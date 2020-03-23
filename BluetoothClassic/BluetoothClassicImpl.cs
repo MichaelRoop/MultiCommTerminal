@@ -9,6 +9,8 @@ using System.Text;
 namespace BluetoothClassic {
     public class BluetoothClassicImpl : IBTInterface {
 
+        public event EventHandler<BTDeviceInfo> DiscoveredDevice;
+
         public void blah() {
             
 

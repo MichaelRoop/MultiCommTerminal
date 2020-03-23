@@ -8,7 +8,10 @@ namespace BluetoothLE {
     public class BluetoothLEImpl : IBTInterface {
 
 
-            //List<BTDeviceInfo> infoList = new List<BTDeviceInfo>();
+        public event EventHandler<BTDeviceInfo> DiscoveredDevice;
+
+
+        //List<BTDeviceInfo> infoList = new List<BTDeviceInfo>();
 
         List<BTDeviceInfo> IBTInterface.DiscoverDevices() {
 

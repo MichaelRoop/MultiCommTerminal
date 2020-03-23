@@ -22,6 +22,8 @@ namespace BluetoothLE.Win32 {
     public class BluetoothLEImplWin32 : IBTInterface {
 
 
+        public event EventHandler<BTDeviceInfo> DiscoveredDevice;
+
 
         /// <summary>Interface call
         /// 
@@ -76,15 +78,30 @@ namespace BluetoothLE.Win32 {
                 this.infoListMain.Clear();
             }
             this.SetupWatcher();
-            this.SetupEvents();
-            this.done.Reset();
-            this.devWatcher.Start();
-            // problem - the enumeration end never happens. Cannot set too high
-            if (this.done.WaitOne(30000)) {
+            //this.SetupEvents();
+            //this.done.Reset();
 
+            // Need to properly shut down watcher if it is up and running
+
+
+            if (devWatcher.Status != DeviceWatcherStatus.Started) {
+                this.devWatcher.Start();
             }
-            this.TearDownEvents();
-            this.devWatcher.Stop();
+
+            //if (devWatcher.Status == DeviceWatcherStatus.Started) {
+            //    this.done.Reset();
+            //    this.devWatcher.Stop();
+            //    this.done.WaitOne(5000);
+            //}
+            //this.devWatcher.Start();
+
+
+            //// problem - the enumeration end never happens. Cannot set too high
+            //if (this.done.WaitOne(30000)) {
+
+            //}
+            //this.TearDownEvents();
+            //this.devWatcher.Stop();
         }
 
         private void SetupWatcher() {
@@ -123,6 +140,9 @@ namespace BluetoothLE.Win32 {
                 string aqsBTAddressNotNull = "System.Devices.Aep.DeviceAddress:<>[]";
                 this.devWatcher = DeviceInformation.CreateWatcher(
                     aqsBTAddressNotNull, prop, DeviceInformationKind.AssociationEndpoint);
+
+
+                this.SetupEvents();
             }
         }
 
@@ -147,10 +167,14 @@ namespace BluetoothLE.Win32 {
 
         private void DevWatcher_Stopped(DeviceWatcher sender, object args) {
             //throw new NotImplementedException();
+            this.done.Set();
         }
 
         private void DevWatcher_EnumerationCompleted(DeviceWatcher sender, object args) {
-            this.done.Set();
+            //this.done.Set();
+            //if (this.devWatcher.Status == DeviceWatcherStatus.Started) {
+            //    this.devWatcher.Stop();
+            //}
         }
 
         private void DevWatcher_Removed(DeviceWatcher sender, DeviceInformationUpdate args) {
@@ -162,15 +186,32 @@ namespace BluetoothLE.Win32 {
         }
 
         private void DevWatcher_Added(DeviceWatcher sender, DeviceInformation args) {
-            lock (this.infoListMain) { // Locking the container causes the list not to populate past first
-                if (args.Name.Length > 0) {
-                    this.infoListMain.Add(new BTDeviceInfo() {
+            //lock (this.infoListMain) { // Locking the container causes the list not to populate past first
+            //    if (args.Name.Length > 0) {
+            //        this.infoListMain.Add(new BTDeviceInfo() {
+            //            Name = args.Name,
+            //            Address = args.Id,
+            //            // Does not apply for bluetooth LE
+            //            Authenticated = true,
+            //            // the aqs query only returns the connected ones
+            //            Connected = true, 
+            //            DeviceClassInt = 0,
+            //            DeviceClassName = "0",
+            //            ServiceClassInt = 0,
+            //            ServiceClassName = "0",
+            //        });
+            //    }
+            //}
+
+            if (args.Name.Length > 0) {
+                if (this.DiscoveredDevice != null) {
+                    this.DiscoveredDevice(this, new BTDeviceInfo() {
                         Name = args.Name,
                         Address = args.Id,
                         // Does not apply for bluetooth LE
                         Authenticated = true,
                         // the aqs query only returns the connected ones
-                        Connected = true, 
+                        Connected = true,
                         DeviceClassInt = 0,
                         DeviceClassName = "0",
                         ServiceClassInt = 0,
@@ -178,6 +219,7 @@ namespace BluetoothLE.Win32 {
                     });
                 }
             }
+
         }
 
         #endregion

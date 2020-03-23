@@ -66,6 +66,31 @@
                                     Content="Discover" Background="Transparent" Click="btnDiscover_Click" />
                             </DockPanel>
                         </StackPanel>
+
+                        <StackPanel x:Name="spBluetoothLE" VerticalAlignment="Center" Visibility="Collapsed">
+                            <DockPanel>
+                                <Label Content="Device:"/>
+                                <ListBox x:Name="lbBluetoothLE" MinHeight="30" MinWidth="200" MaxHeight="100" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding Name}" />
+                                                <!--<TextBlock Grid.Column="1" Text="{Binding Address}" Margin="2,0" />-->
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                                <Button x:Name="btnDiscoverLE" Style="{StaticResource RoundEdgeButton}"
+                                    Content="Discover" Background="Transparent" Click="btnDiscoverLE_Click" />
+                            </DockPanel>
+                        </StackPanel>
+
+
+
                         <StackPanel x:Name="spEthernet" VerticalAlignment="Center" Visibility="Collapsed">
                             <DockPanel>
                                 <Label Content="IP:"/>

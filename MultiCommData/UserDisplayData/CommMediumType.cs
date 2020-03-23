@@ -9,5 +9,6 @@ namespace MultiCommData.UserDisplayData {
         Ethernet,
         Wifi,
         Bluetooth,
+        BluetoothLE,
     }
 }

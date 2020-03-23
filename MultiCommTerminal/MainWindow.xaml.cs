@@ -25,14 +25,24 @@ namespace MultiCommTerminal {
         private MediumGroup mediumGroup = new MediumGroup();
         private CommMediumType currentMedium = CommMediumType.None;
         private List<BTDeviceInfo> btInfoList = new List<BTDeviceInfo>();
-        // TODO move out of UI
-        //private IBTInterface blueTooth = new BluetoothClassic.BluetoothClassicImpl();
+        private List<BTDeviceInfo> btInfoListLE = new List<BTDeviceInfo>();
 
-        private IBTInterface blueTooth = new BluetoothLE.Win32.BluetoothLEImplWin32();
+
+        // TODO move out of UI
+        private IBTInterface blueTooth = new BluetoothClassic.BluetoothClassicImpl();
+        private IBTInterface blueToothLE = new BluetoothLE.Win32.BluetoothLEImplWin32();
 
         public MainWindow() {
             InitializeComponent();
             this.OnStartupSuccess();
+            this.blueToothLE.DiscoveredDevice += this.BlueToothLE_DiscoveredDevice;
+        }
+
+        private void BlueToothLE_DiscoveredDevice(object sender, BTDeviceInfo e) {
+            //throw new NotImplementedException();
+
+            this.btInfoListLE.Add(e);
+
         }
 
         private void Window_ContentRendered(object sender, EventArgs e) {
@@ -51,6 +61,7 @@ namespace MultiCommTerminal {
         private void OnStartupSuccess() {
             // TODO for now init manually
             this.mediumGroup.Mediums.Add(new CommMedialDisplay("Bluetooth", CommMediumType.Bluetooth));
+            this.mediumGroup.Mediums.Add(new CommMedialDisplay("BluetoothLE", CommMediumType.BluetoothLE));
             this.mediumGroup.Mediums.Add(new CommMedialDisplay("Ethernet", CommMediumType.Ethernet));
             this.mediumGroup.Mediums.Add(new CommMedialDisplay("Wifi", CommMediumType.Wifi));
             this.cbComm.ItemsSource = this.mediumGroup.Mediums;
@@ -70,19 +81,41 @@ namespace MultiCommTerminal {
 
         }
 
+        private void btnDiscoverLE_Click(object sender, RoutedEventArgs e) {
+            this.btInfoListLE.Clear();
+            this.lbBluetoothLE.ItemsSource = null;
+            // Hopefully will update on event and be visible
+            this.lbBluetoothLE.ItemsSource = this.btInfoListLE;
+
+            // This will get things going and we will populate on events
+            this.blueToothLE.DiscoverDevices();
+
+            //MessageBox.Show(string.Format("Number of LE devices {0}", this.btInfoList.Count));
+
+        }
+
+
         private void cbComm_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             //MessageBox.Show(String.Format("Enum selected:{0}",
             //    (this.cbComm.SelectedItem as CommMedialDisplay).MediumType.ToString()));
 
             // Hide all the options
             this.spBluetooth.Visibility = Visibility.Collapsed;
+            this.spBluetoothLE.Visibility = Visibility.Collapsed;
             this.spEthernet.Visibility = Visibility.Collapsed;
             this.spWifi.Visibility = Visibility.Collapsed;
+
+            this.btnDiscover.Visibility = Visibility.Collapsed;
+            this.btnDiscoverLE.Visibility = Visibility.Collapsed;
 
             switch((this.cbComm.SelectedItem as CommMedialDisplay).MediumType) {
                 case CommMediumType.Bluetooth:
                     this.spBluetooth.Visibility = Visibility.Visible;
                     this.btnConnect.Visibility = Visibility.Visible;
+                    break;
+                case CommMediumType.BluetoothLE:
+                    this.spBluetoothLE.Visibility = Visibility.Visible;
+                    this.btnDiscoverLE.Visibility = Visibility.Visible;
                     break;
                 case CommMediumType.Ethernet:
                     this.spEthernet.Visibility = Visibility.Visible;
@@ -104,6 +137,8 @@ namespace MultiCommTerminal {
                 // Disconnect whatever we are connected to
                 switch (this.currentMedium) {
                     case CommMediumType.Bluetooth:
+                        break;
+                    case CommMediumType.BluetoothLE:
                         break;
                     case CommMediumType.Ethernet:
                         break;
