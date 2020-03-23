@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MultiCommTerminal": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

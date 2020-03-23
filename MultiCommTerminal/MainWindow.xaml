@@ -44,10 +44,26 @@
                             </ComboBox>
                         </Border>
 
-                        <StackPanel x:Name="spBluetooth" VerticalAlignment="Center" Visibility="Collapsed">
+                        <!-- Will need different for LE and classic. Using the classic one modified for LE for now -->
+                        <StackPanel x:Name="spBluetooth" VerticalAlignment="Center" Visibility="Visible">
                             <DockPanel>
                                 <Label Content="Device:"/>
-                                <ListBox x:Name="lbBluetooth" MinHeight="30" MinWidth="100"/>
+                                <ListBox x:Name="lbBluetooth" MinHeight="30" MinWidth="200" MaxHeight="150" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding Name}" />
+                                                <TextBlock Grid.Column="1" Text="{Binding Address}" Margin="2,0" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                                <Button x:Name="btnDiscover" Style="{StaticResource RoundEdgeButton}"
+                                    Content="Discover" Background="Transparent" Click="btnDiscover_Click" />
                             </DockPanel>
                         </StackPanel>
                         <StackPanel x:Name="spEthernet" VerticalAlignment="Center" Visibility="Collapsed">

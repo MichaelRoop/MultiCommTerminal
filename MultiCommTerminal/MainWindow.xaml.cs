@@ -1,4 +1,6 @@
-﻿using MultiCommData.UserDisplayData;
+﻿using BluetoothCommon.Net;
+using BluetoothCommon.Net.interfaces;
+using MultiCommData.UserDisplayData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +24,11 @@ namespace MultiCommTerminal {
 
         private MediumGroup mediumGroup = new MediumGroup();
         private CommMediumType currentMedium = CommMediumType.None;
+        private List<BTDeviceInfo> btInfoList = new List<BTDeviceInfo>();
+        // TODO move out of UI
+        //private IBTInterface blueTooth = new BluetoothClassic.BluetoothClassicImpl();
+
+        private IBTInterface blueTooth = new BluetoothLE.Win32.BluetoothLEImplWin32();
 
         public MainWindow() {
             InitializeComponent();
@@ -50,7 +57,19 @@ namespace MultiCommTerminal {
             this.cbComm.SelectedIndex = 0;
         }
 
- 
+
+        private void btnDiscover_Click(object sender, RoutedEventArgs e) {
+            this.btInfoList.Clear();
+            this.lbBluetooth.ItemsSource = null;
+
+            // Move out of UI
+            this.btInfoList = this.blueTooth.DiscoverDevices();
+            this.lbBluetooth.ItemsSource = this.btInfoList;
+
+            MessageBox.Show(string.Format("Number of devices {0}", this.btInfoList.Count));
+
+        }
+
         private void cbComm_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             //MessageBox.Show(String.Format("Enum selected:{0}",
             //    (this.cbComm.SelectedItem as CommMedialDisplay).MediumType.ToString()));

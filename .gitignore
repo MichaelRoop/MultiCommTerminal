@@ -1,1 +1,8 @@
 /MultiCommTerminal/bin/*
+/BluetoothClassic/obj/*
+/BluetoothLE/obj/*
+/BluetoothLE.Win32/bin/*
+/BluetoothClassic/bin/*
+/BluetoothLE.Win32/obj/*
+/BluetoothCommon.Net/bin/*
+/BluetoothLE/bin/*

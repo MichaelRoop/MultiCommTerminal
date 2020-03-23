@@ -7,6 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BluetoothClassic\BluetoothClassic.csproj" />
+    <ProjectReference Include="..\BluetoothCommon.Net\BluetoothCommon.Net.csproj" />
+    <ProjectReference Include="..\BluetoothLE.Win32\BluetoothLE.Win32.csproj" />
     <ProjectReference Include="..\MultiCommData\MultiCommData.csproj" />
   </ItemGroup>
 
