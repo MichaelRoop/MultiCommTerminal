@@ -14,13 +14,13 @@ namespace MultiCommTerminal {
         #region Data
 
         private MediumGroup mediumGroup = new MediumGroup();
-        private CommMediumType currentMedium = CommMediumType.None;
+        //private CommMediumType currentMedium = CommMediumType.None;
         private List<BTDeviceInfo> btInfoList = new List<BTDeviceInfo>();
-        private List<BTDeviceInfo> btInfoListLE = new List<BTDeviceInfo>();
+        private List<BluetoothLEDeviceInfo> btInfoListLE = new List<BluetoothLEDeviceInfo>();
 
         // TODO move out of UI
         private IBTInterface blueTooth = new BluetoothClassic.BluetoothClassicImpl();
-        private IBTInterface blueToothLE = new BluetoothLE.Win32.BluetoothLEImplWin32();
+        private IBLETInterface blueToothLE = new BluetoothLE.Win32.BluetoothLEImplWin32();
 
         #endregion
 
@@ -29,7 +29,7 @@ namespace MultiCommTerminal {
         public MainWindow() {
             InitializeComponent();
             this.OnStartupSuccess();
-            this.blueToothLE.DiscoveredDevice += this.BlueToothLE_DiscoveredDevice;
+            this.blueToothLE.DeviceDiscovered += this.BlueToothLE_DeviceDiscovered;
         }
 
 
@@ -55,7 +55,7 @@ namespace MultiCommTerminal {
         /// <summary>Event handler for Bluetooth LE device discovery. Adds one at a time</summary>
         /// <param name="sender">The sender of event</param>
         /// <param name="info">The information for discovered device</param>
-        private void BlueToothLE_DiscoveredDevice(object sender, BTDeviceInfo info) {
+        private void BlueToothLE_DeviceDiscovered(object sender, BluetoothLEDeviceInfo info) {
             this.Dispatcher.Invoke(() => {
                 // Disconnect the list from control before changing. Maybe change to Observable collection
                 this.lbBluetoothLE.ItemsSource = null;

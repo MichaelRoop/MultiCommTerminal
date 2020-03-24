@@ -14,7 +14,7 @@ namespace BluetoothLE.Win32 {
     // Add Reference to \Program Files\Reference Assemblies\Microsoft\Framework\.NETCore\v4.5\System.Runtime.WindowsRuntime.dll
     // Regardless what Target Framework i'm using, the only working version of System.Runtime.WindowsRuntime.dll was v4.5. All other version (wich corresponds to the Target Framework) caused runtime errors.
 
-    public class BluetoothLEImplWin32 : IBTInterface {
+    public class BluetoothLEImplWin32 : IBLETInterface {
 
         #region data
         
@@ -24,7 +24,9 @@ namespace BluetoothLE.Win32 {
 
         #region Interface events
 
-        public event EventHandler<BTDeviceInfo> DiscoveredDevice;
+        public event EventHandler<BluetoothLEDeviceInfo> DeviceDiscovered;
+
+        public event EventHandler<string> DeviceRemoved;
 
         #endregion
 
@@ -32,9 +34,8 @@ namespace BluetoothLE.Win32 {
 
         /// <summary>Interface call to discover devices</summary>
         /// <returns>A list of discovered devices.  However I am now using events so it is empty</returns>
-        List<BTDeviceInfo> IBTInterface.DiscoverDevices() {
+        void IBLETInterface.DiscoverDevices() {
             this.DoLEWatcherSearch();
-            return new List<BTDeviceInfo>();
         }
 
         #region Watcher approach
@@ -161,18 +162,13 @@ namespace BluetoothLE.Win32 {
         private void DevWatcher_Added(DeviceWatcher sender, DeviceInformation deviceInfo) {
             // TODO - look at separate objects for LE
             if (deviceInfo.Name.Length > 0) {
-                if (this.DiscoveredDevice != null) {
-                    this.DiscoveredDevice(this, new BTDeviceInfo() {
+                if (this.DeviceDiscovered != null) {
+                    this.DeviceDiscovered(this, new BluetoothLEDeviceInfo() {
                         Name = deviceInfo.Name,
-                        Address = deviceInfo.Id,
-                        // Does not apply for bluetooth LE
-                        Authenticated = true,
-                        // the aqs query only returns the connected ones
-                        Connected = true,
-                        DeviceClassInt = 0,
-                        DeviceClassName = "0",
-                        ServiceClassInt = 0,
-                        ServiceClassName = "0",
+                        Id = deviceInfo.Id,
+                        IsDefault = deviceInfo.IsDefault,
+                        CanPair  = deviceInfo?.Pairing.CanPair ?? false,
+                        IsPaired = deviceInfo?.Pairing.IsPaired ?? false,
                     });
                 }
             }
