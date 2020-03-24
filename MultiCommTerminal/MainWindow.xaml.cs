@@ -3,34 +3,28 @@ using BluetoothCommon.Net.interfaces;
 using MultiCommData.UserDisplayData;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MultiCommTerminal {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+
+    /// <summary>Interaction logic for MainWindow.xaml</summary>
     public partial class MainWindow : Window {
+
+        #region Data
 
         private MediumGroup mediumGroup = new MediumGroup();
         private CommMediumType currentMedium = CommMediumType.None;
         private List<BTDeviceInfo> btInfoList = new List<BTDeviceInfo>();
         private List<BTDeviceInfo> btInfoListLE = new List<BTDeviceInfo>();
 
-
         // TODO move out of UI
         private IBTInterface blueTooth = new BluetoothClassic.BluetoothClassicImpl();
         private IBTInterface blueToothLE = new BluetoothLE.Win32.BluetoothLEImplWin32();
+
+        #endregion
+
+        #region Constructors and window events
 
         public MainWindow() {
             InitializeComponent();
@@ -38,12 +32,6 @@ namespace MultiCommTerminal {
             this.blueToothLE.DiscoveredDevice += this.BlueToothLE_DiscoveredDevice;
         }
 
-        private void BlueToothLE_DiscoveredDevice(object sender, BTDeviceInfo e) {
-            //throw new NotImplementedException();
-
-            this.btInfoListLE.Add(e);
-
-        }
 
         private void Window_ContentRendered(object sender, EventArgs e) {
             // Must force the window size down
@@ -51,23 +39,45 @@ namespace MultiCommTerminal {
             this.Height = this.grdMain.ActualHeight + 40; // TODO Weird have to add this
         }
 
+        #endregion
+
+        #region Button events
+
         private void btnExit_Click(object sender, RoutedEventArgs e) {
-            // TODO need to disconnect
+            // TODO need to disconnect any connected medium
             this.Close();
         }
 
+        #endregion
 
+        #region Bluetooth LE
 
-        private void OnStartupSuccess() {
-            // TODO for now init manually
-            this.mediumGroup.Mediums.Add(new CommMedialDisplay("Bluetooth", CommMediumType.Bluetooth));
-            this.mediumGroup.Mediums.Add(new CommMedialDisplay("BluetoothLE", CommMediumType.BluetoothLE));
-            this.mediumGroup.Mediums.Add(new CommMedialDisplay("Ethernet", CommMediumType.Ethernet));
-            this.mediumGroup.Mediums.Add(new CommMedialDisplay("Wifi", CommMediumType.Wifi));
-            this.cbComm.ItemsSource = this.mediumGroup.Mediums;
-            this.cbComm.SelectedIndex = 0;
+        /// <summary>Event handler for Bluetooth LE device discovery. Adds one at a time</summary>
+        /// <param name="sender">The sender of event</param>
+        /// <param name="info">The information for discovered device</param>
+        private void BlueToothLE_DiscoveredDevice(object sender, BTDeviceInfo info) {
+            this.Dispatcher.Invoke(() => {
+                // Disconnect the list from control before changing. Maybe change to Observable collection
+                this.lbBluetoothLE.ItemsSource = null;
+                this.btInfoListLE.Add(info);
+                this.lbBluetoothLE.ItemsSource = this.btInfoListLE;
+            });
         }
 
+
+        /// <summary>Clear Bluetooth LE device list and Launch device discovery</summary>
+        /// <param name="sender">Click sender</param>
+        /// <param name="e">Routed argument. Not used</param>
+        private void btnDiscoverLE_Click(object sender, RoutedEventArgs e) {
+            this.lbBluetoothLE.ItemsSource = null;
+            this.btInfoListLE.Clear();
+            this.lbBluetoothLE.ItemsSource = this.btInfoListLE;
+            this.blueToothLE.DiscoverDevices();
+        }
+
+        #endregion
+
+        #region Bluetooth
 
         private void btnDiscover_Click(object sender, RoutedEventArgs e) {
             this.btInfoList.Clear();
@@ -81,17 +91,18 @@ namespace MultiCommTerminal {
 
         }
 
-        private void btnDiscoverLE_Click(object sender, RoutedEventArgs e) {
-            this.btInfoListLE.Clear();
-            this.lbBluetoothLE.ItemsSource = null;
-            // Hopefully will update on event and be visible
-            this.lbBluetoothLE.ItemsSource = this.btInfoListLE;
+        #endregion
 
-            // This will get things going and we will populate on events
-            this.blueToothLE.DiscoverDevices();
+        #region Private
 
-            //MessageBox.Show(string.Format("Number of LE devices {0}", this.btInfoList.Count));
-
+        private void OnStartupSuccess() {
+            // TODO for now init manually
+            this.mediumGroup.Mediums.Add(new CommMedialDisplay("BluetoothLE", CommMediumType.BluetoothLE));
+            this.mediumGroup.Mediums.Add(new CommMedialDisplay("Bluetooth Classic", CommMediumType.Bluetooth));
+            this.mediumGroup.Mediums.Add(new CommMedialDisplay("Ethernet", CommMediumType.Ethernet));
+            this.mediumGroup.Mediums.Add(new CommMedialDisplay("Wifi", CommMediumType.Wifi));
+            this.cbComm.ItemsSource = this.mediumGroup.Mediums;
+            this.cbComm.SelectedIndex = 0;
         }
 
 
@@ -131,29 +142,28 @@ namespace MultiCommTerminal {
         }
 
         // This will be moved out of UI
-        private void DoDisconnect(CommMediumType newMedium) {
-            if (this.currentMedium != CommMediumType.None && 
-                this.currentMedium != newMedium) {
-                // Disconnect whatever we are connected to
-                switch (this.currentMedium) {
-                    case CommMediumType.Bluetooth:
-                        break;
-                    case CommMediumType.BluetoothLE:
-                        break;
-                    case CommMediumType.Ethernet:
-                        break;
-                    case CommMediumType.Wifi:
-                        break;
-                    default:
-                        break;
-                }
-                this.currentMedium = CommMediumType.None;
-                this.btnConnect.Visibility = Visibility.Collapsed;
-            }
+        //private void DoDisconnect(CommMediumType newMedium) {
+        //    if (this.currentMedium != CommMediumType.None && 
+        //        this.currentMedium != newMedium) {
+        //        // Disconnect whatever we are connected to
+        //        switch (this.currentMedium) {
+        //            case CommMediumType.Bluetooth:
+        //                break;
+        //            case CommMediumType.BluetoothLE:
+        //                break;
+        //            case CommMediumType.Ethernet:
+        //                break;
+        //            case CommMediumType.Wifi:
+        //                break;
+        //            default:
+        //                break;
+        //        }
+        //        this.currentMedium = CommMediumType.None;
+        //        this.btnConnect.Visibility = Visibility.Collapsed;
+        //    }
+        //}
 
+        #endregion
 
-        }
-
- 
     }
 }
