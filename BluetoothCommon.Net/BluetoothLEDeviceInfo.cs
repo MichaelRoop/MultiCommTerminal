@@ -21,5 +21,22 @@ namespace BluetoothCommon.Net {
 
         public bool IsPaired { get; set; }
 
+        public string Kind { get; set; }
+
+        public List<Tuple<string,string>> LEProperties { get; set; }
+
+
+        /// <summary>OS 
+        /// specific implementations require a specific object 
+        /// returned from discovery to make a connection
+        /// </summary>
+        public object OSSpecificObj { get; set; }  
+
+
+        public BluetoothLEDeviceInfo() {
+            this.LEProperties = new List<Tuple<string,string>>();
+        }
+
+
     }
 }

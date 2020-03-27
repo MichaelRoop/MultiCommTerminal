@@ -3,6 +3,7 @@ using BluetoothCommon.Net.interfaces;
 using MultiCommData.UserDisplayData;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -74,6 +75,63 @@ namespace MultiCommTerminal {
             this.lbBluetoothLE.ItemsSource = this.btInfoListLE;
             this.blueToothLE.DiscoverDevices();
         }
+
+        private void btnInfoLE_Click(object sender, RoutedEventArgs e) {
+            if(this.lbBluetoothLE.SelectedItem != null) {
+                BluetoothLEDeviceInfo info = this.lbBluetoothLE.SelectedItem as BluetoothLEDeviceInfo;
+                StringBuilder sb = new StringBuilder();
+                sb.Append(string.Format("       Id: {0}\n", info.Id));//.Append("\n");
+                sb.Append(string.Format("IsDefault: {0}\n", info.IsDefault));
+                sb.Append(string.Format("IsEnabled: {0}\n", info.IsEnabled));
+                //sb.Append("     Kind: {0}", device.Kind);
+                // Properties
+                sb.Append(string.Format("Properties: ({0})\n", info.LEProperties.Count));
+                foreach (var p in info.LEProperties) {
+                    if (p.Item2.Length > 0) {
+                        sb.Append(string.Format("   {0} : {1}\n", p.Item1, p.Item2));
+                    }
+                    else {
+                        sb.Append(string.Format("   {0}\n", p.Item1));
+                    }
+                }
+                //// Enclosure location
+                //if (device.EnclosureLocation != null) {
+                //    System.Diagnostics.Debug.WriteLine("EnclosureLocation:");
+                //    System.Diagnostics.Debug.WriteLine("     InDock: {0}", device.EnclosureLocation.InDock);
+                //    System.Diagnostics.Debug.WriteLine("      InLid: {0}", device.EnclosureLocation.InLid);
+                //    System.Diagnostics.Debug.WriteLine("      Panel: {0}", device.EnclosureLocation.Panel);
+                //    System.Diagnostics.Debug.WriteLine("      Angle: {0}", device.EnclosureLocation.RotationAngleInDegreesClockwise);
+                //}
+                //else {
+                //    System.Diagnostics.Debug.WriteLine("EnclosureLocation: null");
+                //}
+                //// Pairing
+                //if (device.Pairing != null) {
+                //    System.Diagnostics.Debug.WriteLine("Pairing:");
+                //    System.Diagnostics.Debug.WriteLine("    CanPair: {0}", device.Pairing.CanPair);
+                //    System.Diagnostics.Debug.WriteLine("   IsPaired: {0}", device.Pairing.IsPaired);
+                //    System.Diagnostics.Debug.WriteLine(" Protection: {0}", device.Pairing.ProtectionLevel);
+                //    if (device.Pairing.Custom != null) {
+                //        System.Diagnostics.Debug.WriteLine("     Custom: not null");
+                //    }
+                //    else {
+                //        System.Diagnostics.Debug.WriteLine("Custom: null");
+                //    }
+                //}
+                //else {
+                //    System.Diagnostics.Debug.WriteLine("Custom: null");
+                //}
+
+
+
+
+
+
+                MessageBox.Show(sb.ToString(), info.Name);
+            }
+
+        }
+
 
         #endregion
 

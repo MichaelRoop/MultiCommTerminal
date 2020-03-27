@@ -16,5 +16,7 @@ namespace BluetoothCommon.Net.interfaces {
         /// <summary>Start or restart the device discovery</summary>
         void DiscoverDevices();
 
+        void Connect(BluetoothLEDeviceInfo deviceInfo);
+
     }
 }

@@ -86,6 +86,10 @@
                                 </ListBox>
                                 <Button x:Name="btnDiscoverLE" Style="{StaticResource RoundEdgeButton}"
                                     Content="Discover" Background="Transparent" Click="btnDiscoverLE_Click" />
+                                <Button x:Name="btnInfoLE" Style="{StaticResource RoundEdgeButton}"
+                                    Content="LE Info" Background="Transparent" Click="btnInfoLE_Click" />
+
+
                             </DockPanel>
                         </StackPanel>
 
