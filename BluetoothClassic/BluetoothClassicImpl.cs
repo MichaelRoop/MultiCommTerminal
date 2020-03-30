@@ -11,50 +11,44 @@ namespace BluetoothClassic {
 
         public event EventHandler<BTDeviceInfo> DiscoveredDevice;
 
-        public void blah() {
-            
-
-        }
+        //private void DiscoveredDevicesCallback(IAsyncResult result) {
+        //    BluetoothClient thisDevice = result.AsyncState as BluetoothClient;
+        //    if (result.IsCompleted) {
+        //        BluetoothDeviceInfo[] devices = thisDevice.EndDiscoverDevices(result);
+        //        foreach (BluetoothDeviceInfo dev in devices) {
+        //            if (this.DiscoveredDevice != null) {
+        //                this.DiscoveredDevice(this, new BTDeviceInfo() {
+        //                    Name = dev.DeviceName,
+        //                    Connected = dev.Connected,
+        //                    Authenticated = dev.Authenticated,
+        //                    Address = dev.DeviceAddress.ToString(),
+        //                    DeviceClassInt = dev.ClassOfDevice.Value,
+        //                    DeviceClassName = string.Format("{0}:{1}", dev.ClassOfDevice.MajorDevice, dev.ClassOfDevice.Device),
+        //                    ServiceClassInt = (int)dev.ClassOfDevice.Service,
+        //                    ServiceClassName = dev.ClassOfDevice.Service.ToString(),
+        //                });
+        //            }
+        //            //this.Invoke(new Action(delegate () {
+        //            //    listBox1.Items.Add(d.DeviceName);
+        //            //}));
+        //        }
+        //    }
+        //}
 
 
         List<BTDeviceInfo> IBTInterface.DiscoverDevices() {
             BluetoothClient cl = null;
-            cl = new BluetoothClient();
             List<BTDeviceInfo> infoList = new List<BTDeviceInfo>();
 
-            //BluetoothDevicePicker p = new BluetoothDevicePicker();
-            //var xx = p.ClassOfDevices;
-            //IReadOnlyCollection<BluetoothDeviceInfo> dd = cl.DiscoverDevices(255);
-            //var xyz = cl.PairedDevices;
-
-
-
-            //foreach (var x in p.ClassOfDevices) {
-            //    BTDeviceInfo info = new BTDeviceInfo() {
-            //        Name = x.Device.ToString(),// dev.DeviceName,
-            //        Connected = true, //dev.Connected,
-            //        Authenticated = true, //dev.Authenticated,
-            //        //Address = dev.DeviceAddress.ToString(),
-            //        DeviceClassInt = (uint)x.Value,// dev.ClassOfDevice.Value,
-            //        DeviceClassName = string.Format("{0}:{1}", x.MajorDevice.GetTypeCode(), x.MajorDevice.ToString()),
-            //        //DeviceClassName = x.Device.ToString(),// string.Format("{0}:{1}", dev.ClassOfDevice.MajorDevice, dev.ClassOfDevice.Device),
-            //        ServiceClassInt = (int)x.Service,//  (int)dev.ClassOfDevice.Service,
-            //        ServiceClassName = x.Service.ToString(),// dev.ClassOfDevice.Service.ToString(),
-            //    };
-            //    infoList.Add(info);
-            //}
-
-
-
-
-
-            //cl.PairedDevices
-            //IReadOnlyCollection<BluetoothDeviceInfo> dd = cl.DiscoverDevices(255);
-
+            //cl = new BluetoothClient();
+            //cl.BeginDiscoverDevices(
+            //    10, true, true, true, false, this.DiscoveredDevicesCallback, cl);
+            //var l = new BluetoothListener();
             //IEnumerable < BluetoothDeviceInfo >
 
-
-            foreach (BluetoothDeviceInfo dev in /*cl.PairedDevices*/ cl.DiscoverDevices()) {
+            cl = new BluetoothClient();
+            //foreach (BluetoothDeviceInfo dev in cl.DiscoverDevices(20)) {
+            foreach (BluetoothDeviceInfo dev in cl.DiscoverDevicesInRange()) {
                 BTDeviceInfo info = new BTDeviceInfo() {
                     Name = dev.DeviceName,
                     Connected = dev.Connected,
@@ -65,7 +59,6 @@ namespace BluetoothClassic {
                     ServiceClassInt = (int)dev.ClassOfDevice.Service,
                     ServiceClassName = dev.ClassOfDevice.Service.ToString(),
                 };
-
                 infoList.Add(info);
             }
             return infoList;

@@ -158,8 +158,9 @@ namespace MultiCommTerminal {
             this.btInfoList = this.blueTooth.DiscoverDevices();
             this.lbBluetooth.ItemsSource = this.btInfoList;
 
-            MessageBox.Show(string.Format("Number of devices {0}", this.btInfoList.Count));
-
+            if (this.btInfoList.Count == 0) {
+                MessageBox.Show(string.Format("Number of devices {0}", this.btInfoList.Count));
+            }
         }
 
         #endregion
@@ -194,6 +195,7 @@ namespace MultiCommTerminal {
             switch ((this.cbComm.SelectedItem as CommMedialDisplay).MediumType) {
                 case CommMediumType.Bluetooth:
                     this.spBluetooth.Visibility = Visibility.Visible;
+                    this.btnDiscover.Visibility = Visibility.Visible;
                     break;
                 case CommMediumType.BluetoothLE:
                     this.spBluetoothLE.Visibility = Visibility.Visible;
