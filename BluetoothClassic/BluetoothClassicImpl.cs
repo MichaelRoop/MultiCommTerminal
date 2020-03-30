@@ -16,7 +16,6 @@ namespace BluetoothClassic {
             BluetoothClient thisDevice = result.AsyncState as BluetoothClient;
             if (result.IsCompleted) {
                 BluetoothDeviceInfo[] devices = thisDevice.EndDiscoverDevices(result);
-                found = devices.Length > 0;
                 foreach (BluetoothDeviceInfo dev in devices) {
                     if (this.DiscoveredBTDevice != null) {
                         this.DiscoveredBTDevice(this, new BTDeviceInfo() {

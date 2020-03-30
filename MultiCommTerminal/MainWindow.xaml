@@ -10,7 +10,7 @@
     
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="grdMain">
         <Grid x:Name="gridWait" Panel.ZIndex="10000" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" >
-            <Label x:Name="lblWait" Content="WAIT" FontSize="100">
+            <Label x:Name="lblWait" Content="WAIT" FontSize="100" Opacity="0.1">
                 <Label.Triggers>
                     <EventTrigger RoutedEvent="Label.Loaded">
                         <BeginStoryboard>
