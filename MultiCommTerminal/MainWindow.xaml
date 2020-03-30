@@ -7,8 +7,28 @@
         mc:Ignorable="d"
         Title="Multi Comm Terminal"  
         ContentRendered="Window_ContentRendered">
+    
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="grdMain">
+        <Grid x:Name="gridWait" Panel.ZIndex="10000" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" >
+            <Label x:Name="lblWait" Content="WAIT" FontSize="100">
+                <Label.Triggers>
+                    <EventTrigger RoutedEvent="Label.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation 
+                                    Storyboard.TargetName="lblWait"
+                                    Storyboard.TargetProperty="(Label.Opacity)" 
+                                    From="0.1" To="1" Duration="0:0:0.75" AutoReverse="True" RepeatBehavior="Forever" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Label.Triggers>
+            </Label>
+        </Grid>
+        
         <Border BorderBrush="Blue" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            
+            
             <StackPanel x:Name="spMain" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Border BorderBrush="AliceBlue" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <DockPanel  VerticalAlignment="Center">

@@ -31,8 +31,9 @@ namespace MultiCommTerminal {
             InitializeComponent();
             this.OnStartupSuccess();
             this.blueToothLE.DeviceDiscovered += this.BlueToothLE_DeviceDiscovered;
+            this.blueTooth.DiscoveredBTDevice += this.BlueTooth_DiscoveredBTDevice;
+            this.blueTooth.DiscoveryComplete += this.BlueTooth_DiscoveryComplete;
         }
-
 
         private void Window_ContentRendered(object sender, EventArgs e) {
             // Must force the window size down
@@ -151,16 +152,37 @@ namespace MultiCommTerminal {
         #region Bluetooth
 
         private void btnDiscover_Click(object sender, RoutedEventArgs e) {
-            this.btInfoList.Clear();
+
+            //// For synchronous call
+            //this.btInfoList.Clear();
+            //this.lbBluetooth.ItemsSource = null;
+            //this.btInfoList = this.blueTooth.DiscoverDevices();
+            //this.lbBluetooth.ItemsSource = this.btInfoList;
+            //if (this.btInfoList.Count == 0) {
+            //    MessageBox.Show(string.Format("Number of devices {0}", this.btInfoList.Count));
+            //}
+
+            // for asynchronous call
             this.lbBluetooth.ItemsSource = null;
-
-            // Move out of UI
-            this.btInfoList = this.blueTooth.DiscoverDevices();
+            this.btInfoList.Clear();
             this.lbBluetooth.ItemsSource = this.btInfoList;
+            this.gridWait.Visibility = Visibility.Visible;
+            this.blueTooth.DiscoverDevices();
+        }
 
-            if (this.btInfoList.Count == 0) {
-                MessageBox.Show(string.Format("Number of devices {0}", this.btInfoList.Count));
-            }
+
+        private void BlueTooth_DiscoveredBTDevice(object sender, BTDeviceInfo dev) {
+            this.Dispatcher.Invoke(() => {
+                this.lbBluetooth.ItemsSource = null;
+                this.btInfoList.Add(dev);
+                this.lbBluetooth.ItemsSource = this.btInfoList;
+            });
+        }
+
+        private void BlueTooth_DiscoveryComplete(object sender, bool e) {
+            this.Dispatcher.Invoke(() => {
+                this.gridWait.Visibility = Visibility.Collapsed;
+            });
         }
 
         #endregion
@@ -169,8 +191,8 @@ namespace MultiCommTerminal {
 
         private void OnStartupSuccess() {
             // TODO for now init manually
-            this.mediumGroup.Mediums.Add(new CommMedialDisplay("BluetoothLE", CommMediumType.BluetoothLE));
             this.mediumGroup.Mediums.Add(new CommMedialDisplay("Bluetooth Classic", CommMediumType.Bluetooth));
+            this.mediumGroup.Mediums.Add(new CommMedialDisplay("BluetoothLE", CommMediumType.BluetoothLE));
             this.mediumGroup.Mediums.Add(new CommMedialDisplay("Ethernet", CommMediumType.Ethernet));
             this.mediumGroup.Mediums.Add(new CommMedialDisplay("Wifi", CommMediumType.Wifi));
             this.cbComm.ItemsSource = this.mediumGroup.Mediums;
