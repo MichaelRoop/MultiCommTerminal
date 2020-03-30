@@ -109,9 +109,9 @@
                         </StackPanel>
 
 
-                        <Button x:Name="btnConnect" 
+                        <Button x:Name="btnLEConnect" 
                             Style="{StaticResource RoundEdgeButton}"
-                            Content="Connect" Background="Transparent" />
+                            Content="Connect" Background="Transparent" Click="btnLEConnect_Click" />
                     </DockPanel>
                 </Border>
                 <Border BorderBrush="AliceBlue" BorderThickness="1" VerticalAlignment="Center">

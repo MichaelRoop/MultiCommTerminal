@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Devices.Bluetooth;
+using Windows.Devices.Bluetooth.GenericAttributeProfile;
 using Windows.Devices.Enumeration;
 
 // Example code read write
@@ -66,31 +67,63 @@ namespace BluetoothLE.Win32 {
         }
 
 
+        string id = "";
+
         void IBLETInterface.Connect(BluetoothLEDeviceInfo deviceInfo) {
             this.Disconnect();
+            this.id = deviceInfo.Id;
             Task.Run(async () => await this.ConnectToDevice(deviceInfo));
-
-
         }
 
+
         private async Task ConnectToDevice(BluetoothLEDeviceInfo deviceInfo) {
-            // https://github.com/microsoft/Windows-universal-samples/blob/master/Samples/BluetoothLE/cs/Scenario2_Client.xaml.cs
-            this.currentDevice = await BluetoothLEDevice.FromIdAsync(deviceInfo.Id);
+            System.Diagnostics.Debug.WriteLine(string.Format("Attempting connection to {0}: FromIdAsync({1})", 
+                deviceInfo.Name, deviceInfo.Id));
+
+            try {
+                // https://github.com/microsoft/Windows-universal-samples/blob/master/Samples/BluetoothLE/cs/Scenario2_Client.xaml.cs
+
+                System.Diagnostics.Debug.WriteLine(string.Format("Stored Device Info ID {0}", this.id));
+                System.Diagnostics.Debug.WriteLine(string.Format(" Param Device Info ID {0}", deviceInfo.Id));
+
+                //this.currentDevice = await BluetoothLEDevice.FromIdAsync(deviceInfo.Id);
+                this.currentDevice = await BluetoothLEDevice.FromIdAsync(this.id);
+
+                if (this.currentDevice == null) {
+                    System.Diagnostics.Debug.WriteLine("OK connection");
+                }
+                else {
+                    System.Diagnostics.Debug.WriteLine("Failed connection");
+                }
+
+                System.Diagnostics.Debug.WriteLine("Get GATT services");
+
+                GattDeviceService service = await GattDeviceService.FromIdAsync(this.id);
+                foreach (var s in service.GetAllCharacteristics()) {
+                    System.Diagnostics.Debug.WriteLine(string.Format("Service Description: {0}", s.UserDescription));
+                }
+
+            }
+            catch (Exception e) {
+                System.Diagnostics.Debug.WriteLine(string.Format("Exception on connection: {0}", e.Message));
+                if (e.StackTrace != null) {
+                    System.Diagnostics.Debug.WriteLine(string.Format("Stack Trace\n{0}", e.StackTrace));
+                }
+            }
+
             if (this.currentDevice == null) {
                 // report error
+                System.Diagnostics.Debug.WriteLine("NULL device returned for {0}", deviceInfo.Id);
                 return;
             }
             else {
                 // Note: BluetoothLEDevice.GattServices property will return an empty list for unpaired devices. For all uses we recommend using the GetGattServicesAsync method.
                 // BT_Code: GetGattServicesAsync returns a list of all the supported services of the device (even if it's not paired to the system).
                 // If the services supported by the device are expected to change during BT usage, subscribe to the GattServicesChanged event.
-                //GattDeviceServicesResult result = 
-                //    await this.currentDevice..GetGattServicesAsync(BluetoothCacheMode.Uncached);
-
-                foreach (var s in this.currentDevice.GattServices) {
-                    //s.
-                }
-
+                //GattDeviceServicesResult result =
+                //    await this.currentDevice.GetGattServicesAsync(BluetoothCacheMode.Uncached);
+                ////GattDeviceServicesResult result = await BluetoothLEDevice.FromIdAsync(this.currentDevice.DeviceId);
+                System.Diagnostics.Debug.WriteLine("Device Connected {0}", this.currentDevice.BluetoothAddress);
             }
 
         }
@@ -174,36 +207,26 @@ namespace BluetoothLE.Win32 {
             // https://github.com/microsoft/Windows-universal-samples/blob/master/Samples/DeviceEnumerationAndPairing/cs/DeviceWatcherHelper.cs
 
             if (this.devWatcher == null) {
-                // With properties only get 4
-                string[] prop = {
-                    "System.Devices.Aep.DeviceAddress",
-                    "System.Devices.Aep.IsConnected",
-                    "System.Devices.Aep.Bluetooth.Le.IsConnectable",
-                    "System.Devices.Aep.IsPaired"
-                };
-                #region failed experiments
-                //// Even with null properties I get 4
-                //this.devWatcher = DeviceInformation.CreateWatcher(
-                //    BluetoothLEDevice.GetDeviceSelectorFromPairingState(false), prop, .AssociationEndpoint);
-
-                //// Gets Ergonomic keyboard only 
-                //this.devWatcher = DeviceInformation.CreateWatcher(
-                //    BluetoothLEDevice.GetDeviceSelector(), prop, DeviceInformationKind.AssociationEndpoint);
-
-                // 1413 devices, duplicates, etc
-                //this.devWatcher = DeviceInformation.CreateWatcher(DeviceClass.All);
-
-                // 0 devices
-                //this.devWatcher = DeviceInformation.CreateWatcher("System.Devices.Aep.DeviceAddress:<>[]");
-
-                // 0 devices
-                //this.devWatcher = DeviceInformation.CreateWatcher("System.Devices.Aep.DeviceAddress:<>[]", reqProperties);
-                #endregion
+                //// With properties only get 4
+                //string[] prop = {
+                //    "System.Devices.Aep.DeviceAddress",
+                //    "System.Devices.Aep.IsConnected",
+                //    "System.Devices.Aep.Bluetooth.Le.IsConnectable",
+                //    "System.Devices.Aep.IsPaired"
+                //};
 
                 // with AQS Get 23 if I use properties, if null properties only 22
-                string aqsBTAddressNotNull = "System.Devices.Aep.DeviceAddress:<>[]";
-                this.devWatcher = DeviceInformation.CreateWatcher(
-                    aqsBTAddressNotNull, prop, DeviceInformationKind.AssociationEndpoint);
+                //string aqsBTAddressNotNull = "System.Devices.Aep.DeviceAddress:<>[]";
+
+                //this.devWatcher = DeviceInformation.CreateWatcher(
+                //    BluetoothLEDevice.GetDeviceSelector(),  //aqsBTAddressNotNull, 
+                //    prop, 
+                //    DeviceInformationKind.AssociationEndpoint);
+
+                // The GetDeviceSelector creates an aqs string that will return all LE devices. Do not need other parameters
+                this.devWatcher = DeviceInformation.CreateWatcher(BluetoothLEDevice.GetDeviceSelector());
+
+                // See the GetDeviceSelectorFromAppearance to get specific kinds of LE devices
 
                 // Hook up the events
                 devWatcher.Added += DevWatcher_Added;

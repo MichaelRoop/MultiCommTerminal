@@ -77,7 +77,7 @@ namespace MultiCommTerminal {
         }
 
         private void btnInfoLE_Click(object sender, RoutedEventArgs e) {
-            if(this.lbBluetoothLE.SelectedItem != null) {
+            if (this.lbBluetoothLE.SelectedItem != null) {
                 BluetoothLEDeviceInfo info = this.lbBluetoothLE.SelectedItem as BluetoothLEDeviceInfo;
                 StringBuilder sb = new StringBuilder();
                 sb.Append(string.Format("       Id: {0}\n", info.Id));//.Append("\n");
@@ -132,6 +132,19 @@ namespace MultiCommTerminal {
 
         }
 
+        private void btnLEConnect_Click(object sender, RoutedEventArgs e) {
+            if (this.lbBluetoothLE.SelectedItem != null) {
+                try {
+                    BluetoothLEDeviceInfo info = this.lbBluetoothLE.SelectedItem as BluetoothLEDeviceInfo;
+                    this.blueToothLE.Connect(info);
+                }
+                catch (Exception ex) {
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                }
+            }
+        }
+
+
 
         #endregion
 
@@ -171,28 +184,27 @@ namespace MultiCommTerminal {
             // Hide all the options
             this.spBluetooth.Visibility = Visibility.Collapsed;
             this.spBluetoothLE.Visibility = Visibility.Collapsed;
+            this.btnLEConnect.Visibility = Visibility.Collapsed;
             this.spEthernet.Visibility = Visibility.Collapsed;
             this.spWifi.Visibility = Visibility.Collapsed;
 
             this.btnDiscover.Visibility = Visibility.Collapsed;
             this.btnDiscoverLE.Visibility = Visibility.Collapsed;
 
-            switch((this.cbComm.SelectedItem as CommMedialDisplay).MediumType) {
+            switch ((this.cbComm.SelectedItem as CommMedialDisplay).MediumType) {
                 case CommMediumType.Bluetooth:
                     this.spBluetooth.Visibility = Visibility.Visible;
-                    this.btnConnect.Visibility = Visibility.Visible;
                     break;
                 case CommMediumType.BluetoothLE:
                     this.spBluetoothLE.Visibility = Visibility.Visible;
                     this.btnDiscoverLE.Visibility = Visibility.Visible;
+                    this.btnLEConnect.Visibility = Visibility.Visible;
                     break;
                 case CommMediumType.Ethernet:
                     this.spEthernet.Visibility = Visibility.Visible;
-                    this.btnConnect.Visibility = Visibility.Visible;
                     break;
                 case CommMediumType.Wifi:
                     this.spWifi.Visibility = Visibility.Visible;
-                    this.btnConnect.Visibility = Visibility.Visible;
                     break;
                 default:
                     break;
@@ -222,6 +234,5 @@ namespace MultiCommTerminal {
         //}
 
         #endregion
-
     }
 }
