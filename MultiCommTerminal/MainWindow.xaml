@@ -38,13 +38,17 @@
                                 <Button x:Name="btnSend" Margin="1" Style="{StaticResource RoundEdgeButton}" Content="Send" Click="btnSend_Click" />
                             </DockPanel>
                             <Border BorderBrush="Blue" BorderThickness="1" Margin="10">
-                                <ListBox x:Name="outgoing" MinWidth="250" MinHeight="200" />
+                                <ListBox x:Name="outgoing" Width="250" Height="300" 
+                                         ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                                         ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
                             </Border>
                         </StackPanel>
                         <StackPanel x:Name="spResps" VerticalAlignment="Center">
                             <Label Content="Responses" HorizontalAlignment="Center" />
                             <Border BorderBrush="Blue" BorderThickness="1" Margin="10">
-                                <ListBox x:Name="lbIncoming" MinWidth="250" MinHeight="200" />
+                                <ListBox x:Name="lbIncoming" Width="250" Height="300" 
+                                    ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                                    ScrollViewer.HorizontalScrollBarVisibility="Auto" />
                             </Border>
                         </StackPanel>
                     </DockPanel>
