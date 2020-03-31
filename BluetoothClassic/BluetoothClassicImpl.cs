@@ -63,6 +63,7 @@ namespace BluetoothClassic {
 
 
         public void Disconnect() {
+            this.KillRead();
             if (this.dataStream != null) {
                 this.dataStream.Dispose();
                 this.dataStream = null;
