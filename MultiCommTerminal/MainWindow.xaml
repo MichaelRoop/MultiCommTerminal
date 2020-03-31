@@ -84,6 +84,9 @@
                                 </ListBox>
                                 <Button x:Name="btnDiscover" Style="{StaticResource RoundEdgeButton}"
                                     Content="Discover" Background="Transparent" Click="btnDiscover_Click" />
+                                <Button x:Name="btnBTConnect" 
+                                    Style="{StaticResource RoundEdgeButton}"
+                                    Content="Connect" Background="Transparent" Click="btnBTConnect_Click" />
                             </DockPanel>
                         </StackPanel>
 
@@ -109,7 +112,9 @@
                                 <Button x:Name="btnInfoLE" Style="{StaticResource RoundEdgeButton}"
                                     Content="LE Info" Background="Transparent" Click="btnInfoLE_Click" />
 
-
+                                <Button x:Name="btnLEConnect" 
+                                    Style="{StaticResource RoundEdgeButton}"
+                                    Content="Connect" Background="Transparent" Click="btnLEConnect_Click" />
                             </DockPanel>
                         </StackPanel>
 
@@ -128,10 +133,6 @@
                             </DockPanel>
                         </StackPanel>
 
-
-                        <Button x:Name="btnLEConnect" 
-                            Style="{StaticResource RoundEdgeButton}"
-                            Content="Connect" Background="Transparent" Click="btnLEConnect_Click" />
                     </DockPanel>
                 </Border>
                 <Border BorderBrush="AliceBlue" BorderThickness="1" VerticalAlignment="Center">

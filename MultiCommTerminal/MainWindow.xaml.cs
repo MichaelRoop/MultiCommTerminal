@@ -33,7 +33,10 @@ namespace MultiCommTerminal {
             this.blueToothLE.DeviceDiscovered += this.BlueToothLE_DeviceDiscovered;
             this.blueTooth.DiscoveredBTDevice += this.BlueTooth_DiscoveredBTDevice;
             this.blueTooth.DiscoveryComplete += this.BlueTooth_DiscoveryComplete;
+            this.blueTooth.ConnectionCompleted += this.BlueTooth_ConnectionCompleted;
+            this.blueTooth.BytesReceived += this.BlueTooth_BytesReceived;
         }
+
 
         private void Window_ContentRendered(object sender, EventArgs e) {
             // Must force the window size down
@@ -170,6 +173,14 @@ namespace MultiCommTerminal {
             this.blueTooth.DiscoverDevices();
         }
 
+        private void btnBTConnect_Click(object sender, RoutedEventArgs e) {
+            BTDeviceInfo item = this.lbBluetooth.SelectedItem as BTDeviceInfo;
+            if (item != null) {
+                this.gridWait.Visibility = Visibility.Visible;
+                this.blueTooth.Connect(item);
+            }
+        }
+
 
         private void BlueTooth_DiscoveredBTDevice(object sender, BTDeviceInfo dev) {
             this.Dispatcher.Invoke(() => {
@@ -184,6 +195,22 @@ namespace MultiCommTerminal {
                 this.gridWait.Visibility = Visibility.Collapsed;
             });
         }
+
+
+        private void BlueTooth_BytesReceived(object sender, byte[] e) {
+            this.Dispatcher.Invoke(() => {
+                string data = Encoding.ASCII.GetString(e, 0, e.Length);
+                System.Diagnostics.Debug.WriteLine(data);
+            });
+        }
+
+
+        private void BlueTooth_ConnectionCompleted(object sender, bool e) {
+            this.Dispatcher.Invoke(() => {
+                this.gridWait.Visibility = Visibility.Collapsed;
+            });
+        }
+
 
         #endregion
 
@@ -258,5 +285,6 @@ namespace MultiCommTerminal {
         //}
 
         #endregion
+
     }
 }
