@@ -15,6 +15,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BluetoothLE.Net", "Bluetoot
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BluetoothLE.Win32", "BluetoothLE.Win32\BluetoothLE.Win32.csproj", "{79FF7E7E-E2D5-40BB-95C9-A09D17DA5F54}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChkUtils.Net", "..\SharedNetLibs\ChkUtils.Net\ChkUtils.Net.csproj", "{A71559FD-9A21-4F27-92EC-C89FBEF25718}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogUtils.Net", "..\SharedNetLibs\LogUtils.Net\LogUtils.Net.csproj", "{DB9AA64B-945B-41D5-A0DA-83407D2BFCC8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{79FF7E7E-E2D5-40BB-95C9-A09D17DA5F54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79FF7E7E-E2D5-40BB-95C9-A09D17DA5F54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79FF7E7E-E2D5-40BB-95C9-A09D17DA5F54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A71559FD-9A21-4F27-92EC-C89FBEF25718}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A71559FD-9A21-4F27-92EC-C89FBEF25718}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A71559FD-9A21-4F27-92EC-C89FBEF25718}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A71559FD-9A21-4F27-92EC-C89FBEF25718}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB9AA64B-945B-41D5-A0DA-83407D2BFCC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB9AA64B-945B-41D5-A0DA-83407D2BFCC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB9AA64B-945B-41D5-A0DA-83407D2BFCC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB9AA64B-945B-41D5-A0DA-83407D2BFCC8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

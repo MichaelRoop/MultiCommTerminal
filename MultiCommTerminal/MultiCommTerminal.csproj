@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\SharedNetLibs\LogUtils.Net\LogUtils.Net.csproj" />
     <ProjectReference Include="..\BluetoothClassic\BluetoothClassic.csproj" />
     <ProjectReference Include="..\BluetoothCommon.Net\BluetoothCommon.Net.csproj" />
     <ProjectReference Include="..\BluetoothLE.Win32\BluetoothLE.Win32.csproj" />
@@ -15,6 +16,16 @@
 
   <ItemGroup>
     <Folder Include="UserControls\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="log4net" Version="2.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
