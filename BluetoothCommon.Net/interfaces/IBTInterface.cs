@@ -17,5 +17,9 @@ namespace BluetoothCommon.Net.interfaces {
 
         void Connect(BTDeviceInfo device);
         void Disconnect();
+
+        void Send(string msg);
+
+
     }
 }

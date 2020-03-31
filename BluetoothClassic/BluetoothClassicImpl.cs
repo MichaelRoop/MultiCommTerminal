@@ -75,6 +75,16 @@ namespace BluetoothClassic {
         }
 
 
+        public void Send(string msg) {
+            if (this.currentDevice != null) {
+                if (this.dataStream != null) {
+                    byte[] buff = Encoding.ASCII.GetBytes(msg);
+                    this.dataStream.Write(buff, 0, buff.Length);
+                }
+            }
+        }
+
+
         #region Async Callbacks
         private void DiscoveredDevicesCallback(IAsyncResult result) {
             BluetoothClient thisDevice = result.AsyncState as BluetoothClient;
@@ -109,8 +119,8 @@ namespace BluetoothClassic {
                 thisDevice.EndConnect(result);
                 this.dataStream = thisDevice.GetStream();
                 this.LaunchRead();
-                byte[] data = Encoding.ASCII.GetBytes("Data sent on connect");
-                this.dataStream.Write(data, 0, data.Length);
+                //byte[] data = Encoding.ASCII.GetBytes("Data sent on connect");
+                //this.dataStream.Write(data, 0, data.Length);
             }
             if (this.ConnectionCompleted!= null) {
                 this.ConnectionCompleted(this, result.IsCompleted);

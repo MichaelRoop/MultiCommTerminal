@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MultiCommTerminal"
         mc:Ignorable="d"
         Title="Multi Comm Terminal"  
-        ContentRendered="Window_ContentRendered">
+        ContentRendered="Window_ContentRendered" Closing="Window_Closing">
     
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="grdMain">
         <Grid x:Name="gridWait" Panel.ZIndex="10000" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" >
@@ -33,15 +33,18 @@
                 <Border BorderBrush="AliceBlue" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <DockPanel  VerticalAlignment="Center">
                         <StackPanel x:Name="spCmds" VerticalAlignment="Center">
-                            <Label Content="Commands" HorizontalAlignment="Center" />
+                            <DockPanel HorizontalAlignment="Center" Margin="0,2,0,0">
+                                <Label Content="Commands: "/>
+                                <Button x:Name="btnSend" Margin="1" Style="{StaticResource RoundEdgeButton}" Content="Send" Click="btnSend_Click" />
+                            </DockPanel>
                             <Border BorderBrush="Blue" BorderThickness="1" Margin="10">
-                                <ListBox MinWidth="250" MinHeight="200" />
+                                <ListBox x:Name="outgoing" MinWidth="250" MinHeight="200" />
                             </Border>
                         </StackPanel>
                         <StackPanel x:Name="spResps" VerticalAlignment="Center">
                             <Label Content="Responses" HorizontalAlignment="Center" />
                             <Border BorderBrush="Blue" BorderThickness="1" Margin="10">
-                                <ListBox MinWidth="250" MinHeight="200" />
+                                <ListBox x:Name="lbIncoming" MinWidth="250" MinHeight="200" />
                             </Border>
                         </StackPanel>
                     </DockPanel>

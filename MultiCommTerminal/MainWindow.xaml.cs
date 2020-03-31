@@ -35,6 +35,14 @@ namespace MultiCommTerminal {
             this.blueTooth.DiscoveryComplete += this.BlueTooth_DiscoveryComplete;
             this.blueTooth.ConnectionCompleted += this.BlueTooth_ConnectionCompleted;
             this.blueTooth.BytesReceived += this.BlueTooth_BytesReceived;
+
+
+            this.outgoing.Items.Add("First msg");
+            this.outgoing.Items.Add("Second msg");
+            this.outgoing.Items.Add("A bit of nothing");
+            this.outgoing.Items.Add("Start doing something");
+            this.outgoing.Items.Add("Stop doing int");
+
         }
 
 
@@ -43,6 +51,20 @@ namespace MultiCommTerminal {
             this.Width = this.grdMain.ActualWidth;
             this.Height = this.grdMain.ActualHeight + 40; // TODO Weird have to add this
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+            this.blueToothLE.DeviceDiscovered -= this.BlueToothLE_DeviceDiscovered;
+            this.blueTooth.DiscoveredBTDevice -= this.BlueTooth_DiscoveredBTDevice;
+            this.blueTooth.DiscoveryComplete -= this.BlueTooth_DiscoveryComplete;
+            this.blueTooth.ConnectionCompleted -= this.BlueTooth_ConnectionCompleted;
+            this.blueTooth.BytesReceived -= this.BlueTooth_BytesReceived;
+
+            // Safe to disconnect
+            this.blueTooth.Disconnect();
+
+        }
+
+
 
         #endregion
 
@@ -201,6 +223,7 @@ namespace MultiCommTerminal {
             this.Dispatcher.Invoke(() => {
                 string data = Encoding.ASCII.GetString(e, 0, e.Length);
                 System.Diagnostics.Debug.WriteLine(data);
+                this.lbIncoming.Items.Add(data);
             });
         }
 
@@ -241,6 +264,7 @@ namespace MultiCommTerminal {
             this.btnDiscover.Visibility = Visibility.Collapsed;
             this.btnDiscoverLE.Visibility = Visibility.Collapsed;
 
+            // TODO - disconnect on switch
             switch ((this.cbComm.SelectedItem as CommMedialDisplay).MediumType) {
                 case CommMediumType.Bluetooth:
                     this.spBluetooth.Visibility = Visibility.Visible;
@@ -285,6 +309,26 @@ namespace MultiCommTerminal {
         //}
 
         #endregion
+
+        private void btnSend_Click(object sender, RoutedEventArgs e) {
+            string cmd = this.outgoing.SelectedItem as string;
+            if (cmd != null) {
+                // TODO - send to current device
+                switch ((this.cbComm.SelectedItem as CommMedialDisplay).MediumType) {
+                    case CommMediumType.Bluetooth:
+                        this.blueTooth.Send(cmd);
+                        break;
+                    case CommMediumType.BluetoothLE:
+                        break;
+                    case CommMediumType.Ethernet:
+                        break;
+                    case CommMediumType.Wifi:
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
 
     }
 }
