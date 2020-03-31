@@ -79,7 +79,13 @@ namespace BluetoothClassic {
             if (this.currentDevice != null) {
                 if (this.dataStream != null) {
                     byte[] buff = Encoding.ASCII.GetBytes(msg);
-                    this.dataStream.Write(buff, 0, buff.Length);
+                    // Add line terminator
+                    // TODO get the terminator(s) from client
+                    byte[] buff2 = new byte[buff.Length + 2];
+                    buff.CopyTo(buff2, 0);
+                    buff2[buff.Length] = (byte)'\n';
+                    buff2[buff.Length+1] = (byte)'\r';
+                    this.dataStream.Write(buff2, 0, buff2.Length);
                 }
             }
         }
