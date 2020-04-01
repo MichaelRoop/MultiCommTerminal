@@ -107,7 +107,7 @@ namespace MultiCommTerminal {
             roller.File =
                 Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments, Environment.SpecialFolderOption.None),
-                    @"MRProg\MultiCommTerminal\Logs\log.txt");
+                    @"MultiCommSerialTerminal\Logs\log.txt");
             //roller.File = @"Logs\EventLog.txt";
             roller.Layout = patternLayout;
             roller.MaxSizeRollBackups = 5;

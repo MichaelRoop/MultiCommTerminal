@@ -5,9 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MultiCommTerminal"
         mc:Ignorable="d"
-        Title="Multi Comm Terminal"  
+        Title="Multi Comm Serial Terminal"  
         ContentRendered="Window_ContentRendered" Closing="Window_Closing">
-    
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="grdMain">
         <Grid x:Name="gridWait" Panel.ZIndex="10000" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" >
             <Label x:Name="lblWait" Content="WAIT" FontSize="100" Opacity="0.1">
@@ -30,6 +29,28 @@
             
             
             <StackPanel x:Name="spMain" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                <StackPanel>
+                    <Menu>
+                        <MenuItem Header="Settings" Style="{StaticResource menuParentStyle}" ItemContainerStyle="{DynamicResource MenuItemStyle1}" Template="{DynamicResource MenuItemControlTemplate2}"  >
+                            <MenuItem Header="Language" Click="MenuItem_Click" />
+                            <!--<MenuItem Header="_Save"/>
+                            <MenuItem Header="_Quit" />-->
+                        </MenuItem>
+                        <MenuItem Header="_File" Style="{StaticResource menuParentStyle}" ItemContainerStyle="{DynamicResource MenuItemStyle1}" Template="{DynamicResource MenuItemControlTemplate2}"  >
+                            <MenuItem Header="_New"  />
+                            <MenuItem Header="_Save"/>
+                            <MenuItem Header="_Quit" />
+                        </MenuItem>
+                        <MenuItem Header="_Edit" Style="{StaticResource menuParentStyle}"  ItemContainerStyle="{DynamicResource MenuItemStyle1}"  Template="{DynamicResource MenuItemControlTemplate2}">
+                            <MenuItem Header="_Copy"/>
+                            <MenuItem Header="_Cut" />
+                            <MenuItem Header="_Paste" />
+                        </MenuItem>
+                    </Menu>
+                </StackPanel>
+
+
                 <Border BorderBrush="AliceBlue" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <DockPanel  VerticalAlignment="Center">
                         <StackPanel x:Name="spCmds" VerticalAlignment="Center">

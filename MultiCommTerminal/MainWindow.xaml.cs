@@ -177,17 +177,7 @@ namespace MultiCommTerminal {
         #region Bluetooth
 
         private void btnDiscover_Click(object sender, RoutedEventArgs e) {
-
-            //// For synchronous call
-            //this.btInfoList.Clear();
-            //this.lbBluetooth.ItemsSource = null;
-            //this.btInfoList = this.blueTooth.DiscoverDevices();
-            //this.lbBluetooth.ItemsSource = this.btInfoList;
-            //if (this.btInfoList.Count == 0) {
-            //    MessageBox.Show(string.Format("Number of devices {0}", this.btInfoList.Count));
-            //}
-
-            // for asynchronous call
+            // Asynchronous call
             this.lbBluetooth.ItemsSource = null;
             this.btInfoList.Clear();
             this.lbBluetooth.ItemsSource = this.btInfoList;
@@ -329,6 +319,14 @@ namespace MultiCommTerminal {
                 }
             }
         }
+
+        #region Menu events
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e) {
+            MessageBox.Show("Select languages");
+        }
+
+        #endregion
 
     }
 }
