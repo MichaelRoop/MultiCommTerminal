@@ -1,0 +1,51 @@
+﻿<Window x:Class="MultiCommTerminal.WindowObjs.LanguageSelector"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MultiCommTerminal.WindowObjs"
+        xmlns:wpfHelper="clr-namespace:MultiCommTerminal.WPF_Helpers"
+        mc:Ignorable="d"
+        Title="{Binding Source={x:Static wpfHelper:BindFetcher.Language}}" MinHeight="150" MinWidth="100"
+        ContentRendered="Window_ContentRendered" Closing="Window_Closing"
+        
+        >
+    <Grid HorizontalAlignment="Stretch">
+        <StackPanel>
+            <ListBox x:Name="lbLanguages" Width="250" Height="200"
+                     Margin="10"
+                     ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                     >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{Binding Display}" />
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <DockPanel HorizontalAlignment="Center" Margin="0,0,0,10">
+                
+                <Button x:Name="btnExit" Style="{StaticResource RoundEdgeButton}" 
+                        Content="{Binding Source={x:Static wpfHelper:BindFetcher.Exit}}" 
+                        Click="btnExit_Click" />
+
+                <Button x:Name="btnSelect" Margin="10" Style="{StaticResource RoundEdgeButton}" 
+                        Content="{Binding Source={x:Static wpfHelper:BindFetcher.Select}}" 
+                        Click="btnSelect_Click" />
+
+                <Button x:Name="btnCancel"  Style="{StaticResource RoundEdgeButton}" 
+                        Content="{Binding Source={x:Static wpfHelper:BindFetcher.Cancel}}" 
+                        Click="btnCancel_Click" />
+
+
+            </DockPanel>
+
+        </StackPanel>
+    </Grid>
+</Window>

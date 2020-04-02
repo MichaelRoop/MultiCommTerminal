@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\SharedNetLibs\LanguageFactory\LanguageFactory.Net.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\LogUtils.Net\LogUtils.Net.csproj" />
     <ProjectReference Include="..\BluetoothClassic\BluetoothClassic.csproj" />
     <ProjectReference Include="..\BluetoothCommon.Net\BluetoothCommon.Net.csproj" />

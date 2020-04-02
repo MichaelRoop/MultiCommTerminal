@@ -1,6 +1,8 @@
 ﻿using BluetoothCommon.Net;
 using BluetoothCommon.Net.interfaces;
+using LanguageFactory.data;
 using MultiCommData.UserDisplayData;
+using MultiCommTerminal.WindowObjs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,13 +32,15 @@ namespace MultiCommTerminal {
         public MainWindow() {
             InitializeComponent();
             this.OnStartupSuccess();
+            App.Languages.LanguageChanged += this.Languages_LanguageChanged;
+
             this.blueToothLE.DeviceDiscovered += this.BlueToothLE_DeviceDiscovered;
             this.blueTooth.DiscoveredBTDevice += this.BlueTooth_DiscoveredBTDevice;
             this.blueTooth.DiscoveryComplete += this.BlueTooth_DiscoveryComplete;
             this.blueTooth.ConnectionCompleted += this.BlueTooth_ConnectionCompleted;
             this.blueTooth.BytesReceived += this.BlueTooth_BytesReceived;
 
-
+            // TODO - remove - temp populate command box
             this.outgoing.Items.Add("First msg");
             this.outgoing.Items.Add("Second msg");
             this.outgoing.Items.Add("A bit of nothing");
@@ -47,10 +51,12 @@ namespace MultiCommTerminal {
 
 
         private void Window_ContentRendered(object sender, EventArgs e) {
-            // Must force the window size down
-            this.Width = this.grdMain.ActualWidth;
-            this.Height = this.grdMain.ActualHeight + 40; // TODO Weird have to add this
+            //// Must force the window size down
+            //this.Width = this.grdMain.ActualWidth;
+            //this.Height = this.grdMain.ActualHeight + 40; // TODO Weird have to add this
+            //App.Languages.LanguageChanged += this.Languages_LanguageChanged;
         }
+
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             this.blueToothLE.DeviceDiscovered -= this.BlueToothLE_DeviceDiscovered;
@@ -237,6 +243,7 @@ namespace MultiCommTerminal {
             this.mediumGroup.Mediums.Add(new CommMedialDisplay("Wifi", CommMediumType.Wifi));
             this.cbComm.ItemsSource = this.mediumGroup.Mediums;
             this.cbComm.SelectedIndex = 0;
+            this.SizeToContent = SizeToContent.WidthAndHeight;
         }
 
 
@@ -323,10 +330,34 @@ namespace MultiCommTerminal {
         #region Menu events
 
         private void MenuItem_Click(object sender, RoutedEventArgs e) {
-            MessageBox.Show("Select languages");
+            //MessageBox.Show("Select languages");
+            LanguageSelector win = new LanguageSelector(App.Languages);
+            win.ShowDialog();
         }
 
         #endregion
+
+
+        private void Languages_LanguageChanged(object sender, LanguageFactory.Messaging.SupportedLanguage lang) {
+            // Buttons
+            this.btnExit.Content = lang.GetText(MsgCode.exit);
+            this.btnSend.Content = lang.GetText(MsgCode.send);
+            this.btnBTConnect.Content = lang.GetText(MsgCode.connect);
+            this.btnLEConnect.Content = lang.GetText(MsgCode.connect);
+            this.btnDiscover.Content = lang.GetText(MsgCode.discover);
+            this.btnDiscoverLE.Content = lang.GetText(MsgCode.discover);
+            this.btnInfoLE.Content =lang.GetText(MsgCode.info);
+
+            // Labels
+            this.lbCommand.Content = lang.GetText(MsgCode.command);
+            this.lbResponse.Content = lang.GetText(MsgCode.response);
+
+            // Menu
+            this.mnuLanguage.Header = lang.GetText(MsgCode.language);
+
+            // TODO Other texts
+        }
+
 
     }
 }

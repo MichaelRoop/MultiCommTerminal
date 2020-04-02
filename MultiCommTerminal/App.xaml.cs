@@ -1,5 +1,7 @@
 ﻿using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
+using LanguageFactory.interfaces;
+using LanguageFactory.Messaging;
 using log4net;
 using log4net.Appender;
 using log4net.Core;
@@ -22,7 +24,20 @@ namespace MultiCommTerminal {
         private log4net.ILog loggerImpl = null;
         private ClassLog log = new ClassLog("App");
 
+        private static ILangFactory languages = null;
+
         #endregion
+
+        public static ILangFactory Languages { 
+            get {
+                // Move to injector?
+                if (languages == null) {
+                    languages = new SupportedLanguageFactory();
+                }
+                return languages;
+            }
+        }
+
 
         #region Constructors
 
