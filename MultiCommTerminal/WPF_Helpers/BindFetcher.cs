@@ -30,6 +30,8 @@ namespace MultiCommTerminal.WPF_Helpers {
 
         #endregion
 
+        public static string Save { get { return GetTxt(MsgCode.save); } }
+        public static string Copy { get { return GetTxt(MsgCode.copy); } }
         public static string Select { get { return GetTxt(MsgCode.select); } }
         public static string Cancel { get { return GetTxt(MsgCode.cancel); } }
         public static string Exit { get { return GetTxt(MsgCode.exit); } }

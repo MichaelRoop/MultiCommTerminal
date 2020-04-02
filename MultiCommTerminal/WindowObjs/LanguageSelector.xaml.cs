@@ -18,50 +18,59 @@ namespace MultiCommTerminal.WindowObjs {
     public partial class LanguageSelector : Window {
 
         private ILangFactory languages = null;
+        private LangCode languageOnEntry = LangCode.English;
 
         public LanguageSelector(ILangFactory languages) {
             InitializeComponent();
             this.SizeToContent = SizeToContent.WidthAndHeight;
             this.languages = languages;
             this.languages.LanguageChanged += Languages_LanguageChanged;
+            this.languageOnEntry = this.languages.GetCurrentLanguage();
         }
 
         private void Window_ContentRendered(object sender, EventArgs e) {
             this.lbLanguages.ItemsSource = this.languages.AvailableLanguages;
+            // Only create the selected index here to avoid it firing on load
+            this.lbLanguages.SelectionChanged += this.lbLanguages_SelectionChanged;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
-            this.languages.LanguageChanged -= Languages_LanguageChanged;
+            this.lbLanguages.SelectionChanged -= this.lbLanguages_SelectionChanged;
+            this.languages.LanguageChanged -= this.Languages_LanguageChanged;
         }
 
 
-        private void btnExit_Click(object sender, RoutedEventArgs e) {
+        // change to save
+        private void btnSave_Click(object sender, RoutedEventArgs e) {
+            // TODO Save new language to file
             this.Close();
         }
 
-        private void btnSelect_Click(object sender, RoutedEventArgs e) {
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e) {
+            LangCode currentSelected = this.languages.GetCurrentLanguage();
+            if (this.languageOnEntry != currentSelected) {
+                this.languages.SetCurrentLanguage(this.languageOnEntry);
+            }
+            this.Close();
+        }
+
+
+        private void lbLanguages_SelectionChanged(object sender, SelectionChangedEventArgs args) {
             LanguageDataModel data = this.lbLanguages.SelectedItem as LanguageDataModel;
             if (data != null) {
                 this.languages.SetCurrentLanguage(data.Code);
-                // May want to close on on separate button
-                //this.Close();
             }
-
         }
-
 
         private void Languages_LanguageChanged(object sender, LanguageFactory.Messaging.SupportedLanguage lang) {
-            this.Title = lang.GetText(MsgCode.language);
-            this.btnExit.Content = lang.GetMsg(MsgCode.exit).Display;
-            this.btnSelect.Content = lang.GetText(MsgCode.select);
-            this.btnCancel.Content = lang.GetText(MsgCode.cancel);
-
-            // TODO Other texts
-
+            this.Dispatcher.Invoke(() => { 
+                this.Title = lang.GetText(MsgCode.language);
+                this.btnSave.Content = lang.GetText(MsgCode.save);
+                this.btnCancel.Content = lang.GetText(MsgCode.cancel);
+                // TODO Other texts
+            });
         }
 
-        private void btnCancel_Click(object sender, RoutedEventArgs e) {
-
-        }
     }
 }

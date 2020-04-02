@@ -30,20 +30,13 @@
             </ListBox>
 
             <DockPanel HorizontalAlignment="Center" Margin="0,0,0,10">
-                
-                <Button x:Name="btnExit" Style="{StaticResource RoundEdgeButton}" 
-                        Content="{Binding Source={x:Static wpfHelper:BindFetcher.Exit}}" 
-                        Click="btnExit_Click" />
-
-                <Button x:Name="btnSelect" Margin="10" Style="{StaticResource RoundEdgeButton}" 
-                        Content="{Binding Source={x:Static wpfHelper:BindFetcher.Select}}" 
-                        Click="btnSelect_Click" />
+                <Button x:Name="btnSave" Margin="10" Style="{StaticResource RoundEdgeButton}" 
+                        Content="{Binding Source={x:Static wpfHelper:BindFetcher.Save}}" 
+                        Click="btnSave_Click" />
 
                 <Button x:Name="btnCancel"  Style="{StaticResource RoundEdgeButton}" 
                         Content="{Binding Source={x:Static wpfHelper:BindFetcher.Cancel}}" 
                         Click="btnCancel_Click" />
-
-
             </DockPanel>
 
         </StackPanel>
