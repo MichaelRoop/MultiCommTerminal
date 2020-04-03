@@ -24,6 +24,8 @@ namespace MultiCommTerminal.WindowObjs {
         private IBTInterface blueTooth = new BluetoothClassic.BluetoothClassicImpl();
         private IBLETInterface blueToothLE = new BluetoothLE.Win32.BluetoothLEImplWin32();
 
+        MenuWin theMenu = null;
+
         #endregion
 
         #region Constructors and window events
@@ -50,6 +52,8 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void Window_ContentRendered(object sender, EventArgs e) {
+            this.theMenu = new MenuWin();
+            this.theMenu.Visibility = Visibility.Collapsed;
         }
 
 
@@ -59,6 +63,11 @@ namespace MultiCommTerminal.WindowObjs {
             this.blueTooth.DiscoveryComplete -= this.BlueTooth_DiscoveryComplete;
             this.blueTooth.ConnectionCompleted -= this.BlueTooth_ConnectionCompleted;
             this.blueTooth.BytesReceived -= this.BlueTooth_BytesReceived;
+
+            if (this.theMenu != null) {
+                this.theMenu.Close();
+            }
+
 
             // Safe to disconnect
             this.blueTooth.Disconnect();
@@ -327,7 +336,6 @@ namespace MultiCommTerminal.WindowObjs {
             win.ShowDialog();
         }
 
-        #endregion
 
 
         private void Languages_LanguageChanged(object sender, LanguageFactory.Messaging.SupportedLanguage lang) {
@@ -354,5 +362,36 @@ namespace MultiCommTerminal.WindowObjs {
         private void lbTitle_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
             App.Current.MainWindow.DragMove();
         }
+
+
+
+        private void imgMenu_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+            if (this.theMenu.IsVisible) {
+                this.theMenu.Hide();
+            }
+            else {
+                // Need to get offset from current position of main window at click time
+                this.theMenu.Left = this.Left;
+                this.theMenu.Top = this.Top + this.taskBar.ActualHeight;
+                this.theMenu.Show();
+            }
+        }
+
+
+        /// <summary>Catch the MouseDown event before it bubbles up to the window and closes the menu</summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void imgMenu_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+            e.Handled = true;
+        }
+
+        #endregion
+
+        private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+            if (this.theMenu.IsVisible) {
+                this.theMenu.Hide();
+            }
+        }
+
     }
 }

@@ -9,7 +9,10 @@
         mc:Ignorable="d"
         Title="Multi Comm Serial Terminal" WindowStyle="None" AllowsTransparency="True"
          ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
-        ContentRendered="Window_ContentRendered" Closing="Window_Closing">
+        ContentRendered="Window_ContentRendered" Closing="Window_Closing"
+        MouseDown="Window_MouseDown"
+        
+        >
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="grdMain">
         
         <Grid x:Name="gridWait" Panel.ZIndex="10000" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" >
@@ -30,22 +33,33 @@
         </Grid>
         
         
-        <Border BorderBrush="Blue" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Border BorderBrush="Blue" BorderThickness="1" >
             <StackPanel x:Name="spMain" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Border VerticalAlignment="Top" Background="DarkBlue" HorizontalAlignment="Stretch" >
-                    <Label x:Name="lbTitle" Margin="2" Content="Multi Comm Serial Terminal" MouseDown="lbTitle_MouseDown"
-                           Foreground="White" FontSize="15" FontWeight="Bold" Padding="2" HorizontalContentAlignment="Center" />
+
+                <Border Height="30" VerticalAlignment="Top" Background="DarkBlue" >
+                    <DockPanel x:Name="taskBar" >
+                        <Border Background="DarkBlue" >
+                            <Image x:Name="imgMenu" Width="25" Margin="6,0,0,0"
+                                   Source="/MultiCommTerminal;component/images/icons/navigation-menu-white.png" 
+                                   MouseLeftButtonDown="imgMenu_MouseLeftButtonDown" MouseDown="imgMenu_MouseDown" />
+                        </Border>
+                        <Label x:Name="lbTitle" Content="Multi Comm Serial Terminal" MouseDown="lbTitle_MouseDown"
+                           Foreground="White" Background="DarkBlue" FontSize="14" FontWeight="Bold" 
+                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                    </DockPanel>
                 </Border>
 
                 <StackPanel>
                     <Menu>
-                        <MenuItem Header="Settings" Style="{StaticResource menuParentStyle}" ItemContainerStyle="{DynamicResource MenuItemStyle1}" Template="{DynamicResource MenuItemControlTemplate2}"  >
+                        <MenuItem Header="Settings" Style="{StaticResource menuParentStyle}" 
+                                  ItemContainerStyle="{DynamicResource MenuItemStyle1}" 
+                                  Template="{DynamicResource MenuItemControlTemplate2}"  >
                             <MenuItem Header="{Binding Source={x:Static wpfHelper:BindFetcher.Language}}" x:Name="mnuLanguage" Click="MenuItem_Click" />
                             <!--<MenuItem Header="_Save"/>
                             <MenuItem Header="_Quit" />-->
                         </MenuItem>
                         <MenuItem Header="_File" Style="{StaticResource menuParentStyle}" ItemContainerStyle="{DynamicResource MenuItemStyle1}" Template="{DynamicResource MenuItemControlTemplate2}"  >
-                            <MenuItem Header="_New"  />
+                            <MenuItem Header="_New" />
                             <MenuItem Header="_Save"/>
                             <MenuItem Header="_Quit" />
                         </MenuItem>

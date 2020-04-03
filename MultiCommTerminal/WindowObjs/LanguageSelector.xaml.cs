@@ -17,7 +17,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.SizeToContent = SizeToContent.WidthAndHeight;
             this.languages = languages;
             this.languages.LanguageChanged += Languages_LanguageChanged;
-            this.languageOnEntry = this.languages.GetCurrentLanguage();
+            this.languageOnEntry = this.languages.GetCurrentLanguageCode();
         }
 
         private void Window_ContentRendered(object sender, EventArgs e) {
@@ -40,7 +40,7 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void btnCancel_Click(object sender, RoutedEventArgs e) {
-            LangCode currentSelected = this.languages.GetCurrentLanguage();
+            LangCode currentSelected = this.languages.GetCurrentLanguageCode();
             if (this.languageOnEntry != currentSelected) {
                 this.languages.SetCurrentLanguage(this.languageOnEntry);
             }

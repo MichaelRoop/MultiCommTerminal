@@ -10,6 +10,7 @@
     <None Remove="images\icons\check-1.png" />
     <None Remove="images\icons\close.png" />
     <None Remove="images\icons\logout-1.png" />
+    <None Remove="images\icons\navigation-menu-white.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,6 +37,7 @@
     <Resource Include="images\icons\check-1.png" />
     <Resource Include="images\icons\close.png" />
     <Resource Include="images\icons\logout-1.png" />
+    <Resource Include="images\icons\navigation-menu-white.png" />
   </ItemGroup>
 
   <ItemGroup>
