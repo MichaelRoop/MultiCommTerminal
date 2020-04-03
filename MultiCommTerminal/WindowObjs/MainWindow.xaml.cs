@@ -2,20 +2,16 @@
 using BluetoothCommon.Net.interfaces;
 using LanguageFactory.data;
 using MultiCommData.UserDisplayData;
-using MultiCommTerminal.WindowObjs;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-//using System.Windows.Media;
-using Windows.UI;
-using Windows.UI.ViewManagement;
 
 namespace MultiCommTerminal.WindowObjs {
 
     /// <summary>Interaction logic for MainWindow.xaml</summary>
-    public partial class MainWindow : CustomWindow {
+    public partial class MainWindow : Window {
 
         #region Data
 
@@ -54,10 +50,6 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void Window_ContentRendered(object sender, EventArgs e) {
-            //// Must force the window size down
-            //this.Width = this.grdMain.ActualWidth;
-            //this.Height = this.grdMain.ActualHeight + 40; // TODO Weird have to add this
-            //App.Languages.LanguageChanged += this.Languages_LanguageChanged;
         }
 
 
@@ -70,10 +62,7 @@ namespace MultiCommTerminal.WindowObjs {
 
             // Safe to disconnect
             this.blueTooth.Disconnect();
-
         }
-
-
 
         #endregion
 
@@ -361,9 +350,6 @@ namespace MultiCommTerminal.WindowObjs {
             // TODO Other texts
         }
 
-        //private void CustomWindow_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
-        //    App.Current.MainWindow.DragMove();
-        //}
 
         private void lbTitle_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
             App.Current.MainWindow.DragMove();

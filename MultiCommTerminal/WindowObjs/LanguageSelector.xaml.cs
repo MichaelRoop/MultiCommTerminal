@@ -1,22 +1,13 @@
 ﻿using LanguageFactory.data;
 using LanguageFactory.interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-
 
 namespace MultiCommTerminal.WindowObjs {
 
     /// <summary>Interaction logic for LanguagaSelector.xamlsummary>
-    public partial class LanguageSelector : CustomWindow {
+    public partial class LanguageSelector : Window {
 
         private ILangFactory languages = null;
         private LangCode languageOnEntry = LangCode.English;
