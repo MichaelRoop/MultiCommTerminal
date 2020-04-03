@@ -21,7 +21,7 @@ namespace MultiCommTerminal.WindowObjs {
         private List<BluetoothLEDeviceInfo> btInfoListLE = new List<BluetoothLEDeviceInfo>();
 
         // TODO move out of UI
-        private IBTInterface blueTooth = new BluetoothClassic.BluetoothClassicImpl();
+        private IBTInterface blueTooth = new BluetoothClassic.Win32.BluetoothClassicImpl();
         private IBLETInterface blueToothLE = new BluetoothLE.Win32.BluetoothLEImplWin32();
 
         MenuWin menu = null;

@@ -10,7 +10,7 @@ using System.Text;
 using System.Linq;
 using System.Threading;
 
-namespace BluetoothClassic {
+namespace BluetoothClassic.Win32 {
     public class BluetoothClassicImpl : IBTInterface {
 
         private BluetoothClient currentDevice = null;
