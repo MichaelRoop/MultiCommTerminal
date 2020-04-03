@@ -30,6 +30,8 @@ namespace MultiCommTerminal.WPF_Helpers {
 
         #endregion
 
+        #region Text for UI
+
         public static string Save { get { return GetTxt(MsgCode.save); } }
         public static string Copy { get { return GetTxt(MsgCode.copy); } }
         public static string Select { get { return GetTxt(MsgCode.select); } }
@@ -48,12 +50,6 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string Info { get { return GetTxt(MsgCode.info); } }
 
 
-
-
-
-        //private static string XX { get { return GetTxt(MsgCode.exit); } }
-
-
         private static string GetTxt(MsgCode code) {
             if (System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime) {
                 // If in VS XMAL designer you can just get the text from the english language module here
@@ -67,6 +63,37 @@ namespace MultiCommTerminal.WPF_Helpers {
                 return App.Languages.GetMsgDisplay(code);
             }
         }
+
+        #endregion
+
+        #region Icon paths for UI
+
+        public static string IconSave { get { return GetIconPath(UIIcon.Save); } }
+        public static string IconCancel { get { return GetIconPath(UIIcon.Cancel); } }
+        public static string IconExit { get { return GetIconPath(UIIcon.Exit); } }
+
+
+        private static string GetIconPath(UIIcon code) {
+            switch (code) {
+                case UIIcon.Save:   return AddIconDirectory("check-1.png");
+                case UIIcon.Cancel: return AddIconDirectory("close.png");
+                case UIIcon.Exit:   return AddIconDirectory("logout-1.png");
+                
+                default:            return AddIconDirectory("check-1.png");
+            }
+        }
+
+
+        private static string AddIconDirectory(string name) {
+            return string.Format("/MultiCommTerminal;component/images/icons/{0}", name);
+        }
+
+        private static string AddIconUriDirectory(string name) {
+            return string.Format("/MultiCommTerminal;component/images/icons/{0}", name);
+        }
+
+
+        #endregion
 
     }
 }

@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MultiCommTerminal.WindowObjs"
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.WPF_Helpers"
+        xmlns:controls="clr-namespace:MultiCommTerminal.UserControls"
         mc:Ignorable="d"
-        Title="Multi Comm Serial Terminal" WindowStyle="None" 
+        Title="Multi Comm Serial Terminal" WindowStyle="None" AllowsTransparency="True"
          ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
         ContentRendered="Window_ContentRendered" Closing="Window_Closing">
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="grdMain">
@@ -171,10 +172,12 @@
                     </DockPanel>
                 </Border>
                 <Border BorderBrush="AliceBlue" BorderThickness="1" VerticalAlignment="Center">
-                    <DockPanel  VerticalAlignment="Center">
-                        <Button x:Name="btnExit" Margin="10"
-                            Style="{StaticResource RoundEdgeButton}" 
-                            Content="Exit" Click="btnExit_Click" />
+                    <DockPanel  VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <controls:UC_IconButton x:Name="btnExit" Margin="10"
+                            Style="{StaticResource TextIconButton}" 
+                            Content="{Binding Source={x:Static wpfHelper:BindFetcher.Exit}}"
+                            Img="{Binding Source={x:Static wpfHelper:BindFetcher.IconExit}}"                                                
+                            Click="btnExit_Click" />
                     </DockPanel>
                 </Border>
 

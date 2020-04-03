@@ -7,16 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="images\icons\check-1.png" />
+    <None Remove="images\icons\close.png" />
+    <None Remove="images\icons\logout-1.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\SharedNetLibs\LanguageFactory\LanguageFactory.Net.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\LogUtils.Net\LogUtils.Net.csproj" />
     <ProjectReference Include="..\BluetoothClassic\BluetoothClassic.csproj" />
     <ProjectReference Include="..\BluetoothCommon.Net\BluetoothCommon.Net.csproj" />
     <ProjectReference Include="..\BluetoothLE.Win32\BluetoothLE.Win32.csproj" />
     <ProjectReference Include="..\MultiCommData\MultiCommData.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="UserControls\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +30,12 @@
     <Reference Include="Windows">
       <HintPath>C:\Program Files (x86)\Windows Kits\10\UnionMetadata\Windows.winmd</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\icons\check-1.png" />
+    <Resource Include="images\icons\close.png" />
+    <Resource Include="images\icons\logout-1.png" />
   </ItemGroup>
 
   <ItemGroup>
