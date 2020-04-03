@@ -8,11 +8,14 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+//using System.Windows.Media;
+using Windows.UI;
+using Windows.UI.ViewManagement;
 
-namespace MultiCommTerminal {
+namespace MultiCommTerminal.WindowObjs {
 
     /// <summary>Interaction logic for MainWindow.xaml</summary>
-    public partial class MainWindow : Window {
+    public partial class MainWindow : CustomWindow {
 
         #region Data
 
@@ -358,6 +361,12 @@ namespace MultiCommTerminal {
             // TODO Other texts
         }
 
+        //private void CustomWindow_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+        //    App.Current.MainWindow.DragMove();
+        //}
 
+        private void lbTitle_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+            App.Current.MainWindow.DragMove();
+        }
     }
 }

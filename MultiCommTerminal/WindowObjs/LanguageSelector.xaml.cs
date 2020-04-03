@@ -12,10 +12,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+
 namespace MultiCommTerminal.WindowObjs {
 
     /// <summary>Interaction logic for LanguagaSelector.xamlsummary>
-    public partial class LanguageSelector : Window {
+    public partial class LanguageSelector : CustomWindow {
 
         private ILangFactory languages = null;
         private LangCode languageOnEntry = LangCode.English;
@@ -65,11 +66,18 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void Languages_LanguageChanged(object sender, LanguageFactory.Messaging.SupportedLanguage lang) {
             this.Dispatcher.Invoke(() => { 
-                this.Title = lang.GetText(MsgCode.language);
+                //this.Title = lang.GetText(MsgCode.language);
+
+                this.lbTitle.Content = lang.GetText(MsgCode.language);
                 this.btnSave.Content = lang.GetText(MsgCode.save);
                 this.btnCancel.Content = lang.GetText(MsgCode.cancel);
                 // TODO Other texts
             });
+        }
+
+
+        private void lbTitle_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+            this.DragMove();
         }
 
     }
