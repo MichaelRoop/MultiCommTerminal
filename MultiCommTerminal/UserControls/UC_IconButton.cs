@@ -4,46 +4,44 @@ using System.Windows.Media;
 
 namespace MultiCommTerminal.UserControls {
 
-    /// <summary>Base class for buttons which will have an image so you can set the values in templates</summary>
+    /// <summary>Buttons with image that can be set in templates</summary>
     public class UC_IconButton : Button {
 
         #region Properties
 
-        public ImageSource Img {
+        /// <summary>Exposes the ImageSource of the icon for template injection</summary>
+        /// <remarks>
+        /// Usage in XAML
+        /// Using a static function to inject the image source string
+        /// IconSource="{Binding Source={x:Static wpfHelper:BindFetcher.IconExit}}"
+        /// Using the inmage source string when image is compiled as resource
+        /// IconSource="AppName;component;/folderName/folderName/imageName.emageExtension"
+        /// </remarks>
+        public ImageSource IconSource {
             get {
-                return (ImageSource)GetValue(ImgProperty);
+                return (ImageSource)GetValue(IconSourceProperty);
             }
             set {
-                SetValue(ImgProperty, value);
+                SetValue(IconSourceProperty, value);
             }
         }
 
 
-        public double ImgHeight {
+        /// <summary>
+        /// Exposes border around image to force resize in template using Padding 
+        /// </summary>
+        /// <remarks>
+        /// Usage in XAML - Can use 1, 2 or 4 values in string just like Padding property
+        /// IconMargin="5" Same value on all sides
+        /// IconMargin="2,4" Width and Height dimensions
+        /// IconMargin="2,2,2,2" All sides can be different
+        /// </remarks>
+        public Thickness IconMargin {
             get {
-                return (double)GetValue(ImgHeightProperty);
+                return (Thickness)GetValue(IconMarginProperty);
             }
             set {
-                SetValue(ImgHeightProperty, value);
-            }
-        }
-
-
-        public double ImgWidth {
-            get {
-                return (double)GetValue(ImgWidthProperty);
-            }
-            set {
-                SetValue(ImgWidthProperty, value);
-            }
-        }
-
-        public Thickness ImgMargin {
-            get {
-                return (Thickness)GetValue(ImgMarginProperty);
-            }
-            set {
-                SetValue(ImgMarginProperty, value);
+                SetValue(IconMarginProperty, value);
             }
         }
 
@@ -58,32 +56,21 @@ namespace MultiCommTerminal.UserControls {
 
         #endregion
 
-        public static readonly DependencyProperty ImgHeightProperty = DependencyProperty.Register(
-            "ImgHeight",
-            typeof(double),
-            typeof(UC_IconButton),
-            new PropertyMetadata(default(double)));
+        #region Dependency properties
 
-
-        public static readonly DependencyProperty ImgWidthProperty = DependencyProperty.Register(
-            "ImgWidth",
-            typeof(double),
-            typeof(UC_IconButton),
-            new PropertyMetadata(default(double)));
-
-
-        public static readonly DependencyProperty ImgMarginProperty = DependencyProperty.Register(
-            "ImgMargin",
+        public static readonly DependencyProperty IconMarginProperty = DependencyProperty.Register(
+            "IconMargin",
             typeof(Thickness),
             typeof(UC_IconButton),
             new PropertyMetadata(default(Thickness)));
 
 
-        public static readonly DependencyProperty ImgProperty = DependencyProperty.Register(
-            "Img",
+        public static readonly DependencyProperty IconSourceProperty = DependencyProperty.Register(
+            "IconSource",
             typeof(ImageSource),
             typeof(UC_IconButton),
             new PropertyMetadata(default(ImageSource)));
 
+        #endregion
     }
 }

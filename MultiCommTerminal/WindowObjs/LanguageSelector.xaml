@@ -42,11 +42,11 @@
                         <controls:UC_IconButton x:Name="btnCancel"  
                             Style="{StaticResource TextIconButton}" 
                             Content="{Binding Source={x:Static wpfHelper:BindFetcher.Cancel}}" 
-                            Img="{Binding Source={x:Static wpfHelper:BindFetcher.IconCancel}}"
+                            IconSource="{Binding Source={x:Static wpfHelper:BindFetcher.IconCancel}}"
                             Click="btnCancel_Click" />
                         <controls:UC_IconButton x:Name="btnSave" Margin="10" Style="{StaticResource TextIconButton}" 
                             Content="{Binding Source={x:Static wpfHelper:BindFetcher.Save}}"
-                            Img="{Binding Source={x:Static wpfHelper:BindFetcher.IconSave}}"
+                            IconSource="{Binding Source={x:Static wpfHelper:BindFetcher.IconSave}}"
                             Click="btnSave_Click" />
                     </DockPanel>
                 </StackPanel>
