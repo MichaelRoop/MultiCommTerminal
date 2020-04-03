@@ -35,7 +35,7 @@
         
         <Border BorderBrush="Blue" BorderThickness="1" >
             <StackPanel x:Name="spMain" HorizontalAlignment="Center" VerticalAlignment="Center">
-
+                <!-- Custom title bar -->
                 <Border Height="30" VerticalAlignment="Top" Background="DarkBlue" >
                     <DockPanel x:Name="taskBar" >
                         <Border Background="DarkBlue" >
@@ -48,30 +48,6 @@
                                HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                     </DockPanel>
                 </Border>
-
-                <StackPanel>
-                    <Menu>
-                        <MenuItem Header="Settings" Style="{StaticResource menuParentStyle}" 
-                                  ItemContainerStyle="{DynamicResource MenuItemStyle1}" 
-                                  Template="{DynamicResource MenuItemControlTemplate2}"  >
-                            <MenuItem Header="{Binding Source={x:Static wpfHelper:BindFetcher.Language}}" x:Name="mnuLanguage" Click="MenuItem_Click" />
-                            <!--<MenuItem Header="_Save"/>
-                            <MenuItem Header="_Quit" />-->
-                        </MenuItem>
-                        <MenuItem Header="_File" Style="{StaticResource menuParentStyle}" ItemContainerStyle="{DynamicResource MenuItemStyle1}" Template="{DynamicResource MenuItemControlTemplate2}"  >
-                            <MenuItem Header="_New" />
-                            <MenuItem Header="_Save"/>
-                            <MenuItem Header="_Quit" />
-                        </MenuItem>
-                        <MenuItem Header="_Edit" Style="{StaticResource menuParentStyle}"  ItemContainerStyle="{DynamicResource MenuItemStyle1}"  Template="{DynamicResource MenuItemControlTemplate2}">
-                            <MenuItem Header="_Copy"/>
-                            <MenuItem Header="_Cut" />
-                            <MenuItem Header="_Paste" />
-                        </MenuItem>
-                    </Menu>
-                </StackPanel>
-
-
                 <Border BorderBrush="AliceBlue" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <DockPanel  VerticalAlignment="Center">
                         <StackPanel x:Name="spCmds" VerticalAlignment="Center">
@@ -194,7 +170,6 @@
                             IconSource="{Binding Source={x:Static wpfHelper:BindFetcher.IconExit}}" />
                     </DockPanel>
                 </Border>
-
             </StackPanel>
         </Border>
  

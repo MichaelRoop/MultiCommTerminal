@@ -24,7 +24,7 @@ namespace MultiCommTerminal.WindowObjs {
         private IBTInterface blueTooth = new BluetoothClassic.BluetoothClassicImpl();
         private IBLETInterface blueToothLE = new BluetoothLE.Win32.BluetoothLEImplWin32();
 
-        MenuWin theMenu = null;
+        MenuWin menu = null;
 
         #endregion
 
@@ -52,8 +52,8 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void Window_ContentRendered(object sender, EventArgs e) {
-            this.theMenu = new MenuWin();
-            this.theMenu.Visibility = Visibility.Collapsed;
+            this.menu = new MenuWin();
+            this.menu.Visibility = Visibility.Collapsed;
         }
 
 
@@ -64,13 +64,20 @@ namespace MultiCommTerminal.WindowObjs {
             this.blueTooth.ConnectionCompleted -= this.BlueTooth_ConnectionCompleted;
             this.blueTooth.BytesReceived -= this.BlueTooth_BytesReceived;
 
-            if (this.theMenu != null) {
-                this.theMenu.Close();
+            if (this.menu != null) {
+                this.menu.Close();
             }
 
 
             // Safe to disconnect
             this.blueTooth.Disconnect();
+        }
+
+        /// <summary>Close opened menu window anywhere on window on mouse down</summary>
+        private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+            if (this.menu.IsVisible) {
+                this.menu.Hide();
+            }
         }
 
         #endregion
@@ -176,8 +183,6 @@ namespace MultiCommTerminal.WindowObjs {
                 }
             }
         }
-
-
 
         #endregion
 
@@ -306,8 +311,6 @@ namespace MultiCommTerminal.WindowObjs {
         //    }
         //}
 
-        #endregion
-
         private void btnSend_Click(object sender, RoutedEventArgs e) {
             string cmd = this.outgoing.SelectedItem as string;
             if (cmd != null) {
@@ -328,16 +331,39 @@ namespace MultiCommTerminal.WindowObjs {
             }
         }
 
-        #region Menu events
+        #endregion
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e) {
-            //MessageBox.Show("Select languages");
-            LanguageSelector win = new LanguageSelector(App.Languages);
-            win.ShowDialog();
+        #region Title bar events
+
+        /// <summary>Grab window to start drag move when mouse clicks down on my title bar</summary>
+        private void lbTitle_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+            App.Current.MainWindow.DragMove();
+        }
+
+        #endregion
+
+        #region Menu events
+        /// <summary>Click event on the hamburger icon to toggle menu window</summary>
+        private void imgMenu_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+            if (this.menu.IsVisible) {
+                this.menu.Hide();
+            }
+            else {
+                // Need to get offset from current position of main window at click time
+                this.menu.Left = this.Left;
+                this.menu.Top = this.Top + this.taskBar.ActualHeight;
+                this.menu.Show();
+            }
         }
 
 
+        /// <summary>Catch the MouseDown event on hamburg menu before it bubbles up to the window and closes the menu</summary>
+        private void imgMenu_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+            e.Handled = true;
+        }
 
+
+        /// <summary>Handle the language changed event to update controls text</summary>
         private void Languages_LanguageChanged(object sender, LanguageFactory.Messaging.SupportedLanguage lang) {
             // Buttons
             this.btnExit.Content = lang.GetText(MsgCode.exit);
@@ -352,46 +378,10 @@ namespace MultiCommTerminal.WindowObjs {
             this.lbCommand.Content = lang.GetText(MsgCode.command);
             this.lbResponse.Content = lang.GetText(MsgCode.response);
 
-            // Menu
-            this.mnuLanguage.Header = lang.GetText(MsgCode.language);
-
             // TODO Other texts
         }
 
-
-        private void lbTitle_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
-            App.Current.MainWindow.DragMove();
-        }
-
-
-
-        private void imgMenu_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
-            if (this.theMenu.IsVisible) {
-                this.theMenu.Hide();
-            }
-            else {
-                // Need to get offset from current position of main window at click time
-                this.theMenu.Left = this.Left;
-                this.theMenu.Top = this.Top + this.taskBar.ActualHeight;
-                this.theMenu.Show();
-            }
-        }
-
-
-        /// <summary>Catch the MouseDown event before it bubbles up to the window and closes the menu</summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void imgMenu_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
-            e.Handled = true;
-        }
-
         #endregion
-
-        private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
-            if (this.theMenu.IsVisible) {
-                this.theMenu.Hide();
-            }
-        }
 
     }
 }

@@ -48,7 +48,7 @@ namespace MultiCommTerminal.WindowObjs {
         private void lbxMenuItems_SelectionChanged(object sender, SelectionChangedEventArgs args) {
             MenuItemDataModel item = this.lbxMenuItems.SelectedItem as MenuItemDataModel;
             if (item != null) {
-                //this.Hide();
+                this.Hide();
                 switch (item.Code) {
                     case Data.MenuCode.Language:
                         LanguageSelector win = new LanguageSelector(App.Languages);
@@ -60,8 +60,6 @@ namespace MultiCommTerminal.WindowObjs {
                         // Not supported
                         break;
                 }
-                this.Hide();
-
             }
         }
 
