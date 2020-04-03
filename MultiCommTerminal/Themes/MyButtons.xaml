@@ -4,6 +4,7 @@
     xmlns:controls="clr-namespace:MultiCommTerminal.UserControls"
 	>
 
+    <!-- Button with rounded corners -->
     <Style x:Key="RoundEdgeButton" TargetType="{x:Type Button}">
         <Setter Property="Width" Value="75"/>
         <Setter Property="Height" Value="25"/>
@@ -11,60 +12,73 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border CornerRadius="5" Background="Transparent" 
+                    <Border x:Name="buttonBorder" CornerRadius="5" Background="Transparent" 
                             BorderBrush="Blue"  BorderThickness="1" Padding="2" >
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <TextBlock x:Name="buttonText" Text="{TemplateBinding Content}" 
+                            VerticalAlignment="Center" HorizontalAlignment="Center" TextTrimming="CharacterEllipsis" />
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <!-- Useful when using a mouse. Set general opacity -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Opacity" Value=".5" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter Property="Opacity" Value="1" />
+                        </Trigger>
+                        <!-- Useful when just doing touch screen. Note: must set different properties than IsMouseOver -->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="buttonBorder" Property="Opacity" Value=".5" />
+                            <Setter TargetName="buttonText" Property="Opacity" Value=".5" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="False">
+                            <Setter TargetName="buttonBorder" Property="Opacity" Value="1" />
+                            <Setter TargetName="buttonText" Property="Opacity" Value="1" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-
+    <!-- Button with rounded corners and an icon on the left -->
     <Style x:Key="TextIconButton" TargetType="{x:Type controls:UC_IconButton}">
         <Setter Property="Width" Value="75"/>
         <Setter Property="Height" Value="25"/>
         <Setter Property="Foreground" Value="Blue"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Padding" Value="3"/>
+        <Setter Property="ImgMargin" Value="6,6,6,6"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:UC_IconButton}">
-                    <Border x:Name="buttonBorder" CornerRadius="5" BorderBrush="Blue" BorderThickness="1" Background="{TemplateBinding Background}" >
+                    <Border x:Name="tiButtonBorder" CornerRadius="5" BorderBrush="Blue" BorderThickness="1" Background="{TemplateBinding Background}" >
                         <Grid>
                             <DockPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <!-- Have to pad the image seperately since the Content already is padded -->
-                                <Border Padding="6">
-                                    <Image Source="{TemplateBinding Img}" 
-                                   VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-                                   RenderOptions.BitmapScalingMode="HighQuality"
-                                   RenderOptions.EdgeMode="Aliased" />
+                                <!-- Pad image seperately since the Content already is padded -->
+                                <Border x:Name="imageBorder" Padding="{TemplateBinding ImgMargin}">
+                                    <Image Source="{TemplateBinding Img}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                                       RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" />
                                 </Border>
-                                <!--<ContentPresenter x:Name="buttonText" VerticalAlignment="Center" HorizontalAlignment="Center" />-->
                                 <TextBlock x:Name="buttonText" Text="{TemplateBinding Content}" VerticalAlignment="Center" HorizontalAlignment="Center" TextTrimming="CharacterEllipsis" />
                             </DockPanel>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <!-- Useful when using a mouse. Set general opacity -->
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="buttonBorder" Property="Opacity" Value=".6" />
+                            <Setter Property="Opacity" Value=".5" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="False">
-                            <Setter TargetName="buttonBorder" Property="Opacity" Value="1" />
+                            <Setter Property="Opacity" Value="1" />
                         </Trigger>
+                        <!-- Useful when just doing touch screen. Note: must set different properties than IsMouseOver -->
                         <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="tiButtonBorder" Property="Opacity" Value=".4" />
                             <Setter TargetName="buttonText" Property="Opacity" Value=".5" />
-                            <Setter TargetName="buttonText" Property="Opacity" Value=".5" />
-                            <Setter TargetName="buttonText" Property="Opacity" Value=".5" />
-                            <!--<Setter TargetName="roundedImageButtonBorder" Property="Background" Value="{DynamicResource Background_ButtonClicked}" />
-                            <Setter TargetName="roundedImageButtonText" Property="Foreground" Value="{DynamicResource Foreground_ButtonClicked}" />-->
                         </Trigger>
                         <Trigger Property="IsPressed" Value="False">
+                            <Setter TargetName="tiButtonBorder" Property="Opacity" Value="1" />
                             <Setter TargetName="buttonText" Property="Opacity" Value="1" />
-                            <Setter TargetName="buttonText" Property="Opacity" Value="1" />
-                            <Setter TargetName="buttonText" Property="Opacity" Value="1" />
-                            <!--<Setter TargetName="roundedImageButtonBorder" Property="Background" Value="{StaticResource Background_Button}" />
-                            <Setter TargetName="roundedImageButtonText" Property="Foreground" Value="{StaticResource Foreground_Button}" />-->
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

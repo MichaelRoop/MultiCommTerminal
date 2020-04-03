@@ -172,12 +172,12 @@
                     </DockPanel>
                 </Border>
                 <Border BorderBrush="AliceBlue" BorderThickness="1" VerticalAlignment="Center">
-                    <DockPanel  VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <controls:UC_IconButton x:Name="btnExit" Margin="10"
-                            Style="{StaticResource TextIconButton}" 
+                    <DockPanel  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                        <!-- Need to override the Icons margin because the Exit is smaller within PNG file -->
+                        <controls:UC_IconButton x:Name="btnExit" Click="btnExit_Click"
+                            Style="{StaticResource TextIconButton}" ImgMargin="4,4,4,4"
                             Content="{Binding Source={x:Static wpfHelper:BindFetcher.Exit}}"
-                            Img="{Binding Source={x:Static wpfHelper:BindFetcher.IconExit}}"                                                
-                            Click="btnExit_Click" />
+                            Img="{Binding Source={x:Static wpfHelper:BindFetcher.IconExit}}" />
                     </DockPanel>
                 </Border>
 
