@@ -80,8 +80,8 @@ namespace MultiCommTerminal.WindowObjs {
                 this.items.Clear();
 
                 // Move the filling of list to wrapper
-                this.items.Add(new MenuItemDataModel(Data.MenuCode.Language, lang.GetText(MsgCode.language)));
-                this.items.Add(new MenuItemDataModel(Data.MenuCode.Settings, "Settings"));
+                this.items.Add(new MenuItemDataModel(Data.MenuCode.Language, lang.GetText(MsgCode.language), "/MultiCommTerminal;component/images/icons/language.png"));
+                this.items.Add(new MenuItemDataModel(Data.MenuCode.Settings, "Settings", "/MultiCommTerminal;component/images/icons/cog.png"));
 
                 this.lbxMenuItems.ItemsSource = this.items;
                 lbxMenuItems.SelectionChanged += this.lbxMenuItems_SelectionChanged;

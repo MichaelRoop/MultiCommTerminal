@@ -14,11 +14,19 @@
     <Grid HorizontalAlignment="Stretch">
         <Border BorderBrush="Blue" BorderThickness="1">
             <StackPanel>
-                <Border Background="DarkBlue">
+                <Border Background="DarkBlue" Height="30">
+                    <DockPanel HorizontalAlignment="Center">
+                        <Border Padding="4">
+                            <Image Source="/MultiCommTerminal;component/images/icons/language-white.png"
+                                 RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased"
+                                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch"                                   
+                                   />
+                        </Border>
                     <Label x:Name="lbTitle" Margin="2" Content="Language" 
                        MouseDown="lbTitle_MouseDown" HorizontalContentAlignment="Center"
-                       Foreground="White" Background="DarkBlue" FontSize="15" FontWeight="Bold" Padding="2" 
+                       Foreground="White" Background="DarkBlue" FontSize="14" FontWeight="Bold" Padding="2" 
                         />
+                    </DockPanel>
                 </Border>
                 <StackPanel Grid.ColumnSpan="2">
                     <ListBox x:Name="lbLanguages" Width="250" Height="200"

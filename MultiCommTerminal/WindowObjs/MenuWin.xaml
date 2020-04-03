@@ -23,7 +23,15 @@
                     <DataTemplate>
                         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center">
                             <Separator Background="Aquamarine" />
-                            <TextBlock Text="{Binding Display}" Margin="10,5" VerticalAlignment="Center"/>
+                            <DockPanel Height="22" Margin="5">
+                                <Border Padding="{Binding Padding}">
+                                    <!-- "0,2,9,2"  -->
+                                    <Image Source="{Binding IconSource}" 
+                                           RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased"
+                                            VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+                                </Border>
+                                <TextBlock Text="{Binding Display}" VerticalAlignment="Center"/>
+                            </DockPanel>
                         </StackPanel>
 
                         <!--<Grid Margin="-6,0">

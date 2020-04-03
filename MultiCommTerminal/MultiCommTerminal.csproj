@@ -9,6 +9,9 @@
   <ItemGroup>
     <None Remove="images\icons\check-1.png" />
     <None Remove="images\icons\close.png" />
+    <None Remove="images\icons\cog.png" />
+    <None Remove="images\icons\language-white.png" />
+    <None Remove="images\icons\language.png" />
     <None Remove="images\icons\logout-1.png" />
     <None Remove="images\icons\navigation-menu-white.png" />
   </ItemGroup>
@@ -36,6 +39,9 @@
   <ItemGroup>
     <Resource Include="images\icons\check-1.png" />
     <Resource Include="images\icons\close.png" />
+    <Resource Include="images\icons\cog.png" />
+    <Resource Include="images\icons\language-white.png" />
+    <Resource Include="images\icons\language.png" />
     <Resource Include="images\icons\logout-1.png" />
     <Resource Include="images\icons\navigation-menu-white.png" />
   </ItemGroup>
