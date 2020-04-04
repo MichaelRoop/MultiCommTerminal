@@ -1,16 +1,20 @@
 ﻿using DependencyInjectorFactory.interfaces;
+using LanguageFactory.data;
+using LanguageFactory.interfaces;
 using MultiCommWrapper.Net.DI;
 using MultiCommWrapper.Net.interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MultiCommTerminal.DependencyInjection {
 
     /// <summary>Static class to easily access Dependency injected objects</summary>
     public static class DI {
 
+        #region Data
+
         private static IObjContainer container = null;
+
+        #endregion
+
 
         /// <summary>Get the full container of objects</summary>
         /// <returns>The container</returns>
@@ -21,6 +25,7 @@ namespace MultiCommTerminal.DependencyInjection {
             }
             return DI.container;
         }
+
 
         /// <summary>Returns a singleton instance of the type</summary>
         /// <typeparam name="T">The type instance to retrieve</typeparam>
@@ -37,6 +42,14 @@ namespace MultiCommTerminal.DependencyInjection {
             return DI.GetObj<ICommWrapper>();
         }
 
+
+        public static ILangFactory Language() {
+            return DI.GetObj<ILangFactory>();
+        }
+
+        public static string GetText(MsgCode code) {
+            return DI.Language().GetMsgDisplay(code);
+        }
 
     }
 }
