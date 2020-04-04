@@ -52,9 +52,9 @@
                     <DockPanel  VerticalAlignment="Center">
                         <StackPanel x:Name="spCmds" VerticalAlignment="Center">
                             <DockPanel HorizontalAlignment="Center" Margin="0,2,0,0">
-                                <Label x:Name="lbCommand" Content="{Binding Source={x:Static wpfHelper:BindFetcher.Commands}}"/>
+                                <Label x:Name="lbCommand" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Commands}}"/>
                                 <Button x:Name="btnSend" Margin="1" Style="{StaticResource RoundEdgeButton}" 
-                                        Content="{Binding Source={x:Static wpfHelper:BindFetcher.Send}}" Click="btnSend_Click" />
+                                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.Send}}" Click="btnSend_Click" />
                             </DockPanel>
                             <Border BorderBrush="Blue" BorderThickness="1" Margin="10">
                                 <ListBox x:Name="outgoing" Width="250" Height="300" 
@@ -63,7 +63,7 @@
                             </Border>
                         </StackPanel>
                         <StackPanel x:Name="spResps" VerticalAlignment="Center">
-                            <Label x:Name="lbResponse" Content="{Binding Source={x:Static wpfHelper:BindFetcher.Response}}" HorizontalAlignment="Center" />
+                            <Label x:Name="lbResponse" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Response}}" HorizontalAlignment="Center" />
                             <Border BorderBrush="Blue" BorderThickness="1" Margin="10">
                                 <ListBox x:Name="lbIncoming" Width="250" Height="300" 
                                     ScrollViewer.VerticalScrollBarVisibility="Auto" 
@@ -109,10 +109,10 @@
                                     </ListBox.ItemTemplate>
                                 </ListBox>
                                 <Button x:Name="btnDiscover" Style="{StaticResource RoundEdgeButton}"
-                                    Content="{Binding Source={x:Static wpfHelper:BindFetcher.Discover}}" Background="Transparent" Click="btnDiscover_Click" />
+                                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Discover}}" Background="Transparent" Click="btnDiscover_Click" />
                                 <Button x:Name="btnBTConnect" 
                                     Style="{StaticResource RoundEdgeButton}"
-                                    Content="{Binding Source={x:Static wpfHelper:BindFetcher.Connect}}" Background="Transparent" Click="btnBTConnect_Click" />
+                                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Connect}}" Background="Transparent" Click="btnBTConnect_Click" />
                             </DockPanel>
                         </StackPanel>
 
@@ -166,8 +166,8 @@
                         <!-- Need to override the Icons margin because the Exit is smaller within PNG file -->
                         <controls:UC_IconButton x:Name="btnExit" Click="btnExit_Click"
                             Style="{StaticResource TextIconButton}" IconMargin="4"
-                            Content="{Binding Source={x:Static wpfHelper:BindFetcher.Exit}}"
-                            IconSource="{Binding Source={x:Static wpfHelper:BindFetcher.IconExit}}" />
+                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Exit}}"
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Exit}}" />
                     </DockPanel>
                 </Border>
             </StackPanel>

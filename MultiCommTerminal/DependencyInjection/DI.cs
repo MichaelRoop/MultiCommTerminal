@@ -1,4 +1,6 @@
 ﻿using DependencyInjectorFactory.interfaces;
+using IconFactory.data;
+using IconFactory.interfaces;
 using LanguageFactory.data;
 using LanguageFactory.interfaces;
 using MultiCommWrapper.Net.DI;
@@ -49,6 +51,20 @@ namespace MultiCommTerminal.DependencyInjection {
 
         public static string GetText(MsgCode code) {
             return DI.Language().GetMsgDisplay(code);
+        }
+
+        public static IIconFactory GetIconFactory() {
+            return DI.Get().GetObjSingleton<IIconFactory>();
+        }
+
+
+        public static IconDataModel GetIcon(UIIcon code) {
+            return DI.GetIconFactory().GetIcon(code);
+        }
+
+
+        public static string GetIconSource(UIIcon code) {
+            return DI.GetIcon(code).IconSource as string;
         }
 
     }

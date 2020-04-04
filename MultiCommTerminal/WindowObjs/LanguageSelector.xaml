@@ -8,7 +8,7 @@
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.WPF_Helpers"
         mc:Ignorable="d"
         WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="Manual"
-        Title="{Binding Source={x:Static wpfHelper:BindFetcher.Language}}" MinHeight="150" MinWidth="100"
+        Title="{Binding Source={x:Static wpfHelper:TxtBinder.Language}}" MinHeight="150" MinWidth="100"
         ContentRendered="Window_ContentRendered" Closing="Window_Closing"
         >
     <Grid HorizontalAlignment="Stretch">
@@ -18,16 +18,15 @@
                     <DockPanel HorizontalAlignment="Center">
                         <Border Padding="4">
                             <!--MultiCommTerminal;component/images/icons/language-white.png-->
-                            
-                            <Image Source="{Binding Source={x:Static wpfHelper:BindFetcher.IconWLanguage}}"
+
+                            <Image Source="{Binding Source={x:Static wpfHelper:IconBinder.Language_W}}"
                                  RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased"
                                  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"                                   
                                    />
                         </Border>
-                    <Label x:Name="lbTitle" Margin="2" Content="{Binding Source={x:Static wpfHelper:BindFetcher.Language}}" 
-                       MouseDown="lbTitle_MouseDown" HorizontalContentAlignment="Center"
-                       Foreground="White" Background="DarkBlue" FontSize="14" FontWeight="Bold" Padding="2" 
-                        />
+                        <Label x:Name="lbTitle" Margin="2" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Language}}" 
+                           MouseDown="lbTitle_MouseDown" HorizontalContentAlignment="Center"
+                           Foreground="White" Background="DarkBlue" FontSize="14" FontWeight="Bold" Padding="2" />
                     </DockPanel>
                 </Border>
                 <StackPanel Grid.ColumnSpan="2">
@@ -51,12 +50,12 @@
                     <DockPanel HorizontalAlignment="Center" Margin="0,0,0,10">
                         <controls:UC_IconButton x:Name="btnCancel"  
                             Style="{StaticResource TextIconButton}" 
-                            Content="{Binding Source={x:Static wpfHelper:BindFetcher.Cancel}}" 
-                            IconSource="{Binding Source={x:Static wpfHelper:BindFetcher.IconCancel}}"
+                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Cancel}}" 
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}"
                             Click="btnCancel_Click" />
                         <controls:UC_IconButton x:Name="btnSave" Margin="10" Style="{StaticResource TextIconButton}" 
-                            Content="{Binding Source={x:Static wpfHelper:BindFetcher.Save}}"
-                            IconSource="{Binding Source={x:Static wpfHelper:BindFetcher.IconSave}}"
+                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Save}}"
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Save}}"
                             Click="btnSave_Click" />
                     </DockPanel>
                 </StackPanel>

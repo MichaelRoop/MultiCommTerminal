@@ -13,7 +13,7 @@ namespace MultiCommTerminal.UserControls {
         /// <remarks>
         /// Usage in XAML
         /// Using a static function to inject the image source string
-        /// IconSource="{Binding Source={x:Static wpfHelper:BindFetcher.IconExit}}"
+        /// IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Exit}}"
         /// Using the inmage source string when image is compiled as resource
         /// IconSource="AppName;component;/folderName/folderName/imageName.emageExtension"
         /// </remarks>

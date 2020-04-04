@@ -19,7 +19,6 @@ namespace MultiCommTerminal.WindowObjs {
         #region Data
 
         List<MenuItemDataModel> items = new List<MenuItemDataModel>();
-        ILangFactory languageFactory = null;
 
         #endregion
 
@@ -85,8 +84,8 @@ namespace MultiCommTerminal.WindowObjs {
 
                 // Move to wrapper?
                 // TODO - entry for Settings in language modules
-                this.items.Add(this.GetMenuDM(MenuCode.Language, lang.GetText(MsgCode.language), BindFetcher.IconLanguageDM, "2"));
-                this.items.Add(this.GetMenuDM(MenuCode.Settings, lang.GetText(MsgCode.Settings), BindFetcher.IconSettingsDM, "4"));
+                this.items.Add(this.GetMenuDM(MenuCode.Language, lang.GetText(MsgCode.language), IconBinder.LanguageDM, "2"));
+                this.items.Add(this.GetMenuDM(MenuCode.Settings, lang.GetText(MsgCode.Settings), IconBinder.SettingsDM, "4"));
 
                 this.lbxMenuItems.ItemsSource = this.items;
                 lbxMenuItems.SelectionChanged += this.lbxMenuItems_SelectionChanged;
