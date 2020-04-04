@@ -17,7 +17,9 @@
                 <Border Background="DarkBlue" Height="30">
                     <DockPanel HorizontalAlignment="Center">
                         <Border Padding="4">
-                            <Image Source="/MultiCommTerminal;component/images/icons/language-white.png"
+                            <!--MultiCommTerminal;component/images/icons/language-white.png-->
+                            
+                            <Image Source="{Binding Source={x:Static wpfHelper:BindFetcher.IconWLanguage}}"
                                  RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased"
                                  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"                                   
                                    />

@@ -1,26 +1,28 @@
-﻿using LanguageFactory.data;
+﻿using IconFactory.data;
+using LanguageFactory.data;
 using LanguageFactory.interfaces;
 using LanguageFactory.Messaging;
 using MultiCommData.UserDisplayData;
+using MultiCommTerminal.Data;
+using MultiCommTerminal.WPF_Helpers;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace MultiCommTerminal.WindowObjs {
 
     /// <summary>Interaction logic for MenuWin.xaml</summary>
     public partial class MenuWin : Window {
 
+        #region Data
+
         List<MenuItemDataModel> items = new List<MenuItemDataModel>();
         ILangFactory languageFactory = null;
+
+        #endregion
+
+        #region Constructors and windows events
 
         public MenuWin() {
             InitializeComponent();
@@ -41,7 +43,7 @@ namespace MultiCommTerminal.WindowObjs {
             App.Languages.LanguageChanged -= this.Languages_LanguageChanged;
         }
 
-
+        #endregion
 
         #region List box items mangement
 
@@ -79,14 +81,24 @@ namespace MultiCommTerminal.WindowObjs {
                 this.lbxMenuItems.ItemsSource = null;
                 this.items.Clear();
 
-                // Move the filling of list to wrapper
-                this.items.Add(new MenuItemDataModel(Data.MenuCode.Language, lang.GetText(MsgCode.language), "/MultiCommTerminal;component/images/icons/language.png"));
-                this.items.Add(new MenuItemDataModel(Data.MenuCode.Settings, "Settings", "/MultiCommTerminal;component/images/icons/cog.png"));
+                // Move to wrapper?
+                // TODO - entry for Settings in language modules
+                this.items.Add(this.GetMenuDM(MenuCode.Language, lang.GetText(MsgCode.language), BindFetcher.IconLanguageDM, "2"));
+                this.items.Add(this.GetMenuDM(MenuCode.Settings, "Settings" /*lang.GetText(MsgCode.)*/, BindFetcher.IconSettingsDM, "4"));
 
                 this.lbxMenuItems.ItemsSource = this.items;
                 lbxMenuItems.SelectionChanged += this.lbxMenuItems_SelectionChanged;
-
             });
+        }
+
+
+        MenuItemDataModel GetMenuDM(MenuCode menuCode, string display, IconDataModel idm, string padding) {
+            return new MenuItemDataModel() {
+                Code = menuCode,
+                Display = display,
+                IconSource = idm.IconSource as string,
+                Padding = padding,
+            };
         }
 
         #endregion

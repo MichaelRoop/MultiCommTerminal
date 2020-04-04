@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogUtils.Net", "..\SharedNe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LanguageFactory.Net", "..\SharedNetLibs\LanguageFactory\LanguageFactory.Net.csproj", "{4F6445CD-1589-465A-864D-DC597B44745C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IconFactory", "..\SharedNetLibs\IconFactory\IconFactory.csproj", "{8CA4272F-AFD9-4737-A941-AB24ED051D40}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{4F6445CD-1589-465A-864D-DC597B44745C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F6445CD-1589-465A-864D-DC597B44745C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F6445CD-1589-465A-864D-DC597B44745C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CA4272F-AFD9-4737-A941-AB24ED051D40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CA4272F-AFD9-4737-A941-AB24ED051D40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CA4272F-AFD9-4737-A941-AB24ED051D40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CA4272F-AFD9-4737-A941-AB24ED051D40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

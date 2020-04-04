@@ -1,4 +1,6 @@
-﻿using LanguageFactory.data;
+﻿using IconFactory.data;
+using IconFactory.interfaces;
+using LanguageFactory.data;
 using LanguageFactory.interfaces;
 using LanguageFactory.Languages.en;
 using LanguageFactory.Messaging;
@@ -27,6 +29,7 @@ namespace MultiCommTerminal.WPF_Helpers {
         #region Data
 
         private static SupportedLanguage designLanguage = null;
+        private static IIconFactory iconFactory = null;
 
         #endregion
 
@@ -68,30 +71,36 @@ namespace MultiCommTerminal.WPF_Helpers {
 
         #region Icon paths for UI
 
-        public static string IconSave { get { return GetIconPath(UIIcon.Save); } }
-        public static string IconCancel { get { return GetIconPath(UIIcon.Cancel); } }
-        public static string IconExit { get { return GetIconPath(UIIcon.Exit); } }
+        public static string IconSave { get { return GetIconSource(UIIcon.Save); } }
+        public static string IconCancel { get { return GetIconSource(UIIcon.Cancel); } }
+        public static string IconExit { get { return GetIconSource(UIIcon.Exit); } }
 
+        public static string IconSettings { get { return GetIconSource(UIIcon.Settings); } }
+        public static string IconLanguage { get { return GetIconSource(UIIcon.Language); } }
+        public static string IconWLanguage { get { return GetIconSource(UIIcon.LanguageWhite); } }
 
-        private static string GetIconPath(UIIcon code) {
-            switch (code) {
-                case UIIcon.Save:   return AddIconDirectory("check-1.png");
-                case UIIcon.Cancel: return AddIconDirectory("close.png");
-                case UIIcon.Exit:   return AddIconDirectory("logout-1.png");
-                
-                default:            return AddIconDirectory("check-1.png");
+        private static string GetIconSource(UIIcon code) {
+            return GetIconDM(code).IconSource as string;
+        }
+
+        #endregion
+
+        #region Get Icon Data Model
+
+        public static IconDataModel IconSaveDM { get { return GetIconDM(UIIcon.Save); } }
+        public static IconDataModel IconCancelDM { get { return GetIconDM(UIIcon.Cancel); } }
+        public static IconDataModel IconExitDM { get { return GetIconDM(UIIcon.Exit); } }
+
+        public static IconDataModel IconSettingsDM { get { return GetIconDM(UIIcon.Settings); } }
+        public static IconDataModel IconLanguageDM { get { return GetIconDM(UIIcon.Language); } }
+        public static IconDataModel IconWLanguageDM { get { return GetIconDM(UIIcon.LanguageWhite); } }
+
+        private static IconDataModel GetIconDM(UIIcon code) {
+            if (iconFactory == null) {
+                iconFactory = new IconFactory();
             }
+            return iconFactory.GetIcon(code);
         }
-
-
-        private static string AddIconDirectory(string name) {
-            return string.Format("/MultiCommTerminal;component/images/icons/{0}", name);
-        }
-
-        private static string AddIconUriDirectory(string name) {
-            return string.Format("/MultiCommTerminal;component/images/icons/{0}", name);
-        }
-
 
         #endregion
 
