@@ -24,7 +24,7 @@
                                  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"                                   
                                    />
                         </Border>
-                    <Label x:Name="lbTitle" Margin="2" Content="Language" 
+                    <Label x:Name="lbTitle" Margin="2" Content="{Binding Source={x:Static wpfHelper:BindFetcher.Language}}" 
                        MouseDown="lbTitle_MouseDown" HorizontalContentAlignment="Center"
                        Foreground="White" Background="DarkBlue" FontSize="14" FontWeight="Bold" Padding="2" 
                         />

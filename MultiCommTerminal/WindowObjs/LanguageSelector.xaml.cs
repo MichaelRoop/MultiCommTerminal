@@ -10,7 +10,6 @@ namespace MultiCommTerminal.WindowObjs {
     /// <summary>Interaction logic for LanguagaSelector.xamlsummary>
     public partial class LanguageSelector : Window {
 
-        private ILangFactory languages = null;
         private LangCode languageOnEntry = LangCode.English;
 
         public LanguageSelector() {
@@ -18,13 +17,12 @@ namespace MultiCommTerminal.WindowObjs {
             this.SizeToContent = SizeToContent.WidthAndHeight;
 
             // Move forward stuff to wrapper
-            this.languages = DI.GetObj<ILangFactory>();
             DI.Wrapper().LanguageChanged += Languages_LanguageChanged;
-            this.languageOnEntry = this.languages.CurrentLanguageCode;
+            this.languageOnEntry = DI.Language().CurrentLanguageCode;
         }
 
         private void Window_ContentRendered(object sender, EventArgs e) {
-            this.lbLanguages.ItemsSource = this.languages.AvailableLanguages;
+            this.lbLanguages.ItemsSource = DI.Language().AvailableLanguages;
             // Only create the selected index here to avoid it firing on load
             this.lbLanguages.SelectionChanged += this.lbLanguages_SelectionChanged;
         }
@@ -43,9 +41,9 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void btnCancel_Click(object sender, RoutedEventArgs e) {
-            LangCode currentSelected = this.languages.CurrentLanguageCode;
+            LangCode currentSelected = DI.Language().CurrentLanguageCode;
             if (this.languageOnEntry != currentSelected) {
-                this.languages.SetCurrentLanguage(this.languageOnEntry);
+                DI.Language().SetCurrentLanguage(this.languageOnEntry);
             }
             this.Close();
         }
@@ -54,17 +52,16 @@ namespace MultiCommTerminal.WindowObjs {
         private void lbLanguages_SelectionChanged(object sender, SelectionChangedEventArgs args) {
             LanguageDataModel data = this.lbLanguages.SelectedItem as LanguageDataModel;
             if (data != null) {
-                this.languages.SetCurrentLanguage(data.Code);
+                DI.Language().SetCurrentLanguage(data.Code);
             }
         }
 
         private void Languages_LanguageChanged(object sender, LanguageFactory.Messaging.SupportedLanguage lang) {
             this.Dispatcher.Invoke(() => { 
-                //this.Title = lang.GetText(MsgCode.language);
-
                 this.lbTitle.Content = lang.GetText(MsgCode.language);
                 this.btnSave.Content = lang.GetText(MsgCode.save);
                 this.btnCancel.Content = lang.GetText(MsgCode.cancel);
+
                 // TODO Other texts
             });
         }
