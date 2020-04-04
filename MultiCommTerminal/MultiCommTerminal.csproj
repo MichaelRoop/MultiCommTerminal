@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\SharedNetLibs\DependencyInjectorFactory\DependencyInjectorFactory.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\IconFactory\IconFactory.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\LanguageFactory\LanguageFactory.Net.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\LogUtils.Net\LogUtils.Net.csproj" />
@@ -24,6 +25,7 @@
     <ProjectReference Include="..\BluetoothCommon.Net\BluetoothCommon.Net.csproj" />
     <ProjectReference Include="..\BluetoothLE.Win32\BluetoothLE.Win32.csproj" />
     <ProjectReference Include="..\MultiCommData\MultiCommData.csproj" />
+    <ProjectReference Include="..\MultiCommWrapper\MultiCommWrapper.Net.csproj" />
   </ItemGroup>
 
   <ItemGroup>

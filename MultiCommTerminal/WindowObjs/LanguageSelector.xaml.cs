@@ -1,5 +1,6 @@
 ﻿using LanguageFactory.data;
 using LanguageFactory.interfaces;
+using MultiCommTerminal.DependencyInjection;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,11 +13,13 @@ namespace MultiCommTerminal.WindowObjs {
         private ILangFactory languages = null;
         private LangCode languageOnEntry = LangCode.English;
 
-        public LanguageSelector(ILangFactory languages) {
+        public LanguageSelector() {
             InitializeComponent();
             this.SizeToContent = SizeToContent.WidthAndHeight;
-            this.languages = languages;
-            this.languages.LanguageChanged += Languages_LanguageChanged;
+
+            // Move forward stuff to wrapper
+            this.languages = DI.GetObj<ILangFactory>();
+            DI.Wrapper().LanguageChanged += Languages_LanguageChanged;
             this.languageOnEntry = this.languages.CurrentLanguageCode;
         }
 
@@ -28,7 +31,7 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             this.lbLanguages.SelectionChanged -= this.lbLanguages_SelectionChanged;
-            this.languages.LanguageChanged -= this.Languages_LanguageChanged;
+            DI.Wrapper().LanguageChanged -= this.Languages_LanguageChanged;
         }
 
 

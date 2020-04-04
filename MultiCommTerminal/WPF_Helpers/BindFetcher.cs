@@ -4,6 +4,7 @@ using LanguageFactory.data;
 using LanguageFactory.interfaces;
 using LanguageFactory.Languages.en;
 using LanguageFactory.Messaging;
+using MultiCommTerminal.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -63,7 +64,7 @@ namespace MultiCommTerminal.WPF_Helpers {
             }
             else {
                 // You would need to get a singleton of the factory here
-                return App.Languages.GetMsgDisplay(code);
+                return DI.GetObj<ILangFactory>().GetMsgDisplay(code);
             }
         }
 

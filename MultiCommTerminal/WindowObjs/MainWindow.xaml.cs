@@ -2,6 +2,7 @@
 using BluetoothCommon.Net.interfaces;
 using LanguageFactory.data;
 using MultiCommData.UserDisplayData;
+using MultiCommTerminal.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -33,7 +34,7 @@ namespace MultiCommTerminal.WindowObjs {
         public MainWindow() {
             InitializeComponent();
             this.OnStartupSuccess();
-            App.Languages.LanguageChanged += this.Languages_LanguageChanged;
+            DI.Wrapper().LanguageChanged += this.Languages_LanguageChanged;
 
             this.blueToothLE.DeviceDiscovered += this.BlueToothLE_DeviceDiscovered;
             this.blueTooth.DiscoveredBTDevice += this.BlueTooth_DiscoveredBTDevice;

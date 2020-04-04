@@ -4,6 +4,7 @@ using LanguageFactory.interfaces;
 using LanguageFactory.Messaging;
 using MultiCommData.UserDisplayData;
 using MultiCommTerminal.Data;
+using MultiCommTerminal.DependencyInjection;
 using MultiCommTerminal.WPF_Helpers;
 using System;
 using System.Collections.Generic;
@@ -29,18 +30,19 @@ namespace MultiCommTerminal.WindowObjs {
             this.SizeToContent = SizeToContent.WidthAndHeight;
 
             // TODO - move to wrapper
-            this.languageFactory = App.Languages;
+            //this.languageFactory = App.Languages;
         }
 
         private void Window_ContentRendered(object sender, EventArgs e) {
-            this.LoadList(App.Languages.CurrentLanguage);
-            App.Languages.LanguageChanged += this.Languages_LanguageChanged;
+            // TODO - replace with calls to wrapper
+            this.LoadList(DI.GetObj<ILangFactory>().CurrentLanguage);
+            DI.Wrapper().LanguageChanged += this.Languages_LanguageChanged;
         }
 
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             lbxMenuItems.SelectionChanged -= this.lbxMenuItems_SelectionChanged;
-            App.Languages.LanguageChanged -= this.Languages_LanguageChanged;
+            DI.Wrapper().LanguageChanged -= this.Languages_LanguageChanged;
         }
 
         #endregion
@@ -53,7 +55,7 @@ namespace MultiCommTerminal.WindowObjs {
                 this.Hide();
                 switch (item.Code) {
                     case Data.MenuCode.Language:
-                        LanguageSelector win = new LanguageSelector(App.Languages);
+                        LanguageSelector win = new LanguageSelector();
                         win.ShowDialog();
                         break;
                     case Data.MenuCode.Settings:

@@ -8,6 +8,8 @@ using log4net.Core;
 using log4net.Layout;
 using log4net.Repository.Hierarchy;
 using LogUtils.Net;
+using MultiCommTerminal.DependencyInjection;
+using MultiCommWrapper.Net.interfaces;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -24,25 +26,19 @@ namespace MultiCommTerminal {
         private log4net.ILog loggerImpl = null;
         private ClassLog log = new ClassLog("App");
 
-        private static ILangFactory languages = null;
-
         #endregion
-
-        public static ILangFactory Languages { 
-            get {
-                // Move to injector?
-                if (languages == null) {
-                    languages = new SupportedLanguageFactory();
-                }
-                return languages;
-            }
-        }
-
 
         #region Constructors
 
         public App() {
-            loggerImpl = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+            this.SetupLogging();
+            this.SetupDI();
+        }
+
+        #endregion
+
+        private void SetupLogging() {
+            this.loggerImpl = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             this.SetupLog4Net();
 
             Log.SetStackTools(new StackTools());
@@ -52,7 +48,19 @@ namespace MultiCommTerminal {
             Log.OnLogMsgEvent += new LogingMsgEventDelegate(this.Log_OnLogMsgEvent);
         }
 
-        #endregion
+        private void SetupDI() {
+            // Just start it up so that it is loaded in this one place
+            ErrReport err;
+            WrapErr.ToErrReport(out err, 9999, () => {
+                ICommWrapper w = DI.Wrapper();
+            });
+            if (err.Code != 0) {
+                MessageBox.Show(err.Msg, "Critical Error loading DI container");
+                Application.Current.Shutdown();
+            }
+
+        }
+
 
         #region Log Event Handlers
 

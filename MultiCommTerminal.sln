@@ -23,6 +23,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LanguageFactory.Net", "..\S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IconFactory", "..\SharedNetLibs\IconFactory\IconFactory.csproj", "{8CA4272F-AFD9-4737-A941-AB24ED051D40}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DependencyInjectorFactory", "..\SharedNetLibs\DependencyInjectorFactory\DependencyInjectorFactory.csproj", "{6D911CDF-3F4F-45F8-A698-BCB47FF53E08}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiCommWrapper.Net", "MultiCommWrapper\MultiCommWrapper.Net.csproj", "{F86E019F-F046-4DC2-A949-D0EA0F0D0964}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +73,14 @@ Global
 		{8CA4272F-AFD9-4737-A941-AB24ED051D40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8CA4272F-AFD9-4737-A941-AB24ED051D40}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8CA4272F-AFD9-4737-A941-AB24ED051D40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D911CDF-3F4F-45F8-A698-BCB47FF53E08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D911CDF-3F4F-45F8-A698-BCB47FF53E08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D911CDF-3F4F-45F8-A698-BCB47FF53E08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D911CDF-3F4F-45F8-A698-BCB47FF53E08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F86E019F-F046-4DC2-A949-D0EA0F0D0964}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F86E019F-F046-4DC2-A949-D0EA0F0D0964}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F86E019F-F046-4DC2-A949-D0EA0F0D0964}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F86E019F-F046-4DC2-A949-D0EA0F0D0964}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
