@@ -56,6 +56,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         public void Teardown() {
             // TODO - shut down anything needed and dispose
             this.TeardownLanguages();
+            this.TeardownBluetoothClassic();
         }
 
 
@@ -63,6 +64,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         private void InitializeAll() {
             this.InitLanguages();
             this.InitStorage();
+            this.InitBluetoothClassic();
         }
 
         #endregion

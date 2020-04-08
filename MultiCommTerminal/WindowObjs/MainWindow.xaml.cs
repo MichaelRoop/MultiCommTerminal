@@ -24,7 +24,6 @@ namespace MultiCommTerminal.WindowObjs {
         private List<BluetoothLEDeviceInfo> btInfoListLE = new List<BluetoothLEDeviceInfo>();
 
         // TODO move out of UI
-        private IBTInterface blueTooth = new BluetoothClassic.Win32.BluetoothClassicImpl();
         private IBLETInterface blueToothLE = new BluetoothLE.Win32.BluetoothLEImplWin32();
 
         MenuWin menu = null;
@@ -41,10 +40,12 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper.LanguageChanged += this.Languages_LanguageChanged;
 
             this.blueToothLE.DeviceDiscovered += this.BlueToothLE_DeviceDiscovered;
-            this.blueTooth.DiscoveredBTDevice += this.BlueTooth_DiscoveredBTDevice;
-            this.blueTooth.DiscoveryComplete += this.BlueTooth_DiscoveryComplete;
-            this.blueTooth.ConnectionCompleted += this.BlueTooth_ConnectionCompleted;
-            this.blueTooth.BytesReceived += this.BlueTooth_BytesReceived;
+
+            //this.wrapper.Blu
+            this.wrapper.BluetoothClassicDeviceDiscovered += this.BlueTooth_DiscoveredBTDevice;
+            this.wrapper.BluetoothClassicDiscoveryComplete += this.BlueTooth_DiscoveryComplete;
+            this.wrapper.BluetoothClassicConnectionCompleted += this.BlueTooth_ConnectionCompleted;
+            this.wrapper.BluetoothClassicBytesReceived += this.BlueTooth_BytesReceived;
 
             // TODO - remove - temp populate command box
             this.outgoing.Items.Add("First msg");
@@ -63,19 +64,20 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+            // TODO call the wrapper teardown
+
             this.blueToothLE.DeviceDiscovered -= this.BlueToothLE_DeviceDiscovered;
-            this.blueTooth.DiscoveredBTDevice -= this.BlueTooth_DiscoveredBTDevice;
-            this.blueTooth.DiscoveryComplete -= this.BlueTooth_DiscoveryComplete;
-            this.blueTooth.ConnectionCompleted -= this.BlueTooth_ConnectionCompleted;
-            this.blueTooth.BytesReceived -= this.BlueTooth_BytesReceived;
+            this.wrapper.BluetoothClassicDeviceDiscovered -= this.BlueTooth_DiscoveredBTDevice;
+            this.wrapper.BluetoothClassicDiscoveryComplete -= this.BlueTooth_DiscoveryComplete;
+            this.wrapper.BluetoothClassicConnectionCompleted -= this.BlueTooth_ConnectionCompleted;
+            this.wrapper.BluetoothClassicBytesReceived -= this.BlueTooth_BytesReceived;
+
 
             if (this.menu != null) {
                 this.menu.Close();
             }
 
-
-            // Safe to disconnect
-            this.blueTooth.Disconnect();
+            this.wrapper.Teardown();
         }
 
         /// <summary>Close opened menu window anywhere on window on mouse down</summary>
@@ -199,14 +201,14 @@ namespace MultiCommTerminal.WindowObjs {
             this.btInfoList.Clear();
             this.lbBluetooth.ItemsSource = this.btInfoList;
             this.gridWait.Visibility = Visibility.Visible;
-            this.blueTooth.DiscoverDevices();
+            this.wrapper.BluetoothClassicDiscoverAsync();
         }
 
         private void btnBTConnect_Click(object sender, RoutedEventArgs e) {
             BTDeviceInfo item = this.lbBluetooth.SelectedItem as BTDeviceInfo;
             if (item != null) {
                 this.gridWait.Visibility = Visibility.Visible;
-                this.blueTooth.Connect(item);
+                this.wrapper.BluetoothClassicConnectAsync(item);
             }
         }
 
@@ -226,11 +228,9 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
-        private void BlueTooth_BytesReceived(object sender, byte[] e) {
+        private void BlueTooth_BytesReceived(object sender, string msg) {
             this.Dispatcher.Invoke(() => {
-                string data = Encoding.ASCII.GetString(e, 0, e.Length);
-                System.Diagnostics.Debug.WriteLine(data);
-                this.lbIncoming.Items.Add(data);
+                this.lbIncoming.Items.Add(msg);
             });
         }
 
@@ -319,7 +319,7 @@ namespace MultiCommTerminal.WindowObjs {
                 // TODO - send to current device
                 switch ((this.cbComm.SelectedItem as CommMedialDisplay).MediumType) {
                     case CommMediumType.Bluetooth:
-                        this.blueTooth.Send(cmd);
+                        this.wrapper.BluetoothClassicSend(cmd);
                         break;
                     case CommMediumType.BluetoothLE:
                         break;

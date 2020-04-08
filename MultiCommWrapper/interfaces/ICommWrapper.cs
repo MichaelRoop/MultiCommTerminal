@@ -1,4 +1,5 @@
-﻿using IconFactory.data;
+﻿using BluetoothCommon.Net;
+using IconFactory.data;
 using LanguageFactory.data;
 using LanguageFactory.Messaging;
 using MultiCommData.Net.StorageDataModels;
@@ -20,10 +21,6 @@ namespace MultiCommWrapper.Net.interfaces {
         //event EventHandler<BluetoothLEDeviceInfo> BLE_DeviceDiscovered;
 
 
-        //event EventHandler<BTDeviceInfo> BT_DeviceDiscovered;
-        //event EventHandler<bool> BT_DiscoveryComplete;
-        //event EventHandler<bool> BT_ConnectionCompleted;
-        ////event EventHandler<byte[]> BytesReceived;
         //// Intercept and assemble a full message from BT before raising this level event
 
         #endregion
@@ -71,6 +68,22 @@ namespace MultiCommWrapper.Net.interfaces {
         void IconInfo(UIIcon code, Action<IconDataModel> onSuccess);
 
         string IconSource(UIIcon code);
+
+        #endregion
+
+        #region Bluetooth Classic
+
+        event EventHandler<BTDeviceInfo> BluetoothClassicDeviceDiscovered;
+        event EventHandler<bool> BluetoothClassicDiscoveryComplete;
+        event EventHandler<bool> BluetoothClassicConnectionCompleted;
+        event EventHandler<string> BluetoothClassicBytesReceived;
+
+        void BluetoothClassicDiscoverAsync();
+        void BluetoothClassicConnectAsync(BTDeviceInfo device);
+
+        void BluetoothClassicDisconnect();
+
+        void BluetoothClassicSend(string msg);
 
         #endregion
 
