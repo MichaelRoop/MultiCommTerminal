@@ -1,8 +1,4 @@
 ﻿using DependencyInjectorFactory.interfaces;
-using IconFactory.data;
-using IconFactory.interfaces;
-using LanguageFactory.data;
-using LanguageFactory.interfaces;
 using MultiCommWrapper.Net.DI;
 using MultiCommWrapper.Net.interfaces;
 
@@ -20,7 +16,7 @@ namespace MultiCommTerminal.DependencyInjection {
 
         /// <summary>Get the full container of objects</summary>
         /// <returns>The container</returns>
-        public static IObjContainer Get() {
+        private static IObjContainer GetContainer() {
             if (DI.container == null) {
                 DI.container = new MultiCommIOC();
                 DI.container.Initialise(new WinDiExtraCreators());
@@ -28,34 +24,15 @@ namespace MultiCommTerminal.DependencyInjection {
             return DI.container;
         }
 
-
-        /// <summary>Returns a singleton instance of the type</summary>
-        /// <typeparam name="T">The type instance to retrieve</typeparam>
-        /// <returns>The singleton instance of the type</returns>
-        public static T GetObj<T>() where T : class {
-            // Since we only use singletons in the terminal this avoids confusion
-            return DI.Get().GetObjSingleton<T>();
-        }
-
         
         /// <summary>Shortcut to get the application code wrapper</summary>
         /// <returns>The multi comm code wrapper</returns>
-        public static ICommWrapper Wrapper { get { return DI.GetObj<ICommWrapper>(); } }
-
-
-        public static IIconFactory GetIconFactory() {
-            return DI.Get().GetObjSingleton<IIconFactory>();
+        public static ICommWrapper Wrapper {
+            get {
+                return DI.GetContainer().GetObjSingleton<ICommWrapper>();
+            }
         }
 
-
-        public static IconDataModel GetIcon(UIIcon code) {
-            return DI.GetIconFactory().GetIcon(code);
-        }
-
-
-        public static string GetIconSource(UIIcon code) {
-            return DI.GetIcon(code).IconSource as string;
-        }
 
     }
 }

@@ -1,8 +1,10 @@
 ﻿using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
+using IconFactory.data;
 using LanguageFactory.data;
 using LanguageFactory.Messaging;
 using MultiCommData.Net.StorageDataModels;
+using MultiCommData.UserDisplayData.Net;
 using MultiCommWrapper.Net.interfaces;
 using System;
 using System.Collections.Generic;
@@ -102,6 +104,41 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         public string GetText(MsgCode code) {
             return this.languages.GetMsgDisplay(code);
+        }
+
+
+        public void GetMenuItemDataModel(
+            MenuCode menuCode,
+            MsgCode msgCode, 
+            UIIcon iconCode, 
+            string padding,
+            Action<MenuItemDataModel> onSuccess,
+            Action<MenuItemDataModel> onError) {
+
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    onSuccess(new MenuItemDataModel() {
+                        Code = menuCode,
+                        Display = this.GetText(msgCode),
+                        IconSource =  this.IconSource(iconCode),
+                        Padding = padding,
+                    });
+                });
+                if (report.Code != 0) {
+                    WrapErr.SafeAction(() => { 
+                        onError.Invoke(new MenuItemDataModel() {
+                            Code = menuCode,
+                            Display = "**NA**",
+                            IconSource = "",
+                            Padding = padding,
+                        });
+                    });
+                }
+            });
+
+
+
         }
 
         #endregion

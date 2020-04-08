@@ -49,11 +49,10 @@ namespace MultiCommTerminal {
         }
 
         private void SetupDI() {
-            // Just start it up so that it is loaded in this one place
+            // Start it here for first load and retrieve stored language
             ErrReport err;
             WrapErr.ToErrReport(out err, 9999, () => {
-                ICommWrapper w = DI.Wrapper;
-                w.CurrentStoredLanguage();
+                DI.Wrapper.CurrentStoredLanguage();
             });
             if (err.Code != 0) {
                 MessageBox.Show(err.Msg, "Critical Error loading DI container");
