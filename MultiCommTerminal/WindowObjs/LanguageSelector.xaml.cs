@@ -10,8 +10,14 @@ namespace MultiCommTerminal.WindowObjs {
     /// <summary>Interaction logic for LanguagaSelector.xamlsummary>
     public partial class LanguageSelector : Window {
 
+        #region Data
+
         private LangCode languageOnEntry = LangCode.English;
         private ICommWrapper wrapper = null;
+
+        #endregion
+
+        #region Constructors and windows events
 
         public LanguageSelector() {
             this.wrapper = DI.Wrapper;
@@ -32,13 +38,21 @@ namespace MultiCommTerminal.WindowObjs {
             });
         }
 
+
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             this.lbLanguages.SelectionChanged -= this.lbLanguages_SelectionChanged;
             this.wrapper.LanguageChanged -= this.Languages_LanguageChanged;
         }
 
 
-        // change to save
+        private void lbTitle_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+            this.DragMove();
+        }
+
+        #endregion
+
+        #region Events from controls
+
         private void btnSave_Click(object sender, RoutedEventArgs e) {
             this.wrapper.CurrentLanguage((lang) => {
                 if (this.languageOnEntry != lang) {
@@ -73,14 +87,11 @@ namespace MultiCommTerminal.WindowObjs {
                 this.btnSave.Content = lang.GetText(MsgCode.save);
                 this.btnCancel.Content = lang.GetText(MsgCode.cancel);
 
-                // TODO Other texts
+                // Other texts
             });
         }
 
-
-        private void lbTitle_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
-            this.DragMove();
-        }
+        #endregion
 
     }
 }

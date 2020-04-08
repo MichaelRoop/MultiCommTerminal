@@ -259,9 +259,6 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void cbComm_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            //MessageBox.Show(String.Format("Enum selected:{0}",
-            //    (this.cbComm.SelectedItem as CommMedialDisplay).MediumType.ToString()));
-
             // Hide all the options
             this.spBluetooth.Visibility = Visibility.Collapsed;
             this.spBluetoothLE.Visibility = Visibility.Collapsed;
@@ -348,6 +345,7 @@ namespace MultiCommTerminal.WindowObjs {
         #endregion
 
         #region Menu events
+
         /// <summary>Click event on the hamburger icon to toggle menu window</summary>
         private void imgMenu_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
             if (this.menu.IsVisible) {

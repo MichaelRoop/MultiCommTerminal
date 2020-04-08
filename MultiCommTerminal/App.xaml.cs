@@ -1,7 +1,5 @@
 ﻿using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
-using LanguageFactory.interfaces;
-using LanguageFactory.Messaging;
 using log4net;
 using log4net.Appender;
 using log4net.Core;
@@ -9,7 +7,6 @@ using log4net.Layout;
 using log4net.Repository.Hierarchy;
 using LogUtils.Net;
 using MultiCommTerminal.DependencyInjection;
-using MultiCommWrapper.Net.interfaces;
 using System;
 using System.Diagnostics;
 using System.IO;
