@@ -1,6 +1,8 @@
-﻿using LanguageFactory.data;
+﻿using IconFactory.data;
+using LanguageFactory.data;
 using LanguageFactory.Messaging;
 using MultiCommData.Net.StorageDataModels;
+using MultiCommData.UserDisplayData.Net;
 using System;
 using System.Collections.Generic;
 
@@ -46,12 +48,29 @@ namespace MultiCommWrapper.Net.interfaces {
 
         string GetText(MsgCode code);
 
+        void GetMenuItemDataModel(
+            MenuCode menuCode,
+            MsgCode msgCode, 
+            UIIcon iconCode, 
+            string Padding,
+            Action<MenuItemDataModel> onSuccess,
+            Action<MenuItemDataModel> onError); 
+
         #endregion
 
         #region Settings
 
         void GetSettings(Action<SettingItems> onSuccess, Action<string> onError);
         void SaveSettings(SettingItems settings, Action onSuccess, Action<string> onError);
+
+        #endregion
+
+        #region Icons
+
+        void IconInfo(UIIcon code, Action<IconDataModel> onSuccess, Action<string> onError);
+        void IconInfo(UIIcon code, Action<IconDataModel> onSuccess);
+
+        string IconSource(UIIcon code);
 
         #endregion
 

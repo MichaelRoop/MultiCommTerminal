@@ -20,46 +20,29 @@ namespace MultiCommTerminal.WPF_Helpers {
         /// <summary>Used in VS XAML design when the DI cannot be loaded</summary>
         private static IIconFactory designFactory = new IconFactory();
 
+
         #region Icon paths for UI
 
-        public static string Save { get { return GetSource(UIIcon.Save); } }
-        public static string Cancel { get { return GetSource(UIIcon.Cancel); } }
-        public static string Exit { get { return GetSource(UIIcon.Exit); } }
+        public static string Save { get { return Source(UIIcon.Save); } }
+        public static string Cancel { get { return Source(UIIcon.Cancel); } }
+        public static string Exit { get { return Source(UIIcon.Exit); } }
 
-        public static string Settings { get { return GetSource(UIIcon.Settings); } }
-        public static string Language { get { return GetSource(UIIcon.Language); } }
-        public static string Language_W { get { return GetSource(UIIcon.LanguageWhite); } }
-
-        #endregion
-
-        #region Get Icon Data Model
-
-        public static IconDataModel SaveDM { get { return GetDM(UIIcon.Save); } }
-        public static IconDataModel CancelDM { get { return GetDM(UIIcon.Cancel); } }
-        public static IconDataModel ExitDM { get { return GetDM(UIIcon.Exit); } }
-
-        public static IconDataModel SettingsDM { get { return GetDM(UIIcon.Settings); } }
-        public static IconDataModel LanguageDM { get { return GetDM(UIIcon.Language); } }
-        public static IconDataModel LanguageDM_W { get { return GetDM(UIIcon.LanguageWhite); } }
+        public static string Settings { get { return Source(UIIcon.Settings); } }
+        public static string Language { get { return Source(UIIcon.Language); } }
+        public static string Language_W { get { return Source(UIIcon.LanguageWhite); } }
 
         #endregion
 
 
-        private static string GetSource(UIIcon code) {
-            return GetDM(code).IconSource as string;
-        }
-
-
-        private static IconDataModel GetDM(UIIcon code) {
-            return IconBinder.GetFactory().GetIcon(code);
-        }
-
-
-        private static IIconFactory GetFactory() {
+        /// <summary>Get the source from factory directly if in design mode or from DI</summary>
+        /// <param name="code">The icon identifier code </param>
+        /// <returns>String with icon path</returns>
+        private static string Source(UIIcon code) {
             if (System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime) {
-                return IconBinder.designFactory;
+                string result = IconBinder.designFactory.GetIcon(code).IconSource as string;
+                return result != null ? result : "";
             }
-            return DI.GetIconFactory();
+            return DI.Wrapper.IconSource(code);
         }
 
     }

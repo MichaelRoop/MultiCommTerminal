@@ -29,14 +29,11 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper = DI.Wrapper;
             InitializeComponent();
             this.SizeToContent = SizeToContent.WidthAndHeight;
-
-            // TODO - move to wrapper
-            //this.languageFactory = App.Languages;
         }
 
+
         private void Window_ContentRendered(object sender, EventArgs e) {
-            // TODO - replace with calls to wrapper
-            this.LoadList(DI.GetObj<ILangFactory>().CurrentLanguage);
+            this.LoadList();
             this.wrapper.LanguageChanged += this.Languages_LanguageChanged;
         }
 
@@ -60,6 +57,7 @@ namespace MultiCommTerminal.WindowObjs {
                         win.ShowDialog();
                         break;
                     case MenuCode.Settings:
+                        // TODO - settings window
                         break;
                     default:
                         // Not supported
@@ -70,38 +68,27 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void Languages_LanguageChanged(object sender, LanguageFactory.Messaging.SupportedLanguage language) {
-            this.Dispatcher.Invoke(() => {
-                this.LoadList(language);
-            });
+            this.Dispatcher.Invoke(this.LoadList);
         }
 
 
-        private void LoadList(SupportedLanguage lang) {
+        private void LoadList() {
             this.Dispatcher.Invoke(() => {
                 // Disable selection changed event during load
                 lbxMenuItems.SelectionChanged -= this.lbxMenuItems_SelectionChanged;
-
                 this.lbxMenuItems.ItemsSource = null;
                 this.items.Clear();
-
-                // Move to wrapper?
-                // TODO - entry for Settings in language modules
-                this.items.Add(this.GetMenuDM(MenuCode.Language, lang.GetText(MsgCode.language), IconBinder.LanguageDM, "2"));
-                this.items.Add(this.GetMenuDM(MenuCode.Settings, lang.GetText(MsgCode.Settings), IconBinder.SettingsDM, "4"));
-
+                this.AddItem(MenuCode.Language, MsgCode.language, UIIcon.Language, "2");
+                this.AddItem(MenuCode.Settings, MsgCode.Settings, UIIcon.Settings, "4");
                 this.lbxMenuItems.ItemsSource = this.items;
                 lbxMenuItems.SelectionChanged += this.lbxMenuItems_SelectionChanged;
             });
         }
 
 
-        MenuItemDataModel GetMenuDM(MenuCode menuCode, string display, IconDataModel idm, string padding) {
-            return new MenuItemDataModel() {
-                Code = menuCode,
-                Display = display,
-                IconSource = idm.IconSource as string,
-                Padding = padding,
-            };
+        private void AddItem(MenuCode menuCode, MsgCode msgCode, UIIcon uIIcon, string padding) {
+            this.wrapper.GetMenuItemDataModel(menuCode, msgCode, uIIcon, padding,
+                (dm) => { this.items.Add(dm); }, (dm) => { this.items.Add(dm); });
         }
 
         #endregion
