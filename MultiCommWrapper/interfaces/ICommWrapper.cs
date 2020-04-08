@@ -11,20 +11,6 @@ namespace MultiCommWrapper.Net.interfaces {
 
     public interface ICommWrapper {
 
-        #region For future
-
-        ///// <summary>Event raised when a device is dropped from OS</summary>
-        //event EventHandler<string> BLE_DeviceRemoved;
-
-
-        ///// <summary>Event raised when a device is discovered</summary>
-        //event EventHandler<BluetoothLEDeviceInfo> BLE_DeviceDiscovered;
-
-
-        //// Intercept and assemble a full message from BT before raising this level event
-
-        #endregion
-
         #region events
 
         /// <summary>Event raised when the language is changed</summary>
@@ -84,6 +70,21 @@ namespace MultiCommWrapper.Net.interfaces {
         void BluetoothClassicDisconnect();
 
         void BluetoothClassicSend(string msg);
+
+        #endregion
+
+        #region BluetoothLE
+
+        /// <summary>Event raised when a device is dropped from OS</summary>
+        //event EventHandler<string> BluetoothLE_DeviceRemoved;
+
+
+        /// <summary>Event raised when a device is discovered</summary>
+        event EventHandler<BluetoothLEDeviceInfo> BluetoothLE_DeviceDiscovered;
+
+        void BluetoothLEDiscoverAsync();
+
+        void BluetoothLEConnectAsync(BluetoothLEDeviceInfo device);
 
         #endregion
 

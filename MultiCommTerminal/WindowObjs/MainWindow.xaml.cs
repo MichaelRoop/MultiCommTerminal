@@ -23,9 +23,6 @@ namespace MultiCommTerminal.WindowObjs {
         private List<BTDeviceInfo> btInfoList = new List<BTDeviceInfo>();
         private List<BluetoothLEDeviceInfo> btInfoListLE = new List<BluetoothLEDeviceInfo>();
 
-        // TODO move out of UI
-        private IBLETInterface blueToothLE = new BluetoothLE.Win32.BluetoothLEImplWin32();
-
         MenuWin menu = null;
         private ICommWrapper wrapper = null;
 
@@ -39,7 +36,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.OnStartupSuccess();
             this.wrapper.LanguageChanged += this.Languages_LanguageChanged;
 
-            this.blueToothLE.DeviceDiscovered += this.BlueToothLE_DeviceDiscovered;
+            this.wrapper.BluetoothLE_DeviceDiscovered += this.BlueToothLE_DeviceDiscovered;
 
             //this.wrapper.Blu
             this.wrapper.BluetoothClassicDeviceDiscovered += this.BlueTooth_DiscoveredBTDevice;
@@ -66,7 +63,7 @@ namespace MultiCommTerminal.WindowObjs {
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             // TODO call the wrapper teardown
 
-            this.blueToothLE.DeviceDiscovered -= this.BlueToothLE_DeviceDiscovered;
+            this.wrapper.BluetoothLE_DeviceDiscovered -= this.BlueToothLE_DeviceDiscovered;
             this.wrapper.BluetoothClassicDeviceDiscovered -= this.BlueTooth_DiscoveredBTDevice;
             this.wrapper.BluetoothClassicDiscoveryComplete -= this.BlueTooth_DiscoveryComplete;
             this.wrapper.BluetoothClassicConnectionCompleted -= this.BlueTooth_ConnectionCompleted;
@@ -120,7 +117,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.lbBluetoothLE.ItemsSource = null;
             this.btInfoListLE.Clear();
             this.lbBluetoothLE.ItemsSource = this.btInfoListLE;
-            this.blueToothLE.DiscoverDevices();
+            this.wrapper.BluetoothLEDiscoverAsync();
         }
 
         private void btnInfoLE_Click(object sender, RoutedEventArgs e) {
@@ -169,11 +166,6 @@ namespace MultiCommTerminal.WindowObjs {
                 //    System.Diagnostics.Debug.WriteLine("Custom: null");
                 //}
 
-
-
-
-
-
                 MessageBox.Show(sb.ToString(), info.Name);
             }
 
@@ -183,7 +175,7 @@ namespace MultiCommTerminal.WindowObjs {
             if (this.lbBluetoothLE.SelectedItem != null) {
                 try {
                     BluetoothLEDeviceInfo info = this.lbBluetoothLE.SelectedItem as BluetoothLEDeviceInfo;
-                    this.blueToothLE.Connect(info);
+                    this.wrapper.BluetoothLEConnectAsync(info);
                 }
                 catch (Exception ex) {
                     System.Diagnostics.Debug.WriteLine(ex.Message);
