@@ -26,6 +26,15 @@
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
       },
+      "Newtonsoft.Json/12.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        }
+      },
       "BluetoothCommon.Net/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
@@ -93,6 +102,34 @@
         },
         "runtime": {
           "bin/placeholder/LogUtils.Net.dll": {}
+        }
+      },
+      "MultiCommData.Net/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "LanguageFactory.Net": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/MultiCommData.Net.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MultiCommData.Net.dll": {}
+        }
+      },
+      "StorageFactory.Net/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "ChkUtils.Net": "1.0.0",
+          "LogUtils.Net": "1.0.0",
+          "Newtonsoft.Json": "12.0.3"
+        },
+        "compile": {
+          "bin/placeholder/StorageFactory.Net.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/StorageFactory.Net.dll": {}
         }
       }
     }
@@ -241,6 +278,37 @@
         "netstandard.library.nuspec"
       ]
     },
+    "Newtonsoft.Json/12.0.3": {
+      "sha512": "6mgjfnRB4jKMlzHSl+VD+oUc1IebOZabkbyWj2RiTgWwYPPuaK1H97G1sHqGwPlS5npiF5Q0OrxN1wni2n5QWg==",
+      "type": "package",
+      "path": "newtonsoft.json/12.0.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "lib/net20/Newtonsoft.Json.dll",
+        "lib/net20/Newtonsoft.Json.xml",
+        "lib/net35/Newtonsoft.Json.dll",
+        "lib/net35/Newtonsoft.Json.xml",
+        "lib/net40/Newtonsoft.Json.dll",
+        "lib/net40/Newtonsoft.Json.xml",
+        "lib/net45/Newtonsoft.Json.dll",
+        "lib/net45/Newtonsoft.Json.xml",
+        "lib/netstandard1.0/Newtonsoft.Json.dll",
+        "lib/netstandard1.0/Newtonsoft.Json.xml",
+        "lib/netstandard1.3/Newtonsoft.Json.dll",
+        "lib/netstandard1.3/Newtonsoft.Json.xml",
+        "lib/netstandard2.0/Newtonsoft.Json.dll",
+        "lib/netstandard2.0/Newtonsoft.Json.xml",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.xml",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.xml",
+        "newtonsoft.json.12.0.3.nupkg.sha512",
+        "newtonsoft.json.nuspec",
+        "packageIcon.png"
+      ]
+    },
     "BluetoothCommon.Net/1.0.0": {
       "type": "project",
       "path": "../BluetoothCommon.Net/BluetoothCommon.Net.csproj",
@@ -270,6 +338,16 @@
       "type": "project",
       "path": "../../SharedNetLibs/LogUtils.Net/LogUtils.Net.csproj",
       "msbuildProject": "../../SharedNetLibs/LogUtils.Net/LogUtils.Net.csproj"
+    },
+    "MultiCommData.Net/1.0.0": {
+      "type": "project",
+      "path": "../MultiCommData/MultiCommData.Net.csproj",
+      "msbuildProject": "../MultiCommData/MultiCommData.Net.csproj"
+    },
+    "StorageFactory.Net/1.0.0": {
+      "type": "project",
+      "path": "../../SharedNetLibs/StorageFactory.Net/StorageFactory.Net.csproj",
+      "msbuildProject": "../../SharedNetLibs/StorageFactory.Net/StorageFactory.Net.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -278,7 +356,9 @@
       "DependencyInjectorFactory >= 1.0.0",
       "IconFactory >= 1.0.0",
       "LanguageFactory.Net >= 1.0.0",
-      "NETStandard.Library >= 2.0.3"
+      "MultiCommData.Net >= 1.0.0",
+      "NETStandard.Library >= 2.0.3",
+      "StorageFactory.Net >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -314,6 +394,9 @@
             "D:\\Dev\\MultiCommTerminal\\BluetoothCommon.Net\\BluetoothCommon.Net.csproj": {
               "projectPath": "D:\\Dev\\MultiCommTerminal\\BluetoothCommon.Net\\BluetoothCommon.Net.csproj"
             },
+            "D:\\Dev\\MultiCommTerminal\\MultiCommData\\MultiCommData.Net.csproj": {
+              "projectPath": "D:\\Dev\\MultiCommTerminal\\MultiCommData\\MultiCommData.Net.csproj"
+            },
             "D:\\Dev\\SharedNetLibs\\DependencyInjectorFactory\\DependencyInjectorFactory.csproj": {
               "projectPath": "D:\\Dev\\SharedNetLibs\\DependencyInjectorFactory\\DependencyInjectorFactory.csproj"
             },
@@ -322,6 +405,9 @@
             },
             "D:\\Dev\\SharedNetLibs\\LanguageFactory\\LanguageFactory.Net.csproj": {
               "projectPath": "D:\\Dev\\SharedNetLibs\\LanguageFactory\\LanguageFactory.Net.csproj"
+            },
+            "D:\\Dev\\SharedNetLibs\\StorageFactory.Net\\StorageFactory.Net.csproj": {
+              "projectPath": "D:\\Dev\\SharedNetLibs\\StorageFactory.Net\\StorageFactory.Net.csproj"
             }
           }
         }

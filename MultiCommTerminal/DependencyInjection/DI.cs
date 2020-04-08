@@ -40,18 +40,8 @@ namespace MultiCommTerminal.DependencyInjection {
         
         /// <summary>Shortcut to get the application code wrapper</summary>
         /// <returns>The multi comm code wrapper</returns>
-        public static ICommWrapper Wrapper() {
-            return DI.GetObj<ICommWrapper>();
-        }
+        public static ICommWrapper Wrapper { get { return DI.GetObj<ICommWrapper>(); } }
 
-
-        public static ILangFactory Language() {
-            return DI.GetObj<ILangFactory>();
-        }
-
-        public static string GetText(MsgCode code) {
-            return DI.Language().GetMsgDisplay(code);
-        }
 
         public static IIconFactory GetIconFactory() {
             return DI.Get().GetObjSingleton<IIconFactory>();

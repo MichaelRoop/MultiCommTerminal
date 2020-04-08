@@ -52,7 +52,8 @@ namespace MultiCommTerminal {
             // Just start it up so that it is loaded in this one place
             ErrReport err;
             WrapErr.ToErrReport(out err, 9999, () => {
-                ICommWrapper w = DI.Wrapper();
+                ICommWrapper w = DI.Wrapper;
+                w.CurrentStoredLanguage();
             });
             if (err.Code != 0) {
                 MessageBox.Show(err.Msg, "Critical Error loading DI container");
@@ -127,9 +128,10 @@ namespace MultiCommTerminal {
             RollingFileAppender roller = new RollingFileAppender();
             roller.AppendToFile = true;
             // I had to use the manual configuration because the %env for special folders no longer working
+            //MultiCommSerialTerminal/Settings
             roller.File =
                 Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments, Environment.SpecialFolderOption.None),
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.None),
                     @"MultiCommSerialTerminal\Logs\log.txt");
             //roller.File = @"Logs\EventLog.txt";
             roller.Layout = patternLayout;

@@ -1,6 +1,5 @@
-﻿using MultiCommTerminal.Data;
-
-namespace MultiCommData.UserDisplayData {
+﻿
+namespace MultiCommData.UserDisplayData.Net {
 
     public class MenuItemDataModel {
         public MenuCode Code { get; set; } = MenuCode.Language;

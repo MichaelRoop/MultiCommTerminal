@@ -1,11 +1,10 @@
 ﻿using BluetoothCommon.Net.interfaces;
 using IconFactory.interfaces;
 using LanguageFactory.interfaces;
-using LanguageFactory.Messaging;
+using LogUtils.Net;
+using MultiCommData.Net.StorageDataModels;
 using MultiCommWrapper.Net.interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using StorageFactory.Net.interfaces;
 
 namespace MultiCommWrapper.Net.WrapCode {
 
@@ -14,35 +13,59 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         #region Data
 
+        IStorageManagerFactory storageFactory = null;
         ILangFactory languages = null;
         IIconFactory iconFactory = null;
         IBTInterface classicBluetooth = null;
         IBLETInterface bleBluetooth = null;
+        IStorageManager<SettingItems> settings = null;
+
+        private ClassLog log = new ClassLog("CommWrapper");
 
         #endregion
 
-        /// <summary>
-        /// 
-        /// </summary>
+        #region Constructors
+
+        /// <summary>Code logic and error handling here rather than UI</summary>
+        /// <remarks>This makes less work when adding extra OS UIs</remarks>
+        /// <param name="storageFactory"></param>
+        /// <param name="languages"></param>
+        /// <param name="iconFactory"></param>
+        /// <param name="classicBluetooth"></param>
+        /// <param name="bleBluetooth"></param>
         public CommWrapper(
+            IStorageManagerFactory storageFactory,
             ILangFactory languages,
             IIconFactory iconFactory,
             IBTInterface classicBluetooth,
             IBLETInterface bleBluetooth ) {
 
+            this.storageFactory = storageFactory;
             this.languages = languages;
             this.iconFactory = iconFactory;
             this.classicBluetooth = classicBluetooth;
             this.bleBluetooth = bleBluetooth;
 
-            this.languages.LanguageChanged += Event_LanguageChanged;
+            this.InitializeAll();
         }
 
+        #endregion
+
+        #region Init and teardown
 
         public void Teardown() {
             // TODO - shut down anything needed and dispose
-            this.languages.LanguageChanged -= this.Event_LanguageChanged;
+            this.TeardownLanguages();
         }
+
+
+        /// <summary>Make sure there are default files for all storage managers</summary>
+        private void InitializeAll() {
+            this.InitLanguages();
+            this.InitStorage();
+        }
+
+        #endregion
 
     }
 }

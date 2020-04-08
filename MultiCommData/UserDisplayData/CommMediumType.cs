@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MultiCommData.UserDisplayData {
+﻿
+namespace MultiCommData.UserDisplayData.Net {
 
     public enum CommMediumType {
         None,

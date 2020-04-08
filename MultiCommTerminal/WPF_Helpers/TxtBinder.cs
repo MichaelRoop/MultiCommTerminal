@@ -2,6 +2,7 @@
 using LanguageFactory.Languages.en;
 using LanguageFactory.Messaging;
 using MultiCommTerminal.DependencyInjection;
+using MultiCommWrapper.Net.interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -60,7 +61,7 @@ namespace MultiCommTerminal.WPF_Helpers {
                 return designLanguage.GetMsg(code).Display;
             }
             // Dependency injector
-            return DI.GetText(code);
+            return DI.Wrapper.GetText(code);
         }
 
 

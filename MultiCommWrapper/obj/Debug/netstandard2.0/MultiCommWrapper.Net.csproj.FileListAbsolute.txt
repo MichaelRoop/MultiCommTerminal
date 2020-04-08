@@ -20,3 +20,7 @@ D:\Dev\MultiCommTerminal\MultiCommWrapper\obj\Debug\netstandard2.0\MultiCommWrap
 D:\Dev\MultiCommTerminal\MultiCommWrapper\obj\Debug\netstandard2.0\MultiCommWrapper.Net.csproj.CopyComplete
 D:\Dev\MultiCommTerminal\MultiCommWrapper\obj\Debug\netstandard2.0\MultiCommWrapper.Net.dll
 D:\Dev\MultiCommTerminal\MultiCommWrapper\obj\Debug\netstandard2.0\MultiCommWrapper.Net.pdb
+D:\Dev\MultiCommTerminal\MultiCommWrapper\bin\Debug\netstandard2.0\MultiCommData.Net.dll
+D:\Dev\MultiCommTerminal\MultiCommWrapper\bin\Debug\netstandard2.0\StorageFactory.Net.dll
+D:\Dev\MultiCommTerminal\MultiCommWrapper\bin\Debug\netstandard2.0\StorageFactory.Net.pdb
+D:\Dev\MultiCommTerminal\MultiCommWrapper\bin\Debug\netstandard2.0\MultiCommData.Net.pdb

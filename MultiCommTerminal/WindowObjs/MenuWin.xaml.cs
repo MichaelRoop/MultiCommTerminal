@@ -2,10 +2,10 @@
 using LanguageFactory.data;
 using LanguageFactory.interfaces;
 using LanguageFactory.Messaging;
-using MultiCommData.UserDisplayData;
-using MultiCommTerminal.Data;
+using MultiCommData.UserDisplayData.Net;
 using MultiCommTerminal.DependencyInjection;
 using MultiCommTerminal.WPF_Helpers;
+using MultiCommWrapper.Net.interfaces;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -19,12 +19,14 @@ namespace MultiCommTerminal.WindowObjs {
         #region Data
 
         List<MenuItemDataModel> items = new List<MenuItemDataModel>();
+        ICommWrapper wrapper = null;
 
         #endregion
 
         #region Constructors and windows events
 
         public MenuWin() {
+            this.wrapper = DI.Wrapper;
             InitializeComponent();
             this.SizeToContent = SizeToContent.WidthAndHeight;
 
@@ -35,13 +37,13 @@ namespace MultiCommTerminal.WindowObjs {
         private void Window_ContentRendered(object sender, EventArgs e) {
             // TODO - replace with calls to wrapper
             this.LoadList(DI.GetObj<ILangFactory>().CurrentLanguage);
-            DI.Wrapper().LanguageChanged += this.Languages_LanguageChanged;
+            this.wrapper.LanguageChanged += this.Languages_LanguageChanged;
         }
 
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             lbxMenuItems.SelectionChanged -= this.lbxMenuItems_SelectionChanged;
-            DI.Wrapper().LanguageChanged -= this.Languages_LanguageChanged;
+            this.wrapper.LanguageChanged -= this.Languages_LanguageChanged;
         }
 
         #endregion
@@ -53,11 +55,11 @@ namespace MultiCommTerminal.WindowObjs {
             if (item != null) {
                 this.Hide();
                 switch (item.Code) {
-                    case Data.MenuCode.Language:
+                    case MenuCode.Language:
                         LanguageSelector win = new LanguageSelector();
                         win.ShowDialog();
                         break;
-                    case Data.MenuCode.Settings:
+                    case MenuCode.Settings:
                         break;
                     default:
                         // Not supported

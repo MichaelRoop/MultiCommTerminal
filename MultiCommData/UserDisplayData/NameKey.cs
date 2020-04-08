@@ -1,4 +1,5 @@
-﻿namespace MultiCommData.UserDisplayData {
+﻿
+namespace MultiCommData.UserDisplayData.Net {
 
     /// <summary>Group a communication message and its display value</summary>
     public class NameKey {

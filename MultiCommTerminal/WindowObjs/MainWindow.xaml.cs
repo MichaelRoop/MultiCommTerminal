@@ -2,7 +2,9 @@
 using BluetoothCommon.Net.interfaces;
 using LanguageFactory.data;
 using MultiCommData.UserDisplayData;
+using MultiCommData.UserDisplayData.Net;
 using MultiCommTerminal.DependencyInjection;
+using MultiCommWrapper.Net.interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -26,15 +28,17 @@ namespace MultiCommTerminal.WindowObjs {
         private IBLETInterface blueToothLE = new BluetoothLE.Win32.BluetoothLEImplWin32();
 
         MenuWin menu = null;
+        private ICommWrapper wrapper = null;
 
         #endregion
 
         #region Constructors and window events
 
         public MainWindow() {
+            this.wrapper = DI.Wrapper;
             InitializeComponent();
             this.OnStartupSuccess();
-            DI.Wrapper().LanguageChanged += this.Languages_LanguageChanged;
+            this.wrapper.LanguageChanged += this.Languages_LanguageChanged;
 
             this.blueToothLE.DeviceDiscovered += this.BlueToothLE_DeviceDiscovered;
             this.blueTooth.DiscoveredBTDevice += this.BlueTooth_DiscoveredBTDevice;

@@ -3,8 +3,10 @@ using DependencyInjectorFactory;
 using IconFactory.interfaces;
 using LanguageFactory.interfaces;
 using LanguageFactory.Messaging;
+using MultiCommWrapper.Net.Factories;
 using MultiCommWrapper.Net.interfaces;
 using MultiCommWrapper.Net.WrapCode;
+using StorageFactory.Net.interfaces;
 using System;
 using System.Collections.Generic;
 
@@ -19,11 +21,13 @@ namespace MultiCommWrapper.Net.DI {
             Dictionary<Type, ObjCreator> singletonCreators) {
             
             singletonCreators.Add(typeof(ILangFactory), new ObjSingletonCreator(() => new SupportedLanguageFactory()));
+            singletonCreators.Add(typeof(IStorageManagerFactory), new ObjSingletonCreator(() => new MultiCommTerminalStorageFactory()));
 
             singletonCreators.Add(
                 typeof(ICommWrapper), 
                     new ObjSingletonCreator(() => 
                         new CommWrapper(
+                            this.GetObjSingleton<IStorageManagerFactory>(),
                             this.GetObjSingleton<ILangFactory>(), 
                             this.GetObjSingleton<IIconFactory>(),
                             this.GetObjSingleton<IBTInterface>(), 

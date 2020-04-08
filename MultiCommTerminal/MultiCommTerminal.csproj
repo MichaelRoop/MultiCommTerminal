@@ -24,7 +24,7 @@
     <ProjectReference Include="..\BluetoothClassic\BluetoothClassic.Win32.csproj" />
     <ProjectReference Include="..\BluetoothCommon.Net\BluetoothCommon.Net.csproj" />
     <ProjectReference Include="..\BluetoothLE.Win32\BluetoothLE.Win32.csproj" />
-    <ProjectReference Include="..\MultiCommData\MultiCommData.csproj" />
+    <ProjectReference Include="..\MultiCommData\MultiCommData.Net.csproj" />
     <ProjectReference Include="..\MultiCommWrapper\MultiCommWrapper.Net.csproj" />
   </ItemGroup>
 

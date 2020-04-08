@@ -1,12 +1,14 @@
-﻿using BluetoothCommon.Net;
+﻿using LanguageFactory.data;
 using LanguageFactory.Messaging;
+using MultiCommData.Net.StorageDataModels;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MultiCommWrapper.Net.interfaces {
-    
+
     public interface ICommWrapper {
+
+        #region For future
 
         ///// <summary>Event raised when a device is dropped from OS</summary>
         //event EventHandler<string> BLE_DeviceRemoved;
@@ -22,18 +24,38 @@ namespace MultiCommWrapper.Net.interfaces {
         ////event EventHandler<byte[]> BytesReceived;
         //// Intercept and assemble a full message from BT before raising this level event
 
+        #endregion
 
-        #region Language Methods and events
+        #region events
 
         /// <summary>Event raised when the language is changed</summary>
         event EventHandler<SupportedLanguage> LanguageChanged;
 
+        #endregion
+
+        #region Languages
+
+        void CurrentStoredLanguage();
+
+        void CurrentLanguage(Action<LangCode> onDone);
+        void SetLanguage(LangCode code);
+        void LanguageList(Action<List<LanguageDataModel>> onDone);
+
+        void SaveLanguage(LangCode code, Action<string> onError);
+        void SaveLanguage(LangCode code, Action onSuccess, Action<string> onError);
+
+        string GetText(MsgCode code);
+
+        #endregion
+
+        #region Settings
+
+        void GetSettings(Action<SettingItems> onSuccess, Action<string> onError);
+        void SaveSettings(SettingItems settings, Action onSuccess, Action<string> onError);
 
         #endregion
 
         void Teardown();
-
-
 
     }
 }

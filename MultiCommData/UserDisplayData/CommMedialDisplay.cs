@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
+namespace MultiCommData.UserDisplayData.Net {
 
-namespace MultiCommData.UserDisplayData {
     public class CommMedialDisplay {
 
         /// <summary>String displayed to user</summary>
