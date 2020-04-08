@@ -57,7 +57,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             // TODO - shut down anything needed and dispose
             this.TeardownLanguages();
             this.TeardownBluetoothClassic();
-            this.TearDownBluetoothLE();
+            this.BLE_TearDown();
         }
 
 
@@ -66,7 +66,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.InitLanguages();
             this.InitStorage();
             this.InitBluetoothClassic();
-            this.InitBluetoothLE();
+            this.BLE_Init();
         }
 
         #endregion

@@ -7,61 +7,61 @@ namespace MultiCommWrapper.Net.WrapCode {
 
     public partial class CommWrapper : ICommWrapper {
 
-        public event EventHandler<BTDeviceInfo> BluetoothClassicDeviceDiscovered;
-        public event EventHandler<bool> BluetoothClassicDiscoveryComplete;
-        public event EventHandler<bool> BluetoothClassicConnectionCompleted;
-        public event EventHandler<string> BluetoothClassicBytesReceived;
+        public event EventHandler<BTDeviceInfo> BTClassicDeviceDiscovered;
+        public event EventHandler<bool> BTClassicDiscoveryComplete;
+        public event EventHandler<bool> BTClassicConnectionCompleted;
+        public event EventHandler<string> BTClassicBytesReceived;
 
         #region Event handlers
 
-        private void ClassicBT_BytesReceived(object sender, byte[] data) {
+        private void BTClassic_BytesReceivedHandler(object sender, byte[] data) {
             // TODO Eventually assemble a message according to terminators and just send up completed message
 
             string msg = Encoding.ASCII.GetString(data, 0, data.Length);
             this.log.Info("", () => string.Format("Msg In: '{0}'", msg));
-            if (this.BluetoothClassicBytesReceived != null) {
-                this.BluetoothClassicBytesReceived(this, msg);
+            if (this.BTClassicBytesReceived != null) {
+                this.BTClassicBytesReceived(this, msg);
             }
         }
 
 
-        private void ClassicBT_ConnectionCompleted(object sender, bool e) {
-            if (this.BluetoothClassicConnectionCompleted != null) {
-                this.BluetoothClassicConnectionCompleted(this, e);
+        private void BTClassic_ConnectionCompletedHander(object sender, bool e) {
+            if (this.BTClassicConnectionCompleted != null) {
+                this.BTClassicConnectionCompleted(this, e);
             }
         }
 
 
-        private void ClassicBT_DiscoveryComplete(object sender, bool e) {
-            if (this.BluetoothClassicDiscoveryComplete != null) {
-                this.BluetoothClassicDiscoveryComplete(this, e);
+        private void BTClassic_DiscoveryCompleteHandler(object sender, bool e) {
+            if (this.BTClassicDiscoveryComplete != null) {
+                this.BTClassicDiscoveryComplete(this, e);
             }
         }
 
 
-        private void ClassicBT_DiscoveredDevice(object sender, BTDeviceInfo e) {
-            if (this.BluetoothClassicDeviceDiscovered != null) {
-                this.BluetoothClassicDeviceDiscovered(this, e);
+        private void BTClassic_DiscoveredDeviceHandler(object sender, BTDeviceInfo e) {
+            if (this.BTClassicDeviceDiscovered != null) {
+                this.BTClassicDeviceDiscovered(this, e);
             }
         }
 
         #endregion
 
-        public void BluetoothClassicDiscoverAsync() {
+        public void BTClassicDiscoverAsync() {
             this.classicBluetooth.DiscoverDevices();
         }
 
 
-        public void BluetoothClassicConnectAsync(BTDeviceInfo device) {
+        public void BTClassicConnectAsync(BTDeviceInfo device) {
             this.classicBluetooth.Connect(device);
         }
 
 
-        public void BluetoothClassicDisconnect() {
+        public void BTClassicDisconnect() {
             this.classicBluetooth.Disconnect();
         }
 
-        public void BluetoothClassicSend(string msg) {
+        public void BTClassicSend(string msg) {
             this.classicBluetooth.Send(msg);
         }
 
@@ -69,19 +69,19 @@ namespace MultiCommWrapper.Net.WrapCode {
         #region Init and teardown
 
         private void InitBluetoothClassic() {
-            this.classicBluetooth.DiscoveredBTDevice += this.ClassicBT_DiscoveredDevice;
-            this.classicBluetooth.DiscoveryComplete += this.ClassicBT_DiscoveryComplete;
-            this.classicBluetooth.ConnectionCompleted += this.ClassicBT_ConnectionCompleted;
-            this.classicBluetooth.BytesReceived += this.ClassicBT_BytesReceived;
+            this.classicBluetooth.DiscoveredBTDevice += this.BTClassic_DiscoveredDeviceHandler;
+            this.classicBluetooth.DiscoveryComplete += this.BTClassic_DiscoveryCompleteHandler;
+            this.classicBluetooth.ConnectionCompleted += this.BTClassic_ConnectionCompletedHander;
+            this.classicBluetooth.BytesReceived += this.BTClassic_BytesReceivedHandler;
         }
 
 
         private void TeardownBluetoothClassic() {
             this.classicBluetooth.Disconnect();
-            this.classicBluetooth.DiscoveredBTDevice -= this.ClassicBT_DiscoveredDevice;
-            this.classicBluetooth.DiscoveryComplete -= this.ClassicBT_DiscoveryComplete;
-            this.classicBluetooth.ConnectionCompleted -= this.ClassicBT_ConnectionCompleted;
-            this.classicBluetooth.BytesReceived -= this.ClassicBT_BytesReceived;
+            this.classicBluetooth.DiscoveredBTDevice -= this.BTClassic_DiscoveredDeviceHandler;
+            this.classicBluetooth.DiscoveryComplete -= this.BTClassic_DiscoveryCompleteHandler;
+            this.classicBluetooth.ConnectionCompleted -= this.BTClassic_ConnectionCompletedHander;
+            this.classicBluetooth.BytesReceived -= this.BTClassic_BytesReceivedHandler;
         }
 
         #endregion

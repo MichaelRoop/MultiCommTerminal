@@ -1,7 +1,5 @@
 ﻿using BluetoothCommon.Net;
-using BluetoothCommon.Net.interfaces;
 using LanguageFactory.data;
-using MultiCommData.UserDisplayData;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommTerminal.DependencyInjection;
 using MultiCommWrapper.Net.interfaces;
@@ -19,7 +17,6 @@ namespace MultiCommTerminal.WindowObjs {
         #region Data
 
         private MediumGroup mediumGroup = new MediumGroup();
-        //private CommMediumType currentMedium = CommMediumType.None;
         private List<BTDeviceInfo> btInfoList = new List<BTDeviceInfo>();
         private List<BluetoothLEDeviceInfo> btInfoListLE = new List<BluetoothLEDeviceInfo>();
 
@@ -36,13 +33,13 @@ namespace MultiCommTerminal.WindowObjs {
             this.OnStartupSuccess();
             this.wrapper.LanguageChanged += this.Languages_LanguageChanged;
 
-            this.wrapper.BluetoothLE_DeviceDiscovered += this.BlueToothLE_DeviceDiscovered;
+            this.wrapper.BLE_DeviceDiscovered += this.BlueToothLE_DeviceDiscovered;
 
             //this.wrapper.Blu
-            this.wrapper.BluetoothClassicDeviceDiscovered += this.BlueTooth_DiscoveredBTDevice;
-            this.wrapper.BluetoothClassicDiscoveryComplete += this.BlueTooth_DiscoveryComplete;
-            this.wrapper.BluetoothClassicConnectionCompleted += this.BlueTooth_ConnectionCompleted;
-            this.wrapper.BluetoothClassicBytesReceived += this.BlueTooth_BytesReceived;
+            this.wrapper.BTClassicDeviceDiscovered += this.BlueTooth_DiscoveredBTDevice;
+            this.wrapper.BTClassicDiscoveryComplete += this.BlueTooth_DiscoveryComplete;
+            this.wrapper.BTClassicConnectionCompleted += this.BlueTooth_ConnectionCompleted;
+            this.wrapper.BTClassicBytesReceived += this.BlueTooth_BytesReceived;
 
             // TODO - remove - temp populate command box
             this.outgoing.Items.Add("First msg");
@@ -63,11 +60,11 @@ namespace MultiCommTerminal.WindowObjs {
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             // TODO call the wrapper teardown
 
-            this.wrapper.BluetoothLE_DeviceDiscovered -= this.BlueToothLE_DeviceDiscovered;
-            this.wrapper.BluetoothClassicDeviceDiscovered -= this.BlueTooth_DiscoveredBTDevice;
-            this.wrapper.BluetoothClassicDiscoveryComplete -= this.BlueTooth_DiscoveryComplete;
-            this.wrapper.BluetoothClassicConnectionCompleted -= this.BlueTooth_ConnectionCompleted;
-            this.wrapper.BluetoothClassicBytesReceived -= this.BlueTooth_BytesReceived;
+            this.wrapper.BLE_DeviceDiscovered -= this.BlueToothLE_DeviceDiscovered;
+            this.wrapper.BTClassicDeviceDiscovered -= this.BlueTooth_DiscoveredBTDevice;
+            this.wrapper.BTClassicDiscoveryComplete -= this.BlueTooth_DiscoveryComplete;
+            this.wrapper.BTClassicConnectionCompleted -= this.BlueTooth_ConnectionCompleted;
+            this.wrapper.BTClassicBytesReceived -= this.BlueTooth_BytesReceived;
 
 
             if (this.menu != null) {
@@ -117,7 +114,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.lbBluetoothLE.ItemsSource = null;
             this.btInfoListLE.Clear();
             this.lbBluetoothLE.ItemsSource = this.btInfoListLE;
-            this.wrapper.BluetoothLEDiscoverAsync();
+            this.wrapper.BLE_DiscoverAsync();
         }
 
         private void btnInfoLE_Click(object sender, RoutedEventArgs e) {
@@ -175,7 +172,7 @@ namespace MultiCommTerminal.WindowObjs {
             if (this.lbBluetoothLE.SelectedItem != null) {
                 try {
                     BluetoothLEDeviceInfo info = this.lbBluetoothLE.SelectedItem as BluetoothLEDeviceInfo;
-                    this.wrapper.BluetoothLEConnectAsync(info);
+                    this.wrapper.BLE_ConnectAsync(info);
                 }
                 catch (Exception ex) {
                     System.Diagnostics.Debug.WriteLine(ex.Message);
@@ -193,14 +190,14 @@ namespace MultiCommTerminal.WindowObjs {
             this.btInfoList.Clear();
             this.lbBluetooth.ItemsSource = this.btInfoList;
             this.gridWait.Visibility = Visibility.Visible;
-            this.wrapper.BluetoothClassicDiscoverAsync();
+            this.wrapper.BTClassicDiscoverAsync();
         }
 
         private void btnBTConnect_Click(object sender, RoutedEventArgs e) {
             BTDeviceInfo item = this.lbBluetooth.SelectedItem as BTDeviceInfo;
             if (item != null) {
                 this.gridWait.Visibility = Visibility.Visible;
-                this.wrapper.BluetoothClassicConnectAsync(item);
+                this.wrapper.BTClassicConnectAsync(item);
             }
         }
 
@@ -311,7 +308,7 @@ namespace MultiCommTerminal.WindowObjs {
                 // TODO - send to current device
                 switch ((this.cbComm.SelectedItem as CommMedialDisplay).MediumType) {
                     case CommMediumType.Bluetooth:
-                        this.wrapper.BluetoothClassicSend(cmd);
+                        this.wrapper.BTClassicSend(cmd);
                         break;
                     case CommMediumType.BluetoothLE:
                         break;

@@ -59,17 +59,17 @@ namespace MultiCommWrapper.Net.interfaces {
 
         #region Bluetooth Classic
 
-        event EventHandler<BTDeviceInfo> BluetoothClassicDeviceDiscovered;
-        event EventHandler<bool> BluetoothClassicDiscoveryComplete;
-        event EventHandler<bool> BluetoothClassicConnectionCompleted;
-        event EventHandler<string> BluetoothClassicBytesReceived;
+        event EventHandler<BTDeviceInfo> BTClassicDeviceDiscovered;
+        event EventHandler<bool> BTClassicDiscoveryComplete;
+        event EventHandler<bool> BTClassicConnectionCompleted;
+        event EventHandler<string> BTClassicBytesReceived;
 
-        void BluetoothClassicDiscoverAsync();
-        void BluetoothClassicConnectAsync(BTDeviceInfo device);
+        void BTClassicDiscoverAsync();
+        void BTClassicConnectAsync(BTDeviceInfo device);
 
-        void BluetoothClassicDisconnect();
+        void BTClassicDisconnect();
 
-        void BluetoothClassicSend(string msg);
+        void BTClassicSend(string msg);
 
         #endregion
 
@@ -80,11 +80,11 @@ namespace MultiCommWrapper.Net.interfaces {
 
 
         /// <summary>Event raised when a device is discovered</summary>
-        event EventHandler<BluetoothLEDeviceInfo> BluetoothLE_DeviceDiscovered;
+        event EventHandler<BluetoothLEDeviceInfo> BLE_DeviceDiscovered;
 
-        void BluetoothLEDiscoverAsync();
+        void BLE_DiscoverAsync();
 
-        void BluetoothLEConnectAsync(BluetoothLEDeviceInfo device);
+        void BLE_ConnectAsync(BluetoothLEDeviceInfo device);
 
         #endregion
 

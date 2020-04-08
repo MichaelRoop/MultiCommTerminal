@@ -1,40 +1,48 @@
 ﻿using BluetoothCommon.Net;
 using MultiCommWrapper.Net.interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MultiCommWrapper.Net.WrapCode {
-    
+
     public partial class CommWrapper : ICommWrapper {
 
+        #region Events and their handlers
+
         /// <summary>Event raised when a device is discovered</summary>
-        public event EventHandler<BluetoothLEDeviceInfo> BluetoothLE_DeviceDiscovered;
+        public event EventHandler<BluetoothLEDeviceInfo> BLE_DeviceDiscovered;
 
 
-        private void BleBluetooth_DeviceDiscovered(object sender, BluetoothLEDeviceInfo e) {
-            if (this.BluetoothLE_DeviceDiscovered != null) {
-                this.BluetoothLE_DeviceDiscovered(this, e);
+        private void BLE_DeviceDiscoveredHandler(object sender, BluetoothLEDeviceInfo e) {
+            if (this.BLE_DeviceDiscovered != null) {
+                this.BLE_DeviceDiscovered(this, e);
             }
         }
 
-        private void InitBluetoothLE() {
-            this.bleBluetooth.DeviceDiscovered += BleBluetooth_DeviceDiscovered;
-        }
+        #endregion
 
-        private void TearDownBluetoothLE() {
-            this.bleBluetooth.DeviceDiscovered -= BleBluetooth_DeviceDiscovered;
-        }
+        #region Public
 
-
-        public void BluetoothLEDiscoverAsync() {
+        public void BLE_DiscoverAsync() {
             this.bleBluetooth.DiscoverDevices();
         }
 
-        public void BluetoothLEConnectAsync(BluetoothLEDeviceInfo device) {
+        public void BLE_ConnectAsync(BluetoothLEDeviceInfo device) {
             this.bleBluetooth.Connect(device);
         }
 
+        #endregion
+
+        #region Init and teardown
+
+        private void BLE_Init() {
+            this.bleBluetooth.DeviceDiscovered += BLE_DeviceDiscoveredHandler;
+        }
+
+        private void BLE_TearDown() {
+            this.bleBluetooth.DeviceDiscovered -= BLE_DeviceDiscoveredHandler;
+        }
+
+        #endregion
 
     }
 }
