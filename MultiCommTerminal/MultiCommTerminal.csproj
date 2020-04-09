@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="images\icons\add.png" />
+    <None Remove="images\icons\bin-2.png" />
     <None Remove="images\icons\check-1.png" />
     <None Remove="images\icons\close.png" />
     <None Remove="images\icons\cog.png" />
@@ -14,6 +16,9 @@
     <None Remove="images\icons\language.png" />
     <None Remove="images\icons\logout-1.png" />
     <None Remove="images\icons\navigation-menu-white.png" />
+    <None Remove="images\icons\pencil.png" />
+    <None Remove="images\icons\search.png" />
+    <None Remove="images\icons\view.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,6 +45,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="images\icons\add.png" />
+    <Resource Include="images\icons\bin-2.png" />
     <Resource Include="images\icons\check-1.png" />
     <Resource Include="images\icons\close.png" />
     <Resource Include="images\icons\cog.png" />
@@ -47,6 +54,9 @@
     <Resource Include="images\icons\language.png" />
     <Resource Include="images\icons\logout-1.png" />
     <Resource Include="images\icons\navigation-menu-white.png" />
+    <Resource Include="images\icons\pencil.png" />
+    <Resource Include="images\icons\search.png" />
+    <Resource Include="images\icons\view.png" />
   </ItemGroup>
 
   <ItemGroup>

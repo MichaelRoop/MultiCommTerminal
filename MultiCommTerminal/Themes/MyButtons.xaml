@@ -6,14 +6,14 @@
 
     <!-- Button with rounded corners -->
     <Style x:Key="RoundEdgeButton" TargetType="{x:Type Button}">
-        <Setter Property="Width" Value="75"/>
-        <Setter Property="Height" Value="25"/>
+        <Setter Property="Width" Value="85"/>
+        <Setter Property="Height" Value="35"/>
         <Setter Property="Foreground" Value="Blue"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="buttonBorder" CornerRadius="5" Background="Transparent" 
-                            BorderBrush="Blue"  BorderThickness="1" Padding="2" >
+                    <Border x:Name="buttonBorder" CornerRadius="10" Background="Transparent" 
+                            BorderBrush="Blue"  BorderThickness="1" Padding="10,0" >
                         <TextBlock x:Name="buttonText" Text="{TemplateBinding Content}" 
                             VerticalAlignment="Center" HorizontalAlignment="Center" TextTrimming="CharacterEllipsis" />
                     </Border>
@@ -42,24 +42,26 @@
 
     <!-- Button with rounded corners and an icon on the left -->
     <Style x:Key="TextIconButton" TargetType="{x:Type controls:UC_IconButton}">
-        <Setter Property="Width" Value="75"/>
-        <Setter Property="Height" Value="25"/>
+        <Setter Property="MinWidth" Value="85"/>
+        <Setter Property="Height" Value="35"/>
         <Setter Property="Foreground" Value="Blue"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Padding" Value="3"/>
-        <Setter Property="IconMargin" Value="6"/>
+        <Setter Property="IconMargin" Value="9"/>
+        <Setter Property="FontSize" Value="14"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:UC_IconButton}">
-                    <Border x:Name="tiButtonBorder" CornerRadius="5" BorderBrush="Blue" BorderThickness="1" Background="{TemplateBinding Background}" >
-                        <Grid>
+                    <Border x:Name="tiButtonBorder" CornerRadius="15" BorderBrush="Blue" BorderThickness="1" Background="{TemplateBinding Background}" >
+                        <Grid Margin="10,0">
                             <DockPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <!-- Pad image seperately since the Content already is padded -->
                                 <Border x:Name="imageBorder" Padding="{TemplateBinding IconMargin}">
                                     <Image Source="{TemplateBinding IconSource}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                                        RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" />
                                 </Border>
-                                <TextBlock x:Name="buttonText" Text="{TemplateBinding Content}" VerticalAlignment="Center" HorizontalAlignment="Center" TextTrimming="CharacterEllipsis" />
+                                <TextBlock x:Name="buttonText" Text="{TemplateBinding Content}" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                           TextTrimming="CharacterEllipsis" />
                             </DockPanel>
                         </Grid>
                     </Border>
@@ -85,4 +87,51 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <!-- Button with rounded corners and an icon on the left -->
+    <Style x:Key="RoundIconButton" TargetType="{x:Type controls:UC_RoundIconButton}">
+        <Setter Property="Width" Value="45"/>
+        <Setter Property="Height" Value="45"/>
+        <Setter Property="Foreground" Value="Blue"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="IconPadding" Value="8"/>
+        <Setter Property="ButtonCornerRadius" Value="22"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:UC_RoundIconButton}">
+                    <Border x:Name="tiButtonBorder" CornerRadius="{TemplateBinding ButtonCornerRadius}" BorderBrush="Blue" BorderThickness="1" Background="{TemplateBinding Background}" >
+                        <Grid>
+                            <DockPanel HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                <Border x:Name="imageBorder" Margin="{TemplateBinding IconPadding}" >
+                                    <Image x:Name="icon" Source="{TemplateBinding IconSource}"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                                       RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" />
+                                </Border>
+                            </DockPanel>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                         <!--Useful when using a mouse. Set general opacity--> 
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Opacity" Value=".5" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter Property="Opacity" Value="1" />
+                        </Trigger>
+                         <!--Useful when just doing touch screen. Note: must set different properties than IsMouseOver--> 
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="tiButtonBorder" Property="Opacity" Value=".4" />
+                            <Setter TargetName="icon" Property="Opacity" Value=".5" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="False">
+                            <Setter TargetName="tiButtonBorder" Property="Opacity" Value="1" />
+                            <Setter TargetName="icon" Property="Opacity" Value="1" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
 </ResourceDictionary>

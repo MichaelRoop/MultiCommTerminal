@@ -26,10 +26,14 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string Save { get { return Source(UIIcon.Save); } }
         public static string Cancel { get { return Source(UIIcon.Cancel); } }
         public static string Exit { get { return Source(UIIcon.Exit); } }
-
         public static string Settings { get { return Source(UIIcon.Settings); } }
         public static string Language { get { return Source(UIIcon.Language); } }
         public static string Language_W { get { return Source(UIIcon.LanguageWhite); } }
+        public static string Delete { get { return Source(UIIcon.Delete); } }
+        public static string Edit { get { return Source(UIIcon.Edit); } }
+        public static string View { get { return Source(UIIcon.View); } }
+        public static string Add { get { return Source(UIIcon.Add); } }
+        public static string Search { get { return Source(UIIcon.Search); } }
 
         #endregion
 

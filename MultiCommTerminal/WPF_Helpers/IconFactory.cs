@@ -22,10 +22,19 @@ namespace MultiCommTerminal.WPF_Helpers {
                     return new IconDataModel(UIIcon.Language, this.AddDir("language.png"), "6");
                 case UIIcon.LanguageWhite:
                     return new IconDataModel(UIIcon.LanguageWhite, this.AddDir("language-white.png"), "6");
+                case UIIcon.Delete:
+                    return new IconDataModel(UIIcon.Delete, this.AddDir("bin-2.png"), "6");
+                case UIIcon.Edit:
+                    return new IconDataModel(UIIcon.Edit, this.AddDir("pencil.png"), "6");
+                case UIIcon.View:
+                    return new IconDataModel(UIIcon.View, this.AddDir("view.png"), "6");
+                case UIIcon.Add:
+                    return new IconDataModel(UIIcon.Add, this.AddDir("add.png"), "6");
+                case UIIcon.Search:
+                    return new IconDataModel(UIIcon.Search, this.AddDir("search.png"), "6");
                 default:
                     return new IconDataModel(UIIcon.Cancel, this.AddDir("close.png"), "6");
             }
-
 
         }
 

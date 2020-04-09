@@ -59,6 +59,11 @@ namespace MultiCommTerminal.WindowObjs {
                     case MenuCode.Settings:
                         // TODO - settings window
                         break;
+                    case MenuCode.Commands:
+                        Commands cmds = new Commands();
+                        cmds.ShowDialog();
+                        this.Close();
+                        break;
                     default:
                         // Not supported
                         break;
@@ -80,6 +85,8 @@ namespace MultiCommTerminal.WindowObjs {
                 this.items.Clear();
                 this.AddItem(MenuCode.Language, MsgCode.language, UIIcon.Language, "2");
                 this.AddItem(MenuCode.Settings, MsgCode.Settings, UIIcon.Settings, "4");
+                this.AddItem(MenuCode.Commands, MsgCode.command, UIIcon.Add, "2"); // TODO Get a new icon
+
                 this.lbxMenuItems.ItemsSource = this.items;
                 lbxMenuItems.SelectionChanged += this.lbxMenuItems_SelectionChanged;
             });

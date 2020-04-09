@@ -10,7 +10,7 @@
     <Grid>
         <Border BorderBrush="Blue" BorderThickness="0.5" >
             <!-- Hack the upper margin to hide the top most separator -->
-            <ListView x:Name="lbxMenuItems" MinHeight="10" MinWidth="10" Margin="0,-4.5,0,0" Padding="0">
+            <ListView x:Name="lbxMenuItems" MinHeight="10" MinWidth="10" Margin="0,-4.5,0,0" Padding="0" FontSize="16">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />

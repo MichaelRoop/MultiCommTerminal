@@ -57,7 +57,7 @@
                                         Content="{Binding Source={x:Static wpfHelper:TxtBinder.Send}}" Click="btnSend_Click" />
                             </DockPanel>
                             <Border BorderBrush="Blue" BorderThickness="1" Margin="10">
-                                <ListBox x:Name="outgoing" Width="250" Height="300" 
+                                <ListBox x:Name="outgoing" Width="250" Height="300" FontSize="16" HorizontalAlignment="Stretch"
                                          ScrollViewer.VerticalScrollBarVisibility="Auto" 
                                          ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
                             </Border>
@@ -65,7 +65,7 @@
                         <StackPanel x:Name="spResps" VerticalAlignment="Center">
                             <Label x:Name="lbResponse" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Response}}" HorizontalAlignment="Center" />
                             <Border BorderBrush="Blue" BorderThickness="1" Margin="10">
-                                <ListBox x:Name="lbIncoming" Width="250" Height="300" 
+                                <ListBox x:Name="lbIncoming" Width="250" Height="300" FontSize="16" HorizontalAlignment="Stretch"
                                     ScrollViewer.VerticalScrollBarVisibility="Auto" 
                                     ScrollViewer.HorizontalScrollBarVisibility="Auto" />
                             </Border>
@@ -74,8 +74,8 @@
                 </Border>
                 <Border BorderBrush="AliceBlue" BorderThickness="1" VerticalAlignment="Center">
                     <DockPanel  VerticalAlignment="Center">
-                        <Border BorderBrush="Blue" BorderThickness="1" Margin="10">
-                            <ComboBox x:Name="cbComm" MinHeight="20" MinWidth="100" MaxHeight="90" Background="Transparent"
+                        <Border Margin="10">
+                            <ComboBox x:Name="cbComm" Height="25" MinWidth="100" MaxHeight="90" VerticalAlignment="Top" Background="Transparent"
                                       SelectionChanged="cbComm_SelectionChanged">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
@@ -91,61 +91,72 @@
                         </Border>
 
                         <!-- Will need different for LE and classic. Using the classic one modified for LE for now -->
-                        <StackPanel x:Name="spBluetooth" VerticalAlignment="Center" Visibility="Visible">
-                            <DockPanel>
+                        <StackPanel x:Name="spBluetooth" VerticalAlignment="Center" Visibility="Collapsed">
+                            <DockPanel Margin="10,0">
                                 <Label Content="Device:"/>
-                                <ListBox x:Name="lbBluetooth" MinHeight="30" MinWidth="200" MaxHeight="100" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <Grid Margin="1">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="auto" />
-                                                    <ColumnDefinition Width="auto" />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Text="{Binding Name}" />
-                                                <!--<TextBlock Grid.Column="1" Text="{Binding Address}" Margin="2,0" />-->
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                                </ListBox>
-                                <Button x:Name="btnDiscover" Style="{StaticResource RoundEdgeButton}"
-                                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Discover}}" Background="Transparent" Click="btnDiscover_Click" />
-                                <Button x:Name="btnBTConnect" 
-                                    Style="{StaticResource RoundEdgeButton}"
-                                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Connect}}" Background="Transparent" Click="btnBTConnect_Click" />
+                                <StackPanel>
+                                    <ListBox x:Name="lbBluetooth" MinHeight="30" MinWidth="200" MaxHeight="100" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="1">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto" />
+                                                        <ColumnDefinition Width="auto" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="{Binding Name}" />
+                                                    <!--<TextBlock Grid.Column="1" Text="{Binding Address}" Margin="2,0" />-->
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                    <DockPanel HorizontalAlignment="Left" Margin="0,10">
+                                        <controls:UC_IconButton x:Name="btnDiscover" Margin="0,0,10,0"
+                                            Style="{StaticResource TextIconButton}"
+                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Discover}}" 
+                                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Search}}"                                                                                            
+                                            Background="Transparent" Click="btnDiscover_Click" />
+                                        <Button x:Name="btnBTConnect"  
+                                            Style="{StaticResource RoundEdgeButton}"
+                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Connect}}" Background="Transparent" Click="btnBTConnect_Click" />
+                                    </DockPanel>
+                                </StackPanel>
                             </DockPanel>
                         </StackPanel>
-
-                        <StackPanel x:Name="spBluetoothLE" VerticalAlignment="Center" Visibility="Collapsed">
-                            <DockPanel>
+                        <StackPanel x:Name="spBluetoothLE" VerticalAlignment="Center" Visibility="Visible">
+                            <DockPanel Margin="10,0">
                                 <Label Content="Device:"/>
-                                <ListBox x:Name="lbBluetoothLE" MinHeight="30" MinWidth="200" MaxHeight="100" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <Grid Margin="1">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="auto" />
-                                                    <ColumnDefinition Width="auto" />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Text="{Binding Name}" />
-                                                <!--<TextBlock Grid.Column="1" Text="{Binding Address}" Margin="2,0" />-->
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                                </ListBox>
-                                <Button x:Name="btnDiscoverLE" Style="{StaticResource RoundEdgeButton}"
-                                    Content="Discover" Background="Transparent" Click="btnDiscoverLE_Click" />
-                                <Button x:Name="btnInfoLE" Style="{StaticResource RoundEdgeButton}"
-                                    Content="LE Info" Background="Transparent" Click="btnInfoLE_Click" />
-
-                                <Button x:Name="btnLEConnect" 
-                                    Style="{StaticResource RoundEdgeButton}"
-                                    Content="Connect" Background="Transparent" Click="btnLEConnect_Click" />
+                                <StackPanel>
+                                    <ListBox x:Name="lbBluetoothLE" MinHeight="30" MinWidth="200" MaxHeight="100" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="1">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto" />
+                                                        <ColumnDefinition Width="auto" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="{Binding Name}" />
+                                                    <!--<TextBlock Grid.Column="1" Text="{Binding Address}" Margin="2,0" />-->
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                    <DockPanel HorizontalAlignment="Left" Margin="0,10">
+                                        <controls:UC_IconButton x:Name="btnDiscoverLE" 
+                                            Style="{StaticResource TextIconButton}"
+                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Discover}}"                                        
+                                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Search}}"                                    
+                                            Background="Transparent" Click="btnDiscoverLE_Click" />
+                                        <controls:UC_IconButton x:Name="btnInfoLE" Style="{StaticResource TextIconButton}"
+                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Info}}" Margin="10,0"
+                                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.View}}"                                                        
+                                            Background="Transparent" Click="btnInfoLE_Click" />
+                                        <Button x:Name="btnLEConnect" 
+                                            Style="{StaticResource RoundEdgeButton}"
+                                            Content="Connect" Background="Transparent" Click="btnLEConnect_Click" />
+                                    </DockPanel>
+                                </StackPanel>
                             </DockPanel>
                         </StackPanel>
-
-
-
                         <StackPanel x:Name="spEthernet" VerticalAlignment="Center" Visibility="Collapsed">
                             <DockPanel>
                                 <Label Content="IP:"/>
@@ -158,7 +169,6 @@
                                 <ListBox x:Name="lbWifi" MinHeight="30" MinWidth="100"/>
                             </DockPanel>
                         </StackPanel>
-
                     </DockPanel>
                 </Border>
                 <Border BorderBrush="AliceBlue" BorderThickness="1" VerticalAlignment="Center">
