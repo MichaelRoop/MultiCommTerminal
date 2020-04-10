@@ -1,4 +1,5 @@
 ﻿using LanguageFactory.data;
+using LogUtils.Net;
 using MultiCommTerminal.DependencyInjection;
 using MultiCommWrapper.Net.interfaces;
 using System;
@@ -36,7 +37,7 @@ namespace MultiCommTerminal.WindowObjs {
                 // Only create the selected index here to avoid it firing on load
                 this.lbLanguages.SelectionChanged += this.lbLanguages_SelectionChanged;
             });
-            WpfHelperClasses.Core.WPF_ControlHelpers.ResizeToWidest(this.btnCancel, this.btnSave);
+            //WpfHelperClasses.Core.WPF_ControlHelpers.ResizeToWidest(this.btnCancel, this.btnSave);
         }
 
 
@@ -88,7 +89,14 @@ namespace MultiCommTerminal.WindowObjs {
                 this.lbTitle.Content = lang.GetText(MsgCode.language);
                 this.btnSave.Content = lang.GetText(MsgCode.save);
                 this.btnCancel.Content = lang.GetText(MsgCode.cancel);
-                WpfHelperClasses.Core.WPF_ControlHelpers.ResizeToWidest(this.btnCancel, this.btnSave);
+
+                Log.Error(9, "");
+                Log.Error(9, () => string.Format("{0} | {1} - {2}|{3}", 
+                    btnCancel.Width, btnCancel.ActualWidth, btnSave.Width, btnSave.ActualWidth));
+
+            // This somehow prevents them from ever resizing after intial call
+             //   WpfHelperClasses.Core.WPF_ControlHelpers.ResizeToWidest(this.btnCancel, this.btnSave);
+
             });
         }
 
