@@ -52,15 +52,15 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:UC_IconButton}">
-                    <Border x:Name="tiButtonBorder" CornerRadius="15" BorderBrush="Blue" BorderThickness="1" Background="{TemplateBinding Background}" >
-                        <Grid Margin="10,0">
+                    <Border x:Name="tiButtonBorder" CornerRadius="15" BorderBrush="Blue" BorderThickness="1" Background="{TemplateBinding Background}" HorizontalAlignment="Stretch" >
+                        <Grid Margin="10,0" HorizontalAlignment="Stretch">
                             <DockPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <!-- Pad image seperately since the Content already is padded -->
                                 <Border x:Name="imageBorder" Padding="{TemplateBinding IconMargin}">
-                                    <Image Source="{TemplateBinding IconSource}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-                                       RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" />
+                                    <Image Source="{TemplateBinding IconSource}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                           RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" />
                                 </Border>
-                                <TextBlock x:Name="buttonText" Text="{TemplateBinding Content}" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                <TextBlock x:Name="buttonText" Text="{TemplateBinding Content}" VerticalAlignment="Center" HorizontalAlignment="Center"
                                            TextTrimming="CharacterEllipsis" />
                             </DockPanel>
                         </Grid>

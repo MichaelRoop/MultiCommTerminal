@@ -36,6 +36,7 @@ namespace MultiCommTerminal.WindowObjs {
                 // Only create the selected index here to avoid it firing on load
                 this.lbLanguages.SelectionChanged += this.lbLanguages_SelectionChanged;
             });
+            WpfHelperClasses.Core.WPF_ControlHelpers.ResizeToWidest(this.btnCancel, this.btnSave);
         }
 
 
@@ -45,8 +46,9 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
-        private void lbTitle_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+        private void BrdTitleBorder_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
             this.DragMove();
+
         }
 
         #endregion
@@ -86,8 +88,7 @@ namespace MultiCommTerminal.WindowObjs {
                 this.lbTitle.Content = lang.GetText(MsgCode.language);
                 this.btnSave.Content = lang.GetText(MsgCode.save);
                 this.btnCancel.Content = lang.GetText(MsgCode.cancel);
-
-                // Other texts
+                WpfHelperClasses.Core.WPF_ControlHelpers.ResizeToWidest(this.btnCancel, this.btnSave);
             });
         }
 

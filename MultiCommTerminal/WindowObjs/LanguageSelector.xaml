@@ -14,7 +14,7 @@
     <Grid HorizontalAlignment="Stretch">
         <Border BorderBrush="Blue" BorderThickness="1">
             <StackPanel>
-                <Border Background="DarkBlue" Height="30">
+                <Border x:Name="brdTitle" Background="DarkBlue" Height="30" MouseDown="BrdTitleBorder_MouseDown">
                     <DockPanel HorizontalAlignment="Center">
                         <Border Padding="4">
                             <!--MultiCommTerminal;component/images/icons/language-white.png-->
@@ -25,12 +25,12 @@
                                    />
                         </Border>
                         <Label x:Name="lbTitle" Margin="2" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Language}}" 
-                           MouseDown="lbTitle_MouseDown" HorizontalContentAlignment="Center"
+                           HorizontalContentAlignment="Center"
                            Foreground="White" Background="DarkBlue" FontSize="14" FontWeight="Bold" Padding="2" />
                     </DockPanel>
                 </Border>
                 <StackPanel Grid.ColumnSpan="2">
-                    <ListBox x:Name="lbLanguages" Width="250" Height="200" FontSize="16"
+                    <ListBox x:Name="lbLanguages" MinWidth="250" MinHeight="200" FontSize="16"
                      Margin="10"
                      ScrollViewer.HorizontalScrollBarVisibility="Auto"
                      ScrollViewer.VerticalScrollBarVisibility="Auto"
