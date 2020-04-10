@@ -24,11 +24,65 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper = DI.Wrapper;
             InitializeComponent();
             this.SizeToContent = SizeToContent.WidthAndHeight;
+            // Called before the SizeChanged event on the buttons which will call the initial resize
+            WpfHelperClasses.Core.WPF_ControlHelpers.ForceButtonMinMax(this.btnCancel, this.btnSave);
 
             // Move forward stuff to wrapper
             this.wrapper.LanguageChanged += Languages_LanguageChanged;
             this.wrapper.CurrentLanguage((code) => { this.languageOnEntry = code; });
+
+            this.btnCancel.SizeChanged += BtnCancel_SizeChanged;
+            this.btnSave.SizeChanged += BtnSave_SizeChanged;
+
+            this.btnCancel.DataContextChanged += BtnCancel_DataContextChanged;
+
         }
+
+        private void BtnCancel_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e) {
+            //throw new NotImplementedException();
+
+            Log.Error(34, "DATA CONTEXT CHANGED - Cancel");
+
+        }
+
+        bool cancelResized = false;
+        bool saveResized = false;
+
+        private void BtnSave_SizeChanged(object sender, SizeChangedEventArgs e) {
+            this.saveResized = true;
+            if (this.cancelResized) {
+                this.DoButtonResize();
+            }
+            else {
+                Log.Error(1, "SaveResized - single");
+            }
+        }
+
+
+        private void BtnCancel_SizeChanged(object sender, SizeChangedEventArgs e) {
+            this.cancelResized = true;
+            if (this.saveResized) {
+                this.DoButtonResize();
+            }
+            else {
+                Log.Error(1, "CancelResized - single");
+            }
+        }
+
+        private void DoButtonResize() {
+            Log.Error(10, "ButtonResize");
+            this.saveResized = false;
+            this.cancelResized = false;
+            Log.Error(11, "");
+            Log.Error(11, () => string.Format("{0} | {1} - {2}|{3}",
+                btnCancel.Width, btnCancel.ActualWidth, btnSave.Width, btnSave.ActualWidth));
+
+            // Need to disconnect events to prevent recall loop on the resize
+            this.btnCancel.SizeChanged -= BtnCancel_SizeChanged;
+            this.btnSave.SizeChanged -= BtnSave_SizeChanged;
+            WpfHelperClasses.Core.WPF_ControlHelpers.ResizeToWidest(this.btnCancel, this.btnSave);
+        }
+
 
 
         private void Window_ContentRendered(object sender, EventArgs e) {
@@ -87,20 +141,20 @@ namespace MultiCommTerminal.WindowObjs {
         private void Languages_LanguageChanged(object sender, LanguageFactory.Messaging.SupportedLanguage lang) {
             this.Dispatcher.Invoke(() => { 
                 this.lbTitle.Content = lang.GetText(MsgCode.language);
+                
+                // Force min max values and connect SizeChanged event BEFORE content changes
+                WpfHelperClasses.Core.WPF_ControlHelpers.ForceButtonMinMax(this.btnCancel, this.btnSave);
+                this.btnCancel.SizeChanged += BtnCancel_SizeChanged;
+                this.btnSave.SizeChanged += BtnSave_SizeChanged;
+
+                // Now change the content to fire the Size changed event
                 this.btnSave.Content = lang.GetText(MsgCode.save);
                 this.btnCancel.Content = lang.GetText(MsgCode.cancel);
-
-                Log.Error(9, "");
-                Log.Error(9, () => string.Format("{0} | {1} - {2}|{3}", 
-                    btnCancel.Width, btnCancel.ActualWidth, btnSave.Width, btnSave.ActualWidth));
-
-            // This somehow prevents them from ever resizing after intial call
-             //   WpfHelperClasses.Core.WPF_ControlHelpers.ResizeToWidest(this.btnCancel, this.btnSave);
-
             });
         }
 
         #endregion
+
 
     }
 }
