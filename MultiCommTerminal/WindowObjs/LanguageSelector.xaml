@@ -47,13 +47,13 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
                 
-                    <DockPanel HorizontalAlignment="Center" Margin="0,0,0,10">
-                        <controls:UC_IconButton x:Name="btnCancel"  
+                    <DockPanel HorizontalAlignment="Center" Margin="10,10,10,20">
+                        <controls:UC_IconButton x:Name="btnCancel"  Margin="0,0,10,0"
                             Style="{StaticResource TextIconButton}" 
                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Cancel}}" 
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}"
                             Click="btnCancel_Click"/>
-                        <controls:UC_IconButton x:Name="btnSave" Margin="10" Style="{StaticResource TextIconButton}" 
+                        <controls:UC_IconButton x:Name="btnSave" Style="{StaticResource TextIconButton}" 
                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Save}}"
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Save}}"
                             Click="btnSave_Click" />
