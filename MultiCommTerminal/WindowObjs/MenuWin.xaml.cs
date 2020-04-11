@@ -18,15 +18,17 @@ namespace MultiCommTerminal.WindowObjs {
 
         #region Data
 
-        List<MenuItemDataModel> items = new List<MenuItemDataModel>();
-        ICommWrapper wrapper = null;
+        private Window mainWindow = null;
+        private List<MenuItemDataModel> items = new List<MenuItemDataModel>();
+        private ICommWrapper wrapper = null;
 
         #endregion
 
         #region Constructors and windows events
 
-        public MenuWin() {
+        public MenuWin(Window mainWindow) {
             this.wrapper = DI.Wrapper;
+            this.mainWindow = mainWindow;
             InitializeComponent();
             this.SizeToContent = SizeToContent.WidthAndHeight;
         }
@@ -53,21 +55,27 @@ namespace MultiCommTerminal.WindowObjs {
                 this.Hide();
                 switch (item.Code) {
                     case MenuCode.Language:
-                        LanguageSelector win = new LanguageSelector();
+                        LanguageSelector win = new LanguageSelector(this.mainWindow);
                         win.ShowDialog();
                         break;
                     case MenuCode.Settings:
                         // TODO - settings window
                         break;
                     case MenuCode.Commands:
-                        Commands cmds = new Commands();
+                        Commands cmds = new Commands(this.mainWindow);
                         cmds.ShowDialog();
-                        this.Close();
+                        //this.lbxMenuItems.se
                         break;
                     default:
                         // Not supported
                         break;
                 }
+
+                this.lbxMenuItems.SelectionChanged -= this.lbxMenuItems_SelectionChanged;
+                this.Hide();
+                this.lbxMenuItems.UnselectAll();
+                lbxMenuItems.SelectionChanged += this.lbxMenuItems_SelectionChanged;
+
             }
         }
 

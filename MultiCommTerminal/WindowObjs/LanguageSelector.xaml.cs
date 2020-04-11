@@ -1,4 +1,5 @@
 ﻿using LanguageFactory.data;
+using LogUtils.Net;
 using MultiCommTerminal.DependencyInjection;
 using MultiCommWrapper.Net.interfaces;
 using System;
@@ -16,14 +17,17 @@ namespace MultiCommTerminal.WindowObjs {
         private LangCode languageOnEntry = LangCode.English;
         private ICommWrapper wrapper = null;
         private ButtonGroupSizeSyncManager widthManager = null;
+        private Window parent = null;
 
         #endregion
 
         #region Constructors and windows events
 
-        public LanguageSelector() {
+        public LanguageSelector(Window parent) {
             this.wrapper = DI.Wrapper;
+            this.parent = parent;
             InitializeComponent();
+
             this.SizeToContent = SizeToContent.WidthAndHeight;
 
             // Connect to language event
@@ -42,6 +46,7 @@ namespace MultiCommTerminal.WindowObjs {
                 // Only create the selected index here to avoid it firing on load
                 this.lbxLanguages.SelectionChanged += this.lbLanguages_SelectionChanged;
             });
+            WPF_ControlHelpers.CenterChild(parent, this);
         }
 
 

@@ -52,7 +52,7 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void Window_ContentRendered(object sender, EventArgs e) {
-            this.menu = new MenuWin();
+            this.menu = new MenuWin(this);
             this.menu.Visibility = Visibility.Collapsed;
         }
 
