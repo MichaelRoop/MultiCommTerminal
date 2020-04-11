@@ -4,6 +4,7 @@ using MultiCommWrapper.Net.interfaces;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.WindowObjs {
 
@@ -14,8 +15,7 @@ namespace MultiCommTerminal.WindowObjs {
 
         private LangCode languageOnEntry = LangCode.English;
         private ICommWrapper wrapper = null;
-        private bool cancelResized = false;
-        private bool saveResized = false;
+        private ButtonGroupSizeSyncManager widthManager = null;
 
         #endregion
 
@@ -30,25 +30,25 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper.LanguageChanged += Languages_LanguageChanged;
             this.wrapper.CurrentLanguage((code) => { this.languageOnEntry = code; });
 
-            // Call before the SizeChanged event and rendering which will trigger initial resize events
-            WpfHelperClasses.Core.WPF_ControlHelpers.ForceButtonMinMax(this.btnCancel, this.btnSave);
-            this.btnCancel.SizeChanged += this.Button_SizeChanged;
-            this.btnSave.SizeChanged += this.Button_SizeChanged;
+            // Call before rendering which will trigger initial resize events
+            this.widthManager = new ButtonGroupSizeSyncManager(this.btnCancel, this.btnSave);
+            this.widthManager.PrepForChange();
         }
 
 
         private void Window_ContentRendered(object sender, EventArgs e) {
             this.wrapper.LanguageList((items) => {
-                this.lbLanguages.ItemsSource = items;
+                this.lbxLanguages.ItemsSource = items;
                 // Only create the selected index here to avoid it firing on load
-                this.lbLanguages.SelectionChanged += this.lbLanguages_SelectionChanged;
+                this.lbxLanguages.SelectionChanged += this.lbLanguages_SelectionChanged;
             });
         }
 
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
-            this.lbLanguages.SelectionChanged -= this.lbLanguages_SelectionChanged;
+            this.lbxLanguages.SelectionChanged -= this.lbLanguages_SelectionChanged;
             this.wrapper.LanguageChanged -= this.Languages_LanguageChanged;
+            this.widthManager.Teardown();
         }
 
 
@@ -62,27 +62,19 @@ namespace MultiCommTerminal.WindowObjs {
         #region Events from controls
 
         private void btnSave_Click(object sender, RoutedEventArgs e) {
-            this.wrapper.CurrentLanguage((lang) => {
-                if (this.languageOnEntry != lang) {
-                    this.wrapper.SaveLanguage(lang, (err) => { MessageBox.Show(err); });
-                }
-            });
+            this.wrapper.CurrentLanguage(this.SaveIfDifferent);
             this.Close();
         }
 
 
         private void btnCancel_Click(object sender, RoutedEventArgs e) {
-            this.wrapper.CurrentLanguage((lang) => {
-                if (this.languageOnEntry != lang) {
-                    this.wrapper.SetLanguage(this.languageOnEntry);
-                }
-            });
+            this.wrapper.CurrentLanguage(this.RevertIfDifferent);
             this.Close();
         }
 
 
         private void lbLanguages_SelectionChanged(object sender, SelectionChangedEventArgs args) {
-            LanguageDataModel data = this.lbLanguages.SelectedItem as LanguageDataModel;
+            LanguageDataModel data = this.lbxLanguages.SelectedItem as LanguageDataModel;
             if (data != null) {
                 this.wrapper.SetLanguage(data.Code);
             }
@@ -92,41 +84,32 @@ namespace MultiCommTerminal.WindowObjs {
         private void Languages_LanguageChanged(object sender, LanguageFactory.Messaging.SupportedLanguage lang) {
             this.Dispatcher.Invoke(() => { 
                 this.lbTitle.Content = lang.GetText(MsgCode.language);
-                
-                // Force min max values and connect SizeChanged event BEFORE content changes
-                WpfHelperClasses.Core.WPF_ControlHelpers.ForceButtonMinMax(this.btnCancel, this.btnSave);
-                this.btnCancel.SizeChanged += this.Button_SizeChanged;
-                this.btnSave.SizeChanged += this.Button_SizeChanged;
 
-                // Now change the content to fire the Size changed event
+                // Prep for change then change button contents
+                this.widthManager.PrepForChange();
                 this.btnSave.Content = lang.GetText(MsgCode.save);
                 this.btnCancel.Content = lang.GetText(MsgCode.cancel);
-                // Content changes trigger SizeChange events where we will synchronize size of both buttons
             });
         }
 
+        #endregion
 
-        private void Button_SizeChanged(object sender, SizeChangedEventArgs e) {
-            Button b = sender as Button;
-            if (b.Name == nameof(this.btnCancel)) {
-                this.cancelResized = true;
+        #region Helpers
+
+        private void RevertIfDifferent(LangCode code) {
+            if (this.languageOnEntry != code) {
+                this.wrapper.SetLanguage(this.languageOnEntry);
             }
-            if (b.Name == nameof(this.btnSave)) {
-                this.saveResized = true;
-            }
-            if (this.cancelResized && this.saveResized) {
-                this.saveResized = false;
-                this.cancelResized = false;
-                // Need to disconnect events to prevent recall loop on the resize
-                this.btnCancel.SizeChanged -= Button_SizeChanged;
-                this.btnSave.SizeChanged -= Button_SizeChanged;
-                WpfHelperClasses.Core.WPF_ControlHelpers.ResizeToWidest(this.btnCancel, this.btnSave);
+        }
+
+        private void SaveIfDifferent(LangCode code) {
+            if (this.languageOnEntry != code) {
+                this.wrapper.SaveLanguage(code, (err) => { MessageBox.Show(err); });
             }
         }
 
 
         #endregion
-
 
     }
 }
