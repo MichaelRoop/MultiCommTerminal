@@ -119,8 +119,6 @@ namespace BluetoothClassic.Win32 {
                 thisDevice.EndConnect(result);
                 this.dataStream = thisDevice.GetStream();
                 this.LaunchRead();
-                //byte[] data = Encoding.ASCII.GetBytes("Data sent on connect");
-                //this.dataStream.Write(data, 0, data.Length);
             }
             if (this.ConnectionCompleted!= null) {
                 this.ConnectionCompleted(this, result.IsCompleted);

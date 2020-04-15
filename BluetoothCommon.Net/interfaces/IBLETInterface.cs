@@ -1,13 +1,13 @@
-﻿using System;
+﻿using CommunicationStack.Net.interfaces;
+using System;
 
 namespace BluetoothCommon.Net.interfaces {
 
     /// <summary>Interface for Bluetooth LE devices</summary>
-    public interface IBLETInterface {
+    public interface IBLETInterface : ICommStackChannel {
 
         /// <summary>Event raised when a device is dropped from OS</summary>
         event EventHandler<string> DeviceRemoved;
-
 
         /// <summary>Event raised when a device is discovered</summary>
         event EventHandler<BluetoothLEDeviceInfo> DeviceDiscovered;
@@ -17,6 +17,9 @@ namespace BluetoothCommon.Net.interfaces {
         void DiscoverDevices();
 
         void Connect(BluetoothLEDeviceInfo deviceInfo);
+
+
+        void Disconnect();
 
     }
 }

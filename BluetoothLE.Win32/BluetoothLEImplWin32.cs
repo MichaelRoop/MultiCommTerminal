@@ -33,6 +33,22 @@ namespace BluetoothLE.Win32 {
 
         #endregion
 
+        #region IBLETInterface:ICommStackChannel
+
+        // TODO - the read thread on the BLE will raise this
+        // When bytes come in
+        public event EventHandler<byte[]> MsgReceivedEvent;
+
+        public bool SendOutMsg(byte[] msg) {
+            //throw new NotImplementedException();
+            // TODO - send out by some kind of stream to BLE device - see classic
+            return false;
+        }
+
+        #endregion
+
+
+
         #region Interface events
 
         public event EventHandler<BluetoothLEDeviceInfo> DeviceDiscovered;
@@ -73,6 +89,11 @@ namespace BluetoothLE.Win32 {
             this.Disconnect();
             this.id = deviceInfo.Id;
             Task.Run(async () => await this.ConnectToDevice(deviceInfo));
+        }
+
+
+        void IBLETInterface.Disconnect() {
+            //throw new NotImplementedException();
         }
 
 
@@ -130,6 +151,8 @@ namespace BluetoothLE.Win32 {
 
 
         #endregion
+
+
 
         #region Connection to device code
 
@@ -382,7 +405,6 @@ namespace BluetoothLE.Win32 {
                 System.Diagnostics.Debug.WriteLine("Custom: null");
             }
         }
-
 
         #endregion
 

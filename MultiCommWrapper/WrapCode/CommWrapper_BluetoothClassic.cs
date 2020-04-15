@@ -63,7 +63,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
         public void BTClassicSend(string msg) {
-            this.BtClassicStack.SendToComm(msg);
+            this.btClassicStack.SendToComm(msg);
         }
 
 
@@ -71,14 +71,14 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         private void InitBluetoothClassic() {
             // Connect comm channel and its stack
-            this.BtClassicStack.SetCommChannel(this.classicBluetooth);
-            this.BtClassicStack.InTerminators = "\n\r".ToAsciiByteArray();
-            this.BtClassicStack.OutTerminators = "\n\r".ToAsciiByteArray();
+            this.btClassicStack.SetCommChannel(this.classicBluetooth);
+            this.btClassicStack.InTerminators = "\n\r".ToAsciiByteArray();
+            this.btClassicStack.OutTerminators = "\n\r".ToAsciiByteArray();
 
             this.classicBluetooth.DiscoveredBTDevice += this.BTClassic_DiscoveredDeviceHandler;
             this.classicBluetooth.DiscoveryComplete += this.BTClassic_DiscoveryCompleteHandler;
             this.classicBluetooth.ConnectionCompleted += this.BTClassic_ConnectionCompletedHander;
-            this.BtClassicStack.MsgReceived += this.BTClassic_BytesReceivedHandler;
+            this.btClassicStack.MsgReceived += this.BTClassic_BytesReceivedHandler;
         }
 
 
@@ -87,7 +87,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.classicBluetooth.DiscoveredBTDevice -= this.BTClassic_DiscoveredDeviceHandler;
             this.classicBluetooth.DiscoveryComplete -= this.BTClassic_DiscoveryCompleteHandler;
             this.classicBluetooth.ConnectionCompleted -= this.BTClassic_ConnectionCompletedHander;
-            this.BtClassicStack.MsgReceived -= this.BTClassic_BytesReceivedHandler;
+            this.btClassicStack.MsgReceived -= this.BTClassic_BytesReceivedHandler;
         }
 
         #endregion

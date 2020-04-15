@@ -52,6 +52,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\SharedNetLibs\CommunicationStack.Net\CommunicationStack.Net.csproj">
+      <Project>{34EB157E-2489-4B3E-9E6A-BE92D5ED4711}</Project>
+      <Name>CommunicationStack.Net</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BluetoothCommon.Net\BluetoothCommon.Net.csproj">
       <Project>{f30f15eb-d67a-4338-b34a-c1def003e5db}</Project>
       <Name>BluetoothCommon.Net</Name>

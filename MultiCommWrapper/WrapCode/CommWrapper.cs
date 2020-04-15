@@ -21,7 +21,8 @@ namespace MultiCommWrapper.Net.WrapCode {
         IBTInterface classicBluetooth = null;
         IBLETInterface bleBluetooth = null;
         IStorageManager<SettingItems> settings = null;
-        ICommStackLevel0 BtClassicStack = null;
+        ICommStackLevel0 btClassicStack = null;
+        ICommStackLevel0 bleStack = null;
 
         private ClassLog log = new ClassLog("CommWrapper");
 
@@ -42,14 +43,16 @@ namespace MultiCommWrapper.Net.WrapCode {
             IIconFactory iconFactory,
             IBTInterface classicBluetooth,
             ICommStackLevel0 classicBluetoothStack,
-            IBLETInterface bleBluetooth ) {
+            IBLETInterface bleBluetooth,
+            ICommStackLevel0 bleStack) {
 
             this.storageFactory = storageFactory;
             this.languages = languages;
             this.iconFactory = iconFactory;
             this.classicBluetooth = classicBluetooth;
+            this.btClassicStack = classicBluetoothStack;
             this.bleBluetooth = bleBluetooth;
-            this.BtClassicStack = classicBluetoothStack;
+            this.bleStack = bleStack;
             this.InitializeAll();
         }
 

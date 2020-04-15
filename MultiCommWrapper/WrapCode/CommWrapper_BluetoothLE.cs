@@ -1,6 +1,7 @@
 ﻿using BluetoothCommon.Net;
 using MultiCommWrapper.Net.interfaces;
 using System;
+using VariousUtils;
 
 namespace MultiCommWrapper.Net.WrapCode {
 
@@ -35,11 +36,20 @@ namespace MultiCommWrapper.Net.WrapCode {
         #region Init and teardown
 
         private void BLE_Init() {
-            this.bleBluetooth.DeviceDiscovered += BLE_DeviceDiscoveredHandler;
+            this.bleStack.SetCommChannel(this.bleBluetooth);
+            this.bleStack.InTerminators = "\n\r".ToAsciiByteArray();
+            this.bleStack.OutTerminators = "\n\r".ToAsciiByteArray();
+            this.bleStack.MsgReceived += this.BleStack_MsgReceived;
+            this.bleBluetooth.DeviceDiscovered += this.BLE_DeviceDiscoveredHandler;
+        }
+
+        private void BleStack_MsgReceived(object sender, byte[] e) {
+            throw new NotImplementedException();
         }
 
         private void BLE_TearDown() {
-            this.bleBluetooth.DeviceDiscovered -= BLE_DeviceDiscoveredHandler;
+            this.bleStack.MsgReceived -= this.BleStack_MsgReceived;
+            this.bleBluetooth.DeviceDiscovered -= this.BLE_DeviceDiscoveredHandler;
         }
 
         #endregion

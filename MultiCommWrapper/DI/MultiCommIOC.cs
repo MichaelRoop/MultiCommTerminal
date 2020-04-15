@@ -31,16 +31,16 @@ namespace MultiCommWrapper.Net.DI {
             singletonCreators.Add(typeof(IStorageManagerFactory), new ObjSingletonCreator(() => new MultiCommTerminalStorageFactory()));
 
             singletonCreators.Add(
-                typeof(ICommWrapper), 
-                    new ObjSingletonCreator(() => 
+                typeof(ICommWrapper),
+                    new ObjSingletonCreator(() =>
                         new CommWrapper(
                             this.GetObjSingleton<IStorageManagerFactory>(),
-                            this.GetObjSingleton<ILangFactory>(), 
+                            this.GetObjSingleton<ILangFactory>(),
                             this.GetObjSingleton<IIconFactory>(),
-                            this.GetObjSingleton<IBTInterface>(), 
+                            this.GetObjSingleton<IBTInterface>(),
                             this.GetObjInstance<ICommStackLevel0>(),
-                            this.GetObjSingleton<IBLETInterface>())));
-
+                            this.GetObjSingleton<IBLETInterface>(),
+                            this.GetObjInstance<ICommStackLevel0>())));
 
         }
     }
