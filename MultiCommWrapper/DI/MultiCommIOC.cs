@@ -1,4 +1,6 @@
 ﻿using BluetoothCommon.Net.interfaces;
+using CommunicationStack.Net.interfaces;
+using CommunicationStack.Net.Stacks;
 using DependencyInjectorFactory;
 using IconFactory.interfaces;
 using LanguageFactory.interfaces;
@@ -19,7 +21,12 @@ namespace MultiCommWrapper.Net.DI {
         protected override void LoadCreators(
             Dictionary<Type, ObjCreator> instanceCreators, 
             Dictionary<Type, ObjCreator> singletonCreators) {
-            
+
+            // Instance creators
+            instanceCreators.Add(
+                typeof(ICommStackLevel0), 
+                new ObjInstanceCreator(()=> new CommStackLevel0()));
+
             singletonCreators.Add(typeof(ILangFactory), new ObjSingletonCreator(() => new SupportedLanguageFactory()));
             singletonCreators.Add(typeof(IStorageManagerFactory), new ObjSingletonCreator(() => new MultiCommTerminalStorageFactory()));
 
@@ -31,7 +38,10 @@ namespace MultiCommWrapper.Net.DI {
                             this.GetObjSingleton<ILangFactory>(), 
                             this.GetObjSingleton<IIconFactory>(),
                             this.GetObjSingleton<IBTInterface>(), 
+                            this.GetObjInstance<ICommStackLevel0>(),
                             this.GetObjSingleton<IBLETInterface>())));
+
+
         }
     }
 }

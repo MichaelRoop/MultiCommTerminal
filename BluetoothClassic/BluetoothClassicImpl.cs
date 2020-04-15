@@ -1,13 +1,11 @@
 ﻿using BluetoothCommon.Net;
 using BluetoothCommon.Net.interfaces;
+using ChkUtils.Net;
 using InTheHand.Net;
 using InTheHand.Net.Bluetooth;
 using InTheHand.Net.Sockets;
 using System;
-using System.Collections.Generic;
 using System.Net.Sockets;
-using System.Text;
-using System.Linq;
 using System.Threading;
 
 namespace BluetoothClassic.Win32 {
@@ -18,11 +16,10 @@ namespace BluetoothClassic.Win32 {
         public event EventHandler<BTDeviceInfo> DiscoveredBTDevice;
         public event EventHandler<bool> DiscoveryComplete;
         public event EventHandler<bool> ConnectionCompleted;
-        public event EventHandler<byte[]> BytesReceived;
+        public event EventHandler<byte[]> MsgReceivedEvent;
 
-        List<BTDeviceInfo> IBTInterface.DiscoverDevices() {
+        void IBTInterface.DiscoverDevicesAsync() {
             BluetoothClient cl = null;
-            List<BTDeviceInfo> infoList = new List<BTDeviceInfo>();
 
             // 32feet.Net - async callback
             cl = new BluetoothClient();
@@ -46,12 +43,10 @@ namespace BluetoothClassic.Win32 {
             //    infoList.Add(info);
             //}
             // remove later
-            return infoList;
-
         }
 
 
-        public void Connect(BTDeviceInfo device) {
+        public void ConnectAsync(BTDeviceInfo device) {
             this.Disconnect();
             this.currentDevice = new BluetoothClient();
             this.currentDevice.BeginConnect(
@@ -76,20 +71,18 @@ namespace BluetoothClassic.Win32 {
         }
 
 
-        public void Send(string msg) {
+        /// <summary>Used by ICommStackLevel0 to send msg after adding terminator</summary>
+        /// <param name="msg"></param>
+        /// <returns></returns>
+        public bool SendOutMsg(byte[] msg) {
             if (this.currentDevice != null) {
                 if (this.dataStream != null) {
-                    byte[] buff = Encoding.ASCII.GetBytes(msg);
-                    // Add line terminator
-                    // TODO get the terminator(s) from client
-                    byte[] buff2 = new byte[buff.Length + 2];
-                    buff.CopyTo(buff2, 0);
-                    buff2[buff.Length] = (byte)'\n';
-                    buff2[buff.Length+1] = (byte)'\r';
-                    this.dataStream.Write(buff2, 0, buff2.Length);
+                    this.dataStream.Write(msg, 0, msg.Length);
                 }
             }
+            return true;
         }
+
 
 
         #region Async Callbacks
@@ -156,8 +149,11 @@ namespace BluetoothClassic.Win32 {
         private void KillRead() {
             if (this.readThread != null) {
                 this.doneRead = true;
+                // send dummy message so thread can wake and end
+                this.dataStream.Write(new byte[1] { 0 }, 0, 1);
                 if (!this.readDoneEvent.WaitOne(500)) {
-                    this.readThread.Abort();
+                    // TODO not supported on this platform. Core only.
+                    WrapErr.ToErrReport(9999, () => this.readThread.Abort());
                 }
                 this.readThread = null;
             }
@@ -170,10 +166,10 @@ namespace BluetoothClassic.Win32 {
                 try {
                     int bytesRead = this.dataStream.Read(buff, 0, 500);
                     if (bytesRead > 0) {
-                        if (this.BytesReceived != null) {
+                        if (this.MsgReceivedEvent != null) {
                             byte[] outgoing = new byte[bytesRead];
                             Buffer.BlockCopy(buff, 0, outgoing, 0, bytesRead);
-                            this.BytesReceived(this, outgoing);
+                            this.MsgReceivedEvent(this, outgoing);
                         }
                     }
                 }
@@ -183,7 +179,6 @@ namespace BluetoothClassic.Win32 {
                 }
             }
             this.readDoneEvent.Set();
-
         }
 
         #endregion

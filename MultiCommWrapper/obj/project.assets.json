@@ -38,6 +38,9 @@
       "BluetoothCommon.Net/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "CommunicationStack.Net": "1.0.0"
+        },
         "compile": {
           "bin/placeholder/BluetoothCommon.Net.dll": {}
         },
@@ -53,6 +56,19 @@
         },
         "runtime": {
           "bin/placeholder/ChkUtils.Net.dll": {}
+        }
+      },
+      "CommunicationStack.Net/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "VariousUtils": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/CommunicationStack.Net.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CommunicationStack.Net.dll": {}
         }
       },
       "DependencyInjectorFactory/1.0.0": {
@@ -123,13 +139,28 @@
         "dependencies": {
           "ChkUtils.Net": "1.0.0",
           "LogUtils.Net": "1.0.0",
-          "Newtonsoft.Json": "12.0.3"
+          "Newtonsoft.Json": "12.0.3",
+          "VariousUtils": "1.0.0"
         },
         "compile": {
           "bin/placeholder/StorageFactory.Net.dll": {}
         },
         "runtime": {
           "bin/placeholder/StorageFactory.Net.dll": {}
+        }
+      },
+      "VariousUtils/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "ChkUtils.Net": "1.0.0",
+          "LogUtils.Net": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/VariousUtils.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/VariousUtils.dll": {}
         }
       }
     }
@@ -319,6 +350,11 @@
       "path": "../../SharedNetLibs/ChkUtils.Net/ChkUtils.Net.csproj",
       "msbuildProject": "../../SharedNetLibs/ChkUtils.Net/ChkUtils.Net.csproj"
     },
+    "CommunicationStack.Net/1.0.0": {
+      "type": "project",
+      "path": "../../SharedNetLibs/CommunicationStack.Net/CommunicationStack.Net.csproj",
+      "msbuildProject": "../../SharedNetLibs/CommunicationStack.Net/CommunicationStack.Net.csproj"
+    },
     "DependencyInjectorFactory/1.0.0": {
       "type": "project",
       "path": "../../SharedNetLibs/DependencyInjectorFactory/DependencyInjectorFactory.csproj",
@@ -348,6 +384,11 @@
       "type": "project",
       "path": "../../SharedNetLibs/StorageFactory.Net/StorageFactory.Net.csproj",
       "msbuildProject": "../../SharedNetLibs/StorageFactory.Net/StorageFactory.Net.csproj"
+    },
+    "VariousUtils/1.0.0": {
+      "type": "project",
+      "path": "../../SharedNetLibs/VariousUtils/VariousUtils.csproj",
+      "msbuildProject": "../../SharedNetLibs/VariousUtils/VariousUtils.csproj"
     }
   },
   "projectFileDependencyGroups": {

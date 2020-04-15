@@ -31,6 +31,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StorageFactory.Net", "..\Sh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfHelperClasses.Core", "..\SharedNetCoreLibs\WpfHelpers.Core\WpfHelperClasses.Core.csproj", "{C7371D08-8844-4C42-88A7-9E612314E13D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VariousUtils", "..\SharedNetLibs\VariousUtils\VariousUtils.csproj", "{8702AF2D-436D-485D-B6A7-F2854E56B9C4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommunicationStack.Net", "..\SharedNetLibs\CommunicationStack.Net\CommunicationStack.Net.csproj", "{34EB157E-2489-4B3E-9E6A-BE92D5ED4711}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +97,14 @@ Global
 		{C7371D08-8844-4C42-88A7-9E612314E13D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7371D08-8844-4C42-88A7-9E612314E13D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7371D08-8844-4C42-88A7-9E612314E13D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8702AF2D-436D-485D-B6A7-F2854E56B9C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8702AF2D-436D-485D-B6A7-F2854E56B9C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8702AF2D-436D-485D-B6A7-F2854E56B9C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8702AF2D-436D-485D-B6A7-F2854E56B9C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34EB157E-2489-4B3E-9E6A-BE92D5ED4711}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34EB157E-2489-4B3E-9E6A-BE92D5ED4711}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34EB157E-2489-4B3E-9E6A-BE92D5ED4711}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34EB157E-2489-4B3E-9E6A-BE92D5ED4711}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

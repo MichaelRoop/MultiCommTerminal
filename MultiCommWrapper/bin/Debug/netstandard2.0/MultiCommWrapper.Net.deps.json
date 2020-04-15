@@ -36,6 +36,9 @@
         }
       },
       "BluetoothCommon.Net/1.0.0": {
+        "dependencies": {
+          "CommunicationStack.Net": "1.0.0"
+        },
         "runtime": {
           "BluetoothCommon.Net.dll": {}
         }
@@ -43,6 +46,14 @@
       "ChkUtils.Net/1.0.0": {
         "runtime": {
           "ChkUtils.Net.dll": {}
+        }
+      },
+      "CommunicationStack.Net/1.0.0": {
+        "dependencies": {
+          "VariousUtils": "1.0.0"
+        },
+        "runtime": {
+          "CommunicationStack.Net.dll": {}
         }
       },
       "DependencyInjectorFactory/1.0.0": {
@@ -86,10 +97,20 @@
         "dependencies": {
           "ChkUtils.Net": "1.0.0",
           "LogUtils.Net": "1.0.0",
-          "Newtonsoft.Json": "12.0.3"
+          "Newtonsoft.Json": "12.0.3",
+          "VariousUtils": "1.0.0"
         },
         "runtime": {
           "StorageFactory.Net.dll": {}
+        }
+      },
+      "VariousUtils/1.0.0": {
+        "dependencies": {
+          "ChkUtils.Net": "1.0.0",
+          "LogUtils.Net": "1.0.0"
+        },
+        "runtime": {
+          "VariousUtils.dll": {}
         }
       }
     }
@@ -131,6 +152,11 @@
       "serviceable": false,
       "sha512": ""
     },
+    "CommunicationStack.Net/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
     "DependencyInjectorFactory/1.0.0": {
       "type": "project",
       "serviceable": false,
@@ -157,6 +183,11 @@
       "sha512": ""
     },
     "StorageFactory.Net/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "VariousUtils/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

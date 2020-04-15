@@ -1,10 +1,12 @@
 ﻿using BluetoothCommon.Net.interfaces;
+using CommunicationStack.Net.interfaces;
 using IconFactory.interfaces;
 using LanguageFactory.interfaces;
 using LogUtils.Net;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommWrapper.Net.interfaces;
 using StorageFactory.Net.interfaces;
+using VariousUtils;
 
 namespace MultiCommWrapper.Net.WrapCode {
 
@@ -19,6 +21,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         IBTInterface classicBluetooth = null;
         IBLETInterface bleBluetooth = null;
         IStorageManager<SettingItems> settings = null;
+        ICommStackLevel0 BtClassicStack = null;
 
         private ClassLog log = new ClassLog("CommWrapper");
 
@@ -38,6 +41,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             ILangFactory languages,
             IIconFactory iconFactory,
             IBTInterface classicBluetooth,
+            ICommStackLevel0 classicBluetoothStack,
             IBLETInterface bleBluetooth ) {
 
             this.storageFactory = storageFactory;
@@ -45,7 +49,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.iconFactory = iconFactory;
             this.classicBluetooth = classicBluetooth;
             this.bleBluetooth = bleBluetooth;
-
+            this.BtClassicStack = classicBluetoothStack;
             this.InitializeAll();
         }
 

@@ -1,25 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using CommunicationStack.Net.interfaces;
+using System;
 
 namespace BluetoothCommon.Net.interfaces {
-    public interface IBTInterface {
 
+    /// <summary>Interface for communication channels passed to the stack</summary>
+    public interface IBTInterface : ICommStackChannel {
+
+        /// <summary>Fired on every Bluetooth device discovered</summary>
         event EventHandler<BTDeviceInfo> DiscoveredBTDevice;
+
+        /// <summary>Fired when async discovery completed of Bluetooth devices</summary>
         event EventHandler<bool> DiscoveryComplete;
+
+        /// <summary>Raised when the async connection is completed</summary>
         event EventHandler<bool> ConnectionCompleted;
-        event EventHandler<byte[]> BytesReceived;
 
 
-        /// <summary>Get a list of Bluetooth devices</summary>
-        /// <returns>A list of info on the devices discovered</returns>
-        List<BTDeviceInfo> DiscoverDevices();
+        /// <summary>Async retrieval of Bluetooth devices</summary>
+        void DiscoverDevicesAsync();
 
-        void Connect(BTDeviceInfo device);
+
+        /// <summary>Asynchrnous connection</summary>
+        /// <param name="device">The device to connect to</param>
+        void ConnectAsync(BTDeviceInfo device);
+
+
+        /// <summary>Disconnect if connected</summary>
         void Disconnect();
-
-        void Send(string msg);
-
 
     }
 }
