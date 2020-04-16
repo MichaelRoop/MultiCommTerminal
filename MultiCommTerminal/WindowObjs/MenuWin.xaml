@@ -30,7 +30,7 @@
                                            RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased"
                                             VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
                                 </Border>
-                                <TextBlock Text="{Binding Display}" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding Display}" VerticalAlignment="Center" Margin="10,0"/>
                             </DockPanel>
                         </StackPanel>
 

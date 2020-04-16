@@ -143,6 +143,15 @@ namespace MultiCommTerminal.WindowObjs {
             }
         }
 
+        private void btnInfoBT_Click(object sender, RoutedEventArgs e) {
+            if (this.listBox_BT.SelectedItem != null) {
+                BTDeviceInfo item = this.listBox_BT.SelectedItem as BTDeviceInfo;
+                if (item != null) {
+                    MessageBox.Show(item.Address, item.Name);
+                }
+            }
+        }
+
 
         private void BT_DeviceDiscoveredHandler(object sender, BTDeviceInfo dev) {
             this.Dispatcher.Invoke(() => {

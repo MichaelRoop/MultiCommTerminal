@@ -40,7 +40,7 @@
                     <DockPanel x:Name="taskBar" >
                         <Border Background="DarkBlue" >
                             <Image x:Name="imgMenu" Width="25" Margin="6,0,0,0"
-                                   Source="/MultiCommTerminal;component/images/icons/navigation-menu-white.png" 
+                                   Source="/MultiCommTerminal;component/images/icons/icons8-menu-white-50.png" 
                                    MouseLeftButtonDown="imgMenu_MouseLeftButtonDown" MouseDown="imgMenu_MouseDown" />
                         </Border>
                         <Label x:Name="lbTitle" Content="Multi Comm Serial Terminal" MouseDown="lbTitle_MouseDown"
@@ -53,8 +53,10 @@
                         <StackPanel x:Name="spCmds" VerticalAlignment="Center">
                             <DockPanel HorizontalAlignment="Center" Margin="0,2,0,0">
                                 <Label x:Name="lbCommand" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Commands}}" VerticalAlignment="Center"/>
-                                <Button x:Name="btnSend" Margin="1" Style="{StaticResource RoundEdgeButton}"  Visibility="Collapsed"
-                                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.Send}}" Click="btnSend_Click" />
+                                <controls:UC_IconButton x:Name="btnSend" Style="{StaticResource TextIconButton}" Visibility="Collapsed"
+                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Send}}" 
+                                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Send}}"                                                                                            
+                                            Background="Transparent" Click="btnSend_Click" />
                             </DockPanel>
                             <Border BorderBrush="Blue" BorderThickness="1" Margin="10">
                                 <ListBox x:Name="outgoing" Width="250" Height="300" FontSize="16" HorizontalAlignment="Stretch"
@@ -97,10 +99,24 @@
                         </Border>
 
                         <!-- Will need different for LE and classic. Using the classic one modified for LE for now -->
-                        <StackPanel x:Name="spBluetooth" VerticalAlignment="Center" Visibility="Visible">
-                            <DockPanel Margin="10,0">
-                                <Label Content="Device:"/>
-                                <StackPanel>
+                        <StackPanel x:Name="spBluetooth" VerticalAlignment="Center" Visibility="Visible" Margin="30,0,10,10">
+                            <DockPanel Margin="0,0">
+                                <StackPanel Margin="10,0">
+                                    <controls:UC_IconButton x:Name="btnBTDiscover" Style="{StaticResource TextIconButton}"
+                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Discover}}" 
+                                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Search}}"                                                                                            
+                                            Background="Transparent" Click="btnBTDiscover_Click" />
+                                    <controls:UC_IconButton x:Name="btnInfoBT" Style="{StaticResource TextIconButton}"
+                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Info}}" Margin="0,5"
+                                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.View}}"                                                        
+                                            Background="Transparent" Click="btnInfoBT_Click" />
+                                    <controls:UC_IconButton x:Name="btnBTConnect" Style="{StaticResource TextIconButton}"
+                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Connect}}" 
+                                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Connect}}"                                                                                            
+                                            Background="Transparent" Click="btnBTConnect_Click" />
+                                </StackPanel>
+                                <StackPanel Margin="10,0">
+                                    <Label Content="Device:" HorizontalAlignment="Center"/>
                                     <ListBox x:Name="listBox_BT" MinHeight="30" MinWidth="200" MaxHeight="100" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
@@ -115,25 +131,30 @@
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
                                     </ListBox>
-                                    <DockPanel HorizontalAlignment="Left" Margin="0,10">
-                                        <controls:UC_IconButton x:Name="btnBTDiscover" Margin="0,0,10,0"
-                                            Style="{StaticResource TextIconButton}"
-                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Discover}}" 
-                                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Search}}"                                                                                            
-                                            Background="Transparent" Click="btnBTDiscover_Click" />
-                                        <controls:UC_IconButton x:Name="btnBTConnect" Margin="0,0,10,0"
-                                            Style="{StaticResource TextIconButton}"
-                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Connect}}" 
-                                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Connect}}"                                                                                            
-                                            Background="Transparent" Click="btnBTConnect_Click" />
-                                    </DockPanel>
                                 </StackPanel>
                             </DockPanel>
                         </StackPanel>
-                        <StackPanel x:Name="spBluetoothLE" VerticalAlignment="Center" Visibility="Collapsed">
-                            <DockPanel Margin="10,0">
-                                <Label Content="Device:"/>
+                        <StackPanel x:Name="spBluetoothLE" VerticalAlignment="Center" Visibility="Collapsed" Margin="20,0,10,10">
+                            <DockPanel>
+                                <StackPanel Margin="0,0,20,0" >
+                                    <controls:UC_IconButton x:Name="btnDiscoverLE" 
+                                            Style="{StaticResource TextIconButton}"
+                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Discover}}"                                        
+                                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Search}}"                                    
+                                            Background="Transparent" Click="btnDiscoverLE_Click" />
+                                    <controls:UC_IconButton x:Name="btnInfoLE" Style="{StaticResource TextIconButton}"
+                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Info}}" Margin="0,5"
+                                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.View}}"                                                        
+                                            Background="Transparent" Click="btnInfoLE_Click" />
+                                    <controls:UC_IconButton x:Name="btnLEConnect" Margin="0,0,0,0"
+                                            Style="{StaticResource TextIconButton}"
+                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Connect}}" 
+                                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Connect}}"                                                                                            
+                                            Background="Transparent" Click="btnLEConnect_Click" />
+                                </StackPanel>
+
                                 <StackPanel>
+                                    <Label Content="Device:" HorizontalAlignment="Center"/>
                                     <ListBox x:Name="listBox_BLE" MinHeight="30" MinWidth="200" MaxHeight="100" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
@@ -148,22 +169,6 @@
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
                                     </ListBox>
-                                    <DockPanel HorizontalAlignment="Left" Margin="0,10">
-                                        <controls:UC_IconButton x:Name="btnDiscoverLE" 
-                                            Style="{StaticResource TextIconButton}"
-                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Discover}}"                                        
-                                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Search}}"                                    
-                                            Background="Transparent" Click="btnDiscoverLE_Click" />
-                                        <controls:UC_IconButton x:Name="btnInfoLE" Style="{StaticResource TextIconButton}"
-                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Info}}" Margin="10,0"
-                                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.View}}"                                                        
-                                            Background="Transparent" Click="btnInfoLE_Click" />
-                                        <controls:UC_IconButton x:Name="btnLEConnect" Margin="0,0,10,0"
-                                            Style="{StaticResource TextIconButton}"
-                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Connect}}" 
-                                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Connect}}"                                                                                            
-                                            Background="Transparent" Click="btnLEConnect_Click" />
-                                    </DockPanel>
                                 </StackPanel>
                             </DockPanel>
                         </StackPanel>
@@ -185,9 +190,9 @@
                     <DockPanel  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
                         <!-- Need to override the Icons margin because the Exit is smaller within PNG file -->
                         <controls:UC_IconButton x:Name="btnExit" Click="btnExit_Click"
-                            Style="{StaticResource TextIconButton}" IconMargin="4"
+                            Style="{StaticResource TextIconButton}" 
                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Exit}}"
-                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Exit}}" />
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Exit}}"/>
                     </DockPanel>
                 </Border>
             </StackPanel>

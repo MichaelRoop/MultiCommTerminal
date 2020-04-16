@@ -91,9 +91,9 @@ namespace MultiCommTerminal.WindowObjs {
                 lbxMenuItems.SelectionChanged -= this.lbxMenuItems_SelectionChanged;
                 this.lbxMenuItems.ItemsSource = null;
                 this.items.Clear();
-                this.AddItem(MenuCode.Language, MsgCode.language, UIIcon.Language, "2");
-                this.AddItem(MenuCode.Settings, MsgCode.Settings, UIIcon.Settings, "4");
-                this.AddItem(MenuCode.Commands, MsgCode.command, UIIcon.Add, "2"); // TODO Get a new icon
+                this.AddItem(MenuCode.Language, MsgCode.language, UIIcon.Language, "0");
+                this.AddItem(MenuCode.Settings, MsgCode.Settings, UIIcon.Settings, "0");
+                this.AddItem(MenuCode.Commands, MsgCode.command, UIIcon.Command, "0"); // TODO Get a new icon
 
                 this.lbxMenuItems.ItemsSource = this.items;
                 lbxMenuItems.SelectionChanged += this.lbxMenuItems_SelectionChanged;

@@ -7,21 +7,28 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="images\icons\add.png" />
-    <None Remove="images\icons\bin-2.png" />
-    <None Remove="images\icons\check-1.png" />
-    <None Remove="images\icons\close.png" />
-    <None Remove="images\icons\cog.png" />
-    <None Remove="images\icons\flash-1.png" />
-    <None Remove="images\icons\hierarchy-5.png" />
+    <None Remove="images\icons\icons8-add-50-noborder.png" />
     <None Remove="images\icons\icons8-bluetooth-50.png" />
+    <None Remove="images\icons\icons8-checkmark-50.png" />
+    <None Remove="images\icons\icons8-close-window-50-noborder.png" />
+    <None Remove="images\icons\icons8-close-window-50.png" />
+    <None Remove="images\icons\icons8-cmd-50.png" />
+    <None Remove="images\icons\icons8-edit-50.png" />
+    <None Remove="images\icons\icons8-ethernet-on-50.png" />
+    <None Remove="images\icons\icons8-exit-50.png" />
+    <None Remove="images\icons\icons8-eye-50.png" />
+    <None Remove="images\icons\icons8-file-preview-50.png" />
+    <None Remove="images\icons\icons8-gear-32.png" />
+    <None Remove="images\icons\icons8-language-50.png" />
+    <None Remove="images\icons\icons8-language-white-50.png" />
+    <None Remove="images\icons\icons8-menu-white-50.png" />
+    <None Remove="images\icons\icons8-quick-mode-on-100.png" />
+    <None Remove="images\icons\icons8-running-24.png" />
+    <None Remove="images\icons\icons8-search-50.png" />
+    <None Remove="images\icons\icons8-trash-can-50.png" />
     <None Remove="images\icons\icons8-wi-fi-32.png" />
     <None Remove="images\icons\language-white.png" />
     <None Remove="images\icons\language.png" />
-    <None Remove="images\icons\logout-1.png" />
-    <None Remove="images\icons\navigation-menu-white.png" />
-    <None Remove="images\icons\pencil.png" />
-    <None Remove="images\icons\search.png" />
     <None Remove="images\icons\view.png" />
   </ItemGroup>
 
@@ -50,21 +57,28 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="images\icons\add.png" />
-    <Resource Include="images\icons\bin-2.png" />
-    <Resource Include="images\icons\check-1.png" />
-    <Resource Include="images\icons\close.png" />
-    <Resource Include="images\icons\cog.png" />
-    <Resource Include="images\icons\flash-1.png" />
-    <Resource Include="images\icons\hierarchy-5.png" />
+    <Resource Include="images\icons\icons8-add-50-noborder.png" />
     <Resource Include="images\icons\icons8-bluetooth-50.png" />
+    <Resource Include="images\icons\icons8-checkmark-50.png" />
+    <Resource Include="images\icons\icons8-close-window-50-noborder.png" />
+    <Resource Include="images\icons\icons8-close-window-50.png" />
+    <Resource Include="images\icons\icons8-cmd-50.png" />
+    <Resource Include="images\icons\icons8-edit-50.png" />
+    <Resource Include="images\icons\icons8-ethernet-on-50.png" />
+    <Resource Include="images\icons\icons8-exit-50.png" />
+    <Resource Include="images\icons\icons8-eye-50.png" />
+    <Resource Include="images\icons\icons8-file-preview-50.png" />
+    <Resource Include="images\icons\icons8-gear-32.png" />
+    <Resource Include="images\icons\icons8-language-50.png" />
+    <Resource Include="images\icons\icons8-language-white-50.png" />
+    <Resource Include="images\icons\icons8-menu-white-50.png" />
+    <Resource Include="images\icons\icons8-quick-mode-on-100.png" />
+    <Resource Include="images\icons\icons8-running-24.png" />
+    <Resource Include="images\icons\icons8-search-50.png" />
+    <Resource Include="images\icons\icons8-trash-can-50.png" />
     <Resource Include="images\icons\icons8-wi-fi-32.png" />
     <Resource Include="images\icons\language-white.png" />
     <Resource Include="images\icons\language.png" />
-    <Resource Include="images\icons\logout-1.png" />
-    <Resource Include="images\icons\navigation-menu-white.png" />
-    <Resource Include="images\icons\pencil.png" />
-    <Resource Include="images\icons\search.png" />
     <Resource Include="images\icons\view.png" />
   </ItemGroup>
 

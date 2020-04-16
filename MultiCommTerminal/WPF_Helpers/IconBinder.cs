@@ -1,6 +1,7 @@
 ﻿using IconFactory.data;
 using IconFactory.interfaces;
 using MultiCommTerminal.DependencyInjection;
+using System.Windows;
 
 namespace MultiCommTerminal.WPF_Helpers {
 
@@ -35,6 +36,10 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string Add { get { return Source(UIIcon.Add); } }
         public static string Search { get { return Source(UIIcon.Search); } }
         public static string Connect { get { return Source(UIIcon.Connect); } }
+        public static string Command { get { return Source(UIIcon.Command); } }
+        public static string Send { get { return Source(UIIcon.Run); } }
+
+
 
         #endregion
 
