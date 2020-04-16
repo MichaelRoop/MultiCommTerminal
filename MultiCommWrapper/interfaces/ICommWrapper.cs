@@ -88,6 +88,12 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void BLE_ConnectAsync(BluetoothLEDeviceInfo device);
 
+
+        /// <summary>Debug method to get string of properties</summary>
+        /// <param name="obj">The selected BLE info object</param>
+        /// <param name="onComplete">Raisd with title and text for message box</param>
+        void BLE_GetDbgInfoStringDump(object obj, Action<string, string> onComplete);
+
         #endregion
 
         void Teardown();

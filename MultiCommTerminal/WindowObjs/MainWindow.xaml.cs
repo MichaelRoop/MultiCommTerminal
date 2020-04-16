@@ -44,11 +44,11 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             this.btButtonSizer.Teardown();            
-            this.wrapper.BLE_DeviceDiscovered -= this.BlueToothLE_DeviceDiscovered;
-            this.wrapper.BTClassicDeviceDiscovered -= this.BlueTooth_DiscoveredBTDevice;
-            this.wrapper.BTClassicDiscoveryComplete -= this.BlueTooth_DiscoveryComplete;
-            this.wrapper.BTClassicConnectionCompleted -= this.BlueTooth_ConnectionCompleted;
-            this.wrapper.BTClassicBytesReceived -= this.BlueTooth_BytesReceived;
+            this.wrapper.BLE_DeviceDiscovered -= this.BLE_DeviceDiscoveredHandler;
+            this.wrapper.BTClassicDeviceDiscovered -= this.BT_DeviceDiscoveredHandler;
+            this.wrapper.BTClassicDiscoveryComplete -= this.BT_DiscoveryCompleteHandler;
+            this.wrapper.BTClassicConnectionCompleted -= this.BT_ConnectionCompletedHandler;
+            this.wrapper.BTClassicBytesReceived -= this.BT_BytesReceivedHandler;
 
 
             if (this.menu != null) {
@@ -81,7 +81,7 @@ namespace MultiCommTerminal.WindowObjs {
         /// <summary>Event handler for Bluetooth LE device discovery. Adds one at a time</summary>
         /// <param name="sender">The sender of event</param>
         /// <param name="info">The information for discovered device</param>
-        private void BlueToothLE_DeviceDiscovered(object sender, BluetoothLEDeviceInfo info) {
+        private void BLE_DeviceDiscoveredHandler(object sender, BluetoothLEDeviceInfo info) {
             this.Dispatcher.Invoke(() => {
                 // Disconnect the list from control before changing. Maybe change to Observable collection
                 this.lbBluetoothLE.ItemsSource = null;
@@ -101,56 +101,15 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper.BLE_DiscoverAsync();
         }
 
+
         private void btnInfoLE_Click(object sender, RoutedEventArgs e) {
             if (this.lbBluetoothLE.SelectedItem != null) {
-                BluetoothLEDeviceInfo info = this.lbBluetoothLE.SelectedItem as BluetoothLEDeviceInfo;
-                StringBuilder sb = new StringBuilder();
-                sb.Append(string.Format("       Id: {0}\n", info.Id));//.Append("\n");
-                sb.Append(string.Format("IsDefault: {0}\n", info.IsDefault));
-                sb.Append(string.Format("IsEnabled: {0}\n", info.IsEnabled));
-                //sb.Append("     Kind: {0}", device.Kind);
-                // Properties
-                sb.Append(string.Format("Properties: ({0})\n", info.LEProperties.Count));
-                foreach (var p in info.LEProperties) {
-                    if (p.Item2.Length > 0) {
-                        sb.Append(string.Format("   {0} : {1}\n", p.Item1, p.Item2));
-                    }
-                    else {
-                        sb.Append(string.Format("   {0}\n", p.Item1));
-                    }
-                }
-                //// Enclosure location
-                //if (device.EnclosureLocation != null) {
-                //    System.Diagnostics.Debug.WriteLine("EnclosureLocation:");
-                //    System.Diagnostics.Debug.WriteLine("     InDock: {0}", device.EnclosureLocation.InDock);
-                //    System.Diagnostics.Debug.WriteLine("      InLid: {0}", device.EnclosureLocation.InLid);
-                //    System.Diagnostics.Debug.WriteLine("      Panel: {0}", device.EnclosureLocation.Panel);
-                //    System.Diagnostics.Debug.WriteLine("      Angle: {0}", device.EnclosureLocation.RotationAngleInDegreesClockwise);
-                //}
-                //else {
-                //    System.Diagnostics.Debug.WriteLine("EnclosureLocation: null");
-                //}
-                //// Pairing
-                //if (device.Pairing != null) {
-                //    System.Diagnostics.Debug.WriteLine("Pairing:");
-                //    System.Diagnostics.Debug.WriteLine("    CanPair: {0}", device.Pairing.CanPair);
-                //    System.Diagnostics.Debug.WriteLine("   IsPaired: {0}", device.Pairing.IsPaired);
-                //    System.Diagnostics.Debug.WriteLine(" Protection: {0}", device.Pairing.ProtectionLevel);
-                //    if (device.Pairing.Custom != null) {
-                //        System.Diagnostics.Debug.WriteLine("     Custom: not null");
-                //    }
-                //    else {
-                //        System.Diagnostics.Debug.WriteLine("Custom: null");
-                //    }
-                //}
-                //else {
-                //    System.Diagnostics.Debug.WriteLine("Custom: null");
-                //}
-
-                MessageBox.Show(sb.ToString(), info.Name);
+                this.wrapper.BLE_GetDbgInfoStringDump(this.lbBluetoothLE.SelectedItem, (title, msg) => {
+                    MessageBox.Show(msg, title);
+                });
             }
-
         }
+
 
         private void btnLEConnect_Click(object sender, RoutedEventArgs e) {
             if (this.lbBluetoothLE.SelectedItem != null) {
@@ -186,7 +145,7 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
-        private void BlueTooth_DiscoveredBTDevice(object sender, BTDeviceInfo dev) {
+        private void BT_DeviceDiscoveredHandler(object sender, BTDeviceInfo dev) {
             this.Dispatcher.Invoke(() => {
                 this.lbBluetooth.ItemsSource = null;
                 this.btInfoList.Add(dev);
@@ -194,26 +153,25 @@ namespace MultiCommTerminal.WindowObjs {
             });
         }
 
-        private void BlueTooth_DiscoveryComplete(object sender, bool e) {
+        private void BT_DiscoveryCompleteHandler(object sender, bool e) {
             this.Dispatcher.Invoke(() => {
                 this.gridWait.Visibility = Visibility.Collapsed;
             });
         }
 
 
-        private void BlueTooth_BytesReceived(object sender, string msg) {
+        private void BT_BytesReceivedHandler(object sender, string msg) {
             this.Dispatcher.Invoke(() => {
                 this.lbIncoming.Items.Add(msg);
             });
         }
 
 
-        private void BlueTooth_ConnectionCompleted(object sender, bool e) {
+        private void BT_ConnectionCompletedHandler(object sender, bool e) {
             this.Dispatcher.Invoke(() => {
                 this.gridWait.Visibility = Visibility.Collapsed;
             });
         }
-
 
         #endregion
 
@@ -229,16 +187,16 @@ namespace MultiCommTerminal.WindowObjs {
             this.cbComm.SelectedIndex = 0;
             this.SizeToContent = SizeToContent.WidthAndHeight;
 
-            this.wrapper.LanguageChanged += this.Languages_LanguageChanged;
+            this.wrapper.LanguageChanged += this.LanguageChangedHandler;
 
             // Bluetooth LE
-            this.wrapper.BLE_DeviceDiscovered += this.BlueToothLE_DeviceDiscovered;
+            this.wrapper.BLE_DeviceDiscovered += this.BLE_DeviceDiscoveredHandler;
 
             //Bluetooth Classic
-            this.wrapper.BTClassicDeviceDiscovered += this.BlueTooth_DiscoveredBTDevice;
-            this.wrapper.BTClassicDiscoveryComplete += this.BlueTooth_DiscoveryComplete;
-            this.wrapper.BTClassicConnectionCompleted += this.BlueTooth_ConnectionCompleted;
-            this.wrapper.BTClassicBytesReceived += this.BlueTooth_BytesReceived;
+            this.wrapper.BTClassicDeviceDiscovered += this.BT_DeviceDiscoveredHandler;
+            this.wrapper.BTClassicDiscoveryComplete += this.BT_DiscoveryCompleteHandler;
+            this.wrapper.BTClassicConnectionCompleted += this.BT_ConnectionCompletedHandler;
+            this.wrapper.BTClassicBytesReceived += this.BT_BytesReceivedHandler;
             // Call before rendering which will trigger initial resize events
             btButtonSizer = new ButtonGroupSizeSyncManager(this.btnBTConnect, this.btnBTDiscover);
             this.btButtonSizer.PrepForChange();
@@ -252,7 +210,6 @@ namespace MultiCommTerminal.WindowObjs {
             this.outgoing.Items.Add("Stop doing int");
 
         }
-
 
         #endregion
 
@@ -375,7 +332,7 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         /// <summary>Handle the language changed event to update controls text</summary>
-        private void Languages_LanguageChanged(object sender, LanguageFactory.Messaging.SupportedLanguage lang) {
+        private void LanguageChangedHandler(object sender, LanguageFactory.Messaging.SupportedLanguage lang) {
             // The button text change will trigger resize
             this.btButtonSizer.PrepForChange();
 
