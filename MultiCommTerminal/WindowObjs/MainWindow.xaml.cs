@@ -33,26 +33,6 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper = DI.Wrapper;
             InitializeComponent();
             this.OnStartupSuccess();
-            this.wrapper.LanguageChanged += this.Languages_LanguageChanged;
-
-            this.wrapper.BLE_DeviceDiscovered += this.BlueToothLE_DeviceDiscovered;
-
-            //this.wrapper.Blu
-            this.wrapper.BTClassicDeviceDiscovered += this.BlueTooth_DiscoveredBTDevice;
-            this.wrapper.BTClassicDiscoveryComplete += this.BlueTooth_DiscoveryComplete;
-            this.wrapper.BTClassicConnectionCompleted += this.BlueTooth_ConnectionCompleted;
-            this.wrapper.BTClassicBytesReceived += this.BlueTooth_BytesReceived;
-
-            // TODO - remove - temp populate command box
-            this.outgoing.Items.Add("First msg");
-            this.outgoing.Items.Add("Second msg");
-            this.outgoing.Items.Add("A bit of nothing");
-            this.outgoing.Items.Add("Start doing something");
-            this.outgoing.Items.Add("Stop doing int");
-
-            // Call before rendering which will trigger initial resize events
-            btButtonSizer = new ButtonGroupSizeSyncManager(this.btnBTConnect, this.btnBTDiscover);
-            this.btButtonSizer.PrepForChange();
         }
 
         ButtonGroupSizeSyncManager btButtonSizer = null;
@@ -237,7 +217,7 @@ namespace MultiCommTerminal.WindowObjs {
 
         #endregion
 
-        #region Private
+        #region Private Init and teardown
 
         private void OnStartupSuccess() {
             this.wrapper.CommMediumList((items) => {
@@ -248,8 +228,35 @@ namespace MultiCommTerminal.WindowObjs {
             this.cbComm.ItemsSource = this.mediums;
             this.cbComm.SelectedIndex = 0;
             this.SizeToContent = SizeToContent.WidthAndHeight;
+
+            this.wrapper.LanguageChanged += this.Languages_LanguageChanged;
+
+            // Bluetooth LE
+            this.wrapper.BLE_DeviceDiscovered += this.BlueToothLE_DeviceDiscovered;
+
+            //Bluetooth Classic
+            this.wrapper.BTClassicDeviceDiscovered += this.BlueTooth_DiscoveredBTDevice;
+            this.wrapper.BTClassicDiscoveryComplete += this.BlueTooth_DiscoveryComplete;
+            this.wrapper.BTClassicConnectionCompleted += this.BlueTooth_ConnectionCompleted;
+            this.wrapper.BTClassicBytesReceived += this.BlueTooth_BytesReceived;
+            // Call before rendering which will trigger initial resize events
+            btButtonSizer = new ButtonGroupSizeSyncManager(this.btnBTConnect, this.btnBTDiscover);
+            this.btButtonSizer.PrepForChange();
+
+
+            // TODO - remove - temp populate command box
+            this.outgoing.Items.Add("First msg");
+            this.outgoing.Items.Add("Second msg");
+            this.outgoing.Items.Add("A bit of nothing");
+            this.outgoing.Items.Add("Start doing something");
+            this.outgoing.Items.Add("Stop doing int");
+
         }
 
+
+        #endregion
+
+        #region Private
 
         private void cbComm_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             // Hide all the options
