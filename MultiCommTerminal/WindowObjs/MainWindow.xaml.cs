@@ -1,12 +1,10 @@
 ﻿using BluetoothCommon.Net;
-using IconFactory.data;
 using LanguageFactory.data;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommTerminal.DependencyInjection;
 using MultiCommWrapper.Net.interfaces;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using WpfHelperClasses.Core;
@@ -21,6 +19,7 @@ namespace MultiCommTerminal.WindowObjs {
         private List<CommMedialDisplay> mediums = new List<CommMedialDisplay>();
         private List<BTDeviceInfo> btInfoList = new List<BTDeviceInfo>();
         private List<BluetoothLEDeviceInfo> btInfoListLE = new List<BluetoothLEDeviceInfo>();
+        private ButtonGroupSizeSyncManager btButtonSizer = null;
 
         MenuWin menu = null;
         private ICommWrapper wrapper = null;
@@ -35,7 +34,6 @@ namespace MultiCommTerminal.WindowObjs {
             this.OnStartupSuccess();
         }
 
-        ButtonGroupSizeSyncManager btButtonSizer = null;
         private void Window_ContentRendered(object sender, EventArgs e) {
             this.menu = new MenuWin(this);
             this.menu.Visibility = Visibility.Collapsed;
@@ -45,10 +43,10 @@ namespace MultiCommTerminal.WindowObjs {
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             this.btButtonSizer.Teardown();            
             this.wrapper.BLE_DeviceDiscovered -= this.BLE_DeviceDiscoveredHandler;
-            this.wrapper.BTClassicDeviceDiscovered -= this.BT_DeviceDiscoveredHandler;
-            this.wrapper.BTClassicDiscoveryComplete -= this.BT_DiscoveryCompleteHandler;
-            this.wrapper.BTClassicConnectionCompleted -= this.BT_ConnectionCompletedHandler;
-            this.wrapper.BTClassicBytesReceived -= this.BT_BytesReceivedHandler;
+            this.wrapper.BT_DeviceDiscovered -= this.BT_DeviceDiscoveredHandler;
+            this.wrapper.BT_DiscoveryComplete -= this.BT_DiscoveryCompleteHandler;
+            this.wrapper.BT_ConnectionCompleted -= this.BT_ConnectionCompletedHandler;
+            this.wrapper.BT_BytesReceived -= this.BT_BytesReceivedHandler;
 
 
             if (this.menu != null) {
@@ -193,10 +191,10 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper.BLE_DeviceDiscovered += this.BLE_DeviceDiscoveredHandler;
 
             //Bluetooth Classic
-            this.wrapper.BTClassicDeviceDiscovered += this.BT_DeviceDiscoveredHandler;
-            this.wrapper.BTClassicDiscoveryComplete += this.BT_DiscoveryCompleteHandler;
-            this.wrapper.BTClassicConnectionCompleted += this.BT_ConnectionCompletedHandler;
-            this.wrapper.BTClassicBytesReceived += this.BT_BytesReceivedHandler;
+            this.wrapper.BT_DeviceDiscovered += this.BT_DeviceDiscoveredHandler;
+            this.wrapper.BT_DiscoveryComplete += this.BT_DiscoveryCompleteHandler;
+            this.wrapper.BT_ConnectionCompleted += this.BT_ConnectionCompletedHandler;
+            this.wrapper.BT_BytesReceived += this.BT_BytesReceivedHandler;
             // Call before rendering which will trigger initial resize events
             btButtonSizer = new ButtonGroupSizeSyncManager(this.btnBTConnect, this.btnBTDiscover);
             this.btButtonSizer.PrepForChange();

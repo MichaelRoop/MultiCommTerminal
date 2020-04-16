@@ -8,10 +8,10 @@ namespace MultiCommWrapper.Net.WrapCode {
 
     public partial class CommWrapper : ICommWrapper {
 
-        public event EventHandler<BTDeviceInfo> BTClassicDeviceDiscovered;
-        public event EventHandler<bool> BTClassicDiscoveryComplete;
-        public event EventHandler<bool> BTClassicConnectionCompleted;
-        public event EventHandler<string> BTClassicBytesReceived;
+        public event EventHandler<BTDeviceInfo> BT_DeviceDiscovered;
+        public event EventHandler<bool> BT_DiscoveryComplete;
+        public event EventHandler<bool> BT_ConnectionCompleted;
+        public event EventHandler<string> BT_BytesReceived;
 
         #region Event handlers
 
@@ -20,29 +20,29 @@ namespace MultiCommWrapper.Net.WrapCode {
 
             string msg = Encoding.ASCII.GetString(data, 0, data.Length);
             this.log.Info("", () => string.Format("Msg In: '{0}'", msg));
-            if (this.BTClassicBytesReceived != null) {
-                this.BTClassicBytesReceived(this, msg);
+            if (this.BT_BytesReceived != null) {
+                this.BT_BytesReceived(this, msg);
             }
         }
 
 
         private void BTClassic_ConnectionCompletedHander(object sender, bool e) {
-            if (this.BTClassicConnectionCompleted != null) {
-                this.BTClassicConnectionCompleted(this, e);
+            if (this.BT_ConnectionCompleted != null) {
+                this.BT_ConnectionCompleted(this, e);
             }
         }
 
 
         private void BTClassic_DiscoveryCompleteHandler(object sender, bool e) {
-            if (this.BTClassicDiscoveryComplete != null) {
-                this.BTClassicDiscoveryComplete(this, e);
+            if (this.BT_DiscoveryComplete != null) {
+                this.BT_DiscoveryComplete(this, e);
             }
         }
 
 
         private void BTClassic_DiscoveredDeviceHandler(object sender, BTDeviceInfo e) {
-            if (this.BTClassicDeviceDiscovered != null) {
-                this.BTClassicDeviceDiscovered(this, e);
+            if (this.BT_DeviceDiscovered != null) {
+                this.BT_DeviceDiscovered(this, e);
             }
         }
 
