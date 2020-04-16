@@ -97,11 +97,11 @@
                         </Border>
 
                         <!-- Will need different for LE and classic. Using the classic one modified for LE for now -->
-                        <StackPanel x:Name="spBluetooth" VerticalAlignment="Center" Visibility="Collapsed">
+                        <StackPanel x:Name="spBluetooth" VerticalAlignment="Center" Visibility="Visible">
                             <DockPanel Margin="10,0">
                                 <Label Content="Device:"/>
                                 <StackPanel>
-                                    <ListBox x:Name="lbBluetooth" MinHeight="30" MinWidth="200" MaxHeight="100" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                                    <ListBox x:Name="listBox_BT" MinHeight="30" MinWidth="200" MaxHeight="100" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <Grid Margin="1">
@@ -128,11 +128,11 @@
                                 </StackPanel>
                             </DockPanel>
                         </StackPanel>
-                        <StackPanel x:Name="spBluetoothLE" VerticalAlignment="Center" Visibility="Visible">
+                        <StackPanel x:Name="spBluetoothLE" VerticalAlignment="Center" Visibility="Collapsed">
                             <DockPanel Margin="10,0">
                                 <Label Content="Device:"/>
                                 <StackPanel>
-                                    <ListBox x:Name="lbBluetoothLE" MinHeight="30" MinWidth="200" MaxHeight="100" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                                    <ListBox x:Name="listBox_BLE" MinHeight="30" MinWidth="200" MaxHeight="100" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <Grid Margin="1">

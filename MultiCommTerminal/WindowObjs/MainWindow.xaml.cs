@@ -17,9 +17,9 @@ namespace MultiCommTerminal.WindowObjs {
         #region Data
 
         private List<CommMedialDisplay> mediums = new List<CommMedialDisplay>();
-        private List<BTDeviceInfo> btInfoList = new List<BTDeviceInfo>();
-        private List<BluetoothLEDeviceInfo> btInfoListLE = new List<BluetoothLEDeviceInfo>();
-        private ButtonGroupSizeSyncManager btButtonSizer = null;
+        private List<BTDeviceInfo> infoList_BT = new List<BTDeviceInfo>();
+        private List<BluetoothLEDeviceInfo> infoList_BLE = new List<BluetoothLEDeviceInfo>();
+        private ButtonGroupSizeSyncManager buttonSizer_BT = null;
 
         MenuWin menu = null;
         private ICommWrapper wrapper = null;
@@ -41,7 +41,7 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
-            this.btButtonSizer.Teardown();            
+            this.buttonSizer_BT.Teardown();            
             this.wrapper.BLE_DeviceDiscovered -= this.BLE_DeviceDiscoveredHandler;
             this.wrapper.BT_DeviceDiscovered -= this.BT_DeviceDiscoveredHandler;
             this.wrapper.BT_DiscoveryComplete -= this.BT_DiscoveryCompleteHandler;
@@ -82,9 +82,9 @@ namespace MultiCommTerminal.WindowObjs {
         private void BLE_DeviceDiscoveredHandler(object sender, BluetoothLEDeviceInfo info) {
             this.Dispatcher.Invoke(() => {
                 // Disconnect the list from control before changing. Maybe change to Observable collection
-                this.lbBluetoothLE.ItemsSource = null;
-                this.btInfoListLE.Add(info);
-                this.lbBluetoothLE.ItemsSource = this.btInfoListLE;
+                this.listBox_BLE.ItemsSource = null;
+                this.infoList_BLE.Add(info);
+                this.listBox_BLE.ItemsSource = this.infoList_BLE;
             });
         }
 
@@ -93,16 +93,16 @@ namespace MultiCommTerminal.WindowObjs {
         /// <param name="sender">Click sender</param>
         /// <param name="e">Routed argument. Not used</param>
         private void btnDiscoverLE_Click(object sender, RoutedEventArgs e) {
-            this.lbBluetoothLE.ItemsSource = null;
-            this.btInfoListLE.Clear();
-            this.lbBluetoothLE.ItemsSource = this.btInfoListLE;
+            this.listBox_BLE.ItemsSource = null;
+            this.infoList_BLE.Clear();
+            this.listBox_BLE.ItemsSource = this.infoList_BLE;
             this.wrapper.BLE_DiscoverAsync();
         }
 
 
         private void btnInfoLE_Click(object sender, RoutedEventArgs e) {
-            if (this.lbBluetoothLE.SelectedItem != null) {
-                this.wrapper.BLE_GetDbgInfoStringDump(this.lbBluetoothLE.SelectedItem, (title, msg) => {
+            if (this.listBox_BLE.SelectedItem != null) {
+                this.wrapper.BLE_GetDbgInfoStringDump(this.listBox_BLE.SelectedItem, (title, msg) => {
                     MessageBox.Show(msg, title);
                 });
             }
@@ -110,9 +110,9 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void btnLEConnect_Click(object sender, RoutedEventArgs e) {
-            if (this.lbBluetoothLE.SelectedItem != null) {
+            if (this.listBox_BLE.SelectedItem != null) {
                 try {
-                    BluetoothLEDeviceInfo info = this.lbBluetoothLE.SelectedItem as BluetoothLEDeviceInfo;
+                    BluetoothLEDeviceInfo info = this.listBox_BLE.SelectedItem as BluetoothLEDeviceInfo;
                     this.wrapper.BLE_ConnectAsync(info);
                 }
                 catch (Exception ex) {
@@ -127,15 +127,15 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void btnBTDiscover_Click(object sender, RoutedEventArgs e) {
             // Asynchronous call
-            this.lbBluetooth.ItemsSource = null;
-            this.btInfoList.Clear();
-            this.lbBluetooth.ItemsSource = this.btInfoList;
+            this.listBox_BT.ItemsSource = null;
+            this.infoList_BT.Clear();
+            this.listBox_BT.ItemsSource = this.infoList_BT;
             this.gridWait.Visibility = Visibility.Visible;
             this.wrapper.BTClassicDiscoverAsync();
         }
 
         private void btnBTConnect_Click(object sender, RoutedEventArgs e) {
-            BTDeviceInfo item = this.lbBluetooth.SelectedItem as BTDeviceInfo;
+            BTDeviceInfo item = this.listBox_BT.SelectedItem as BTDeviceInfo;
             if (item != null) {
                 this.gridWait.Visibility = Visibility.Visible;
                 this.wrapper.BTClassicConnectAsync(item);
@@ -145,9 +145,9 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void BT_DeviceDiscoveredHandler(object sender, BTDeviceInfo dev) {
             this.Dispatcher.Invoke(() => {
-                this.lbBluetooth.ItemsSource = null;
-                this.btInfoList.Add(dev);
-                this.lbBluetooth.ItemsSource = this.btInfoList;
+                this.listBox_BT.ItemsSource = null;
+                this.infoList_BT.Add(dev);
+                this.listBox_BT.ItemsSource = this.infoList_BT;
             });
         }
 
@@ -196,8 +196,8 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper.BT_ConnectionCompleted += this.BT_ConnectionCompletedHandler;
             this.wrapper.BT_BytesReceived += this.BT_BytesReceivedHandler;
             // Call before rendering which will trigger initial resize events
-            btButtonSizer = new ButtonGroupSizeSyncManager(this.btnBTConnect, this.btnBTDiscover);
-            this.btButtonSizer.PrepForChange();
+            buttonSizer_BT = new ButtonGroupSizeSyncManager(this.btnBTConnect, this.btnBTDiscover);
+            this.buttonSizer_BT.PrepForChange();
 
 
             // TODO - remove - temp populate command box
@@ -332,7 +332,7 @@ namespace MultiCommTerminal.WindowObjs {
         /// <summary>Handle the language changed event to update controls text</summary>
         private void LanguageChangedHandler(object sender, LanguageFactory.Messaging.SupportedLanguage lang) {
             // The button text change will trigger resize
-            this.btButtonSizer.PrepForChange();
+            this.buttonSizer_BT.PrepForChange();
 
             // Buttons
             this.btnExit.Content = lang.GetText(MsgCode.exit);
