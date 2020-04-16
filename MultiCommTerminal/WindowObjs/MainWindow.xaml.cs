@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.WindowObjs {
 
@@ -49,9 +50,12 @@ namespace MultiCommTerminal.WindowObjs {
             this.outgoing.Items.Add("Start doing something");
             this.outgoing.Items.Add("Stop doing int");
 
+            // Call before rendering which will trigger initial resize events
+            btButtonSizer = new ButtonGroupSizeSyncManager(this.btnBTConnect, this.btnBTDiscover);
+            this.btButtonSizer.PrepForChange();
         }
 
-
+        ButtonGroupSizeSyncManager btButtonSizer = null;
         private void Window_ContentRendered(object sender, EventArgs e) {
             this.menu = new MenuWin(this);
             this.menu.Visibility = Visibility.Collapsed;
@@ -59,8 +63,7 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
-            // TODO call the wrapper teardown
-
+            this.btButtonSizer.Teardown();            
             this.wrapper.BLE_DeviceDiscovered -= this.BlueToothLE_DeviceDiscovered;
             this.wrapper.BTClassicDeviceDiscovered -= this.BlueTooth_DiscoveredBTDevice;
             this.wrapper.BTClassicDiscoveryComplete -= this.BlueTooth_DiscoveryComplete;
@@ -185,7 +188,7 @@ namespace MultiCommTerminal.WindowObjs {
 
         #region Bluetooth
 
-        private void btnDiscover_Click(object sender, RoutedEventArgs e) {
+        private void btnBTDiscover_Click(object sender, RoutedEventArgs e) {
             // Asynchronous call
             this.lbBluetooth.ItemsSource = null;
             this.btInfoList.Clear();
@@ -256,14 +259,14 @@ namespace MultiCommTerminal.WindowObjs {
             this.spEthernet.Visibility = Visibility.Collapsed;
             this.spWifi.Visibility = Visibility.Collapsed;
 
-            this.btnDiscover.Visibility = Visibility.Collapsed;
+            this.btnBTDiscover.Visibility = Visibility.Collapsed;
             this.btnDiscoverLE.Visibility = Visibility.Collapsed;
 
             // TODO - disconnect on switch
             switch ((this.cbComm.SelectedItem as CommMedialDisplay).MediumType) {
                 case CommMediumType.Bluetooth:
                     this.spBluetooth.Visibility = Visibility.Visible;
-                    this.btnDiscover.Visibility = Visibility.Visible;
+                    this.btnBTDiscover.Visibility = Visibility.Visible;
                     break;
                 case CommMediumType.BluetoothLE:
                     this.spBluetoothLE.Visibility = Visibility.Visible;
@@ -323,6 +326,14 @@ namespace MultiCommTerminal.WindowObjs {
             }
         }
 
+
+        private void outgoing_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            this.btnSend.Visibility = Visibility.Visible;
+            // TODO modify so that only when connected
+        }
+
+
+
         #endregion
 
         #region Title bar events
@@ -358,12 +369,15 @@ namespace MultiCommTerminal.WindowObjs {
 
         /// <summary>Handle the language changed event to update controls text</summary>
         private void Languages_LanguageChanged(object sender, LanguageFactory.Messaging.SupportedLanguage lang) {
+            // The button text change will trigger resize
+            this.btButtonSizer.PrepForChange();
+
             // Buttons
             this.btnExit.Content = lang.GetText(MsgCode.exit);
             this.btnSend.Content = lang.GetText(MsgCode.send);
             this.btnBTConnect.Content = lang.GetText(MsgCode.connect);
             this.btnLEConnect.Content = lang.GetText(MsgCode.connect);
-            this.btnDiscover.Content = lang.GetText(MsgCode.discover);
+            this.btnBTDiscover.Content = lang.GetText(MsgCode.discover);
             this.btnDiscoverLE.Content = lang.GetText(MsgCode.discover);
             this.btnInfoLE.Content =lang.GetText(MsgCode.info);
 
