@@ -55,6 +55,8 @@ namespace MultiCommWrapper.Net.interfaces {
 
         string IconSource(UIIcon code);
 
+        void CommMediumList(Action<List<CommMedialDisplay>> mediums);
+
         #endregion
 
         #region Bluetooth Classic

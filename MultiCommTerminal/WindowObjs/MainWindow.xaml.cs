@@ -1,4 +1,5 @@
 ﻿using BluetoothCommon.Net;
+using IconFactory.data;
 using LanguageFactory.data;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommTerminal.DependencyInjection;
@@ -16,7 +17,7 @@ namespace MultiCommTerminal.WindowObjs {
 
         #region Data
 
-        private MediumGroup mediumGroup = new MediumGroup();
+        private List<CommMedialDisplay> mediums = new List<CommMedialDisplay>();
         private List<BTDeviceInfo> btInfoList = new List<BTDeviceInfo>();
         private List<BluetoothLEDeviceInfo> btInfoListLE = new List<BluetoothLEDeviceInfo>();
 
@@ -236,12 +237,12 @@ namespace MultiCommTerminal.WindowObjs {
         #region Private
 
         private void OnStartupSuccess() {
-            // TODO for now init manually
-            this.mediumGroup.Mediums.Add(new CommMedialDisplay("Bluetooth Classic", CommMediumType.Bluetooth));
-            this.mediumGroup.Mediums.Add(new CommMedialDisplay("BluetoothLE", CommMediumType.BluetoothLE));
-            this.mediumGroup.Mediums.Add(new CommMedialDisplay("Ethernet", CommMediumType.Ethernet));
-            this.mediumGroup.Mediums.Add(new CommMedialDisplay("Wifi", CommMediumType.Wifi));
-            this.cbComm.ItemsSource = this.mediumGroup.Mediums;
+            this.wrapper.CommMediumList((items) => {
+                foreach (var item in items) {
+                    this.mediums.Add(item);
+                }
+            });
+            this.cbComm.ItemsSource = this.mediums;
             this.cbComm.SelectedIndex = 0;
             this.SizeToContent = SizeToContent.WidthAndHeight;
         }
