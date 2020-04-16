@@ -40,6 +40,8 @@ namespace MultiCommTerminal.WPF_Helpers {
                     return new IconDataModel(UIIcon.Search, this.AddDir("icons8-bluetooth-50.png"), "6");
                 case UIIcon.Ethernet:
                     return new IconDataModel(UIIcon.Search, this.AddDir("hierarchy-5.png"), "6");
+                case UIIcon.Connect:
+                    return new IconDataModel(UIIcon.Connect, this.AddDir("flash-1.png"), "6");
                 default:
                     return new IconDataModel(UIIcon.Cancel, this.AddDir("close.png"), "6");
             }

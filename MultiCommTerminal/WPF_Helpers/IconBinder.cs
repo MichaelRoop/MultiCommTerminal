@@ -34,6 +34,7 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string View { get { return Source(UIIcon.View); } }
         public static string Add { get { return Source(UIIcon.Add); } }
         public static string Search { get { return Source(UIIcon.Search); } }
+        public static string Connect { get { return Source(UIIcon.Connect); } }
 
         #endregion
 

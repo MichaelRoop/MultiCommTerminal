@@ -20,6 +20,7 @@ namespace MultiCommTerminal.WindowObjs {
         private List<BTDeviceInfo> infoList_BT = new List<BTDeviceInfo>();
         private List<BluetoothLEDeviceInfo> infoList_BLE = new List<BluetoothLEDeviceInfo>();
         private ButtonGroupSizeSyncManager buttonSizer_BT = null;
+        private ButtonGroupSizeSyncManager buttonSizer_BLE = null;
 
         MenuWin menu = null;
         private ICommWrapper wrapper = null;
@@ -41,7 +42,8 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
-            this.buttonSizer_BT.Teardown();            
+            this.buttonSizer_BT.Teardown();
+            this.buttonSizer_BLE.Teardown();
             this.wrapper.BLE_DeviceDiscovered -= this.BLE_DeviceDiscoveredHandler;
             this.wrapper.BT_DeviceDiscovered -= this.BT_DeviceDiscoveredHandler;
             this.wrapper.BT_DiscoveryComplete -= this.BT_DiscoveryCompleteHandler;
@@ -68,7 +70,6 @@ namespace MultiCommTerminal.WindowObjs {
         #region Button events
 
         private void btnExit_Click(object sender, RoutedEventArgs e) {
-            // TODO need to disconnect any connected medium
             this.Close();
         }
 
@@ -199,6 +200,8 @@ namespace MultiCommTerminal.WindowObjs {
             buttonSizer_BT = new ButtonGroupSizeSyncManager(this.btnBTConnect, this.btnBTDiscover);
             this.buttonSizer_BT.PrepForChange();
 
+            buttonSizer_BLE = new ButtonGroupSizeSyncManager(this.btnDiscoverLE, this.btnInfoLE, this.btnLEConnect);
+            buttonSizer_BLE.PrepForChange();
 
             // TODO - remove - temp populate command box
             this.outgoing.Items.Add("First msg");
@@ -333,6 +336,7 @@ namespace MultiCommTerminal.WindowObjs {
         private void LanguageChangedHandler(object sender, LanguageFactory.Messaging.SupportedLanguage lang) {
             // The button text change will trigger resize
             this.buttonSizer_BT.PrepForChange();
+            this.buttonSizer_BLE.PrepForChange();
 
             // Buttons
             this.btnExit.Content = lang.GetText(MsgCode.exit);

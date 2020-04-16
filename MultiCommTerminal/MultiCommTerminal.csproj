@@ -12,6 +12,7 @@
     <None Remove="images\icons\check-1.png" />
     <None Remove="images\icons\close.png" />
     <None Remove="images\icons\cog.png" />
+    <None Remove="images\icons\flash-1.png" />
     <None Remove="images\icons\hierarchy-5.png" />
     <None Remove="images\icons\icons8-bluetooth-50.png" />
     <None Remove="images\icons\icons8-wi-fi-32.png" />
@@ -54,6 +55,7 @@
     <Resource Include="images\icons\check-1.png" />
     <Resource Include="images\icons\close.png" />
     <Resource Include="images\icons\cog.png" />
+    <Resource Include="images\icons\flash-1.png" />
     <Resource Include="images\icons\hierarchy-5.png" />
     <Resource Include="images\icons\icons8-bluetooth-50.png" />
     <Resource Include="images\icons\icons8-wi-fi-32.png" />
