@@ -44,6 +44,8 @@ namespace MultiCommTerminal.WPF_Helpers {
                     return new IconDataModel(UIIcon.Connect, this.AddDir("icons8-quick-mode-on-100.png"), "6");
                 case UIIcon.Command:
                     return new IconDataModel(UIIcon.Connect, this.AddDir("icons8-cmd-50.png"), "6");
+                case UIIcon.CommandWhite:
+                    return new IconDataModel(UIIcon.Connect, this.AddDir("icons8-cmd-white-50.png"), "6");
                 case UIIcon.Run:
                     return new IconDataModel(UIIcon.Connect, this.AddDir("icons8-running-24.png"), "6");
                 default:

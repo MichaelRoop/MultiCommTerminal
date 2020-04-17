@@ -37,6 +37,7 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string Search { get { return Source(UIIcon.Search); } }
         public static string Connect { get { return Source(UIIcon.Connect); } }
         public static string Command { get { return Source(UIIcon.Command); } }
+        public static string Command_W { get { return Source(UIIcon.CommandWhite); } }
         public static string Send { get { return Source(UIIcon.Run); } }
 
 

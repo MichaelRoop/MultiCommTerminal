@@ -27,7 +27,7 @@
                                         />
                                         </Border>
                                         <Label x:Name="titleLabel" Margin="2" Content="{TemplateBinding Title}" 
-                                        HorizontalContentAlignment="Center" Foreground="White" Background="DarkBlue" FontSize="14" FontWeight="Bold" Padding="2" />
+                                        HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" Background="DarkBlue" FontSize="14" FontWeight="Bold" Padding="2" />
                                     </DockPanel>
                                 </Border>
                                 <!--This will represent a header/toolbar-->

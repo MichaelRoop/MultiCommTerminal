@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Style="{StaticResource MyWindowStyle}"
         Title="{Binding Source={x:Static wpfHelper:TxtBinder.Commands}}" 
-        Icon="{Binding Source={x:Static wpfHelper:IconBinder.Language_W}}"
+        Icon="{Binding Source={x:Static wpfHelper:IconBinder.Command_W}}"
         WindowStartupLocation="Manual" MinHeight="150" MinWidth="150"
         ContentRendered="Window_ContentRendered" Closing="Window_Closing">
     <Grid HorizontalAlignment="Stretch">

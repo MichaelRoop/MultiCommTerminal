@@ -13,6 +13,7 @@
     <None Remove="images\icons\icons8-close-window-50-noborder.png" />
     <None Remove="images\icons\icons8-close-window-50.png" />
     <None Remove="images\icons\icons8-cmd-50.png" />
+    <None Remove="images\icons\icons8-cmd-white-50.png" />
     <None Remove="images\icons\icons8-edit-50.png" />
     <None Remove="images\icons\icons8-ethernet-on-50.png" />
     <None Remove="images\icons\icons8-exit-50.png" />
@@ -63,6 +64,7 @@
     <Resource Include="images\icons\icons8-close-window-50-noborder.png" />
     <Resource Include="images\icons\icons8-close-window-50.png" />
     <Resource Include="images\icons\icons8-cmd-50.png" />
+    <Resource Include="images\icons\icons8-cmd-white-50.png" />
     <Resource Include="images\icons\icons8-edit-50.png" />
     <Resource Include="images\icons\icons8-ethernet-on-50.png" />
     <Resource Include="images\icons\icons8-exit-50.png" />
