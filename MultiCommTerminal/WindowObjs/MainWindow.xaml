@@ -77,7 +77,7 @@
                 <Border BorderBrush="AliceBlue" BorderThickness="1" VerticalAlignment="Center">
                     <DockPanel  VerticalAlignment="Center">
                         <Border Margin="10,0,10,10">
-                            <ComboBox x:Name="cbComm" Height="30" MinWidth="100" MaxHeight="90" VerticalAlignment="Top" Background="Transparent"
+                            <ComboBox x:Name="cbComm" Height="30" MinWidth="120" MaxHeight="90" VerticalAlignment="Top" Background="Transparent"
                                       SelectionChanged="cbComm_SelectionChanged">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
@@ -99,9 +99,9 @@
                         </Border>
 
                         <!-- Will need different for LE and classic. Using the classic one modified for LE for now -->
-                        <StackPanel x:Name="spBluetooth" VerticalAlignment="Center" Visibility="Visible" Margin="30,0,10,10">
-                            <DockPanel Margin="0,0">
-                                <StackPanel Margin="10,0">
+                        <StackPanel x:Name="spBluetooth" VerticalAlignment="Center" Visibility="Visible" Margin="20,0,10,10">
+                            <DockPanel>
+                                <StackPanel Margin="0,0,10,0">
                                     <controls:UC_IconButton x:Name="btnBTDiscover" Style="{StaticResource TextIconButton}"
                                             HorizontalContentAlignment="Left"
                                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Discover}}" 
@@ -141,7 +141,7 @@
                         </StackPanel>
                         <StackPanel x:Name="spBluetoothLE" VerticalAlignment="Center" Visibility="Collapsed" Margin="20,0,10,10">
                             <DockPanel>
-                                <StackPanel Margin="0,0,20,0" >
+                                <StackPanel Margin="0,0,10,0" >
                                     <controls:UC_IconButton x:Name="btnDiscoverLE" 
                                             HorizontalContentAlignment="Left"
                                             Style="{StaticResource TextIconButton}"
@@ -161,9 +161,9 @@
                                             Background="Transparent" Click="btnLEConnect_Click" />
                                 </StackPanel>
 
-                                <StackPanel>
+                                <StackPanel Margin="10,0">
                                     <Label Content="Device:" HorizontalAlignment="Center"/>
-                                    <ListBox x:Name="listBox_BLE" MinHeight="30" MinWidth="200" MaxHeight="100" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                                    <ListBox x:Name="listBox_BLE" MinHeight="30" MinWidth="200" MaxHeight="85" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <Grid Margin="1">
