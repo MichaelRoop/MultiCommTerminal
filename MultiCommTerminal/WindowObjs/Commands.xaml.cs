@@ -1,4 +1,5 @@
 ﻿using MultiCommData.Net.StorageDataModels;
+using MultiCommTerminal.WPF_Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -37,6 +38,12 @@ namespace MultiCommTerminal.WindowObjs {
             this.spEditButtons.Visibility = Visibility.Collapsed;
         }
 
+        public override void OnApplyTemplate() {
+            this.BindMouseDownToCustomTitleBar();
+            base.OnApplyTemplate();
+        }
+
+
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             this.lbxCmds.SelectionChanged -= this.lbxCmds_SelectionChanged;
         }
@@ -45,10 +52,6 @@ namespace MultiCommTerminal.WindowObjs {
             this.lbxCmds.ItemsSource = this.scripts;
             this.lbxCmds.SelectionChanged += this.lbxCmds_SelectionChanged;
             WPF_ControlHelpers.CenterChild(parent, this);
-        }
-
-        private void lbTitle_MouseDown(object sender, MouseButtonEventArgs e) {
-            this.DragMove();
         }
 
         private void btnExit_Click(object sender, RoutedEventArgs e) {

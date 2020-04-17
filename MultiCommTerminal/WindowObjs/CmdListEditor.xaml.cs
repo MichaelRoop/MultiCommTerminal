@@ -26,8 +26,7 @@ namespace MultiCommTerminal.WindowObjs {
 
         /// <summary>MouseDown event mapped to template title bar</summary>
         public override void OnApplyTemplate() {
-            Border b = this.Template.FindName("PART_topBar", this) as Border;
-            b.MouseDown += TitleBar_MouseDown;
+            this.BindMouseDownToCustomTitleBar();
             base.OnApplyTemplate();
         }
 

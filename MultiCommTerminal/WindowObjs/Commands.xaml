@@ -7,24 +7,14 @@
         xmlns:controls="clr-namespace:MultiCommTerminal.UserControls"
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.WPF_Helpers"
         mc:Ignorable="d"
-        WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="Manual"
-        Title="{Binding Source={x:Static wpfHelper:TxtBinder.Commands}}" MinHeight="150" MinWidth="150"
+        Style="{StaticResource MyWindowStyle}"
+        Title="{Binding Source={x:Static wpfHelper:TxtBinder.Commands}}" 
+        Icon="{Binding Source={x:Static wpfHelper:IconBinder.Language_W}}"
+        WindowStartupLocation="Manual" MinHeight="150" MinWidth="150"
         ContentRendered="Window_ContentRendered" Closing="Window_Closing">
     <Grid HorizontalAlignment="Stretch">
         <Border BorderBrush="Blue" BorderThickness="1">
             <StackPanel>
-                <Border Background="DarkBlue" Height="30">
-                    <DockPanel HorizontalAlignment="Center">
-                        <!--<Border Padding="4">
-                            <Image Source="{Binding Source={x:Static wpfHelper:IconBinder.Language_W}}"
-                                 RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased"
-                                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
-                        </Border>-->
-                        <Label x:Name="lbTitle" Margin="2" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Commands}}" 
-                           MouseDown="lbTitle_MouseDown" HorizontalContentAlignment="Center"
-                           Foreground="White" Background="DarkBlue" FontSize="14" FontWeight="Bold" Padding="2" />
-                    </DockPanel>
-                </Border>
                 <StackPanel Grid.ColumnSpan="2">
                     <DockPanel>
                     <ListBox x:Name="lbxCmds" Width="250" Height="200" Margin="10" FontSize="16" 

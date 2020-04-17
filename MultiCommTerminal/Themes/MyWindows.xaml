@@ -18,7 +18,7 @@
                         <Border x:Name="PART_topBar" BorderBrush="Blue" BorderThickness="1" 
                                 Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                             <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <Border x:Name="brdTitle" Background="DarkBlue" Height="30" >
+                                <Border x:Name="brdTitle" Background="DarkBlue" Height="35" >
                                     <DockPanel HorizontalAlignment="Center">
                                         <Border Padding="4">
                                             <Image x:Name="titleIcon"  Source="{TemplateBinding Icon}" Width="25" Height="25"
