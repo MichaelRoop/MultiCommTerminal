@@ -49,15 +49,15 @@
         <Setter Property="Padding" Value="3"/>
         <Setter Property="IconMargin" Value="7"/>
         <Setter Property="FontSize" Value="14"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:UC_IconButton}">
                     <!-- TODO If the border H Alignment is Center it can resize down but cannot be set on entry as both same size. works with stretch but not downsize -->
-                    <Border x:Name="tiButtonBorder" CornerRadius="15" BorderBrush="Blue" BorderThickness="1" 
-                            >
-                        <Grid Margin="10,0" HorizontalAlignment="Center">
-                                
-                            <DockPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <!-- Bind the border background to the button background to capture click event -->
+                    <Border x:Name="tiButtonBorder" CornerRadius="15" BorderBrush="Blue" BorderThickness="1" Background="{TemplateBinding Background}" >
+                        <Grid Margin="10,0" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}">
+                            <DockPanel HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center">
                                  <!--Pad image seperately since the Content already is padded-->
                                 <Border x:Name="imageBorder" Padding="{TemplateBinding IconMargin}">
                                     <Image Source="{TemplateBinding IconSource}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"

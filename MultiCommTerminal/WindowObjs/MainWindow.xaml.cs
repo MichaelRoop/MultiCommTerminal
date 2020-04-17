@@ -350,9 +350,12 @@ namespace MultiCommTerminal.WindowObjs {
             // Buttons
             this.btnExit.Content = lang.GetText(MsgCode.exit);
             this.btnSend.Content = lang.GetText(MsgCode.send);
+            
             this.btnBTConnect.Content = lang.GetText(MsgCode.connect);
-            this.btnLEConnect.Content = lang.GetText(MsgCode.connect);
+            this.btnInfoBT.Content = lang.GetText(MsgCode.info);
             this.btnBTDiscover.Content = lang.GetText(MsgCode.discover);
+
+            this.btnLEConnect.Content = lang.GetText(MsgCode.connect);
             this.btnDiscoverLE.Content = lang.GetText(MsgCode.discover);
             this.btnInfoLE.Content =lang.GetText(MsgCode.info);
 

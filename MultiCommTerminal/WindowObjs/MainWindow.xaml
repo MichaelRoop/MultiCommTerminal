@@ -103,14 +103,17 @@
                             <DockPanel Margin="0,0">
                                 <StackPanel Margin="10,0">
                                     <controls:UC_IconButton x:Name="btnBTDiscover" Style="{StaticResource TextIconButton}"
+                                            HorizontalContentAlignment="Left"
                                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Discover}}" 
                                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Search}}"                                                                                            
                                             Background="Transparent" Click="btnBTDiscover_Click" />
                                     <controls:UC_IconButton x:Name="btnInfoBT" Style="{StaticResource TextIconButton}"
+                                            HorizontalContentAlignment="Left"
                                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Info}}" Margin="0,5"
                                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.View}}"                                                        
                                             Background="Transparent" Click="btnInfoBT_Click" />
                                     <controls:UC_IconButton x:Name="btnBTConnect" Style="{StaticResource TextIconButton}"
+                                            HorizontalContentAlignment="Left"
                                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Connect}}" 
                                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Connect}}"                                                                                            
                                             Background="Transparent" Click="btnBTConnect_Click" />
@@ -138,15 +141,18 @@
                             <DockPanel>
                                 <StackPanel Margin="0,0,20,0" >
                                     <controls:UC_IconButton x:Name="btnDiscoverLE" 
+                                            HorizontalContentAlignment="Left"
                                             Style="{StaticResource TextIconButton}"
                                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Discover}}"                                        
                                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Search}}"                                    
                                             Background="Transparent" Click="btnDiscoverLE_Click" />
                                     <controls:UC_IconButton x:Name="btnInfoLE" Style="{StaticResource TextIconButton}"
+                                            HorizontalContentAlignment="Left"
                                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Info}}" Margin="0,5"
                                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.View}}"                                                        
                                             Background="Transparent" Click="btnInfoLE_Click" />
                                     <controls:UC_IconButton x:Name="btnLEConnect" Margin="0,0,0,0"
+                                            HorizontalContentAlignment="Left"
                                             Style="{StaticResource TextIconButton}"
                                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Connect}}" 
                                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Connect}}"                                                                                            
