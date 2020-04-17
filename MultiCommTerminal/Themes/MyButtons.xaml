@@ -58,7 +58,7 @@
                     <Border x:Name="tiButtonBorder" CornerRadius="15" BorderBrush="Blue" BorderThickness="1" Background="{TemplateBinding Background}" >
                         <Grid Margin="10,0" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}">
                             <DockPanel HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center">
-                                 <!--Pad image seperately since the Content already is padded-->
+                                <!--Pad image seperately since the Content already is padded-->
                                 <Border x:Name="imageBorder" Padding="{TemplateBinding IconMargin}">
                                     <Image Source="{TemplateBinding IconSource}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                            RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" />
@@ -114,14 +114,14 @@
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                         <!--Useful when using a mouse. Set general opacity--> 
+                        <!--Useful when using a mouse. Set general opacity-->
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Opacity" Value=".5" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="False">
                             <Setter Property="Opacity" Value="1" />
                         </Trigger>
-                         <!--Useful when just doing touch screen. Note: must set different properties than IsMouseOver--> 
+                        <!--Useful when just doing touch screen. Note: must set different properties than IsMouseOver-->
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="tiButtonBorder" Property="Opacity" Value=".4" />
                             <Setter TargetName="icon" Property="Opacity" Value=".5" />
@@ -135,6 +135,61 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+
+    <!--  Temp to test -->
+    <!-- https://www.eidias.com/blog/2012/2/20/customizing-wpf-combo-box-style  -->
+    <!-- Style="{Binding Source={StaticResource CustomToggleButton}}" -->
+
+
+    <!--<ControlTemplate x:Key="CustomToggleButton" TargetType="ToggleButton">
+        --><!-- No idea what this is about --><!--
+        <Grid Background="Blue" Margin="50">
+            <Border Name="Border" BorderThickness="10" BorderBrush="Brown" />
+            <Border Name="SmallBorder" BorderThickness="10" BorderBrush="Green" />
+            --><!--<Path Name="Arrow" Width="40" Data="M0,0 L0,2 L4,6 L8,2 L8,0 L4,4 z"  Fill="Yellow" />--><!--
+        </Grid>
+    </ControlTemplate>
+    <Style TargetType="{x:Type ComboBoxItem}">
+        <Setter Property="FrameworkElement.OverridesDefaultStyle" Value="True" />
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                    --><!-- this is the border around each item in the list --><!--
+                    <Border BorderThickness="0" BorderBrush="Transparent">
+                        <ContentPresenter />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type ComboBox}">
+        <Setter Property="FrameworkElement.OverridesDefaultStyle" Value="True" />
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ComboBox">
+                    <Grid>
+                        <ToggleButton Template="{StaticResource CustomToggleButton}" />
+                        <ContentPresenter />
+                        <TextBox/>
+                        <Popup>
+                            <Grid>
+                                <Border BorderThickness="5" BorderBrush="Black" Background="Green">
+                                    <ScrollViewer>
+                                        <ItemsPresenter />
+                                    </ScrollViewer>
+                                </Border>
+                            </Grid>
+                        </Popup>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>-->
+
+
+
 
 
 </ResourceDictionary>
