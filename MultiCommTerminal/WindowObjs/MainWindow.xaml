@@ -120,7 +120,9 @@
                                 </StackPanel>
                                 <StackPanel Margin="10,0">
                                     <Label Content="Device:" HorizontalAlignment="Center"/>
-                                    <ListBox x:Name="listBox_BT" MinHeight="30" MinWidth="200" MaxHeight="100" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                                    <ListBox x:Name="listBox_BT" MinHeight="30" MinWidth="200" MaxHeight="85" 
+                                             ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                                             ScrollViewer.HorizontalScrollBarVisibility="Auto">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <Grid Margin="1">
@@ -195,7 +197,7 @@
                 <Border BorderBrush="AliceBlue" BorderThickness="1" VerticalAlignment="Center">
                     <DockPanel  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
                         <!-- Need to override the Icons margin because the Exit is smaller within PNG file -->
-                        <controls:UC_IconButton x:Name="btnExit" Click="btnExit_Click"
+                        <controls:UC_IconButton x:Name="btnExit" Click="btnExit_Click" MinWidth="100" IconMargin="7"
                             Style="{StaticResource TextIconButton}" 
                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Exit}}"
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Exit}}"/>
