@@ -25,7 +25,6 @@
                             <Separator Background="Aquamarine" />
                             <DockPanel Height="22" Margin="5">
                                 <Border Padding="{Binding Padding}">
-                                    <!-- "0,2,9,2"  -->
                                     <Image Source="{Binding IconSource}" 
                                            RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased"
                                             VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />

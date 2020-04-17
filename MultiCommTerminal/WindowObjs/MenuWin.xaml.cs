@@ -62,6 +62,9 @@ namespace MultiCommTerminal.WindowObjs {
                         // TODO - settings window
                         break;
                     case MenuCode.Commands:
+                        //CmdListEditor cmd = new CmdListEditor();
+                        //cmd.ShowDialog();
+
                         Commands cmds = new Commands(this.mainWindow);
                         cmds.ShowDialog();
                         //this.lbxMenuItems.se
