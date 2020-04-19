@@ -32,6 +32,7 @@ namespace MultiCommTerminal.WindowObjs {
         public MainWindow() {
             this.wrapper = DI.Wrapper;
             InitializeComponent();
+            this.terminatorEdit.SetParent(this);
             this.OnStartupSuccess();
         }
 

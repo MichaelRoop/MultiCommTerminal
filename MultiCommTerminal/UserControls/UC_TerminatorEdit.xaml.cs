@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CommunicationStack.Net.Stacks;
+using MultiCommTerminal.WindowObjs;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -17,6 +19,7 @@ namespace MultiCommTerminal.UserControls {
     /// </summary>
     public partial class UC_TerminatorEdit : UserControl {
 
+        Window parent = null;
         List<StackPanel> buttonPanels = new List<StackPanel>();
         List<Label> hex = new List<Label>();
         List<Label> names = new List<Label>();
@@ -26,6 +29,7 @@ namespace MultiCommTerminal.UserControls {
 
         public UC_TerminatorEdit() {
             InitializeComponent();
+
             this.buttonPanels.Add(this.sp1);
             this.buttonPanels.Add(this.sp2);
             this.buttonPanels.Add(this.sp3);
@@ -47,11 +51,18 @@ namespace MultiCommTerminal.UserControls {
             this.names.Add(this.name5);
 
 
-            //this.btnDelete.Visibility = Visibility.Collapsed;
+            for (int i = 0; i < MAX_TERMINATORS; i++) {
+                this.hex[i].Content = "";
+                this.names[i].Content = "";
+            }
 
             // Need an init once the current number loaded into the editor
             this.CollapseButtonPanels();
             this.Init(0);
+        }
+
+        public void SetParent(Window parent) {
+            this.parent = parent;
         }
 
 
@@ -95,15 +106,26 @@ namespace MultiCommTerminal.UserControls {
             //}
 
             if (this.currentIndex < (MAX_TERMINATORS-1)) {
-                this.currentIndex++;
-                this.SetVisible(this.buttonPanels[this.currentIndex]);
-                this.Init(this.currentIndex + 1);
+                TerminatorSelector win = new TerminatorSelector(this.parent);
+                win.ShowDialog();
+                TerminatorInfo info = win.SelectedTerminator;
+                if (info != null) {
+                    this.currentIndex++;
+                    // Set the hex and name before display
+                    // TODO - also save in a byte block
+                    this.names[this.currentIndex].Content = info.Display;
+                    this.hex[this.currentIndex].Content = info.HexDisplay;
+                    this.SetVisible(this.buttonPanels[this.currentIndex]);
+                    this.Init(this.currentIndex + 1);
+                }
             }
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e) {
             if (this.currentIndex > -1) {
                 this.SetCollapsed(this.buttonPanels[this.currentIndex]);
+                this.hex[this.currentIndex].Content = "";
+                this.names[this.currentIndex].Content = "";
                 this.currentIndex--;
                 this.Init(this.currentIndex + 1);
             }

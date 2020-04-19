@@ -98,7 +98,7 @@
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
 
-                                <controls:UC_TerminatorEdit />
+                                <controls:UC_TerminatorEdit x:Name="terminatorEdit" />
 
                             </StackPanel>
 
