@@ -77,6 +77,7 @@
                 <Border BorderBrush="AliceBlue" BorderThickness="1" VerticalAlignment="Center">
                     <DockPanel  VerticalAlignment="Center">
                         <Border Margin="10,0,10,10">
+                            <StackPanel>
                             <ComboBox x:Name="cbComm" Height="30" MinWidth="120" MaxHeight="90" VerticalAlignment="Top" Background="Transparent"
                                       SelectionChanged="cbComm_SelectionChanged">
                                 <ComboBox.ItemTemplate>
@@ -96,6 +97,11 @@
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
+
+                                <controls:UC_TerminatorEdit />
+
+                            </StackPanel>
+
                         </Border>
 
                         <!-- Will need different for LE and classic. Using the classic one modified for LE for now -->
