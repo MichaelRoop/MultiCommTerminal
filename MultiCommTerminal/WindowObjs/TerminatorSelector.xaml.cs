@@ -1,31 +1,30 @@
 ﻿using CommunicationStack.Net.Stacks;
 using MultiCommTerminal.WPF_Helpers;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.WindowObjs {
-    /// <summary>
-    /// Interaction logic for TerminatorSelector.xaml
-    /// </summary>
+
+    /// <summary>Presents a list of potential terminators for selection</summary>
     public partial class TerminatorSelector : Window {
 
-        TerminatorFactory factory = new TerminatorFactory();
+        #region Data
+
+        private TerminatorFactory factory = new TerminatorFactory();
         private ButtonGroupSizeSyncManager widthManager = null;
         private Window parent = null;
 
+        #endregion
 
+        #region Properties
+
+        /// <summary>Holds the selected terminator or null if none selected</summary>
         public TerminatorInfo SelectedTerminator { get; set; } = null;
 
+        #endregion
+
+        #region Constructor and window events
 
         public TerminatorSelector(Window parent) {
             InitializeComponent();
@@ -58,6 +57,9 @@ namespace MultiCommTerminal.WindowObjs {
             this.widthManager.Teardown();
         }
 
+        #endregion
+
+        #region Private Button event handlers
 
         private void btnSelect_Click(object sender, RoutedEventArgs e) {
             TerminatorInfo info = this.listBoxTerminators.SelectedItem as TerminatorInfo;
@@ -72,5 +74,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.SelectedTerminator = null;
             this.Close();
         }
+
+        #endregion
     }
 }
