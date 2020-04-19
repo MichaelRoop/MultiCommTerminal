@@ -19,12 +19,24 @@ namespace MultiCommTerminal.UserControls {
     /// </summary>
     public partial class UC_TerminatorEdit : UserControl {
 
+        #region Data
+
         Window parent = null;
         List<StackPanel> buttonPanels = new List<StackPanel>();
         List<Label> hex = new List<Label>();
         List<Label> names = new List<Label>();
         private int currentIndex = -1;
         private const int MAX_TERMINATORS = 5;
+        private List<TerminatorInfo> selectedTerminators = new List<TerminatorInfo>();
+
+
+        #endregion
+
+        #region Events
+
+        public event EventHandler<TerminatorData> OnSave;
+
+        #endregion
 
 
         public UC_TerminatorEdit() {
@@ -61,10 +73,13 @@ namespace MultiCommTerminal.UserControls {
             this.Init(0);
         }
 
-        public void SetParent(Window parent) {
-            this.parent = parent;
-        }
 
+        public void InitialiseEditor(Window parent, TerminatorData data) {
+            this.parent = parent;
+            foreach (TerminatorInfo info in data.TerminatorInfos) {
+                this.AddTerminator(info);
+            }
+        }
 
 
         private void Init(int numberSet) {
@@ -76,14 +91,17 @@ namespace MultiCommTerminal.UserControls {
                         this.CollapseButtonPanels();
                         this.SetVisible(this.btnAdd);
                         this.SetCollapsed(this.btnDelete);
+                        this.SetCollapsed(this.btnSave);
                         break;
                     case MAX_TERMINATORS:
-                        this.SetVisible(this.btnDelete);
                         this.SetCollapsed(this.btnAdd);
+                        this.SetVisible(this.btnDelete);
+                        this.SetVisible(this.btnSave);
                         break;
                     default:
                         this.SetVisible(this.btnAdd);
                         this.SetVisible(this.btnDelete);
+                        this.SetVisible(this.btnSave);
                         break;
 
                 }
@@ -101,25 +119,29 @@ namespace MultiCommTerminal.UserControls {
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e) {
-            //if (this.currentNumber == 0) {
-            //    this.SetVisible(this.btnDelete);
-            //}
-
             if (this.currentIndex < (MAX_TERMINATORS-1)) {
                 TerminatorSelector win = new TerminatorSelector(this.parent);
                 win.ShowDialog();
                 TerminatorInfo info = win.SelectedTerminator;
                 if (info != null) {
-                    this.currentIndex++;
-                    // Set the hex and name before display
-                    // TODO - also save in a byte block
-                    this.names[this.currentIndex].Content = info.Display;
-                    this.hex[this.currentIndex].Content = info.HexDisplay;
-                    this.SetVisible(this.buttonPanels[this.currentIndex]);
-                    this.Init(this.currentIndex + 1);
+                    this.AddTerminator(info);
                 }
             }
         }
+
+
+        private void AddTerminator(TerminatorInfo info) {
+            this.selectedTerminators.Add(info);
+            this.currentIndex++;
+            // Set the hex and name before display
+            // TODO - also save in a byte block
+            this.names[this.currentIndex].Content = info.Display;
+            this.hex[this.currentIndex].Content = info.HexDisplay;
+            this.SetVisible(this.buttonPanels[this.currentIndex]);
+            this.Init(this.currentIndex + 1);
+        }
+
+
 
         private void btnDelete_Click(object sender, RoutedEventArgs e) {
             if (this.currentIndex > -1) {
@@ -127,12 +149,23 @@ namespace MultiCommTerminal.UserControls {
                 this.hex[this.currentIndex].Content = "";
                 this.names[this.currentIndex].Content = "";
                 this.currentIndex--;
+                if (this.selectedTerminators.Count > 0) {
+                    this.selectedTerminators.RemoveAt(this.selectedTerminators.Count - 1);
+                }
                 this.Init(this.currentIndex + 1);
             }
         }
 
 
+        private void btnSave_Click(object sender, RoutedEventArgs e) {
+            // Raise an event so the subscriber can save the data to persistent storage
+            if (this.OnSave != null) {
+                this.OnSave.Invoke(this, new TerminatorData(this.selectedTerminators));
+            }
+        }
 
+
+        #region Private
 
         private void SetVisible(StackPanel panel) {
             panel.Visibility = Visibility.Visible;
@@ -151,7 +184,7 @@ namespace MultiCommTerminal.UserControls {
             ctrl.Visibility = Visibility.Hidden;
         }
 
-
+        #endregion
 
     }
 }

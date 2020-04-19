@@ -72,6 +72,9 @@
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Delete}}" Margin="5"
                             Click="btnDelete_Click" />
 
+                <local:UC_RoundIconButton x:Name="btnSave"  Style="{StaticResource RoundIconButton}" 
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Save}}" Margin="5"
+                            Click="btnSave_Click" />
 
 
                 <!--<local:UC_IconButton x:Name="btnCancel" Click="btnCancel_Click"  IconMargin="7"
