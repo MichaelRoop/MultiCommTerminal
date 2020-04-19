@@ -7,103 +7,72 @@
              xmlns:local="clr-namespace:MultiCommTerminal.UserControls"
              mc:Ignorable="d" 
              >
-    <Grid MinWidth="200" MinHeight="100">
+    <Grid MinWidth="200" MinHeight="105" Margin="5">
         <StackPanel>
-            <Label Content="Terminators" HorizontalContentAlignment="Center" />
-
-            <DockPanel HorizontalAlignment="Center" Margin="5" MinHeight="63">
+            <Border BorderBrush="Blue" BorderThickness=".5" Padding="2">
+                <DockPanel HorizontalAlignment="Left"  Margin="0">
                 <StackPanel x:Name="sp1" Margin="0,0,2,0">
-                        <DockPanel MinHeight="18" HorizontalAlignment="Center">
-                            <local:UC_RoundIconButton x:Name="btnAdd1" Visibility="Visible" 
-                                Style="{StaticResource IconButton}" HorizontalAlignment="Center"
-                                IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Add}}" Click="btnAdd1_Click" />
-                            <local:UC_RoundIconButton x:Name="btnDelete1"  Visibility="Collapsed"
-                                Style="{StaticResource IconButton}" HorizontalAlignment="Center"
-                                IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Delete}}" Click="btnDelete1_Click" />
-                        </DockPanel>
                     <StackPanel VerticalAlignment="Bottom">
-                        <Border x:Name="hex1" BorderBrush="Blue" BorderThickness="1" >
-                            <Label Content="0x00" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                        <Border BorderBrush="Blue" BorderThickness="1" >
+                            <Label x:Name="hex1" Content="0x00" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                         </Border>
-                        <Border x:Name="name1" BorderBrush="Blue" BorderThickness="1" Margin="0,10,0,0" >
-                            <Label Content="NUL" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                        <Border BorderBrush="Blue" BorderThickness="1" Margin="0,10,0,0" >
+                            <Label x:Name="name1" Content="NUL" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                         </Border>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel x:Name="sp2" Margin="2,0">
-                    <DockPanel MinHeight="18" HorizontalAlignment="Center">
-                        <local:UC_RoundIconButton x:Name="btnAdd2" Visibility="Visible" 
-                                Style="{StaticResource IconButton}" HorizontalAlignment="Center"
-                                IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Add}}" Click="btnAdd1_Click" />
-                        <local:UC_RoundIconButton x:Name="btnDelete2"  Visibility="Collapsed"
-                                Style="{StaticResource IconButton}" HorizontalAlignment="Center"
-                                IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Delete}}" Click="btnDelete2_Click" />
-                    </DockPanel>
                     <StackPanel VerticalAlignment="Bottom">
-                        <Border x:Name="hex2" BorderBrush="Blue" BorderThickness="1" >
-                            <Label Content="0x00" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                        <Border BorderBrush="Blue" BorderThickness="1" >
+                            <Label x:Name="hex2" Content="0x00" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                         </Border>
-                        <Border x:Name="name2" BorderBrush="Blue" BorderThickness="1" Margin="0,10,0,0" >
-                            <Label Content="NUL" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                        <Border BorderBrush="Blue" BorderThickness="1" Margin="0,10,0,0" >
+                            <Label x:Name="name2" Content="NUL" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                         </Border>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel x:Name="sp3" Margin="2,0">
-                    <DockPanel MinHeight="18" HorizontalAlignment="Center">
-                        <local:UC_RoundIconButton x:Name="btnAdd3" Visibility="Visible" 
-                                Style="{StaticResource IconButton}" HorizontalAlignment="Center"
-                                IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Add}}" Click="btnAdd3_Click" />
-                        <local:UC_RoundIconButton x:Name="btnDelete3"  Visibility="Collapsed"
-                                Style="{StaticResource IconButton}" HorizontalAlignment="Center"
-                                IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Delete}}" Click="btnDelete3_Click" />
-                    </DockPanel>
                     <StackPanel VerticalAlignment="Bottom">
-                        <Border x:Name="hex3" BorderBrush="Blue" BorderThickness="1" >
-                            <Label Content="0x00" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                        <Border BorderBrush="Blue" BorderThickness="1" >
+                            <Label x:Name="hex3" Content="0x00" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                         </Border>
-                        <Border x:Name="name3" BorderBrush="Blue" BorderThickness="1" Margin="0,10,0,0" >
-                            <Label Content="NUL" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                        <Border BorderBrush="Blue" BorderThickness="1" Margin="0,10,0,0" >
+                            <Label x:Name="name3" Content="NUL" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                         </Border>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel x:Name="sp4" Margin="2,0">
-                    <DockPanel MinHeight="18" HorizontalAlignment="Center">
-                        <local:UC_RoundIconButton x:Name="btnAdd4" Visibility="Visible" 
-                                Style="{StaticResource IconButton}" HorizontalAlignment="Center"
-                                IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Add}}" Click="btnAdd4_Click" />
-                        <local:UC_RoundIconButton x:Name="btnDelete4"  Visibility="Collapsed"
-                                Style="{StaticResource IconButton}" HorizontalAlignment="Center"
-                                IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Delete}}" Click="btnDelete4_Click" />
-                    </DockPanel>
                     <StackPanel VerticalAlignment="Bottom">
-                        <Border x:Name="hex4" BorderBrush="Blue" BorderThickness="1" >
-                            <Label Content="0x00" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                        <Border BorderBrush="Blue" BorderThickness="1" >
+                            <Label x:Name="hex4" Content="0x00" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                         </Border>
-                        <Border x:Name="name4" BorderBrush="Blue" BorderThickness="1" Margin="0,10,0,0" >
-                            <Label Content="NUL" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                        <Border BorderBrush="Blue" BorderThickness="1" Margin="0,10,0,0" >
+                            <Label x:Name="name4" Content="NUL" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                         </Border>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel x:Name="sp5" Margin="2,0,0,0">
-                    <DockPanel MinHeight="18" HorizontalAlignment="Center">
-                        <local:UC_RoundIconButton x:Name="btnAdd5" Visibility="Visible" 
-                                Style="{StaticResource IconButton}" HorizontalAlignment="Center"
-                                IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Add}}" Click="btnAdd5_Click" />
-                        <local:UC_RoundIconButton x:Name="btnDelete5"  Visibility="Collapsed"
-                                Style="{StaticResource IconButton}" HorizontalAlignment="Center"
-                                IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Delete}}" Click="btnDelete5_Click" />
-                    </DockPanel>
                     <StackPanel VerticalAlignment="Bottom">
-                        <Border x:Name="hex5" BorderBrush="Blue" BorderThickness="1" >
-                            <Label Content="0x00" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                        <Border BorderBrush="Blue" BorderThickness="1" >
+                            <Label x:Name="hex5" Content="0x00" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                         </Border>
-                        <Border x:Name="name5" BorderBrush="Blue" BorderThickness="1" Margin="0,10,0,0" >
-                            <Label Content="NUL" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                        <Border BorderBrush="Blue" BorderThickness="1" Margin="0,10,0,0" >
+                            <Label x:Name="name5" Content="NUL" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                         </Border>
                     </StackPanel>
                 </StackPanel>
             </DockPanel>
-            <DockPanel>
+            </Border>
+            
+            <DockPanel HorizontalAlignment="Center">
+                <local:UC_RoundIconButton x:Name="btnAdd"  Style="{StaticResource RoundIconButton}" 
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Add}}"  Margin="5"
+                            Click="btnAdd_Click" />
+                <local:UC_RoundIconButton x:Name="btnDelete"  Style="{StaticResource RoundIconButton}" 
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Delete}}" Margin="5"
+                            Click="btnDelete_Click" />
+
+
 
                 <!--<local:UC_IconButton x:Name="btnCancel" Click="btnCancel_Click"  IconMargin="7"
                             Style="{StaticResource TextIconButton}" 

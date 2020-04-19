@@ -17,144 +17,116 @@ namespace MultiCommTerminal.UserControls {
     /// </summary>
     public partial class UC_TerminatorEdit : UserControl {
 
-        List<UC_RoundIconButton> addButtons = new List<UC_RoundIconButton>();
-        List<UC_RoundIconButton> deleteButtons = new List<UC_RoundIconButton>();
         List<StackPanel> buttonPanels = new List<StackPanel>();
+        List<Label> hex = new List<Label>();
+        List<Label> names = new List<Label>();
+        private int currentIndex = -1;
+        private const int MAX_TERMINATORS = 5;
+
 
         public UC_TerminatorEdit() {
             InitializeComponent();
-            this.addButtons.Add(this.btnAdd1);
-            this.addButtons.Add(this.btnAdd2);
-            this.addButtons.Add(this.btnAdd3);
-            this.addButtons.Add(this.btnAdd4);
-            this.addButtons.Add(this.btnAdd5);
-
-            this.deleteButtons.Add(this.btnDelete1);
-            this.deleteButtons.Add(this.btnDelete2);
-            this.deleteButtons.Add(this.btnDelete3);
-            this.deleteButtons.Add(this.btnDelete4);
-            this.deleteButtons.Add(this.btnDelete5);
-
-            //foreach (var button in this.addButtons) {
-            //    button.Visibility = Visibility.Collapsed;
-            //}
-            //foreach (var button in this.deleteButtons) {
-            //    button.Visibility = Visibility.Collapsed;
-            //}
-
-            ////this.sp1.Visibility = Visibility.Collapsed;
-            //this.sp2.Visibility = Visibility.Collapsed;
-            //this.sp3.Visibility = Visibility.Collapsed;
-            //this.sp4.Visibility = Visibility.Collapsed;
-            //this.sp5.Visibility = Visibility.Collapsed;
-
             this.buttonPanels.Add(this.sp1);
             this.buttonPanels.Add(this.sp2);
             this.buttonPanels.Add(this.sp3);
             this.buttonPanels.Add(this.sp4);
             this.buttonPanels.Add(this.sp5);
-
-            this.CollapseAllButtons();
             this.CollapseButtonPanels();
+            this.currentIndex = -1;
 
-            this.sp1.Visibility = Visibility.Visible;
-            this.btnAdd1.Visibility = Visibility.Visible;
+            this.hex.Add(this.hex1);
+            this.hex.Add(this.hex2);
+            this.hex.Add(this.hex3);
+            this.hex.Add(this.hex4);
+            this.hex.Add(this.hex5);
 
+            this.names.Add(this.name1);
+            this.names.Add(this.name2);
+            this.names.Add(this.name3);
+            this.names.Add(this.name4);
+            this.names.Add(this.name5);
+
+
+            //this.btnDelete.Visibility = Visibility.Collapsed;
+
+            // Need an init once the current number loaded into the editor
+            this.CollapseButtonPanels();
+            this.Init(0);
         }
 
 
 
-        private void SetButtonToNone(UC_RoundIconButton add, UC_RoundIconButton delete) {
-            add.Visibility = Visibility.Collapsed;
-            delete.Visibility = Visibility.Collapsed;
-        }
+        private void Init(int numberSet) {
+            if (numberSet >= 0 && numberSet <= MAX_TERMINATORS) {
+                this.currentIndex = numberSet - 1;
 
-        private void SetButtonToDelete(UC_RoundIconButton add, UC_RoundIconButton delete) {
-            add.Visibility = Visibility.Collapsed;
-            delete.Visibility = Visibility.Visible;
-        }
+                switch (numberSet) {
+                    case 0:
+                        this.CollapseButtonPanels();
+                        this.SetVisible(this.btnAdd);
+                        this.SetCollapsed(this.btnDelete);
+                        break;
+                    case MAX_TERMINATORS:
+                        this.SetVisible(this.btnDelete);
+                        this.SetCollapsed(this.btnAdd);
+                        break;
+                    default:
+                        this.SetVisible(this.btnAdd);
+                        this.SetVisible(this.btnDelete);
+                        break;
 
-        private void SetButtonToAdd(UC_RoundIconButton add, UC_RoundIconButton delete) {
-            add.Visibility = Visibility.Visible;
-            delete.Visibility = Visibility.Collapsed;
-        }
-
-        private void SetPanelToVisible(StackPanel sp) {
-
-        }
-
-
-        private void btnAdd1_Click(object sender, RoutedEventArgs e) {
-            SetButtonToDelete(this.btnAdd1, this.btnDelete1);
-
-            SetButtonToAdd(this.btnAdd2, this.btnDelete2);
-        }
-
-        private void btnDelete1_Click(object sender, RoutedEventArgs e) {
-            // empty it
-
-        }
-
-        private void btnAdd2_Click(object sender, RoutedEventArgs e) {
-            SetButtonToNone(this.btnAdd1, this.btnDelete1);
-            SetButtonToDelete(this.btnAdd2, this.btnDelete2);
-            SetButtonToAdd(this.btnAdd3, this.btnDelete3);
-
-        }
-
-        private void btnDelete2_Click(object sender, RoutedEventArgs e) {
-
-        }
-
-        private void btnAdd3_Click(object sender, RoutedEventArgs e) {
-
-        }
-
-        private void btnDelete3_Click(object sender, RoutedEventArgs e) {
-
-        }
-
-        private void btnAdd4_Click(object sender, RoutedEventArgs e) {
-
-        }
-
-        private void btnDelete4_Click(object sender, RoutedEventArgs e) {
-
-        }
-
-        private void btnAdd5_Click(object sender, RoutedEventArgs e) {
-
-        }
-
-        private void btnDelete5_Click(object sender, RoutedEventArgs e) {
-
-        }
-
-
-
-
-        private void btnCancel_Click(object sender, RoutedEventArgs e) {
-
-        }
-
-        private void btnSave_Click(object sender, RoutedEventArgs e) {
-
-        }
-
-
-        private void CollapseAllButtons() {
-            foreach (var button in this.addButtons) {
-                button.Visibility = Visibility.Collapsed;
+                }
             }
-            foreach (var button in this.deleteButtons) {
-                button.Visibility = Visibility.Collapsed;
-            }
+
         }
+
+
+
 
         private void CollapseButtonPanels() {
             foreach(var p in this.buttonPanels) {
-                p.Visibility = Visibility.Collapsed;
+                this.SetCollapsed(p);
             }
+        }
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e) {
+            //if (this.currentNumber == 0) {
+            //    this.SetVisible(this.btnDelete);
+            //}
+
+            if (this.currentIndex < (MAX_TERMINATORS-1)) {
+                this.currentIndex++;
+                this.SetVisible(this.buttonPanels[this.currentIndex]);
+                this.Init(this.currentIndex + 1);
+            }
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e) {
+            if (this.currentIndex > -1) {
+                this.SetCollapsed(this.buttonPanels[this.currentIndex]);
+                this.currentIndex--;
+                this.Init(this.currentIndex + 1);
+            }
+        }
+
+
+
+
+        private void SetVisible(StackPanel panel) {
+            panel.Visibility = Visibility.Visible;
+        }
+
+        private void SetCollapsed(StackPanel panel) {
+            panel.Visibility = Visibility.Hidden;
+        }
+
+
+        private void SetVisible(Control ctrl) {
+            ctrl.Visibility = Visibility.Visible;
+        }
+
+        private void SetCollapsed(Control ctrl) {
+            ctrl.Visibility = Visibility.Hidden;
         }
 
 
