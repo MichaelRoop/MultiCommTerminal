@@ -137,6 +137,52 @@
     </Style>
 
 
+    <!-- Button with an icon and not border -->
+    <Style x:Key="IconButton" TargetType="{x:Type controls:UC_RoundIconButton}">
+        <Setter Property="Width" Value="15"/>
+        <Setter Property="Height" Value="15"/>
+        <Setter Property="Foreground" Value="Blue"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="IconPadding" Value="2"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:UC_RoundIconButton}">
+                    <Border x:Name="tiButtonBorder" Background="{TemplateBinding Background}" >
+                        <Grid>
+                            <DockPanel HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                <Border x:Name="imageBorder" Margin="{TemplateBinding IconPadding}" >
+                                    <Image x:Name="icon" Source="{TemplateBinding IconSource}"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                                       RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" />
+                                </Border>
+                            </DockPanel>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <!--Useful when using a mouse. Set general opacity-->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Opacity" Value=".5" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter Property="Opacity" Value="1" />
+                        </Trigger>
+                        <!--Useful when just doing touch screen. Note: must set different properties than IsMouseOver-->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="tiButtonBorder" Property="Opacity" Value=".4" />
+                            <Setter TargetName="icon" Property="Opacity" Value=".5" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="False">
+                            <Setter TargetName="tiButtonBorder" Property="Opacity" Value="1" />
+                            <Setter TargetName="icon" Property="Opacity" Value="1" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
     <!--  Temp to test -->
     <!-- https://www.eidias.com/blog/2012/2/20/customizing-wpf-combo-box-style  -->
     <!-- Style="{Binding Source={StaticResource CustomToggleButton}}" -->
