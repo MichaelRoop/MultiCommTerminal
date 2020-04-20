@@ -20,12 +20,12 @@
                         <Grid Margin="1" HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="35" />
-                                <ColumnDefinition Width="85"/>
+                                <ColumnDefinition Width="75"/>
                                 <ColumnDefinition Width="*" />
                                 <!-- TODO add columns and bindings -->
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Margin="0,0" Padding="0" HorizontalContentAlignment="Right" Content="{Binding PaddedDisplay}"  />
-                            <Label Grid.Column="1" Margin="15,0" Padding="0" HorizontalContentAlignment="Right" Content="{Binding PaddedHexDisplay}" />
+                            <Label Grid.Column="0" Margin="0,0" Padding="0" HorizontalContentAlignment="Right" Content="{Binding Display}"  />
+                            <Label Grid.Column="1" Margin="15,0" Padding="0" HorizontalContentAlignment="Right" Content="{Binding HexDisplay}" />
                             <Label Grid.Column="2" Margin="0,0"  Padding="0" HorizontalContentAlignment="Left" Content="{Binding Description}" />
                         </Grid>
                     </DataTemplate>
