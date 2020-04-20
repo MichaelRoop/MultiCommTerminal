@@ -1,11 +1,13 @@
 ﻿using BluetoothCommon.Net.interfaces;
 using CommunicationStack.Net.interfaces;
+using CommunicationStack.Net.Stacks;
 using IconFactory.interfaces;
 using LanguageFactory.interfaces;
 using LogUtils.Net;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommWrapper.Net.interfaces;
 using StorageFactory.Net.interfaces;
+using StorageFactory.Net.StorageManagers;
 using VariousUtils;
 
 namespace MultiCommWrapper.Net.WrapCode {
@@ -21,6 +23,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         IBTInterface classicBluetooth = null;
         IBLETInterface bleBluetooth = null;
         IStorageManager<SettingItems> settings = null;
+        IIndexedStorageManager<TerminatorData, DefaultFileExtraInfo> terminatorStorage = null;
         ICommStackLevel0 btClassicStack = null;
         ICommStackLevel0 bleStack = null;
 

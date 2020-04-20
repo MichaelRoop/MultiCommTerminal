@@ -33,15 +33,18 @@ namespace MultiCommTerminal.WindowObjs {
         public MainWindow() {
             this.wrapper = DI.Wrapper;
             InitializeComponent();
-
-            List<TerminatorInfo> infos = new List<TerminatorInfo>();
-            infos.Add(new TerminatorInfo(Terminator.CR));
-            infos.Add(new TerminatorInfo(Terminator.NUL));
-            infos.Add(new TerminatorInfo(Terminator.LF));
-            TerminatorData data = new TerminatorData(infos);
-            this.terminatorEdit.InitialiseEditor(this, data);
-
+            this.wrapper.GetCurrentTerminator((data) => {
+                this.terminatorEdit.InitialiseEditor(this, data);
+            }, (err) => {
+                MessageBox.Show(err);
+                this.terminatorEdit.InitialiseEditor(this, new TerminatorData());
+            });
+            this.terminatorEdit.OnSave += this.TerminatorEdit_OnSave;
             this.OnStartupSuccess();
+        }
+
+        private void TerminatorEdit_OnSave(object sender, TerminatorData data) {
+            this.wrapper.SetCurrentTerminators(data, (err) => { MessageBox.Show(err); });
         }
 
         private void Window_ContentRendered(object sender, EventArgs e) {
@@ -58,6 +61,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper.BT_DiscoveryComplete -= this.BT_DiscoveryCompleteHandler;
             this.wrapper.BT_ConnectionCompleted -= this.BT_ConnectionCompletedHandler;
             this.wrapper.BT_BytesReceived -= this.BT_BytesReceivedHandler;
+            this.terminatorEdit.OnSave -= this.TerminatorEdit_OnSave;
 
 
             if (this.menu != null) {

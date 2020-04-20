@@ -1,4 +1,5 @@
-﻿using LanguageFactory.data;
+﻿using CommunicationStack.Net.Stacks;
+using LanguageFactory.data;
 
 namespace MultiCommData.Net.StorageDataModels {
 
@@ -10,7 +11,8 @@ namespace MultiCommData.Net.StorageDataModels {
         /// <summary>Just for user if they look in the JSON file</summary>
         public string LanguageName { get; set; } = LangCode.English.ToString();
 
-
+        /// <summary>Currently selected terminator</summary>
+        public TerminatorData CurrentTerminator { get; set; } = new TerminatorData();
 
     }
 }

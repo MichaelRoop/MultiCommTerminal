@@ -1,4 +1,5 @@
 ﻿using BluetoothCommon.Net;
+using CommunicationStack.Net.Stacks;
 using IconFactory.data;
 using LanguageFactory.data;
 using LanguageFactory.Messaging;
@@ -56,6 +57,14 @@ namespace MultiCommWrapper.Net.interfaces {
         string IconSource(UIIcon code);
 
         void CommMediumList(Action<List<CommMedialDisplay>> mediums);
+
+        #endregion
+
+        #region Terminators
+
+        void GetCurrentTerminator(Action<TerminatorData> onSuccess, Action<string> onError);
+
+        void SetCurrentTerminators(TerminatorData data, Action<string> onError);
 
         #endregion
 

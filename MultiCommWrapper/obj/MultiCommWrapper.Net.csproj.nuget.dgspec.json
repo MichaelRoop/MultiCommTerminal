@@ -92,6 +92,9 @@
         "frameworks": {
           "netstandard2.0": {
             "projectReferences": {
+              "D:\\Dev\\SharedNetLibs\\CommunicationStack.Net\\CommunicationStack.Net.csproj": {
+                "projectPath": "D:\\Dev\\SharedNetLibs\\CommunicationStack.Net\\CommunicationStack.Net.csproj"
+              },
               "D:\\Dev\\SharedNetLibs\\LanguageFactory\\LanguageFactory.Net.csproj": {
                 "projectPath": "D:\\Dev\\SharedNetLibs\\LanguageFactory\\LanguageFactory.Net.csproj"
               }

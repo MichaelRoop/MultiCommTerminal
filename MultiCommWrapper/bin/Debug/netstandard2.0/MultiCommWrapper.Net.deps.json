@@ -87,6 +87,7 @@
       },
       "MultiCommData.Net/1.0.0": {
         "dependencies": {
+          "CommunicationStack.Net": "1.0.0",
           "LanguageFactory.Net": "1.0.0"
         },
         "runtime": {
