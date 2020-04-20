@@ -61,6 +61,10 @@ namespace MultiCommTerminal.WindowObjs {
                     case MenuCode.Settings:
                         // TODO - settings window
                         break;
+                    case MenuCode.Terminators:
+                        TerminatorDataSelector terminatorSelector = new TerminatorDataSelector(this.mainWindow);
+                        terminatorSelector.ShowDialog();
+                        break;
                     case MenuCode.Commands:
                         //CmdListEditor cmd = new CmdListEditor();
                         //cmd.ShowDialog();
@@ -96,7 +100,9 @@ namespace MultiCommTerminal.WindowObjs {
                 this.items.Clear();
                 this.AddItem(MenuCode.Language, MsgCode.language, UIIcon.Language, "0");
                 this.AddItem(MenuCode.Settings, MsgCode.Settings, UIIcon.Settings, "0");
+                this.AddItem(MenuCode.Terminators, MsgCode.Terminators, UIIcon.Terminator, "0");
                 this.AddItem(MenuCode.Commands, MsgCode.command, UIIcon.Command, "0"); // TODO Get a new icon
+
 
                 this.lbxMenuItems.ItemsSource = this.items;
                 lbxMenuItems.SelectionChanged += this.lbxMenuItems_SelectionChanged;
