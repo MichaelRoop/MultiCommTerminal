@@ -50,6 +50,7 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string Discover { get { return GetTxt(MsgCode.discover); } }
         public static string Connect { get { return GetTxt(MsgCode.connect); } }
         public static string Info { get { return GetTxt(MsgCode.info); } }
+        public static string Terminators { get { return GetTxt(MsgCode.Terminators); } }
 
         #endregion
 

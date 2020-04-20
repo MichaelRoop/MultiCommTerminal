@@ -48,6 +48,10 @@ namespace MultiCommTerminal.WPF_Helpers {
                     return new IconDataModel(UIIcon.Connect, this.AddDir("icons8-cmd-white-50.png"), "6");
                 case UIIcon.Run:
                     return new IconDataModel(UIIcon.Connect, this.AddDir("icons8-running-24.png"), "6");
+                case UIIcon.Terminator:
+                    return new IconDataModel(UIIcon.Connect, this.AddDir("icons8-null-symbol-30.png"), "6");
+                case UIIcon.TerminatorWhite:
+                    return new IconDataModel(UIIcon.Connect, this.AddDir("icons8-null-symbol-white-30.png"), "6");
                 default:
                     return new IconDataModel(UIIcon.Cancel, this.AddDir("icons8-close-window-50-noborder.png"), "6");
             }
