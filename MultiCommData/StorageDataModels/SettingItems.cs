@@ -12,7 +12,7 @@ namespace MultiCommData.Net.StorageDataModels {
         public string LanguageName { get; set; } = LangCode.English.ToString();
 
         /// <summary>Currently selected terminator</summary>
-        public TerminatorData CurrentTerminator { get; set; } = new TerminatorData();
+        public TerminatorDataModel CurrentTerminator { get; set; } = new TerminatorDataModel();
 
     }
 }

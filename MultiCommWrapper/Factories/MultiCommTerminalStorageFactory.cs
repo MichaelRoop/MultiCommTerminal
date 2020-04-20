@@ -15,9 +15,9 @@ namespace MultiCommWrapper.Net.Factories {
 
 
         /// <summary>Singleton terminator indexed storage</summary>
-        IIndexedStorageManager<TerminatorData, DefaultFileExtraInfo> terminatorStorage = 
-            new IndexedStorageManager<TerminatorData, DefaultFileExtraInfo>(
-                new JsonReadWriteSerializerIndented<TerminatorData>(),
+        IIndexedStorageManager<TerminatorDataModel, DefaultFileExtraInfo> terminatorStorage = 
+            new IndexedStorageManager<TerminatorDataModel, DefaultFileExtraInfo>(
+                new JsonReadWriteSerializerIndented<TerminatorDataModel>(),
                 new JsonReadWriteSerializerIndented<IIndexGroup<DefaultFileExtraInfo>>());
 
         public MultiCommTerminalStorageFactory() { }
@@ -60,7 +60,7 @@ namespace MultiCommWrapper.Net.Factories {
         public IIndexedStorageManager<TData, TIndexExtraInfo> GetIndexedManager<TData, TIndexExtraInfo>()
             where TData : class where TIndexExtraInfo : class {
 
-            if (typeof(TData).Name == typeof(TerminatorData).Name) {
+            if (typeof(TData).Name == typeof(TerminatorDataModel).Name) {
                 return this.terminatorStorage as IIndexedStorageManager<TData,TIndexExtraInfo>;
             }
             // Add others
@@ -80,7 +80,7 @@ namespace MultiCommWrapper.Net.Factories {
         public IIndexedStorageManager<TData, TIndexExtraInfo> GetIndexedManager<TData, TIndexExtraInfo>(string subDirectory) 
             where TData : class where TIndexExtraInfo : class {
             IIndexedStorageManager<TData, TIndexExtraInfo> manager = this.GetIndexedManager<TData, TIndexExtraInfo>();
-            manager.StorageSubDir = "Terminators";
+            manager.StorageSubDir = subDirectory;
             return manager;
         }
 

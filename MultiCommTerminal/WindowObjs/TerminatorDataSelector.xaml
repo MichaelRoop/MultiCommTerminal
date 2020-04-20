@@ -16,7 +16,7 @@
     <Grid>
         <StackPanel>
             <DockPanel>
-                <ListBox x:Name="lbxCmds" Width="250" Height="200" Margin="10" FontSize="16" 
+                <ListBox x:Name="listBoxTerminators" Width="250" Height="200" Margin="10" FontSize="16" 
                      ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" >
                 <ListBox.ItemTemplate>
                     <DataTemplate>

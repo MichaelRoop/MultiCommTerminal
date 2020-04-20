@@ -1,6 +1,7 @@
 ﻿using BluetoothCommon.Net;
 using CommunicationStack.Net.Stacks;
 using LanguageFactory.data;
+using MultiCommData.Net.StorageDataModels;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommTerminal.DependencyInjection;
 using MultiCommWrapper.Net.interfaces;
@@ -37,13 +38,13 @@ namespace MultiCommTerminal.WindowObjs {
                 this.terminatorEdit.InitialiseEditor(this, data);
             }, (err) => {
                 MessageBox.Show(err);
-                this.terminatorEdit.InitialiseEditor(this, new TerminatorData());
+                this.terminatorEdit.InitialiseEditor(this, new TerminatorDataModel());
             });
             this.terminatorEdit.OnSave += this.TerminatorEdit_OnSave;
             this.OnStartupSuccess();
         }
 
-        private void TerminatorEdit_OnSave(object sender, TerminatorData data) {
+        private void TerminatorEdit_OnSave(object sender, TerminatorDataModel data) {
             this.wrapper.SetCurrentTerminators(data, (err) => { MessageBox.Show(err); });
         }
 

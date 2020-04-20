@@ -5,6 +5,8 @@ using LanguageFactory.data;
 using LanguageFactory.Messaging;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommData.UserDisplayData.Net;
+using StorageFactory.Net.interfaces;
+using StorageFactory.Net.StorageManagers;
 using System;
 using System.Collections.Generic;
 
@@ -62,9 +64,11 @@ namespace MultiCommWrapper.Net.interfaces {
 
         #region Terminators
 
-        void GetCurrentTerminator(Action<TerminatorData> onSuccess, Action<string> onError);
+        void GetCurrentTerminator(Action<TerminatorDataModel> onSuccess, Action<string> onError);
 
-        void SetCurrentTerminators(TerminatorData data, Action<string> onError);
+        void SetCurrentTerminators(TerminatorDataModel data, Action<string> onError);
+
+        void GetTerminatorList(Action<List<IIndexItem<DefaultFileExtraInfo>>> onSuccess, Action<string> onError);
 
         #endregion
 

@@ -30,6 +30,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.parent = parent;
             InitializeComponent();
             this.SizeToContent = SizeToContent.WidthAndHeight;
+            this.spEditButtons.Visibility = Visibility.Collapsed;
 
             // Call before rendering which will trigger initial resize events
             this.widthManager = new ButtonGroupSizeSyncManager(this.btnCancel, this.btnSelect);
@@ -44,7 +45,16 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void Window_ContentRendered(object sender, EventArgs e) {
             // TODO load the list from storage
+            this.wrapper.GetTerminatorList(
+                (items) => {
+                    this.listBoxTerminators.ItemsSource = items;
+                },
+                (err) => {
+                    MessageBox.Show(err);
+                });
 
+
+            this.listBoxTerminators.SelectionChanged += this.listBoxTerminators_SelectionChanged;
             WPF_ControlHelpers.CenterChild(parent, this);
         }
 
@@ -82,5 +92,9 @@ namespace MultiCommTerminal.WindowObjs {
 
         #endregion
 
+        private void listBoxTerminators_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            this.spEditButtons.Visibility = Visibility.Visible;
+
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CommunicationStack.Net.Stacks;
+using MultiCommData.Net.StorageDataModels;
 using MultiCommTerminal.WindowObjs;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,7 @@ namespace MultiCommTerminal.UserControls {
 
         #region Events
 
-        public event EventHandler<TerminatorData> OnSave;
+        public event EventHandler<TerminatorDataModel> OnSave;
 
         #endregion
 
@@ -74,7 +75,7 @@ namespace MultiCommTerminal.UserControls {
         }
 
 
-        public void InitialiseEditor(Window parent, TerminatorData data) {
+        public void InitialiseEditor(Window parent, TerminatorDataModel data) {
             this.parent = parent;
             foreach (TerminatorInfo info in data.TerminatorInfos) {
                 this.AddTerminator(info);
@@ -160,7 +161,7 @@ namespace MultiCommTerminal.UserControls {
         private void btnSave_Click(object sender, RoutedEventArgs e) {
             // Raise an event so the subscriber can save the data to persistent storage
             if (this.OnSave != null) {
-                this.OnSave.Invoke(this, new TerminatorData(this.selectedTerminators));
+                this.OnSave.Invoke(this, new TerminatorDataModel(this.selectedTerminators));
             }
         }
 

@@ -23,7 +23,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         IBTInterface classicBluetooth = null;
         IBLETInterface bleBluetooth = null;
         IStorageManager<SettingItems> settings = null;
-        IIndexedStorageManager<TerminatorData, DefaultFileExtraInfo> terminatorStorage = null;
+        IIndexedStorageManager<TerminatorDataModel, DefaultFileExtraInfo> terminatorStorage = null;
         ICommStackLevel0 btClassicStack = null;
         ICommStackLevel0 bleStack = null;
 
