@@ -4,16 +4,8 @@ using MultiCommWrapper.Net.interfaces;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.WindowObjs {
@@ -46,17 +38,7 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void Window_ContentRendered(object sender, EventArgs e) {
-            // TODO load the list from storage
-            this.wrapper.GetTerminatorList(
-                (items) => {
-                    this.listBoxTerminators.ItemsSource = items;
-                },
-                (err) => {
-                    MessageBox.Show(err);
-                });
-
-
-            this.listBoxTerminators.SelectionChanged += this.listBoxTerminators_SelectionChanged;
+            ReloadList();
             WPF_ControlHelpers.CenterChild(parent, this);
         }
 
@@ -69,37 +51,32 @@ namespace MultiCommTerminal.WindowObjs {
         #region Sidebar buttons
 
         private void btnAdd_Click(object sender, RoutedEventArgs e) {
-            // TODO - bogus just to test UI
-            this.wrapper.GetCurrentTerminator(
-                (dataModel) => {
-                    var item = this.listBoxTerminators.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
-                    if (item != null) {
-                        TerminatorEditor win = new TerminatorEditor(this, item, dataModel);
-                        win.ShowDialog();
-                    }
-                },
-                (err) => {
-                    MessageBox.Show(err);
-                });
+            TerminatorEditor win = new TerminatorEditor(this, null);
+            win.ShowDialog();
+            if (win.IsChanged) {
+                this.ReloadList();
+            }
         }
+
 
         private void btnEdit_Click(object sender, RoutedEventArgs e) {
-            // TODO - bogus just to test UI
-            this.wrapper.GetCurrentTerminator(
-                (dataModel) => {
-                    var item = this.listBoxTerminators.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
-                    if (item != null) {
-                        TerminatorEditor win = new TerminatorEditor(this, item, dataModel);
-                        win.ShowDialog();
-                    }
-                },
-                (err) => {
-                    MessageBox.Show(err);
-                });
+            var item = this.listBoxTerminators.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
+            if (item != null) {
+                TerminatorEditor win = new TerminatorEditor(this, item);
+                win.ShowDialog();
+                if (win.IsChanged) {
+                    this.ReloadList();
+                }
+            }
         }
 
-        private void btnDelete_Click(object sender, RoutedEventArgs e) {
 
+        private void btnDelete_Click(object sender, RoutedEventArgs e) {
+            var item = this.listBoxTerminators.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
+            if (item != null) {
+                this.wrapper.DeleteTerminatorData(
+                    item, (ok) => this.ReloadList(), (err) => MessageBox.Show(err));
+            }
         }
 
         #endregion
@@ -111,7 +88,10 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
         private void btnSelect_Click(object sender, RoutedEventArgs e) {
-
+            var item = this.listBoxTerminators.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
+            if (item != null) {
+                this.wrapper.SetCurrentTerminators(item, this.Close, (err) => MessageBox.Show(err));
+            }
         }
 
         #endregion
@@ -120,5 +100,20 @@ namespace MultiCommTerminal.WindowObjs {
             this.spEditButtons.Visibility = Visibility.Visible;
 
         }
+
+
+        private void ReloadList() {
+            this.listBoxTerminators.SelectionChanged -= this.listBoxTerminators_SelectionChanged;
+            this.wrapper.GetTerminatorList(
+                (items) => {
+                    this.listBoxTerminators.ItemsSource = null;
+                    this.listBoxTerminators.ItemsSource = items;
+                },
+                (err) => {
+                    MessageBox.Show(err);
+                });
+            this.listBoxTerminators.SelectionChanged += this.listBoxTerminators_SelectionChanged;
+        }
+
     }
 }

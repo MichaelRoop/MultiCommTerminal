@@ -27,13 +27,7 @@
                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Cancel}}" 
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}"
                             Click="btnCancel_Click"/>
-                <controls:UC_IconButton x:Name="btnSave" Style="{StaticResource TextIconButton}" 
-                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Save}}"
-                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Save}}"
-                            Click="btnSave_Click" />
-
             </DockPanel>
-
         </StackPanel>
     </Grid>
 </Window>

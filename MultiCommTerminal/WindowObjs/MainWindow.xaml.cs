@@ -41,9 +41,16 @@ namespace MultiCommTerminal.WindowObjs {
                     MessageBox.Show(err);
                     this.terminatorView.Initialise(new TerminatorDataModel());
                 });
+            this.wrapper.CurrentTerminatorChanged += Wrapper_CurrentTerminatorChanged;
+
             this.OnStartupSuccess();
             this.SizeToContent = SizeToContent.WidthAndHeight;
 
+        }
+
+
+        private void Wrapper_CurrentTerminatorChanged(object sender, TerminatorDataModel data) {
+            this.terminatorView.Initialise(data);
         }
 
 

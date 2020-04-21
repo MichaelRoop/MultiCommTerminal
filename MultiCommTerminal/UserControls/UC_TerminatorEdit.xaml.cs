@@ -31,13 +31,11 @@ namespace MultiCommTerminal.UserControls {
         private List<TerminatorInfo> selectedTerminators = new List<TerminatorInfo>();
         private string objUID = "";
 
-
         #endregion
 
         #region Events
 
         public event EventHandler<TerminatorDataModel> OnSave;
-        public event Action onOtherButton;
 
         #endregion
 
@@ -136,7 +134,6 @@ namespace MultiCommTerminal.UserControls {
                 TerminatorInfo info = win.SelectedTerminator;
                 if (info != null) {
                     this.AddTerminator(info);
-                    this.RaiseButtonPressed();
                 }
             }
         }
@@ -163,7 +160,6 @@ namespace MultiCommTerminal.UserControls {
                 this.currentIndex--;
                 if (this.selectedTerminators.Count > 0) {
                     this.selectedTerminators.RemoveAt(this.selectedTerminators.Count - 1);
-                    this.RaiseButtonPressed();
                 }
                 this.Init(this.currentIndex + 1);
             }
@@ -198,12 +194,6 @@ namespace MultiCommTerminal.UserControls {
 
         private void SetCollapsed(Control ctrl) {
             ctrl.Visibility = Visibility.Hidden;
-        }
-
-        private void RaiseButtonPressed() {
-            if (this.onOtherButton != null) {
-                this.onOtherButton.Invoke();
-            }
         }
 
         #endregion

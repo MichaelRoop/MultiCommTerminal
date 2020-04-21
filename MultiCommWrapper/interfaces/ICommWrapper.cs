@@ -1,5 +1,4 @@
 ﻿using BluetoothCommon.Net;
-using CommunicationStack.Net.Stacks;
 using IconFactory.data;
 using LanguageFactory.data;
 using LanguageFactory.Messaging;
@@ -18,6 +17,9 @@ namespace MultiCommWrapper.Net.interfaces {
 
         /// <summary>Event raised when the language is changed</summary>
         event EventHandler<SupportedLanguage> LanguageChanged;
+
+        /// <summary>When the current terminator is changed</summary>
+        event EventHandler<TerminatorDataModel> CurrentTerminatorChanged;
 
         #endregion
 
@@ -68,7 +70,17 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void SetCurrentTerminators(TerminatorDataModel data, Action<string> onError);
 
+        void SetCurrentTerminators(IIndexItem<DefaultFileExtraInfo> index, Action onSuccess, Action<string> onError);
+
         void GetTerminatorList(Action<List<IIndexItem<DefaultFileExtraInfo>>> onSuccess, Action<string> onError);
+
+        void CreateNewTerminator(string display, TerminatorDataModel data, Action onSuccess, Action<string> onError);
+
+        void RetrieveTerminatorData(IIndexItem<DefaultFileExtraInfo> index, Action<TerminatorDataModel> onSuccess, Action<string> onError);
+
+        void SaveTerminator(IIndexItem<DefaultFileExtraInfo> idx, TerminatorDataModel data, Action onSuccess, Action<string> onError);
+
+        void DeleteTerminatorData(IIndexItem<DefaultFileExtraInfo> index, Action<bool> onComplete, Action<string> onError);
 
         #endregion
 

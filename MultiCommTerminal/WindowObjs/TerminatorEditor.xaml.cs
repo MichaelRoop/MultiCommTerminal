@@ -1,73 +1,60 @@
 ﻿using MultiCommData.Net.StorageDataModels;
+using MultiCommTerminal.DependencyInjection;
 using MultiCommTerminal.WPF_Helpers;
 using MultiCommWrapper.Net.interfaces;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.WindowObjs {
-    
-    
-    /// <summary>
-    /// Interaction logic for TerminatorEditor.xaml
-    /// </summary>
+
+
+    /// <summary>Interaction logic for TerminatorEditor.xaml</summary>
     public partial class TerminatorEditor : Window {
 
         #region Data
+
         Window parent = null;
         private ICommWrapper wrapper = null;
-        private ButtonGroupSizeSyncManager widthManager = null;
-
-        TerminatorDataModel data = null;
         IIndexItem<DefaultFileExtraInfo> index = null;
 
         #endregion
 
+        #region Properties
 
-        public TerminatorEditor(
-            Window parent,
-            IIndexItem<DefaultFileExtraInfo> index,
-            TerminatorDataModel data) {
+        public bool IsChanged { get; set; } = false;
+
+        #endregion
+
+        #region Constructors and windows events
+
+        public TerminatorEditor(Window parent, IIndexItem<DefaultFileExtraInfo> index) {
+            this.wrapper = DI.Wrapper;
             this.parent = parent;
-            this.index = index;
-            this.data = data;
+            this.index = index; 
             InitializeComponent();
-            this.btnSave.Visibility = Visibility.Collapsed;
 
-            this.txtBoxDisplay.Text = index.Display;
-            this.tEditor.InitialiseEditor(parent, this.data);
-            this.tEditor.onOtherButton += TEditor_onOtherButton;
+            if (this.index == null) {
+                // New entry
+                this.txtBoxDisplay.Text = "NA";
+                this.tEditor.InitialiseEditor(parent, new TerminatorDataModel());
+            }
+            else {
+                this.wrapper.RetrieveTerminatorData(
+                    this.index,
+                    (dataModel) => {
+                        this.txtBoxDisplay.Text = index.Display;
+                        this.tEditor.InitialiseEditor(parent, dataModel);
+                    },
+                    this.delegate_OnInitFail);
+            }
+
             this.tEditor.OnSave += TEditor_OnSave;
-
-
             this.SizeToContent = SizeToContent.WidthAndHeight;
-
-
-            // Call before rendering which will trigger initial resize events
-            this.widthManager = new ButtonGroupSizeSyncManager(this.btnCancel, this.btnSave);
-            this.widthManager.PrepForChange();
         }
 
-        private void TEditor_OnSave(object sender, TerminatorDataModel e) {
-            //throw new NotImplementedException();
-            this.btnSave.Visibility = Visibility.Visible;
-        }
-
-        private void TEditor_onOtherButton() {
-            //throw new NotImplementedException();
-            this.btnSave.Visibility = Visibility.Collapsed;
-        }
 
         /// <summary>Connect the style mouse grab on title bar</summary>
         public override void OnApplyTemplate() {
@@ -76,23 +63,57 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
-        private void btnCancel_Click(object sender, RoutedEventArgs e) {
-
-            this.Close();
-        }
-
-        private void btnSave_Click(object sender, RoutedEventArgs e) {
-
-            this.Close();
-        }
-
         private void Window_ContentRendered(object sender, EventArgs e) {
-
             WPF_ControlHelpers.CenterChild(parent, this);
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
 
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
         }
+
+        #endregion
+
+        #region Button events
+
+        private void TEditor_OnSave(object sender, TerminatorDataModel data) {
+            if (this.index == null) {
+                this.wrapper.CreateNewTerminator(
+                    this.txtBoxDisplay.Text, 
+                    data, this.delegateSaveOk,
+                    this.delegateSaveFailed);
+            }
+            else {
+                this.index.Display = this.txtBoxDisplay.Text;
+                this.wrapper.SaveTerminator(this.index, data,
+                    this.delegateSaveOk, this.delegateSaveFailed);
+            }
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e) {
+            this.Close();
+        }
+
+        #endregion
+
+        #region Delegates
+
+        private void delegateSaveOk() {
+            this.IsChanged = true;
+            this.Close();
+        }
+
+
+        private void delegateSaveFailed(string err) {
+            MessageBox.Show(err);
+        }
+
+
+        private void delegate_OnInitFail(string err) {
+            MessageBox.Show(err);
+            this.Close();
+        }
+
+        #endregion
+
     }
 }

@@ -11,59 +11,58 @@
         <StackPanel>
             <Border BorderBrush="Blue" BorderThickness=".5" Padding="2">
                 <DockPanel HorizontalAlignment="Left"  Margin="0">
-                <StackPanel x:Name="sp1" Margin="0,0,2,0">
-                    <StackPanel VerticalAlignment="Bottom">
-                        <Border BorderBrush="Blue" BorderThickness="1" >
-                            <Label x:Name="hex1" Content="0x00" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                        </Border>
-                        <Border BorderBrush="Blue" BorderThickness="1" Margin="0,10,0,0" >
-                            <Label x:Name="name1" Content="NUL" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                        </Border>
+                    <StackPanel x:Name="sp1" Margin="0,0,2,0">
+                        <StackPanel VerticalAlignment="Bottom">
+                            <Border BorderBrush="Blue" BorderThickness="1" >
+                                <Label x:Name="hex1" Content="0x00" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                            </Border>
+                            <Border BorderBrush="Blue" BorderThickness="1" Margin="0,10,0,0" >
+                                <Label x:Name="name1" Content="NUL" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                            </Border>
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
-                <StackPanel x:Name="sp2" Margin="2,0">
-                    <StackPanel VerticalAlignment="Bottom">
-                        <Border BorderBrush="Blue" BorderThickness="1" >
-                            <Label x:Name="hex2" Content="0x00" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                        </Border>
-                        <Border BorderBrush="Blue" BorderThickness="1" Margin="0,10,0,0" >
-                            <Label x:Name="name2" Content="NUL" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                        </Border>
+                    <StackPanel x:Name="sp2" Margin="2,0">
+                        <StackPanel VerticalAlignment="Bottom">
+                            <Border BorderBrush="Blue" BorderThickness="1" >
+                                <Label x:Name="hex2" Content="0x00" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                            </Border>
+                            <Border BorderBrush="Blue" BorderThickness="1" Margin="0,10,0,0" >
+                                <Label x:Name="name2" Content="NUL" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                            </Border>
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
-                <StackPanel x:Name="sp3" Margin="2,0">
-                    <StackPanel VerticalAlignment="Bottom">
-                        <Border BorderBrush="Blue" BorderThickness="1" >
-                            <Label x:Name="hex3" Content="0x00" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                        </Border>
-                        <Border BorderBrush="Blue" BorderThickness="1" Margin="0,10,0,0" >
-                            <Label x:Name="name3" Content="NUL" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                        </Border>
+                    <StackPanel x:Name="sp3" Margin="2,0">
+                        <StackPanel VerticalAlignment="Bottom">
+                            <Border BorderBrush="Blue" BorderThickness="1" >
+                                <Label x:Name="hex3" Content="0x00" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                            </Border>
+                            <Border BorderBrush="Blue" BorderThickness="1" Margin="0,10,0,0" >
+                                <Label x:Name="name3" Content="NUL" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                            </Border>
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
-                <StackPanel x:Name="sp4" Margin="2,0">
-                    <StackPanel VerticalAlignment="Bottom">
-                        <Border BorderBrush="Blue" BorderThickness="1" >
-                            <Label x:Name="hex4" Content="0x00" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                        </Border>
-                        <Border BorderBrush="Blue" BorderThickness="1" Margin="0,10,0,0" >
-                            <Label x:Name="name4" Content="NUL" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                        </Border>
+                    <StackPanel x:Name="sp4" Margin="2,0">
+                        <StackPanel VerticalAlignment="Bottom">
+                            <Border BorderBrush="Blue" BorderThickness="1" >
+                                <Label x:Name="hex4" Content="0x00" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                            </Border>
+                            <Border BorderBrush="Blue" BorderThickness="1" Margin="0,10,0,0" >
+                                <Label x:Name="name4" Content="NUL" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                            </Border>
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
-                <StackPanel x:Name="sp5" Margin="2,0,0,0">
-                    <StackPanel VerticalAlignment="Bottom">
-                        <Border BorderBrush="Blue" BorderThickness="1" >
-                            <Label x:Name="hex5" Content="0x00" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                        </Border>
-                        <Border BorderBrush="Blue" BorderThickness="1" Margin="0,10,0,0" >
-                            <Label x:Name="name5" Content="NUL" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                        </Border>
+                    <StackPanel x:Name="sp5" Margin="2,0,0,0">
+                        <StackPanel VerticalAlignment="Bottom">
+                            <Border BorderBrush="Blue" BorderThickness="1" >
+                                <Label x:Name="hex5" Content="0x00" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                            </Border>
+                            <Border BorderBrush="Blue" BorderThickness="1" Margin="0,10,0,0" >
+                                <Label x:Name="name5" Content="NUL" Padding="5,0,5,1"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                            </Border>
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
-            </DockPanel>
+                </DockPanel>
             </Border>
-            
             <DockPanel HorizontalAlignment="Center">
                 <local:UC_RoundIconButton x:Name="btnAdd"  Style="{StaticResource RoundIconButton}" 
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Add}}"  Margin="5"
@@ -71,26 +70,11 @@
                 <local:UC_RoundIconButton x:Name="btnDelete"  Style="{StaticResource RoundIconButton}" 
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Delete}}" Margin="5"
                             Click="btnDelete_Click" />
-
-                <local:UC_RoundIconButton x:Name="btnSave"  Style="{StaticResource RoundIconButton}" 
-                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Save}}" Margin="5"
-                            Click="btnSave_Click" />
-
-
-                <!--<local:UC_IconButton x:Name="btnCancel" Click="btnCancel_Click"  IconMargin="7"
-                            Style="{StaticResource TextIconButton}" 
-                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Cancel}}"
-                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}"/>
-                <local:UC_IconButton x:Name="btnSave" Click="btnSave_Click"  IconMargin="7"
-                            Style="{StaticResource TextIconButton}" 
+                <local:UC_IconButton x:Name="btnSave" Style="{StaticResource TextIconButton}" 
                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Save}}"
-                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Save}}"/>-->
-
-
-            </DockPanel>            
-            
-            
-            
-        </StackPanel>    
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Save}}"
+                            Click="btnSave_Click" />
+            </DockPanel>
+        </StackPanel>
     </Grid>
 </UserControl>
