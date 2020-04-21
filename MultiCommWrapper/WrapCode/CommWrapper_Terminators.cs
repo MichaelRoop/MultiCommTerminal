@@ -118,7 +118,25 @@ namespace MultiCommWrapper.Net.WrapCode {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;
                 WrapErr.ToErrReport(out report, 9999, () => {
-                    onComplete(this.terminatorStorage.DeleteFile(index));
+                    if (terminatorStorage.IndexedItems.Count < 2) {
+                        onError("Cannot delete last terminator");
+                    }
+                    else {
+                        bool ok = this.terminatorStorage.DeleteFile(index);
+                        this.GetCurrentTerminator(
+                            (data) => {
+                                if (data.UId == index.UId_Object) {
+                                    this.RetrieveTerminatorData(
+                                        this.terminatorStorage.IndexedItems[0],
+                                        (newData) => {
+                                            this.SetCurrentTerminators(newData, (err) => { });
+                                        },
+                                        (err) => { });
+                                }
+                            },
+                            (err) => { });
+                        onComplete(ok);
+                    }
                 });
                 if (report.Code != 0) {
                     onError.Invoke("Failed to retrieve terminator data");

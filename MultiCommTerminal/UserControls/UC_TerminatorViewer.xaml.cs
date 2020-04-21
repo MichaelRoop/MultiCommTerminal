@@ -1,5 +1,8 @@
 ﻿using CommunicationStack.Net.Stacks;
 using MultiCommData.Net.StorageDataModels;
+using MultiCommTerminal.DependencyInjection;
+using MultiCommTerminal.WPF_Helpers;
+using MultiCommWrapper.Net.interfaces;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,6 +16,7 @@ namespace MultiCommTerminal.UserControls {
 
         #region Data
 
+        ICommWrapper wrapper = null;
         List<Label> hex = new List<Label>();
         List<Label> names = new List<Label>();
         private const int MAX_TERMINATORS = 5;
@@ -21,6 +25,7 @@ namespace MultiCommTerminal.UserControls {
 
 
         public UC_TerminatorViewer() {
+            this.wrapper = DI.Wrapper;
             InitializeComponent();
 
             this.hex.Add(this.hex1);
@@ -39,10 +44,17 @@ namespace MultiCommTerminal.UserControls {
                 this.hex[i].Content = "";
                 this.names[i].Content = "";
             }
+            this.wrapper.LanguageChanged += this.Wrapper_LanguageChanged;
         }
 
 
         public void Initialise(TerminatorDataModel data) {
+            // Blank out any existing info
+            for (int i = 0; i < MAX_TERMINATORS; i++) {
+                this.names[i].Content = "";
+                this.hex[i].Content = "";
+            }
+
             int index = 0;
             foreach (TerminatorInfo info in data.TerminatorInfos) {
                 if (index < MAX_TERMINATORS) {
@@ -58,6 +70,10 @@ namespace MultiCommTerminal.UserControls {
             this.hex[index].Content = info.HexDisplay;
         }
 
+
+        private void Wrapper_LanguageChanged(object sender, LanguageFactory.Messaging.SupportedLanguage e) {
+            this.lblTerminators.Content = TxtBinder.Terminators;
+        }
 
     }
 }

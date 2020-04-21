@@ -62,12 +62,7 @@ namespace MultiCommTerminal.UserControls {
             this.names.Add(this.name3);
             this.names.Add(this.name4);
             this.names.Add(this.name5);
-
-
-            for (int i = 0; i < MAX_TERMINATORS; i++) {
-                this.hex[i].Content = "";
-                this.names[i].Content = "";
-            }
+            this.ResetAllBoxes();
 
             // Need an init once the current number loaded into the editor
             this.CollapseButtonPanels();
@@ -79,6 +74,7 @@ namespace MultiCommTerminal.UserControls {
             this.parent = parent;
             this.objUID = dataModel.UId;
 
+            this.ResetAllBoxes();
             // Make a copy to not mess up the original in case you do not save
             List<TerminatorInfo> infos = new List<TerminatorInfo>();
             foreach (var i in dataModel.TerminatorInfos) {
@@ -194,6 +190,14 @@ namespace MultiCommTerminal.UserControls {
 
         private void SetCollapsed(Control ctrl) {
             ctrl.Visibility = Visibility.Hidden;
+        }
+
+
+        private void ResetAllBoxes() {
+            for (int i = 0; i < MAX_TERMINATORS; i++) {
+                this.hex[i].Content = "";
+                this.names[i].Content = "";
+            }
         }
 
         #endregion

@@ -12,7 +12,7 @@
             <StackPanel>
                 <DockPanel HorizontalAlignment="Center">
                     <Image Source="{Binding Source={x:Static wpfHelper:IconBinder.Terminator}}" Height="18" Width="18" />
-                    <Label Content="{Binding Source={x:Static wpfHelper:TxtBinder.Terminators}}" />
+                    <Label x:Name="lblTerminators" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Terminators}}" />
                 </DockPanel>
                 <Border BorderBrush="Blue" BorderThickness=".5" Padding="2">
                     <DockPanel HorizontalAlignment="Left"  Margin="0">
