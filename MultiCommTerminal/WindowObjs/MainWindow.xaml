@@ -98,10 +98,11 @@
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
 
-                                <controls:UC_TerminatorEdit x:Name="terminatorEdit" />
+                                <!--<controls:UC_TerminatorEdit x:Name="terminatorEdit" />-->
+
+                                <controls:UC_TerminatorViewer x:Name="terminatorView"  />
 
                             </StackPanel>
-
                         </Border>
 
                         <!-- Will need different for LE and classic. Using the classic one modified for LE for now -->

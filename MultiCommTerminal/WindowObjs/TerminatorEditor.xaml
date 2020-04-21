@@ -1,0 +1,39 @@
+﻿<Window x:Class="MultiCommTerminal.WindowObjs.TerminatorEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MultiCommTerminal.WindowObjs"
+        mc:Ignorable="d"
+        xmlns:controls="clr-namespace:MultiCommTerminal.UserControls"
+        xmlns:wpfHelper="clr-namespace:MultiCommTerminal.WPF_Helpers"
+        Style="{StaticResource MyWindowStyle}"
+        Title="{Binding Source={x:Static wpfHelper:TxtBinder.Terminators}}" 
+        Icon="{Binding Source={x:Static wpfHelper:IconBinder.Terminator_W}}"
+        WindowStartupLocation="Manual" MinHeight="150" MinWidth="150" 
+        ContentRendered="Window_ContentRendered" Closing="Window_Closing"
+        >
+    <Grid>
+        <StackPanel>
+            <DockPanel Margin="10">
+                <Label Content="{Binding Source={x:Static wpfHelper:TxtBinder.Name}}" Margin="0,0,0,0" HorizontalContentAlignment="Right" />
+                <Label Content=":" />
+                <TextBox x:Name="txtBoxDisplay" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"  Text="Your terminator name" BorderBrush="Blue" BorderThickness=".5" />
+            </DockPanel>
+            <controls:UC_TerminatorEdit x:Name="tEditor"/>
+            <DockPanel HorizontalAlignment="Center" Margin="10,5,10,15">
+                <controls:UC_IconButton x:Name="btnCancel"  Margin="0,0,10,0"
+                            Style="{StaticResource TextIconButton}" 
+                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Cancel}}" 
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}"
+                            Click="btnCancel_Click"/>
+                <controls:UC_IconButton x:Name="btnSave" Style="{StaticResource TextIconButton}" 
+                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Save}}"
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Save}}"
+                            Click="btnSave_Click" />
+
+            </DockPanel>
+
+        </StackPanel>
+    </Grid>
+</Window>

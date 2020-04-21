@@ -1,6 +1,8 @@
 ﻿using MultiCommTerminal.DependencyInjection;
 using MultiCommTerminal.WPF_Helpers;
 using MultiCommWrapper.Net.interfaces;
+using StorageFactory.Net.interfaces;
+using StorageFactory.Net.StorageManagers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -67,11 +69,33 @@ namespace MultiCommTerminal.WindowObjs {
         #region Sidebar buttons
 
         private void btnAdd_Click(object sender, RoutedEventArgs e) {
-
+            // TODO - bogus just to test UI
+            this.wrapper.GetCurrentTerminator(
+                (dataModel) => {
+                    var item = this.listBoxTerminators.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
+                    if (item != null) {
+                        TerminatorEditor win = new TerminatorEditor(this, item, dataModel);
+                        win.ShowDialog();
+                    }
+                },
+                (err) => {
+                    MessageBox.Show(err);
+                });
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e) {
-
+            // TODO - bogus just to test UI
+            this.wrapper.GetCurrentTerminator(
+                (dataModel) => {
+                    var item = this.listBoxTerminators.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
+                    if (item != null) {
+                        TerminatorEditor win = new TerminatorEditor(this, item, dataModel);
+                        win.ShowDialog();
+                    }
+                },
+                (err) => {
+                    MessageBox.Show(err);
+                });
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e) {

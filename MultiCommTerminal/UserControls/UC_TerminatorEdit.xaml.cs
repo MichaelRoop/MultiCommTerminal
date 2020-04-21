@@ -29,6 +29,7 @@ namespace MultiCommTerminal.UserControls {
         private int currentIndex = -1;
         private const int MAX_TERMINATORS = 5;
         private List<TerminatorInfo> selectedTerminators = new List<TerminatorInfo>();
+        private string objUID = "";
 
 
         #endregion
@@ -36,6 +37,7 @@ namespace MultiCommTerminal.UserControls {
         #region Events
 
         public event EventHandler<TerminatorDataModel> OnSave;
+        public event Action onOtherButton;
 
         #endregion
 
@@ -75,9 +77,17 @@ namespace MultiCommTerminal.UserControls {
         }
 
 
-        public void InitialiseEditor(Window parent, TerminatorDataModel data) {
+        public void InitialiseEditor(Window parent, TerminatorDataModel dataModel) {
             this.parent = parent;
-            foreach (TerminatorInfo info in data.TerminatorInfos) {
+            this.objUID = dataModel.UId;
+
+            // Make a copy to not mess up the original in case you do not save
+            List<TerminatorInfo> infos = new List<TerminatorInfo>();
+            foreach (var i in dataModel.TerminatorInfos) {
+                infos.Add(new TerminatorInfo(i.Code));
+            }
+
+            foreach (TerminatorInfo info in infos) {
                 this.AddTerminator(info);
             }
         }
@@ -126,6 +136,7 @@ namespace MultiCommTerminal.UserControls {
                 TerminatorInfo info = win.SelectedTerminator;
                 if (info != null) {
                     this.AddTerminator(info);
+                    this.RaiseButtonPressed();
                 }
             }
         }
@@ -152,6 +163,7 @@ namespace MultiCommTerminal.UserControls {
                 this.currentIndex--;
                 if (this.selectedTerminators.Count > 0) {
                     this.selectedTerminators.RemoveAt(this.selectedTerminators.Count - 1);
+                    this.RaiseButtonPressed();
                 }
                 this.Init(this.currentIndex + 1);
             }
@@ -161,7 +173,10 @@ namespace MultiCommTerminal.UserControls {
         private void btnSave_Click(object sender, RoutedEventArgs e) {
             // Raise an event so the subscriber can save the data to persistent storage
             if (this.OnSave != null) {
-                this.OnSave.Invoke(this, new TerminatorDataModel(this.selectedTerminators));
+                this.OnSave.Invoke(this, new TerminatorDataModel(this.selectedTerminators) {
+                    // Return preserved UID
+                    UId = this.objUID,
+                });
             }
         }
 
@@ -183,6 +198,12 @@ namespace MultiCommTerminal.UserControls {
 
         private void SetCollapsed(Control ctrl) {
             ctrl.Visibility = Visibility.Hidden;
+        }
+
+        private void RaiseButtonPressed() {
+            if (this.onOtherButton != null) {
+                this.onOtherButton.Invoke();
+            }
         }
 
         #endregion

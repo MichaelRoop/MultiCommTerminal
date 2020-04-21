@@ -1,5 +1,4 @@
 ﻿using BluetoothCommon.Net;
-using CommunicationStack.Net.Stacks;
 using LanguageFactory.data;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommData.UserDisplayData.Net;
@@ -34,19 +33,19 @@ namespace MultiCommTerminal.WindowObjs {
         public MainWindow() {
             this.wrapper = DI.Wrapper;
             InitializeComponent();
-            this.wrapper.GetCurrentTerminator((data) => {
-                this.terminatorEdit.InitialiseEditor(this, data);
-            }, (err) => {
-                MessageBox.Show(err);
-                this.terminatorEdit.InitialiseEditor(this, new TerminatorDataModel());
-            });
-            this.terminatorEdit.OnSave += this.TerminatorEdit_OnSave;
+            this.wrapper.GetCurrentTerminator(
+                (data) => { 
+                    this.terminatorView.Initialise(data);
+                }, 
+                (err) => {
+                    MessageBox.Show(err);
+                    this.terminatorView.Initialise(new TerminatorDataModel());
+                });
             this.OnStartupSuccess();
+            this.SizeToContent = SizeToContent.WidthAndHeight;
+
         }
 
-        private void TerminatorEdit_OnSave(object sender, TerminatorDataModel data) {
-            this.wrapper.SetCurrentTerminators(data, (err) => { MessageBox.Show(err); });
-        }
 
         private void Window_ContentRendered(object sender, EventArgs e) {
             this.menu = new MenuWin(this);
@@ -62,8 +61,6 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper.BT_DiscoveryComplete -= this.BT_DiscoveryCompleteHandler;
             this.wrapper.BT_ConnectionCompleted -= this.BT_ConnectionCompletedHandler;
             this.wrapper.BT_BytesReceived -= this.BT_BytesReceivedHandler;
-            this.terminatorEdit.OnSave -= this.TerminatorEdit_OnSave;
-
 
             if (this.menu != null) {
                 this.menu.Close();
