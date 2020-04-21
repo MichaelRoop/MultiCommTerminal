@@ -1,4 +1,5 @@
 ﻿using BluetoothCommon.Net;
+using CommunicationStack.Net.Stacks;
 using IconFactory.data;
 using LanguageFactory.data;
 using LanguageFactory.Messaging;
@@ -10,6 +11,14 @@ using System;
 using System.Collections.Generic;
 
 namespace MultiCommWrapper.Net.interfaces {
+
+    #region Delegates used throughout the wrapper
+
+    public delegate void OnErr(string msg);
+    public delegate void OnErrTitle(string title, string msg);
+
+
+    #endregion
 
     public interface ICommWrapper {
 
@@ -48,8 +57,8 @@ namespace MultiCommWrapper.Net.interfaces {
 
         #region Settings
 
-        void GetSettings(Action<SettingItems> onSuccess, Action<string> onError);
-        void SaveSettings(SettingItems settings, Action onSuccess, Action<string> onError);
+        void GetSettings(Action<SettingItems> onSuccess, OnErr onError);
+        void SaveSettings(SettingItems settings, Action onSuccess, OnErr onError);
 
         #endregion
 
@@ -66,21 +75,25 @@ namespace MultiCommWrapper.Net.interfaces {
 
         #region Terminators
 
-        void GetCurrentTerminator(Action<TerminatorDataModel> onSuccess, Action<string> onError);
+        /// <summary>Get a list of individual Terminator chars</summary>
+        /// <param name="onSuccess">Recovered list</param>
+        void GetTerminatorEntitiesList(Action<List<TerminatorInfo>> onSuccess, OnErr onError);
 
-        void SetCurrentTerminators(TerminatorDataModel data, Action<string> onError);
+        void GetCurrentTerminator(Action<TerminatorDataModel> onSuccess, OnErr onError);
 
-        void SetCurrentTerminators(IIndexItem<DefaultFileExtraInfo> index, Action onSuccess, Action<string> onError);
+        void SetCurrentTerminators(TerminatorDataModel data, OnErr onError);
 
-        void GetTerminatorList(Action<List<IIndexItem<DefaultFileExtraInfo>>> onSuccess, Action<string> onError);
+        void SetCurrentTerminators(IIndexItem<DefaultFileExtraInfo> index, Action onSuccess, OnErr onError);
 
-        void CreateNewTerminator(string display, TerminatorDataModel data, Action onSuccess, Action<string> onError);
+        void GetTerminatorList(Action<List<IIndexItem<DefaultFileExtraInfo>>> onSuccess, OnErr onError);
 
-        void RetrieveTerminatorData(IIndexItem<DefaultFileExtraInfo> index, Action<TerminatorDataModel> onSuccess, Action<string> onError);
+        void CreateNewTerminator(string display, TerminatorDataModel data, Action onSuccess, OnErr onError);
 
-        void SaveTerminator(IIndexItem<DefaultFileExtraInfo> idx, TerminatorDataModel data, Action onSuccess, Action<string> onError);
+        void RetrieveTerminatorData(IIndexItem<DefaultFileExtraInfo> index, Action<TerminatorDataModel> onSuccess, OnErr onError);
 
-        void DeleteTerminatorData(IIndexItem<DefaultFileExtraInfo> index, Action<bool> onComplete, Action<string> onError);
+        void SaveTerminator(IIndexItem<DefaultFileExtraInfo> idx, TerminatorDataModel data, Action onSuccess, OnErr onError);
+
+        void DeleteTerminatorData(IIndexItem<DefaultFileExtraInfo> index, Action<bool> onComplete, OnErr onError);
 
         #endregion
 

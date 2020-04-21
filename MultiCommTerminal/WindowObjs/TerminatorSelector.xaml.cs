@@ -1,6 +1,8 @@
 ﻿using CommunicationStack.Net.Stacks;
+using MultiCommTerminal.DependencyInjection;
 using MultiCommTerminal.WPF_Helpers;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using WpfHelperClasses.Core;
 
@@ -11,7 +13,6 @@ namespace MultiCommTerminal.WindowObjs {
 
         #region Data
 
-        private TerminatorFactory factory = new TerminatorFactory();
         private ButtonGroupSizeSyncManager widthManager = null;
         private Window parent = null;
 
@@ -27,13 +28,11 @@ namespace MultiCommTerminal.WindowObjs {
         #region Constructor and window events
 
         public TerminatorSelector(Window parent) {
+            this.parent = parent;
             InitializeComponent();
             this.SizeToContent = SizeToContent.WidthAndHeight;
 
-            this.parent = parent;
-
-            // TODO move to wrapper
-            this.listBoxTerminators.ItemsSource = this.factory.Items;
+            DI.Wrapper.GetTerminatorEntitiesList(this.OnTerminatorLoadOk, App.ShowMsg);
 
             // Call before rendering which will trigger initial resize events
             this.widthManager = new ButtonGroupSizeSyncManager(this.btnCancel, this.btnSelect);
@@ -76,5 +75,14 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
         #endregion
+
+        #region Delegates
+
+        private void OnTerminatorLoadOk(List<TerminatorInfo> terminatorEntities) {
+            this.listBoxTerminators.ItemsSource = terminatorEntities;
+        }
+
+        #endregion
+
     }
 }

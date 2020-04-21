@@ -1,5 +1,7 @@
 ﻿using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
+using CommunicationStack.Net.Stacks;
+using LanguageFactory.data;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommWrapper.Net.interfaces;
 using StorageFactory.Net.interfaces;
@@ -11,11 +13,26 @@ namespace MultiCommWrapper.Net.WrapCode {
 
     public partial class CommWrapper : ICommWrapper {
 
-        /// <summary>When the current terminator is changed</summary>
+        private TerminatorFactory terminatorEntityFactory = new TerminatorFactory();
+
+
         public event EventHandler<TerminatorDataModel> CurrentTerminatorChanged;
 
 
-        public void GetCurrentTerminator(Action<TerminatorDataModel> onSuccess, Action<string> onError) {
+        public void GetTerminatorEntitiesList(Action<List<TerminatorInfo>> onSuccess, OnErr onError) {
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    onSuccess.Invoke(this.terminatorEntityFactory.Items);
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.LoadFailed));
+                }
+            });
+        }
+
+
+        public void GetCurrentTerminator(Action<TerminatorDataModel> onSuccess, OnErr onError) {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;
                 WrapErr.ToErrReport(out report, 9999, () => {
@@ -23,14 +40,13 @@ namespace MultiCommWrapper.Net.WrapCode {
                     onSuccess(items.CurrentTerminator);
                 });
                 if (report.Code != 0) {
-                    // TODO - language
-                    onError.Invoke("Failed to load settings");
+                    onError.Invoke(this.GetText(MsgCode.LoadFailed));
                 }
             });
         }
 
 
-        public void SetCurrentTerminators(TerminatorDataModel data, Action<string> onError) {
+        public void SetCurrentTerminators(TerminatorDataModel data, OnErr onError) {
             this.GetSettings((settings) => {
                 settings.CurrentTerminator = data;
                 this.SaveSettings(settings, () => {
@@ -42,7 +58,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-        public void SetCurrentTerminators(IIndexItem<DefaultFileExtraInfo> index, Action onSuccess, Action<string> onError) {
+        public void SetCurrentTerminators(IIndexItem<DefaultFileExtraInfo> index, Action onSuccess, OnErr onError) {
             this.RetrieveTerminatorData(
                 index, 
                 (data) => {
@@ -53,23 +69,21 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-        public void GetTerminatorList(Action<List<IIndexItem<DefaultFileExtraInfo>>> onSuccess, Action<string> onError) {
+        public void GetTerminatorList(Action<List<IIndexItem<DefaultFileExtraInfo>>> onSuccess, OnErr onError) {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;
                 WrapErr.ToErrReport(out report, 9999, () => {
                     onSuccess.Invoke(this.terminatorStorage.IndexedItems);
                 });
                 if (report.Code != 0) {
-                    // TODO - language
-                    onError.Invoke("Failed to retrieve terminator index");
+                    onError.Invoke(this.GetText(MsgCode.LoadFailed));
                 }
             });
         }
 
 
 
-        public void RetrieveTerminatorData(IIndexItem<DefaultFileExtraInfo> index, Action<TerminatorDataModel> onSuccess,Action<string> onError) {
-
+        public void RetrieveTerminatorData(IIndexItem<DefaultFileExtraInfo> index, Action<TerminatorDataModel> onSuccess, OnErr onError) {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;
                 WrapErr.ToErrReport(out report, 9999, () => {
@@ -77,14 +91,13 @@ namespace MultiCommWrapper.Net.WrapCode {
                     onSuccess.Invoke(this.terminatorStorage.Retrieve(index));
                 });
                 if (report.Code != 0) {
-                    // TODO - language
-                    onError.Invoke("Failed to retrieve terminator data");
+                    onError.Invoke(this.GetText(MsgCode.LoadFailed));
                 }
             });
         }
 
 
-        public void CreateNewTerminator(string display, TerminatorDataModel data, Action onSuccess, Action<string> onError) {
+        public void CreateNewTerminator(string display, TerminatorDataModel data, Action onSuccess, OnErr onError) {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;
                 WrapErr.ToErrReport(out report, 9999, () => {
@@ -94,13 +107,13 @@ namespace MultiCommWrapper.Net.WrapCode {
                     this.SaveTerminator(idx, data, onSuccess, onError);
                 });
                 if (report.Code != 0) {
-                    onError.Invoke("Failed to create terminator data");
+                    onError.Invoke(this.GetText(MsgCode.SaveFailed));
                 }
             });
         }
 
 
-        public void SaveTerminator(IIndexItem<DefaultFileExtraInfo> idx, TerminatorDataModel data, Action onSuccess, Action<string> onError) {
+        public void SaveTerminator(IIndexItem<DefaultFileExtraInfo> idx, TerminatorDataModel data, Action onSuccess, OnErr onError) {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;
                 WrapErr.ToErrReport(out report, 9999, () => {
@@ -108,18 +121,18 @@ namespace MultiCommWrapper.Net.WrapCode {
                     onSuccess.Invoke();
                 });
                 if (report.Code != 0) {
-                    onError.Invoke("Failed to save terminator data");
+                    onError.Invoke(this.GetText(MsgCode.SaveFailed));
                 }
             });
         }
 
 
-        public void DeleteTerminatorData(IIndexItem<DefaultFileExtraInfo> index, Action<bool> onComplete, Action<string> onError) {
+        public void DeleteTerminatorData(IIndexItem<DefaultFileExtraInfo> index, Action<bool> onComplete, OnErr onError) {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;
                 WrapErr.ToErrReport(out report, 9999, () => {
                     if (terminatorStorage.IndexedItems.Count < 2) {
-                        onError("Cannot delete last terminator");
+                        onError(this.GetText(MsgCode.CannotDeleteLast));
                     }
                     else {
                         bool ok = this.terminatorStorage.DeleteFile(index);
@@ -139,7 +152,7 @@ namespace MultiCommWrapper.Net.WrapCode {
                     }
                 });
                 if (report.Code != 0) {
-                    onError.Invoke("Failed to retrieve terminator data");
+                    onError.Invoke(this.GetText(MsgCode.LoadFailed));
                 }
             });
         }

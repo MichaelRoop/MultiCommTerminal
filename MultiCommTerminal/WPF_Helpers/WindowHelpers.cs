@@ -1,10 +1,13 @@
-﻿using System;
+﻿using LanguageFactory.data;
+using MultiCommTerminal.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace MultiCommTerminal.WPF_Helpers {
+
     public static class WindowHelpers {
 
         /// <summary>
@@ -19,6 +22,19 @@ namespace MultiCommTerminal.WPF_Helpers {
                 win.DragMove();
             };
         }
+
+
+        public static void ShowMsg(string msg) {
+            // TODO - create custom message box
+            MessageBox.Show(msg, DI.Wrapper.GetText(MsgCode.Error));
+        }
+
+
+        public static void ShowMsgTitle(string title, string msg) {
+            // TODO - create custom message box
+            MessageBox.Show(msg, title);
+        }
+
 
 
     }

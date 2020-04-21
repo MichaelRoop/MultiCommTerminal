@@ -1,5 +1,6 @@
 ﻿using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
+using LanguageFactory.data;
 using log4net;
 using log4net.Appender;
 using log4net.Core;
@@ -7,6 +8,7 @@ using log4net.Layout;
 using log4net.Repository.Hierarchy;
 using LogUtils.Net;
 using MultiCommTerminal.DependencyInjection;
+using MultiCommTerminal.WPF_Helpers;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -22,12 +24,14 @@ namespace MultiCommTerminal {
 
         private log4net.ILog loggerImpl = null;
         private ClassLog log = new ClassLog("App");
+        private static App STATIC_APP = null;
 
         #endregion
 
         #region Constructors
 
         public App() {
+            STATIC_APP = this;     
             this.SetupLogging();
             this.SetupDI();
         }
@@ -144,6 +148,26 @@ namespace MultiCommTerminal {
 
             hierarchy.Root.Level = Level.Info;
             hierarchy.Configured = true;
+        }
+
+        #endregion
+
+        #region Static helpers that provide Windows dispatch
+
+        private void DispatchProxy(Action action) {
+            this.Dispatcher.Invoke(new Action(() => {
+                WrapErr.ToErrReport(9999, action.Invoke);
+            }));
+        }
+
+
+        public static void ShowMsg(string msg) {
+            STATIC_APP.DispatchProxy(()=> WindowHelpers.ShowMsg(msg));
+        }
+
+
+        public static void ShowMsgTitle(string title, string msg) {
+            STATIC_APP.DispatchProxy(() => WindowHelpers.ShowMsgTitle(title, msg));
         }
 
         #endregion

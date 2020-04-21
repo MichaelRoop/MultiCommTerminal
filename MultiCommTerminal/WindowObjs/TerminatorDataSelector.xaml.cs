@@ -74,8 +74,7 @@ namespace MultiCommTerminal.WindowObjs {
         private void btnDelete_Click(object sender, RoutedEventArgs e) {
             var item = this.listBoxTerminators.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
             if (item != null) {
-                this.wrapper.DeleteTerminatorData(
-                    item, (ok) => this.ReloadList(), (err) => MessageBox.Show(err));
+                this.wrapper.DeleteTerminatorData(item, (ok) => this.ReloadList(), App.ShowMsg);
             }
         }
 
@@ -90,7 +89,7 @@ namespace MultiCommTerminal.WindowObjs {
         private void btnSelect_Click(object sender, RoutedEventArgs e) {
             var item = this.listBoxTerminators.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
             if (item != null) {
-                this.wrapper.SetCurrentTerminators(item, this.Close, (err) => MessageBox.Show(err));
+                this.wrapper.SetCurrentTerminators(item, this.Close, App.ShowMsg);
             }
         }
 
@@ -108,10 +107,7 @@ namespace MultiCommTerminal.WindowObjs {
                 (items) => {
                     this.listBoxTerminators.ItemsSource = null;
                     this.listBoxTerminators.ItemsSource = items;
-                },
-                (err) => {
-                    MessageBox.Show(err);
-                });
+                }, App.ShowMsg);
             this.listBoxTerminators.SelectionChanged += this.listBoxTerminators_SelectionChanged;
         }
 

@@ -109,7 +109,7 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void SaveIfDifferent(LangCode code) {
             if (this.languageOnEntry != code) {
-                this.wrapper.SaveLanguage(code, (err) => { MessageBox.Show(err); });
+                this.wrapper.SaveLanguage(code, App.ShowMsg);
             }
         }
 

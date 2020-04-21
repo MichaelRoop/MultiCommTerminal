@@ -78,14 +78,11 @@ namespace MultiCommTerminal.WindowObjs {
         private void TEditor_OnSave(object sender, TerminatorDataModel data) {
             if (this.index == null) {
                 this.wrapper.CreateNewTerminator(
-                    this.txtBoxDisplay.Text, 
-                    data, this.delegateSaveOk,
-                    this.delegateSaveFailed);
+                    this.txtBoxDisplay.Text, data, this.OnSaveOk, this.OnSaveFailed);
             }
             else {
                 this.index.Display = this.txtBoxDisplay.Text;
-                this.wrapper.SaveTerminator(this.index, data,
-                    this.delegateSaveOk, this.delegateSaveFailed);
+                this.wrapper.SaveTerminator(this.index, data, this.OnSaveOk, this.OnSaveFailed);
             }
         }
 
@@ -97,19 +94,19 @@ namespace MultiCommTerminal.WindowObjs {
 
         #region Delegates
 
-        private void delegateSaveOk() {
+        private void OnSaveOk() {
             this.IsChanged = true;
             this.Close();
         }
 
 
-        private void delegateSaveFailed(string err) {
-            MessageBox.Show(err);
+        private void OnSaveFailed(string err) {
+            App.ShowMsg(err);
         }
 
 
         private void delegate_OnInitFail(string err) {
-            MessageBox.Show(err);
+            App.ShowMsg(err);
             this.Close();
         }
 

@@ -38,7 +38,7 @@ namespace MultiCommTerminal.WindowObjs {
                     this.terminatorView.Initialise(data);
                 }, 
                 (err) => {
-                    MessageBox.Show(err);
+                    App.ShowMsg(err);
                     this.terminatorView.Initialise(new TerminatorDataModel());
                 });
             this.wrapper.CurrentTerminatorChanged += Wrapper_CurrentTerminatorChanged;
@@ -121,9 +121,7 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void btnInfoLE_Click(object sender, RoutedEventArgs e) {
             if (this.listBox_BLE.SelectedItem != null) {
-                this.wrapper.BLE_GetDbgInfoStringDump(this.listBox_BLE.SelectedItem, (title, msg) => {
-                    MessageBox.Show(msg, title);
-                });
+                this.wrapper.BLE_GetDbgInfoStringDump(this.listBox_BLE.SelectedItem, App.ShowMsgTitle);
             }
         }
 
@@ -165,7 +163,7 @@ namespace MultiCommTerminal.WindowObjs {
             if (this.listBox_BT.SelectedItem != null) {
                 BTDeviceInfo item = this.listBox_BT.SelectedItem as BTDeviceInfo;
                 if (item != null) {
-                    MessageBox.Show(item.Address, item.Name);
+                    App.ShowMsgTitle(item.Name, item.Address);
                 }
             }
         }
