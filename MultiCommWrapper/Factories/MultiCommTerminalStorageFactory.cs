@@ -84,5 +84,15 @@ namespace MultiCommWrapper.Net.Factories {
             return manager;
         }
 
+
+        public IIndexedStorageManager<TData, TIndexExtraInfo> GetIndexedManager<TData, TIndexExtraInfo>(string subDirectory, string indexName)
+            where TData : class where TIndexExtraInfo : class {
+            IIndexedStorageManager<TData, TIndexExtraInfo> manager = this.GetIndexedManager<TData, TIndexExtraInfo>(subDirectory);
+            manager.IndexFileName = indexName;
+            return manager;
+        }
+
+
+
     }
 }

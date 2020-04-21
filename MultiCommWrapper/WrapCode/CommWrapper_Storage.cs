@@ -13,8 +13,9 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         private readonly string APP_DIR = "MultiCommSerialTerminal";
         private readonly string SETTINGS_DIR = "Settings";
-        private readonly string TERMINATOR_DIR = "Terminators";
         private readonly string SETTINGS_FILE = "MultiCommSettings.txt";
+        private readonly string TERMINATOR_DIR = "Terminators";
+        private readonly string TERMINATOR_INDEX_FILE = "TerminatorsIndex.txt";
 
         #endregion
 
@@ -25,7 +26,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.AssureSettingsDefault();
 
             this.terminatorStorage = 
-                this.storageFactory.GetIndexedManager<TerminatorDataModel, DefaultFileExtraInfo>(this.Dir(TERMINATOR_DIR));
+                this.storageFactory.GetIndexedManager<TerminatorDataModel, DefaultFileExtraInfo>(this.Dir(TERMINATOR_DIR), TERMINATOR_INDEX_FILE);
             this.AssureTerminatorsDefault();
         }
 
