@@ -38,9 +38,10 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void Window_ContentRendered(object sender, EventArgs e) {
-            ReloadList();
+            ReloadList(true);
             WPF_ControlHelpers.CenterChild(parent, this);
         }
+
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             this.widthManager.Teardown();
@@ -53,9 +54,7 @@ namespace MultiCommTerminal.WindowObjs {
         private void btnAdd_Click(object sender, RoutedEventArgs e) {
             TerminatorEditor win = new TerminatorEditor(this, null);
             win.ShowDialog();
-            if (win.IsChanged) {
-                this.ReloadList();
-            }
+            this.ReloadList(win.IsChanged);
         }
 
 
@@ -64,9 +63,7 @@ namespace MultiCommTerminal.WindowObjs {
             if (item != null) {
                 TerminatorEditor win = new TerminatorEditor(this, item);
                 win.ShowDialog();
-                if (win.IsChanged) {
-                    this.ReloadList();
-                }
+                this.ReloadList(win.IsChanged);
             }
         }
 
@@ -74,7 +71,7 @@ namespace MultiCommTerminal.WindowObjs {
         private void btnDelete_Click(object sender, RoutedEventArgs e) {
             var item = this.listBoxTerminators.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
             if (item != null) {
-                this.wrapper.DeleteTerminatorData(item, (ok) => this.ReloadList(), App.ShowMsg);
+                this.wrapper.DeleteTerminatorData(item, this.ReloadList, App.ShowMsg);
             }
         }
 
@@ -101,14 +98,16 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
-        private void ReloadList() {
-            this.listBoxTerminators.SelectionChanged -= this.listBoxTerminators_SelectionChanged;
-            this.wrapper.GetTerminatorList(
-                (items) => {
-                    this.listBoxTerminators.ItemsSource = null;
-                    this.listBoxTerminators.ItemsSource = items;
-                }, App.ShowMsg);
-            this.listBoxTerminators.SelectionChanged += this.listBoxTerminators_SelectionChanged;
+        private void ReloadList(bool isChanged) {
+            if (isChanged) {
+                this.listBoxTerminators.SelectionChanged -= this.listBoxTerminators_SelectionChanged;
+                this.wrapper.GetTerminatorList(
+                    (items) => {
+                        this.listBoxTerminators.ItemsSource = null;
+                        this.listBoxTerminators.ItemsSource = items;
+                    }, App.ShowMsg);
+                this.listBoxTerminators.SelectionChanged += this.listBoxTerminators_SelectionChanged;
+            }
         }
 
     }

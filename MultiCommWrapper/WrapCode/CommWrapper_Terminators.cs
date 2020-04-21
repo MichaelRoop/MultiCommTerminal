@@ -101,10 +101,15 @@ namespace MultiCommWrapper.Net.WrapCode {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;
                 WrapErr.ToErrReport(out report, 9999, () => {
-                    IIndexItem<DefaultFileExtraInfo> idx = new IndexItem<DefaultFileExtraInfo>(data.UId) {
-                        Display = display,
-                    };
-                    this.SaveTerminator(idx, data, onSuccess, onError);
+                    if (display.Length == 0) {
+                        onError.Invoke(this.GetText(MsgCode.EmptyName));
+                    }
+                    else {
+                        IIndexItem<DefaultFileExtraInfo> idx = new IndexItem<DefaultFileExtraInfo>(data.UId) {
+                            Display = display,
+                        };
+                        this.SaveTerminator(idx, data, onSuccess, onError);
+                    }
                 });
                 if (report.Code != 0) {
                     onError.Invoke(this.GetText(MsgCode.SaveFailed));
@@ -117,8 +122,13 @@ namespace MultiCommWrapper.Net.WrapCode {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;
                 WrapErr.ToErrReport(out report, 9999, () => {
-                    this.terminatorStorage.Store(data, idx);
-                    onSuccess.Invoke();
+                    if (idx.Display.Length == 0) {
+                        onError.Invoke(this.GetText(MsgCode.EmptyName));
+                    }
+                    else {
+                        this.terminatorStorage.Store(data, idx);
+                        onSuccess.Invoke();
+                    }
                 });
                 if (report.Code != 0) {
                     onError.Invoke(this.GetText(MsgCode.SaveFailed));
@@ -136,14 +146,17 @@ namespace MultiCommWrapper.Net.WrapCode {
                     }
                     else {
                         bool ok = this.terminatorStorage.DeleteFile(index);
+                        // If deleted terminator was the current, update current to first in list
                         this.GetCurrentTerminator(
                             (data) => {
                                 if (data.UId == index.UId_Object) {
                                     this.RetrieveTerminatorData(
                                         this.terminatorStorage.IndexedItems[0],
                                         (newData) => {
+                                            // TODO error handling if we fail to set current
                                             this.SetCurrentTerminators(newData, (err) => { });
                                         },
+                                        // TODO error handling if we fail to retrieve current terminator
                                         (err) => { });
                                 }
                             },
@@ -156,7 +169,6 @@ namespace MultiCommWrapper.Net.WrapCode {
                 }
             });
         }
-
 
 
     }
