@@ -25,6 +25,7 @@ namespace MultiCommTerminal.WindowObjs {
         #region Properties
 
         public bool IsChanged { get; set; } = false;
+        public bool IsClosed { get; set; } = false;
 
         #endregion
 
@@ -38,17 +39,11 @@ namespace MultiCommTerminal.WindowObjs {
 
             if (this.index == null) {
                 // New entry
-                this.txtBoxDisplay.Text = "NA";
+                //this.txtBoxDisplay.Text = this.wrapper.GetText(LanguageFactory.data.MsgCode.Name);
                 this.tEditor.InitialiseEditor(parent, new TerminatorDataModel());
             }
             else {
-                this.wrapper.RetrieveTerminatorData(
-                    this.index,
-                    (dataModel) => {
-                        this.txtBoxDisplay.Text = index.Display;
-                        this.tEditor.InitialiseEditor(parent, dataModel);
-                    },
-                    this.delegate_OnInitFail);
+                this.wrapper.RetrieveTerminatorData(this.index, this.OnInitOk, this.OnInitFail);
             }
 
             this.tEditor.OnSave += TEditor_OnSave;
@@ -69,6 +64,7 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+            this.IsClosed = true;
         }
 
         #endregion
@@ -105,9 +101,15 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
-        private void delegate_OnInitFail(string err) {
+        private void OnInitFail(string err) {
             App.ShowMsg(err);
             this.Close();
+        }
+
+
+        private void OnInitOk(TerminatorDataModel dataModel) {
+            this.txtBoxDisplay.Text = index.Display;
+            this.tEditor.InitialiseEditor(parent, dataModel);
         }
 
         #endregion

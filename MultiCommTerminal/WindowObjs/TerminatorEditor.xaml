@@ -18,7 +18,21 @@
             <DockPanel Margin="10">
                 <Label Content="{Binding Source={x:Static wpfHelper:TxtBinder.Name}}" Margin="0,0,0,0" HorizontalContentAlignment="Right" />
                 <Label Content=":" />
-                <TextBox x:Name="txtBoxDisplay" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"  Text="Your terminator name" BorderBrush="Blue" BorderThickness=".5" />
+                <Grid>
+                <TextBox x:Name="txtBoxDisplay" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" BorderBrush="Blue" BorderThickness=".5"  />
+                <TextBlock IsHitTestVisible="False" Text="{Binding Source={x:Static wpfHelper:TxtBinder.EnterName}}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="DarkGray">
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Text, ElementName=txtBoxDisplay}" Value="">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+                </Grid>
             </DockPanel>
             <controls:UC_TerminatorEdit x:Name="tEditor"/>
             <DockPanel HorizontalAlignment="Center" Margin="10,5,10,15">
