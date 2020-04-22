@@ -22,12 +22,15 @@
                     <DockPanel x:Name="taskBar" >
                         <Border Background="DarkBlue" >
                             <Image x:Name="imgMenu" Width="25" Margin="6,0,0,0"
-                                   Source="/MultiCommTerminal;component/images/icons/icons8-menu-white-50.png" 
+                                   Source="{Binding Source={x:Static wpfHelper:IconBinder.HamburgMenu_W}}" 
                                    MouseLeftButtonDown="imgMenu_MouseLeftButtonDown" MouseDown="imgMenu_MouseDown" />
                         </Border>
-                        <Label x:Name="lbTitle" Content="Multi Comm Serial Terminal" MouseDown="lbTitle_MouseDown"
+                        <DockPanel HorizontalAlignment="Center">
+                            <Image Source="{Binding Source={x:Static wpfHelper:IconBinder.SerialPort_W}}" Width="40"  />
+                            <Label x:Name="lbTitle" Content="Multi Comm Serial Terminal" MouseDown="lbTitle_MouseDown"
                            Foreground="White" Background="DarkBlue" FontSize="14" FontWeight="Bold" 
                                HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                        </DockPanel>
                     </DockPanel>
                 </Border>
                 <Border BorderBrush="AliceBlue" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center">

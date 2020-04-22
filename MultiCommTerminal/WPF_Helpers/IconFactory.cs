@@ -16,6 +16,8 @@ namespace MultiCommTerminal.WPF_Helpers {
                     return new IconDataModel(UIIcon.Save, this.AddDir("icons8-checkmark-50.png"), "0");
                 case UIIcon.Exit:
                     return new IconDataModel(UIIcon.Exit, this.AddDir("icons8-exit-50.png"), "2");
+                case UIIcon.HamburgerMenuWhite:
+                    return new IconDataModel(UIIcon.HamburgerMenuWhite, this.AddDir("icons8-menu-white-50.png"), "6");
                 case UIIcon.Settings:
                     return new IconDataModel(UIIcon.Settings, this.AddDir("icons8-gear-32.png"), "6");
                 case UIIcon.Language:
@@ -54,6 +56,8 @@ namespace MultiCommTerminal.WPF_Helpers {
                     return new IconDataModel(UIIcon.Connect, this.AddDir("icons8-null-symbol-white-30.png"), "6");
                 case UIIcon.SpinIcon:
                     return new IconDataModel(UIIcon.Connect, this.AddDir("icons8-iphone-spinner-100.png"), "6");
+                case UIIcon.SerialPortWhite:
+                    return new IconDataModel(UIIcon.SerialPortWhite, this.AddDir("icons8-rs-232-male-white-50.png"), "6");
                 default:
                     return new IconDataModel(UIIcon.Cancel, this.AddDir("icons8-close-window-50-noborder.png"), "6");
             }

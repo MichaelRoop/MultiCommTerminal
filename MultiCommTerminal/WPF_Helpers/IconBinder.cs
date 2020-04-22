@@ -27,6 +27,7 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string Save { get { return Source(UIIcon.Save); } }
         public static string Cancel { get { return Source(UIIcon.Cancel); } }
         public static string Exit { get { return Source(UIIcon.Exit); } }
+        public static string HamburgMenu_W { get { return Source(UIIcon.HamburgerMenuWhite); } }
         public static string Settings { get { return Source(UIIcon.Settings); } }
         public static string Language { get { return Source(UIIcon.Language); } }
         public static string Language_W { get { return Source(UIIcon.LanguageWhite); } }
@@ -42,7 +43,7 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string Terminator { get { return Source(UIIcon.Terminator); } }
         public static string Terminator_W { get { return Source(UIIcon.TerminatorWhite); } }
         public static string SpinIcon { get { return Source(UIIcon.SpinIcon); } }
-
+        public static string SerialPort_W { get { return Source(UIIcon.SerialPortWhite); } }
 
         #endregion
 

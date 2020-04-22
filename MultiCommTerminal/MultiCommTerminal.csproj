@@ -27,6 +27,7 @@
     <None Remove="images\icons\icons8-null-symbol-30.png" />
     <None Remove="images\icons\icons8-null-symbol-white-30.png" />
     <None Remove="images\icons\icons8-quick-mode-on-100.png" />
+    <None Remove="images\icons\icons8-rs-232-male-white-50.png" />
     <None Remove="images\icons\icons8-running-24.png" />
     <None Remove="images\icons\icons8-search-50.png" />
     <None Remove="images\icons\icons8-trash-can-50.png" />
@@ -81,6 +82,7 @@
     <Resource Include="images\icons\icons8-null-symbol-30.png" />
     <Resource Include="images\icons\icons8-null-symbol-white-30.png" />
     <Resource Include="images\icons\icons8-quick-mode-on-100.png" />
+    <Resource Include="images\icons\icons8-rs-232-male-white-50.png" />
     <Resource Include="images\icons\icons8-running-24.png" />
     <Resource Include="images\icons\icons8-search-50.png" />
     <Resource Include="images\icons\icons8-trash-can-50.png" />
