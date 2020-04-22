@@ -10,25 +10,45 @@ namespace MultiCommTerminal.WindowObjs {
         Window parent = null;
 
         public static void ShowBox(Window win, string msg) {
-            MsgBoxSimple box = new MsgBoxSimple(win, msg);
-            box.ShowDialog();
+            win.Dispatcher.Invoke(() => {
+                MsgBoxSimple box = new MsgBoxSimple(win, msg);
+                box.ShowDialog();
+            });
         }
 
 
         public static void ShowBox(Window win, string title, string msg) {
-            MsgBoxSimple box = new MsgBoxSimple(win, title, msg);
-            box.ShowDialog();
+            win.Dispatcher.Invoke(() => {
+                MsgBoxSimple box = new MsgBoxSimple(win, title, msg);
+                box.ShowDialog();
+            });
         }
 
 
         public static void ShowBox(string msg) {
-            MsgBoxSimple box = new MsgBoxSimple(null, msg);
+            MsgBoxSimple box = new MsgBoxSimple(msg);
             box.ShowDialog();
         }
 
         public static void ShowBox(string title, string msg) {
-            MsgBoxSimple box = new MsgBoxSimple(null, title, msg);
+            MsgBoxSimple box = new MsgBoxSimple(title, msg);
             box.ShowDialog();
+        }
+
+
+        private MsgBoxSimple() {
+            InitializeComponent();
+            this.SizeToContent = SizeToContent.WidthAndHeight;
+        }
+
+
+        public MsgBoxSimple(string msg) : this() {
+            this.txtBlock.Text = msg;
+        }
+
+
+        public MsgBoxSimple(string title, string msg) : this(msg) {
+            this.Title = title;
         }
 
 
@@ -69,23 +89,5 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
     }
-
-
-    public static class MsgBoxSimpleExtensions {
-
-        public static void ShowBox(this Window win, string msg) {
-            MsgBoxSimple box = new MsgBoxSimple(win, msg);
-            box.ShowDialog();
-        }
-
-
-        public static void ShowBox(this Window win, string title, string msg) {
-            MsgBoxSimple box = new MsgBoxSimple(win, title, msg);
-            box.ShowDialog();
-        }
-
-
-    }
-
 
 }

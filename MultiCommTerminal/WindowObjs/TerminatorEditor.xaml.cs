@@ -93,12 +93,12 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void OnSaveFailed(string err) {
-            App.ShowMsg(err);
+            this.ShowMsgBox(err);
         }
 
 
         private void OnInitFail(string err) {
-            App.ShowMsg(err);
+            this.ShowMsgBox(err);
             this.Close();
         }
 

@@ -7,10 +7,10 @@
         xmlns:controls="clr-namespace:MultiCommTerminal.UserControls"
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.WPF_Helpers"
         Style="{StaticResource MyWindowStyle}"
-
+        Title="{Binding Source={x:Static wpfHelper:TxtBinder.Terminators}}" 
+        Icon="{Binding Source={x:Static wpfHelper:IconBinder.Terminator_W}}"
         mc:Ignorable="d"
-        ContentRendered="Window_ContentRendered" Closing="Window_Closing"
-        Title="TerminatorSelector" >
+        ContentRendered="Window_ContentRendered" Closing="Window_Closing">
     <Grid>
         <StackPanel>
             <ListBox x:Name="listBoxTerminators" MinWidth="200" Height="300" Margin="10" FontSize="16" HorizontalAlignment="Stretch"
