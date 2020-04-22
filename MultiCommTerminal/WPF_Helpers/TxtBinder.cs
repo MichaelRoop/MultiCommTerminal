@@ -39,6 +39,7 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string Select { get { return GetTxt(MsgCode.select); } }
         public static string Cancel { get { return GetTxt(MsgCode.cancel); } }
         public static string Exit { get { return GetTxt(MsgCode.exit); } }
+        public static string OK { get { return GetTxt(MsgCode.Ok); } }
 
         public static string Language { get { return GetTxt(MsgCode.language); } }
         public static string Start { get { return GetTxt(MsgCode.start); } }
