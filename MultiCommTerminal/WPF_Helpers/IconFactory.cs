@@ -52,6 +52,8 @@ namespace MultiCommTerminal.WPF_Helpers {
                     return new IconDataModel(UIIcon.Connect, this.AddDir("icons8-null-symbol-30.png"), "6");
                 case UIIcon.TerminatorWhite:
                     return new IconDataModel(UIIcon.Connect, this.AddDir("icons8-null-symbol-white-30.png"), "6");
+                case UIIcon.SpinIcon:
+                    return new IconDataModel(UIIcon.Connect, this.AddDir("icons8-iphone-spinner-100.png"), "6");
                 default:
                     return new IconDataModel(UIIcon.Cancel, this.AddDir("icons8-close-window-50-noborder.png"), "6");
             }

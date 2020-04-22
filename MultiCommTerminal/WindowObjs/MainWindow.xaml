@@ -10,29 +10,11 @@
         Title="Multi Comm Serial Terminal" WindowStyle="None" AllowsTransparency="True"
          ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
         ContentRendered="Window_ContentRendered" Closing="Window_Closing"
-        MouseDown="Window_MouseDown"
-        
-        >
+        MouseDown="Window_MouseDown" >
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="grdMain">
-        
         <Grid x:Name="gridWait" Panel.ZIndex="10000" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" >
-            <Label x:Name="lblWait" Content="WAIT" FontSize="100" Opacity="0.1">
-                <Label.Triggers>
-                    <EventTrigger RoutedEvent="Label.Loaded">
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimation 
-                                    Storyboard.TargetName="lblWait"
-                                    Storyboard.TargetProperty="(Label.Opacity)" 
-                                    From="0.1" To="1" Duration="0:0:0.75" AutoReverse="True" RepeatBehavior="Forever" />
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger>
-                </Label.Triggers>
-            </Label>
+            <controls:UC_BusyImageSpinner/>
         </Grid>
-        
-        
         <Border BorderBrush="Blue" BorderThickness="1" >
             <StackPanel x:Name="spMain" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <!-- Custom title bar -->
@@ -212,6 +194,5 @@
                 </Border>
             </StackPanel>
         </Border>
- 
-    </Grid>
+     </Grid>
 </Window>

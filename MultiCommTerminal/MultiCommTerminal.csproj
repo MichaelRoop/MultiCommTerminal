@@ -20,6 +20,7 @@
     <None Remove="images\icons\icons8-eye-50.png" />
     <None Remove="images\icons\icons8-file-preview-50.png" />
     <None Remove="images\icons\icons8-gear-32.png" />
+    <None Remove="images\icons\icons8-iphone-spinner-100.png" />
     <None Remove="images\icons\icons8-language-50.png" />
     <None Remove="images\icons\icons8-language-white-50.png" />
     <None Remove="images\icons\icons8-menu-white-50.png" />
@@ -73,6 +74,7 @@
     <Resource Include="images\icons\icons8-eye-50.png" />
     <Resource Include="images\icons\icons8-file-preview-50.png" />
     <Resource Include="images\icons\icons8-gear-32.png" />
+    <Resource Include="images\icons\icons8-iphone-spinner-100.png" />
     <Resource Include="images\icons\icons8-language-50.png" />
     <Resource Include="images\icons\icons8-language-white-50.png" />
     <Resource Include="images\icons\icons8-menu-white-50.png" />

@@ -41,6 +41,7 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string Send { get { return Source(UIIcon.Run); } }
         public static string Terminator { get { return Source(UIIcon.Terminator); } }
         public static string Terminator_W { get { return Source(UIIcon.TerminatorWhite); } }
+        public static string SpinIcon { get { return Source(UIIcon.SpinIcon); } }
 
 
         #endregion
