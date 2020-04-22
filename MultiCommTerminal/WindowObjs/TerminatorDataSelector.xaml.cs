@@ -53,10 +53,8 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void btnAdd_Click(object sender, RoutedEventArgs e) {
             TerminatorEditor win = new TerminatorEditor(this, null);
-            if (!win.IsClosed) {
-                win.ShowDialog();
-                this.ReloadList(win.IsChanged);
-            }
+            win.ShowDialog();
+            this.ReloadList(win.IsChanged);
         }
 
 
@@ -64,10 +62,8 @@ namespace MultiCommTerminal.WindowObjs {
             var item = this.listBoxTerminators.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
             if (item != null) {
                 TerminatorEditor win = new TerminatorEditor(this, item);
-                if (!win.IsClosed) {
-                    win.ShowDialog();
-                    this.ReloadList(win.IsChanged);
-                }
+                win.ShowDialog();
+                this.ReloadList(win.IsChanged);
             }
         }
 

@@ -25,7 +25,6 @@ namespace MultiCommTerminal.WindowObjs {
         #region Properties
 
         public bool IsChanged { get; set; } = false;
-        public bool IsClosed { get; set; } = false;
 
         #endregion
 
@@ -36,17 +35,6 @@ namespace MultiCommTerminal.WindowObjs {
             this.parent = parent;
             this.index = index; 
             InitializeComponent();
-
-            if (this.index == null) {
-                // New entry
-                //this.txtBoxDisplay.Text = this.wrapper.GetText(LanguageFactory.data.MsgCode.Name);
-                this.tEditor.InitialiseEditor(parent, new TerminatorDataModel());
-            }
-            else {
-                this.wrapper.RetrieveTerminatorData(this.index, this.OnInitOk, this.OnInitFail);
-            }
-
-            this.tEditor.OnSave += TEditor_OnSave;
             this.SizeToContent = SizeToContent.WidthAndHeight;
         }
 
@@ -58,13 +46,21 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
-        private void Window_ContentRendered(object sender, EventArgs e) {
-            WPF_ControlHelpers.CenterChild(parent, this);
+        private void Window_Loaded(object sender, RoutedEventArgs e) {
+            if (this.index == null) {
+                // New entry
+                this.tEditor.InitialiseEditor(parent, new TerminatorDataModel());
+            }
+            else {
+                this.wrapper.RetrieveTerminatorData(this.index, this.OnInitOk, this.OnInitFail);
+            }
+
+            this.tEditor.OnSave += TEditor_OnSave;
         }
 
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
-            this.IsClosed = true;
+        private void Window_ContentRendered(object sender, EventArgs e) {
+            WPF_ControlHelpers.CenterChild(parent, this);
         }
 
         #endregion
