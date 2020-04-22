@@ -18,7 +18,7 @@
         <Border BorderBrush="Blue" BorderThickness="1" >
             <StackPanel x:Name="spMain" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <!-- Custom title bar -->
-                <Border Height="30" VerticalAlignment="Top" Background="DarkBlue" >
+                <Border x:Name="titleBarBorder" Height="30" VerticalAlignment="Top" Background="DarkBlue" MouseDown="TitleBarBorder_MouseDown" >
                     <DockPanel x:Name="taskBar" >
                         <Border Background="DarkBlue" >
                             <Image x:Name="imgMenu" Width="25" Margin="6,0,0,0"
@@ -27,7 +27,7 @@
                         </Border>
                         <DockPanel HorizontalAlignment="Center">
                             <Image Source="{Binding Source={x:Static wpfHelper:IconBinder.SerialPort_W}}" Width="40"  />
-                            <Label x:Name="lbTitle" Content="Multi Comm Serial Terminal" MouseDown="lbTitle_MouseDown"
+                            <Label x:Name="lbTitle" Content="Multi Comm Serial Terminal" 
                            Foreground="White" Background="DarkBlue" FontSize="14" FontWeight="Bold" 
                                HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                         </DockPanel>

@@ -78,9 +78,7 @@ namespace MultiCommTerminal.WindowObjs {
 
         /// <summary>Close opened menu window anywhere on window on mouse down</summary>
         private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
-            if (this.menu.IsVisible) {
-                this.menu.Hide();
-            }
+            this.HideMenu();
         }
 
         #endregion
@@ -326,15 +324,6 @@ namespace MultiCommTerminal.WindowObjs {
 
         #endregion
 
-        #region Title bar events
-
-        /// <summary>Grab window to start drag move when mouse clicks down on my title bar</summary>
-        private void lbTitle_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
-            App.Current.MainWindow.DragMove();
-        }
-
-        #endregion
-
         #region Menu events
 
         /// <summary>Click event on the hamburger icon to toggle menu window</summary>
@@ -380,6 +369,19 @@ namespace MultiCommTerminal.WindowObjs {
             this.lbResponse.Content = lang.GetText(MsgCode.response);
 
             // TODO Other texts
+        }
+
+
+        private void TitleBarBorder_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+            this.HideMenu();
+            this.DragMove();
+        }
+
+
+        private void HideMenu() {
+            if (this.menu.IsVisible) {
+                this.menu.Hide();
+            }
         }
 
         #endregion

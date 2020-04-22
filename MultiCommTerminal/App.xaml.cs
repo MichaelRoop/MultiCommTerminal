@@ -47,6 +47,7 @@ namespace MultiCommTerminal {
             Log.SetVerbosity(MsgLevel.Info);
             Log.SetMsgNumberThreshold(5);
             Log.OnLogMsgEvent += new LogingMsgEventDelegate(this.Log_OnLogMsgEvent);
+            DumpLogHeader();
         }
 
         private void SetupDI() {
@@ -103,9 +104,15 @@ namespace MultiCommTerminal {
         private void DumpLogHeader() {
             this.log.Warning(0, "");
             this.log.Warning(0, "************** New Session ****************");
-            this.log.Warning(15664, string.Format("*  Day {0}", DateTime.Now.ToString("dddd, dd MMMM yyyy HH:mm:ss")));
+            this.log.Warning(0, "*");
+            this.log.Warning(0, string.Format("* {0}", System.Reflection.Assembly.GetExecutingAssembly().GetName().Name));
+            this.log.Warning(0, string.Format("* Version: {0}", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString()));
+            this.log.Warning(0, "*");
+            this.log.Warning(0, "*");
+            this.log.Warning(0, string.Format("*  Day {0}", DateTime.Now.ToString("dddd, dd MMMM yyyy HH:mm:ss")));
+            this.log.Warning(0, "*");
             //this.log.Warning(0, string.Format("*  {0}", ""));
-            this.log.Warning(0, "**************************************");
+            this.log.Warning(0, "*******************************************");
         }
 
         #endregion
