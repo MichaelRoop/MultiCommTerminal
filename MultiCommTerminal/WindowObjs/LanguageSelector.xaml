@@ -7,28 +7,15 @@
         xmlns:controls="clr-namespace:MultiCommTerminal.UserControls"
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.WPF_Helpers"
         mc:Ignorable="d"
-        WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="Manual"
-        Title="{Binding Source={x:Static wpfHelper:TxtBinder.Language}}" MinHeight="150" MinWidth="100"
+        Style="{StaticResource MyWindowStyle}"
+        Title="{Binding Source={x:Static wpfHelper:TxtBinder.Language}}" 
+        Icon="{Binding Source={x:Static wpfHelper:IconBinder.Language_W}}"
+        MinHeight="150" MinWidth="100"
         ContentRendered="Window_ContentRendered" Closing="Window_Closing"
         >
     <Grid HorizontalAlignment="Stretch">
         <Border BorderBrush="Blue" BorderThickness="1">
             <StackPanel>
-                <Border x:Name="brdTitle" Background="DarkBlue" Height="30" MouseDown="BrdTitleBorder_MouseDown">
-                    <DockPanel HorizontalAlignment="Center">
-                        <Border Padding="4">
-                            <!--MultiCommTerminal;component/images/icons/language-white.png-->
-
-                            <Image Source="{Binding Source={x:Static wpfHelper:IconBinder.Language_W}}"
-                                 RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased"
-                                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch"                                   
-                                   />
-                        </Border>
-                        <Label x:Name="lbTitle" Margin="2" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Language}}" 
-                           HorizontalContentAlignment="Center"
-                           Foreground="White" Background="DarkBlue" FontSize="14" FontWeight="Bold" Padding="2" />
-                    </DockPanel>
-                </Border>
                 <!--<StackPanel Grid.ColumnSpan="2">-->
                     <ListBox x:Name="lbxLanguages" MinWidth="250" MinHeight="200" FontSize="16"
                      Margin="10"

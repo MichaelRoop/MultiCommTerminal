@@ -1,6 +1,7 @@
 ﻿using LanguageFactory.data;
 using LogUtils.Net;
 using MultiCommTerminal.DependencyInjection;
+using MultiCommTerminal.WPF_Helpers;
 using MultiCommWrapper.Net.interfaces;
 using System;
 using System.Windows;
@@ -57,9 +58,10 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
-        private void BrdTitleBorder_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
-            this.DragMove();
-
+        /// <summary>Bind Mouse drag to Template style</summary>
+        public override void OnApplyTemplate() {
+            this.BindMouseDownToCustomTitleBar();
+            base.OnApplyTemplate();
         }
 
         #endregion
@@ -88,7 +90,7 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void Languages_LanguageChanged(object sender, LanguageFactory.Messaging.SupportedLanguage lang) {
             this.Dispatcher.Invoke(() => { 
-                this.lbTitle.Content = lang.GetText(MsgCode.language);
+                this.Title = lang.GetText(MsgCode.language);
 
                 // Prep for change then change button contents
                 this.widthManager.PrepForChange();
