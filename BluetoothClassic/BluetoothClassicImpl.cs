@@ -1,16 +1,23 @@
 ﻿using BluetoothCommon.Net;
 using BluetoothCommon.Net.interfaces;
 using ChkUtils.Net;
+using ChkUtils.Net.ErrObjects;
 using InTheHand.Net;
 using InTheHand.Net.Bluetooth;
 using InTheHand.Net.Sockets;
+using LogUtils.Net;
 using System;
+using System.Collections.Generic;
 using System.Net.Sockets;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
+using VariousUtils;
 
 namespace BluetoothClassic.Win32 {
     public class BluetoothClassicImpl : IBTInterface {
 
+        private ClassLog log = new ClassLog("BluetoothClassicImpl");
         private BluetoothClient currentDevice = null;
 
         public event EventHandler<BTDeviceInfo> DiscoveredBTDevice;
@@ -54,6 +61,23 @@ namespace BluetoothClassic.Win32 {
                 BluetoothService.SerialPort,
                 this.ConnectedCallback, 
                 this.currentDevice);
+        }
+
+
+        public bool Connect(BTDeviceInfo device) {
+            this.Disconnect();
+            this.currentDevice = new BluetoothClient();
+            BluetoothAddress address;
+
+            if (!BluetoothAddress.TryParse(device.Address, out address)) {
+                this.log.Error(9999, () => string.Format("Failed to parse out the address {0} on device {1}", device.Address, device.Name));
+                return false;
+            }
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 9999, "Error connecting", () => {
+                this.currentDevice.Connect(address, BluetoothService.SerialPort);
+            });
+            return report.Code == 0;
         }
 
 
@@ -101,6 +125,10 @@ namespace BluetoothClassic.Win32 {
                             DeviceClassName = string.Format("{0}:{1}", dev.ClassOfDevice.MajorDevice, dev.ClassOfDevice.Device),
                             ServiceClassInt = (int)dev.ClassOfDevice.Service,
                             ServiceClassName = dev.ClassOfDevice.Service.ToString(),
+                            Strength = dev.Rssi,
+                            LastSeen = dev.LastSeen,
+                            LastUsed = dev.LastUsed,
+                            Radio = this.BuildRadioDataModel(dev),                            
                         });
                     }
                 }
@@ -126,6 +154,33 @@ namespace BluetoothClassic.Win32 {
         }
 
 
+        private BTRadioInfo BuildRadioDataModel(BluetoothDeviceInfo device) {
+            BTDeviceInfo info = new BTDeviceInfo() {
+                Name = device.DeviceName,
+                Address = device.DeviceAddress.ToString(),
+            };
+
+            // Need to connect to each device to get radio info
+            this.Connect(info);
+            RadioVersions devRadio = device.GetVersions();
+            this.Disconnect();
+            if (devRadio == null) {
+                return new BTRadioInfo();
+            }
+
+            string tmp = devRadio.LmpSupportedFeatures.ToString();
+            string[] pieces = tmp.Split(',');
+            List<string> features = new List<string>(pieces.Length);
+            for (int i = 0; i< pieces.Length; i++) {
+                features.Add(pieces[i].Replace("_", "").CamelCaseToSpaces());
+            }
+
+            return new BTRadioInfo() {
+                Manufacturer = devRadio.Manufacturer.ToString().CamelCaseToSpaces(),
+                LinkManagerProtocol = string.Format("{0} ({1})", devRadio.LmpVersion.LmpVerToString(), devRadio.LmpSubversion),
+                Features = features,
+            };
+        }
 
         #endregion
 

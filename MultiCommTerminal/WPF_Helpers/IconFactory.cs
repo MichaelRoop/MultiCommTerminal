@@ -38,8 +38,12 @@ namespace MultiCommTerminal.WPF_Helpers {
                     return new IconDataModel(UIIcon.Search, this.AddDir("icons8-wi-fi-32.png"), "6");
                 case UIIcon.BluetoothClassic:
                     return new IconDataModel(UIIcon.Search, this.AddDir("icons8-bluetooth-50.png"), "6");
+                case UIIcon.BluetoothClassicWhite:
+                    return new IconDataModel(UIIcon.Search, this.AddDir("icons8-bluetooth-white-50.png"), "6");
                 case UIIcon.BluetoothLE:
                     return new IconDataModel(UIIcon.Search, this.AddDir("icons8-bluetooth-50.png"), "6");
+                case UIIcon.BluetoothLEWhite:
+                    return new IconDataModel(UIIcon.Search, this.AddDir("icons8-bluetooth-white-50.png"), "6");
                 case UIIcon.Ethernet:
                     return new IconDataModel(UIIcon.Search, this.AddDir("icons8-ethernet-on-50.png"), "6");
                 case UIIcon.Connect:

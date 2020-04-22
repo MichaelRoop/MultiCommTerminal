@@ -161,7 +161,8 @@ namespace MultiCommTerminal.WindowObjs {
             if (this.listBox_BT.SelectedItem != null) {
                 BTDeviceInfo item = this.listBox_BT.SelectedItem as BTDeviceInfo;
                 if (item != null) {
-                    App.ShowMsgTitle(item.Name, item.Address);
+                    DeviceInfo_BT win = new DeviceInfo_BT(this, item);
+                    win.ShowDialog();
                 }
             }
         }

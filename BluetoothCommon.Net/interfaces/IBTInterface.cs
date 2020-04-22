@@ -25,6 +25,12 @@ namespace BluetoothCommon.Net.interfaces {
         void ConnectAsync(BTDeviceInfo device);
 
 
+        /// <summary>Synchronous connection</summary>
+        /// <param name="device">The device information for connection</param>
+        /// <returns>true on success, otherwise false</returns>
+        bool Connect(BTDeviceInfo device);
+
+
         /// <summary>Disconnect if connected</summary>
         void Disconnect();
 

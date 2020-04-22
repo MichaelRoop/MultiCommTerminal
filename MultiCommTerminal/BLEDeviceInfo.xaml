@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MultiCommTerminal"
         mc:Ignorable="d"
-        Title="BLEDeviceInfo" Height="450" Width="800">
+        Title="Bluetooth" Height="450" Width="800">
     <Grid>
         
     </Grid>

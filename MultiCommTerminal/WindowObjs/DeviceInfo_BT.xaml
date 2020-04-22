@@ -1,0 +1,100 @@
+﻿<Window x:Class="MultiCommTerminal.WindowObjs.DeviceInfo_BT"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MultiCommTerminal.WindowObjs"
+        xmlns:controls="clr-namespace:MultiCommTerminal.UserControls"
+        xmlns:wpfHelper="clr-namespace:MultiCommTerminal.WPF_Helpers"
+        Style="{StaticResource MyWindowStyle}"
+        Title="Bluetooth Classic" 
+        Icon="{Binding Source={x:Static wpfHelper:IconBinder.BluetoothClassic_W}}"
+        WindowStartupLocation="Manual" 
+        mc:Ignorable="d"
+        MinHeight="150" MinWidth="200"
+        ContentRendered="Window_ContentRendered">
+    <Grid>
+        <StackPanel>
+            <Grid HorizontalAlignment="Left">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition MaxWidth="180" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                
+                <Label Grid.Row="0" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Name}}" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
+                <Label Grid.Row="0" Grid.Column="1" x:Name="lbName" Content="xxxxxxxxxxxx" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  />
+
+                <Label Grid.Row="1" Grid.Column="0" Content="Address" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
+                <Label Grid.Row="1" Grid.Column="1" x:Name="lbAddress" Content="" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  />
+
+                <Label Grid.Row="2" Grid.Column="0" Content="Device Class" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
+                <Label Grid.Row="2" Grid.Column="1" x:Name="lbDeviceClass" Content="" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  />
+
+                <Label Grid.Row="3" Grid.Column="0" Content="Service Class" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
+                <Label Grid.Row="3" Grid.Column="1" x:Name="lbServiceClass" Content="" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  />
+
+                <Label Grid.Row="4" Grid.Column="0" Content="RSSI" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
+                <Label Grid.Row="4" Grid.Column="1" x:Name="lbStrength" Content="" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  />
+
+                <Label Grid.Row="5" Grid.Column="0" Content="Last Seen" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
+                <Label Grid.Row="5" Grid.Column="1" x:Name="lbLastSeen" Content="" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  />
+
+                <Label Grid.Row="6" Grid.Column="0" Content="Last Used" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
+                <Label Grid.Row="6" Grid.Column="1" x:Name="lbLastUsed" Content="" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  />
+
+
+                <Label Grid.Row="7" Grid.ColumnSpan="2" Content="Radio" HorizontalAlignment="Center" />
+                
+                <Label Grid.Row="8" Grid.Column="0" Content="Manufacturer" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
+                <Label Grid.Row="8" Grid.Column="1" x:Name="lbRadioManufacturer" Content="" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  />
+                
+                <Label Grid.Row="9" Grid.Column="0" Content="Protocol" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
+                <Label Grid.Row="9" Grid.Column="1" x:Name="lbRadioLmp" Content="" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  />
+                
+                <Label Grid.Row="10" Grid.Column="0" Content="Features" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
+                <!--<Label Grid.Row="10" Grid.Column="1" x:Name="lbRadioFeatures" Content="" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  />-->
+                <ComboBox Grid.Row="10" Grid.Column="1" x:Name="comboBoxFeatures" MaxDropDownHeight="100" HorizontalContentAlignment="Left" HorizontalAlignment="Left" >
+                    <!--<ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="25" />
+                                    <ColumnDefinition Width="auto" />
+                                </Grid.ColumnDefinitions>
+                                <Border Padding="0">
+                                    <Image Grid.Column="0" Source="{Binding IconSource}" 
+                                                       Width="{Binding IconWidth}" Height="{Binding IconHeight}" 
+                                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <TextBlock Grid.Column="1" Text="{Binding Display}" FontSize="16" VerticalAlignment="Center"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>-->
+                </ComboBox>
+
+            </Grid>
+            <DockPanel HorizontalAlignment="Center" Margin="10,5,10,15">
+                <controls:UC_IconButton x:Name="btnExit"  Margin="0,0,10,0"
+                            Style="{StaticResource TextIconButton}" 
+                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Exit}}" 
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Exit}}"
+                            Click="btnExit_Click"/>
+            </DockPanel>
+        </StackPanel>
+       
+    </Grid>
+</Window>
