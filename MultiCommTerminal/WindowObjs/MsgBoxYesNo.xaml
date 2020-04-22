@@ -1,0 +1,29 @@
+﻿<Window x:Class="MultiCommTerminal.WindowObjs.MsgBoxYesNo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MultiCommTerminal.WindowObjs"
+        mc:Ignorable="d"
+        xmlns:controls="clr-namespace:MultiCommTerminal.UserControls"
+        xmlns:wpfHelper="clr-namespace:MultiCommTerminal.WPF_Helpers"
+        Style="{StaticResource MyWindowStyle}" Title="" 
+        WindowStartupLocation="CenterScreen" ContentRendered="Window_ContentRendered" Closing="Window_Closing"
+        MinHeight="100" MinWidth="200" MaxHeight="500" MaxWidth="400">
+    <Grid>
+        <StackPanel>
+            <TextBlock x:Name="txtBlock" HorizontalAlignment="Left" FontSize="16" Text="sldfkjsdklfjsldkf" MaxHeight="450" TextWrapping="WrapWithOverflow" Margin="15,15,15,0" />
+            <TextBlock x:Name="txtContinue" HorizontalAlignment="Center" FontSize="16" Text="{Binding Source={x:Static wpfHelper:TxtBinder.Continue}}"  Margin="10,10,10,0" />
+            <DockPanel HorizontalAlignment="Center" Margin="10">
+                <controls:UC_IconButton x:Name="btnYes" Style="{StaticResource TextIconButton}" Margin="5" 
+                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Yes}}"
+                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Save}}" 
+                    Click="btnYes_Click" />
+                <controls:UC_IconButton x:Name="btnNo" Style="{StaticResource TextIconButton}" Margin="5" 
+                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.No}}"
+                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}" 
+                    Click="btnNo_Click" />
+            </DockPanel>
+        </StackPanel>
+    </Grid>
+</Window>

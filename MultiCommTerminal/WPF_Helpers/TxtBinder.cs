@@ -40,6 +40,8 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string Cancel { get { return GetTxt(MsgCode.cancel); } }
         public static string Exit { get { return GetTxt(MsgCode.exit); } }
         public static string OK { get { return GetTxt(MsgCode.Ok); } }
+        public static string Yes { get { return GetTxt(MsgCode.yes); } }
+        public static string No { get { return GetTxt(MsgCode.no); } }
 
         public static string Language { get { return GetTxt(MsgCode.language); } }
         public static string Start { get { return GetTxt(MsgCode.start); } }
@@ -54,6 +56,7 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string Terminators { get { return GetTxt(MsgCode.Terminators); } }
         public static string Name { get { return GetTxt(MsgCode.Name); } }
         public static string EnterName { get { return GetTxt(MsgCode.EnterName); } }
+        public static string Continue { get { return GetTxt(MsgCode.Continue); } }
 
         #endregion
 
