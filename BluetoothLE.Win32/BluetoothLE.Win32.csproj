@@ -58,8 +58,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLEImplConnect.cs" />
+    <Compile Include="BLEImplDiscover.cs" />
+    <Compile Include="BLEImplEvents.cs" />
     <Compile Include="BLE_DisplayHelpers.cs" />
     <Compile Include="BluetoothLEImplWin32.cs" />
+    <Compile Include="CopiedMsClientBLE.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
