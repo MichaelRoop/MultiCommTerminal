@@ -56,6 +56,10 @@
       <Project>{34EB157E-2489-4B3E-9E6A-BE92D5ED4711}</Project>
       <Name>CommunicationStack.Net</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\SharedNetLibs\LogUtils.Net\LogUtils.Net.csproj">
+      <Project>{DB9AA64B-945B-41D5-A0DA-83407D2BFCC8}</Project>
+      <Name>LogUtils.Net</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BluetoothCommon.Net\BluetoothCommon.Net.csproj">
       <Project>{f30f15eb-d67a-4338-b34a-c1def003e5db}</Project>
       <Name>BluetoothCommon.Net</Name>

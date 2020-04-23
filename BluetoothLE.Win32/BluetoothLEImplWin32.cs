@@ -1,5 +1,6 @@
 ﻿using BluetoothCommon.Net;
 using BluetoothCommon.Net.interfaces;
+using LogUtils.Net;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -30,6 +31,7 @@ namespace BluetoothLE.Win32 {
         private DeviceWatcher devWatcher = null;
 
         private BluetoothLEDevice currentDevice = null;
+        private ClassLog log = new ClassLog("BluetoothLEImplWin32");
 
         #endregion
 
@@ -98,43 +100,62 @@ namespace BluetoothLE.Win32 {
 
 
         private async Task ConnectToDevice(BluetoothLEDeviceInfo deviceInfo) {
-            System.Diagnostics.Debug.WriteLine(string.Format("Attempting connection to {0}: FromIdAsync({1})", 
+            this.log.Info("ConnectToDevice", () => string.Format("Attempting connection to {0}: FromIdAsync({1})",
                 deviceInfo.Name, deviceInfo.Id));
 
             try {
                 // https://github.com/microsoft/Windows-universal-samples/blob/master/Samples/BluetoothLE/cs/Scenario2_Client.xaml.cs
 
-                System.Diagnostics.Debug.WriteLine(string.Format("Stored Device Info ID {0}", this.id));
-                System.Diagnostics.Debug.WriteLine(string.Format(" Param Device Info ID {0}", deviceInfo.Id));
+                this.log.Info("ConnectToDevice", () => string.Format("Stored Device Info ID {0}", this.id));
+                this.log.Info("ConnectToDevice", () => string.Format(" Param Device Info ID {0}", deviceInfo.Id));
 
                 //this.currentDevice = await BluetoothLEDevice.FromIdAsync(deviceInfo.Id);
                 this.currentDevice = await BluetoothLEDevice.FromIdAsync(this.id);
 
                 if (this.currentDevice == null) {
-                    System.Diagnostics.Debug.WriteLine("OK connection");
+                    this.log.Info("ConnectToDevice", "Connection failed" );
                 }
                 else {
-                    System.Diagnostics.Debug.WriteLine("Failed connection");
+                    this.log.Info("ConnectToDevice", "Connection ** OK **");
                 }
 
-                System.Diagnostics.Debug.WriteLine("Get GATT services");
+                
+                this.log.Info("ConnectToDevice", () => string.Format("Device {0} Connection status {1}", 
+                    this.currentDevice.Name, this.currentDevice.ConnectionStatus.ToString()));
+                this.log.Info("ConnectToDevice", () => string.Format("Device {0} Gatt services count {1}", 
+                    this.currentDevice.Name, this.currentDevice.GattServices == null ? "NULL" : this.currentDevice.GattServices.Count.ToString() ));
 
+                if (this.currentDevice.GattServices != null) {
+                    foreach (var serv in this.currentDevice.GattServices) {
+                        this.log.Info("ConnectToDevice", () => string.Format("Gatt service {0}", serv.Uuid.ToString()));
+                        //GattDeviceService s = this.currentDevice.GetGattService(serv.Uuid);
+                        this.log.Info("ConnectToDevice", "    CHARACTERISTICS");
+                        foreach (var ch in serv.GetAllCharacteristics()) {
+                            this.log.Info("ConnectToDevice", () => string.Format("  - Characteristic {0}", ch.UserDescription));
+                            foreach (var desc in ch.GetAllDescriptors()) {
+                                // descriptors have read and write
+                                this.log.Info("ConnectToDevice", () => string.Format("      - Descriptors {0}", desc.Uuid.ToString()));
+                            }
+                        }
+
+                    }
+                }
+
+                // This blows up
+                this.log.Info("ConnectToDevice", "Get GATT services");
                 GattDeviceService service = await GattDeviceService.FromIdAsync(this.id);
                 foreach (var s in service.GetAllCharacteristics()) {
-                    System.Diagnostics.Debug.WriteLine(string.Format("Service Description: {0}", s.UserDescription));
+                    this.log.Info("ConnectToDevice", () => string.Format("Service Description: {0}", s.UserDescription));
                 }
 
             }
             catch (Exception e) {
-                System.Diagnostics.Debug.WriteLine(string.Format("Exception on connection: {0}", e.Message));
-                if (e.StackTrace != null) {
-                    System.Diagnostics.Debug.WriteLine(string.Format("Stack Trace\n{0}", e.StackTrace));
-                }
+                this.log.Exception(9999, "Exception", e);
             }
 
             if (this.currentDevice == null) {
                 // report error
-                System.Diagnostics.Debug.WriteLine("NULL device returned for {0}", deviceInfo.Id);
+                this.log.Info("ConnectToDevice", () => string.Format("NULL device returned for {0}", deviceInfo.Id));
                 return;
             }
             else {
@@ -144,7 +165,8 @@ namespace BluetoothLE.Win32 {
                 //GattDeviceServicesResult result =
                 //    await this.currentDevice.GetGattServicesAsync(BluetoothCacheMode.Uncached);
                 ////GattDeviceServicesResult result = await BluetoothLEDevice.FromIdAsync(this.currentDevice.DeviceId);
-                System.Diagnostics.Debug.WriteLine("Device Connected {0}", this.currentDevice.BluetoothAddress);
+                //System.Diagnostics.Debug.WriteLine("Device Connected {0}", this.currentDevice.BluetoothAddress);
+                this.log.Info("ConnectToDevice", () => string.Format("Device Connected {0}", this.currentDevice.BluetoothAddress));
             }
 
         }
