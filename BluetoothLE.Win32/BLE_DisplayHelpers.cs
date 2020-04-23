@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VariousUtils;
 using Windows.Devices.Bluetooth.GenericAttributeProfile;
 using Windows.Devices.Enumeration;
 using Windows.Storage.Streams;
@@ -17,7 +18,7 @@ namespace BluetoothLE.Win32 {
             if (IsSigDefinedUuid(service.Uuid)) {
                 GattNativeServiceUuid serviceName;
                 if (Enum.TryParse(service.Uuid.ToShortId().ToString(), out serviceName)) {
-                    return serviceName.ToString();
+                    return serviceName.ToString().CamelCaseToSpaces();
                 }
             }
             return "Custom Service: " + service.Uuid;
@@ -27,7 +28,7 @@ namespace BluetoothLE.Win32 {
             if (IsSigDefinedUuid(characteristic.Uuid)) {
                 GattNativeCharacteristicUuid characteristicName;
                 if (Enum.TryParse(characteristic.Uuid.ToShortId().ToString(), out characteristicName)) {
-                    return characteristicName.ToString();
+                    return characteristicName.ToString().CamelCaseToSpaces();
                 }
             }
 
@@ -39,6 +40,19 @@ namespace BluetoothLE.Win32 {
                 return "Custom Characteristic: " + characteristic.Uuid;
             }
         }
+
+
+        public static string GetDescriptorName(GattDescriptor descriptor) {
+            if (IsSigDefinedUuid(descriptor.Uuid)) {
+                GattNativeDescriptorUuid descriptorName;
+                if (Enum.TryParse(descriptor.Uuid.ToShortId().ToString(), out descriptorName)) {
+                    return descriptorName.ToString().CamelCaseToSpaces();
+                }
+            }
+            return "Custom Descriptor: " + descriptor.Uuid;
+        }
+
+
 
         /// <summary>
         ///     The SIG has a standard base value for Assigned UUIDs. In order to determine if a UUID is SIG defined,

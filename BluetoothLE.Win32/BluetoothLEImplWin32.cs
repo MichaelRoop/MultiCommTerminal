@@ -105,6 +105,7 @@ namespace BluetoothLE.Win32 {
             try {
                 // https://github.com/microsoft/Windows-universal-samples/blob/master/Samples/BluetoothLE/cs/Scenario2_Client.xaml.cs
 
+                this.log.Info("ConnectToDevice", () => string.Format("--------------------------------------------------------------------"));
                 this.log.Info("ConnectToDevice", () => string.Format("Stored Device Info ID {0}", this.id));
                 this.log.Info("ConnectToDevice", () => string.Format(" Param Device Info ID {0}", deviceInfo.Id));
 
@@ -128,14 +129,17 @@ namespace BluetoothLE.Win32 {
 
                 if (this.currentDevice.GattServices != null) {
                     foreach (var serv in this.currentDevice.GattServices) {
-                        this.log.Info("ConnectToDevice", () => string.Format("Gatt service {0}", serv.Uuid.ToString()));
+                        this.log.Info("ConnectToDevice", () => string.Format("Gatt Service:{0}  Uid:{1}", 
+                            BLE_DisplayHelpers.GetServiceName(serv), serv.Uuid.ToString()));
                         //GattDeviceService s = this.currentDevice.GetGattService(serv.Uuid);
                         this.log.Info("ConnectToDevice", "    CHARACTERISTICS");
                         foreach (var ch in serv.GetAllCharacteristics()) {
-                            this.log.Info("ConnectToDevice", () => string.Format("  - Characteristic {0}", ch.UserDescription));
+                            this.log.Info("ConnectToDevice", () => string.Format("    Characteristic:{0}  Uid:{1} - Desc:'{2}' ", 
+                                BLE_DisplayHelpers.GetCharacteristicName(ch), ch.Uuid.ToString(), ch.UserDescription));
                             foreach (var desc in ch.GetAllDescriptors()) {
                                 // descriptors have read and write
-                                this.log.Info("ConnectToDevice", () => string.Format("      - Descriptors {0}", desc.Uuid.ToString()));
+                                this.log.Info("ConnectToDevice", () => string.Format("        Descriptor:{0}  Uid:{1}", 
+                                    BLE_DisplayHelpers.GetDescriptorName(desc), desc.Uuid.ToString()));
                             }
                         }
 
@@ -159,9 +163,12 @@ namespace BluetoothLE.Win32 {
                 GattDeviceServicesResult result = await this.currentDevice.GetGattServicesAsync(BluetoothCacheMode.Uncached);
                 this.log.Info("ConnectToDevice", () => string.Format("Service search result {0}", result.Status.ToString()));
                 foreach (var s in result.Services) {
-                    this.log.Info("ConnectToDevice", () => string.Format("Service Description: {0}", s.Uuid.ToString()));
+                    this.log.Info("ConnectToDevice", () => string.Format(
+                        "Service Description:{0}  Uid:{1}", 
+                        BLE_DisplayHelpers.GetServiceName(s), s.Uuid.ToString()));
                 }
 #endif
+                this.log.Info("ConnectToDevice", () => string.Format("--------------------------------------------------------------------"));
 
             }
             catch (Exception e) {
