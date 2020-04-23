@@ -1,4 +1,4 @@
-﻿#define USING_OLDER_UWP
+﻿//#define USING_OLDER_UWP
 
 using BluetoothCommon.Net;
 using BluetoothCommon.Net.interfaces;
@@ -12,6 +12,8 @@ using Windows.Devices.Bluetooth.GenericAttributeProfile;
 using Windows.Devices.Enumeration;
 
 
+// To use the full 
+
 
 // Example code read write
 // https://www.c-sharpcorner.com/code/1912/uwp-bluetooth-le-implementation
@@ -19,11 +21,16 @@ using Windows.Devices.Enumeration;
 
 namespace BluetoothLE.Win32 {
 
-    // Using the UWP Bluetooth LE calls from Win 32 desktop
+    // Using the UWP Bluetooth LE calls from Win 32 desktop - NOT USING THIS ONE ANYMORE
     //https://social.msdn.microsoft.com/Forums/vstudio/en-US/e261aeb5-104d-43ba-9b2b-97447614dec0/how-to-use-windowsdevices-api-in-a-c-winform-desktop-application-in-windows-10?forum=winforms
     // Add Reference to  \Program Files\Windows Kits\10\UnionMetadata\Windows.winmd
     // Add Reference to \Program Files\Reference Assemblies\Microsoft\Framework\.NETCore\v4.5\System.Runtime.WindowsRuntime.dll
     // Regardless what Target Framework i'm using, the only working version of System.Runtime.WindowsRuntime.dll was v4.5. All other version (wich corresponds to the Target Framework) caused runtime errors.
+
+    
+    // NOW USING THIS METHOD TO USE THE FULL POWER OF UWP    
+    // https://docs.microsoft.com/en-us/windows/apps/desktop/modernize/desktop-to-uwp-enhance
+
 
     public class BluetoothLEImplWin32 : IBLETInterface {
 
@@ -123,7 +130,8 @@ namespace BluetoothLE.Win32 {
                 this.log.Info("ConnectToDevice", () => string.Format("Device {0} Connection status {1}", 
                     this.currentDevice.Name, this.currentDevice.ConnectionStatus.ToString()));
 
-#if USING_OLDER_UWP
+// TODO Flipped the define until I can get this going with newer API
+#if !USING_OLDER_UWP
                 this.log.Info("ConnectToDevice", () => string.Format("Device {0} Gatt services count {1}", 
                     this.currentDevice.Name, this.currentDevice.GattServices == null ? "NULL" : this.currentDevice.GattServices.Count.ToString() ));
 
