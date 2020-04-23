@@ -110,7 +110,9 @@ namespace BluetoothLE.Win32 {
                 this.log.Info("ConnectToDevice", () => string.Format(" Param Device Info ID {0}", deviceInfo.Id));
 
                 //this.currentDevice = await BluetoothLEDevice.FromIdAsync(deviceInfo.Id);
-                this.currentDevice = await BluetoothLEDevice.FromIdAsync(this.id);
+                this.currentDevice = //await BluetoothLEDevice.FromIdAsync(this.id);
+                    await BluetoothLEDevice.FromIdAsync(deviceInfo.Id);
+
 
                 if (this.currentDevice == null) {
                     this.log.Info("ConnectToDevice", "Connection failed" );
@@ -143,10 +145,19 @@ namespace BluetoothLE.Win32 {
 
                 // This blows up
                 this.log.Info("ConnectToDevice", "Get GATT services");
-                GattDeviceService service = await GattDeviceService.FromIdAsync(this.id);
-                foreach (var s in service.GetAllCharacteristics()) {
-                    this.log.Info("ConnectToDevice", () => string.Format("Service Description: {0}", s.UserDescription));
+
+                GattDeviceServicesResult result = await this.currentDevice.GetGattServicesAsync(BluetoothCacheMode.Uncached);
+                this.log.Info("ConnectToDevice", () => string.Format("Service search result {0}", result.Status.ToString()));
+                foreach (var s in result.Services) {
+                    this.log.Info("ConnectToDevice", () => string.Format("Service Description: {0}", s.Uuid.ToString()));
                 }
+
+
+                //GattDeviceService service = await GattDeviceService.FromIdAsync(this.id);
+                //foreach (var s in service.GetAllCharacteristics()) {
+                //    this.log.Info("ConnectToDevice", () => string.Format("Service Description: {0}", 
+                //        s.Uuid.ToString()));
+                //}
 
             }
             catch (Exception e) {
