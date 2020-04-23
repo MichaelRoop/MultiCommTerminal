@@ -63,14 +63,14 @@ namespace BluetoothLE.Win32 {
 
         /// <summary>Interface call to discover devices</summary>
         /// <returns>A list of discovered devices.  However I am now using events so it is empty</returns>
-        void IBLETInterface.DiscoverDevices() {
+        public void DiscoverDevices() {
 
             System.Diagnostics.Debug.WriteLine("Doing stuff...");
 
             this.DoLEWatcherSearch();
         }
 
-        void Disconnect() {
+        public void Disconnect() {
             if (this.currentDevice != null) {
                 // Apparently do not need this. Dispose will do it
                 //if (this.currentDevice.ConnectionStatus == BluetoothConnectionStatus.Connected) {
@@ -87,16 +87,16 @@ namespace BluetoothLE.Win32 {
 
         string id = "";
 
-        void IBLETInterface.Connect(BluetoothLEDeviceInfo deviceInfo) {
+        public void Connect(BluetoothLEDeviceInfo deviceInfo) {
             this.Disconnect();
             this.id = deviceInfo.Id;
             Task.Run(async () => await this.ConnectToDevice(deviceInfo));
         }
 
 
-        void IBLETInterface.Disconnect() {
-            //throw new NotImplementedException();
-        }
+        //void IBLETInterface.Disconnect() {
+        //    //throw new NotImplementedException();
+        //}
 
 
         private async Task ConnectToDevice(BluetoothLEDeviceInfo deviceInfo) {
