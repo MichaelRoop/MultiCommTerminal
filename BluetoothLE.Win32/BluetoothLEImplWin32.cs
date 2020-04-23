@@ -1,4 +1,6 @@
-﻿using BluetoothCommon.Net;
+﻿#define USING_OLDER_UWP
+
+using BluetoothCommon.Net;
 using BluetoothCommon.Net.interfaces;
 using LogUtils.Net;
 using System;
@@ -8,6 +10,8 @@ using System.Threading.Tasks;
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Bluetooth.GenericAttributeProfile;
 using Windows.Devices.Enumeration;
+
+
 
 // Example code read write
 // https://www.c-sharpcorner.com/code/1912/uwp-bluetooth-le-implementation
@@ -92,12 +96,7 @@ namespace BluetoothLE.Win32 {
             this.id = deviceInfo.Id;
             Task.Run(async () => await this.ConnectToDevice(deviceInfo));
         }
-
-
-        //void IBLETInterface.Disconnect() {
-        //    //throw new NotImplementedException();
-        //}
-
+  
 
         private async Task ConnectToDevice(BluetoothLEDeviceInfo deviceInfo) {
             this.log.Info("ConnectToDevice", () => string.Format("Attempting connection to {0}: FromIdAsync({1})",
@@ -122,6 +121,8 @@ namespace BluetoothLE.Win32 {
                 
                 this.log.Info("ConnectToDevice", () => string.Format("Device {0} Connection status {1}", 
                     this.currentDevice.Name, this.currentDevice.ConnectionStatus.ToString()));
+
+#if USING_OLDER_UWP
                 this.log.Info("ConnectToDevice", () => string.Format("Device {0} Gatt services count {1}", 
                     this.currentDevice.Name, this.currentDevice.GattServices == null ? "NULL" : this.currentDevice.GattServices.Count.ToString() ));
 
@@ -140,13 +141,27 @@ namespace BluetoothLE.Win32 {
 
                     }
                 }
+#else
 
-                // This blows up
+#endif
+
+
                 this.log.Info("ConnectToDevice", "Get GATT services");
-                GattDeviceService service = await GattDeviceService.FromIdAsync(this.id);
-                foreach (var s in service.GetAllCharacteristics()) {
-                    this.log.Info("ConnectToDevice", () => string.Format("Service Description: {0}", s.UserDescription));
+#if USING_OLDER_UWP
+                //// This blows up with OLD and New
+                //// ArgumentException : Value does not fall within the expected range.
+                //GattDeviceService service = await GattDeviceService.FromIdAsync(this.id);
+                //foreach (var s in service.GetAllCharacteristics()) {
+                //    this.log.Info("ConnectToDevice", () => string.Format("Service Description: {0}",
+                //        s.Uuid.ToString()));
+                //}
+#else
+                GattDeviceServicesResult result = await this.currentDevice.GetGattServicesAsync(BluetoothCacheMode.Uncached);
+                this.log.Info("ConnectToDevice", () => string.Format("Service search result {0}", result.Status.ToString()));
+                foreach (var s in result.Services) {
+                    this.log.Info("ConnectToDevice", () => string.Format("Service Description: {0}", s.Uuid.ToString()));
                 }
+#endif
 
             }
             catch (Exception e) {
@@ -172,11 +187,11 @@ namespace BluetoothLE.Win32 {
         }
 
 
-        #endregion
+#endregion
 
 
 
-        #region Connection to device code
+#region Connection to device code
 
         private void ConnectBTLEDeviceEvents() {
             if (this.currentDevice != null) {
@@ -209,9 +224,9 @@ namespace BluetoothLE.Win32 {
             //throw new NotImplementedException();
         }
 
-        #endregion
+#endregion
 
-        #region Discovery methods
+#region Discovery methods
 
         private void DoLEWatcherSearch() {
             if (this.devWatcher == null) {
@@ -327,9 +342,10 @@ namespace BluetoothLE.Win32 {
         private void DevWatcher_Added(DeviceWatcher sender, DeviceInformation deviceInfo) {
             // TODO - look at separate objects for LE
             if (deviceInfo.Name.Length > 0) {
-                if (deviceInfo.Name == "itead") {
+                //if (deviceInfo.Name == "itead") {
+
                     this.DebugDumpDeviceInfo(deviceInfo);
-                }
+                //}
 
                 if (this.DeviceDiscovered != null) {
 
@@ -383,52 +399,53 @@ namespace BluetoothLE.Win32 {
             //            System.Diagnostics.Debug.WriteLine("Doing stuff...");
 
             // Weird - prints value, then the string with {0}
-            //System.Diagnostics.Debug.WriteLine("     Name: {0}", device.Name);
-            //System.Diagnostics.Debug.WriteLine("       Id: {0}", device.Id);
-            System.Diagnostics.Debug.WriteLine(string.Format("     Name: {0}", device.Name));
-            System.Diagnostics.Debug.WriteLine(string.Format("       Id: {0}", device.Id));
+            this.log.Info("Dump", () => string.Format("     Name: {0}", device.Name));
+            this.log.Info("Dump", () => string.Format("       Id: {0}", device.Id));
+            this.log.Info("Dump", () => string.Format("IsDefault: {0}", device.IsDefault));
+            this.log.Info("Dump", () => string.Format("IsEnabled: {0}", device.IsEnabled));
+            this.log.Info("Dump", () => string.Format("     Kind: {0}", device.Kind));
 
-            System.Diagnostics.Debug.WriteLine("IsDefault: {0}", device.IsDefault);
-            System.Diagnostics.Debug.WriteLine("IsEnabled: {0}", device.IsEnabled);
-            System.Diagnostics.Debug.WriteLine("     Kind: {0}", device.Kind);
-            // Properties
+            this.log.Info("Dump", () => string.Format("PROPERTIES"));
             int number = device?.Properties.Count??-1;
             System.Diagnostics.Debug.WriteLine("Properties: {0}", number);
             if (number > 0) {
                 foreach (var p in device.Properties) {
-                    System.Diagnostics.Debug.WriteLine("      Property: {0} : {1}", p.Key, p.Value);
+                    this.log.Info("Dump", () => string.Format("      Property: {0} : {1}", p.Key, p.Value));
                 }
             }
-            // Enclosure location
+
+            this.log.Info("Dump", () => string.Format("ENCLOSURE LOCATIONS"));
             if (device.EnclosureLocation != null) {
-                System.Diagnostics.Debug.WriteLine("EnclosureLocation:");
-                System.Diagnostics.Debug.WriteLine("     InDock: {0}", device.EnclosureLocation.InDock);
-                System.Diagnostics.Debug.WriteLine("      InLid: {0}", device.EnclosureLocation.InLid);
-                System.Diagnostics.Debug.WriteLine("      Panel: {0}", device.EnclosureLocation.Panel);
-                System.Diagnostics.Debug.WriteLine("      Angle: {0}", device.EnclosureLocation.RotationAngleInDegreesClockwise);
+                this.log.Info("Dump", () => string.Format("     InDock: {0}", device.EnclosureLocation.InDock));
+                this.log.Info("Dump", () => string.Format("      InLid: {0}", device.EnclosureLocation.InLid));
+                this.log.Info("Dump", () => string.Format("      Panel: {0}", device.EnclosureLocation.Panel));
+                this.log.Info("Dump", () => string.Format("      Angle: {0}", device.EnclosureLocation.RotationAngleInDegreesClockwise));
             }
             else {
                 System.Diagnostics.Debug.WriteLine("EnclosureLocation: null");
             }
-            // Pairing
+
+            this.log.Info("Dump", () => string.Format("PAIRING"));
             if (device.Pairing != null) {
-                System.Diagnostics.Debug.WriteLine("Pairing:");
-                System.Diagnostics.Debug.WriteLine("    CanPair: {0}", device.Pairing.CanPair);
-                System.Diagnostics.Debug.WriteLine("   IsPaired: {0}", device.Pairing.IsPaired);
-                System.Diagnostics.Debug.WriteLine(" Protection: {0}", device.Pairing.ProtectionLevel);
+                this.log.Info("Dump", () => string.Format("    CanPair: {0}", device.Pairing.CanPair));
+                this.log.Info("Dump", () => string.Format("   IsPaired: {0}", device.Pairing.IsPaired));
+                this.log.Info("Dump", () => string.Format(" Protection: {0}", device.Pairing.ProtectionLevel));
                 if (device.Pairing.Custom != null) {
-                    System.Diagnostics.Debug.WriteLine("     Custom: not null");
+                    this.log.Info("Dump", () => string.Format("     Custom: not null"));
                 }
                 else {
-                    System.Diagnostics.Debug.WriteLine("Custom: null");
+                    this.log.Info("Dump", () => string.Format("Custom: null"));
                 }
             }
             else {
-                System.Diagnostics.Debug.WriteLine("Custom: null");
+                this.log.Info("Dump", () => string.Format("Custom: null"));
             }
+            //this.log.Info("Dump", () => string.Format());
         }
 
-        #endregion
+
+
+#endregion
 
     }
 }
