@@ -58,6 +58,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLE_DisplayHelpers.cs" />
     <Compile Include="BluetoothLEImplWin32.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
