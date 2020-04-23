@@ -5,11 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Plugin.BluetoothLE" Version="6.2.6" />
+    <ProjectReference Include="..\BluetoothCommon.Net\BluetoothCommon.Net.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BluetoothCommon.Net\BluetoothCommon.Net.csproj" />
+    <Reference Include="System.Runtime.WindowsRuntime">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETCore\v4.5\System.Runtime.WindowsRuntime.dll</HintPath>
+    </Reference>
+    <Reference Include="Windows">
+      <HintPath>C:\Program Files (x86)\Windows Kits\10\UnionMetadata\Windows.winmd</HintPath>
+      <IsWinMDFile>true</IsWinMDFile>
+    </Reference>
   </ItemGroup>
 
 </Project>

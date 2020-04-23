@@ -14,7 +14,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using VariousUtils;
 
-namespace BluetoothClassic.Win32 {
+namespace BluetoothClassic.Net {
     public class BluetoothClassicImpl : IBTInterface {
 
         private ClassLog log = new ClassLog("BluetoothClassicImpl");

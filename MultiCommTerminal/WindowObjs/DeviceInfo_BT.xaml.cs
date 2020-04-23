@@ -53,6 +53,10 @@ namespace MultiCommTerminal.WindowObjs {
             this.Close();
         }
 
+        private void comboBoxFeatures_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            this.comboBoxFeatures.SelectedIndex = -1;
+        }
+
 
         private void Init(BTDeviceInfo info) {
             this.lbName.Content = info.Name;
@@ -66,7 +70,6 @@ namespace MultiCommTerminal.WindowObjs {
             this.lbRadioLmp.Content = info.Radio.LinkManagerProtocol;
             this.comboBoxFeatures.ItemsSource = info.Radio.Features;
         }
-
 
     }
 }

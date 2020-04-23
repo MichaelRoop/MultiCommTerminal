@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiCommData.Net", "MultiC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BluetoothCommon.Net", "BluetoothCommon.Net\BluetoothCommon.Net.csproj", "{F30F15EB-D67A-4338-B34A-C1DEF003E5DB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BluetoothClassic.Win32", "BluetoothClassic\BluetoothClassic.Win32.csproj", "{FAE7FB6C-9ADC-4302-ACD3-53BC981EC403}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BluetoothClassic.Net", "BluetoothClassic\BluetoothClassic.Net.csproj", "{FAE7FB6C-9ADC-4302-ACD3-53BC981EC403}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BluetoothLE.Net", "BluetoothLE\BluetoothLE.Net.csproj", "{262EF221-42EE-4EF3-9FE5-9803DCC19405}"
 EndProject

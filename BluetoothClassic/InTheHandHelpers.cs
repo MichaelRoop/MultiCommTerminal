@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BluetoothClassic.Win32 {
+namespace BluetoothClassic.Net {
     public static class InTheHandHelpers {
 
         public static string LmpVerToString(this LmpVersion version) {
