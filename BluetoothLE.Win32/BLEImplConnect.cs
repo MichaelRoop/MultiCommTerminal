@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Bluetooth.GenericAttributeProfile;
+// The using for the RFCOMM to communicate with classic items
+using Windows.Devices.Bluetooth.Rfcomm;
 
 namespace BluetoothLE.Win32 {
 
@@ -34,6 +36,10 @@ namespace BluetoothLE.Win32 {
                 else {
                     this.log.Info("ConnectToDevice", "Connection ** OK **");
                 }
+
+                // This just does the easy serial communications - this is using a regular HC-05 Classic (RFCOMM) board
+                //RfcommDeviceService s = await RfcommDeviceService.FromIdAsync(this.id);
+                
 
 
                 this.log.Info("ConnectToDevice", () => string.Format("Device {0} Connection status {1}",
