@@ -58,6 +58,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLEImplCharacteristics.cs" />
     <Compile Include="BLEImplConnect.cs" />
     <Compile Include="BLEImplDiscover.cs" />
     <Compile Include="BLEImplEvents.cs" />
