@@ -14,39 +14,8 @@ namespace BluetoothLE.Win32 {
 
 
         private async Task DumpCharacteristic(GattCharacteristic ch) {
-            //this.log.Info("DumpCharacteristic", () => string.Format("    Characteristic:{0}  Uid:{1} - Desc:'{2}' ",
-            //    BLE_DisplayHelpers.GetCharacteristicName(ch), ch.Uuid.ToString(), ch.UserDescription));
-
-
-
-            // Success reading a know characteristic
-            //if (BLE_DisplayHelpers.GetCharacteristicEnum(ch) == GattNativeCharacteristicUuid.DeviceName) {
-            //    // Could try to read the characteristic here
-            //    GattReadResult readResult = await ch.ReadValueAsync();
-            //    this.log.Info("ConnectToDevice", () => string.Format("    Characteristic:{0}  Read result:{1}",
-            //        BLE_DisplayHelpers.GetCharacteristicName(ch), readResult.Status));
-
-            //    if (readResult.Status == GattCommunicationStatus.Success) {
-            //        //readResult.
-
-            //        byte[] b = readResult.Value.FromBufferToBytes();
-            //        string name = Encoding.ASCII.GetString(b, 0, (int)readResult.Value.Length);
-            //        this.log.Info("ConnectToDevice", () => string.Format("    WOOT WOOT - read my first Characteristic:{0}  Value:{1}",
-            //            BLE_DisplayHelpers.GetCharacteristicName(ch), 
-            //            name));
-            //    }
-            //}
-
-            // Try generic
             GattReadResult readResult = await ch.ReadValueAsync();
-            //this.log.Info("ConnectToDevice", () => string.Format("    ++++ Characteristic:{0}  Read result:{1} Enum:{2}",
-            //    BLE_DisplayHelpers.GetCharacteristicName(ch), readResult.Status, BLE_DisplayHelpers.GetCharacteristicEnum(ch)));
-
-
             if (readResult.Status == GattCommunicationStatus.Success) {
-                //this.log.Info("ConnectToDevice", () => string.Format("     Characteristic:{0}  Read OK result:{1} Enum:{2}",
-                //    BLE_DisplayHelpers.GetCharacteristicName(ch), readResult.Status, BLE_DisplayHelpers.GetCharacteristicEnum(ch)));
-
                 if (ch.CharacteristicProperties.HasFlag(GattCharacteristicProperties.Read)) {
                     byte[] b = readResult.Value.FromBufferToBytes();
                     switch (BLE_DisplayHelpers.GetCharacteristicEnum(ch)) {
@@ -59,10 +28,13 @@ namespace BluetoothLE.Win32 {
                             break;
 
                         case GattNativeCharacteristicUuid.BatteryLevel:
-                            // Will be length 1
+
+                            // Will be length 1- value is Hex
                             byte uint8Data = b[0];
-                            this.log.Info("DumpCharacteristic", () => string.Format("    Characteristic:{0}  Value:{1}",
-                                BLE_DisplayHelpers.GetCharacteristicName(ch), uint8Data));
+                            // TODO - must be hex between 0x00 - 0x64
+                            int level = Convert.ToInt32(uint8Data.ToString(), 16);
+                            this.log.Info("DumpCharacteristic", () => string.Format("    Characteristic:{0}  Value:0x{1} - {2}%",
+                                BLE_DisplayHelpers.GetCharacteristicName(ch), uint8Data, level));
                             break;
                         case GattNativeCharacteristicUuid.PnPID:
                             // 7 bytes
@@ -109,50 +81,15 @@ namespace BluetoothLE.Win32 {
                     }
                 }
                 else {
-                    //this.log.Info("DumpCharacteristic",  "FLAG NOT SET TO READ");
                     this.log.Info("ConnectToDevice", () => string.Format("     Characteristic:{0}  Not Read:{1} Enum:{2}",
                         BLE_DisplayHelpers.GetCharacteristicName(ch), readResult.Status, BLE_DisplayHelpers.GetCharacteristicEnum(ch)));
                 }
-
-                #region REMOVE
-                //this.log.Info("ConnectToDevice", () => string.Format(
-                //    "    ***** Characteristic TypeCode:{0}", ch.CharacteristicProperties.GetTypeCode().ToString()));
-                //switch (code) {
-                //        case TypeCode.String:
-                //            string value = Encoding.ASCII.GetString(b, 0, (int)readResult.Value.Length);
-                //            this.log.Info("ConnectToDevice", () => string.Format("    Characteristic:{0}  Value:{1}", 
-                //                BLE_DisplayHelpers.GetCharacteristicName(ch), value));
-                //            break;
-                //        case TypeCode.Int32:
-                //            int intVal = BitConverter.ToInt32(b, 0);
-                //            this.log.Info("ConnectToDevice", () => string.Format("    Characteristic:{0}  Value:{1}",
-                //                BLE_DisplayHelpers.GetCharacteristicName(ch), intVal));
-                //            break;
-                //        case TypeCode.Boolean:
-                //            bool boolVal = BitConverter.ToBoolean(b, 0);
-                //            this.log.Info("ConnectToDevice", () => string.Format("    Characteristic:{0}  Value:{1}",
-                //                BLE_DisplayHelpers.GetCharacteristicName(ch), boolVal));
-                //            break;
-                //        case TypeCode.DateTime:
-                //            long longVal = BitConverter.ToInt64(b, 0);
-                //            DateTime d = new DateTime(longVal);
-                //            this.log.Info("ConnectToDevice", () => string.Format("    Characteristic:{0}  Value:{1}",
-                //                BLE_DisplayHelpers.GetCharacteristicName(ch), d.ToString()));
-                //            break;
-                //    }
-                //}
-                #endregion
             }
             else {
                 this.log.Info("ConnectToDevice", () => string.Format("    ----- Characteristic:{0}  Read FAILED result:{1} Enum:{2}",
                     BLE_DisplayHelpers.GetCharacteristicName(ch), readResult.Status, BLE_DisplayHelpers.GetCharacteristicEnum(ch)));
             }
-
-
         }
-
-
-
 
     }
 }

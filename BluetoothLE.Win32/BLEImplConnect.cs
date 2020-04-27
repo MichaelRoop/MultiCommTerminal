@@ -70,139 +70,60 @@ namespace BluetoothLE.Win32 {
                 }
 #else
                 GattDeviceServicesResult services = await this.currentDevice.GetGattServicesAsync();
-                // Short resume
-                this.log.Info("ConnectToDevice", () => string.Format(
-                    "Overview services. Search result:{0} Count:{1}", services.Status.ToString(), services.Services.Count));
-                foreach (var s in services.Services) {
-                    this.log.Info("ConnectToDevice", () => string.Format(
-                        "Service Description:{0}  Uid:{1}",
-                        BLE_DisplayHelpers.GetServiceName(s), s.Uuid.ToString()));
-                }
+                //// Short resume
+                //this.log.Info("ConnectToDevice", () => string.Format(
+                //    "Overview services. Search result:{0} Count:{1}", services.Status.ToString(), services.Services.Count));
+                //foreach (var s in services.Services) {
+                //    this.log.Info("ConnectToDevice", () => string.Format(
+                //        "Service Description:{0}  Uid:{1}",
+                //        BLE_DisplayHelpers.GetServiceName(s), s.Uuid.ToString()));
+                //}
 
-                this.log.Info("ConnectToDevice", "Details");
+                //this.log.Info("ConnectToDevice", "Details");
 
                 //services.Status == GattCommunicationStatus.Success
-                this.log.Info("ConnectToDevice", () => string.Format("Device {0} Get Services status {1}",
-                    this.currentDevice.Name, services.Status.ToString()));
+                //this.log.Info("ConnectToDevice", () => string.Format("Device {0} Get Services status {1}",
+                //    this.currentDevice.Name, services.Status.ToString()));
                 if (services.Status == GattCommunicationStatus.Success) {
                     if (services.Services != null) {
-                        this.log.Info("ConnectToDevice", () => string.Format("Device {0} Gatt services count {1}",
-                            this.currentDevice.Name, services.Services.Count.ToString()));
-                        foreach (GattDeviceService serv in services.Services) {
-                            // Service
-                            this.log.Info("ConnectToDevice", () => string.Format("Gatt Service:{0}  Uid:{1}",
-                                BLE_DisplayHelpers.GetServiceName(serv), serv.Uuid.ToString()));
-                            
-                            this.log.Info("ConnectToDevice", "    CHARACTERISTICS");
-                            GattCharacteristicsResult characteristics = await serv.GetCharacteristicsAsync();
-                            this.log.Info("ConnectToDevice", () => string.Format("    Characteristics result {0}", characteristics.Status.ToString()));
-                            if (characteristics.Status == GattCommunicationStatus.Success) {
-                                if (characteristics.Characteristics != null) {
-                                    foreach (var ch in characteristics.Characteristics) {
+                        if (services.Services.Count > 0) {
+                            //this.log.Info("ConnectToDevice", () => string.Format("Device {0} Gatt services count {1}",
+                            //    this.currentDevice.Name, services.Services.Count.ToString()));
+                            foreach (GattDeviceService serv in services.Services) {
+                                // Service
+                                this.log.Info("ConnectToDevice", () => string.Format("Gatt Service:{0}  Uid:{1}",
+                                    BLE_DisplayHelpers.GetServiceName(serv), serv.Uuid.ToString()));
 
-                                        await this.DumpCharacteristic(ch);
-
-                                        //this.log.Info("ConnectToDevice", () => string.Format("    Characteristic:{0}  Uid:{1} - Desc:'{2}' ",
-                                        //    BLE_DisplayHelpers.GetCharacteristicName(ch), ch.Uuid.ToString(), ch.UserDescription));
-
-
-
-
-                                        //// Success reading a know characteristic
-                                        ////if (BLE_DisplayHelpers.GetCharacteristicEnum(ch) == GattNativeCharacteristicUuid.DeviceName) {
-                                        ////    // Could try to read the characteristic here
-                                        ////    GattReadResult readResult = await ch.ReadValueAsync();
-                                        ////    this.log.Info("ConnectToDevice", () => string.Format("    Characteristic:{0}  Read result:{1}",
-                                        ////        BLE_DisplayHelpers.GetCharacteristicName(ch), readResult.Status));
-
-                                        ////    if (readResult.Status == GattCommunicationStatus.Success) {
-                                        ////        //readResult.
-
-                                        ////        byte[] b = readResult.Value.FromBufferToBytes();
-                                        ////        string name = Encoding.ASCII.GetString(b, 0, (int)readResult.Value.Length);
-                                        ////        this.log.Info("ConnectToDevice", () => string.Format("    WOOT WOOT - read my first Characteristic:{0}  Value:{1}",
-                                        ////            BLE_DisplayHelpers.GetCharacteristicName(ch), 
-                                        ////            name));
-                                        ////    }
-                                        ////}
-
-                                        //// Try generic
-                                        //GattReadResult readResult = await ch.ReadValueAsync();
-                                        //this.log.Info("ConnectToDevice", () => string.Format("    ++++ Characteristic:{0}  Read result:{1} Enum:{2}",
-                                        //    BLE_DisplayHelpers.GetCharacteristicName(ch), readResult.Status, BLE_DisplayHelpers.GetCharacteristicEnum(ch)));
-
-
-                                        //if (readResult.Status == GattCommunicationStatus.Success) {
-
-
-
-                                        //    //if (ch.CharacteristicProperties.HasFlag(GattCharacteristicProperties.Read)) {
-                                        //        // That worked but some not string. How to tell
-                                        //    byte[] b = readResult.Value.FromBufferToBytes();
-                                        //        //TypeCode code = ch.CharacteristicProperties.GetTypeCode();
-                                        //    //GattCharacteristicProperties properties = ch.CharacteristicProperties;
-
-
-                                        //    string value = Encoding.ASCII.GetString(b, 0, (int)readResult.Value.Length);
-                                        //    this.log.Info("ConnectToDevice", () => string.Format("    Characteristic:{0}  Value:{1}",
-                                        //        BLE_DisplayHelpers.GetCharacteristicName(ch), value));
-
-                                        //    switch (BLE_DisplayHelpers.GetCharacteristicEnum(ch)) {
-                                        //        case GattNativeCharacteristicUuid.String:
-                                        //        case GattNativeCharacteristicUuid.DeviceName:
-                                        //        case GattNativeCharacteristicUuid.ManufacturerNameString:
-                                        //            string strVal = Encoding.ASCII.GetString(b, 0, (int)readResult.Value.Length);
-                                        //            this.log.Info("ConnectToDevice", () => string.Format("    *Characteristic:{0}  Value:{1}",
-                                        //                BLE_DisplayHelpers.GetCharacteristicName(ch), strVal));
-                                        //            break;
-
-                                        //    }
-
-
-
-                                        //    this.log.Info("ConnectToDevice", () => string.Format(
-                                        //        "    ***** Characteristic TypeCode:{0}", ch.CharacteristicProperties.GetTypeCode().ToString()));
-                                        //    //switch (code) {
-                                        //    //        case TypeCode.String:
-                                        //    //            string value = Encoding.ASCII.GetString(b, 0, (int)readResult.Value.Length);
-                                        //    //            this.log.Info("ConnectToDevice", () => string.Format("    Characteristic:{0}  Value:{1}", 
-                                        //    //                BLE_DisplayHelpers.GetCharacteristicName(ch), value));
-                                        //    //            break;
-                                        //    //        case TypeCode.Int32:
-                                        //    //            int intVal = BitConverter.ToInt32(b, 0);
-                                        //    //            this.log.Info("ConnectToDevice", () => string.Format("    Characteristic:{0}  Value:{1}",
-                                        //    //                BLE_DisplayHelpers.GetCharacteristicName(ch), intVal));
-                                        //    //            break;
-                                        //    //        case TypeCode.Boolean:
-                                        //    //            bool boolVal = BitConverter.ToBoolean(b, 0);
-                                        //    //            this.log.Info("ConnectToDevice", () => string.Format("    Characteristic:{0}  Value:{1}",
-                                        //    //                BLE_DisplayHelpers.GetCharacteristicName(ch), boolVal));
-                                        //    //            break;
-                                        //    //        case TypeCode.DateTime:
-                                        //    //            long longVal = BitConverter.ToInt64(b, 0);
-                                        //    //            DateTime d = new DateTime(longVal);
-                                        //    //            this.log.Info("ConnectToDevice", () => string.Format("    Characteristic:{0}  Value:{1}",
-                                        //    //                BLE_DisplayHelpers.GetCharacteristicName(ch), d.ToString()));
-                                        //    //            break;
-                                        //    //    }
-                                        //    //}
-                                        //}
-
-                                        var descriptors = await ch.GetDescriptorsAsync();
-                                        this.log.Info("ConnectToDevice", "        DESCRIPTORS");
-                                        if (descriptors.Status == GattCommunicationStatus.Success) {
-                                            this.log.Info("ConnectToDevice", () => string.Format("        Get Descriptors result:{0} Count:{1}", 
-                                                descriptors.Status.ToString(), descriptors.Descriptors.Count));
-                                            foreach (var desc in descriptors.Descriptors) {
-                                                // descriptors have read and write
-                                                this.log.Info("ConnectToDevice", () => string.Format("        Descriptor:{0}  Uid:{1}",
-                                                    BLE_DisplayHelpers.GetDescriptorName(desc), desc.Uuid.ToString()));
+                                GattCharacteristicsResult characteristics = await serv.GetCharacteristicsAsync();
+                                //this.log.Info("ConnectToDevice", () => string.Format("    Characteristics result {0}", characteristics.Status.ToString()));
+                                if (characteristics.Status == GattCommunicationStatus.Success) {
+                                    if (characteristics.Characteristics != null) {
+                                        if (characteristics.Characteristics.Count > 0) {
+                                            //this.log.Info("ConnectToDevice", "    CHARACTERISTICS");
+                                            foreach (var ch in characteristics.Characteristics) {
+                                                await this.DumpCharacteristic(ch);
+                                                var descriptors = await ch.GetDescriptorsAsync();
+                                                if (descriptors.Status == GattCommunicationStatus.Success) {
+                                                    if (descriptors.Descriptors.Count > 0) {
+                                                        //this.log.Info("ConnectToDevice", "        DESCRIPTORS");
+                                                        //this.log.Info("ConnectToDevice", () => string.Format("        Get Descriptors result:{0} Count:{1}",
+                                                        //    descriptors.Status.ToString(), descriptors.Descriptors.Count));
+                                                        foreach (var desc in descriptors.Descriptors) {
+                                                            // descriptors have read and write
+                                                            this.log.Info("ConnectToDevice", () => string.Format("        Descriptor:{0}  Uid:{1}",
+                                                                BLE_DisplayHelpers.GetDescriptorName(desc), desc.Uuid.ToString()));
+                                                        }
+                                                    }
+                                                }
+                                                else {
+                                                    this.log.Info("ConnectToDevice", () => string.Format("        Get Descriptors result:{0}", descriptors.Status.ToString()));
+                                                }
                                             }
                                         }
-                                        else {
-                                            this.log.Info("ConnectToDevice", () => string.Format("        Get Descriptors result:{0}", descriptors.Status.ToString()));
-                                        }
                                     }
+                                }
+                                else {
+                                    this.log.Info("ConnectToDevice", () => string.Format("    Characteristics result {0}", characteristics.Status.ToString()));
                                 }
                             }
                         }
@@ -215,7 +136,7 @@ namespace BluetoothLE.Win32 {
 #endif
 
 
-                this.log.Info("ConnectToDevice", "Get GATT services");
+                //this.log.Info("ConnectToDevice", "Get GATT services");
 #if USING_OLDER_UWP
                 //// This blows up with OLD and New
                 //// ArgumentException : Value does not fall within the expected range.
