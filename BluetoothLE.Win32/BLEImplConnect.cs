@@ -45,69 +45,24 @@ namespace BluetoothLE.Win32 {
                 this.log.Info("ConnectToDevice", () => string.Format("Device {0} Connection status {1}",
                     this.currentDevice.Name, this.currentDevice.ConnectionStatus.ToString()));
 
-                // TODO Flipped the define until I can get this going with newer API
-#if USING_OLDER_UWP
-                this.log.Info("ConnectToDevice", () => string.Format("Device {0} Gatt services count {1}",
-                    this.currentDevice.Name, this.currentDevice.GattServices == null ? "NULL" : this.currentDevice.GattServices.Count.ToString()));
-
-                if (this.currentDevice.GattServices != null) {
-                    foreach (var serv in this.currentDevice.GattServices) {
-                        this.log.Info("ConnectToDevice", () => string.Format("Gatt Service:{0}  Uid:{1}",
-                            BLE_DisplayHelpers.GetServiceName(serv), serv.Uuid.ToString()));
-                        //GattDeviceService s = this.currentDevice.GetGattService(serv.Uuid);
-                        this.log.Info("ConnectToDevice", "    CHARACTERISTICS");
-                        foreach (var ch in serv.GetAllCharacteristics()) {
-                            this.log.Info("ConnectToDevice", () => string.Format("    Characteristic:{0}  Uid:{1} - Desc:'{2}' ",
-                                BLE_DisplayHelpers.GetCharacteristicName(ch), ch.Uuid.ToString(), ch.UserDescription));
-                            foreach (var desc in ch.GetAllDescriptors()) {
-                                // descriptors have read and write
-                                this.log.Info("ConnectToDevice", () => string.Format("        Descriptor:{0}  Uid:{1}",
-                                    BLE_DisplayHelpers.GetDescriptorName(desc), desc.Uuid.ToString()));
-                            }
-                        }
-
-                    }
-                }
-#else
                 GattDeviceServicesResult services = await this.currentDevice.GetGattServicesAsync();
-                //// Short resume
-                //this.log.Info("ConnectToDevice", () => string.Format(
-                //    "Overview services. Search result:{0} Count:{1}", services.Status.ToString(), services.Services.Count));
-                //foreach (var s in services.Services) {
-                //    this.log.Info("ConnectToDevice", () => string.Format(
-                //        "Service Description:{0}  Uid:{1}",
-                //        BLE_DisplayHelpers.GetServiceName(s), s.Uuid.ToString()));
-                //}
-
-                //this.log.Info("ConnectToDevice", "Details");
-
-                //services.Status == GattCommunicationStatus.Success
-                //this.log.Info("ConnectToDevice", () => string.Format("Device {0} Get Services status {1}",
-                //    this.currentDevice.Name, services.Status.ToString()));
                 if (services.Status == GattCommunicationStatus.Success) {
                     if (services.Services != null) {
                         if (services.Services.Count > 0) {
-                            //this.log.Info("ConnectToDevice", () => string.Format("Device {0} Gatt services count {1}",
-                            //    this.currentDevice.Name, services.Services.Count.ToString()));
                             foreach (GattDeviceService serv in services.Services) {
                                 // Service
                                 this.log.Info("ConnectToDevice", () => string.Format("Gatt Service:{0}  Uid:{1}",
                                     BLE_DisplayHelpers.GetServiceName(serv), serv.Uuid.ToString()));
 
                                 GattCharacteristicsResult characteristics = await serv.GetCharacteristicsAsync();
-                                //this.log.Info("ConnectToDevice", () => string.Format("    Characteristics result {0}", characteristics.Status.ToString()));
                                 if (characteristics.Status == GattCommunicationStatus.Success) {
                                     if (characteristics.Characteristics != null) {
                                         if (characteristics.Characteristics.Count > 0) {
-                                            //this.log.Info("ConnectToDevice", "    CHARACTERISTICS");
                                             foreach (var ch in characteristics.Characteristics) {
                                                 await this.DumpCharacteristic(ch);
                                                 var descriptors = await ch.GetDescriptorsAsync();
                                                 if (descriptors.Status == GattCommunicationStatus.Success) {
                                                     if (descriptors.Descriptors.Count > 0) {
-                                                        //this.log.Info("ConnectToDevice", "        DESCRIPTORS");
-                                                        //this.log.Info("ConnectToDevice", () => string.Format("        Get Descriptors result:{0} Count:{1}",
-                                                        //    descriptors.Status.ToString(), descriptors.Descriptors.Count));
                                                         foreach (var desc in descriptors.Descriptors) {
                                                             // descriptors have read and write
                                                             this.log.Info("ConnectToDevice", () => string.Format("        Descriptor:{0}  Uid:{1}",
@@ -133,27 +88,6 @@ namespace BluetoothLE.Win32 {
                     }
                 }
 
-#endif
-
-
-                //this.log.Info("ConnectToDevice", "Get GATT services");
-#if USING_OLDER_UWP
-                //// This blows up with OLD and New
-                //// ArgumentException : Value does not fall within the expected range.
-                //GattDeviceService service = await GattDeviceService.FromIdAsync(this.id);
-                //foreach (var s in service.GetAllCharacteristics()) {
-                //    this.log.Info("ConnectToDevice", () => string.Format("Service Description: {0}",
-                //        s.Uuid.ToString()));
-                //}
-#else
-                //GattDeviceServicesResult result = await this.currentDevice.GetGattServicesAsync(BluetoothCacheMode.Uncached);
-                //this.log.Info("ConnectToDevice", () => string.Format("Service search result {0}", result.Status.ToString()));
-                //foreach (var s in result.Services) {
-                //    this.log.Info("ConnectToDevice", () => string.Format(
-                //        "Service Description:{0}  Uid:{1}",
-                //        BLE_DisplayHelpers.GetServiceName(s), s.Uuid.ToString()));
-                //}
-#endif
                 this.log.Info("ConnectToDevice", () => string.Format("--------------------------------------------------------------------"));
 
             }
