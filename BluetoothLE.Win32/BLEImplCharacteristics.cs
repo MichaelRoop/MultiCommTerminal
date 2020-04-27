@@ -23,8 +23,8 @@ namespace BluetoothLE.Win32 {
                         case GattNativeCharacteristicUuid.DeviceName:
                         case GattNativeCharacteristicUuid.ManufacturerNameString:
                             string strVal = Encoding.ASCII.GetString(b, 0, (int)readResult.Value.Length);
-                            this.log.Info("DumpCharacteristic", () => string.Format("    Characteristic:{0}  Value:{1}",
-                                BLE_DisplayHelpers.GetCharacteristicName(ch), strVal));
+                            this.log.Info("DumpCharacteristic", () => string.Format("    Characteristic:{0}  Value:{1} Handle:{2}" ,
+                                BLE_DisplayHelpers.GetCharacteristicName(ch), strVal, ch.AttributeHandle));
                             break;
 
                         case GattNativeCharacteristicUuid.BatteryLevel:
@@ -33,8 +33,8 @@ namespace BluetoothLE.Win32 {
                             byte uint8Data = b[0];
                             // TODO - must be hex between 0x00 - 0x64
                             int level = Convert.ToInt32(uint8Data.ToString(), 16);
-                            this.log.Info("DumpCharacteristic", () => string.Format("    Characteristic:{0}  Value:0x{1} - {2}%",
-                                BLE_DisplayHelpers.GetCharacteristicName(ch), uint8Data, level));
+                            this.log.Info("DumpCharacteristic", () => string.Format("    Characteristic:{0}  Value:0x{1} - {2}%  Handle:{3}",
+                                BLE_DisplayHelpers.GetCharacteristicName(ch), uint8Data, level, ch.AttributeHandle));
                             break;
                         case GattNativeCharacteristicUuid.PnPID:
                             // 7 bytes
@@ -49,12 +49,12 @@ namespace BluetoothLE.Win32 {
                                 .Append("Vendor Namespace:").Append(BitConverter.ToInt16(b, 1)).Append(",")
                                 .Append("Manufacturer ID:").Append(BitConverter.ToInt16(b, 3)).Append(",")
                                 .Append("Manufacturer Namespace:").Append(BitConverter.ToInt16(b, 5));
-                            this.log.Info("DumpCharacteristic", () => string.Format("    Characteristic:{0}  Value:{1}",
-                                BLE_DisplayHelpers.GetCharacteristicName(ch), sb.ToString()));
+                            this.log.Info("DumpCharacteristic", () => string.Format("    Characteristic:{0}  Value:{1}  Handle:{2}",
+                                BLE_DisplayHelpers.GetCharacteristicName(ch), sb.ToString(), ch.AttributeHandle));
                             break;
                         case GattNativeCharacteristicUuid.Appearance:
-                            this.log.Info("DumpCharacteristic", () => string.Format("    Characteristic:{0}  Value:{1}",
-                                BLE_DisplayHelpers.GetCharacteristicName(ch),  b.ToGattAppearanceEnum().ToString().CamelCaseToSpaces()));
+                            this.log.Info("DumpCharacteristic", () => string.Format("    Characteristic:{0}  Value:{1}  Handle:{2}",
+                                BLE_DisplayHelpers.GetCharacteristicName(ch),  b.ToGattAppearanceEnum().ToString().CamelCaseToSpaces(), ch.AttributeHandle));
                             break;
                         case GattNativeCharacteristicUuid.PeripheralPreferredConnectionParameters:
                             //Peripheral Preferred Connection Parameters  Value:0x14,0x00,0x24,0x00,0x04,0x00,0xC8,0x00 - 8 bytes
@@ -69,13 +69,13 @@ namespace BluetoothLE.Win32 {
                                 .Append("Max Connect Interval:").Append(BitConverter.ToInt16(b, 2)).Append(",")
                                 .Append("Slave Latency:").Append(BitConverter.ToInt16(b, 4)).Append(",")
                                 .Append("Connect Supervisor Timout multiplier:").Append(BitConverter.ToInt16(b, 6));
-                            this.log.Info("DumpCharacteristic", () => string.Format("    Characteristic:{0}  Value:{1}",
-                                BLE_DisplayHelpers.GetCharacteristicName(ch), sb2.ToString()));
+                            this.log.Info("DumpCharacteristic", () => string.Format("    Characteristic:{0}  Value:{1}  Handle:{2}",
+                                BLE_DisplayHelpers.GetCharacteristicName(ch), sb2.ToString(), ch.AttributeHandle));
                             break;
                         default:
                             byte[] data = new byte[readResult.Value.Length];
                             Array.Copy(b, data, data.Length);
-                            this.log.Info("DumpCharacteristic", () => string.Format("    Characteristic:{0}  Value:{1}  Length:{2}",
+                            this.log.Info("DumpCharacteristic", () => string.Format("    Characteristic:{0}  Value:{1}  Length:{2}  Handle:{3}",
                                 BLE_DisplayHelpers.GetCharacteristicName(ch), data.ToFormatedByteString(), data.Length));
                             break;
                     }

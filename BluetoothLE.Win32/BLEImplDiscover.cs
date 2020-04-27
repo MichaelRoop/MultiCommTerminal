@@ -30,12 +30,13 @@ namespace BluetoothLE.Win32 {
                         this.devWatcher.Start();
                         break;
                     case DeviceWatcherStatus.Started:
-                    // Already started but enumeration not completed
+                        // Already started but enumeration not completed
+                        break;
                     case DeviceWatcherStatus.EnumerationCompleted:
                         // Call Stop and wait on stopped event
                         this.stopped.Reset();
                         this.devWatcher.Stop();
-                        if (this.stopped.WaitOne(5000)) {
+                        if (this.stopped.WaitOne(500)) {
                             this.devWatcher.Start();
                         }
                         break;
@@ -65,22 +66,36 @@ namespace BluetoothLE.Win32 {
                 // with AQS Get 23 if I use properties, if null properties only 22
                 //string aqsBTAddressNotNull = "System.Devices.Aep.DeviceAddress:<>[]";
 
+                //https://github.com/microsoft/Windows-universal-samples/blob/master/Samples/BluetoothLE/cs/Scenario1_Discovery.xaml.cs
+                // This will return all BLE devices, paired or unpaired
+                string aqsBLEProtocol = "(System.Devices.Aep.ProtocolId:=\"{bb7bb05e-5972-42b5-94fc-76eaa7084d49}\")";
+                this.devWatcher = DeviceInformation.CreateWatcher(
+                    aqsBLEProtocol, 
+                    null,
+                    DeviceInformationKind.AssociationEndpoint);
+
+                // The GetDeviceSelector creates an aqs string that will return all LE devices. Do not need other parameters
+
+
                 //this.devWatcher = DeviceInformation.CreateWatcher(
                 //    BluetoothLEDevice.GetDeviceSelector(),  //aqsBTAddressNotNull, 
                 //    prop, 
                 //    DeviceInformationKind.AssociationEndpoint);
 
                 // The GetDeviceSelector creates an aqs string that will return all LE devices. Do not need other parameters
-                this.devWatcher = DeviceInformation.CreateWatcher(BluetoothLEDevice.GetDeviceSelector());
+
+                // This one only returns ones that are paired?
+                //this.devWatcher = DeviceInformation.CreateWatcher(BluetoothLEDevice.GetDeviceSelector());
+                //this.devWatcher = DeviceInformation.CreateWatcher(BluetoothLEDevice.GetDeviceSelectorFromPairingState(false));
 
                 // See the GetDeviceSelectorFromAppearance to get specific kinds of LE devices
 
                 // Hook up the events
-                devWatcher.Added += DevWatcher_Added;
-                devWatcher.Updated += DevWatcher_Updated;
-                devWatcher.Removed += DevWatcher_Removed;
-                devWatcher.EnumerationCompleted += DevWatcher_EnumerationCompleted;
-                devWatcher.Stopped += DevWatcher_Stopped;
+                this.devWatcher.Added += DevWatcher_Added;
+                this.devWatcher.Updated += DevWatcher_Updated;
+                this.devWatcher.Removed += DevWatcher_Removed;
+                this.devWatcher.EnumerationCompleted += DevWatcher_EnumerationCompleted;
+                this.devWatcher.Stopped += DevWatcher_Stopped;
             }
         }
 
@@ -105,6 +120,8 @@ namespace BluetoothLE.Win32 {
         /// <summary>Event fired when the enumeration is complete</summary>
         private void DevWatcher_EnumerationCompleted(DeviceWatcher sender, object args) {
             this.log.Info("DevWatcher_EnumerationCompleted", "*****");
+            // Not sure I want to do this
+            //this.TearDownEvents();
         }
 
 
@@ -112,7 +129,7 @@ namespace BluetoothLE.Win32 {
         /// <param name="sender"></param>
         /// <param name="updateInfo">The removed device. Use the ID</param>
         private void DevWatcher_Removed(DeviceWatcher sender, DeviceInformationUpdate updateInfo) {
-            this.log.Info("DevWatcher_Removed", "*****");
+            this.log.Info("DevWatcher_Removed", () => string.Format("----- {0}", updateInfo.Id));
             if (this.DeviceRemoved != null) {
                 this.DeviceRemoved(sender, updateInfo.Id);
             }
@@ -123,7 +140,7 @@ namespace BluetoothLE.Win32 {
         /// <param name="sender"></param>
         /// <param name="updateInfo"></param>
         private void DevWatcher_Updated(DeviceWatcher sender, DeviceInformationUpdate updateInfo) {
-            this.log.Info("DevWatcher_Updated", "*****");
+            this.log.Info("DevWatcher_Updated", () => string.Format("***** {0}", updateInfo.Id));
         }
 
 
@@ -131,14 +148,11 @@ namespace BluetoothLE.Win32 {
         /// <param name="sender"></param>
         /// <param name="deviceInfo">Info on the discovered device</param>
         private void DevWatcher_Added(DeviceWatcher sender, DeviceInformation deviceInfo) {
-            this.log.Info("DevWatcher_Added", "*****");
+            this.log.Info("DevWatcher_Added", () => string.Format("+++++ {0}", deviceInfo.Name));
 
             // TODO - look at separate objects for LE
             if (deviceInfo.Name.Length > 0) {
-                //if (deviceInfo.Name == "itead") {
-
                 this.DebugDumpDeviceInfo(deviceInfo);
-                //}
 
                 if (this.DeviceDiscovered != null) {
 
