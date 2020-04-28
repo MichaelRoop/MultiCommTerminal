@@ -16,6 +16,8 @@ namespace BluetoothLE.Win32 {
 
         public event EventHandler<string> DeviceRemoved;
 
+        public event EventHandler<bool> DeviceDiscoveryCompleted;
+
         #endregion
 
         #region IBLETInterface:ICommStackChannel events

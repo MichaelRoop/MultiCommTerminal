@@ -122,6 +122,13 @@ namespace MultiCommWrapper.Net.interfaces {
         /// <summary>Event raised when a device is discovered</summary>
         event EventHandler<BluetoothLEDeviceInfo> BLE_DeviceDiscovered;
 
+        /// <summary>Event raised when a device is removed</summary>
+        event EventHandler<string> BLE_DeviceRemoved;
+
+        /// <summary>Event raised when BLE device discovery complete</summary>
+        event EventHandler<bool> BLE_DeviceDiscoveryComplete;
+
+
         void BLE_DiscoverAsync();
 
         void BLE_ConnectAsync(BluetoothLEDeviceInfo device);

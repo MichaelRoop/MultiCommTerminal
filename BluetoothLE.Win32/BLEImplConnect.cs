@@ -75,6 +75,9 @@ namespace BluetoothLE.Win32 {
                                                 }
                                             }
                                         }
+                                        else {
+                                            this.log.Info("ConnectToDevice", () => string.Format("No characteristics"));
+                                        }
                                     }
                                 }
                                 else {
@@ -82,10 +85,16 @@ namespace BluetoothLE.Win32 {
                                 }
                             }
                         }
+                        else {
+                            this.log.Info("ConnectToDevice", "No services exposed");
+                        }
                     }
                     else {
                         this.log.Error(9999, "Null services");
                     }
+                }
+                else {
+                    this.log.Info("ConnectToDevice", () => string.Format("    Get Services result {0}", services.Status.ToString()));
                 }
 
                 this.log.Info("ConnectToDevice", () => string.Format("--------------------------------------------------------------------"));

@@ -91,6 +91,9 @@ namespace BluetoothLE.Win32 {
         private void DevWatcher_EnumerationCompleted(DeviceWatcher sender, object args) {
             this.log.Info("DevWatcher_EnumerationCompleted", "*****");
             // TODO - implement
+            if (this.DeviceDiscoveryCompleted != null) {
+                this.DeviceDiscoveryCompleted.Invoke(this, true);
+            }
         }
 
 
@@ -98,8 +101,8 @@ namespace BluetoothLE.Win32 {
         /// <param name="sender"></param>
         /// <param name="updateInfo">The removed device. Use the ID</param>
         private void DevWatcher_Removed(DeviceWatcher sender, DeviceInformationUpdate updateInfo) {
-            this.log.Info("DevWatcher_Removed", () => string.Format("----- {0}", updateInfo.Id));
             if (this.DeviceRemoved != null) {
+                //this.log.Info("DevWatcher_Removed", () => string.Format("----- {0}", updateInfo.Id));
                 this.DeviceRemoved(sender, updateInfo.Id);
             }
         }
@@ -117,9 +120,9 @@ namespace BluetoothLE.Win32 {
         /// <param name="sender"></param>
         /// <param name="deviceInfo">Info on the discovered device</param>
         private void DevWatcher_Added(DeviceWatcher sender, DeviceInformation deviceInfo) {
-            this.log.Info("DevWatcher_Added", () => string.Format("+++++ {0}", deviceInfo.Name));
-
             if (deviceInfo.Name.Length > 0) {
+                // TODO - find out what comes in with no name
+                //this.log.Info("DevWatcher_Added", () => string.Format("+++++ {0}", deviceInfo.Name));
                 this.DebugDumpDeviceInfo(deviceInfo);
 
                 if (this.DeviceDiscovered != null) {

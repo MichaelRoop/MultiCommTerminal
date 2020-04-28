@@ -15,11 +15,36 @@ namespace MultiCommWrapper.Net.WrapCode {
         /// <summary>Event raised when a device is discovered</summary>
         public event EventHandler<BluetoothLEDeviceInfo> BLE_DeviceDiscovered;
 
+        /// <summary>Event raised when a device is removed</summary>
+        public event EventHandler<string> BLE_DeviceRemoved;
+
+        /// <summary>Event raised when device discovery complete</summary>
+        public event EventHandler<bool> BLE_DeviceDiscoveryComplete;
+
 
         private void BLE_DeviceDiscoveredHandler(object sender, BluetoothLEDeviceInfo e) {
             if (this.BLE_DeviceDiscovered != null) {
                 this.BLE_DeviceDiscovered(this, e);
             }
+        }
+
+
+        private void BLE_DeviceRemovedHandler(object sender, string e) {
+            if (this.BLE_DeviceRemoved != null) {
+                this.BLE_DeviceRemoved(this, e);
+            }
+        }
+
+
+        private void BLE_DeviceDiscoveryCompleted(object sender, bool e) {
+            if (this.BLE_DeviceDiscoveryComplete != null) {
+                this.BLE_DeviceDiscoveryComplete.Invoke(this, e);
+            }
+        }
+
+
+        private void BleStack_MsgReceived(object sender, byte[] e) {
+            throw new NotImplementedException();
         }
 
         #endregion
@@ -109,15 +134,17 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.bleStack.OutTerminators = "\n\r".ToAsciiByteArray();
             this.bleStack.MsgReceived += this.BleStack_MsgReceived;
             this.bleBluetooth.DeviceDiscovered += this.BLE_DeviceDiscoveredHandler;
+            this.bleBluetooth.DeviceRemoved += this.BLE_DeviceRemovedHandler;
+            this.bleBluetooth.DeviceDiscoveryCompleted += this.BLE_DeviceDiscoveryCompleted;
         }
 
-        private void BleStack_MsgReceived(object sender, byte[] e) {
-            throw new NotImplementedException();
-        }
 
         private void BLE_TearDown() {
+            this.bleBluetooth.Disconnect();
             this.bleStack.MsgReceived -= this.BleStack_MsgReceived;
             this.bleBluetooth.DeviceDiscovered -= this.BLE_DeviceDiscoveredHandler;
+            this.bleBluetooth.DeviceRemoved -= this.BLE_DeviceRemovedHandler;
+            this.bleBluetooth.DeviceDiscoveryCompleted -= this.BLE_DeviceDiscoveryCompleted;
         }
 
         #endregion

@@ -1,5 +1,6 @@
 ﻿using BluetoothCommon.Net;
 using LanguageFactory.data;
+using LogUtils.Net;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommTerminal.DependencyInjection;
@@ -25,6 +26,7 @@ namespace MultiCommTerminal.WindowObjs {
 
         MenuWin menu = null;
         private ICommWrapper wrapper = null;
+        private ClassLog log = new ClassLog("MainWindow");
 
         #endregion
 
@@ -64,6 +66,8 @@ namespace MultiCommTerminal.WindowObjs {
             this.buttonSizer_BT.Teardown();
             this.buttonSizer_BLE.Teardown();
             this.wrapper.BLE_DeviceDiscovered -= this.BLE_DeviceDiscoveredHandler;
+            this.wrapper.BLE_DeviceRemoved -= this.BLE_DeviceRemovedHandler;
+            this.wrapper.BLE_DeviceDiscoveryComplete -= BLE_DeviceDiscoveryCompleteHandler;
             this.wrapper.BT_DeviceDiscovered -= this.BT_DeviceDiscoveredHandler;
             this.wrapper.BT_DiscoveryComplete -= this.BT_DiscoveryCompleteHandler;
             this.wrapper.BT_ConnectionCompleted -= this.BT_ConnectionCompletedHandler;
@@ -98,12 +102,54 @@ namespace MultiCommTerminal.WindowObjs {
         /// <param name="info">The information for discovered device</param>
         private void BLE_DeviceDiscoveredHandler(object sender, BluetoothLEDeviceInfo info) {
             this.Dispatcher.Invoke(() => {
-                // Disconnect the list from control before changing. Maybe change to Observable collection
-                this.listBox_BLE.ItemsSource = null;
-                this.infoList_BLE.Add(info);
-                this.listBox_BLE.ItemsSource = this.infoList_BLE;
+                lock (this.listBox_BLE) {
+                    this.log.Info("", () => string.Format("Adding '{0}' '{1}'", info.Name, info.Id));
+                    this.RemoveIfFound(info.Id, false);
+                    // Disconnect the list from control before changing. Maybe change to Observable collection
+                    this.listBox_BLE.ItemsSource = null;
+                    this.infoList_BLE.Add(info);
+                    this.listBox_BLE.ItemsSource = this.infoList_BLE;
+                }
             });
         }
+
+
+        /// <summary>BLE adds and removes devices on its own. Old copies are no longer be valid</summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BLE_DeviceRemovedHandler(object sender, string id) {
+            //this.log.Info("BLE_DeviceRemovedHandler", "Searching to remove");
+            this.RemoveIfFound(id, true);
+        }
+
+
+        private void BLE_DeviceDiscoveryCompleteHandler(object sender, bool e) {
+            this.grdMain.Visibility = Visibility.Collapsed;
+        }
+
+
+        // TODO - add the Update because of Characteristics can be added and removed
+        private void RemoveIfFound(string id, bool postErrorNotFound) {
+            lock (this.listBox_BLE) {
+                // Disconnect the list from control before changing. Maybe change to Observable collection
+                this.listBox_BLE.ItemsSource = null;
+
+                var item = this.infoList_BLE.Find((x) => x.Id == id);
+                if (item != null) {
+                    if (!this.infoList_BLE.Remove(item)) {
+                        this.log.Error(9999, "BLE_DeviceRemovedHander", () => string.Format("Failed to remove '{0}'", id));
+                    }
+                }
+                else {
+                    if (postErrorNotFound) {
+                        this.log.Error(9999, "BLE_DeviceRemovedHander", () => string.Format("Item not found to be removed '{0}'", id));
+                    }
+                }
+
+                this.listBox_BLE.ItemsSource = this.infoList_BLE;
+            }
+        }
+
 
 
         /// <summary>Clear Bluetooth LE device list and Launch device discovery</summary>
@@ -113,6 +159,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.listBox_BLE.ItemsSource = null;
             this.infoList_BLE.Clear();
             this.listBox_BLE.ItemsSource = this.infoList_BLE;
+            this.grdMain.Visibility = Visibility.Visible;
             this.wrapper.BLE_DiscoverAsync();
         }
 
@@ -214,6 +261,8 @@ namespace MultiCommTerminal.WindowObjs {
 
             // Bluetooth LE
             this.wrapper.BLE_DeviceDiscovered += this.BLE_DeviceDiscoveredHandler;
+            this.wrapper.BLE_DeviceRemoved += this.BLE_DeviceRemovedHandler;
+            this.wrapper.BLE_DeviceDiscoveryComplete += BLE_DeviceDiscoveryCompleteHandler;
 
             //Bluetooth Classic
             this.wrapper.BT_DeviceDiscovered += this.BT_DeviceDiscoveredHandler;

@@ -12,6 +12,9 @@ namespace BluetoothCommon.Net.interfaces {
         /// <summary>Event raised when a device is discovered</summary>
         event EventHandler<BluetoothLEDeviceInfo> DeviceDiscovered;
 
+        /// <summary>Will post this at end of enumeration since early adds are not necessarly complete</summary>
+        event EventHandler<bool> DeviceDiscoveryCompleted;
+
 
         /// <summary>Start or restart the device discovery</summary>
         void DiscoverDevices();
