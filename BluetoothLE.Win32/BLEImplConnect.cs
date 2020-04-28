@@ -24,11 +24,8 @@ namespace BluetoothLE.Win32 {
                 // https://github.com/microsoft/Windows-universal-samples/blob/master/Samples/BluetoothLE/cs/Scenario2_Client.xaml.cs
 
                 this.log.Info("ConnectToDevice", () => string.Format("--------------------------------------------------------------------"));
-                this.log.Info("ConnectToDevice", () => string.Format("Stored Device Info ID {0}", this.id));
                 this.log.Info("ConnectToDevice", () => string.Format(" Param Device Info ID {0}", deviceInfo.Id));
-
-                //this.currentDevice = await BluetoothLEDevice.FromIdAsync(deviceInfo.Id);
-                this.currentDevice = await BluetoothLEDevice.FromIdAsync(this.id);
+                this.currentDevice = await BluetoothLEDevice.FromIdAsync(deviceInfo.Id);
 
                 if (this.currentDevice == null) {
                     this.log.Info("ConnectToDevice", "Connection failed");

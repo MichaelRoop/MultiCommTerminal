@@ -50,7 +50,6 @@ namespace BluetoothLE.Win32 {
 
 
         public bool SendOutMsg(byte[] msg) {
-            //throw new NotImplementedException();
             // TODO - send out by some kind of stream to BLE device - see classic
             return false;
         }
@@ -68,6 +67,7 @@ namespace BluetoothLE.Win32 {
             this.DoLEWatcherSearch();
         }
 
+
         public void Disconnect() {
             if (this.currentDevice != null) {
                 // Apparently do not need this. Dispose will do it
@@ -83,20 +83,14 @@ namespace BluetoothLE.Win32 {
         }
 
 
-        string id = "";
-
         public void Connect(BluetoothLEDeviceInfo deviceInfo) {
             this.Disconnect();
-            this.id = deviceInfo.Id;
             Task.Run(async () => await this.ConnectToDevice(deviceInfo));
         }
-  
 
-#endregion
+        #endregion
 
-
-
-#region Connection to device code
+        #region Connection to device code
 
         private void ConnectBTLEDeviceEvents() {
             if (this.currentDevice != null) {
@@ -118,18 +112,23 @@ namespace BluetoothLE.Win32 {
 
 
         private void CurrentDevice_NameChanged(BluetoothLEDevice sender, object args) {
-            //throw new NotImplementedException();
+            this.log.Info("CurrentDevice_NameChanged", () => 
+                string.Format("Device '{0}' name has changed", sender.Name));
         }
+
 
         private void CurrentDevice_GattServicesChanged(BluetoothLEDevice sender, object args) {
-            //throw new NotImplementedException();
+            this.log.Info("CurrentDevice_NameChanged", () =>
+                string.Format("Device '{0}' services have changed", sender.Name));
         }
+
 
         private void CurrentDevice_ConnectionStatusChanged(BluetoothLEDevice sender, object args) {
-            //throw new NotImplementedException();
+            this.log.Info("CurrentDevice_NameChanged", () =>
+                string.Format("Device '{0}' Connection status changed to {1}", sender.Name, sender.ConnectionStatus.ToString()));
         }
 
-#endregion
+        #endregion
 
     }
 }

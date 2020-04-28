@@ -29,11 +29,19 @@ namespace BluetoothLE.Win32 {
                                 break;
 
                             case GattNativeCharacteristicUuid.BatteryLevel:
+                                // This works until we get another add existing again
+                                // Setting it to notify so I can pick up the event
+                                var c = await ch.WriteClientCharacteristicConfigurationDescriptorAsync(GattClientCharacteristicConfigurationDescriptorValue.Notify);
+                                ch.ValueChanged += Ch_BatteryLevelValueChanged;
 
                                 // Will be length 1- value is Hex
                                 byte uint8Data = b[0];
+
+                                // My Arduino maps it 0-100
                                 // TODO - must be hex between 0x00 - 0x64
-                                int level = Convert.ToInt32(uint8Data.ToString(), 16);
+                                //int level = Convert.ToInt32(uint8Data.ToString(), 16);
+                                int level = Convert.ToInt32(uint8Data.ToString());
+
                                 this.log.Info("DumpCharacteristic", () => string.Format("    Characteristic:{0}  Value:0x{1} - {2}%  Handle:{3}",
                                     BLE_DisplayHelpers.GetCharacteristicName(ch), uint8Data, level, ch.AttributeHandle));
                                 break;
@@ -87,7 +95,7 @@ namespace BluetoothLE.Win32 {
                     }
                 }
                 else {
-                    this.log.Info("ConnectToDevice", () => string.Format("    ----- Characteristic:{0}  Read FAILED result:{1} Enum:{2}",
+                    this.log.Info("ConnectToDevice", () => string.Format("    Characteristic:{0}  Read FAILED result:{1} Enum:{2}",
                         BLE_DisplayHelpers.GetCharacteristicName(ch), readResult.Status, BLE_DisplayHelpers.GetCharacteristicEnum(ch)));
                 }
             }
@@ -95,6 +103,27 @@ namespace BluetoothLE.Win32 {
                 this.log.Exception(9999, "Failed during dump info", e);
             }
         }
+
+
+        private void Ch_BatteryLevelValueChanged(GattCharacteristic sender, GattValueChangedEventArgs args) {
+            // TODO temp to read the changed value in the characteristic
+
+            //args.CharacteristicValue.Length;
+            byte[] b = args.CharacteristicValue.FromBufferToBytes();
+            // Will be length 1- value is Hex
+            byte uint8Data = b[0];
+
+            // My Arduino maps it 0-100
+            // TODO - must be hex between 0x00 - 0x64
+            //int level = Convert.ToInt32(uint8Data.ToString(), 16);
+            int level = Convert.ToInt32(uint8Data.ToString());
+            this.log.Info("Ch_ValueChanged", () => string.Format("    Characteristic:{0}  Value:0x{1} - {2}%  Handle:{3}",
+                BLE_DisplayHelpers.GetCharacteristicName(sender), 
+                uint8Data, level, 
+                sender.AttributeHandle));
+        }
+
+
 
     }
 }
