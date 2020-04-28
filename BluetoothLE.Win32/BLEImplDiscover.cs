@@ -1,20 +1,13 @@
 ﻿using BluetoothCommon.Net;
 using BluetoothCommon.Net.interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Devices.Bluetooth;
 using Windows.Devices.Enumeration;
 
 namespace BluetoothLE.Win32 {
 
     public partial class BluetoothLEImplWin32 : IBLETInterface {
 
-        /// <summary>Called from syncronous Interface method .. to call async methods
-        /// 
-        /// </summary>
+        /// <summary>Called from syncronous Interface method .. to call async methods</summary>
         private void DoLEWatcherSearch() {
             if (this.devWatcher == null) {
                 this.SetupWatcher();
@@ -37,6 +30,7 @@ namespace BluetoothLE.Win32 {
                         this.stopped.Reset();
                         this.devWatcher.Stop();
                         if (this.stopped.WaitOne(500)) {
+                            this.log.Info("DoLEWatcherSearch", "THE WATCHER IS RESTARTED");
                             this.devWatcher.Start();
                         }
                         break;
@@ -44,7 +38,6 @@ namespace BluetoothLE.Win32 {
                         // Wait on stopped event
                         break;
                 }
-
             }
         }
 
@@ -55,40 +48,17 @@ namespace BluetoothLE.Win32 {
             // https://github.com/microsoft/Windows-universal-samples/blob/master/Samples/DeviceEnumerationAndPairing/cs/DeviceWatcherHelper.cs
 
             if (this.devWatcher == null) {
-                //// With properties only get 4
-                //string[] prop = {
-                //    "System.Devices.Aep.DeviceAddress",
-                //    "System.Devices.Aep.IsConnected",
-                //    "System.Devices.Aep.Bluetooth.Le.IsConnectable",
-                //    "System.Devices.Aep.IsPaired"
-                //};
-
-                // with AQS Get 23 if I use properties, if null properties only 22
-                //string aqsBTAddressNotNull = "System.Devices.Aep.DeviceAddress:<>[]";
-
                 //https://github.com/microsoft/Windows-universal-samples/blob/master/Samples/BluetoothLE/cs/Scenario1_Discovery.xaml.cs
                 // This will return all BLE devices, paired or unpaired
                 string aqsBLEProtocol = "(System.Devices.Aep.ProtocolId:=\"{bb7bb05e-5972-42b5-94fc-76eaa7084d49}\")";
                 this.devWatcher = DeviceInformation.CreateWatcher(
                     aqsBLEProtocol, 
-                    null,
+                    null, // no extra properties in the query
                     DeviceInformationKind.AssociationEndpoint);
 
-                // The GetDeviceSelector creates an aqs string that will return all LE devices. Do not need other parameters
-
-
-                //this.devWatcher = DeviceInformation.CreateWatcher(
-                //    BluetoothLEDevice.GetDeviceSelector(),  //aqsBTAddressNotNull, 
-                //    prop, 
-                //    DeviceInformationKind.AssociationEndpoint);
-
-                // The GetDeviceSelector creates an aqs string that will return all LE devices. Do not need other parameters
-
-                // This one only returns ones that are paired?
+                // First only returns ones that are paired, the second only those not paired
                 //this.devWatcher = DeviceInformation.CreateWatcher(BluetoothLEDevice.GetDeviceSelector());
                 //this.devWatcher = DeviceInformation.CreateWatcher(BluetoothLEDevice.GetDeviceSelectorFromPairingState(false));
-
-                // See the GetDeviceSelectorFromAppearance to get specific kinds of LE devices
 
                 // Hook up the events
                 this.devWatcher.Added += DevWatcher_Added;
@@ -100,6 +70,7 @@ namespace BluetoothLE.Win32 {
         }
 
 
+        // Events stay all the time. Only added once. Caller can disable as required
         //private void TearDownEvents() {
         //    devWatcher.Added -= DevWatcher_Added;
         //    devWatcher.Updated -= DevWatcher_Updated;
@@ -107,7 +78,6 @@ namespace BluetoothLE.Win32 {
         //    devWatcher.EnumerationCompleted -= DevWatcher_EnumerationCompleted;
         //    devWatcher.Stopped -= DevWatcher_Stopped;
         //}
-
 
 
         /// <summary>Event fired when the watcher is stopped</summary>
@@ -120,8 +90,7 @@ namespace BluetoothLE.Win32 {
         /// <summary>Event fired when the enumeration is complete</summary>
         private void DevWatcher_EnumerationCompleted(DeviceWatcher sender, object args) {
             this.log.Info("DevWatcher_EnumerationCompleted", "*****");
-            // Not sure I want to do this
-            //this.TearDownEvents();
+            // TODO - implement
         }
 
 
@@ -150,7 +119,6 @@ namespace BluetoothLE.Win32 {
         private void DevWatcher_Added(DeviceWatcher sender, DeviceInformation deviceInfo) {
             this.log.Info("DevWatcher_Added", () => string.Format("+++++ {0}", deviceInfo.Name));
 
-            // TODO - look at separate objects for LE
             if (deviceInfo.Name.Length > 0) {
                 this.DebugDumpDeviceInfo(deviceInfo);
 
@@ -198,31 +166,26 @@ namespace BluetoothLE.Win32 {
                     //});
                 }
             }
-
         }
 
 
         private void DebugDumpDeviceInfo(DeviceInformation device) {
-            //            System.Diagnostics.Debug.WriteLine("Doing stuff...");
-
-            // Weird - prints value, then the string with {0}
             this.log.Info("Dump", () => string.Format("     Name: {0}", device.Name));
             this.log.Info("Dump", () => string.Format("       Id: {0}", device.Id));
             this.log.Info("Dump", () => string.Format("IsDefault: {0}", device.IsDefault));
             this.log.Info("Dump", () => string.Format("IsEnabled: {0}", device.IsEnabled));
             this.log.Info("Dump", () => string.Format("     Kind: {0}", device.Kind));
 
-            this.log.Info("Dump", () => string.Format("PROPERTIES"));
             int number = device?.Properties.Count ?? -1;
-            System.Diagnostics.Debug.WriteLine("Properties: {0}", number);
             if (number > 0) {
+                this.log.Info("Dump", () => string.Format("PROPERTIES ({0})", number));
                 foreach (var p in device.Properties) {
                     this.log.Info("Dump", () => string.Format("      Property: {0} : {1}", p.Key, p.Value));
                 }
             }
 
-            this.log.Info("Dump", () => string.Format("ENCLOSURE LOCATIONS"));
             if (device.EnclosureLocation != null) {
+                this.log.Info("Dump", () => string.Format("ENCLOSURE LOCATIONS"));
                 this.log.Info("Dump", () => string.Format("     InDock: {0}", device.EnclosureLocation.InDock));
                 this.log.Info("Dump", () => string.Format("      InLid: {0}", device.EnclosureLocation.InLid));
                 this.log.Info("Dump", () => string.Format("      Panel: {0}", device.EnclosureLocation.Panel));
@@ -232,8 +195,8 @@ namespace BluetoothLE.Win32 {
                 System.Diagnostics.Debug.WriteLine("EnclosureLocation: null");
             }
 
-            this.log.Info("Dump", () => string.Format("PAIRING"));
             if (device.Pairing != null) {
+                this.log.Info("Dump", () => string.Format("PAIRING"));
                 this.log.Info("Dump", () => string.Format("    CanPair: {0}", device.Pairing.CanPair));
                 this.log.Info("Dump", () => string.Format("   IsPaired: {0}", device.Pairing.IsPaired));
                 this.log.Info("Dump", () => string.Format(" Protection: {0}", device.Pairing.ProtectionLevel));
@@ -247,12 +210,7 @@ namespace BluetoothLE.Win32 {
             else {
                 this.log.Info("Dump", () => string.Format("Custom: null"));
             }
-            //this.log.Info("Dump", () => string.Format());
         }
-
-
-
-
 
     }
 }
