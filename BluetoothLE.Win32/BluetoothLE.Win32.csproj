@@ -64,11 +64,16 @@
     <Compile Include="BLEImplEvents.cs" />
     <Compile Include="BLE_DisplayHelpers.cs" />
     <Compile Include="BLE_WinExtensions.cs" />
+    <Compile Include="BLE_WinHelpers.cs" />
     <Compile Include="BluetoothLEImplWin32.cs" />
     <Compile Include="CopiedMsClientBLE.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\SharedNetLibs\ChkUtils.Net\ChkUtils.Net.csproj">
+      <Project>{A71559FD-9A21-4F27-92EC-C89FBEF25718}</Project>
+      <Name>ChkUtils.Net</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\SharedNetLibs\CommunicationStack.Net\CommunicationStack.Net.csproj">
       <Project>{34EB157E-2489-4B3E-9E6A-BE92D5ED4711}</Project>
       <Name>CommunicationStack.Net</Name>

@@ -1,5 +1,6 @@
 ﻿using BluetoothLE.Net.DataModels;
 using BluetoothLE.Net.interfaces;
+using ChkUtils.Net;
 using System;
 using Windows.Devices.Enumeration;
 
@@ -112,7 +113,35 @@ namespace BluetoothLE.Win32 {
         /// <param name="sender"></param>
         /// <param name="updateInfo"></param>
         private void DevWatcher_Updated(DeviceWatcher sender, DeviceInformationUpdate updateInfo) {
+            this.log.Info("DevWatcher_Updated", "------------------------------ START -----------------------------------------------------");
             this.log.Info("DevWatcher_Updated", () => string.Format("***** {0}", updateInfo.Id));
+            WrapErr.ToErrReport(9999, () => {
+                if (updateInfo.Properties != null) {
+                    foreach (var p in updateInfo.Properties) {
+                        string value = "Unhandled";
+                        switch (p.Key) {
+                            case "System.Devices.Aep.ContainerId":
+                            case "Id":
+                            case "System.ItemNameDisplay": // *
+                            case "System.Devices.Icon":
+                            case "System.Devices.GlyphIcon":
+                                value = (string)p.Value;
+                                break;
+                            case "System.Devices.Aep.IsPaired": // *
+                            case "System.Devices.Aep.IsConnected":
+                            case "System.Devices.Aep.IsConnectable":
+                            case "System.Devices.Aep.CanPair": // *
+                                value = string.Format("{0}", (bool)p.Value);
+                                break;
+                                // "System.Devices.Icon"
+                                // "System.Devices.GlyphIcon"
+
+                        }
+                        this.log.Info("DevWatcher_Updated", () => string.Format("    Property:{0}  Value:{1}", p.Key, value));
+                    }
+            }
+            });
+            this.log.Info("DevWatcher_Updated", "------------------------------ END -----------------------------------------------------");
         }
 
 
@@ -121,53 +150,65 @@ namespace BluetoothLE.Win32 {
         /// <param name="deviceInfo">Info on the discovered device</param>
         private void DevWatcher_Added(DeviceWatcher sender, DeviceInformation deviceInfo) {
             if (deviceInfo.Name.Length > 0) {
-                // TODO - find out what comes in with no name
-                //this.log.Info("DevWatcher_Added", () => string.Format("+++++ {0}", deviceInfo.Name));
-                this.DebugDumpDeviceInfo(deviceInfo);
+                WrapErr.ToErrReport(9999, () => {
 
-                if (this.DeviceDiscovered != null) {
+                    // TODO - find out what comes in with no name
+                    //this.log.Info("DevWatcher_Added", () => string.Format("+++++ {0}", deviceInfo.Name));
+                    this.DebugDumpDeviceInfo(deviceInfo);
 
-                    BluetoothLEDeviceInfo dev = new BluetoothLEDeviceInfo() {
-                        Name = deviceInfo.Name,
-                        Id = deviceInfo.Id,
-                        IsDefault = deviceInfo.IsDefault,
-                        CanPair = deviceInfo?.Pairing.CanPair ?? false,
-                        IsPaired = deviceInfo?.Pairing.IsPaired ?? false,
-                        // required for connecting ?
-                        OSSpecificObj = deviceInfo,
-                    };
+                    if (this.DeviceDiscovered != null) {
+                        BluetoothLEDeviceInfo dev = new BluetoothLEDeviceInfo() {
+                            Name = deviceInfo.Name,
+                            Id = deviceInfo.Id,
+                            IsDefault = deviceInfo.IsDefault,
+                            CanPair = deviceInfo?.Pairing.CanPair ?? false,
+                            IsPaired = deviceInfo?.Pairing.IsPaired ?? false,
+                            IsConnectable = deviceInfo.IsConnectable(),
+                            IsConnected = deviceInfo.IsConnected(),
 
-                    if (deviceInfo.Properties != null) {
-                        foreach (var p in deviceInfo.Properties) {
-                            // The value is object. I have only seen strings to this point
-                            object val = p.Value;
-                            string s = val?.ToString() ?? "";
+                            // This would be the DeviceInformation object. Not required
+                            // but handy for updates in Windows
+                            OSSpecificObj = deviceInfo,
+                        };
 
-                            // Sometimes there is only the key
-                            //dev.LEProperties.Add(new Tuple<string, string>(p.Key, p.Value.ToString()));
-                            dev.LEProperties.Add(new Tuple<string, string>(p.Key, s));
+                        // Has list of properties changed
+                        //DeviceInformationUpdate
+                        //DeviceInformation
 
 
+
+                        if (deviceInfo.Properties != null) {
+                            foreach (var p in deviceInfo.Properties) {
+                                // The value is object. I have only seen strings to this point
+                                object val = p.Value;
+                                string s = val?.ToString() ?? "";
+
+                                // Sometimes there is only the key
+                                //dev.LEProperties.Add(new Tuple<string, string>(p.Key, p.Value.ToString()));
+                                dev.LEProperties.Add(new Tuple<string, string>(p.Key, s));
+
+
+                            }
                         }
+
+                        this.DeviceDiscovered(sender, dev);
+
+                        //this.DeviceDiscovered(sender, new BluetoothLEDeviceInfo() {
+                        //    Name = deviceInfo.Name,
+                        //    Id = deviceInfo.Id,
+                        //    IsDefault = deviceInfo.IsDefault,
+                        //    CanPair  = deviceInfo?.Pairing.CanPair ?? false,
+                        //    IsPaired = deviceInfo?.Pairing.IsPaired ?? false,
+                        //    //if (deviceInfo.Properties != null) {
+
+                        //    //},
+
+
+                        //    // required for connecting
+                        //    OSSpecificObj = deviceInfo,
+                        //});
                     }
-
-                    this.DeviceDiscovered(sender, dev);
-
-                    //this.DeviceDiscovered(sender, new BluetoothLEDeviceInfo() {
-                    //    Name = deviceInfo.Name,
-                    //    Id = deviceInfo.Id,
-                    //    IsDefault = deviceInfo.IsDefault,
-                    //    CanPair  = deviceInfo?.Pairing.CanPair ?? false,
-                    //    IsPaired = deviceInfo?.Pairing.IsPaired ?? false,
-                    //    //if (deviceInfo.Properties != null) {
-
-                    //    //},
-
-
-                    //    // required for connecting
-                    //    OSSpecificObj = deviceInfo,
-                    //});
-                }
+                });
             }
         }
 
