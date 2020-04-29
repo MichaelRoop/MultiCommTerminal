@@ -1,11 +1,13 @@
 ﻿using BluetoothCommon.Net.interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VariousUtils;
 using Windows.Devices.Bluetooth.GenericAttributeProfile;
+using Windows.Storage.Streams;
 
 namespace BluetoothLE.Win32 {
 
@@ -84,7 +86,32 @@ namespace BluetoothLE.Win32 {
                             default:
                                 byte[] data = new byte[readResult.Value.Length];
                                 Array.Copy(b, data, data.Length);
-                                this.log.Info("DumpCharacteristic", () => string.Format("    Characteristic:{0}  Value:{1}  Length:{2}  Handle:{3}",
+
+                                // 9998 my serial read write characteristics
+                                if (BLE_DisplayHelpers.GetCharacteristicName(ch) == "39320") {
+                                    this.log.Info("LKDJFKLJSDFLK:JSDKLF", "GOT 39320");
+
+                                    var xx = await ch.WriteClientCharacteristicConfigurationDescriptorAsync(GattClientCharacteristicConfigurationDescriptorValue.Notify);
+                                    ch.ValueChanged += Ch_ValueChangedSerialReturn;
+
+                                    // Test message                                    
+                                    //using (var ms = new DataWriter()) {
+                                    //    // do it this way when we have a multi byte block
+                                    //    ms.WriteBytes(Encoding.ASCII.GetBytes("Blipo message\n\r"));
+                                    //    var result = await ch.WriteValueAsync(ms.DetachBuffer());
+                                    //}
+
+                                    byte[] bytes = Encoding.ASCII.GetBytes("Blipo message\n\r");
+                                    for (int i = 0; i < bytes.Length; i++) {
+                                        using (var ms = new DataWriter()) { 
+                                            ms.WriteByte(bytes[i]);
+                                            var result = await ch.WriteValueAsync(ms.DetachBuffer());
+                                        }
+                                    }
+                                }
+
+                                this.log.Info("DumpCharacteristic", () => string.Format(
+                                    "    Characteristic:{0}  Value:{1}  Length:{2}  Handle:{3}",
                                     BLE_DisplayHelpers.GetCharacteristicName(ch), data.ToFormatedByteString(), data.Length, ch.AttributeHandle));
                                 break;
                         }
@@ -104,6 +131,14 @@ namespace BluetoothLE.Win32 {
             }
         }
 
+        private void Ch_ValueChangedSerialReturn(GattCharacteristic sender, GattValueChangedEventArgs args) {
+            //throw new NotImplementedException();
+
+            byte[] b = args.CharacteristicValue.FromBufferToBytes();
+            this.log.Info("Ch_ValueChangedSerialReturn", 
+                () => string.Format("** ++ ** ++ ** RETURN VALUE '{0}'", Encoding.ASCII.GetString(b)));
+
+        }
 
         private void Ch_BatteryLevelValueChanged(GattCharacteristic sender, GattValueChangedEventArgs args) {
             // TODO temp to read the changed value in the characteristic
