@@ -87,13 +87,13 @@ namespace BluetoothLE.Win32 {
                                 byte[] data = new byte[readResult.Value.Length];
                                 Array.Copy(b, data, data.Length);
 
-                                // 9998 my serial read write characteristics
                                 if (BLE_DisplayHelpers.GetCharacteristicName(ch) == "39320") {
-                                    this.log.Info("LKDJFKLJSDFLK:JSDKLF", "GOT 39320");
-
                                     var xx = await ch.WriteClientCharacteristicConfigurationDescriptorAsync(GattClientCharacteristicConfigurationDescriptorValue.Notify);
                                     ch.ValueChanged += Ch_ValueChangedSerialReturn;
-
+                                }
+                                // 9998 my serial read write characteristics
+                                else if (BLE_DisplayHelpers.GetCharacteristicName(ch) == "39319") {
+                                    this.log.Info("LKDJFKLJSDFLK:JSDKLF", "GOT 39320");
                                     // Test message                                    
                                     //using (var ms = new DataWriter()) {
                                     //    // do it this way when we have a multi byte block
@@ -111,7 +111,7 @@ namespace BluetoothLE.Win32 {
                                 }
 
                                 this.log.Info("DumpCharacteristic", () => string.Format(
-                                    "    Characteristic:{0}  Value:{1}  Length:{2}  Handle:{3}",
+                                    "    Characteristic: ** NOT ENUMERATED **  {0}  Value:{1}  Length:{2}  Handle:{3}",
                                     BLE_DisplayHelpers.GetCharacteristicName(ch), data.ToFormatedByteString(), data.Length, ch.AttributeHandle));
                                 break;
                         }
