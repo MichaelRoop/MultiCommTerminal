@@ -1,4 +1,5 @@
 ﻿using BluetoothCommon.Net;
+using BluetoothLE.Net.DataModels;
 using CommunicationStack.Net.Stacks;
 using IconFactory.data;
 using LanguageFactory.data;

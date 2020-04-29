@@ -1,4 +1,5 @@
 ﻿using BluetoothCommon.Net;
+using BluetoothLE.Net.DataModels;
 using LanguageFactory.data;
 using LogUtils.Net;
 using MultiCommData.Net.StorageDataModels;

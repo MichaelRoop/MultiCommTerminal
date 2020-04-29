@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace BluetoothCommon.Net {
+namespace BluetoothLE.Net.DataModels {
 
     /// <summary>Information particular to Bluetooth LE devices</summary>
     public class BluetoothLEDeviceInfo {

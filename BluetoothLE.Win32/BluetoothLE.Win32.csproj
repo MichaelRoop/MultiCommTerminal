@@ -84,6 +84,10 @@
       <Project>{f30f15eb-d67a-4338-b34a-c1def003e5db}</Project>
       <Name>BluetoothCommon.Net</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BluetoothLE\BluetoothLE.Net.csproj">
+      <Project>{262EF221-42EE-4EF3-9FE5-9803DCC19405}</Project>
+      <Name>BluetoothLE.Net</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

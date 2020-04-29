@@ -1,5 +1,5 @@
-﻿using BluetoothCommon.Net;
-using BluetoothCommon.Net.interfaces;
+﻿using BluetoothLE.Net.DataModels;
+using BluetoothLE.Net.interfaces;
 using System;
 using Windows.Devices.Enumeration;
 

@@ -1,7 +1,8 @@
-﻿using CommunicationStack.Net.interfaces;
+﻿using BluetoothLE.Net.DataModels;
+using CommunicationStack.Net.interfaces;
 using System;
 
-namespace BluetoothCommon.Net.interfaces {
+namespace BluetoothLE.Net.interfaces {
 
     /// <summary>Interface for Bluetooth LE devices</summary>
     public interface IBLETInterface : ICommStackChannel {

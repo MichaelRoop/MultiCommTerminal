@@ -1,14 +1,11 @@
 ﻿//#define USING_OLDER_UWP
 
-using BluetoothCommon.Net;
-using BluetoothCommon.Net.interfaces;
+using BluetoothLE.Net.DataModels;
+using BluetoothLE.Net.interfaces;
 using LogUtils.Net;
-using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Devices.Bluetooth;
-using Windows.Devices.Bluetooth.GenericAttributeProfile;
 using Windows.Devices.Enumeration;
 
 
@@ -27,7 +24,7 @@ namespace BluetoothLE.Win32 {
     // Add Reference to \Program Files\Reference Assemblies\Microsoft\Framework\.NETCore\v4.5\System.Runtime.WindowsRuntime.dll
     // Regardless what Target Framework i'm using, the only working version of System.Runtime.WindowsRuntime.dll was v4.5. All other version (wich corresponds to the Target Framework) caused runtime errors.
 
-    
+
     // NOW USING THIS METHOD TO USE THE FULL POWER OF UWP    
     // https://docs.microsoft.com/en-us/windows/apps/desktop/modernize/desktop-to-uwp-enhance
 

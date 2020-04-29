@@ -1,14 +1,10 @@
-﻿using BluetoothCommon.Net;
-using BluetoothCommon.Net.interfaces;
+﻿using BluetoothLE.Net.DataModels;
+using BluetoothLE.Net.interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Bluetooth.GenericAttributeProfile;
 // The using for the RFCOMM to communicate with classic items
-using Windows.Devices.Bluetooth.Rfcomm;
 
 namespace BluetoothLE.Win32 {
 

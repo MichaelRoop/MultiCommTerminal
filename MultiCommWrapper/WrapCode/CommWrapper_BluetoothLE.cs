@@ -1,4 +1,4 @@
-﻿using BluetoothCommon.Net;
+﻿using BluetoothLE.Net.DataModels;
 using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
 using MultiCommWrapper.Net.interfaces;

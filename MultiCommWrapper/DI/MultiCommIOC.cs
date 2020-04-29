@@ -1,4 +1,5 @@
 ﻿using BluetoothCommon.Net.interfaces;
+using BluetoothLE.Net.interfaces;
 using CommunicationStack.Net.interfaces;
 using CommunicationStack.Net.Stacks;
 using DependencyInjectorFactory;

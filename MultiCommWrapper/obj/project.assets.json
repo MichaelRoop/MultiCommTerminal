@@ -48,6 +48,19 @@
           "bin/placeholder/BluetoothCommon.Net.dll": {}
         }
       },
+      "BluetoothLE.Net/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "BluetoothCommon.Net": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/BluetoothLE.Net.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BluetoothLE.Net.dll": {}
+        }
+      },
       "ChkUtils.Net/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
@@ -346,6 +359,11 @@
       "path": "../BluetoothCommon.Net/BluetoothCommon.Net.csproj",
       "msbuildProject": "../BluetoothCommon.Net/BluetoothCommon.Net.csproj"
     },
+    "BluetoothLE.Net/1.0.0": {
+      "type": "project",
+      "path": "../BluetoothLE/BluetoothLE.Net.csproj",
+      "msbuildProject": "../BluetoothLE/BluetoothLE.Net.csproj"
+    },
     "ChkUtils.Net/1.0.0": {
       "type": "project",
       "path": "../../SharedNetLibs/ChkUtils.Net/ChkUtils.Net.csproj",
@@ -395,6 +413,7 @@
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
       "BluetoothCommon.Net >= 1.0.0",
+      "BluetoothLE.Net >= 1.0.0",
       "DependencyInjectorFactory >= 1.0.0",
       "IconFactory >= 1.0.0",
       "LanguageFactory.Net >= 1.0.0",
@@ -435,6 +454,9 @@
           "projectReferences": {
             "D:\\Dev\\MultiCommTerminal\\BluetoothCommon.Net\\BluetoothCommon.Net.csproj": {
               "projectPath": "D:\\Dev\\MultiCommTerminal\\BluetoothCommon.Net\\BluetoothCommon.Net.csproj"
+            },
+            "D:\\Dev\\MultiCommTerminal\\BluetoothLE\\BluetoothLE.Net.csproj": {
+              "projectPath": "D:\\Dev\\MultiCommTerminal\\BluetoothLE\\BluetoothLE.Net.csproj"
             },
             "D:\\Dev\\MultiCommTerminal\\MultiCommData\\MultiCommData.Net.csproj": {
               "projectPath": "D:\\Dev\\MultiCommTerminal\\MultiCommData\\MultiCommData.Net.csproj"

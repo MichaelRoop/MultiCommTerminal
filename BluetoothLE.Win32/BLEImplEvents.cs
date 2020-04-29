@@ -1,10 +1,6 @@
-﻿using BluetoothCommon.Net;
-using BluetoothCommon.Net.interfaces;
+﻿using BluetoothLE.Net.DataModels;
+using BluetoothLE.Net.interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BluetoothLE.Win32 {
 

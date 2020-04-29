@@ -1,6 +1,6 @@
 ﻿using BluetoothCommon.Net.interfaces;
+using BluetoothLE.Net.interfaces;
 using CommunicationStack.Net.interfaces;
-using CommunicationStack.Net.Stacks;
 using IconFactory.interfaces;
 using LanguageFactory.interfaces;
 using LogUtils.Net;
@@ -8,7 +8,6 @@ using MultiCommData.Net.StorageDataModels;
 using MultiCommWrapper.Net.interfaces;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
-using VariousUtils;
 
 namespace MultiCommWrapper.Net.WrapCode {
 
