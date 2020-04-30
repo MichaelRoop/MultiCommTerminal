@@ -1,6 +1,8 @@
 ﻿using BluetoothLE.Net.DataModels;
 using BluetoothLE.Net.interfaces;
+using BluetoothLE.Net.Parsers;
 using System;
+using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Bluetooth.GenericAttributeProfile;
@@ -54,15 +56,22 @@ namespace BluetoothLE.Win32 {
                                 if (characteristics.Status == GattCommunicationStatus.Success) {
                                     if (characteristics.Characteristics != null) {
                                         if (characteristics.Characteristics.Count > 0) {
-                                            foreach (var ch in characteristics.Characteristics) {
+                                            foreach (GattCharacteristic ch in characteristics.Characteristics) {
                                                 await this.DumpCharacteristic(ch);
                                                 var descriptors = await ch.GetDescriptorsAsync();
                                                 if (descriptors.Status == GattCommunicationStatus.Success) {
                                                     if (descriptors.Descriptors.Count > 0) {
-                                                        foreach (var desc in descriptors.Descriptors) {
+                                                        foreach (GattDescriptor desc in descriptors.Descriptors) {
+                                                            var r = await desc.ReadValueAsync();
+                                                            string descName = "N/A";
+                                                            if (r.Status == GattCommunicationStatus.Success) {
+                                                                //descName = Encoding.ASCII.GetString(r.Value.FromBufferToBytes());
+                                                                descName = BLE_ParseHelpers.GetDescriptorValueAsString(desc.Uuid, r.Value.FromBufferToBytes());
+                                                            }
+
                                                             // descriptors have read and write
-                                                            this.log.Info("ConnectToDevice", () => string.Format("        Descriptor:{0}  Uid:{1}",
-                                                                BLE_DisplayHelpers.GetDescriptorName(desc), desc.Uuid.ToString()));
+                                                            this.log.Info("ConnectToDevice", () => string.Format("        Descriptor:{0}  Uid:{1} Value:{2}",
+                                                                BLE_DisplayHelpers.GetDescriptorName(desc), desc.Uuid.ToString(), descName));
                                                         }
                                                     }
                                                 }

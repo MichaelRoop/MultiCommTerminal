@@ -23,7 +23,7 @@ namespace BluetoothLE.Win32 {
                         switch (BLE_DisplayHelpers.GetCharacteristicEnum(ch)) {
                             case GattNativeCharacteristicUuid.String:
                             case GattNativeCharacteristicUuid.DeviceName:
-                            case GattNativeCharacteristicUuid.ManufacturerNameString:
+                            case GattNativeCharacteristicUuid.ManufacturerNameString: 
                                 string strVal = Encoding.ASCII.GetString(b, 0, (int)readResult.Value.Length);
                                 this.log.Info("DumpCharacteristic", () => string.Format("    Characteristic:{0}  Value:{1} Handle:{2}",
                                     BLE_DisplayHelpers.GetCharacteristicName(ch), strVal, ch.AttributeHandle));

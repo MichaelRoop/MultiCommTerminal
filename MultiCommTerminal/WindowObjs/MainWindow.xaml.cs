@@ -123,7 +123,9 @@ namespace MultiCommTerminal.WindowObjs {
         /// <param name="e"></param>
         private void BLE_DeviceRemovedHandler(object sender, string id) {
             //this.log.Info("BLE_DeviceRemovedHandler", () => string.Format("**** ------- **** Searching to remove {0}", id));
-            this.RemoveIfFound(id, true, true);
+            this.Dispatcher.Invoke(() => {
+                this.RemoveIfFound(id, true, true);
+            });
         }
 
 
@@ -145,7 +147,9 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void BLE_DeviceDiscoveryCompleteHandler(object sender, bool e) {
-            this.grdMain.Visibility = Visibility.Collapsed;
+            this.Dispatcher.Invoke(() => {
+                this.grdMain.Visibility = Visibility.Collapsed;
+            });
         }
 
 
