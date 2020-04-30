@@ -3,6 +3,7 @@
 using BluetoothLE.Net.DataModels;
 using BluetoothLE.Net.interfaces;
 using LogUtils.Net;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Devices.Bluetooth;
@@ -83,9 +84,15 @@ namespace BluetoothLE.Win32 {
         public void Connect(BluetoothLEDeviceInfo deviceInfo) {
             // TODO - need to have a copy of the BluetoothLEDeviceInfo saved also which subscribes to the BLE OS Device
             //        info and passes those events up to the UI
-
             this.Disconnect();
-            Task.Run(async () => await this.ConnectToDevice(deviceInfo));
+            Task.Run(async () => {
+                try {
+                    await this.ConnectToDevice(deviceInfo);
+                }
+                catch(Exception e) {
+                    this.log.Exception(9999, "On Task Run ConnectToDevice", e);
+                }
+            });
         }
 
         #endregion

@@ -128,6 +128,10 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
+        public void BLE_Disconnect() {
+            this.bleBluetooth.Disconnect();
+        }
+
         #endregion
 
         #region Init and teardown

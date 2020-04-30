@@ -142,6 +142,8 @@ namespace MultiCommWrapper.Net.interfaces {
         /// <param name="onComplete">Raisd with title and text for message box</param>
         void BLE_GetDbgInfoStringDump(object obj, Action<string, string> onComplete);
 
+        void BLE_Disconnect();
+
         #endregion
 
         void Teardown();

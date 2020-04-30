@@ -109,20 +109,25 @@ namespace BluetoothLE.Win32 {
                 this.log.Exception(9999, "Exception", e);
             }
 
-            if (this.currentDevice == null) {
-                // report error
-                this.log.Info("ConnectToDevice", () => string.Format("NULL device returned for {0}", deviceInfo.Id));
-                return;
+            try {
+                if (this.currentDevice == null) {
+                    // report error
+                    this.log.Info("ConnectToDevice", () => string.Format("NULL device returned for {0}", deviceInfo.Id));
+                    return;
+                }
+                else {
+                    // Note: BluetoothLEDevice.GattServices property will return an empty list for unpaired devices. For all uses we recommend using the GetGattServicesAsync method.
+                    // BT_Code: GetGattServicesAsync returns a list of all the supported services of the device (even if it's not paired to the system).
+                    // If the services supported by the device are expected to change during BT usage, subscribe to the GattServicesChanged event.
+                    //GattDeviceServicesResult result =
+                    //    await this.currentDevice.GetGattServicesAsync(BluetoothCacheMode.Uncached);
+                    ////GattDeviceServicesResult result = await BluetoothLEDevice.FromIdAsync(this.currentDevice.DeviceId);
+                    //System.Diagnostics.Debug.WriteLine("Device Connected {0}", this.currentDevice.BluetoothAddress);
+                    this.log.Info("ConnectToDevice", () => string.Format("Device Connected {0}", this.currentDevice.BluetoothAddress));
+                }
             }
-            else {
-                // Note: BluetoothLEDevice.GattServices property will return an empty list for unpaired devices. For all uses we recommend using the GetGattServicesAsync method.
-                // BT_Code: GetGattServicesAsync returns a list of all the supported services of the device (even if it's not paired to the system).
-                // If the services supported by the device are expected to change during BT usage, subscribe to the GattServicesChanged event.
-                //GattDeviceServicesResult result =
-                //    await this.currentDevice.GetGattServicesAsync(BluetoothCacheMode.Uncached);
-                ////GattDeviceServicesResult result = await BluetoothLEDevice.FromIdAsync(this.currentDevice.DeviceId);
-                //System.Diagnostics.Debug.WriteLine("Device Connected {0}", this.currentDevice.BluetoothAddress);
-                this.log.Info("ConnectToDevice", () => string.Format("Device Connected {0}", this.currentDevice.BluetoothAddress));
+            catch(Exception ex) {
+                this.log.Exception(9999, "on main task", ex);
             }
 
         }

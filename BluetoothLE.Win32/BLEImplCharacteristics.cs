@@ -1,5 +1,6 @@
 ﻿using BluetoothLE.Net.interfaces;
 using BluetoothLE.Net.Parsers;
+using ChkUtils.Net;
 using System;
 using System.Text;
 using System.Threading.Tasks;
@@ -110,20 +111,27 @@ namespace BluetoothLE.Win32 {
                 }
                 else if (ch.CharacteristicProperties.HasFlag(GattCharacteristicProperties.Write)) {
                     if (BLE_DisplayHelpers.GetCharacteristicName(ch) == "39319") {
-                        this.log.Info("LKDJFKLJSDFLK:JSDKLF", "GOT 39319");
-                        // Test message                                    
-                        //using (var ms = new DataWriter()) {
-                        //    // do it this way when we have a multi byte block
-                        //    ms.WriteBytes(Encoding.ASCII.GetBytes("Blipo message\n\r"));
-                        //    var result = await ch.WriteValueAsync(ms.DetachBuffer());
-                        //}
+                        try {
+                            //WrapErr.ToErrReport(9999, () => {
+                            this.log.Info("LKDJFKLJSDFLK:JSDKLF", "GOT 39319");
+                            // Test message                                    
+                            //using (var ms = new DataWriter()) {
+                            //    // do it this way when we have a multi byte block
+                            //    ms.WriteBytes(Encoding.ASCII.GetBytes("Blipo message\n\r"));
+                            //    var result = await ch.WriteValueAsync(ms.DetachBuffer());
+                            //}
 
-                        byte[] bytes = Encoding.ASCII.GetBytes("Blipo message\n\r");
-                        for (int i = 0; i < bytes.Length; i++) {
-                            using (var ms = new DataWriter()) {
-                                ms.WriteByte(bytes[i]);
-                                var result = await ch.WriteValueAsync(ms.DetachBuffer());
+                            byte[] bytes = Encoding.ASCII.GetBytes("Blipo message\n\r");
+                            for (int i = 0; i < bytes.Length; i++) {
+                                using (var ms = new DataWriter()) {
+                                    ms.WriteByte(bytes[i]);
+                                    var result = await ch.WriteValueAsync(ms.DetachBuffer());
+                                }
                             }
+                            //});
+                        }
+                        catch (Exception e) {
+                            this.log.Exception(9999, "Fail on write to descriptor", e);
                         }
                     }
 
