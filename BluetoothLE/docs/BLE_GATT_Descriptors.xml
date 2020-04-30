@@ -24,7 +24,13 @@
       </Abstract>
       <InformativeDisclaimer/>
       <Summary>
-        Only one Characteristic Aggregate Format descriptor exists in a characteristic definition. This descriptor consists of a list of Attribute Handles pointing to Characteristic Presentation Format declarations. This descriptor is read only and does not require authentication or authorization. The list of Attribute Handles is the concatenation of multiple 16-bit Attribute Handle values into a single Attribute Value. If more than one Characteristic Presentation Format declarations exist, then there is one Characteristic Aggregate Format declaration. However, a Characteristic Aggregate Format descriptor can be present even if there aren't any Presentation Format descriptors in the characteristic definition. The order of the Attribute Handles in the list is significant.
+        Only one Characteristic Aggregate Format descriptor exists in a characteristic definition. This descriptor consists 
+        of a list of Attribute Handles pointing to Characteristic Presentation Format declarations. This descriptor is read 
+        only and does not require authentication or authorization. The list of Attribute Handles is the concatenation of 
+        multiple 16-bit Attribute Handle values into a single Attribute Value. If more than one Characteristic Presentation 
+        Format declarations exist, then there is one Characteristic Aggregate Format declaration. However, a 
+        Characteristic Aggregate Format descriptor can be present even if there aren't any Presentation Format descriptors 
+        in the characteristic definition. The order of the Attribute Handles in the list is significant.
       </Summary>
       <Examples>
         <Example>
@@ -143,7 +149,11 @@
       </Abstract>
       <InformativeDisclaimer/>
       <Summary>
-        This descriptor shall be persistent across connections for bonded devices. The Client Characteristic Configuration descriptor is unique for each client. A client may read and write this descriptor to determine and set the configuration for that client. Authentication and authorization may be required by the server to write this descriptor. The default value for the Client Characteristic Configuration descriptor is 0x00. Upon connection of non-binded clients, this descriptor is set to the default value.
+        This descriptor shall be persistent across connections for bonded devices. The Client Characteristic 
+        Configuration descriptor is unique for each client. A client may read and write this descriptor to determine 
+        and set the configuration for that client. Authentication and authorization may be required by the server to 
+        write this descriptor. The default value for the Client Characteristic Configuration descriptor is 0x00. Upon 
+        connection of non-binded clients, this descriptor is set to the default value.
       </Summary>
     </InformativeText>
     <Value>

@@ -1,4 +1,5 @@
-﻿using ChkUtils.Net;
+﻿using BluetoothLE.Net.Parsers.Descriptor;
+using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
 using LogUtils.Net;
 using System;
@@ -80,8 +81,19 @@ namespace BluetoothLE.Net.Parsers {
                         //return descriptorName.ToString().CamelCaseToSpaces();
                         switch (descriptorEnum) {
                             case GattNativeDescriptorUuid.CharacteristicAggregateFormat:
-                                //uint16
-                                return UInt16.Parse(Encoding.ASCII.GetString(value)).ToString();
+                                #region 
+                                //List of uint16 Atribute Handles
+                                StringBuilder sb = new StringBuilder();
+                                sb.Append("Attribute Handles: ");
+                                int count = value.Length / 2;
+                                for (int i = 0; i < count; i++) {
+                                    if (i > 0) {
+                                        sb.Append(",");
+                                    }
+                                    sb.Append(BitConverter.ToUInt16(value, i * 2).ToString());
+                                }
+                                #endregion
+                                return sb.ToString();
                             case GattNativeDescriptorUuid.CharacteristicExtendedProperties:
                                 // 16bit - 0-3 Reliable write and writable auxilliaries
                                 // https://www.bluetooth.com/xml-viewer/?src=https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Descriptors/org.bluetooth.descriptor.gatt.characteristic_extended_properties.xml
@@ -92,19 +104,7 @@ namespace BluetoothLE.Net.Parsers {
                             case GattNativeDescriptorUuid.CharacteristicUserDescription:
                                 return Encoding.UTF8.GetString(value);
                             case GattNativeDescriptorUuid.ClientCharacteristicConfiguration:
-                                // 16 bit. 0-3
-                                //return BitConverter.ToUInt16(value, 0).ToString();
-                                ushort mask = BitConverter.ToUInt16(value, 0);
-                                // Bit 0 - Notifications disabled/enabled
-                                // Bit 1 - Indications disabled/enabled
-
-                                string res = string.Format("Notifications {0} Indications {1}",
-                                    (mask & (1 << 0)) != 0 ? "Enabled" : "Disabled",
-                                    (mask & (1 << 1)) != 0 ? "Enabled" : "Disabled");
-                                //Log.Info("BLE_ParseHelpers", "GetDescriptorValueAsString", () => string.Format("ClientCharacteristicConfiguration Value {0} Bit checked result {1}",
-                                //    mask, res));
-                                return res;
-
+                                return new DescClientCharasteristicConfigParser(value).DisplayString();
                             case GattNativeDescriptorUuid.EnvironmentalSensingConfiguration:
                                 // ?
                                 break;
@@ -137,7 +137,7 @@ namespace BluetoothLE.Net.Parsers {
                                 // ex: 0x020x0D == 2-13
                                 // ex: 0x58 0x02 0x20 0x1C == 600 - 7,200 seconds
                                 // see: https://www.bluetooth.com/xml-viewer/?src=https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Descriptors/org.bluetooth.descriptor.valid_range.xml
-                                StringBuilder sb = new StringBuilder();
+                                //StringBuilder sb = new StringBuilder();
                                 switch (value.Length) {
                                     case 2:
                                         // TODO conversions from hex
