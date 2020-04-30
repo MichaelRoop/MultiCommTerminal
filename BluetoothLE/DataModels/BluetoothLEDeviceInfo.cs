@@ -1,4 +1,5 @@
-﻿using ChkUtils.Net;
+﻿using BluetoothLE.Net.interfaces;
+using ChkUtils.Net;
 using LogUtils.Net;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,7 @@ namespace BluetoothLE.Net.DataModels {
     public class BluetoothLEDeviceInfo {
 
         private ClassLog log = new ClassLog("BluetoothLEDeviceInfo");
+        private IPropertyKeys propertyKeys = null;
 
         public event EventHandler<StringProperyUpdate> OnStringPropertyChanged;
         public event EventHandler<BoolProperyUpdate> OnBoolPropertyChanged;
@@ -112,7 +114,8 @@ namespace BluetoothLE.Net.DataModels {
         public object OSSpecificObj { get; set; }  
 
 
-        public BluetoothLEDeviceInfo() {
+        public BluetoothLEDeviceInfo(IPropertyKeys propertyKeys) {
+            this.propertyKeys = propertyKeys;
         }
 
 
@@ -124,6 +127,7 @@ namespace BluetoothLE.Net.DataModels {
                         () => string.Format("Failed on update of '{0}'", property.Key), 
                         () => {
                             this.ServiceProperties[property.Key].Value = property.Value.Value;
+                            this.ChangeValueOnUpdate(this.ServiceProperties[property.Key]);
                             this.RaiseChangedEvent(this.ServiceProperties[property.Key]);
                         });
                 }
@@ -133,6 +137,32 @@ namespace BluetoothLE.Net.DataModels {
             }
         }
 
+
+        /// <summary>Change class values based on updated property</summary>
+        /// <param name="dm">The property data model</param>
+        private void ChangeValueOnUpdate(BLE_PropertyDataModel dm) {
+            if (dm.Key == this.propertyKeys.ItemNameDisplay) {
+                this.Name = dm.Value as string;
+            }
+            else if (dm.Key == this.propertyKeys.CanPair) {
+                this.CanPair = (bool)dm.Value;
+            }
+            else if (dm.Key == this.propertyKeys.IsPaired) {
+                this.IsPaired = (bool)dm.Value;
+            }
+            else if (dm.Key == this.propertyKeys.IsConnected) {
+                this.IsConnected = (bool)dm.Value;
+            }
+            else if (dm.Key == this.propertyKeys.IsConnectable) {
+                this.IsConnectable = (bool)dm.Value;
+            }
+
+            // These are in the properties only 
+            //this.propertyKeys.ContainerId
+            //this.propertyKeys.IconPath
+            //this.propertyKeys.GlyphIconPath
+
+        }
 
         private void RaiseChangedEvent(BLE_PropertyDataModel dm) {
             this.log.Info("++++++++++++", 

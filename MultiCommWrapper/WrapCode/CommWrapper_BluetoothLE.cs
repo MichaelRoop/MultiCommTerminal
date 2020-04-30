@@ -73,28 +73,21 @@ namespace MultiCommWrapper.Net.WrapCode {
             WrapErr.ToErrReport(out report, 9999, "", () => {
                 BluetoothLEDeviceInfo info = obj as BluetoothLEDeviceInfo;
                 if (info == null) {
-                    //return "** NOT  A BLE DEVICE **";
                     onComplete("** NOT  A BLE DEVICE **", "** NOT  A BLE DEVICE **");
                     return;
                 }
 
                 StringBuilder sb = new StringBuilder();
-                sb.Append(string.Format("       Id: {0}\n", info.Id));//.Append("\n");
-                sb.Append(string.Format("IsDefault: {0}\n", info.IsDefault));
-                sb.Append(string.Format("IsEnabled: {0}\n", info.IsEnabled));
+                sb.Append(string.Format("Id: {0}", info.Id)).AppendLine();
+                sb.Append(string.Format("IsDefault: {0}", info.IsDefault)).AppendLine();
+                sb.Append(string.Format("IsEnabled: {0}", info.IsEnabled)).AppendLine();
                 //sb.Append("     Kind: {0}", device.Kind);
                 // Properties
-                sb.Append(string.Format("Properties: ({0})\n", info.ServiceProperties.Count));
+                sb.Append(string.Format("Properties: ({0})", info.ServiceProperties.Count)).AppendLine();
                 foreach (var p in info.ServiceProperties) {
-                    sb.Append(p.Key).Append(" : ").Append(p.Value.ToString());
-
-                    //if (p.Item2.Length > 0) {
-                    //    sb.Append(string.Format("   {0} : {1}\n", p.Item1, p.Item2));
-                    //}
-                    //else {
-                    //    sb.Append(string.Format("   {0}\n", p.Item1));
-                    //}
+                    sb.Append(p.Key).Append(" : ").Append(p.Value.Value.ToString()).AppendLine();
                 }
+                #region OS Specific to implement in the abstract
                 //// Enclosure location
                 //if (device.EnclosureLocation != null) {
                 //    System.Diagnostics.Debug.WriteLine("EnclosureLocation:");
@@ -126,6 +119,7 @@ namespace MultiCommWrapper.Net.WrapCode {
                 //MessageBox.Show(sb.ToString(), info.Name);
 
                 //return "";
+                #endregion
                 onComplete.Invoke(info.Name, sb.ToString());
             });
             if (report.Code != 0) {

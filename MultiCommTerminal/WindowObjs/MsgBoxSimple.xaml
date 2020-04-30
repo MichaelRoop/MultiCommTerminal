@@ -9,7 +9,7 @@
         Style="{StaticResource MyWindowStyle}" Title="" 
         WindowStartupLocation="CenterScreen" ContentRendered="Window_ContentRendered"
         mc:Ignorable="d"
-        MinHeight="100" MinWidth="200" MaxHeight="600" MaxWidth="600">
+        MinHeight="100" MinWidth="200" MaxHeight="800" MaxWidth="800">
     <Grid>
         <StackPanel>
             <TextBlock x:Name="txtBlock" HorizontalAlignment="Left" FontSize="16" MaxHeight="450" TextWrapping="WrapWithOverflow" Margin="15" />

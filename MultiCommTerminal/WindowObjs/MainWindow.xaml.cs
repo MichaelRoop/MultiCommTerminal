@@ -106,11 +106,12 @@ namespace MultiCommTerminal.WindowObjs {
         private void BLE_DeviceDiscoveredHandler(object sender, BluetoothLEDeviceInfo info) {
             this.Dispatcher.Invoke(() => {
                 lock (this.listBox_BLE) {
-                    this.log.Info("", () => string.Format("Adding '{0}' '{1}'", info.Name, info.Id));
+                    this.log.Info("BLE_DeviceDiscoveredHandler", () => string.Format("Adding '{0}' '{1}'", info.Name, info.Id));
                     this.RemoveIfFound(info.Id, false, true);
                     // Disconnect the list from control before changing. Maybe change to Observable collection
                     this.listBox_BLE.ItemsSource = null;
                     this.infoList_BLE.Add(info);
+                    this.log.Info("BLE_DeviceDiscoveredHandler", () => string.Format("Adding DONE"));
                     this.listBox_BLE.ItemsSource = this.infoList_BLE;
                 }
             });
@@ -121,7 +122,7 @@ namespace MultiCommTerminal.WindowObjs {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void BLE_DeviceRemovedHandler(object sender, string id) {
-            //this.log.Info("BLE_DeviceRemovedHandler", "Searching to remove");
+            //this.log.Info("BLE_DeviceRemovedHandler", () => string.Format("**** ------- **** Searching to remove {0}", id));
             this.RemoveIfFound(id, true, true);
         }
 
@@ -157,7 +158,7 @@ namespace MultiCommTerminal.WindowObjs {
                 var item = this.infoList_BLE.Find((x) => x.Id == id);
                 if (item != null) {
                     if (msgIfFound) {
-                        this.log.Info("RemoveIfFound", () => string.Format("THE DEVICE WAS ALREADY THERE - REMOVE AND REPLACE"));
+                        this.log.Info("RemoveIfFound", () => string.Format("REMOVE DEVICE:{0}", id));
                     }
                     if (!this.infoList_BLE.Remove(item)) {
                         this.log.Error(9999, "BLE_DeviceRemovedHander", () => string.Format("Failed to remove '{0}'", id));

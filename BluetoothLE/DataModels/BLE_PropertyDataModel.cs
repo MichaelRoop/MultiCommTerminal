@@ -2,7 +2,7 @@
 
     public enum PropertyType {
         UnHandled,
-        DisplayName,
+        ItemNameDisplay,
         CanPair,
         IsPaired,
         IsConnected,

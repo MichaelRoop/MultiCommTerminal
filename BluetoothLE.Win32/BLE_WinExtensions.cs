@@ -1,4 +1,5 @@
 ﻿using BluetoothLE.Net.DataModels;
+using BluetoothLE.Net.interfaces;
 using LogUtils.Net;
 using System;
 using System.Collections.Generic;
@@ -11,14 +12,17 @@ namespace BluetoothLE.Win32 {
     public static class BLE_WinExtensions {
 
         private static ClassLog log = new ClassLog("BLE_WinExtensions");
-        private const string IS_CONNECTED_KEY = "System.Devices.Aep.IsConnected";
-        private const string IS_CONNECTABLE_KEY = "System.Devices.Aep.IsConnectable";
-        private const string CAN_PAIR = "System.Devices.Aep.CanPair";
-        private const string IS_PAIRED = "System.Devices.Aep.IsPaired";
-        private const string CONTAINER_ID = "System.Devices.Aep.ContainerId";
-        private const string ICON_PATH = "System.Devices.Icon";
-        private const string GLYPH_ICON_PATH = "System.Devices.GlyphIcon";
-        private const string ITEM_NAME_DISPLAY = "System.ItemNameDisplay";
+        //private const string IS_CONNECTED_KEY = "System.Devices.Aep.IsConnected";
+        //private const string IS_CONNECTABLE_KEY = "System.Devices.Aep.IsConnectable";
+        //private const string CAN_PAIR = "System.Devices.Aep.CanPair";
+        //private const string IS_PAIRED = "System.Devices.Aep.IsPaired";
+        //private const string CONTAINER_ID = "System.Devices.Aep.ContainerId";
+        //private const string ICON_PATH = "System.Devices.Icon";
+        //private const string GLYPH_ICON_PATH = "System.Devices.GlyphIcon";
+        //private const string ITEM_NAME_DISPLAY = "System.ItemNameDisplay";
+
+
+        private static IPropertyKeys KEYS = new BLE_WinPropertyKeys();
 
 
 
@@ -39,8 +43,8 @@ namespace BluetoothLE.Win32 {
         /// <param name="info">The Win device information object</param>
         /// <returns>true if connectable, otherwise false</returns>
         public static bool IsConnectable(this DeviceInformation info) {
-            if (info.HasProperty(IS_CONNECTABLE_KEY)) {
-                return (bool?)info.Properties[IS_CONNECTABLE_KEY] == true;
+            if (info.HasProperty(KEYS.IsConnectable)) {
+                return (bool?)info.Properties[KEYS.IsConnectable] == true;
             }
             return false;
         }
@@ -50,8 +54,8 @@ namespace BluetoothLE.Win32 {
         /// <param name="info">The Win device information object</param>
         /// <returns>true if connected, otherwise false</returns>
         public static bool IsConnected(this DeviceInformation info) {
-            if (info.HasProperty(IS_CONNECTED_KEY)) {
-                return (bool?)info.Properties[IS_CONNECTED_KEY] == true;
+            if (info.HasProperty(KEYS.IsConnected)) {
+                return (bool?)info.Properties[KEYS.IsConnected] == true;
             }
             return false;
         }
@@ -122,17 +126,35 @@ namespace BluetoothLE.Win32 {
 
 
         private static PropertyType GetPropertyTarget(string key) {
-            switch (key) {
-                case IS_CONNECTED_KEY: return PropertyType.IsConnected;
-                case IS_CONNECTABLE_KEY: return PropertyType.IsConnectable;
-                case CAN_PAIR: return PropertyType.CanPair;
-                case IS_PAIRED: return PropertyType.IsPaired;
-                case CONTAINER_ID: return PropertyType.ContainerId;
-                case ICON_PATH: return PropertyType.IconPath;
-                case GLYPH_ICON_PATH: return PropertyType.GlyphIconPath;
-                case ITEM_NAME_DISPLAY: return PropertyType.DisplayName;
-                default: 
-                    return PropertyType.UnHandled;
+            if (key == KEYS.IsConnected) {
+                return PropertyType.IsConnected;
+            }
+            else if (key == KEYS.IsConnected) {
+                return PropertyType.IsConnected;
+            }
+            else if (key == KEYS.IsConnectable) {
+                return PropertyType.IsConnectable;
+            }
+            else if (key == KEYS.CanPair) {
+                return PropertyType.CanPair;
+            }
+            else if (key == KEYS.IsPaired) {
+                return PropertyType.IsPaired;
+            }
+            else if (key == KEYS.ContainerId) {
+                return PropertyType.ContainerId;
+            }
+            else if (key == KEYS.IconPath) {
+                return PropertyType.IconPath;
+            }
+            else if (key == KEYS.GlyphIconPath) {
+                return PropertyType.GlyphIconPath;
+            }
+            else if (key == KEYS.ItemNameDisplay) {
+                return PropertyType.ItemNameDisplay;
+            }
+            else {
+                return PropertyType.UnHandled;
             }
         }
 
@@ -158,11 +180,6 @@ namespace BluetoothLE.Win32 {
                 }
             }
         }
-
-
-
-
-
 
     }
 }

@@ -65,6 +65,7 @@
     <Compile Include="BLE_DisplayHelpers.cs" />
     <Compile Include="BLE_WinExtensions.cs" />
     <Compile Include="BLE_WinHelpers.cs" />
+    <Compile Include="BLE_WinPropertyKeys.cs" />
     <Compile Include="BluetoothLEImplWin32.cs" />
     <Compile Include="CopiedMsClientBLE.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

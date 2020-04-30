@@ -159,11 +159,11 @@ namespace BluetoothLE.Win32 {
                 WrapErr.ToErrReport(9999, () => {
 
                     // TODO - find out what comes in with no name
-                    //this.log.Info("DevWatcher_Added", () => string.Format("+++++ {0}", deviceInfo.Name));
+                    this.log.Info("DevWatcher_Added", () => string.Format("+++++ {0} : {1}", deviceInfo.Name, deviceInfo.Id));
                     this.DebugDumpDeviceInfo(deviceInfo);
-
+                    
                     if (this.DeviceDiscovered != null) {
-                        BluetoothLEDeviceInfo dev = new BluetoothLEDeviceInfo() {
+                        BluetoothLEDeviceInfo dev = new BluetoothLEDeviceInfo(new BLE_WinPropertyKeys()) {
                             Name = deviceInfo.Name,
                             Id = deviceInfo.Id,
                             IsDefault = deviceInfo.IsDefault,

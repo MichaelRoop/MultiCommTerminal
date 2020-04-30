@@ -28,7 +28,7 @@ namespace BluetoothLE.Win32 {
                 }
                 else {
                     this.log.Info("ConnectToDevice", "Connection ** OK **");
-                    //this.currentDevice.NameChanged += CurrentDevice_NameChanged;
+                    this.currentDevice.NameChanged += CurrentDevice_NameChanged;
 
 
                 }
