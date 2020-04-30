@@ -124,7 +124,7 @@ namespace MultiCommTerminal.WindowObjs {
         private void BLE_DeviceRemovedHandler(object sender, string id) {
             //this.log.Info("BLE_DeviceRemovedHandler", () => string.Format("**** ------- **** Searching to remove {0}", id));
             this.Dispatcher.Invoke(() => {
-                this.RemoveIfFound(id, true, true);
+                this.RemoveIfFound(id, false, true);
             });
         }
 
