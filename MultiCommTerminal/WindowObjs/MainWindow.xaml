@@ -155,7 +155,7 @@
 
                                 <StackPanel Margin="10,0">
                                     <Label Content="Device:" HorizontalAlignment="Center"/>
-                                    <ListBox x:Name="listBox_BLE" MinHeight="30" MinWidth="200" MaxHeight="85" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                                    <ListBox x:Name="listBox_BLE" MinHeight="30" MinWidth="200" MaxHeight="90" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <Grid Margin="1">

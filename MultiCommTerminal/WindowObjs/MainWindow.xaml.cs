@@ -1,5 +1,6 @@
 ﻿using BluetoothCommon.Net;
 using BluetoothLE.Net.DataModels;
+using ChkUtils.Net;
 using LanguageFactory.data;
 using LogUtils.Net;
 using MultiCommData.Net.StorageDataModels;
@@ -66,15 +67,18 @@ namespace MultiCommTerminal.WindowObjs {
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             this.buttonSizer_BT.Teardown();
             this.buttonSizer_BLE.Teardown();
+            
             this.wrapper.BLE_DeviceDiscovered -= this.BLE_DeviceDiscoveredHandler;
             this.wrapper.BLE_DeviceRemoved -= this.BLE_DeviceRemovedHandler;
-            this.wrapper.BLE_DeviceUpdated += this.BLE_DeviceUpdatedHandler;
+            this.wrapper.BLE_DeviceUpdated -= this.BLE_DeviceUpdatedHandler;
             this.wrapper.BLE_DeviceDiscoveryComplete -= BLE_DeviceDiscoveryCompleteHandler;
-            
+            this.wrapper.BLE_Disconnect();
+
             this.wrapper.BT_DeviceDiscovered -= this.BT_DeviceDiscoveredHandler;
             this.wrapper.BT_DiscoveryComplete -= this.BT_DiscoveryCompleteHandler;
             this.wrapper.BT_ConnectionCompleted -= this.BT_ConnectionCompletedHandler;
             this.wrapper.BT_BytesReceived -= this.BT_BytesReceivedHandler;
+            this.wrapper.BTClassicDisconnect();
 
             if (this.menu != null) {
                 this.menu.Close();
@@ -105,15 +109,17 @@ namespace MultiCommTerminal.WindowObjs {
         /// <param name="info">The information for discovered device</param>
         private void BLE_DeviceDiscoveredHandler(object sender, BluetoothLEDeviceInfo info) {
             this.Dispatcher.Invoke(() => {
-                lock (this.listBox_BLE) {
-                    this.log.Info("BLE_DeviceDiscoveredHandler", () => string.Format("Adding '{0}' '{1}'", info.Name, info.Id));
-                    this.RemoveIfFound(info.Id, false, true);
-                    // Disconnect the list from control before changing. Maybe change to Observable collection
-                    this.listBox_BLE.ItemsSource = null;
-                    this.infoList_BLE.Add(info);
-                    this.log.Info("BLE_DeviceDiscoveredHandler", () => string.Format("Adding DONE"));
-                    this.listBox_BLE.ItemsSource = this.infoList_BLE;
-                }
+                WrapErr.ToErrReport(9999, "Failure on BLE Device Discovered", () => {
+                    lock (this.listBox_BLE) {
+                        this.log.Info("BLE_DeviceDiscoveredHandler", () => string.Format("Adding '{0}' '{1}'", info.Name, info.Id));
+                        this.RemoveIfFound(info.Id, false, true);
+                        // Disconnect the list from control before changing. Maybe change to Observable collection
+                        this.listBox_BLE.ItemsSource = null;
+                        this.infoList_BLE.Add(info);
+                        this.log.Info("BLE_DeviceDiscoveredHandler", () => string.Format("Adding DONE"));
+                        this.listBox_BLE.ItemsSource = this.infoList_BLE;
+                    }
+                });
             });
         }
 
@@ -124,14 +130,18 @@ namespace MultiCommTerminal.WindowObjs {
         private void BLE_DeviceRemovedHandler(object sender, string id) {
             //this.log.Info("BLE_DeviceRemovedHandler", () => string.Format("**** ------- **** Searching to remove {0}", id));
             this.Dispatcher.Invoke(() => {
-                this.RemoveIfFound(id, false, true);
+                WrapErr.ToErrReport(9999, "Failure on BLE Device Remove", () => {
+                    lock (this.listBox_BLE) {
+                        this.RemoveIfFound(id, false, true);
+                    }
+                });
             });
         }
 
 
         private void BLE_DeviceUpdatedHandler(object sender, BLE_PropertiesUpdateDataModel args) {
             this.Dispatcher.Invoke(() => {
-                lock (this.listBox_BLE) {
+                WrapErr.ToErrReport(9999, "Failure on BLE Device Updated", () => {
                     this.log.Info("", () => string.Format("Updating '{0}'", args.Id));
                     // Disconnect the list from control before changing. Maybe change to Observable collection
                     this.listBox_BLE.ItemsSource = null;
@@ -141,21 +151,24 @@ namespace MultiCommTerminal.WindowObjs {
                         item.Update(args.ServiceProperties);
                     }
                     this.listBox_BLE.ItemsSource = this.infoList_BLE;
-                }
+                });
             });
         }
 
 
         private void BLE_DeviceDiscoveryCompleteHandler(object sender, bool e) {
             this.Dispatcher.Invoke(() => {
-                this.grdMain.Visibility = Visibility.Collapsed;
+                WrapErr.ToErrReport(9999, "Failure on BLE Device Discovery Complete", () => {
+                    this.gridWait.Visibility = Visibility.Collapsed;
+                });
             });
         }
 
 
         // TODO - add the Update because of Characteristics can be added and removed
         private void RemoveIfFound(string id, bool postErrorNotFound, bool msgIfFound) {
-            lock (this.listBox_BLE) {
+            WrapErr.ToErrReport(9999, "Fail on Remove if found", () => {
+
                 // Disconnect the list from control before changing. Maybe change to Observable collection
                 this.listBox_BLE.ItemsSource = null;
 
@@ -175,7 +188,7 @@ namespace MultiCommTerminal.WindowObjs {
                 }
 
                 this.listBox_BLE.ItemsSource = this.infoList_BLE;
-            }
+            });
         }
 
 
