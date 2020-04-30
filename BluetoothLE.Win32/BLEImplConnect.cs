@@ -28,6 +28,9 @@ namespace BluetoothLE.Win32 {
                 }
                 else {
                     this.log.Info("ConnectToDevice", "Connection ** OK **");
+                    //this.currentDevice.NameChanged += CurrentDevice_NameChanged;
+
+
                 }
 
                 // This just does the easy serial communications - this is using a regular HC-05 Classic (RFCOMM) board
@@ -114,8 +117,6 @@ namespace BluetoothLE.Win32 {
             }
 
         }
-
-
 
     }
 }

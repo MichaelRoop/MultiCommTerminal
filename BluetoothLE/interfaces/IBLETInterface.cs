@@ -16,6 +16,8 @@ namespace BluetoothLE.Net.interfaces {
         /// <summary>Will post this at end of enumeration since early adds are not necessarly complete</summary>
         event EventHandler<bool> DeviceDiscoveryCompleted;
 
+        /// <summary>Raised when BLE updates a device properties</summary>
+        event EventHandler<BLE_PropertiesUpdateDataModel> DeviceUpdated;
 
         /// <summary>Start or restart the device discovery</summary>
         void DiscoverDevices();

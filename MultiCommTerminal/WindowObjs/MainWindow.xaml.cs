@@ -68,7 +68,9 @@ namespace MultiCommTerminal.WindowObjs {
             this.buttonSizer_BLE.Teardown();
             this.wrapper.BLE_DeviceDiscovered -= this.BLE_DeviceDiscoveredHandler;
             this.wrapper.BLE_DeviceRemoved -= this.BLE_DeviceRemovedHandler;
+            this.wrapper.BLE_DeviceUpdated += this.BLE_DeviceUpdatedHandler;
             this.wrapper.BLE_DeviceDiscoveryComplete -= BLE_DeviceDiscoveryCompleteHandler;
+            
             this.wrapper.BT_DeviceDiscovered -= this.BT_DeviceDiscoveredHandler;
             this.wrapper.BT_DiscoveryComplete -= this.BT_DiscoveryCompleteHandler;
             this.wrapper.BT_ConnectionCompleted -= this.BT_ConnectionCompletedHandler;
@@ -121,6 +123,23 @@ namespace MultiCommTerminal.WindowObjs {
         private void BLE_DeviceRemovedHandler(object sender, string id) {
             //this.log.Info("BLE_DeviceRemovedHandler", "Searching to remove");
             this.RemoveIfFound(id, true, true);
+        }
+
+
+        private void BLE_DeviceUpdatedHandler(object sender, BLE_PropertiesUpdateDataModel args) {
+            this.Dispatcher.Invoke(() => {
+                lock (this.listBox_BLE) {
+                    this.log.Info("", () => string.Format("Updating '{0}'", args.Id));
+                    // Disconnect the list from control before changing. Maybe change to Observable collection
+                    this.listBox_BLE.ItemsSource = null;
+                    BluetoothLEDeviceInfo item = this.infoList_BLE.Find((x) => x.Id == args.Id);
+                    if (item != null) {
+                        // This will raise events on change. How to deal with that. Think only if it is the current on display
+                        item.Update(args.ServiceProperties);
+                    }
+                    this.listBox_BLE.ItemsSource = this.infoList_BLE;
+                }
+            });
         }
 
 
@@ -266,6 +285,7 @@ namespace MultiCommTerminal.WindowObjs {
             // Bluetooth LE
             this.wrapper.BLE_DeviceDiscovered += this.BLE_DeviceDiscoveredHandler;
             this.wrapper.BLE_DeviceRemoved += this.BLE_DeviceRemovedHandler;
+            this.wrapper.BLE_DeviceUpdated += this.BLE_DeviceUpdatedHandler;
             this.wrapper.BLE_DeviceDiscoveryComplete += BLE_DeviceDiscoveryCompleteHandler;
 
             //Bluetooth Classic

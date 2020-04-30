@@ -21,6 +21,9 @@ namespace MultiCommWrapper.Net.WrapCode {
         /// <summary>Event raised when device discovery complete</summary>
         public event EventHandler<bool> BLE_DeviceDiscoveryComplete;
 
+        /// <summary>Event raised when BLE device properties change</summary>
+        public event EventHandler<BLE_PropertiesUpdateDataModel> BLE_DeviceUpdated;
+
 
         private void BLE_DeviceDiscoveredHandler(object sender, BluetoothLEDeviceInfo e) {
             if (this.BLE_DeviceDiscovered != null) {
@@ -33,6 +36,11 @@ namespace MultiCommWrapper.Net.WrapCode {
             if (this.BLE_DeviceRemoved != null) {
                 this.BLE_DeviceRemoved(this, e);
             }
+        }
+
+
+        private void BLE_DeviceUpdatedHandler(object sender, BLE_PropertiesUpdateDataModel args) {
+            this.BLE_DeviceUpdated?.Invoke(this, args);
         }
 
 
@@ -76,14 +84,16 @@ namespace MultiCommWrapper.Net.WrapCode {
                 sb.Append(string.Format("IsEnabled: {0}\n", info.IsEnabled));
                 //sb.Append("     Kind: {0}", device.Kind);
                 // Properties
-                sb.Append(string.Format("Properties: ({0})\n", info.LEProperties.Count));
-                foreach (var p in info.LEProperties) {
-                    if (p.Item2.Length > 0) {
-                        sb.Append(string.Format("   {0} : {1}\n", p.Item1, p.Item2));
-                    }
-                    else {
-                        sb.Append(string.Format("   {0}\n", p.Item1));
-                    }
+                sb.Append(string.Format("Properties: ({0})\n", info.ServiceProperties.Count));
+                foreach (var p in info.ServiceProperties) {
+                    sb.Append(p.Key).Append(" : ").Append(p.Value.ToString());
+
+                    //if (p.Item2.Length > 0) {
+                    //    sb.Append(string.Format("   {0} : {1}\n", p.Item1, p.Item2));
+                    //}
+                    //else {
+                    //    sb.Append(string.Format("   {0}\n", p.Item1));
+                    //}
                 }
                 //// Enclosure location
                 //if (device.EnclosureLocation != null) {
@@ -135,6 +145,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.bleStack.MsgReceived += this.BleStack_MsgReceived;
             this.bleBluetooth.DeviceDiscovered += this.BLE_DeviceDiscoveredHandler;
             this.bleBluetooth.DeviceRemoved += this.BLE_DeviceRemovedHandler;
+            this.bleBluetooth.DeviceUpdated += BLE_DeviceUpdatedHandler;
             this.bleBluetooth.DeviceDiscoveryCompleted += this.BLE_DeviceDiscoveryCompleted;
         }
 
@@ -144,6 +155,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.bleStack.MsgReceived -= this.BleStack_MsgReceived;
             this.bleBluetooth.DeviceDiscovered -= this.BLE_DeviceDiscoveredHandler;
             this.bleBluetooth.DeviceRemoved -= this.BLE_DeviceRemovedHandler;
+            this.bleBluetooth.DeviceUpdated -= BLE_DeviceUpdatedHandler;
             this.bleBluetooth.DeviceDiscoveryCompleted -= this.BLE_DeviceDiscoveryCompleted;
         }
 

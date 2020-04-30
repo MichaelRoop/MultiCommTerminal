@@ -14,6 +14,8 @@ namespace BluetoothLE.Win32 {
 
         public event EventHandler<bool> DeviceDiscoveryCompleted;
 
+        public event EventHandler<BLE_PropertiesUpdateDataModel> DeviceUpdated;
+
         #endregion
 
         #region IBLETInterface:ICommStackChannel events

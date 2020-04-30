@@ -81,6 +81,9 @@ namespace BluetoothLE.Win32 {
 
 
         public void Connect(BluetoothLEDeviceInfo deviceInfo) {
+            // TODO - need to have a copy of the BluetoothLEDeviceInfo saved also which subscribes to the BLE OS Device
+            //        info and passes those events up to the UI
+
             this.Disconnect();
             Task.Run(async () => await this.ConnectToDevice(deviceInfo));
         }

@@ -129,6 +129,8 @@ namespace MultiCommWrapper.Net.interfaces {
         /// <summary>Event raised when BLE device discovery complete</summary>
         event EventHandler<bool> BLE_DeviceDiscoveryComplete;
 
+        /// <summary>Event raised when BLE device properties change</summary>
+        event EventHandler<BLE_PropertiesUpdateDataModel> BLE_DeviceUpdated;
 
         void BLE_DiscoverAsync();
 
