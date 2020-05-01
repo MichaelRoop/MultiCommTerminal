@@ -12,18 +12,7 @@ namespace BluetoothLE.Win32 {
     public static class BLE_WinExtensions {
 
         private static ClassLog log = new ClassLog("BLE_WinExtensions");
-        //private const string IS_CONNECTED_KEY = "System.Devices.Aep.IsConnected";
-        //private const string IS_CONNECTABLE_KEY = "System.Devices.Aep.IsConnectable";
-        //private const string CAN_PAIR = "System.Devices.Aep.CanPair";
-        //private const string IS_PAIRED = "System.Devices.Aep.IsPaired";
-        //private const string CONTAINER_ID = "System.Devices.Aep.ContainerId";
-        //private const string ICON_PATH = "System.Devices.Icon";
-        //private const string GLYPH_ICON_PATH = "System.Devices.GlyphIcon";
-        //private const string ITEM_NAME_DISPLAY = "System.ItemNameDisplay";
-
-
         private static IPropertyKeys KEYS = new BLE_WinPropertyKeys();
-
 
 
         /// <summary>Convert from Windows IBuffer to properly sized byte array</summary>
@@ -70,26 +59,9 @@ namespace BluetoothLE.Win32 {
 
 
         public static Dictionary<string, BLE_PropertyDataModel> CreatePropertiesDictionary(this DeviceInformation info) {
-            //Dictionary<string, BLE_PropertyDataModel> properties = new Dictionary<string, BLE_PropertyDataModel>();
             if (info != null) {
                 return CreatePropertiesDictionary(info.Properties);
-                //if (info.Properties != null) {
-                //    foreach (var p in info.Properties) {
-                //        BLE_PropertyDataModel model = new BLE_PropertyDataModel() {
-                //            Key = p.Key,
-                //            Target = GetPropertyTarget(p.Key),
-                //        };
-                //        SetPropertyValue(p.Value, model);
-                //        if (!properties.ContainsKey(model.Key)) {
-                //            properties.Add(model.Key, model);
-                //        }
-                //        else {
-                //            log.Error(9999, "CreatePropertiesDictionary", () => string.Format("Duplicate property key '{0}'", model.Key));
-                //        }
-                //    }
-                //}
             }
-            //return properties;
             return new Dictionary<string, BLE_PropertyDataModel>();
         }
 

@@ -15,6 +15,18 @@ namespace BluetoothLE.Net.Parsers {
     /// DisplayHelpers. Made OS independent
     /// </summary>
     public static class BLE_ParseHelpers {
+
+        #region Data
+
+        private static DescCharacteristicAggregateFormatValueParser agragateFormatValueParser = new DescCharacteristicAggregateFormatValueParser();
+        private static DescClientCharasteristicConfigParser clientCharacteristicConfigParser = new  DescClientCharasteristicConfigParser();
+        private static DescServerCharacteristicConfigValueParser serverCharacteristicConfigParser = new DescServerCharacteristicConfigValueParser();
+        private static DescValidRangeValueParser validRangeParser = new DescValidRangeValueParser();
+        private static DescReportReferenceValueParser reportReferenceValueParser = new DescReportReferenceValueParser();
+
+        #endregion
+
+
         public static string GetServiceName(Guid serviceUuid) {
             if (IsSigDefinedUuid(serviceUuid)) {
                 GattNativeServiceUuid serviceName;
@@ -81,19 +93,7 @@ namespace BluetoothLE.Net.Parsers {
                         //return descriptorName.ToString().CamelCaseToSpaces();
                         switch (descriptorEnum) {
                             case GattNativeDescriptorUuid.CharacteristicAggregateFormat:
-                                #region 
-                                //List of uint16 Atribute Handles
-                                StringBuilder sb = new StringBuilder();
-                                sb.Append("Attribute Handles: ");
-                                int count = value.Length / 2;
-                                for (int i = 0; i < count; i++) {
-                                    if (i > 0) {
-                                        sb.Append(",");
-                                    }
-                                    sb.Append(BitConverter.ToUInt16(value, i * 2).ToString());
-                                }
-                                #endregion
-                                return sb.ToString();
+                                return agragateFormatValueParser.Parse(value);
                             case GattNativeDescriptorUuid.CharacteristicExtendedProperties:
                                 // 16bit - 0-3 Reliable write and writable auxilliaries
                                 // https://www.bluetooth.com/xml-viewer/?src=https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Descriptors/org.bluetooth.descriptor.gatt.characteristic_extended_properties.xml
@@ -104,7 +104,7 @@ namespace BluetoothLE.Net.Parsers {
                             case GattNativeDescriptorUuid.CharacteristicUserDescription:
                                 return Encoding.UTF8.GetString(value);
                             case GattNativeDescriptorUuid.ClientCharacteristicConfiguration:
-                                return new DescClientCharasteristicConfigParser(value).DisplayString();
+                                return clientCharacteristicConfigParser.Parse(value);
                             case GattNativeDescriptorUuid.EnvironmentalSensingConfiguration:
                                 // ?
                                 break;
@@ -118,61 +118,20 @@ namespace BluetoothLE.Net.Parsers {
                                 // Gatt UUID
                                 break;
                             case GattNativeDescriptorUuid.ServerCharacteristicConfiguration:
-                                // uint16 - 0-1
-                                ushort serverConfig = UInt16.Parse(Encoding.ASCII.GetString(value));
-                                switch (serverConfig) {
-                                    case 0:
-                                        return "Broadcast Disabled";
-                                    case 1:
-                                        return "Broadcast Enabled";
-                                    default:
-                                        Log.Error(999, "BLE_ParseHelpers", "", () => string.Format("{0} not handled", serverConfig));
-                                        return serverConfig.ToString();
-                                }
+                                return serverCharacteristicConfigParser.Parse(value);
                             case GattNativeDescriptorUuid.TimeTriggerSetting:
                                 // uint8 0-4
                                 return Byte.Parse(Encoding.ASCII.GetString(value)).ToString();
                             case GattNativeDescriptorUuid.ValidRange:
-                                // Hex values 2 or 4 bytes
-                                // ex: 0x020x0D == 2-13
-                                // ex: 0x58 0x02 0x20 0x1C == 600 - 7,200 seconds
-                                // see: https://www.bluetooth.com/xml-viewer/?src=https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Descriptors/org.bluetooth.descriptor.valid_range.xml
-                                //StringBuilder sb = new StringBuilder();
-                                switch (value.Length) {
-                                    case 2:
-                                        // TODO conversions from hex
-                                        return String.Format("0x{0} - 0x{1}", value[0], value[1]);
-                                    case 4:
-                                        return String.Format(
-                                            "0x{0} - 0x{1}", 
-                                            BitConverter.ToUInt16(value, 0),
-                                            BitConverter.ToUInt16(value, 2));
-                                    default:
-                                        return "INVALID RANGE";
-                                }
+                                return validRangeParser.Parse(value);
                             case GattNativeDescriptorUuid.ValueTriggerSetting:
                                 // uint8 -  0-8
                                 return Byte.Parse(Encoding.ASCII.GetString(value)).ToString();
                             case GattNativeDescriptorUuid.ReportReference:
-                                // Report ID   uint8  0-255 - report ID and Type
-                                // Report Type uint8 1-3 (Input Report=1, Output Report=2, Feature Report=3
-                                UInt16 reportType = BitConverter.ToUInt16(value, 1);
-                                string str = "INVALID";
-                                switch (reportType) {
-                                    case 1:
-                                        str = "Input";
-                                        break;
-                                    case 2:
-                                        str = "Output";
-                                        break;
-                                    case 3:
-                                        str = "Feature";
-                                        break;
-                                }
-                                return string.Format("Report Id:{0} Type:{1}", value[0], str);
+                                return reportReferenceValueParser.Parse(value);
                             case GattNativeDescriptorUuid.NumberOfDigitals:
                                 // uint8 Number of digitals in a characteristic
-                                return Byte.Parse(Encoding.ASCII.GetString(value)).ToString();
+                                return string.Format("Number of Digitals:{0}", value[0]);
                         }
                     }
                 }
