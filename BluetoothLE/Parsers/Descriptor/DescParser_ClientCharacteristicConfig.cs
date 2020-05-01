@@ -15,7 +15,7 @@ namespace BluetoothLE.Net.Parsers.Descriptor {
 
         #region Data
         
-        private readonly ClassLog log = new ClassLog("DescClientCharasteristicConfigParser");
+        private readonly ClassLog log = new ClassLog("DescParser_ClientCharacteristicConfig");
         private readonly int RAW_DATA_LEN = 2;
 
         #endregion
