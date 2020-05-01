@@ -26,6 +26,7 @@ namespace BluetoothLE.Net.Parsers {
         private static DescParser_ServerCharacteristicConfig serverCharacteristicConfigParser = new DescParser_ServerCharacteristicConfig();
         private static DescParser_ValidRange validRangeParser = new DescParser_ValidRange();
         private static DescParser_ReportReference reportReferenceValueParser = new DescParser_ReportReference();
+        private static DescParser_CharacteristicExtendedProperties charExtendedPropertiesParser = new DescParser_CharacteristicExtendedProperties();
 
         #endregion
 
@@ -98,9 +99,7 @@ namespace BluetoothLE.Net.Parsers {
                             case GattNativeDescriptorUuid.CharacteristicAggregateFormat:
                                 return agragateFormatValueParser.Parse(value);
                             case GattNativeDescriptorUuid.CharacteristicExtendedProperties:
-                                // 16bit - 0-3 Reliable write and writable auxilliaries
-                                // https://www.bluetooth.com/xml-viewer/?src=https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Descriptors/org.bluetooth.descriptor.gatt.characteristic_extended_properties.xml
-                                return UInt16.Parse(Encoding.ASCII.GetString(value)).ToString();
+                                return charExtendedPropertiesParser.Parse(value);
                             case GattNativeDescriptorUuid.CharacteristicPresentationFormat:
                                 // byte 0-27 enumeration - data type of characteristic value  
                                 return Byte.Parse(Encoding.ASCII.GetString(value)).ToString();

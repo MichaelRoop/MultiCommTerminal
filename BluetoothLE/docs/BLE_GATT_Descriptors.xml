@@ -366,11 +366,17 @@
   <Descriptor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://schemas.bluetooth.org/Documents/descriptor.xsd" type="org.bluetooth.descriptor.gatt.characteristic_extended_properties" uuid="2900" name="Characteristic Extended Properties">
     <InformativeText>
       <Abstract>
-        The Characteristic Extended Properties descriptor defines additional Characteristic Properties.
+        The Characteristic Extended Properties descriptor defines additional 
+        Characteristic Properties.
       </Abstract>
       <InformativeDisclaimer/>
       <Summary>
-        If the Characteristic Extended Properties bit of the Characteristic Properties is set, then this descriptor exists. The Characteristic Extended Properties descriptor is a bit field defining Reliable Write and Writeable Auxiliaries are enabled for the Characteristic. This descriptor is readable without authentication and authorization being required.
+        If the Characteristic Extended Properties bit of the Characteristic 
+        Properties is set, then this descriptor exists. The Characteristic 
+        Extended Properties descriptor is a bit field defining Reliable Write 
+        and Writeable Auxiliaries are enabled for the Characteristic. This 
+        descriptor is readable without authentication and authorization 
+        being required.
       </Summary>
     </InformativeText>
     <Value>
@@ -442,7 +448,8 @@
   <Descriptor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://schemas.bluetooth.org/Documents/descriptor.xsd" type="org.bluetooth.descriptor.number_of_digitals" uuid="2909" name="Number of Digitals" last-modified="2015-07-14" approved="Yes">
     <InformativeText>
       <Abstract>
-        The Characteristic Number of Digitals descriptor is used for defining the number of digitals in a characteristic.
+        The Characteristic Number of Digitals descriptor is used for defining the number of digitals 
+        in a characteristic.
       </Abstract>
     </InformativeText>
     <Value>
