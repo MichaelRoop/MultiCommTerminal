@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BluetoothLE.Net.Parsers.Descriptor {
 
-    public class DescCharacteristicAggregateFormatValueParser {
+    public class DescParser_CharacteristicAggregateFormat {
 
         #region Data
 
@@ -25,12 +25,12 @@ namespace BluetoothLE.Net.Parsers.Descriptor {
 
         #region Constructors
 
-        public DescCharacteristicAggregateFormatValueParser() {
+        public DescParser_CharacteristicAggregateFormat() {
             this.ResetMembers();
         }
 
 
-        public DescCharacteristicAggregateFormatValueParser(byte[] data) {
+        public DescParser_CharacteristicAggregateFormat(byte[] data) {
             this.Parse(data);
         }
 

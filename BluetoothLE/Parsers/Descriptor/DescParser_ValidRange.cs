@@ -18,7 +18,7 @@ namespace BluetoothLE.Net.Parsers.Descriptor {
     /// 
     /// 
     /// </remarks>
-    public class DescValidRangeValueParser {
+    public class DescParser_ValidRange {
 
         #region Data
 
@@ -40,12 +40,12 @@ namespace BluetoothLE.Net.Parsers.Descriptor {
 
         #region Constructors
 
-        public DescValidRangeValueParser() {
+        public DescParser_ValidRange() {
             this.ResetMembers();
         }
 
 
-        public DescValidRangeValueParser(byte[] data) {
+        public DescParser_ValidRange(byte[] data) {
             this.Parse(data);
         }
 

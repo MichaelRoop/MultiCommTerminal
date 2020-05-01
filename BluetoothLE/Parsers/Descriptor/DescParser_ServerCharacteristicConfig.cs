@@ -9,7 +9,7 @@ namespace BluetoothLE.Net.Parsers.Descriptor {
     /// <summary>
     /// Parse the 16bit value from the Server Characteristic Config Descriptor
     /// </summary>
-    public class DescServerCharacteristicConfigValueParser {
+    public class DescParser_ServerCharacteristicConfig {
 
         #region Data
 
@@ -28,11 +28,11 @@ namespace BluetoothLE.Net.Parsers.Descriptor {
 
         #region Constructors
 
-        public DescServerCharacteristicConfigValueParser() {
+        public DescParser_ServerCharacteristicConfig() {
             this.ResetMembers();
         }
 
-        public DescServerCharacteristicConfigValueParser(byte[] data) {
+        public DescParser_ServerCharacteristicConfig(byte[] data) {
             this.Parse(data);
         }
 

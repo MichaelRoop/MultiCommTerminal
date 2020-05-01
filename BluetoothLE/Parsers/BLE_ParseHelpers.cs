@@ -14,15 +14,18 @@ namespace BluetoothLE.Net.Parsers {
     /// Parse out BLE information for display. Starting point was MS example 
     /// DisplayHelpers. Made OS independent
     /// </summary>
+    /// <remarks>
+    /// Link to the spec: https://www.bluetooth.com/specifications/gatt/descriptors/
+    /// </remarks>
     public static class BLE_ParseHelpers {
 
         #region Data
 
-        private static DescCharacteristicAggregateFormatValueParser agragateFormatValueParser = new DescCharacteristicAggregateFormatValueParser();
+        private static DescParser_CharacteristicAggregateFormat agragateFormatValueParser = new DescParser_CharacteristicAggregateFormat();
         private static DescClientCharasteristicConfigParser clientCharacteristicConfigParser = new  DescClientCharasteristicConfigParser();
-        private static DescServerCharacteristicConfigValueParser serverCharacteristicConfigParser = new DescServerCharacteristicConfigValueParser();
-        private static DescValidRangeValueParser validRangeParser = new DescValidRangeValueParser();
-        private static DescReportReferenceValueParser reportReferenceValueParser = new DescReportReferenceValueParser();
+        private static DescParser_ServerCharacteristicConfig serverCharacteristicConfigParser = new DescParser_ServerCharacteristicConfig();
+        private static DescParser_ValidRange validRangeParser = new DescParser_ValidRange();
+        private static DescParser_ReportReference reportReferenceValueParser = new DescParser_ReportReference();
 
         #endregion
 

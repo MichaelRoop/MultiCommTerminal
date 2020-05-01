@@ -5,7 +5,7 @@ using VariousUtils;
 namespace BluetoothLE.Net.Parsers.Descriptor {
 
     /// <summary>Parse out the values from the Report Reference Descriptor</summary>
-    public class DescReportReferenceValueParser {
+    public class DescParser_ReportReference {
 
         #region Data
 
@@ -25,12 +25,12 @@ namespace BluetoothLE.Net.Parsers.Descriptor {
 
         #region Constructors
 
-        public DescReportReferenceValueParser() {
+        public DescParser_ReportReference() {
             this.ResetMembers();
         }
 
 
-        public DescReportReferenceValueParser(byte[] data) {
+        public DescParser_ReportReference(byte[] data) {
             this.Parse(data);
         }
 
