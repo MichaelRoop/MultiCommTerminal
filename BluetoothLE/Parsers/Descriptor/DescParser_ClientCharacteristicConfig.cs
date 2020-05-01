@@ -11,7 +11,7 @@ namespace BluetoothLE.Net.Parsers.Descriptor {
     ///   Bit 1 - Indications disabled/enabled
     ///   Other bits reserved for future use
     /// </remarks>
-    public class DescClientCharasteristicConfigParser : DescParser_Base {
+    public class DescParser_ClientCharacteristicConfig : DescParser_Base {
 
         #region Data
         
@@ -30,11 +30,11 @@ namespace BluetoothLE.Net.Parsers.Descriptor {
 
         #region Constructors
 
-        public DescClientCharasteristicConfigParser() : base() {
+        public DescParser_ClientCharacteristicConfig() : base() {
         }
 
 
-        public DescClientCharasteristicConfigParser(byte[] data) : base(data) {
+        public DescParser_ClientCharacteristicConfig(byte[] data) : base(data) {
         }
 
         #endregion

@@ -22,7 +22,7 @@ namespace BluetoothLE.Net.Parsers {
         #region Data
 
         private static DescParser_CharacteristicAggregateFormat agragateFormatValueParser = new DescParser_CharacteristicAggregateFormat();
-        private static DescClientCharasteristicConfigParser clientCharacteristicConfigParser = new  DescClientCharasteristicConfigParser();
+        private static DescParser_ClientCharacteristicConfig clientCharacteristicConfigParser = new  DescParser_ClientCharacteristicConfig();
         private static DescParser_ServerCharacteristicConfig serverCharacteristicConfigParser = new DescParser_ServerCharacteristicConfig();
         private static DescParser_ValidRange validRangeParser = new DescParser_ValidRange();
         private static DescParser_ReportReference reportReferenceValueParser = new DescParser_ReportReference();
