@@ -11,12 +11,12 @@ namespace BluetoothLE.Net.Parsers.Descriptor {
     ///   Bit 1 - Indications disabled/enabled
     ///   Other bits reserved for future use
     /// </remarks>
-    public class DescClientCharasteristicConfigParser {
+    public class DescClientCharasteristicConfigParser : DescParser_Base {
 
         #region Data
         
-        private ClassLog log = new ClassLog("DescValueClientCharasteristicConfig");
-        private static int RAW_DATA_LEN = 2;
+        private readonly ClassLog log = new ClassLog("DescClientCharasteristicConfigParser");
+        private readonly int RAW_DATA_LEN = 2;
 
         #endregion
 
@@ -24,64 +24,58 @@ namespace BluetoothLE.Net.Parsers.Descriptor {
 
         public EnabledDisabled Notifications { get; set; } = EnabledDisabled.Disabled;
         public EnabledDisabled Indications { get; set; } = EnabledDisabled.Disabled;
-        public byte[] RawData { get; set; } = new byte[RAW_DATA_LEN];
         public ushort ConvertedData { get; set; }
 
         #endregion
 
-        public DescClientCharasteristicConfigParser() {
-            this.ResetMembers();
+        #region Constructors
+
+        public DescClientCharasteristicConfigParser() : base() {
         }
 
 
-        public DescClientCharasteristicConfigParser(byte[] data) {
-            this.Parse(data);
+        public DescClientCharasteristicConfigParser(byte[] data) : base(data) {
         }
 
+        #endregion
 
-        /// <summary>
-        /// Reset the object with values parsed from the 2 bytes of data retrieved from the Descriptor
-        /// </summary>
-        /// <param name="data">The 2 bytes of data returned from the OS descriptor</param>
-        public string Parse(byte[] data) {
-            this.ResetMembers();
-            if (data != null) {
-                if (data.Length >= RAW_DATA_LEN) {
-                    Array.Copy(data, this.RawData, RAW_DATA_LEN);
-                    this.ConvertedData = BitConverter.ToUInt16(this.RawData, 0);
-
-                    //   Bit 0 - Notifications, Bit 1 - Indications
-                    this.Notifications = (this.ConvertedData.IsBitSet(0)) ? EnabledDisabled.Enabled : EnabledDisabled.Disabled;
-                    this.Indications = (this.ConvertedData.IsBitSet(1)) ? EnabledDisabled.Enabled : EnabledDisabled.Disabled;
-                    this.log.Info("Reset", () => string.Format("Data:{0}", this.RawData.ToAsciiString()));
-                    this.log.Info("Reset", () => string.Format("Display:{0}", this.DisplayString()));
-                }
-                else {
-                    this.log.Error(9999, "Reset", () => string.Format("byte[] length {0} is less than 2", data.Length));
-                }
-            }
-            else {
-                this.log.Error(9999, "Reset", "Raw byte[] is null");
-            }
-            return this.DisplayString();
-        }
-
+        #region Overrides from DescParser_Base
 
         /// <summary>Assemble a string which displays the results of the parsed values</summary>
         /// <example>Return string = 'Notifications:Enabled, Indications:Disabled'</example>
         /// <returns>A display string</returns>
-        public string DisplayString() {
+        protected override string DoDisplayString() {
             return string.Format("Notifications:{0}, Indications:{1}", this.Notifications.ToString(), this.Indications.ToString());
         }
 
 
-        private void ResetMembers() {
+        protected override bool DoParse(byte[] data) {
+            this.log.InfoEntry("DoParse");
+            if (this.CopyToRawData(data, RAW_DATA_LEN)) {
+                this.ConvertedData = BitConverter.ToUInt16(this.RawData, 0);
+
+                //   Bit 0 - Notifications, Bit 1 - Indications
+                this.Notifications = (this.ConvertedData.IsBitSet(0)) ? EnabledDisabled.Enabled : EnabledDisabled.Disabled;
+                this.Indications = (this.ConvertedData.IsBitSet(1)) ? EnabledDisabled.Enabled : EnabledDisabled.Disabled;
+                this.log.Info("DoParse", () => string.Format("Display:{0}", this.DisplayString()));
+                return true;
+            }
+            return false;
+        }
+
+
+        protected override Type GetDerivedType() {
+            return this.GetType();
+        }
+
+
+        protected override  void ResetMembers() {
             this.Notifications = EnabledDisabled.Disabled;
             this.Indications = EnabledDisabled.Disabled;
-            this.RawData = new byte[RAW_DATA_LEN];
             this.ConvertedData = 0;
         }
 
+        #endregion
 
     }
 }
