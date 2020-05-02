@@ -1,5 +1,5 @@
 ﻿
-namespace BluetoothLE.Net.Parsers {
+namespace BluetoothLE.Net.Enumerations {
 
     /// <summary>
     /// Condition for descriptor parser Time Trigger 0x290E (

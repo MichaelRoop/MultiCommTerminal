@@ -1,4 +1,6 @@
 ﻿
+using BluetoothLE.Net.Enumerations;
+
 namespace BluetoothLE.Net.Parsers.Descriptor {
 
     /// <summary>

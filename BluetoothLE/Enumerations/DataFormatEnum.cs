@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BluetoothLE.Net.Parsers {
+namespace BluetoothLE.Net.Enumerations {
 
 
     /// <summary>Used in the format presenter descriptor

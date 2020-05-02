@@ -1,5 +1,5 @@
 ﻿
-namespace BluetoothLE.Net.Parsers {
+namespace BluetoothLE.Net.Enumerations {
 
     /// <summary>Used for the Value Trigger Descriptor first field for condition</summary>
     /// <remarks>TODO Need to study each one more</remarks>

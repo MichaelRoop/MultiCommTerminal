@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace BluetoothLE.Net.Parsers {
+namespace BluetoothLE.Net.Enumerations {
 
     /// <summary>From the SIG to get readable Appearance from the BLE Apppearance Characteristic</summary>
     /// <remarks>

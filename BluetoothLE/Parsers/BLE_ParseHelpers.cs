@@ -1,4 +1,5 @@
-﻿using BluetoothLE.Net.interfaces;
+﻿using BluetoothLE.Net.Enumerations;
+using BluetoothLE.Net.interfaces;
 using BluetoothLE.Net.Parsers.Descriptor;
 using System;
 using VariousUtils;
