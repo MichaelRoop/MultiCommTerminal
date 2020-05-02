@@ -71,6 +71,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\SharedNetLibs\BluetoothLE\BluetoothLE.Net.csproj">
+      <Project>{BF0C5EB0-AEF3-444F-B486-4C1D3271FFFF}</Project>
+      <Name>BluetoothLE.Net</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\SharedNetLibs\ChkUtils.Net\ChkUtils.Net.csproj">
       <Project>{A71559FD-9A21-4F27-92EC-C89FBEF25718}</Project>
       <Name>ChkUtils.Net</Name>
@@ -86,14 +90,6 @@
     <ProjectReference Include="..\..\SharedNetLibs\VariousUtils\VariousUtils.csproj">
       <Project>{8702AF2D-436D-485D-B6A7-F2854E56B9C4}</Project>
       <Name>VariousUtils</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BluetoothCommon.Net\BluetoothCommon.Net.csproj">
-      <Project>{f30f15eb-d67a-4338-b34a-c1def003e5db}</Project>
-      <Name>BluetoothCommon.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BluetoothLE\BluetoothLE.Net.csproj">
-      <Project>{262EF221-42EE-4EF3-9FE5-9803DCC19405}</Project>
-      <Name>BluetoothLE.Net</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

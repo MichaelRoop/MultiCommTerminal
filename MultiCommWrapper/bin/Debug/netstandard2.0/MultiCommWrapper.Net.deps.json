@@ -46,7 +46,8 @@
       },
       "BluetoothLE.Net/1.0.0": {
         "dependencies": {
-          "BluetoothCommon.Net": "1.0.0"
+          "CommunicationStack.Net": "1.0.0",
+          "LogUtils.Net": "1.0.0"
         },
         "runtime": {
           "BluetoothLE.Net.dll": {}
