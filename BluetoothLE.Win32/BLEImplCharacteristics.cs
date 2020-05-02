@@ -121,7 +121,8 @@ namespace BluetoothLE.Win32 {
                             //    var result = await ch.WriteValueAsync(ms.DetachBuffer());
                             //}
 
-                            byte[] bytes = Encoding.ASCII.GetBytes("Blipo message\n\r");
+                            //byte[] bytes = Encoding.ASCII.GetBytes("Blipo message\n\r");
+                            byte[] bytes = Encoding.ASCII.GetBytes("Blipo message being somewhat long and convaluted just to test the return of the entire thing\n\r");
                             for (int i = 0; i < bytes.Length; i++) {
                                 using (var ms = new DataWriter()) {
                                     ms.WriteByte(bytes[i]);
@@ -145,9 +146,11 @@ namespace BluetoothLE.Win32 {
         private void Ch_ValueChangedSerialReturn(GattCharacteristic sender, GattValueChangedEventArgs args) {
             //throw new NotImplementedException();
 
+            this.log.Info("==============================================================================================================", () => string.Format("NUMBER OF INCOMING BYTES {0}", args.CharacteristicValue.Length));
             byte[] b = args.CharacteristicValue.FromBufferToBytes();
             this.log.Info("Ch_ValueChangedSerialReturn", 
                 () => string.Format("** ++ ** ++ ** RETURN VALUE '{0}'", Encoding.ASCII.GetString(b)));
+            this.log.Info("==============================================================================================================", "");
 
         }
 
