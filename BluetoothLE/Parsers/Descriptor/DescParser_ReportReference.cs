@@ -3,13 +3,16 @@ using System;
 
 namespace BluetoothLE.Net.Parsers.Descriptor {
 
-    /// <summary>Parse out the values from the Report Reference Descriptor</summary>
+    /// <summary>
+    /// Parse out the values from the Report Reference Descriptor
+    /// (0x2908) Data type: uint8, uint8 ? 
+    /// TODO - I only have uint  8
+    /// </summary>
     public class DescParser_ReportReference : DescParser_Base {
 
         #region Data
 
         private ClassLog log = new ClassLog("DescParser_ReportReference");
-        private static int BYTE_LEN = 1;
 
         #endregion
 

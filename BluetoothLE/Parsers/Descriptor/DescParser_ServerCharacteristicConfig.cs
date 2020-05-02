@@ -6,13 +6,13 @@ namespace BluetoothLE.Net.Parsers.Descriptor {
 
     /// <summary>
     /// Parse the 16bit value from the Server Characteristic Config Descriptor
+    /// (0x2903) Data type: uint16
     /// </summary>
     public class DescParser_ServerCharacteristicConfig : DescParser_Base {
 
         #region Data
 
         private ClassLog log = new ClassLog("DescParser_ServerCharacteristicConfig");
-        private static int UINT16_LEN = sizeof(ushort);
 
         #endregion
 

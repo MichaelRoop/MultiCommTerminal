@@ -4,7 +4,10 @@ using VariousUtils;
 
 namespace BluetoothLE.Net.Parsers.Descriptor {
 
-    /// <summary>Parse value from Characteristic Extentended Properties descriptor</summary>
+    /// <summary>
+    /// Parse value from Characteristic Extentended Properties descriptor.
+    /// (0x2900) Data type: uint16
+    /// </summary>
     /// <remarks>
     /// https://www.bluetooth.com/xml-viewer/?src=https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Descriptors/org.bluetooth.descriptor.gatt.characteristic_extended_properties.xml
     /// </remarks>
@@ -13,7 +16,6 @@ namespace BluetoothLE.Net.Parsers.Descriptor {
         #region Data
 
         private ClassLog log = new ClassLog("DescParser_CharacteristicExtendedProperties");
-        private static int UINT16_LEN = sizeof(ushort);
 
         #endregion
 

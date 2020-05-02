@@ -15,7 +15,7 @@ namespace BluetoothLE.Net.Parsers.Descriptor {
         private DescParser_CharacteristicExtendedProperties extendedProperties = new DescParser_CharacteristicExtendedProperties();
         private DescParser_ClientCharacteristicConfig clientConfig = new DescParser_ClientCharacteristicConfig();
         private DescParser_Default defaultParser = new DescParser_Default();
-        private DescParser_NumberDecimals numberDecimals = new DescParser_NumberDecimals();
+        private DescParser_NumberDigitals numberDecimals = new DescParser_NumberDigitals();
         private DescParser_ReportReference reportReference = new DescParser_ReportReference();
         private DescParser_ServerCharacteristicConfig serverConfig = new DescParser_ServerCharacteristicConfig();
         private DescParser_UserDescription userDescription = new DescParser_UserDescription();

@@ -325,10 +325,15 @@
       </Field>
     </Value>
   </Descriptor>
-  <Descriptor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://schemas.bluetooth.org/Documents/descriptor.xsd" type="org.bluetooth.descriptor.value_trigger_setting" name="Value Trigger Setting" uuid="290A" last-modified="2015-07-14" approved="Yes">
+  <Descriptor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+              xsi:noNamespaceSchemaLocation="http://schemas.bluetooth.org/Documents/descriptor.xsd" 
+              type="org.bluetooth.descriptor.value_trigger_setting" 
+              name="Value Trigger Setting" uuid="290A" last-modified="2015-07-14" approved="Yes">
     <InformativeText>
       <Abstract>
-        The value of the descriptor has two parts. Part one is a condition field and occupies one octet, and part two is the comparison value (trigger point) that the characteristic value is checked against.
+        The value of the descriptor has two parts. Part one is a condition field and 
+        occupies one octet, and part two is the comparison value (trigger point) that 
+        the characteristic value is checked against.
       </Abstract>
     </InformativeText>
     <Value>

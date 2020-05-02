@@ -4,7 +4,10 @@ using VariousUtils;
 
 namespace BluetoothLE.Net.Parsers.Descriptor {
 
-    /// <summary>Client Characteristic Configuration Descriptor value parser</summary>
+    /// <summary>
+    /// Client Characteristic Configuration Descriptor value parser
+    /// (0x2902) Data type: uint16
+    /// </summary>
     /// <remarks>
     /// Uint16 data: Values 0-3
     ///   Bit 0 - Notifications disabled/enabled
@@ -16,7 +19,6 @@ namespace BluetoothLE.Net.Parsers.Descriptor {
         #region Data
         
         private readonly ClassLog log = new ClassLog("DescParser_ClientCharacteristicConfig");
-        private readonly int RAW_DATA_LEN = 2;
 
         #endregion
 
@@ -51,7 +53,7 @@ namespace BluetoothLE.Net.Parsers.Descriptor {
 
         protected override bool DoParse(byte[] data) {
             this.log.InfoEntry("DoParse");
-            if (this.CopyToRawData(data, RAW_DATA_LEN)) {
+            if (this.CopyToRawData(data, UINT16_LEN)) {
                 this.ConvertedData = BitConverter.ToUInt16(this.RawData, 0);
 
                 //   Bit 0 - Notifications, Bit 1 - Indications

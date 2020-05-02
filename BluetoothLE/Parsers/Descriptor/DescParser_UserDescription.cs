@@ -4,7 +4,10 @@ using System.Text;
 
 namespace BluetoothLE.Net.Parsers.Descriptor {
 
-    /// <summary>Parses User Description Descriptor data</summary>
+    /// <summary>
+    /// Parses User Description Descriptor data
+    /// (0x2901) Data type: string
+    /// </summary>
     public class DescParser_UserDescription : DescParser_Base {
 
         #region Data

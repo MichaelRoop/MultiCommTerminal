@@ -5,12 +5,15 @@ using System.Text;
 
 namespace BluetoothLE.Net.Parsers.Descriptor {
 
+    /// <summary>
+    /// List of attribute handles
+    /// (0x2905) Data type: List<uint16></uint16>
+    /// </summary>
     public class DescParser_CharacteristicAggregateFormat :DescParser_Base {
 
         #region Data
 
         private ClassLog log = new ClassLog("DescParser_CharacteristicAggregateFormat");
-        private static int UNIT16_LEN = sizeof(ushort);
 
         #endregion
 
@@ -39,11 +42,11 @@ namespace BluetoothLE.Net.Parsers.Descriptor {
         /// </summary>
         /// <param name="data">The bytes of data returned from the OS descriptor</param>
         protected override bool DoParse(byte[] data) {
-            int count = data.Length / UNIT16_LEN;
-            if (this.CopyToRawData(data, (count * UNIT16_LEN))) {
+            int count = data.Length / UINT16_LEN;
+            if (this.CopyToRawData(data, (count * UINT16_LEN))) {
                 for (int i = 0; i < count; i++) {
                     this.AttributeHandles.Add(
-                        BitConverter.ToUInt16(this.RawData, i * UNIT16_LEN));
+                        BitConverter.ToUInt16(this.RawData, i * UINT16_LEN));
                 }
                 return true;
             }

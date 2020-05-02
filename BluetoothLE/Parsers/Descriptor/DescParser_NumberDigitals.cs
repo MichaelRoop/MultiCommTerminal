@@ -3,19 +3,22 @@ using System;
 
 namespace BluetoothLE.Net.Parsers.Descriptor {
 
-    public class DescParser_NumberDecimals : DescParser_Base {
+    /// <summary>
+    /// Number of Digitals
+    /// (0x2909) Data type: uint8
+    /// </summary>
+    public class DescParser_NumberDigitals : DescParser_Base {
 
         #region Data
 
         private readonly ClassLog log = new ClassLog("DescParser_NumberDecimals");
-        private readonly int BYTE_LEN = 1;
 
         #endregion
 
         #region Constructors
 
-        public DescParser_NumberDecimals() : base() { }
-        public DescParser_NumberDecimals(byte[] data) : base(data) { }
+        public DescParser_NumberDigitals() : base() { }
+        public DescParser_NumberDigitals(byte[] data) : base(data) { }
 
         #endregion
 

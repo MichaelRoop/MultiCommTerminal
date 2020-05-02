@@ -12,6 +12,16 @@ namespace BluetoothLE.Net.Parsers.Descriptor {
 
         private ClassLog baseLog = new ClassLog("DescParser_Base");
 
+        /// <summary>Number of bytes in byte field</summary>
+        protected readonly int BYTE_LEN = 1;
+        /// <summary>Number of bytes for uint16 field</summary>
+        protected readonly int UINT16_LEN = sizeof(ushort);
+        /// <summary>Number of bytes for uint32 field</summary>
+        protected readonly int UINT32_LEN = sizeof(uint);
+        /// <summary>Number of bytes for time second field</summary>
+        protected readonly int TIMESECOND_LEN = 3; // 3 bytes, 24bit
+
+
         #endregion
 
         #region IDescParser Propertis and methods

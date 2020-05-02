@@ -4,7 +4,10 @@ using System;
 namespace BluetoothLE.Net.Parsers.Descriptor {
 
 
-    /// <summary>Parse value returned from Valid Range Descriptor</summary>
+    /// <summary>
+    /// Parse value returned from Valid Range Descriptor
+    /// (0x2906) Data type: uint16 or uint32
+    /// </summary>
     /// <remarks>
     ///  Hex values 2 or 4 bytes
     /// ex: 0x020x0D == 2-13
@@ -18,8 +21,6 @@ namespace BluetoothLE.Net.Parsers.Descriptor {
         #region Data
 
         private ClassLog log = new ClassLog("DescParser_ValidRange");
-        private static int RAW_DATA_MIN_LEN = 2;
-        private static int RAW_DATA_MAX_LEN = 4;
 
         #endregion
 
@@ -55,9 +56,9 @@ namespace BluetoothLE.Net.Parsers.Descriptor {
             // ex: 0x020x0D == 2-13
             // ex: 0x58 0x02 0x20 0x1C == 600 - 7,200 seconds
             // see: https://www.bluetooth.com/xml-viewer/?src=https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Descriptors/org.bluetooth.descriptor.valid_range.xml
-            int count = (data.Length >= RAW_DATA_MAX_LEN) ? RAW_DATA_MAX_LEN : RAW_DATA_MIN_LEN;
+            int count = (data.Length >= UINT32_LEN) ? UINT32_LEN : UINT16_LEN;
             if (this.CopyToRawData(data, count)) {
-                if (count == RAW_DATA_MAX_LEN) {
+                if (count == UINT32_LEN) {
                     this.ConvertedData = BitConverter.ToUInt32(this.RawData, 0);
                     // TODO convert from hex
                     this.Min = BitConverter.ToUInt16(this.RawData, 0);
