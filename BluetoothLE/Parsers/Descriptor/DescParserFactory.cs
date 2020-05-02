@@ -20,6 +20,8 @@ namespace BluetoothLE.Net.Parsers.Descriptor {
         private DescParser_ServerCharacteristicConfig serverConfig = new DescParser_ServerCharacteristicConfig();
         private DescParser_UserDescription userDescription = new DescParser_UserDescription();
         private DescParser_ValidRange validRange = new DescParser_ValidRange();
+        private DescParser_TimeTriggerSetting timeTriggerSettings = new DescParser_TimeTriggerSetting();
+        private DescParser_PresentationFormat presentationFormat = new DescParser_PresentationFormat();
 
         #endregion
 
@@ -52,12 +54,6 @@ namespace BluetoothLE.Net.Parsers.Descriptor {
                                     return this.aggregateFormat;
                                 case GattNativeDescriptorUuid.CharacteristicExtendedProperties:
                                     return this.extendedProperties;
-                                case GattNativeDescriptorUuid.CharacteristicPresentationFormat:
-                                    return this.defaultParser;
-
-                                // TODO - parser for presentation enum
-                                //// byte 0-27 enumeration - data type of characteristic value  
-                                //return Byte.Parse(Encoding.ASCII.GetString(value)).ToString();
                                 case GattNativeDescriptorUuid.CharacteristicUserDescription:
                                     return this.userDescription;
                                 case GattNativeDescriptorUuid.ClientCharacteristicConfiguration:
@@ -66,22 +62,17 @@ namespace BluetoothLE.Net.Parsers.Descriptor {
                                 case GattNativeDescriptorUuid.EnvironmentalSensingMeasurement:
                                 case GattNativeDescriptorUuid.EnvironmentalSensingTriggerSetting:
                                 case GattNativeDescriptorUuid.ExternalReportReference:
-                                    // TODO Make parsers for above
+                                case GattNativeDescriptorUuid.ValueTriggerSetting:
                                     return this.defaultParser;
+                                    // TODO Make parsers for above
+                                case GattNativeDescriptorUuid.CharacteristicPresentationFormat:
+                                    return this.presentationFormat;
                                 case GattNativeDescriptorUuid.ServerCharacteristicConfiguration:
                                     return this.serverConfig;
                                 case GattNativeDescriptorUuid.TimeTriggerSetting:
-                                    // TODO - Time trigger parser
-                                    return this.defaultParser;
-                                //// uint8 0-4
-                                //return Byte.Parse(Encoding.ASCII.GetString(value)).ToString();
+                                    return this.timeTriggerSettings;
                                 case GattNativeDescriptorUuid.ValidRange:
                                     return this.validRange;
-                                case GattNativeDescriptorUuid.ValueTriggerSetting:
-                                    // TODO - Time trigger setting parser
-                                    return this.defaultParser;
-                                //// uint8 -  0-8
-                                //return Byte.Parse(Encoding.ASCII.GetString(value)).ToString();
                                 case GattNativeDescriptorUuid.ReportReference:
                                     return this.reportReference;
                                 case GattNativeDescriptorUuid.NumberOfDigitals:
