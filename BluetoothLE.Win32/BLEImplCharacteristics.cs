@@ -113,7 +113,7 @@ namespace BluetoothLE.Win32 {
                     if (BLE_DisplayHelpers.GetCharacteristicName(ch) == "39319") {
                         try {
                             //WrapErr.ToErrReport(9999, () => {
-                            this.log.Info("LKDJFKLJSDFLK:JSDKLF", "GOT 39319");
+                            this.log.Info("LKDJFKLJSDFLK:JSDKLF", "GOT 39319 (output to device)");
                             // Test message                                    
                             //using (var ms = new DataWriter()) {
                             //    // do it this way when we have a multi byte block
@@ -123,12 +123,41 @@ namespace BluetoothLE.Win32 {
 
                             //byte[] bytes = Encoding.ASCII.GetBytes("Blipo message\n\r");
                             byte[] bytes = Encoding.ASCII.GetBytes("Blipo message being somewhat long and convaluted just to test the return of the entire thing\n\r");
-                            for (int i = 0; i < bytes.Length; i++) {
+                            int blockLimit = 20;
+                            int count = bytes.Length / blockLimit;
+                            int rest = (bytes.Length % blockLimit);
+                            int lastIndex = 0;
+                            for (int i = 0; i < count; i++) {
+                                lastIndex = i * blockLimit;
                                 using (var ms = new DataWriter()) {
-                                    ms.WriteByte(bytes[i]);
+                                    byte[] part = new byte[blockLimit];
+                                    Array.Copy(bytes, lastIndex, part, 0, part.Length);
+                                    this.log.Error(9191, part.ToFormatedByteString());
+                                    ms.WriteBytes(part);
                                     var result = await ch.WriteValueAsync(ms.DetachBuffer());
                                 }
                             }
+
+                            if (lastIndex > 0) {
+                                if (lastIndex > 0) {
+                                    lastIndex += blockLimit;
+                                }
+                                using (var ms = new DataWriter()) {
+                                    byte[] part = new byte[rest];
+                                    Array.Copy(bytes, lastIndex, part, 0, part.Length);
+                                    this.log.Error(9192, part.ToFormatedByteString());
+                                    ms.WriteBytes(part);
+                                    var result = await ch.WriteValueAsync(ms.DetachBuffer());
+                                }
+                            }
+
+
+                            //for (int i = 0; i < bytes.Length; i++) {
+                            //    using (var ms = new DataWriter()) {
+                            //        ms.WriteByte(bytes[i]);
+                            //        var result = await ch.WriteValueAsync(ms.DetachBuffer());
+                            //    }
+                            //}
                             //});
                         }
                         catch (Exception e) {
