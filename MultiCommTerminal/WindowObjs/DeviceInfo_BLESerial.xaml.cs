@@ -1,4 +1,5 @@
-﻿using MultiCommTerminal.WPF_Helpers;
+﻿using BluetoothLE.Net.DataModels;
+using MultiCommTerminal.WPF_Helpers;
 using MultiCommWrapper.Net.interfaces;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,76 @@ namespace MultiCommTerminal.WindowObjs {
             this.widthManager.PrepForChange();
             this.widthManager2 = new ButtonGroupSizeSyncManager(this.btnExit, this.btnSave);
             this.widthManager2.PrepForChange();
+
+
+
+            //BLE_ServiceDataModel dm = new BLE_ServiceDataModel();
+
+            //this.dev = new BluetoothLEDeviceInfo();
+            //this.treeServices.ItemsSource = this.dev.ServiceProperties;
+
+
+
+            Dictionary<string, BLE_CharacteristicDataModel> ch1 = new Dictionary<string, BLE_CharacteristicDataModel>();
+            ch1.Add("1", new BLE_CharacteristicDataModel() {
+                CharName = "george characteristic"
+            });
+            ch1.Add("2", new BLE_CharacteristicDataModel() {
+                CharName = "fred characteristic"
+            });
+            this.tree.Add(new BLE_ServiceDataModel() {
+                DisplayName = "Hogwarts 1 service",
+                Characteristics = ch1,
+            });
+
+
+            Dictionary<string, BLE_CharacteristicDataModel> ch2 = new Dictionary<string, BLE_CharacteristicDataModel>();
+            ch2.Add("1", new BLE_CharacteristicDataModel() {
+                CharName = "Hermioni characteristic"
+            });
+            ch2.Add("2", new BLE_CharacteristicDataModel() {
+                CharName = "Ginny characteristic"
+            });
+            this.tree.Add(new BLE_ServiceDataModel() {
+                DisplayName = "Hogwarts 2 service",
+                Characteristics = ch2,
+            });
+
+            #region As list characteristics works
+            //List<BLE_CharacteristicDataModel> ch1 = new List<BLE_CharacteristicDataModel>();
+            //ch1.Add(new BLE_CharacteristicDataModel() {
+            //    CharName = "george characteristic"
+            //});
+            //ch1.Add(new BLE_CharacteristicDataModel() {
+            //    CharName = "fred characteristic"
+            //});
+            //this.tree.Add(new BLE_ServiceDataModel() {
+            //    DisplayName = "Hogwarts 1 service",
+            //    tstListChar = ch1,
+            //});
+
+
+            //List<BLE_CharacteristicDataModel> ch2 = new List<BLE_CharacteristicDataModel>();
+            //ch2.Add(new BLE_CharacteristicDataModel() {
+            //    CharName = "Hermioni characteristic"
+            //});
+            //ch2.Add(new BLE_CharacteristicDataModel() {
+            //    CharName = "Ginny characteristic"
+            //});
+            //this.tree.Add(new BLE_ServiceDataModel() {
+            //    DisplayName = "Hogwarts 2 service",
+            //    tstListChar = ch2,
+            //});
+            #endregion
+
+
+            this.treeServices.ItemsSource = this.tree;
+
         }
+        SevicesTree tree = new SevicesTree();
+
+            //BluetoothLEDeviceInfo dev;
+
 
         /// <summary>Bind Mouse drag to Template style</summary>
         public override void OnApplyTemplate() {

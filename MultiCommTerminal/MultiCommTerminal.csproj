@@ -44,6 +44,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\SharedNetCoreLibs\WpfHelpers.Core\WpfHelperClasses.Core.csproj" />
+    <ProjectReference Include="..\..\SharedNetLibs\BluetoothLE\BluetoothLE.Net.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\DependencyInjectorFactory\DependencyInjectorFactory.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\IconFactory\IconFactory.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\LanguageFactory\LanguageFactory.Net.csproj" />
