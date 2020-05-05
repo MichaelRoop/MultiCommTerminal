@@ -12,28 +12,37 @@
         WindowStartupLocation="Manual" 
         Title="Bluetooth BLE Serial" 
         Style="{StaticResource MyWindowStyle}"
-        MinHeight="150" MinWidth="200"
+        MinHeight="150" MinWidth="250"
         mc:Ignorable="d"
         ContentRendered="Window_ContentRendered" Closing="Window_Closing" >
     <Window.Resources>
-        <wpfHelper:SevicesTree  x:Key="services_0"/>
-        <DataTemplate x:Key="characteristics_2">
+        <!-- The main data source as List of BLE_Service -->
+        <wpfHelper:SevicesTree  x:Key="servicesSource"/>
+        <!-- Deepest level - Descriptors -->
+        <DataTemplate x:Key="descriptorsTemplate">
+            <DockPanel>
+                <TextBlock Text="Descriptor: " />
+                <TextBlock Text="{Binding Path=Value.DisplayName}"/>
+            </DockPanel>
+        </DataTemplate>
+        <HierarchicalDataTemplate x:Key="characteristicsTemplate"
+                ItemsSource="{Binding Descriptors}" 
+                ItemTemplate="{StaticResource descriptorsTemplate}" >
             <!-- This is data in the characteristic -->
             <DockPanel>
                 <TextBlock Text="characteristic: " />
                 <TextBlock Text="{Binding Path=Value.CharName}"/>
             </DockPanel>
-        </DataTemplate>
-        <HierarchicalDataTemplate x:Key="lvl1Template" 
-                ItemsSource="{Binding Characteristics}" 
-                ItemTemplate="{StaticResource characteristics_2}">
+        </HierarchicalDataTemplate>
+        <HierarchicalDataTemplate x:Key="servicesTemplate" 
+                ItemsSource="{Binding Characteristics}"
+                ItemTemplate="{StaticResource characteristicsTemplate}">
             <!-- This data in the service -->
             <DockPanel>
                 <TextBlock Text="service: "/>
                 <TextBlock Text="{Binding Path=DisplayName}"/>
             </DockPanel>
         </HierarchicalDataTemplate>
-        
     </Window.Resources>
     
     <Grid>
@@ -76,81 +85,28 @@
                 </DockPanel>
             </Border>
             <Border x:Name="borderCharacteristicSelect">
-            <StackPanel>
-                    <Border Margin="10">
-                        <TreeView x:Name="treeServices"
-                            ItemTemplate="{StaticResource lvl1Template}"
-                            ItemsSource="{StaticResource services_0}"
-                        />
-                        
-                        
-                        
-                        <!--<TreeView x:Name="treeServices"  Height="200" MinWidth="220" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" >
-                            <TreeViewItem Header="Services">
-                                <TextBlock Text="This Service"/>
-                                <TreeViewItem>
-                                    <TextBlock Text="Random Characteristic"/>
-                                    <TreeViewItem>
-                                        <TextBlock  Text="Random Descriptor"/>
-                                    </TreeViewItem>
-                                </TreeViewItem>
-                                <TextBlock Text="That service"/>
-                                <TreeViewItem >
-                                    <TextBlock Text="Input Characteristic"/>
-                                    <TreeViewItem>
-                                        <TextBlock Text="Name Descriptor"/>
-                                        <TextBlock Text="Name Other Descriptor"/>
-                                    </TreeViewItem>
-                                    <TextBlock Text="Output Characteristic"/>
-                                    <TreeViewItem>
-                                        <TextBlock Text="Name Descriptor"/>
-                                        <TextBlock Text="Name Other Descriptor"/>
-                                    </TreeViewItem>
-                                </TreeViewItem>
-                            </TreeViewItem>
-                            
-                            
-                            
-                            --><!--<TreeView.Resources>
-                                <HierarchicalDataTemplate x:Key="xx" ItemsSource="{Binding Members}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <Image Source="/WpfTutorialSamples;component/Images/group.png" Margin="0,0,5,0" />
-                                        <TextBlock Text="{Binding Name}" />
-                                        <TextBlock Text=" [" Foreground="Blue" />
-                                        <TextBlock Text="{Binding Members.Count}" Foreground="Blue" />
-                                        <TextBlock Text="]" Foreground="Blue" />
-                                    </StackPanel>
-                                </HierarchicalDataTemplate>
-                                <DataTemplate DataType="{x:Type self:FamilyMember}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <Image Source="/WpfTutorialSamples;component/Images/user.png" Margin="0,0,5,0" />
-                                        <TextBlock Text="{Binding Name}" />
-                                        <TextBlock Text=" (" Foreground="Green" />
-                                        <TextBlock Text="{Binding Age}" Foreground="Green" />
-                                        <TextBlock Text=" years)" Foreground="Green" />
-                                    </StackPanel>
-                                </DataTemplate>
-
-
-                            </TreeView.Resources>--><!--
-                        </TreeView>-->
+                <StackPanel HorizontalAlignment="Center">
+                    <Border Margin="5" HorizontalAlignment="Center">
+                        <TreeView x:Name="treeServices" HorizontalAlignment="Center" MinWidth="300" MinHeight="150"
+                            ItemTemplate="{StaticResource servicesTemplate}"
+                            ItemsSource="{StaticResource servicesSource}"
+                            SelectedItemChanged="treeServices_SelectedItemChanged" />
                     </Border>
-                        
-                    <ListBox x:Name="ListBoxCharacteristics" Height="0" Width="0" Margin="10">
-                </ListBox>
-                <DockPanel HorizontalAlignment="Center" Margin="10,5,10,15">
-                    <controls:UC_IconButton x:Name="btnCancel"  Margin="0,0,10,0"
+                    <ListBox x:Name="ListBoxCharacteristics" Height="0" Width="300" Margin="10" Visibility="Collapsed">
+                    </ListBox>
+                    <DockPanel HorizontalAlignment="Center" Margin="10,5,10,15">
+                        <controls:UC_IconButton x:Name="btnCancel"  Margin="0,0,10,0"
                             Style="{StaticResource TextIconButton}" 
                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Cancel}}" 
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}"
                             Click="btnCancel_Click"/>
-                    <controls:UC_IconButton x:Name="btnSelect"  Margin="0,0,10,0"
+                        <controls:UC_IconButton x:Name="btnSelect"  Margin="0,0,10,0"
                             Style="{StaticResource TextIconButton}" 
                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Select}}" 
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Save}}"
                             Click="btnSelect_Click"/>
-                </DockPanel>
-            </StackPanel>
+                    </DockPanel>
+                </StackPanel>
             </Border>
             <Border x:Name="borderMainButtons" HorizontalAlignment="Center" Margin="10">
                 <DockPanel HorizontalAlignment="Center">

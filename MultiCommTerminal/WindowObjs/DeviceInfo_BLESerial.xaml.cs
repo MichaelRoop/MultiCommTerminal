@@ -43,32 +43,56 @@ namespace MultiCommTerminal.WindowObjs {
             //this.dev = new BluetoothLEDeviceInfo();
             //this.treeServices.ItemsSource = this.dev.ServiceProperties;
 
+            //// Descriptors
+            //Dictionary<string, BLE_DescriptorDataModel> descriptors = new Dictionary<string, BLE_DescriptorDataModel>();
+            //descriptors.Add("1", new BLE_DescriptorDataModel() {
+            //    DisplayName = "Input from device"
+            //});
+
+            //Dictionary<string, BLE_CharacteristicDataModel> ch1 = new Dictionary<string, BLE_CharacteristicDataModel>();
+            //BLE_DescriptorDataModel desc0 = new BLE_DescriptorDataModel() {
+            //    DisplayName = "Data input to device",
+            //};
+
+            //BLE_CharacteristicDataModel dm1 = new BLE_CharacteristicDataModel() {
+            //    CharName = "george characteristic", 
+            //    Descriptors = descriptors,
+            //};
+            //ch1.Add("1",dm1);
 
 
-            Dictionary<string, BLE_CharacteristicDataModel> ch1 = new Dictionary<string, BLE_CharacteristicDataModel>();
-            ch1.Add("1", new BLE_CharacteristicDataModel() {
-                CharName = "george characteristic"
-            });
-            ch1.Add("2", new BLE_CharacteristicDataModel() {
-                CharName = "fred characteristic"
-            });
-            this.tree.Add(new BLE_ServiceDataModel() {
-                DisplayName = "Hogwarts 1 service",
-                Characteristics = ch1,
-            });
+            //ch1.Add("2", new BLE_CharacteristicDataModel() {
+            //    CharName = "fred characteristic"
+            //});
+            //this.tree.Add(new BLE_ServiceDataModel() {
+            //    DisplayName = "Hogwarts 1 service",
+            //    Characteristics = ch1,
+            //});
+
+            BLE_ServiceDataModel service1 = new BLE_ServiceDataModel();
+            service1.DisplayName = "Hogwarts 1 service";
+            service1.Characteristics.Add("1", new BLE_CharacteristicDataModel());
+            service1.Characteristics["1"].CharName = "George Characteristic";
+            service1.Characteristics.Add("2", new BLE_CharacteristicDataModel());
+            service1.Characteristics["2"].CharName = "Fred Characteristic";
+            service1.Characteristics["2"].Descriptors.Add("1", new BLE_DescriptorDataModel());
+            service1.Characteristics["2"].Descriptors["1"].DisplayName = "Input descriptor";
+            this.tree.Add(service1);
+
+            // ---------------------------------------------
 
 
-            Dictionary<string, BLE_CharacteristicDataModel> ch2 = new Dictionary<string, BLE_CharacteristicDataModel>();
-            ch2.Add("1", new BLE_CharacteristicDataModel() {
-                CharName = "Hermioni characteristic"
-            });
-            ch2.Add("2", new BLE_CharacteristicDataModel() {
-                CharName = "Ginny characteristic"
-            });
-            this.tree.Add(new BLE_ServiceDataModel() {
-                DisplayName = "Hogwarts 2 service",
-                Characteristics = ch2,
-            });
+            // ---------------------------------------------
+            BLE_ServiceDataModel service2 = new BLE_ServiceDataModel();
+            service2.DisplayName = "Hogwarts 2 service";
+            service2.Characteristics.Add("1", new BLE_CharacteristicDataModel());
+            service2.Characteristics["1"].CharName = "Hermioni characteristic";
+            service2.Characteristics.Add("2", new BLE_CharacteristicDataModel());
+            service2.Characteristics["2"].CharName = "Ginny characteristic";
+            this.tree.Add(service2);
+
+
+            //--------------------------------------------------
 
             #region As list characteristics works
             //List<BLE_CharacteristicDataModel> ch1 = new List<BLE_CharacteristicDataModel>();
@@ -186,6 +210,10 @@ namespace MultiCommTerminal.WindowObjs {
                 this.borderInput.BorderThickness = new Thickness(0);
 
             }
+        }
+
+        private void treeServices_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {
+
         }
     }
 }
