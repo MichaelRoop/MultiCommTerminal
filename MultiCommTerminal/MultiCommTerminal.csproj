@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <None Remove="images\icons\icons8-add-50-noborder.png" />
+    <None Remove="images\icons\icons8-arduino-board-50.png" />
+    <None Remove="images\icons\icons8-arduino-board-emitting-50.png" />
     <None Remove="images\icons\icons8-bluetooth-50.png" />
     <None Remove="images\icons\icons8-bluetooth-white-50.png" />
     <None Remove="images\icons\icons8-checkmark-50.png" />
@@ -27,6 +29,8 @@
     <None Remove="images\icons\icons8-menu-white-50.png" />
     <None Remove="images\icons\icons8-null-symbol-30.png" />
     <None Remove="images\icons\icons8-null-symbol-white-30.png" />
+    <None Remove="images\icons\icons8-phonelink-no-ring-50.png" />
+    <None Remove="images\icons\icons8-phonelink-ring-50.png" />
     <None Remove="images\icons\icons8-quick-mode-on-100.png" />
     <None Remove="images\icons\icons8-rs-232-male-white-50.png" />
     <None Remove="images\icons\icons8-running-24.png" />
@@ -63,6 +67,8 @@
 
   <ItemGroup>
     <Resource Include="images\icons\icons8-add-50-noborder.png" />
+    <Resource Include="images\icons\icons8-arduino-board-50.png" />
+    <Resource Include="images\icons\icons8-arduino-board-emitting-50.png" />
     <Resource Include="images\icons\icons8-bluetooth-50.png" />
     <Resource Include="images\icons\icons8-bluetooth-white-50.png" />
     <Resource Include="images\icons\icons8-checkmark-50.png" />
@@ -82,6 +88,8 @@
     <Resource Include="images\icons\icons8-menu-white-50.png" />
     <Resource Include="images\icons\icons8-null-symbol-30.png" />
     <Resource Include="images\icons\icons8-null-symbol-white-30.png" />
+    <Resource Include="images\icons\icons8-phonelink-no-ring-50.png" />
+    <Resource Include="images\icons\icons8-phonelink-ring-50.png" />
     <Resource Include="images\icons\icons8-quick-mode-on-100.png" />
     <Resource Include="images\icons\icons8-rs-232-male-white-50.png" />
     <Resource Include="images\icons\icons8-running-24.png" />

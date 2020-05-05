@@ -62,6 +62,17 @@ namespace MultiCommTerminal.WPF_Helpers {
                     return new IconDataModel(UIIcon.Connect, this.AddDir("icons8-iphone-spinner-100.png"), "6");
                 case UIIcon.SerialPortWhite:
                     return new IconDataModel(UIIcon.SerialPortWhite, this.AddDir("icons8-rs-232-male-white-50.png"), "6");
+
+                case UIIcon.Phone:
+                    return new IconDataModel(UIIcon.Phone, this.AddDir("icons8-phonelink-no-ring-50.png"), "2");
+                case UIIcon.PhoneEmitting:
+                    return new IconDataModel(UIIcon.PhoneEmitting, this.AddDir("icons8-phonelink-ring-50.png"), "2");
+                case UIIcon.Board:
+                    return new IconDataModel(UIIcon.Board, this.AddDir("icons8-arduino-board-50.png"), "2");
+                case UIIcon.BoardEmitting:
+                    return new IconDataModel(UIIcon.BoardEmitting, this.AddDir("icons8-arduino-board-emitting-50.png"), "2");
+
+
                 default:
                     return new IconDataModel(UIIcon.Cancel, this.AddDir("icons8-close-window-50-noborder.png"), "6");
             }

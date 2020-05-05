@@ -1,4 +1,5 @@
-﻿using LanguageFactory.data;
+﻿using ChkUtils.Net;
+using LanguageFactory.data;
 using LogUtils.Net;
 using MultiCommTerminal.DependencyInjection;
 using MultiCommTerminal.WindowObjs;
@@ -24,7 +25,9 @@ namespace MultiCommTerminal.WPF_Helpers {
             Border b = win.Template.FindName("PART_topBar", win) as Border;
             if (b != null) {
                 b.MouseDown += (sender, args) => {
-                    win.DragMove();
+                    WrapErr.ToErrReport(9999, "Drag when mouse not down", () => {
+                        win.DragMove();
+                    });
                 };
             }
             else {

@@ -1,0 +1,91 @@
+﻿<Window x:Class="MultiCommTerminal.WindowObjs.DeviceInfo_BLESerial"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MultiCommTerminal.WindowObjs"
+        xmlns:controls="clr-namespace:MultiCommTerminal.UserControls"
+        xmlns:wpfHelper="clr-namespace:MultiCommTerminal.WPF_Helpers"
+
+        Icon="{Binding Source={x:Static wpfHelper:IconBinder.BluetoothClassic_W}}"
+        WindowStartupLocation="Manual" 
+        Title="Bluetooth BLE Serial" 
+        Style="{StaticResource MyWindowStyle}"
+        MinHeight="150" MinWidth="200"
+        mc:Ignorable="d"
+        ContentRendered="Window_ContentRendered" Closing="Window_Closing" >
+    <Grid>
+        <StackPanel HorizontalAlignment="Center">
+            <Border x:Name="borderInput" BorderBrush="Blue" Margin="3" >
+                <DockPanel HorizontalAlignment="Center">
+                    <Border Padding="4">
+                        <Image Source="{Binding Source={x:Static wpfHelper:IconBinder.PhoneEmitting}}" 
+                           Width="30" Height="30" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"                                   
+                           RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" />
+                    </Border>
+                    <Label Content="&#x2B9E;" VerticalAlignment="Center"/>
+                    <Image Source="{Binding Source={x:Static wpfHelper:IconBinder.Board}}" 
+                           Width="30" Height="30" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"                                   
+                           RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" />
+
+                    <DockPanel>
+                        <Label Content="{Binding Source={x:Static wpfHelper:TxtBinder.Name} }" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" />
+                        <Label Content=":" Margin="2,0" VerticalContentAlignment="Center" />
+                        <Label x:Name="labelInputToDevice" Content="Descriptor Name Input" VerticalContentAlignment="Center"/>
+                    </DockPanel>
+                </DockPanel>
+            </Border>
+            <Border x:Name="borderOutput" BorderBrush="Blue" Margin="3">
+                <DockPanel HorizontalAlignment="Center">
+                    <Border Padding="4">
+                        <Image Source="{Binding Source={x:Static wpfHelper:IconBinder.Phone}}" 
+                           Width="30" Height="30" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"                                   
+                           RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" />
+                    </Border>
+                    <Label Content="&#x2B9C;" VerticalAlignment="Center" />
+                    <Image Source="{Binding Source={x:Static wpfHelper:IconBinder.BoardEmitting}}" 
+                           Width="30" Height="30" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"                                   
+                           RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" />
+                    <DockPanel>
+                        <Label Content="{Binding Source={x:Static wpfHelper:TxtBinder.Name} }" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"   />
+                        <Label Content=":" Margin="2,0" VerticalContentAlignment="Center" />
+                        <Label x:Name="labelOutputFromDevice" Content="Descriptor Name Output" VerticalContentAlignment="Center" />
+                    </DockPanel>
+                </DockPanel>
+            </Border>
+            <Border x:Name="borderCharacteristicSelect">
+            <StackPanel>
+                    <Label x:Name="lblInputOutputType" Content="" HorizontalContentAlignment="Center" />
+                    <ListBox x:Name="ListBoxCharacteristics" Height="200" Width="220" Margin="10">
+                </ListBox>
+                <DockPanel HorizontalAlignment="Center" Margin="10,5,10,15">
+                    <controls:UC_IconButton x:Name="btnCancel"  Margin="0,0,10,0"
+                            Style="{StaticResource TextIconButton}" 
+                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Cancel}}" 
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}"
+                            Click="btnCancel_Click"/>
+                    <controls:UC_IconButton x:Name="btnSelect"  Margin="0,0,10,0"
+                            Style="{StaticResource TextIconButton}" 
+                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Select}}" 
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Save}}"
+                            Click="btnSelect_Click"/>
+                </DockPanel>
+            </StackPanel>
+            </Border>
+            <Border x:Name="borderMainButtons" HorizontalAlignment="Center" Margin="10">
+                <DockPanel HorizontalAlignment="Center">
+                <controls:UC_IconButton x:Name="btnExit" Margin="5"
+                            Style="{StaticResource TextIconButton}" 
+                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Exit}}" 
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Exit}}"
+                            Click="btnExit_Click"/>
+                <controls:UC_IconButton x:Name="btnSave" Margin="5"
+                            Style="{StaticResource TextIconButton}" 
+                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Save}}" 
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Save}}"
+                            Click="btnSave_Click"/>
+                </DockPanel>
+            </Border>
+        </StackPanel>
+    </Grid>
+</Window>

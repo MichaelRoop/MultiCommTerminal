@@ -48,7 +48,10 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string BluetoothClassic_W { get { return Source(UIIcon.BluetoothClassicWhite); } }
         public static string BluetoothLE { get { return Source(UIIcon.BluetoothLE); } }
         public static string BluetoothLE_W { get { return Source(UIIcon.BluetoothLEWhite); } }
-
+        public static string Phone { get { return Source(UIIcon.Phone); } }
+        public static string PhoneEmitting { get { return Source(UIIcon.PhoneEmitting); } }
+        public static string Board { get { return Source(UIIcon.Board); } }
+        public static string BoardEmitting { get { return Source(UIIcon.BoardEmitting); } }
 
         #endregion
 
