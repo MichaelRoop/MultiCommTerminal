@@ -73,12 +73,16 @@ namespace MultiCommTerminal.WindowObjs {
             service1.DisplayName = "Hogwarts 1 service";
             service1.Characteristics.Add("1", new BLE_CharacteristicDataModel());
             service1.Characteristics["1"].CharName = "George Characteristic";
+            service1.Characteristics["1"].Descriptors.Add("1", new BLE_DescriptorDataModel());
+            service1.Characteristics["1"].Descriptors["1"].DisplayName = "Output descriptor";
+
             service1.Characteristics.Add("2", new BLE_CharacteristicDataModel());
             service1.Characteristics["2"].CharName = "Fred Characteristic";
             service1.Characteristics["2"].Descriptors.Add("1", new BLE_DescriptorDataModel());
             service1.Characteristics["2"].Descriptors["1"].DisplayName = "Input descriptor";
-            this.tree.Add(service1);
-
+            service1.Characteristics["2"].Descriptors.Add("2", new BLE_DescriptorDataModel());
+            service1.Characteristics["2"].Descriptors["2"].DisplayName = "Name of stuff";
+            this.treeDict.Add("1", service1);
             // ---------------------------------------------
 
 
@@ -89,43 +93,15 @@ namespace MultiCommTerminal.WindowObjs {
             service2.Characteristics["1"].CharName = "Hermioni characteristic";
             service2.Characteristics.Add("2", new BLE_CharacteristicDataModel());
             service2.Characteristics["2"].CharName = "Ginny characteristic";
-            this.tree.Add(service2);
+            this.treeDict.Add("2", service2);
 
-
-            //--------------------------------------------------
-
-            #region As list characteristics works
-            //List<BLE_CharacteristicDataModel> ch1 = new List<BLE_CharacteristicDataModel>();
-            //ch1.Add(new BLE_CharacteristicDataModel() {
-            //    CharName = "george characteristic"
-            //});
-            //ch1.Add(new BLE_CharacteristicDataModel() {
-            //    CharName = "fred characteristic"
-            //});
-            //this.tree.Add(new BLE_ServiceDataModel() {
-            //    DisplayName = "Hogwarts 1 service",
-            //    tstListChar = ch1,
-            //});
-
-
-            //List<BLE_CharacteristicDataModel> ch2 = new List<BLE_CharacteristicDataModel>();
-            //ch2.Add(new BLE_CharacteristicDataModel() {
-            //    CharName = "Hermioni characteristic"
-            //});
-            //ch2.Add(new BLE_CharacteristicDataModel() {
-            //    CharName = "Ginny characteristic"
-            //});
-            //this.tree.Add(new BLE_ServiceDataModel() {
-            //    DisplayName = "Hogwarts 2 service",
-            //    tstListChar = ch2,
-            //});
-            #endregion
-
-
-            this.treeServices.ItemsSource = this.tree;
+            // Just pass list of Values to avoid headach in XAML    
+            this.treeServices.ItemsSource = this.treeDict.Values;
 
         }
-        SevicesTree tree = new SevicesTree();
+        //SevicesTree tree = new SevicesTree();
+        ServiceTreeDict treeDict = new ServiceTreeDict();
+
 
             //BluetoothLEDeviceInfo dev;
 

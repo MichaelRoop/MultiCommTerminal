@@ -17,7 +17,7 @@
         ContentRendered="Window_ContentRendered" Closing="Window_Closing" >
     <Window.Resources>
         <!-- The main data source as List of BLE_Service -->
-        <wpfHelper:SevicesTree  x:Key="servicesSource"/>
+        <wpfHelper:ServicesTree x:Key="servicesSource"/>
         <!-- Deepest level - Descriptors -->
 
         <HierarchicalDataTemplate
