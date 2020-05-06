@@ -34,16 +34,19 @@
                 DataType="{x:Type dataModels:BLE_CharacteristicDataModel}"
                 ItemsSource="{Binding Path=Descriptors.Values}" >
             <!-- This is data in the characteristic -->
-            <DockPanel>
-                <TextBlock Text="characteristic: " />
-                <TextBlock Text="{Binding CharName}"/>
-            </DockPanel>
+            <StackPanel>
+                <DockPanel>
+                    <TextBlock Text="characteristic: "  />
+                    <TextBlock Text="{Binding CharName}" />
+                </DockPanel>
+                <TextBlock Text="{Binding Uuid}" Visibility="Collapsed"/>
+            </StackPanel>
         </HierarchicalDataTemplate>
         
-        <DataTemplate
-            DataType="{x:Type dataModels:BLE_DescriptorDataModel}">
-            <DockPanel>
-                <TextBlock Text="Descriptor: " />
+        <DataTemplate 
+            DataType="{x:Type dataModels:BLE_DescriptorDataModel}"  >
+            <DockPanel IsEnabled="False" >
+                <TextBlock Text="Descriptor: "/>
                 <TextBlock Text="{Binding DisplayName}"/>
             </DockPanel>
         </DataTemplate>

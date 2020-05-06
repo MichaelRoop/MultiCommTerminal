@@ -189,7 +189,23 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
         private void treeServices_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {
+            if (e.NewValue is BLE_CharacteristicDataModel) {
+                //MsgBoxSimple.ShowBox("Characteristic");
+                BLE_CharacteristicDataModel ch = e.NewValue as BLE_CharacteristicDataModel;
+                if (borderInput.BorderThickness.Top > 0) {
+                    this.labelInputToDevice.Content = ch.CharName;
+                }
+                else {
+                    this.labelOutputFromDevice.Content = ch.CharName;
+                }
+            }
+            else {
+                e.Handled = true;
+            }
 
+
+
+            string x = "dsfsdfsdf";
         }
     }
 }
