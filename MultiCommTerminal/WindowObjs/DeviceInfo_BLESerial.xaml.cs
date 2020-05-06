@@ -189,23 +189,31 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
         private void treeServices_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {
-            if (e.NewValue is BLE_CharacteristicDataModel) {
-                //MsgBoxSimple.ShowBox("Characteristic");
-                BLE_CharacteristicDataModel ch = e.NewValue as BLE_CharacteristicDataModel;
-                if (borderInput.BorderThickness.Top > 0) {
-                    this.labelInputToDevice.Content = ch.CharName;
+            // TODO REMOVE
+        }
+
+        private void treeServices_Selected(object sender, RoutedEventArgs e) {
+            if (sender is TreeView) {
+                TreeView tv = sender as TreeView;
+                if (tv.SelectedItem is BLE_CharacteristicDataModel) {
+                    BLE_CharacteristicDataModel ch = tv.SelectedItem as BLE_CharacteristicDataModel;
+                    if (this.borderInput.BorderThickness.Top > 0) {
+                        // TODO - save the other info
+                        this.labelInputToDevice.Content = ch.CharName;
+                    }
+                    else {
+                        // TODO - save the other info
+                        this.labelOutputFromDevice.Content = ch.CharName;
+                    }
                 }
                 else {
-                    this.labelOutputFromDevice.Content = ch.CharName;
+                    if (e.OriginalSource is TreeViewItem) {
+                        TreeViewItem tvi = e.OriginalSource as TreeViewItem;
+                        tvi.IsSelected = false;
+                    }
+                    e.Handled = true;
                 }
             }
-            else {
-                e.Handled = true;
-            }
-
-
-
-            string x = "dsfsdfsdf";
         }
     }
 }
