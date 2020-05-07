@@ -7,5 +7,6 @@ namespace MultiCommData.UserDisplayData.Net {
         Wifi,
         Bluetooth,
         BluetoothLE,
+        Usb,
     }
 }
