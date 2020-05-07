@@ -72,6 +72,15 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void CommMediumList(Action<List<CommMedialDisplay>> mediums);
 
+
+        #endregion
+
+        #region Help            
+
+        /// <summary>Help information on communication mediums</summary>
+        /// <param name="onSuccess">List returned on success</param>
+        void CommMediumHelpList(Action<List<CommMediumHelp>> onSuccess);
+
         #endregion
 
         #region Terminators

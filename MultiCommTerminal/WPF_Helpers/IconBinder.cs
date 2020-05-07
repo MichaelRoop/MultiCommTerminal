@@ -1,5 +1,6 @@
 ﻿using IconFactory.data;
 using IconFactory.interfaces;
+using MultiCommData.UserDisplayData.Net;
 using MultiCommTerminal.DependencyInjection;
 using System.Windows;
 
@@ -52,8 +53,27 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string PhoneEmitting { get { return Source(UIIcon.PhoneEmitting); } }
         public static string Board { get { return Source(UIIcon.Board); } }
         public static string BoardEmitting { get { return Source(UIIcon.BoardEmitting); } }
+        public static string ArduinoIcon { get { return Source(UIIcon.ArduinoIcon); } }
+        public static string Help { get { return Source(UIIcon.Help); } }
+        public static string HelpWhite { get { return Source(UIIcon.HelpWhite); } }
+        public static string Configure { get { return Source(UIIcon.Configure); } }
 
         #endregion
+
+
+        /// <summary>Get the icon corresponding to the Communication Medium Type</summary>
+        /// <param name="medium">The medium type</param>
+        /// <returns>Icon source string</returns>
+        public static string CommMediumSource(this CommMediumType medium) {
+            switch (medium) {
+                case CommMediumType.Bluetooth: return BluetoothClassic;
+                case CommMediumType.BluetoothLE: return BluetoothLE;
+                case CommMediumType.Ethernet: return Source(UIIcon.Ethernet);
+                case CommMediumType.Wifi: return Source(UIIcon.Wifi);
+                default: return Cancel;
+            }
+
+        }
 
 
         /// <summary>Get the source from factory directly if in design mode or from DI</summary>

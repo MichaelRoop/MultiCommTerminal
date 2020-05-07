@@ -63,25 +63,30 @@
                     <DockPanel  VerticalAlignment="Center">
                         <Border Margin="10,0,10,10">
                             <StackPanel>
-                            <ComboBox x:Name="cbComm" Height="30" MinWidth="120" MaxHeight="90" VerticalAlignment="Top" Background="Transparent"
+                                <DockPanel>
+                                    <controls:UC_RoundIconButton x:Name="btnCommTypeHelp" Margin="0,0,5,0" Height="25" Width="25"
+                                        Style="{StaticResource IconButton}" IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Help}}" 
+                                        Click="btnCommTypeHelp_Click" />
+                                    <ComboBox x:Name="cbComm" Height="30" MinWidth="120" MaxHeight="90" VerticalAlignment="Top" Background="Transparent"
                                       SelectionChanged="cbComm_SelectionChanged">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid Margin="1">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="25" />
-                                                <ColumnDefinition Width="auto" />
-                                            </Grid.ColumnDefinitions>
-                                            <Border Padding="0">
-                                                <Image Grid.Column="0" Source="{Binding IconSource}" 
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="1">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="25" />
+                                                        <ColumnDefinition Width="auto" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Border Padding="0">
+                                                        <Image Grid.Column="0" Source="{Binding IconSource}" 
                                                        Width="{Binding IconWidth}" Height="{Binding IconHeight}" 
                                                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            </Border>
-                                            <TextBlock Grid.Column="1" Text="{Binding Display}" FontSize="16" VerticalAlignment="Center"/>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
+                                                    </Border>
+                                                    <TextBlock Grid.Column="1" Text="{Binding Display}" FontSize="16" VerticalAlignment="Center"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                </DockPanel>
 
                                 <!--<controls:UC_TerminatorEdit x:Name="terminatorEdit" />-->
 

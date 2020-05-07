@@ -478,5 +478,9 @@ namespace MultiCommTerminal.WindowObjs {
 
         #endregion
 
+        private void btnCommTypeHelp_Click(object sender, RoutedEventArgs e) {
+            Help_CommunicationMediums win = new Help_CommunicationMediums(this);
+            win.ShowDialog();
+        }
     }
 }

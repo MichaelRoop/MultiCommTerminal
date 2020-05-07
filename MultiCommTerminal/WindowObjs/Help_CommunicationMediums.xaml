@@ -1,0 +1,61 @@
+﻿<Window x:Class="MultiCommTerminal.WindowObjs.Help_CommunicationMediums"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MultiCommTerminal.WindowObjs"
+        
+        xmlns:controls="clr-namespace:MultiCommTerminal.UserControls"
+        xmlns:wpfHelper="clr-namespace:MultiCommTerminal.WPF_Helpers"
+
+        Icon="{Binding Source={x:Static wpfHelper:IconBinder.HelpWhite}}"
+        Style="{StaticResource MyWindowStyle}"
+        MinHeight="150" MinWidth="250"
+        WindowStartupLocation="Manual" 
+        Title="" 
+        mc:Ignorable="d"
+        ContentRendered="Window_ContentRendered"
+        >
+    <Grid>
+        <StackPanel>
+            <DockPanel Margin="10">
+                <ListBox x:Name="listBoxMediums" MinHeight="50" MaxHeight="400" MinWidth="200" MaxWidth="600"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                     >
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition MinWidth="20"/>
+                                    <ColumnDefinition MinWidth="80"/>
+                                    <ColumnDefinition Width="250" />
+                                </Grid.ColumnDefinitions>
+                                <!--<Border VerticalAlignment="Center" HorizontalAlignment="Center">-->
+                                    <Image Grid.Column="0" Source="{Binding Icon}" Width="18" Height="18" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                <!--</Border>-->
+                                <TextBlock Grid.Column="1" Text="{Binding Title}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Column="2" Text="{Binding Text}" TextWrapping="WrapWithOverflow"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <StackPanel VerticalAlignment="Center">
+                    <controls:UC_RoundIconButton x:Name="btnCode" Margin="5" Width="35" Height="35"
+                            Style="{StaticResource RoundIconButton}" 
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.ArduinoIcon}}"
+                            Click="btnCode_Click"/>
+
+                </StackPanel>
+            </DockPanel>
+
+
+            <Border HorizontalAlignment="Center">
+                <controls:UC_IconButton x:Name="btnExit" Margin="5"
+                            Style="{StaticResource TextIconButton}" 
+                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Exit}}" 
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Exit}}"
+                            Click="btnExit_Click"/>
+            </Border>
+        </StackPanel>
+    </Grid>
+</Window>

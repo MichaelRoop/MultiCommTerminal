@@ -62,7 +62,6 @@ namespace MultiCommTerminal.WPF_Helpers {
                     return new IconDataModel(UIIcon.Connect, this.AddDir("icons8-iphone-spinner-100.png"), "6");
                 case UIIcon.SerialPortWhite:
                     return new IconDataModel(UIIcon.SerialPortWhite, this.AddDir("icons8-rs-232-male-white-50.png"), "6");
-
                 case UIIcon.Phone:
                     return new IconDataModel(UIIcon.Phone, this.AddDir("icons8-phonelink-no-ring-50.png"), "2");
                 case UIIcon.PhoneEmitting:
@@ -71,7 +70,14 @@ namespace MultiCommTerminal.WPF_Helpers {
                     return new IconDataModel(UIIcon.Board, this.AddDir("icons8-arduino-board-50.png"), "2");
                 case UIIcon.BoardEmitting:
                     return new IconDataModel(UIIcon.BoardEmitting, this.AddDir("icons8-arduino-board-emitting-50.png"), "2");
-
+                case UIIcon.ArduinoIcon:
+                    return new IconDataModel(UIIcon.ArduinoIcon, this.AddDir("icons8-arduino-50.png"), "3");
+                case UIIcon.Help:
+                    return new IconDataModel(UIIcon.Help, this.AddDir("icons8-help-50.png"), "2");
+                case UIIcon.HelpWhite:
+                    return new IconDataModel(UIIcon.HelpWhite, this.AddDir("icons8-help-white-50.png"), "1");
+                case UIIcon.Configure:
+                    return new IconDataModel(UIIcon.Configure, this.AddDir("icons8-job-50.png"), "1");
 
                 default:
                     return new IconDataModel(UIIcon.Cancel, this.AddDir("icons8-close-window-50-noborder.png"), "6");
