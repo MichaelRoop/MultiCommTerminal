@@ -50,7 +50,9 @@ namespace MultiCommWrapper.Net.WrapCode {
         public void CommMediumList(Action<List<CommMedialDisplay>> mediums) {
             List<CommMedialDisplay> items = new List<CommMedialDisplay>();
             items.Add(this.CommItem("Classic", UIIcon.BluetoothClassic, CommMediumType.Bluetooth));
-            items.Add(this.CommItem("BLE", UIIcon.BluetoothLE, CommMediumType.BluetoothLE));
+            // TODO - for now serial, need a full BLE
+            items.Add(this.CommItem(String.Format("BLE  {0} {1}", '\u2b84', '\u2b86'), 
+                UIIcon.BluetoothLE, CommMediumType.BluetoothLE));
             items.Add(this.CommItem("Ethernet", UIIcon.Ethernet, CommMediumType.Ethernet));
             items.Add(this.CommItem("Wifi", UIIcon.Wifi, CommMediumType.Wifi));
             mediums.Invoke(items);

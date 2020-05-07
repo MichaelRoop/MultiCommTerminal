@@ -58,11 +58,11 @@ namespace BluetoothLE.Win32 {
                                         if (characteristics.Characteristics.Count > 0) {
                                             foreach (GattCharacteristic ch in characteristics.Characteristics) {
                                                 await this.DumpCharacteristic(ch);
-                                                var descriptors = await ch.GetDescriptorsAsync();
+                                                GattDescriptorsResult descriptors = await ch.GetDescriptorsAsync();
                                                 if (descriptors.Status == GattCommunicationStatus.Success) {
                                                     if (descriptors.Descriptors.Count > 0) {
                                                         foreach (GattDescriptor desc in descriptors.Descriptors) {
-                                                            var r = await desc.ReadValueAsync();
+                                                            GattReadResult r = await desc.ReadValueAsync();
                                                             string descName = "N/A";
                                                             if (r.Status == GattCommunicationStatus.Success) {
                                                                 //descName = Encoding.ASCII.GetString(r.Value.FromBufferToBytes());
