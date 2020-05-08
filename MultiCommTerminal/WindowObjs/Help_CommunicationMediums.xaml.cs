@@ -38,14 +38,17 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void listBoxMediums_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {
-            this.spView.Visibility = Visibility.Visible;
+            if (this.listBoxMediums.SelectedItem != null) {
+                CommMediumHelp help = this.listBoxMediums.SelectedItem as CommMediumHelp;
+                DI.Wrapper.HasCodeSample(help.Id, this.OnSelectedHasCodeSample, this.OnSelectedNoCodeSample);
+            }
         }
 
 
         private void btnCode_Click(object sender, RoutedEventArgs e) {
             if (this.listBoxMediums.SelectedItem != null) {
                 CommMediumHelp help = this.listBoxMediums.SelectedItem as CommMediumHelp;
-                DI.Wrapper.HasCodeSample(help.Id, this.OnHasCodeSample, WindowHelpers.ShowMsgTitle);
+                DI.Wrapper.HasCodeSample(help.Id, this.OnHasCodeSampleView, WindowHelpers.ShowMsgTitle);
             }
         }
 
@@ -61,11 +64,22 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
-        private void OnHasCodeSample(CommMediumType medium) {
+        private void OnHasCodeSampleView(CommMediumType medium) {
             // This to avoid opening the code highlighted box because
             // its control malfunctions with no content
             MsgBoxCode win = new MsgBoxCode(this, medium);
             win.ShowDialog();
+        }
+
+
+        private void OnSelectedHasCodeSample(CommMediumType medium) {
+            this.spView.Visibility = Visibility.Visible;
+        }
+
+
+        private void OnSelectedNoCodeSample(string title, string msg) {
+            this.spView.Visibility = Visibility.Collapsed;
+            ;
         }
 
     }
