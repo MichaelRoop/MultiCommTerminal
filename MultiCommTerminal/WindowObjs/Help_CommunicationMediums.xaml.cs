@@ -1,18 +1,9 @@
 ﻿using MultiCommData.UserDisplayData.Net;
 using MultiCommTerminal.DependencyInjection;
 using MultiCommTerminal.WPF_Helpers;
-using MultiCommWrapper.Net.interfaces;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.WindowObjs {
@@ -48,7 +39,7 @@ namespace MultiCommTerminal.WindowObjs {
         private void btnCode_Click(object sender, RoutedEventArgs e) {
             if (this.listBoxMediums.SelectedItem != null) {
                 CommMediumHelp help = this.listBoxMediums.SelectedItem as CommMediumHelp;
-                MsgBoxSimple.ShowBox(string.Format("Arduino Sample ({0})", help.Title), help.Code);
+                DI.Wrapper.HasCodeSample(help.Id, this.OnHasCodeSample, WindowHelpers.ShowMsgTitle);
             }
         }
 
@@ -61,6 +52,14 @@ namespace MultiCommTerminal.WindowObjs {
         private void OnBuildMediumHelp(List<CommMediumHelp> helps) {
             this.mediumHelps = helps;
             this.listBoxMediums.ItemsSource = this.mediumHelps;
+        }
+
+
+        private void OnHasCodeSample(CommMediumType medium) {
+            // This to avoid opening the code highlighted box because
+            // its control malfunctions with no content
+            MsgBoxCode win = new MsgBoxCode(this, medium);
+            win.ShowDialog();
         }
 
     }

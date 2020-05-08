@@ -81,6 +81,15 @@ namespace MultiCommWrapper.Net.interfaces {
         /// <param name="onSuccess">List returned on success</param>
         void CommMediumHelpList(Action<List<CommMediumHelp>> onSuccess);
 
+        /// <summary>Retrieve a sample code file for display</summary>
+        /// <param name="medium">The type of communication medium to find sample</param>
+        /// <param name="onSuccess">Raised when file is found and opened</param>
+        /// <param name="onError">Raised on error</param>
+        void GetCodeSample(CommMediumType medium, Action<string> onSuccess, OnErrTitle onError);
+
+
+        void HasCodeSample(CommMediumType medium, Action<CommMediumType> onSuccess, OnErrTitle onError);
+
         #endregion
 
         #region Terminators

@@ -1,7 +1,11 @@
-﻿using MultiCommData.UserDisplayData.Net;
+﻿using ChkUtils.Net;
+using ChkUtils.Net.ErrObjects;
+using LanguageFactory.data;
+using MultiCommData.UserDisplayData.Net;
 using MultiCommWrapper.Net.interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace MultiCommWrapper.Net.WrapCode {
@@ -50,8 +54,61 @@ namespace MultiCommWrapper.Net.WrapCode {
             onSuccess(helps);
 
         }
+    
+
+        public void HasCodeSample(CommMediumType medium, Action<CommMediumType> onSuccess, OnErrTitle onError) {
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 9999,
+                () => string.Format(""),
+                () => {
+                    string tmp = this.GetFilename(medium);
+                    if (tmp.Length > 0) {
+                        onSuccess(medium);
+                    }
+                    else {
+                        onError(this.GetText(MsgCode.Error), this.GetText(MsgCode.LoadFailed));
+                    }
+                });
+            if (report.Code != 0) {
+                WrapErr.SafeAction(() => {
+                    onError.Invoke(this.GetText(MsgCode.Error), report.Msg);
+                });
+            }
+        }
 
 
-
+        public void GetCodeSample(CommMediumType medium, Action<string> onSuccess, OnErrTitle onError) {
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 9999,
+                () => string.Format(""),
+                () => {
+                    string filename = this.GetFilename(medium);
+                    if (filename.Length > 0) {
+                        // TODO - Move to cross platform access
+                        if (File.Exists(filename)) {
+                            onSuccess.Invoke(File.ReadAllText(filename));
+                            return;
+                        }
+                    }
+                    onError(this.GetText(MsgCode.Error), "* N/Ax *");
+                });
+            if (report.Code!= 0) {
+                WrapErr.SafeAction(() => {
+                    onError.Invoke(this.GetText(MsgCode.Error), report.Msg);
+                });
+            }
+        }
+    
+    
+        private string GetFilename(CommMediumType medium) {
+            switch (medium) {
+                case CommMediumType.Bluetooth:
+                    return "./Samples/BTSample.txt";
+                case CommMediumType.BluetoothLE:
+                    return "./Samples/BLESample.txt";
+                default: return "";
+            }
+        }
     }
+
 }

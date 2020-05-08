@@ -54,6 +54,7 @@
     <ProjectReference Include="..\..\SharedNetLibs\IconFactory\IconFactory.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\LanguageFactory\LanguageFactory.Net.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\LogUtils.Net\LogUtils.Net.csproj" />
+    <ProjectReference Include="..\AurelienRibon.Ui.SyntaxHighlightBox\AurelienRibon.Ui.SyntaxHighlightBox.csproj" />
     <ProjectReference Include="..\BluetoothClassic\BluetoothClassic.Net.csproj" />
     <ProjectReference Include="..\BluetoothLE.Win32\BluetoothLE.Win32.csproj" />
     <ProjectReference Include="..\MultiCommData\MultiCommData.Net.csproj" />
@@ -114,6 +115,12 @@
 
   <ItemGroup>
     <None Update="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Samples\BLESample.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Samples\BTSample.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
