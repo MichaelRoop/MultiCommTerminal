@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Syntax name="CPPDL">
+	<HighlightWordsRule name="Standard types">
+		<Words>
+      int double long  bool char float void byte
+      bit integer boolean
+      string .h
+      std_ulogic
+      std_ulogic_vector
+      std_logic std_logic_vector
+      unsigned signed
+      true false
+      uint8_t uint16_t
+      for while if else
+      \\\
+    </Words>
+		<IgnoreCase>true</IgnoreCase>
+		<Foreground>Blue</Foreground>
+		<FontWeight>Bold</FontWeight>
+		<FontStyle>Normal</FontStyle>
+	</HighlightWordsRule>
+
+
+  <HighlightWordsRule name="Lighter purple">
+    <Words>
+      write n r ' # include # define #ifelse #ifndef
+    </Words>
+    <IgnoreCase>true</IgnoreCase>
+    <Foreground>#C00080</Foreground>
+    <FontWeight>Normal</FontWeight>
+    <FontStyle>Normal</FontStyle>
+  </HighlightWordsRule>
+
+  <HighlightWordsRule name="Arduino Lighter purple">
+    <Words>
+      print println
+      BLEService BLECharacteristic BLEDescriptor
+    </Words>
+    <IgnoreCase>true</IgnoreCase>
+    <Foreground>#C00080</Foreground>
+    <FontWeight>Normal</FontWeight>
+    <FontStyle>Normal</FontStyle>
+  </HighlightWordsRule>
+
+
+  <HighlightWordsRule name="Lighter purple italic">
+    <Words>
+      fred
+    </Words>
+    <IgnoreCase>true</IgnoreCase>
+    <Foreground>#C00080</Foreground>
+    <FontWeight>Normal</FontWeight>
+    <FontStyle>Italic</FontStyle>
+  </HighlightWordsRule>
+
+
+
+  <HighlightLineRule name="Comments">
+		<LineStart>//</LineStart>
+		<IgnoreCase>false</IgnoreCase>
+		<Foreground>#009933</Foreground>
+		<FontWeight>Normal</FontWeight>
+		<FontStyle>Normal</FontStyle>
+	</HighlightLineRule>
+  
+	<AdvancedHighlightRule name="Numbers">
+		<Expression>\b([0-9]+)\b</Expression>
+		<IgnoreCase>false</IgnoreCase>
+		<Foreground>#F68A1B</Foreground>
+		<FontWeight>Normal</FontWeight>
+		<FontStyle>Normal</FontStyle>
+	</AdvancedHighlightRule>
+</Syntax>
