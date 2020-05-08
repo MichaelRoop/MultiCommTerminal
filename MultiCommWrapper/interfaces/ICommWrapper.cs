@@ -46,6 +46,8 @@ namespace MultiCommWrapper.Net.interfaces {
 
         string GetText(MsgCode code);
 
+        string GetText(CommMediumType medium);
+
         void GetMenuItemDataModel(
             MenuCode menuCode,
             MsgCode msgCode, 

@@ -2,7 +2,9 @@
 using IconFactory.interfaces;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommTerminal.DependencyInjection;
+using System;
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace MultiCommTerminal.WPF_Helpers {
 
@@ -72,7 +74,57 @@ namespace MultiCommTerminal.WPF_Helpers {
                 case CommMediumType.Wifi: return Source(UIIcon.Wifi);
                 default: return Cancel;
             }
+        }
 
+
+        public static string CommMediumSourceWhite(this CommMediumType medium) {
+            switch (medium) {
+                case CommMediumType.Bluetooth:
+                    return BluetoothClassic_W;
+                case CommMediumType.BluetoothLE:
+                    return BluetoothLE_W;
+                case CommMediumType.Ethernet:
+                    // TODO need white
+                    return Source(UIIcon.Ethernet);
+                case CommMediumType.Wifi:
+                    return Source(UIIcon.Wifi);
+                default:
+                    return Cancel;
+            }
+        }
+
+
+        /// <summary>Access to the 
+        /// 
+        /// </summary>
+        /// <param name="icon"></param>
+        /// <returns></returns>
+        public static string PacketSource(this UIIcon icon) {
+            return string.Format("pack://application:,,,{0}", IconBinder.Source(icon));
+        }
+
+
+        public static string PacketSource(this CommMediumType medium) {
+            return string.Format("pack://application:,,,{0}", IconBinder.CommMediumSource(medium));
+        }
+
+
+        public static BitmapImage ResourceBlackBitmap(this UIIcon icon) {
+            return new BitmapImage(new Uri(icon.PacketSource(), UriKind.Absolute));
+        }
+
+
+        public static BitmapImage ResourceWhiteBitmap(this CommMediumType medium) {
+            return new BitmapImage(new Uri(medium.PacketSourceWhite(), UriKind.Absolute));
+        }
+
+        public static BitmapImage ResourceBlackBitmap(this CommMediumType medium) {
+            return new BitmapImage(new Uri(medium.PacketSource(), UriKind.Absolute));
+        }
+
+
+        public static string PacketSourceWhite(this CommMediumType medium) {
+           return string.Format("pack://application:,,,{0}", IconBinder.CommMediumSourceWhite(medium));
         }
 
 

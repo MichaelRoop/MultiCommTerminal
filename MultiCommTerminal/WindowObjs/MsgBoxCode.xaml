@@ -9,7 +9,7 @@
         xmlns:cbox="clr-namespace:AurelienRibon.Ui.SyntaxHighlightBox.src;assembly=AurelienRibon.Ui.SyntaxHighlightBox"        
         WindowStartupLocation="Manual" 
         mc:Ignorable="d"
-        Title="MsgBoxCode" 
+        Title="" 
         Style="{StaticResource MyWindowStyle}"
         MinHeight="150" MinWidth="150"
         ContentRendered="Window_ContentRendered" Closing="Window_Closing">

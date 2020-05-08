@@ -107,6 +107,19 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
+        public string GetText(CommMediumType medium) {
+            switch (medium) {
+                case CommMediumType.Bluetooth: return "Classic";
+                case CommMediumType.BluetoothLE: return String.Format("BLE  {0} {1}", '\u2b84', '\u2b86');
+                case CommMediumType.Wifi: return "Wifi";
+                case CommMediumType.Ethernet: return "Ethernet";
+                case CommMediumType.Usb: return "USB";
+                default: return "N/A";
+                    // TODO - others
+            }
+        }
+
+
         public void GetMenuItemDataModel(
             MenuCode menuCode,
             MsgCode msgCode, 

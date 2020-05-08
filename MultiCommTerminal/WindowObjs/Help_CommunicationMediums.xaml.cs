@@ -19,6 +19,7 @@ namespace MultiCommTerminal.WindowObjs {
         public Help_CommunicationMediums(Window parent) {
             this.parent = parent;
             InitializeComponent();
+            this.spView.Visibility = Visibility.Collapsed;
             this.SizeToContent = SizeToContent.WidthAndHeight;
             DI.Wrapper.CommMediumHelpList(this.OnBuildMediumHelp);
         }
@@ -33,6 +34,11 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void Window_ContentRendered(object sender, EventArgs e) {
             this.CenterToParent(this.parent);
+        }
+
+
+        private void listBoxMediums_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {
+            this.spView.Visibility = Visibility.Visible;
         }
 
 

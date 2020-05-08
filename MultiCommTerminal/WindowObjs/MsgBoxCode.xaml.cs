@@ -1,11 +1,15 @@
 ﻿using AurelienRibon.Ui.SyntaxHighlightBox.src;
 using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
+using LanguageFactory.data;
+using LogUtils.Net;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommTerminal.DependencyInjection;
 using MultiCommTerminal.WPF_Helpers;
 using System;
 using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.WindowObjs {
@@ -30,6 +34,8 @@ namespace MultiCommTerminal.WindowObjs {
             this.parent = parent;
             this.medium = medium;
             InitializeComponent();
+            this.Title = DI.Wrapper.GetText(medium);
+            WrapErr.ToErrReport(9999, () => this.Icon = medium.ResourceWhiteBitmap());
             this.codeBox.CurrentHighlighter = HighlighterManager.Instance.Highlighters["CPPDL"];
             this.buttonWidthManager = new ButtonGroupSizeSyncManager(this.btnCopy, this.btnExit);
             this.buttonWidthManager.PrepForChange();
