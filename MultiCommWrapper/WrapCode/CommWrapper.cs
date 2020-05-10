@@ -78,6 +78,12 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.BLE_Init();
         }
 
+
+        public void DisconnectAll() {
+            //this.BLE_Disconnect();
+            //this.BTClassicDisconnect();
+        }
+
         #endregion
 
     }

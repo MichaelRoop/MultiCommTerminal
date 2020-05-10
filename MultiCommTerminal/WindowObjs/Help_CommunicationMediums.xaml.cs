@@ -79,7 +79,6 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void OnSelectedNoCodeSample(string title, string msg) {
             this.spView.Visibility = Visibility.Collapsed;
-            ;
         }
 
     }

@@ -219,7 +219,7 @@ namespace MultiCommTerminal.WindowObjs {
                     this.wrapper.BLE_ConnectAsync(info);
                 }
                 catch (Exception ex) {
-                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    this.log.Exception(9999, "Failed on BLE connect", ex);
                 }
             }
         }
@@ -238,8 +238,10 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
         private void btnBTConnect_Click(object sender, RoutedEventArgs e) {
+            this.log.InfoEntry("btnBTConnect_Click");
             BTDeviceInfo item = this.listBox_BT.SelectedItem as BTDeviceInfo;
             if (item != null) {
+                this.log.Info("btnBTConnect_Click", "item not NULL - so call connect async");
                 this.gridWait.Visibility = Visibility.Visible;
                 this.wrapper.BTClassicConnectAsync(item);
             }
@@ -265,6 +267,7 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
         private void BT_DiscoveryCompleteHandler(object sender, bool e) {
+            this.log.InfoEntry("BT_DiscoveryCompleteHandler");
             this.Dispatcher.Invoke(() => {
                 this.gridWait.Visibility = Visibility.Collapsed;
             });
@@ -279,6 +282,7 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void BT_ConnectionCompletedHandler(object sender, bool e) {
+            this.log.InfoEntry("BT_ConnectionCompletedHandler");
             this.Dispatcher.Invoke(() => {
                 this.gridWait.Visibility = Visibility.Collapsed;
             });
@@ -342,7 +346,9 @@ namespace MultiCommTerminal.WindowObjs {
             this.btnBTDiscover.Visibility = Visibility.Collapsed;
             this.btnDiscoverLE.Visibility = Visibility.Collapsed;
 
-            // TODO - disconnect on switch
+            // Disconnect on switch
+            DI.Wrapper.DisconnectAll();
+
             switch ((this.cbComm.SelectedItem as CommMedialDisplay).MediumType) {
                 case CommMediumType.Bluetooth:
                     this.spBluetooth.Visibility = Visibility.Visible;

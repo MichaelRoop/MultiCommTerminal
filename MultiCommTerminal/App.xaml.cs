@@ -1,6 +1,6 @@
-﻿using ChkUtils.Net;
+﻿#define SEND_LOG_TO_DEBUG
+using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
-using LanguageFactory.data;
 using log4net;
 using log4net.Appender;
 using log4net.Core;
@@ -89,7 +89,7 @@ namespace MultiCommTerminal {
                             break;
                     }
 
-                    #if !SEND_LOG_TO_DEBUG
+                    #if SEND_LOG_TO_DEBUG
                         Debug.WriteLine(msg);
                     #endif
                 }

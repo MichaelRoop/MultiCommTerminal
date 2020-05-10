@@ -168,5 +168,6 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void Teardown();
 
+        void DisconnectAll();
     }
 }

@@ -1,4 +1,6 @@
 ﻿using BluetoothCommon.Net;
+using ChkUtils.Net;
+using ChkUtils.Net.ErrObjects;
 using MultiCommWrapper.Net.interfaces;
 using System;
 using System.Text;
@@ -49,12 +51,20 @@ namespace MultiCommWrapper.Net.WrapCode {
         #endregion
 
         public void BTClassicDiscoverAsync() {
+            this.DisconnectAll();
             this.classicBluetooth.DiscoverDevicesAsync();
         }
 
 
         public void BTClassicConnectAsync(BTDeviceInfo device) {
-            this.classicBluetooth.ConnectAsync(device);
+            this.log.InfoEntry("BTClassicConnectAsync");
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 9999, "Failure on BTClassicConnectAsync", () => {
+                this.classicBluetooth.ConnectAsync(device);
+            });
+            if (report.Code != 0) {
+                WrapErr.SafeAction(() => BT_DiscoveryComplete?.Invoke(this, false));
+            }
         }
 
 
