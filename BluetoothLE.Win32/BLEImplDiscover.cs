@@ -206,7 +206,7 @@ namespace BluetoothLE.Win32 {
                 this.log.Info("Dump", () => string.Format("      Angle: {0}", device.EnclosureLocation.RotationAngleInDegreesClockwise));
             }
             else {
-                System.Diagnostics.Debug.WriteLine("EnclosureLocation: null");
+                this.log.Error(9999, "EnclosureLocation: null");
             }
 
             if (device.Pairing != null) {

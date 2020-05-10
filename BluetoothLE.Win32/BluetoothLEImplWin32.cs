@@ -59,9 +59,7 @@ namespace BluetoothLE.Win32 {
         /// <summary>Interface call to discover devices</summary>
         /// <returns>A list of discovered devices.  However I am now using events so it is empty</returns>
         public void DiscoverDevices() {
-
-            System.Diagnostics.Debug.WriteLine("Doing stuff...");
-
+            this.log.Info("DiscoverDevices", "Doing stuff...");
             this.DoLEWatcherSearch();
         }
 
