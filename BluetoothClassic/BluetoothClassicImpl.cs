@@ -19,6 +19,7 @@ namespace BluetoothClassic.Net {
 
         private ClassLog log = new ClassLog("BluetoothClassicImpl");
         private BluetoothClient currentDevice = null;
+        private NetworkStream dataStream = null;
 
         public event EventHandler<BTDeviceInfo> DiscoveredBTDevice;
         public event EventHandler<bool> DiscoveryComplete;
@@ -26,72 +27,87 @@ namespace BluetoothClassic.Net {
         public event EventHandler<byte[]> MsgReceivedEvent;
 
         void IBTInterface.DiscoverDevicesAsync() {
+            this.log.InfoEntry("DiscoverDevicesAsync+++");
             BluetoothClient cl = null;
 
-            // 32feet.Net - async callback
-            cl = new BluetoothClient();
-            cl.BeginDiscoverDevices(
-                25, true, true, true, true, this.DiscoveredDevicesCallback, cl);
+            try {
+                // 32feet.Net - async callback
+                cl = new BluetoothClient();
+                cl.BeginDiscoverDevices(
+                    25, true, true, true, true, this.DiscoveredDevicesCallback, cl);
 
-            //// 32feet.Net
-            //cl = new BluetoothClient();
-            ////foreach (BluetoothDeviceInfo dev in cl.DiscoverDevices(20)) {
-            //foreach (BluetoothDeviceInfo dev in cl.DiscoverDevicesInRange()) {
-            //    BTDeviceInfo info = new BTDeviceInfo() {
-            //        Name = dev.DeviceName,
-            //        Connected = dev.Connected,
-            //        Authenticated = dev.Authenticated,
-            //        Address = dev.DeviceAddress.ToString(),
-            //        DeviceClassInt = dev.ClassOfDevice.Value,
-            //        DeviceClassName = string.Format("{0}:{1}", dev.ClassOfDevice.MajorDevice, dev.ClassOfDevice.Device),
-            //        ServiceClassInt = (int)dev.ClassOfDevice.Service,
-            //        ServiceClassName = dev.ClassOfDevice.Service.ToString(),
-            //    };
-            //    infoList.Add(info);
-            //}
-            // remove later
+                this.log.InfoExit("DiscoverDevicesAsync---");
+            }
+            catch (Exception e) {
+                this.log.Exception(9000, "", e);
+            }
         }
 
 
         public void ConnectAsync(BTDeviceInfo device) {
-            this.Disconnect();
-            this.currentDevice = new BluetoothClient();
-            this.currentDevice.BeginConnect(
-                BluetoothAddress.Parse(device.Address),
-                BluetoothService.SerialPort,
-                this.ConnectedCallback, 
-                this.currentDevice);
+            try {
+                this.Disconnect();
+                this.currentDevice = new BluetoothClient();
+
+                this.log.Info("ConnectAsyn",
+                    () => string.Format("Starting connection of:{0} {1}",
+                    device.Name, device.Address));
+
+                IAsyncResult result = this.currentDevice.BeginConnect(
+                    BluetoothAddress.Parse(device.Address),
+                    BluetoothService.SerialPort,
+                    this.ConnectedCallback,
+                    this.currentDevice);
+                this.log.Info("ConnectAsyn",
+                    () => string.Format("IsComplete:{0} IsCompletedSynchronously:{1}",
+                    result.IsCompleted, result.CompletedSynchronously));
+            }
+            catch (Exception e) {
+                this.log.Exception(7777, "", e);
+                this.ConnectionCompleted?.Invoke(this, false);
+            }
         }
 
 
         public bool Connect(BTDeviceInfo device) {
-            this.Disconnect();
-            this.currentDevice = new BluetoothClient();
-            BluetoothAddress address;
+            try {
+                this.log.InfoEntry("Connect");
+                this.Disconnect();
+                this.currentDevice = new BluetoothClient();
+                BluetoothAddress address;
 
-            if (!BluetoothAddress.TryParse(device.Address, out address)) {
-                this.log.Error(9999, () => string.Format("Failed to parse out the address {0} on device {1}", device.Address, device.Name));
+                if (!BluetoothAddress.TryParse(device.Address, out address)) {
+                    this.log.Error(9999, () => string.Format("Failed to parse out the address {0} on device {1}", device.Address, device.Name));
+                    return false;
+                }
+
+                this.currentDevice.Connect(address, BluetoothService.SerialPort);
+                this.log.Info("Connect", () => string.Format("IsConnected:{0}", this.currentDevice.Connected));
+                return this.currentDevice.Connected;
+            }
+            catch (Exception e) {
+                this.log.Exception(8888, "", e);
+                this.log.Info("Connect", "Exiting FALSE");
                 return false;
             }
-            ErrReport report;
-            WrapErr.ToErrReport(out report, 9999, "Error connecting", () => {
-                this.currentDevice.Connect(address, BluetoothService.SerialPort);
-            });
-            return report.Code == 0;
         }
 
 
         public void Disconnect() {
-            this.KillRead();
-            if (this.dataStream != null) {
-                this.dataStream.Dispose();
-                this.dataStream = null;
-            }
+            this.log.InfoEntry("Disconnect");
+            WrapErr.ToErrReport(9999, () => {
+                this.KillRead();
+                if (this.dataStream != null) {
+                    this.dataStream.Dispose();
+                    this.dataStream = null;
+                }
 
-            if (this.currentDevice != null) {
-                this.currentDevice.Dispose();
-                this.currentDevice = null;
-            }
+                if (this.currentDevice != null) {
+                    this.currentDevice.Dispose();
+                    this.currentDevice = null;
+                }
+            });
+            this.log.InfoExit("Disconnect");
         }
 
 
@@ -99,87 +115,149 @@ namespace BluetoothClassic.Net {
         /// <param name="msg"></param>
         /// <returns></returns>
         public bool SendOutMsg(byte[] msg) {
-            if (this.currentDevice != null) {
-                if (this.dataStream != null) {
-                    this.dataStream.Write(msg, 0, msg.Length);
+            try {
+                this.log.InfoEntry("SendOutMsg");
+                if (this.currentDevice != null) {
+                    if (this.dataStream != null) {
+                        this.dataStream.Write(msg, 0, msg.Length);
+                        return true;
+                    }
+                    else {
+                        this.log.Error(9111, "Data stream null");
+                    }
+                }
+                else {
+                    this.log.Error(9111, "Current device null");
                 }
             }
-            return true;
+            catch (Exception e) {
+                this.log.Exception(9898, "", e);
+            }
+            return false;
         }
-
 
 
         #region Async Callbacks
         private void DiscoveredDevicesCallback(IAsyncResult result) {
-            BluetoothClient thisDevice = result.AsyncState as BluetoothClient;
-            if (result.IsCompleted) {
-                BluetoothDeviceInfo[] devices = thisDevice.EndDiscoverDevices(result);
-                foreach (BluetoothDeviceInfo dev in devices) {
-                    if (this.DiscoveredBTDevice != null) {
-                        this.DiscoveredBTDevice(this, new BTDeviceInfo() {
-                            Name = dev.DeviceName,
-                            Connected = dev.Connected,
-                            Authenticated = dev.Authenticated,
-                            Address = dev.DeviceAddress.ToString(),
-                            DeviceClassInt = dev.ClassOfDevice.Value,
-                            DeviceClassName = string.Format("{0}:{1}", dev.ClassOfDevice.MajorDevice, dev.ClassOfDevice.Device),
-                            ServiceClassInt = (int)dev.ClassOfDevice.Service,
-                            ServiceClassName = dev.ClassOfDevice.Service.ToString(),
-                            Strength = dev.Rssi,
-                            LastSeen = dev.LastSeen,
-                            LastUsed = dev.LastUsed,
-                            Radio = this.BuildRadioDataModel(dev),                            
-                        });
+            this.log.InfoEntry("DiscoveredDevicesCallback");
+            try {
+                BluetoothClient thisDevice = result.AsyncState as BluetoothClient;
+                if (result.IsCompleted) {
+                    BluetoothDeviceInfo[] devices = thisDevice.EndDiscoverDevices(result);
+                    foreach (BluetoothDeviceInfo dev in devices) {
+
+                        this.log.Info("DiscoveredDevicesCallback", () => string.Format("Device:{0} Number services:{1}",
+                            dev.DeviceName, dev.InstalledServices.Length));
+                        foreach (var s in dev.InstalledServices) {
+                            this.log.Info("InfoDiscoveredDevicesCallback", () => string.Format("     Service:{0}", s.ToString()));
+                        }
+
+                        if (this.DiscoveredBTDevice != null) {
+                            this.log.Info("DiscoveredDevicesCallback", () =>
+                                string.Format("Discovered:{0} - {1}", dev.DeviceName, dev.DeviceAddress.ToString()));
+                            this.DiscoveredBTDevice(this, new BTDeviceInfo() {
+                                Name = dev.DeviceName,
+                                Connected = dev.Connected,
+                                Authenticated = dev.Authenticated,
+                                Address = dev.DeviceAddress.ToString(),
+                                DeviceClassInt = dev.ClassOfDevice.Value,
+                                DeviceClassName = string.Format("{0}:{1}", dev.ClassOfDevice.MajorDevice, dev.ClassOfDevice.Device),
+                                ServiceClassInt = (int)dev.ClassOfDevice.Service,
+                                ServiceClassName = dev.ClassOfDevice.Service.ToString(),
+                                Strength = dev.Rssi,
+                                LastSeen = dev.LastSeen,
+                                LastUsed = dev.LastUsed,
+                                Radio = this.BuildRadioDataModel(dev),
+                            });
+                        }
+                        else {
+                            this.log.Warning(9999, "No subscribers to DiscoveredBTDevice");
+                        }
                     }
                 }
+                else {
+                    this.log.Error(9990, "DiscoveredDevicesCallback", "Asychronous Operation Not Completed");
+                }
+                // push up completed event
+                if (this.DiscoveryComplete != null) {
+                    this.DiscoveryComplete(this, result.IsCompleted);
+                }
             }
-            // push up completed event
-            if (this.DiscoveryComplete != null) {
-                this.DiscoveryComplete(this, result.IsCompleted);
+            catch (Exception e) {
+                this.log.Exception(9999, "", e);
             }
         }
 
-        NetworkStream dataStream = null;
 
         private void ConnectedCallback(IAsyncResult result) {
-            BluetoothClient thisDevice = result.AsyncState as BluetoothClient;
-            if (result.IsCompleted) {
-                thisDevice.EndConnect(result);
-                this.dataStream = thisDevice.GetStream();
-                this.LaunchRead();
+                try { 
+                this.log.InfoEntry("ConnectedCallback");
+                BluetoothClient thisDevice = result.AsyncState as BluetoothClient;
+                if (result.IsCompleted) {
+                    thisDevice.EndConnect(result);
+                    if (this.dataStream != null) {
+                        this.dataStream.Close();
+                        this.dataStream.Dispose();
+                        this.dataStream = null;
+                    }
+                    this.dataStream = thisDevice.GetStream();
+                    this.LaunchRead();
+                }
+                else {
+                    this.log.Error(9999, "Failed to complete connection");
+                }
+                this.ConnectionCompleted?.Invoke(this, result.IsCompleted);
             }
-            if (this.ConnectionCompleted!= null) {
-                this.ConnectionCompleted(this, result.IsCompleted);
+            catch(Exception e) {
+                this.log.Exception(9999, "", e);
             }
         }
 
 
         private BTRadioInfo BuildRadioDataModel(BluetoothDeviceInfo device) {
-            BTDeviceInfo info = new BTDeviceInfo() {
-                Name = device.DeviceName,
-                Address = device.DeviceAddress.ToString(),
-            };
+            // TODO Until we fix the connect issue just return empty radio info
+            return new BTRadioInfo();
 
-            // Need to connect to each device to get radio info
-            this.Connect(info);
-            RadioVersions devRadio = device.GetVersions();
-            this.Disconnect();
-            if (devRadio == null) {
+            try {
+                this.log.InfoEntry("BuildRadioDataModel");
+                BTDeviceInfo info = new BTDeviceInfo() {
+                    Name = device.DeviceName,
+                    Address = device.DeviceAddress.ToString(),
+                };
+
+                // Need to connect to each device to get radio info
+                RadioVersions devRadio = null;
+                if (this.Connect(info)) {
+                    devRadio = device.GetVersions();
+                    this.Disconnect();
+                }
+                else {
+                    this.log.Error(9991, "NOT CONNECTED TO READ RADIO INFO");
+                }
+
+                //this.Disconnect();
+                if (devRadio == null) {
+                    this.log.Info("", "NULL Radio info");
+                    return new BTRadioInfo();
+                }
+
+                string tmp = devRadio.LmpSupportedFeatures.ToString();
+                string[] pieces = tmp.Split(',');
+                List<string> features = new List<string>(pieces.Length);
+                for (int i = 0; i < pieces.Length; i++) {
+                    features.Add(pieces[i].Replace("_", "").CamelCaseToSpaces());
+                }
+
+                return new BTRadioInfo() {
+                    Manufacturer = devRadio.Manufacturer.ToString().CamelCaseToSpaces(),
+                    LinkManagerProtocol = string.Format("{0} ({1})", devRadio.LmpVersion.LmpVerToString(), devRadio.LmpSubversion),
+                    Features = features,
+                };
+            }
+            catch (Exception e) {
+                this.log.Exception(9999, "", e);
                 return new BTRadioInfo();
             }
-
-            string tmp = devRadio.LmpSupportedFeatures.ToString();
-            string[] pieces = tmp.Split(',');
-            List<string> features = new List<string>(pieces.Length);
-            for (int i = 0; i< pieces.Length; i++) {
-                features.Add(pieces[i].Replace("_", "").CamelCaseToSpaces());
-            }
-
-            return new BTRadioInfo() {
-                Manufacturer = devRadio.Manufacturer.ToString().CamelCaseToSpaces(),
-                LinkManagerProtocol = string.Format("{0} ({1})", devRadio.LmpVersion.LmpVerToString(), devRadio.LmpSubversion),
-                Features = features,
-            };
         }
 
         #endregion
@@ -200,26 +278,34 @@ namespace BluetoothClassic.Net {
 
 
         private void KillRead() {
-            if (this.readThread != null) {
-                this.doneRead = true;
-                // send dummy message so thread can wake and end
-                this.dataStream.Write(new byte[1] { 0 }, 0, 1);
-                if (!this.readDoneEvent.WaitOne(500)) {
-                    // TODO not supported on this platform. Core only.
-                    WrapErr.ToErrReport(9999, () => this.readThread.Abort());
+            WrapErr.ToErrReport(9999, () => {
+                this.log.InfoEntry("KillRead++++");
+                if (this.readThread != null) {
+                    this.doneRead = true;
+                    // send dummy message so thread can wake and end
+                    this.dataStream.Write(new byte[1] { 0 }, 0, 1);
+                    if (!this.readDoneEvent.WaitOne(500)) {
+                        // TODO not supported on this platform. Core only.
+                        WrapErr.ToErrReport(9999, () => this.readThread.Abort());
+                    }
+                    else {
+                        this.log.Info("KillRead", "The done read has completed properly");
+                    }
+                    this.readThread = null;
                 }
-                this.readThread = null;
-            }
+                this.log.InfoExit("KillRead----");
+            });
         }
 
 
         private void ReadThread() {
+            this.log.InfoEntry("ReadThread");
             byte[] buff = new byte[500];
             while (!this.doneRead) {
                 try {
                     int bytesRead = this.dataStream.Read(buff, 0, 500);
                     if (bytesRead > 0) {
-                        if (this.MsgReceivedEvent != null) {
+                        if (!this.doneRead && this.MsgReceivedEvent != null) {
                             byte[] outgoing = new byte[bytesRead];
                             Buffer.BlockCopy(buff, 0, outgoing, 0, bytesRead);
                             this.MsgReceivedEvent(this, outgoing);
@@ -227,10 +313,11 @@ namespace BluetoothClassic.Net {
                     }
                 }
                 catch (Exception e) {
-                    System.Diagnostics.Debug.WriteLine(e.Message);
-                    Thread.Sleep(500);
+                    this.log.Exception(9999, "From the read thread", e);
+                    Thread.Sleep(100);
                 }
             }
+            this.log.Info("ReadThread", "Exiting read thread....");
             this.readDoneEvent.Set();
         }
 
