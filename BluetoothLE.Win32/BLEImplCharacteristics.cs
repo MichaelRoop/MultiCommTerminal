@@ -15,18 +15,19 @@ namespace BluetoothLE.Win32 {
 
     public partial class BluetoothLEImplWin32 : IBLETInterface {
 
-
-
-        private async Task BuildCharacteristicDataModel(GattCharacteristic ch, BLE_CharacteristicDataModel dataModel) {
+        private async Task BuildCharacteristicDataModel(GattCharacteristic ch, BLE_ServiceDataModel service) {
             try {
-                dataModel.Uuid = ch.Uuid;
-                dataModel.UserDescription = ch.UserDescription;
-                dataModel.AttributeHandle = ch.AttributeHandle;
-                dataModel.CharName = BLE_DisplayHelpers.GetCharacteristicName(ch);
-                dataModel.PropertiesFlags = ch.CharacteristicProperties.ToUInt().ToEnum<CharacteristicProperties>();
-                dataModel.ProtectionLevel = (BLE_ProtectionLevel)ch.ProtectionLevel;
-                dataModel.PresentationFormats = this.BuildPresentationFormats(ch);
-                await this.BuildDescriptors(ch, dataModel);
+                BLE_CharacteristicDataModel characteristic = new BLE_CharacteristicDataModel();
+                characteristic.Uuid = ch.Uuid;
+                characteristic.UserDescription = ch.UserDescription;
+                characteristic.AttributeHandle = ch.AttributeHandle;
+                characteristic.Service = service;
+                characteristic.CharName = BLE_DisplayHelpers.GetCharacteristicName(ch);
+                characteristic.PropertiesFlags = ch.CharacteristicProperties.ToUInt().ToEnum<CharacteristicProperties>();
+                characteristic.ProtectionLevel = (BLE_ProtectionLevel)ch.ProtectionLevel;
+                characteristic.PresentationFormats = this.BuildPresentationFormats(ch);
+                await this.BuildDescriptors(ch, characteristic);
+                service.Characteristics.Add(characteristic.Uuid.ToString(), characteristic);
             }
             catch (Exception e) {
                 this.log.Exception(9999, "Failed during build of characteristic", e);
