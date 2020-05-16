@@ -64,6 +64,7 @@
     <Compile Include="BLEImplDiscover.cs" />
     <Compile Include="BLEImplEvents.cs" />
     <Compile Include="BLEImplGetInfo.cs" />
+    <Compile Include="BLEImplServices.cs" />
     <Compile Include="BLE_DisplayHelpers.cs" />
     <Compile Include="BLE_WinExtensions.cs" />
     <Compile Include="BLE_WinHelpers.cs" />

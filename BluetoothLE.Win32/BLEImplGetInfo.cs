@@ -33,40 +33,8 @@ namespace BluetoothLE.Win32 {
                     if (services.Services != null) {
                         if (services.Services.Count > 0) {
                             foreach (GattDeviceService service in services.Services) {
-                                this.log.Info("ConnectToDevice", () => string.Format("Gatt Service:{0}  Uid:{1}",
-                                    BLE_DisplayHelpers.GetServiceName(service), service.Uuid.ToString()));
-
-                                // New service data model to add to device info
-                                BLE_ServiceDataModel dmService = new BLE_ServiceDataModel() {
-                                    Characteristics = new Dictionary<string, BLE_CharacteristicDataModel>(),
-                                    AttributeHandle = service.AttributeHandle, 
-                                    DeviceId = deviceInfo.Id,
-                                    DisplayName = BLE_DisplayHelpers.GetServiceName(service),
-                                    Uuid = service.Uuid,
-                                };
-
-                                // Get the characteristics for the service
-                                GattCharacteristicsResult characteristics = await service.GetCharacteristicsAsync();
-                                if (characteristics.Status == GattCommunicationStatus.Success) {
-                                    if (characteristics.Characteristics != null) {
-                                        if (characteristics.Characteristics.Count > 0) {
-                                            foreach (GattCharacteristic ch in characteristics.Characteristics) {
-                                                await this.BuildCharacteristicDataModel(ch, dmService);
-                                            }
-                                        }
-                                        else {
-                                            this.log.Info("ConnectToDevice", () => string.Format("No characteristics"));
-                                        }
-                                    }
-                                }
-                                else {
-                                    this.log.Error(9999, "HarvestDeviceInfo", () => string.Format("Failed to get Characteristics result {0}", characteristics.Status.ToString()));
-                                }
-
-                                // Add the service data model to the device info data model
-                                deviceInfo.Services.Add(dmService.Uuid.ToString(), dmService);
-
-                            } // End of foreach Services
+                                await this.BuildServiceDataModel(service, deviceInfo);
+                            }
                         }
                         else {
                             this.log.Info("HarvestDeviceInfo", "No services exposed");
@@ -84,8 +52,6 @@ namespace BluetoothLE.Win32 {
             catch (Exception e) {
                 this.log.Exception(9999, "On harvest device info", e);
                 // TODO - raise event with null device
-
-
             }
             finally {
                 try {
