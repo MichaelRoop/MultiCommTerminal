@@ -54,32 +54,32 @@ namespace BluetoothLE.Win32 {
                                                 BLE_CharacteristicDataModel chDataModel = new BLE_CharacteristicDataModel() {
                                                     Service = dmService,
                                                 };
-                                                this.BuildCharacteristicDataModel(ch, chDataModel);
+                                                await this.BuildCharacteristicDataModel(ch, chDataModel);
 
-                                                // Add the descriptor data models
-                                                GattDescriptorsResult descriptors = await ch.GetDescriptorsAsync();
-                                                if (descriptors.Status == GattCommunicationStatus.Success) {
-                                                    if (descriptors.Descriptors.Count > 0) {
-                                                        foreach (GattDescriptor desc in descriptors.Descriptors) {
-                                                            // New characteristic data model to add to service
-                                                            GattReadResult r = await desc.ReadValueAsync();
-                                                            if (r.Status == GattCommunicationStatus.Success) {
-                                                                BLE_DescriptorDataModel descDataModel = new BLE_DescriptorDataModel() {
-                                                                    Uuid = desc.Uuid,
-                                                                    AttributeHandle = desc.AttributeHandle,
-                                                                    DisplayName = BLE_ParseHelpers.GetDescriptorValueAsString(desc.Uuid, r.Value.FromBufferToBytes())
-                                                                };
+                                                //// Add the descriptor data models
+                                                //GattDescriptorsResult descriptors = await ch.GetDescriptorsAsync();
+                                                //if (descriptors.Status == GattCommunicationStatus.Success) {
+                                                //    if (descriptors.Descriptors.Count > 0) {
+                                                //        foreach (GattDescriptor desc in descriptors.Descriptors) {
+                                                //            // New characteristic data model to add to service
+                                                //            GattReadResult r = await desc.ReadValueAsync();
+                                                //            if (r.Status == GattCommunicationStatus.Success) {
+                                                //                BLE_DescriptorDataModel descDataModel = new BLE_DescriptorDataModel() {
+                                                //                    Uuid = desc.Uuid,
+                                                //                    AttributeHandle = desc.AttributeHandle,
+                                                //                    DisplayName = BLE_ParseHelpers.GetDescriptorValueAsString(desc.Uuid, r.Value.FromBufferToBytes())
+                                                //                };
 
-                                                                chDataModel.Descriptors.Add(descDataModel.Uuid.ToString(), descDataModel);
-                                                                this.log.Info("ConnectToDevice", () => string.Format("        Descriptor:{0}  Uid:{1} Value:{2}",
-                                                                    BLE_DisplayHelpers.GetDescriptorName(desc), desc.Uuid.ToString(), descDataModel.DisplayName));
-                                                            };
-                                                        }
-                                                    }
-                                                }
-                                                else {
-                                                    this.log.Info("ConnectToDevice", () => string.Format("        Get Descriptors result:{0}", descriptors.Status.ToString()));
-                                                }
+                                                //                chDataModel.Descriptors.Add(descDataModel.Uuid.ToString(), descDataModel);
+                                                //                this.log.Info("ConnectToDevice", () => string.Format("        Descriptor:{0}  Uid:{1} Value:{2}",
+                                                //                    BLE_DisplayHelpers.GetDescriptorName(desc), desc.Uuid.ToString(), descDataModel.DisplayName));
+                                                //            };
+                                                //        }
+                                                //    }
+                                                //}
+                                                //else {
+                                                //    this.log.Info("ConnectToDevice", () => string.Format("        Get Descriptors result:{0}", descriptors.Status.ToString()));
+                                                //}
 
                                                 dmService.Characteristics.Add(chDataModel.Uuid.ToString(), chDataModel);
                                             }// End of foreach Characteristics

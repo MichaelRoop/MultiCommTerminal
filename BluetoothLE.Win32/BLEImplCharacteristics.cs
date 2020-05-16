@@ -17,30 +17,36 @@ namespace BluetoothLE.Win32 {
 
 
 
-        private void BuildCharacteristicDataModel(GattCharacteristic ch, BLE_CharacteristicDataModel dataModel) {
+        private async Task BuildCharacteristicDataModel(GattCharacteristic ch, BLE_CharacteristicDataModel dataModel) {
             try {
                 dataModel.Uuid = ch.Uuid;
                 dataModel.UserDescription = ch.UserDescription;
                 dataModel.AttributeHandle = ch.AttributeHandle;
                 dataModel.CharName = BLE_DisplayHelpers.GetCharacteristicName(ch);
                 dataModel.PropertiesFlags = ch.CharacteristicProperties.ToUInt().ToEnum<CharacteristicProperties>();
-                dataModel.Descriptors = new Dictionary<string, BLE_DescriptorDataModel>();
                 dataModel.ProtectionLevel = (BLE_ProtectionLevel)ch.ProtectionLevel;
-                dataModel.PresentationFormats = new List<BLE_PresentationFormat>();
-                foreach (var pf in ch.PresentationFormats) {
-                    BLE_PresentationFormat format = new BLE_PresentationFormat() {
-                        Description = pf.Description,
-                        Exponent = pf.Exponent,
-                        Format = (DataFormatEnum)pf.FormatType,
-                        Units = (UnitsOfMeasurement)pf.Unit,
-                        Namespace = pf.Namespace,
-                    };
-                    dataModel.PresentationFormats.Add(format);
-                }
+                dataModel.PresentationFormats = this.BuildPresentationFormats(ch);
+                await this.BuildDescriptors(ch, dataModel);
             }
             catch (Exception e) {
                 this.log.Exception(9999, "Failed during build of characteristic", e);
             }
+        }
+
+
+        private List<BLE_PresentationFormat> BuildPresentationFormats(GattCharacteristic ch) {
+            List<BLE_PresentationFormat> formats = new List<BLE_PresentationFormat>();
+            foreach (var pf in ch.PresentationFormats) {
+                BLE_PresentationFormat format = new BLE_PresentationFormat() {
+                    Description = pf.Description,
+                    Exponent = pf.Exponent,
+                    Format = (DataFormatEnum)pf.FormatType,
+                    Units = (UnitsOfMeasurement)pf.Unit,
+                    Namespace = pf.Namespace,
+                };
+                formats.Add(format);
+            }
+            return formats;
         }
 
 
