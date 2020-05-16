@@ -156,6 +156,9 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void BLE_ConnectAsync(BluetoothLEDeviceInfo device);
 
+        /// <summary>Get complete info populated in device</summary>
+        /// <param name="device"></param>
+        void BLE_GetInfo(BluetoothLEDeviceInfo device);
 
         /// <summary>Debug method to get string of properties</summary>
         /// <param name="obj">The selected BLE info object</param>

@@ -4,6 +4,7 @@ using ChkUtils.Net.ErrObjects;
 using MultiCommWrapper.Net.interfaces;
 using System;
 using System.Text;
+using System.Threading;
 using VariousUtils;
 
 namespace MultiCommWrapper.Net.WrapCode {
@@ -67,6 +68,22 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.bleBluetooth.Connect(device);
         }
 
+
+
+        public void BLE_GetInfo(BluetoothLEDeviceInfo device) {
+            ManualResetEvent done = new ManualResetEvent(false);
+            this.bleBluetooth.DeviceInfoAssembled += (sender, dev) => {
+                done.Set();
+            };
+            this.bleBluetooth.GetInfo(device);
+            // TODO - for now it is async. Expose the event. Only need a true/false event
+            //        since values are added to the device data model passed in
+            done.WaitOne(5000);
+        }
+
+        private void BleBluetooth_DeviceInfoAssembled(object sender, BluetoothLEDeviceInfo e) {
+            throw new NotImplementedException();
+        }
 
         public void BLE_GetDbgInfoStringDump(object obj, Action<string, string> onComplete) {
             ErrReport report;

@@ -211,6 +211,22 @@ namespace MultiCommTerminal.WindowObjs {
             }
         }
 
+        private void btnConfigureBLE_Click(object sender, RoutedEventArgs e) {
+            if (this.listBox_BLE.SelectedItem != null) {
+                try {
+                    BluetoothLEDeviceInfo info = this.listBox_BLE.SelectedItem as BluetoothLEDeviceInfo;
+                    // Will connect to complete the info
+                    DI.Wrapper.BLE_GetInfo(info);
+
+                    DeviceInfo_BLESerial bleInfo = new DeviceInfo_BLESerial(this, info);
+                    bleInfo.ShowDialog();
+                }
+                catch (Exception ex) {
+                    this.log.Exception(9999, "Failed on BLE config access to device", ex);
+                }
+            }
+        }
+
 
         private void btnLEConnect_Click(object sender, RoutedEventArgs e) {
             if (this.listBox_BLE.SelectedItem != null) {
@@ -488,5 +504,6 @@ namespace MultiCommTerminal.WindowObjs {
             Help_CommunicationMediums win = new Help_CommunicationMediums(this);
             win.ShowDialog();
         }
+
     }
 }

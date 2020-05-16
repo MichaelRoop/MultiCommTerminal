@@ -1,7 +1,9 @@
-﻿using BluetoothLE.Net.interfaces;
+﻿using BluetoothLE.Net.DataModels;
+using BluetoothLE.Net.interfaces;
 using BluetoothLE.Net.Parsers;
 using ChkUtils.Net;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using VariousUtils;
@@ -12,6 +14,21 @@ namespace BluetoothLE.Win32 {
 
     public partial class BluetoothLEImplWin32 : IBLETInterface {
 
+
+
+        private void BuildCharacteristicDataModel(GattCharacteristic ch, BLE_CharacteristicDataModel dataModel) {
+            try {
+                dataModel.Uuid = ch.Uuid;
+                dataModel.UserDescription = ch.UserDescription;
+                dataModel.AttributeHandle = ch.AttributeHandle;
+                dataModel.CharName = BLE_DisplayHelpers.GetCharacteristicName(ch);
+                dataModel.Flags = ch.BuildFlagList();
+                dataModel.Descriptors = new Dictionary<string, BLE_DescriptorDataModel>();
+            }
+            catch (Exception e) {
+                this.log.Exception(9999, "Failed during build of characteristic", e);
+            }
+        }
 
 
         private async Task DumpCharacteristic(GattCharacteristic ch) {

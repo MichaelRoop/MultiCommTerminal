@@ -1,4 +1,6 @@
-﻿using BluetoothLE.Net.Parsers;
+﻿using BluetoothLE.Net.Enumerations;
+using BluetoothLE.Net.Parsers;
+using System.Collections.Generic;
 using Windows.Devices.Bluetooth.GenericAttributeProfile;
 
 namespace BluetoothLE.Win32 {
@@ -27,6 +29,44 @@ namespace BluetoothLE.Win32 {
         public static string GetDescriptorName(GattDescriptor descriptor) {
             return BLE_ParseHelpers.GetDescriptorName(descriptor.Uuid);
         }
+
+
+        public static List<CharacteristicProperties> BuildFlagList( this GattCharacteristic ch) {
+            List<CharacteristicProperties> flags = new List<CharacteristicProperties>();
+            flags.Add(CharacteristicProperties.None);
+            if (ch.CharacteristicProperties.HasFlag(GattCharacteristicProperties.Write)) {
+                flags.Add(CharacteristicProperties.Write);
+            }
+            else if (ch.CharacteristicProperties.HasFlag(GattCharacteristicProperties.Broadcast)) {
+                flags.Add(CharacteristicProperties.Broadcast);
+            }
+            else if (ch.CharacteristicProperties.HasFlag(GattCharacteristicProperties.ExtendedProperties)) {
+                flags.Add(CharacteristicProperties.ExtendedProperties);
+            }
+            else if (ch.CharacteristicProperties.HasFlag(GattCharacteristicProperties.Indicate)) {
+                flags.Add(CharacteristicProperties.Indicate);
+            }
+            else if (ch.CharacteristicProperties.HasFlag(GattCharacteristicProperties.Notify)) {
+                flags.Add(CharacteristicProperties.Notify);
+            }
+            else if (ch.CharacteristicProperties.HasFlag(GattCharacteristicProperties.Read)) {
+                flags.Add(CharacteristicProperties.Read);
+            }
+            else if (ch.CharacteristicProperties.HasFlag(GattCharacteristicProperties.ReliableWrites)) {
+                flags.Add(CharacteristicProperties.ReliableWrites);
+            }
+            else if (ch.CharacteristicProperties.HasFlag(GattCharacteristicProperties.WritableAuxiliaries)) {
+                flags.Add(CharacteristicProperties.WritableAuxiliaries);
+            }
+            else if (ch.CharacteristicProperties.HasFlag(GattCharacteristicProperties.Write)) {
+                flags.Add(CharacteristicProperties.Write);
+            }
+            else if (ch.CharacteristicProperties.HasFlag(GattCharacteristicProperties.WriteWithoutResponse)) {
+                flags.Add(CharacteristicProperties.WriteWithoutResponse);
+            }
+            return flags;
+        }
+
     }
 
 

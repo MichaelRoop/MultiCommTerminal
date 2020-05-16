@@ -136,7 +136,7 @@
                                 </StackPanel>
                             </DockPanel>
                         </StackPanel>
-                        <StackPanel x:Name="spBluetoothLE" VerticalAlignment="Center" Visibility="Collapsed" Margin="20,0,10,10">
+                        <StackPanel x:Name="spBluetoothLE" VerticalAlignment="Center" Visibility="Visible" Margin="20,0,10,10">
                             <DockPanel>
                                 <StackPanel Margin="0,0,10,0" >
                                     <controls:UC_IconButton x:Name="btnDiscoverLE" 
@@ -150,6 +150,11 @@
                                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Info}}" Margin="0,5"
                                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.View}}"                                                        
                                             Background="Transparent" Click="btnInfoLE_Click" />
+                                    <controls:UC_IconButton x:Name="btnConfigureBLE" Style="{StaticResource TextIconButton}"
+                                            HorizontalContentAlignment="Left"
+                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Configure}}" Margin="0,5"
+                                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Configure}}"                                                        
+                                            Background="Transparent" Click="btnConfigureBLE_Click" />
                                     <controls:UC_IconButton x:Name="btnLEConnect" Margin="0,0,0,0"
                                             HorizontalContentAlignment="Left"
                                             Style="{StaticResource TextIconButton}"

@@ -60,6 +60,23 @@ namespace MultiCommTerminal.WindowObjs {
         }
         ServiceTreeDict treeDict = new ServiceTreeDict();
 
+        BluetoothLEDeviceInfo info = null;
+
+        public DeviceInfo_BLESerial(Window parent, BluetoothLEDeviceInfo info) {
+            this.parent = parent;
+            InitializeComponent();
+            this.SizeToContent = SizeToContent.WidthAndHeight;
+            this.borderInput.MouseLeftButtonDown += this.BorderInput_MouseLeftButtonDown;
+            this.borderOutput.MouseLeftButtonDown += this.BorderOutput_MouseLeftButtonDown;
+            this.widthManager = new ButtonGroupSizeSyncManager(this.btnExit, this.btnSave);
+            this.widthManager.PrepForChange();
+
+            this.info = info;
+            // TODO - check if any previous selections
+            this.treeServices.ItemsSource = this.info.Services.Values;
+        }
+
+
 
         /// <summary>Bind Mouse drag to Template style</summary>
         public override void OnApplyTemplate() {

@@ -93,6 +93,17 @@ namespace BluetoothLE.Win32 {
             });
         }
 
+        public void GetInfo(BluetoothLEDeviceInfo deviceInfo) {
+            Task.Run(async () => {
+                try {
+                    await this.HarvestDeviceInfo(deviceInfo);
+                }
+                catch (Exception e) {
+                    this.log.Exception(9999, "On Task Run GetInfo", e);
+                }
+            });
+        }
+
         #endregion
 
         #region Connection to device code
