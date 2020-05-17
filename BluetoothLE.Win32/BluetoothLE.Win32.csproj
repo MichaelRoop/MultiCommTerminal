@@ -61,6 +61,7 @@
     <Compile Include="BLEImplCharacteristics.cs" />
     <Compile Include="BLEImplConnect.cs" />
     <Compile Include="BLEImplDescriptors.cs" />
+    <Compile Include="BLEImplDevice.cs" />
     <Compile Include="BLEImplDiscover.cs" />
     <Compile Include="BLEImplEvents.cs" />
     <Compile Include="BLEImplGetInfo.cs" />
