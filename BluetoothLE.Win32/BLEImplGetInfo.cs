@@ -45,10 +45,13 @@ namespace BluetoothLE.Win32 {
                     this.log.Error(9999, "HarvestDeviceInfo", () => string.Format("    Get Services Failed {0}", services.Status.ToString()));
                 }
 
+                // Raise event
+                this.DeviceInfoAssembled?.Invoke(this, deviceDataModel);
             }
             catch (Exception e) {
                 this.log.Exception(9999, "On harvest device info", e);
                 // TODO - raise event with null device
+                this.DeviceInfoAssembled?.Invoke(this, null);
             }
             finally {
                 try {
@@ -56,9 +59,6 @@ namespace BluetoothLE.Win32 {
                         device.Dispose();
                         device = null;
                     }
-
-                    // Raise event
-                    this.DeviceInfoAssembled?.Invoke(this, deviceDataModel);
                 }
                 catch (Exception ex) {
                     this.log.Exception(9999, "On fail to disconnect harvesting device data", ex);

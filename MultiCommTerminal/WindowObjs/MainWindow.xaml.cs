@@ -87,6 +87,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper.Teardown();
         }
 
+
         /// <summary>Close opened menu window anywhere on window on mouse down</summary>
         private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
             this.HideMenu();
@@ -165,6 +166,23 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
+        private void Wrapper_BLE_DeviceInfoGatheredForConfig(object sender, BluetoothLEDeviceInfo info) {
+            this.Dispatcher.Invoke(() => {
+                WrapErr.ToErrReport(9999, "Failure on BLE Device info gathered Complete", () => {
+                    this.gridWait.Visibility = Visibility.Collapsed;
+                    this.wrapper.BLE_DeviceInfoGathered -= this.Wrapper_BLE_DeviceInfoGatheredForConfig;
+                    if (info != null) {
+                        DeviceInfo_BLESerial bleInfo = new DeviceInfo_BLESerial(this, info);
+                        bleInfo.ShowDialog();
+                    }
+                    else {
+                        MsgBoxSimple.ShowBox(DI.Wrapper.GetText(MsgCode.Error), DI.Wrapper.GetText(MsgCode.LoadFailed));
+                    }
+                });
+            });
+        }
+
+
         // TODO - add the Update because of Characteristics can be added and removed
         private void RemoveIfFound(string id, bool postErrorNotFound, bool msgIfFound) {
             WrapErr.ToErrReport(9999, "Fail on Remove if found", () => {
@@ -216,10 +234,9 @@ namespace MultiCommTerminal.WindowObjs {
                 try {
                     BluetoothLEDeviceInfo info = this.listBox_BLE.SelectedItem as BluetoothLEDeviceInfo;
                     // Will connect to complete the info
+                    this.gridWait.Visibility = Visibility.Visible;
+                    this.wrapper.BLE_DeviceInfoGathered += this.Wrapper_BLE_DeviceInfoGatheredForConfig;
                     DI.Wrapper.BLE_GetInfo(info);
-
-                    DeviceInfo_BLESerial bleInfo = new DeviceInfo_BLESerial(this, info);
-                    bleInfo.ShowDialog();
                 }
                 catch (Exception ex) {
                     this.log.Exception(9999, "Failed on BLE config access to device", ex);

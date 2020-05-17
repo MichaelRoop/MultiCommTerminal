@@ -25,6 +25,9 @@ namespace MultiCommWrapper.Net.WrapCode {
         /// <summary>Event raised when BLE device properties change</summary>
         public event EventHandler<BLE_PropertiesUpdateDataModel> BLE_DeviceUpdated;
 
+        /// <summary>Raised when BLE info on a device is finished gathering</summary>
+        public event EventHandler<BluetoothLEDeviceInfo> BLE_DeviceInfoGathered;
+
 
         private void BLE_DeviceDiscoveredHandler(object sender, BluetoothLEDeviceInfo e) {
             if (this.BLE_DeviceDiscovered != null) {
@@ -71,19 +74,14 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void BLE_GetInfo(BluetoothLEDeviceInfo device) {
-            ManualResetEvent done = new ManualResetEvent(false);
-            this.bleBluetooth.DeviceInfoAssembled += (sender, dev) => {
-                done.Set();
-            };
             this.bleBluetooth.GetInfo(device);
-            // TODO - for now it is async. Expose the event. Only need a true/false event
-            //        since values are added to the device data model passed in
-            done.WaitOne(5000);
         }
 
+
         private void BleBluetooth_DeviceInfoAssembled(object sender, BluetoothLEDeviceInfo e) {
-            throw new NotImplementedException();
+            this.BLE_DeviceInfoGathered?.Invoke(this, e);
         }
+
 
         public void BLE_GetDbgInfoStringDump(object obj, Action<string, string> onComplete) {
             ErrReport report;
@@ -162,6 +160,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.bleBluetooth.DeviceRemoved += this.BLE_DeviceRemovedHandler;
             this.bleBluetooth.DeviceUpdated += BLE_DeviceUpdatedHandler;
             this.bleBluetooth.DeviceDiscoveryCompleted += this.BLE_DeviceDiscoveryCompleted;
+            this.bleBluetooth.DeviceInfoAssembled += this.BleBluetooth_DeviceInfoAssembled;
         }
 
 
@@ -172,6 +171,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.bleBluetooth.DeviceRemoved -= this.BLE_DeviceRemovedHandler;
             this.bleBluetooth.DeviceUpdated -= BLE_DeviceUpdatedHandler;
             this.bleBluetooth.DeviceDiscoveryCompleted -= this.BLE_DeviceDiscoveryCompleted;
+            this.bleBluetooth.DeviceInfoAssembled -= this.BleBluetooth_DeviceInfoAssembled;
         }
 
         #endregion
