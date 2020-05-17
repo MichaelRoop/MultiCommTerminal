@@ -12,7 +12,11 @@
         ContentRendered="Window_ContentRendered" Closing="Window_Closing"
         MouseDown="Window_MouseDown" >
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="grdMain">
-        <Grid x:Name="gridWait" Panel.ZIndex="10000" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" >
+        <Grid x:Name="gridWait" Panel.ZIndex="10000" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed" >
+            <Grid.Background>
+                <!--  Prevent any control from getting input during spinner visibility -->
+                <SolidColorBrush Color="AntiqueWhite" Opacity=".1"/>
+            </Grid.Background>
             <controls:UC_BusyImageSpinner/>
         </Grid>
         <Border BorderBrush="Blue" BorderThickness="1" >
@@ -136,7 +140,7 @@
                                 </StackPanel>
                             </DockPanel>
                         </StackPanel>
-                        <StackPanel x:Name="spBluetoothLE" VerticalAlignment="Center" Visibility="Visible" Margin="20,0,10,10">
+                        <StackPanel x:Name="spBluetoothLE" VerticalAlignment="Center" Visibility="Collapsed" Margin="20,0,10,10">
                             <DockPanel>
                                 <StackPanel Margin="0,0,10,0" >
                                     <controls:UC_IconButton x:Name="btnDiscoverLE" 
