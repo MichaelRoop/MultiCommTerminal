@@ -22,15 +22,12 @@ namespace MultiCommTerminal.WindowObjs {
         #region Data
 
         private Window parent = null;
-        private ICommWrapper wrapper = null;
-        private BTDeviceInfo info = null;
 
         #endregion
 
 
         public DeviceInfo_BT(Window parent, BTDeviceInfo info) {
             this.parent = parent;
-            this.info = info;
             InitializeComponent();
             this.Init(info);
             this.SizeToContent = SizeToContent.WidthAndHeight;

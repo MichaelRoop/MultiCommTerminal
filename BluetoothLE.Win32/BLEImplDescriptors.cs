@@ -1,4 +1,5 @@
 ﻿using BluetoothLE.Net.DataModels;
+using BluetoothLE.Net.Enumerations;
 using BluetoothLE.Net.interfaces;
 using BluetoothLE.Net.Parsers;
 using System;
@@ -19,12 +20,13 @@ namespace BluetoothLE.Win32 {
             if (descriptors.Status == GattCommunicationStatus.Success) {
                 if (descriptors.Descriptors.Count > 0) {
                     foreach (GattDescriptor desc in descriptors.Descriptors) {
-                        // New characteristic data model to add to service
                         GattReadResult r = await desc.ReadValueAsync();
                         if (r.Status == GattCommunicationStatus.Success) {
+                            // New characteristic data model to add to service
                             BLE_DescriptorDataModel descDataModel = new BLE_DescriptorDataModel() {
                                 Uuid = desc.Uuid,
                                 AttributeHandle = desc.AttributeHandle,
+                                ProtectionLevel = (BLE_ProtectionLevel)desc.ProtectionLevel,
                                 DisplayName = BLE_ParseHelpers.GetDescriptorValueAsString(desc.Uuid, r.Value.FromBufferToBytes())
                             };
 
@@ -36,7 +38,7 @@ namespace BluetoothLE.Win32 {
                 }
             }
             else {
-                this.log.Info("ConnectToDevice", () => string.Format("        Get Descriptors result:{0}", descriptors.Status.ToString()));
+                this.log.Error(9999, "BuildDescriptors", () => string.Format("Get Descriptors result:{0}", descriptors.Status.ToString()));
             }
         }
     }
