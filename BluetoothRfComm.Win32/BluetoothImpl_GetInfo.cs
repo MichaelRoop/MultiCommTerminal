@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Bluetooth.Rfcomm;
@@ -41,7 +42,9 @@ namespace BluetoothRfComm.Win32 {
                     this.log.Info("HarvestInfo", () => string.Format("        Connected:{0}", dataModel.Connected));
                     this.log.Info("HarvestInfo", () => string.Format("        Device Access Status:{0}", device.DeviceAccessInformation.CurrentStatus.ToString()));
                     this.log.Info("HarvestInfo", () => string.Format("        Device Kind:{0}", device.DeviceInformation.Kind.ToString()));
+                    //device.DeviceInformation.Pairing
 
+                    #region DeviceInformation.Properties
                     this.log.Info("HarvestInfo", () => string.Format("        Properties count:{0}", device.DeviceInformation.Properties.Count));
                     foreach (var p in device.DeviceInformation.Properties) {
                         if (p.Value == null) {
@@ -60,28 +63,25 @@ namespace BluetoothRfComm.Win32 {
                             this.log.Info("HarvestInfo", () => string.Format("            Key:{0} Value:{1}", p.Key, p.Value.GetType().Name));
                         }
                     }
+                    #endregion
 
-
-                    //device.BluetoothDeviceId
-                    //device.BluetoothAddress
-                    //device.DeviceId
-                    
-
-                    //device.DeviceInformation.cl
-                    //device.DeviceAccessInformation.CurrentStatus == Windows.Devices.Enumeration.DeviceAccessStatus.DeniedBySystem
-                    //device.ClassOfDevice.ServiceCapabilities == BluetoothServiceCapabilities.
+                    #region Class of Device
                     BluetoothClassOfDevice cl = device.ClassOfDevice;
                     if (cl != null) {
                         dataModel.DeviceClassInt = (uint)cl.MajorClass;
                         dataModel.DeviceClassName = string.Format("{0}:{1}", cl.MajorClass.ToString(), cl.MinorClass.ToString());
-
                         this.log.Info("HarvestInfo", () => string.Format("        Major class:{0}", cl.MajorClass.ToString()));
                         this.log.Info("HarvestInfo", () => string.Format("        Minor class:{0}", cl.MinorClass.ToString()));
+                        this.log.Info("HarvestInfo", () => string.Format("        ServiceCapabilities:{0}", device.ClassOfDevice.ServiceCapabilities));
                     }
+                    else {
+                        this.log.Info("HarvestInfo", () => string.Format("        device.ClassOfDevice NULL"));
+                    }
+                    #endregion
+
                 }
 
-
-
+                #region GetAdapter which fails with non default
                 //try {
                 //    this.log.Info("HarvestInfo", "        ---------- Get Adapter ----------");
                 //    // I can only get info from the default
@@ -111,7 +111,7 @@ namespace BluetoothRfComm.Win32 {
                 //catch (Exception ex1) {
                 //    this.log.Exception(999, "Exception on Adapter From IdAsync", ex1);
                 //}
-
+                #endregion
 
                 try {
 
@@ -126,63 +126,68 @@ namespace BluetoothRfComm.Win32 {
 
                     //device.ConnectionStatus.
 
+                    this.log.Info("HarvestInfo", "        ---------- SDP Records ----------");
                     var syncRfc = device.SdpRecords;
                     foreach (var s in syncRfc) {
                         this.log.Info("HarvestInfo", () => string.Format("             Capacity:{0}", s.Capacity));
                         this.log.Info("HarvestInfo", () => string.Format("             Length:{0}", s.Length));
                     }
 
-
+                    // Must use uncached
                     RfcommDeviceServicesResult rfc = await device.GetRfcommServicesAsync(BluetoothCacheMode.Uncached);
-                    //RfcommDeviceServicesResult rfc = await device.GetRfcommServicesForIdAsync(RfcommServiceId.SerialPort);
 
+                    this.log.Info("HarvestInfo", "        ---------- Get RfCommService ----------");
                     this.log.Info("HarvestInfo", () => string.Format("services count:{0}", rfc.Services.Count));
                     foreach (var service in rfc.Services) {
-                        this.log.Info("HarvestInfo", () => string.Format(
-                            "             Service Name:{0}", service.ConnectionServiceName));
-                        this.log.Info("HarvestInfo", () => string.Format(
-                            "             Host Name:{0}", service.ConnectionHostName));
-                        this.log.Info("HarvestInfo", () => string.Format(
-                            "             Access Status:{0}", service.DeviceAccessInformation.CurrentStatus));
+                        var sdpAttr = await service.GetSdpRawAttributesAsync(BluetoothCacheMode.Uncached);
+                        foreach(var attr in sdpAttr) {
+                            this.log.Info("HarvestInfo", () => string.Format("             SDP Attribute:{0} Capacity:{1} Length:{2}", attr.Key, attr.Value.Capacity, attr.Value.Length));
+                        }
 
+                        this.log.Info("HarvestInfo", () => string.Format("             Service Name:{0}", service.ConnectionServiceName));
+                        this.log.Info("HarvestInfo", () => string.Format("             Host Name:{0}", service.ConnectionHostName));
+                        this.log.Info("HarvestInfo", () => string.Format("             Access Status:{0}", service.DeviceAccessInformation.CurrentStatus));
 
                         // This is how you would write to it
                         // https://docs.microsoft.com/en-us/windows/uwp/devices-sensors/send-or-receive-files-with-rfcomm
                         // Check support
 
-
                         this.log.Info("HarvestInfo", "        ---------- Connect ----------");
 
-                        StreamSocket socket = new StreamSocket();
-                        await socket.ConnectAsync(
-                            service.ConnectionHostName,
-                            service.ConnectionServiceName,
-                            SocketProtectionLevel.BluetoothEncryptionAllowNullAuthentication);
+                        using (StreamSocket socket = new StreamSocket()) {
+                            await socket.ConnectAsync(
+                                service.ConnectionHostName,
+                                service.ConnectionServiceName,
+                                SocketProtectionLevel.BluetoothEncryptionAllowNullAuthentication);
 
-                        using (var writer = new DataWriter(socket.OutputStream)) {
-                            writer.WriteString("Just a long meandering string to see if it gets through");
-                            await socket.OutputStream.WriteAsync(writer.DetachBuffer());
+                            using (var writer = new DataWriter(socket.OutputStream)) {
+                                writer.WriteString("Just a long string to see if it works\r\n");
+                                await socket.OutputStream.WriteAsync(writer.DetachBuffer());
+                                writer.DetachStream();
+                            }
+
+                            // Example of reading
+                            // https://stackoverflow.com/questions/37015649/datareader-of-socketstream-for-uwp-app
+                            using (var reader = new DataReader(socket.InputStream)) {
+                                CancellationTokenSource cts = new CancellationTokenSource();
+                                for (int i = 0; i < 10; i++) {
+                                    reader.InputStreamOptions = InputStreamOptions.Partial;
+                                    reader.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
+                                    reader.ByteOrder = ByteOrder.LittleEndian;
+
+                                    uint count = await reader.LoadAsync(256).AsTask(cts.Token);
+
+                                    string output = reader.ReadString(count);
+                                    this.log.Info("Feedback from device", () => string.Format("****** Data:{0}", output));
+                                }
+                                reader.DetachStream();
+                            }
                         }
-
-                        //IBuffer
-                        Windows.Storage.Streams.DataWriter w = new DataWriter();
-                        //w.WriteString("This is a very long string to see if anything goes through");
-
-
-                       //BufferedStream bs = new BufferedStream(w);
-                       //await socket.OutputStream.WriteAsync(bs);
-
-
-                    socket.Dispose();
                     }
-
                 }
                 catch (Exception ex2) {
                     this.log.Exception(9999, "Exception on RFComm services", ex2);
                 }
-
-
-
             }
             finally {
                 if (device != null) {
