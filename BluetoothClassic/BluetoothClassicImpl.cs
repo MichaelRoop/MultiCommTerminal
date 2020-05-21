@@ -171,7 +171,8 @@ namespace BluetoothClassic.Net {
                                 Strength = dev.Rssi,
                                 LastSeen = dev.LastSeen,
                                 LastUsed = dev.LastUsed,
-                                Radio = this.BuildRadioDataModel(dev),
+                                //Radio = this.BuildRadioDataModel(dev),
+                                Radio = new BTRadioInfo(),
                             });
                         }
                         else {
