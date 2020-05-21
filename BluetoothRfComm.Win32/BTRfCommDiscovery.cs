@@ -34,53 +34,61 @@ namespace BluetoothRfComm.Win32 {
                 string selector = BluetoothDevice.GetDeviceSelectorFromPairingState(true);
                 var devices = await DeviceInformation.FindAllAsync(selector);
                 foreach (DeviceInformation info in devices) {
-                    this.log.Info("DoDiscovery", () => string.Format("Found device {0}", info.Name));
-                    if (this.DiscoveredBTDevice != null) {
-                        BTDeviceInfo deviceInfo = new BTDeviceInfo() {
-                            Name = info.Name,
-                            Connected = false,
-                            Address = info.Id,
-                        };
+                    // TODO - figure out how to remove old cached BlueRadios BT profiles
 
+                    if (!info.Name.Contains("BlueRadios")) {
+                        this.log.Info("DoDiscovery", () => string.Format("Found device {0}", info.Name));
+                        if (this.DiscoveredBTDevice != null) {
+                            BTDeviceInfo deviceInfo = new BTDeviceInfo() {
+                                Name = info.Name,
+                                Connected = false,
+                                Address = info.Id,
+                            };
 
-                        //dev.Pairing.IsPaired;
-                        //dev.Pairing.ProtectionLevel
-                        if (info.Properties != null) {
-                            this.log.Info("DoDiscovery", "Found properties");
-                            this.log.Info("DoDiscovery", () => string.Format(
-                                "Number of Properties for {0} - {1}", info.Name, info.Properties.Count));
-                            foreach (var v in info.Properties) {
-                                if (v.Value == null) {
-                                    this.log.Info("DoDiscovery", () => string.Format(
-                                        "    Key:{0} Value:NULL", v.Key));
-                                }
-                                else {
-                                    if (v.Value is string) {
+                            //dev.Pairing.IsPaired;
+                            //dev.Pairing.ProtectionLevel
+                            if (info.Properties != null) {
+                                this.log.Info("DoDiscovery", "Found properties");
+                                this.log.Info("DoDiscovery", () => string.Format(
+                                    "Number of Properties for {0} - {1}", info.Name, info.Properties.Count));
+                                foreach (var v in info.Properties) {
+                                    if (v.Value == null) {
                                         this.log.Info("DoDiscovery", () => string.Format(
-                                            "    Key:{0} Value:{1}", v.Key, (string)v.Value));
+                                            "    Key:{0} Value:NULL", v.Key));
                                     }
                                     else {
-                                        this.log.Info("DoDiscovery", () => string.Format(
-                                            "    Key:{0} Type:{1}", v.Key, v.Value.GetType().Name));
+                                        if (v.Value is string) {
+                                            this.log.Info("DoDiscovery", () => string.Format(
+                                                "    Key:{0} String Value:{1}", v.Key, (string)v.Value));
+                                        }
+                                        else if (v.Value is Boolean) {
+                                            this.log.Info("DoDiscovery", () => string.Format(
+                                                "    Key:{0} Boolean Value:{1}", v.Key, (bool)v.Value));
+                                        }
+                                        else {
+                                            this.log.Info("DoDiscovery", () => string.Format(
+                                                "    Key:{0} Type:{1}", v.Key, v.Value.GetType().Name));
+                                        }
                                     }
                                 }
+
+                                await this.HarvestInfo(deviceInfo);
+
                             }
+
+                            //// TODO remove after doing experiments
+                            //if (deviceInfo.Name.Contains("HC-05")) {
+                            //    await this.HarvestInfo(deviceInfo);
+                            //}
+
+
+                            this.DiscoveredBTDevice(this, deviceInfo);
                         }
-
-
-                        // TODO remove after doing experiments
-                        if (deviceInfo.Name.Contains("HC-05")) {
-                            await this.HarvestInfo(deviceInfo);
+                        else {
+                            this.log.Info("DoDiscovery", "No subscribers to discovered event");
+                            break;
                         }
-
-
-                        this.DiscoveredBTDevice(this, deviceInfo);
                     }
-                    else {
-                        this.log.Info("DoDiscovery", "No subscribers to discovered event");
-                        break;
-                    }
-
                     this.log.InfoExit("DoDiscovery");
                     this.DiscoveryComplete?.Invoke(this, true);
                 }

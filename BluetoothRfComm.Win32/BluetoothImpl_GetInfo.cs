@@ -50,6 +50,12 @@ namespace BluetoothRfComm.Win32 {
                         else if (p.Value is string) {
                             this.log.Info("HarvestInfo", () => string.Format("            Key:{0} Value:{1}", p.Key, p.Value as string));
                         }
+                        else if (p.Value is Boolean) {
+                            this.log.Info("HarvestInfo", () => string.Format("            Key:{0} Value:{1}", p.Key, (bool)p.Value));
+                        }
+                        else if (p.Value is Guid) {
+                            this.log.Info("HarvestInfo", () => string.Format("            Key:{0} Value:{1}", p.Key, ((Guid)p.Value).ToString()));
+                        }
                         else {
                             this.log.Info("HarvestInfo", () => string.Format("            Key:{0} Value:{1}", p.Key, p.Value.GetType().Name));
                         }
@@ -76,46 +82,60 @@ namespace BluetoothRfComm.Win32 {
 
 
 
-                try {
-                    this.log.Info("HarvestInfo", "        ---------- Get Adapter ----------");
+                //try {
+                //    this.log.Info("HarvestInfo", "        ---------- Get Adapter ----------");
+                //    // I can only get info from the default
+                //    //BluetoothAdapter adapter = await BluetoothAdapter.GetDefaultAsync();
+                //    string id = "";
+                //    //id = device.BluetoothAddress.ToString();  // Element not found
+                //    // id = dataModel.Address;                  // Element not found
+                //    //id = device.BluetoothDeviceId.Id;         // Element not found
+
+                //    BluetoothAdapter adapter = await BluetoothAdapter.FromIdAsync(id);
+                //    //BluetoothAdapter adapter = await BluetoothAdapter.FromIdAsync(device.BluetoothDeviceId.Id);
 
 
+                //    if (adapter != null) {
+                //        this.log.Info("HarvestInfo", "Got Adapter");
+                //        Radio radio = await adapter.GetRadioAsync();
+                //        if (radio != null) {
+                //            this.log.Info("HarvestInfo", "Got Radio");
+                //            dataModel.Radio.Manufacturer = radio.Name;
+                //            this.log.Info("HarvestInfo", () => string.Format("        Radio Name:{0}", radio.Name));
+                //            this.log.Info("HarvestInfo", () => string.Format("        Radio Kind:{0}", radio.Kind.ToString()));
+                //            this.log.Info("HarvestInfo", () => string.Format("        Radio State:{0}", radio.State.ToString()));
+                //        }
 
-                    // I can only get info from the default
-                    //BluetoothAdapter adapter = await BluetoothAdapter.GetDefaultAsync();
-
-                    // Element not found
-                    //BluetoothAdapter adapter = await BluetoothAdapter.FromIdAsync(dataModel.Address);
-
-                    // Element not found
-                    //BluetoothAdapter adapter = await BluetoothAdapter.FromIdAsync(device.BluetoothDeviceId.Id);
-
-                    BluetoothAdapter adapter = await BluetoothAdapter.FromIdAsync(device.BluetoothDeviceId.Id);
-
-
-                    if (adapter != null) {
-                        this.log.Info("HarvestInfo", "Got Adapter");
-                        Radio radio = await adapter.GetRadioAsync();
-                        if (radio != null) {
-                            this.log.Info("HarvestInfo", "Got Radio");
-                            dataModel.Radio.Manufacturer = radio.Name;
-                            this.log.Info("HarvestInfo", () => string.Format("        Radio Name:{0}", radio.Name));
-                            this.log.Info("HarvestInfo", () => string.Format("        Radio Kind:{0}", radio.Kind.ToString()));
-                            this.log.Info("HarvestInfo", () => string.Format("        Radio State:{0}", radio.State.ToString()));
-                        }
-
-                    }
-                }
-                catch (Exception ex1) {
-                    this.log.Exception(999, "Exception on Adapter From IdAsync", ex1);
-                }
+                //    }
+                //}
+                //catch (Exception ex1) {
+                //    this.log.Exception(999, "Exception on Adapter From IdAsync", ex1);
+                //}
 
 
                 try {
 
                     this.log.Info("HarvestInfo", "        ---------- Get RfCommService ----------");
 
-                    RfcommDeviceServicesResult rfc = await device.GetRfcommServicesAsync();
+                    //RfcommServiceId serviceId = RfcommServiceId.SerialPort;
+                    //serviceId = RfcommServiceId.GenericFileTransfer;
+                    //serviceId = RfcommServiceId.ObexFileTransfer;
+                    //serviceId = RfcommServiceId.ObexObjectPush;
+                    //serviceId = RfcommServiceId.PhoneBookAccessPce;
+                    //serviceId = RfcommServiceId.PhoneBookAccessPse;
+
+                    //device.ConnectionStatus.
+
+                    var syncRfc = device.SdpRecords;
+                    foreach (var s in syncRfc) {
+                        this.log.Info("HarvestInfo", () => string.Format("             Capacity:{0}", s.Capacity));
+                        this.log.Info("HarvestInfo", () => string.Format("             Length:{0}", s.Length));
+                    }
+
+
+                    RfcommDeviceServicesResult rfc = await device.GetRfcommServicesAsync(BluetoothCacheMode.Uncached);
+                    //RfcommDeviceServicesResult rfc = await device.GetRfcommServicesForIdAsync(RfcommServiceId.SerialPort);
+
                     this.log.Info("HarvestInfo", () => string.Format("services count:{0}", rfc.Services.Count));
                     foreach (var service in rfc.Services) {
                         this.log.Info("HarvestInfo", () => string.Format(
