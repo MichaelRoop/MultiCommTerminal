@@ -19,7 +19,6 @@ namespace BluetoothClassic.Net {
 
         private ClassLog log = new ClassLog("BluetoothClassicImpl");
         private BluetoothClient currentDevice = null;
-        private NetworkStream dataStream = null;
 
         public event EventHandler<BTDeviceInfo> DiscoveredBTDevice;
         public event EventHandler<bool> DiscoveryComplete;
@@ -29,6 +28,8 @@ namespace BluetoothClassic.Net {
         void IBTInterface.DiscoverDevicesAsync() {
             this.log.InfoEntry("DiscoverDevicesAsync+++");
             BluetoothClient cl = null;
+            // Kill any current connections
+            this.Disconnect();
 
             try {
                 // 32feet.Net - async callback
@@ -49,7 +50,7 @@ namespace BluetoothClassic.Net {
                 this.Disconnect();
                 this.currentDevice = new BluetoothClient();
 
-                this.log.Info("ConnectAsyn",
+                this.log.Info("ConnectAsync",
                     () => string.Format("Starting connection of:{0} {1}",
                     device.Name, device.Address));
 
@@ -64,6 +65,7 @@ namespace BluetoothClassic.Net {
             }
             catch (Exception e) {
                 this.log.Exception(7777, "", e);
+                this.Disconnect();
                 this.ConnectionCompleted?.Invoke(this, false);
             }
         }
@@ -88,6 +90,7 @@ namespace BluetoothClassic.Net {
             catch (Exception e) {
                 this.log.Exception(8888, "", e);
                 this.log.Info("Connect", "Exiting FALSE");
+                this.Disconnect();
                 return false;
             }
         }
@@ -97,14 +100,16 @@ namespace BluetoothClassic.Net {
             this.log.InfoEntry("Disconnect");
             WrapErr.ToErrReport(9999, () => {
                 this.KillRead();
-                if (this.dataStream != null) {
-                    this.dataStream.Dispose();
-                    this.dataStream = null;
+                try {
+                    if (this.currentDevice != null) {
+                        this.currentDevice.Dispose();
+                        this.currentDevice = null;
+                        // A bug where BT device requires time to properly shut down
+                        Thread.Sleep(500);
+                    }
                 }
-
-                if (this.currentDevice != null) {
-                    this.currentDevice.Dispose();
-                    this.currentDevice = null;
+                catch (Exception e) {
+                    this.log.Exception(9990, "", e);
                 }
             });
             this.log.InfoExit("Disconnect");
@@ -118,12 +123,11 @@ namespace BluetoothClassic.Net {
             try {
                 this.log.InfoEntry("SendOutMsg");
                 if (this.currentDevice != null) {
-                    if (this.dataStream != null) {
-                        this.dataStream.Write(msg, 0, msg.Length);
-                        return true;
+                    if (this.currentDevice.Connected) {
+                        this.currentDevice.GetStream().Write(msg, 0, msg.Length);
                     }
                     else {
-                        this.log.Error(9111, "Data stream null");
+                        this.log.Error(9111, "Current device not connected");
                     }
                 }
                 else {
@@ -195,12 +199,6 @@ namespace BluetoothClassic.Net {
                 BluetoothClient thisDevice = result.AsyncState as BluetoothClient;
                 if (result.IsCompleted) {
                     thisDevice.EndConnect(result);
-                    if (this.dataStream != null) {
-                        this.dataStream.Close();
-                        this.dataStream.Dispose();
-                        this.dataStream = null;
-                    }
-                    this.dataStream = thisDevice.GetStream();
                     this.LaunchRead();
                 }
                 else {
@@ -215,9 +213,6 @@ namespace BluetoothClassic.Net {
 
 
         private BTRadioInfo BuildRadioDataModel(BluetoothDeviceInfo device) {
-            // TODO Until we fix the connect issue just return empty radio info
-            return new BTRadioInfo();
-
             try {
                 this.log.InfoEntry("BuildRadioDataModel");
                 BTDeviceInfo info = new BTDeviceInfo() {
@@ -229,13 +224,11 @@ namespace BluetoothClassic.Net {
                 RadioVersions devRadio = null;
                 if (this.Connect(info)) {
                     devRadio = device.GetVersions();
-                    this.Disconnect();
                 }
                 else {
                     this.log.Error(9991, "NOT CONNECTED TO READ RADIO INFO");
                 }
 
-                //this.Disconnect();
                 if (devRadio == null) {
                     this.log.Info("", "NULL Radio info");
                     return new BTRadioInfo();
@@ -257,6 +250,10 @@ namespace BluetoothClassic.Net {
             catch (Exception e) {
                 this.log.Exception(9999, "", e);
                 return new BTRadioInfo();
+            }
+            finally {
+                // TODO - move this to the getInfo function as it takes a 1/2 second per device disconnect
+                this.Disconnect();
             }
         }
 
@@ -282,9 +279,8 @@ namespace BluetoothClassic.Net {
                 this.log.InfoEntry("KillRead++++");
                 if (this.readThread != null) {
                     this.doneRead = true;
-                    // send dummy message so thread can wake and end
-                    this.dataStream.Write(new byte[1] { 0 }, 0, 1);
                     if (!this.readDoneEvent.WaitOne(500)) {
+                        this.log.Error(9999, "Read thread not completed. Attempt abort");
                         // TODO not supported on this platform. Core only.
                         WrapErr.ToErrReport(9999, () => this.readThread.Abort());
                     }
@@ -303,18 +299,30 @@ namespace BluetoothClassic.Net {
             byte[] buff = new byte[500];
             while (!this.doneRead) {
                 try {
-                    int bytesRead = this.dataStream.Read(buff, 0, 500);
-                    if (bytesRead > 0) {
-                        if (!this.doneRead && this.MsgReceivedEvent != null) {
-                            byte[] outgoing = new byte[bytesRead];
-                            Buffer.BlockCopy(buff, 0, outgoing, 0, bytesRead);
-                            this.MsgReceivedEvent(this, outgoing);
+                    if (this.currentDevice.GetStream().DataAvailable) {
+                        int bytesRead = this.currentDevice.GetStream().Read(buff, 0, 500);
+                        if (bytesRead > 0) {
+                            this.log.Info("ReadThread", () => string.Format("In bytes:{0}", buff.ToFormatedByteString()));
+                            if (!this.doneRead) {
+                                byte[] outgoing = new byte[bytesRead];
+                                Buffer.BlockCopy(buff, 0, outgoing, 0, bytesRead);
+                                if (this.MsgReceivedEvent != null) {
+                                    this.MsgReceivedEvent(this, outgoing);
+                                }
+                                else {
+                                    this.log.Error(9999, "No subscribers to MsgReceivedEvent");
+                                }
+                            }
                         }
                     }
+                    if (doneRead) {
+                        break;
+                    }
+                    Thread.Sleep(50);
                 }
                 catch (Exception e) {
                     this.log.Exception(9999, "From the read thread", e);
-                    Thread.Sleep(100);
+                    break;
                 }
             }
             this.log.Info("ReadThread", "Exiting read thread....");
