@@ -4,6 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>
@@ -57,6 +58,7 @@
     <ProjectReference Include="..\AurelienRibon.Ui.SyntaxHighlightBox\AurelienRibon.Ui.SyntaxHighlightBox.csproj" />
     <ProjectReference Include="..\BluetoothClassic\BluetoothClassic.Net.csproj" />
     <ProjectReference Include="..\BluetoothLE.Win32\BluetoothLE.Win32.csproj" />
+    <ProjectReference Include="..\BluetoothRfComm.Win32\BluetoothRfComm.Win32.csproj" />
     <ProjectReference Include="..\MultiCommData\MultiCommData.Net.csproj" />
     <ProjectReference Include="..\MultiCommWrapper\MultiCommWrapper.Net.csproj" />
   </ItemGroup>

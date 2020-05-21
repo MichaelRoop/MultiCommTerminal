@@ -19,11 +19,11 @@ namespace MultiCommTerminal.DependencyInjection {
         public WinDiExtraCreators() {
             this.SingletonCreators.Add(
                 typeof(IIconFactory), new ObjSingletonCreator(() => new MultiCommTerminal.WPF_Helpers.IconFactory()));
-            
+
             this.SingletonCreators.Add(
                 typeof(IBTInterface), new ObjSingletonCreator(() => new BluetoothClassicImpl()));
-            
-            
+
+
             this.SingletonCreators.Add(
                 typeof(IBLETInterface), new ObjSingletonCreator(() => new BluetoothLEImplWin32()));
         }
