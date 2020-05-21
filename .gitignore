@@ -7,3 +7,5 @@
 /BluetoothCommon.Net/bin/*
 /BluetoothLE/bin/*
 /AurelienRibon.Ui.SyntaxHighlightBox/obj/*
+/MultiCommWrapper/bin/Release/*
+/MultiCommWrapper/obj/*
