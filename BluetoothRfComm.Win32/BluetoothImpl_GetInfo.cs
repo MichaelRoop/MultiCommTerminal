@@ -1,4 +1,5 @@
 ﻿using BluetoothCommon.Net;
+using BluetoothCommon.Net.Enumerations;
 using BluetoothCommon.Net.interfaces;
 using System;
 using System.Collections.Generic;
@@ -141,8 +142,16 @@ namespace BluetoothRfComm.Win32 {
                     foreach (var service in rfc.Services) {
                         var sdpAttr = await service.GetSdpRawAttributesAsync(BluetoothCacheMode.Uncached);
                         foreach(var attr in sdpAttr) {
-                            this.log.Info("HarvestInfo", () => string.Format("             SDP Attribute:{0} Capacity:{1} Length:{2}", attr.Key, attr.Value.Capacity, attr.Value.Length));
+                            this.log.Info("HarvestInfo", () => string.Format(
+                                "             SDP Attribute:{0} Capacity:{1} Length:{2} Type:{3}", 
+                                attr.Key, attr.Value.Capacity, attr.Value.Length, attr.Value.GetType().Name));
                         }
+                       
+
+
+                        this.log.Info("HarvestInfo", () => string.Format("             Service Type:{0}", BT_ParseHelpers.GetServiceType(service.ConnectionServiceName)));
+
+
 
                         this.log.Info("HarvestInfo", () => string.Format("             Service Name:{0}", service.ConnectionServiceName));
                         this.log.Info("HarvestInfo", () => string.Format("             Host Name:{0}", service.ConnectionHostName));
@@ -161,25 +170,76 @@ namespace BluetoothRfComm.Win32 {
                                 SocketProtectionLevel.BluetoothEncryptionAllowNullAuthentication);
 
                             using (var writer = new DataWriter(socket.OutputStream)) {
-                                writer.WriteString("Just a long string to see if it works\r\n");
+                                //writer.WriteString("Just a long string to see if it works\r\n");
+                                //await socket.OutputStream.WriteAsync(writer.DetachBuffer());
+
+
+                                writer.WriteString("Just a long string to ");
                                 await socket.OutputStream.WriteAsync(writer.DetachBuffer());
+                                writer.WriteString("see if it works\r\n");
+                                await socket.OutputStream.WriteAsync(writer.DetachBuffer());
+
+
+
                                 writer.DetachStream();
                             }
 
                             // Example of reading
                             // https://stackoverflow.com/questions/37015649/datareader-of-socketstream-for-uwp-app
+                            //CancellationTokenSource cts = new CancellationTokenSource(1000);
+                            CancellationTokenSource cts = new CancellationTokenSource();
+                            cts.Token.ThrowIfCancellationRequested();
+
                             using (var reader = new DataReader(socket.InputStream)) {
-                                CancellationTokenSource cts = new CancellationTokenSource();
+                            //var reader = new DataReader(socket.InputStream);
                                 for (int i = 0; i < 10; i++) {
+                                    this.log.Info("Feedback from device", () => string.Format("------ Read Iteration:{0}", i + 1));
                                     reader.InputStreamOptions = InputStreamOptions.Partial;
                                     reader.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
                                     reader.ByteOrder = ByteOrder.LittleEndian;
 
-                                    uint count = await reader.LoadAsync(256).AsTask(cts.Token);
 
-                                    string output = reader.ReadString(count);
-                                    this.log.Info("Feedback from device", () => string.Format("****** Data:{0}", output));
+                                    try {
+                                        
+
+                                        uint count = await reader.LoadAsync(256).AsTask(cts.Token);
+                                        this.log.Info("Feedback from device", () => string.Format("------ Count:{0}", count));
+                                        if (count > 0) {
+                                            string output = reader.ReadString(count);
+                                            this.log.Info("Feedback from device", () => string.Format("****** Data:{0}", output));
+                                        }
+                                        else {
+                                            this.log.Info("Feedback from device", "NO DATA");
+                                        }
+
+                                        if (i == 3) {
+                                            await Task.Run(() => {
+                                                this.log.Info("Feedback from device", "ITERATION 3 CANCEL - sleep");
+                                                Thread.Sleep(3000);
+                                                this.log.Info("Feedback from device", "ITERATION 3 CANCEL - AWAKE");
+                                                cts.Cancel();
+                                            });
+
+                                        }
+
+                                    }
+                                    catch (TaskCanceledException ce) {
+                                        this.log.Exception(9999, "", ce);
+                                        //cts = new CancellationTokenSource(500);
+                                        //reader = new DataReader(socket.InputStream);
+                                        break;
+
+                                        // No problem. Just keep looping. You would check a variable to exit loop
+                                    }
+                                    catch (Exception e3) {
+                                        this.log.Exception(9999, "", e3);
+                                        break;
+                                    }
+
                                 }
+                                this.log.Info("Feedback from device", "DONE");
+
+                                //reader.Dispose();
                                 reader.DetachStream();
                             }
                         }

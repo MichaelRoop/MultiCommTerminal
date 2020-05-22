@@ -172,6 +172,7 @@ namespace BluetoothClassic.Net {
                                 LastSeen = dev.LastSeen,
                                 LastUsed = dev.LastUsed,
                                 //Radio = this.BuildRadioDataModel(dev),
+                                // The non async connect does not seem to clear out the serial port. Need to move this
                                 Radio = new BTRadioInfo(),
                             });
                         }
