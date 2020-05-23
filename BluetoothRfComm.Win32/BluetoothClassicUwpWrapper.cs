@@ -3,8 +3,6 @@ using BluetoothCommon.Net.Enumerations;
 using LogUtils.Net;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using VariousUtils;
@@ -30,6 +28,8 @@ namespace BluetoothRfComm.Win32 {
         private DataWriter writer = null;
         private DataReader reader = null;
         private CancellationTokenSource readCancelationToken = null;
+        private bool continueReading = false;
+        private static uint READ_BUFF_MAX_SIZE = 256;
 
         #endregion
 
@@ -47,14 +47,11 @@ namespace BluetoothRfComm.Win32 {
         /// <summary>Raised when bytes are read</summary>
         public event EventHandler<byte[]> MsgReceivedEvent;
 
-
         #endregion
 
         #region Properties
 
         public bool Connected { get; private set; } = false;
-
-        public bool InputDataAvailable { get { return this.nextInputIndex > 0; }  }
 
         #endregion
 
@@ -65,6 +62,10 @@ namespace BluetoothRfComm.Win32 {
 
         #region Public
 
+        /// <summary>
+        /// Launch asynchronous device discovery where DeviceDiscovered is raised on each device
+        /// discovered, and DiscoveryComplete when the discovery ends
+        /// </summary>
         public void DiscoverPairedDevicesAsync() {
             Task.Run(() => {
                 try {
@@ -77,23 +78,26 @@ namespace BluetoothRfComm.Win32 {
         }
 
 
+        /// <summary>Tear down an existing connection are reset for next</summary>
         public void Disconnect() {
-            this.ClearAll();
+            this.TearDown();
             this.Connected = false;
         }
 
 
-        public void ConnectAsync(BTDeviceInfo deviceInfo) {
+        /// <summary>Run asynchronous connection where ConnectionCompleted is raised on completion</summary>
+        /// <param name="deviceDataModel">The data model with information on the device</param>
+        public void ConnectAsync(BTDeviceInfo deviceDataModel) {
             this.Disconnect();
             Task.Run(async () => {
                 try {
                     this.log.InfoEntry("ConnectAsync");
-                    await this.GetExtraInfo(deviceInfo);
+                    await this.GetExtraInfo(deviceDataModel);
 
                     this.socket = new StreamSocket();
                     await this.socket.ConnectAsync(
-                        new HostName(deviceInfo.RemoteHostName),
-                        deviceInfo.RemoteServiceName,
+                        new HostName(deviceDataModel.RemoteHostName),
+                        deviceDataModel.RemoteServiceName,
                         SocketProtectionLevel.BluetoothEncryptionAllowNullAuthentication);
 
                     this.writer = new DataWriter(this.socket.OutputStream);
@@ -106,11 +110,10 @@ namespace BluetoothRfComm.Win32 {
 
                     this.readCancelationToken = new CancellationTokenSource();
                     this.readCancelationToken.Token.ThrowIfCancellationRequested();
-
-                    //deviceInfo.Connected = true;
+                    this.continueReading = true;
 
                     this.Connected = true;
-                    this.DoReadTask();
+                    this.LaunchReadTask();
 
                     this.ConnectionCompleted?.Invoke(this, true);
                 }
@@ -122,42 +125,8 @@ namespace BluetoothRfComm.Win32 {
         }
 
 
-        private static int READ_BUFF_SIZE = 5000;
-        private static uint INTERMEDIATE_BUFF_SIZE = 256;
-        private int nextInputIndex = 0;
-        private byte[] inputBuffer = new byte[READ_BUFF_SIZE];
-
-        private void DoReadTask() {
-            Task.Run(async () => {
-                this.log.InfoEntry("DoReadTask +++");
-                while (true) {
-                    try {
-                        int count = (int)await this.reader.LoadAsync(INTERMEDIATE_BUFF_SIZE);
-                        if (count > 0) {
-                            byte[] tmpBuff = new byte[count];
-                            this.reader.ReadBytes(tmpBuff);
-                            this.MsgReceivedEvent?.Invoke(this, tmpBuff);
-
-                            //lock (this.inputBuffer) {
-                            //    Array.Copy(tmpBuff, 0, this.inputBuffer, this.nextInputIndex, count);
-                            //    this.nextInputIndex += count;
-                            //}
-                        }
-                    }
-                    catch (TaskCanceledException) {
-                        this.log.Info("DoReadTask", "Cancelation");
-                        break;
-                    }
-                    catch(Exception e) {
-                        this.log.Exception(9999, "", e);
-                    }
-                }
-                this.log.InfoExit("DoReadTask ---");
-            });
-        }
-
-
-
+        /// <summary>Run an asynchronous write</summary>
+        /// <param name="msg">The message bytes to write</param>
         public void WriteAsync(byte[] msg) {
             if (this.Connected) {
                 if (this.socket != null) {
@@ -183,65 +152,48 @@ namespace BluetoothRfComm.Win32 {
             }
         }
 
-
-        public int Read(byte[] buff, int buffMaxSize) {
-            int bytesRead = 0;
-            if (this.InputDataAvailable) {
-                lock (this.inputBuffer) {
-                    if (this.nextInputIndex > buffMaxSize) {
-                        Array.Copy(this.inputBuffer, buff, buffMaxSize);
-                        this.nextInputIndex -= buffMaxSize;
-                        Array.Copy(this.inputBuffer, buffMaxSize, this.inputBuffer, 0, this.nextInputIndex);
-                        bytesRead = buffMaxSize;
-                    }
-                    else {
-                        Array.Copy(this.inputBuffer, buff, this.nextInputIndex);
-                        bytesRead = this.nextInputIndex;
-                        this.nextInputIndex = 0;
-                    }
-                }
-            }
-            return bytesRead;
-        }
-
-
         #endregion
 
         #region IDisposable
 
         public void Dispose() {
-            this.ClearAll();
+            this.TearDown();
         }
 
         #endregion
 
-
         #region Private
 
-        private void ClearAll() {
+        /// <summary>Tear down any connections, dispose and reset all resources</summary>
+        private void TearDown() {
             if (this.writer != null) {
                 this.writer.DetachStream();
                 this.writer.Dispose();
                 this.writer = null;
             }
+
+            this.continueReading = false;
             if (this.readCancelationToken != null) {
                 this.readCancelationToken.Cancel();
                 this.readCancelationToken.Dispose();
                 this.readCancelationToken = null;
             }
+
             if (this.reader != null) {
                 this.reader.DetachStream();
                 this.reader.Dispose();
                 this.reader = null;
             }
+
             if (this.socket != null) {
                 this.socket.Dispose();
                 this.socket = null;
             }
-
-            this.nextInputIndex = 0;
         }
 
+
+        /// <summary>Discover devices</summary>
+        /// <param name="paired">If discovery limited to paired or non paired devices</param>
         private async void DoDiscovery(bool paired) {
             try {
                 DeviceInformationCollection devices = await DeviceInformation.FindAllAsync(
@@ -255,9 +207,6 @@ namespace BluetoothRfComm.Win32 {
                             Connected = false,
                             Address = info.Id,
                         };
-
-                        // TODO - put this off until connect or info request
-
                         
                         using (BluetoothDevice device = await BluetoothDevice.FromIdAsync(info.Id)) {
                             deviceInfo.Connected = device.ConnectionStatus == BluetoothConnectionStatus.Connected;
@@ -279,45 +228,6 @@ namespace BluetoothRfComm.Win32 {
                                 //device.ClassOfDevice.ServiceCapabilities == BluetoothServiceCapabilities.ObjectTransferService, etc
                             }
 
-
-                            //// TODO - defer this to before connection or info request                            
-                            //// SDP records only after services
-                            //// Must use uncached
-                            //RfcommDeviceServicesResult serviceResult = await device.GetRfcommServicesAsync(BluetoothCacheMode.Uncached);
-                            //if (serviceResult.Error == BluetoothError.Success) {
-                            //    foreach (var service in serviceResult.Services) {
-                            //        BT_ServiceType serviceType = BT_ParseHelpers.GetServiceType(service.ConnectionServiceName);
-                            //        if (serviceType == BT_ServiceType.SerialPort) {
-                            //            // TODO get extra info on attributes
-                            //            //var sdpAttr = await service.GetSdpRawAttributesAsync(BluetoothCacheMode.Uncached);
-                            //            //foreach (var attr in sdpAttr) {
-                            //            //    this.log.Info("HarvestInfo", () => string.Format("             SDP Attribute:{0} Capacity:{1} Length:{2}", attr.Key, attr.Value.Capacity, attr.Value.Length));
-                            //            //}
-                            //            // Sample output. See: https://www.bluetooth.com/specifications/assigned-numbers/service-discovery/
-                            //            //SDP Attribute id | Capacity | Length | Description(?)
-                            //            //    256               7           7
-                            //            //      0               5           5
-                            //            //      6              11          11
-                            //            //      4              14          14
-                            //            //      1               5           5      (service class ID list
-                            //            deviceInfo.ServiceType = BT_ServiceType.SerialPort;
-                            //            deviceInfo.RemoteHostName = service.ConnectionHostName.ToString();
-                            //            deviceInfo.RemoteServiceName = service.ConnectionServiceName;
-                            //            // TODO info on access 
-                            //            //service.DeviceAccessInformation.CurrentStatus == DeviceAccessStatus.Allowed
-                            //            this.log.Info("****", () => string.Format("Device:{0} Host Name:{1} Service:{2}", 
-                            //                deviceInfo.Name, deviceInfo.RemoteHostName, deviceInfo.RemoteServiceName));
-                            //        }
-                            //        else {
-                            //            // Not used. 
-                            //        }
-                            //    }
-                            //}
-                            //else {
-                            //    this.log.Error(9999, () => string.Format("Get Service result:{0}", serviceResult.Error.ToString()));
-                            //}
-                            
-
                             // Serial port service name
                             // Bluetooth#Bluetooth10:08:b1:8a:b0:02-20:16:04:07:61:01#RFCOMM:00000000:{00001101-0000-1000-8000-00805f9b34fb}
                             // TODO - determine if all the info in device is disposed by the device.Dispose
@@ -328,10 +238,7 @@ namespace BluetoothRfComm.Win32 {
                     catch (Exception ex2) {
                         this.log.Exception(9999, "", ex2);
                     }
-
                 }
-
-
                 this.DiscoveryComplete?.Invoke(this, true);
             }
             catch (Exception e) {
@@ -341,6 +248,10 @@ namespace BluetoothRfComm.Win32 {
         }
 
 
+        /// <summary>Get extra info for connection and other not gathered at discovery to save time</summary>
+        /// <param name="deviceInfo">The device information data model to populate</param>
+        /// <returns>An asynchronous task result</returns>
+        /// <returns>An asynchronous task result</returns>
         private async Task GetExtraInfo(BTDeviceInfo deviceInfo) {
             this.log.InfoEntry("GetExtraInfo");
 
@@ -387,6 +298,11 @@ namespace BluetoothRfComm.Win32 {
         }
 
 
+        /// <summary>Get the boolean value from a Device Information property</summary>
+        /// <param name="property">The device information property</param>
+        /// <param name="key">The property key to lookup</param>
+        /// <param name="defaultValue">Default value on error</param>
+        /// <returns></returns>
         private bool GetBoolProperty(IReadOnlyDictionary<string, object> property, string key, bool defaultValue) {
             if (property.ContainsKey(key)) {
                 if (property[key] is Boolean) {
@@ -398,6 +314,32 @@ namespace BluetoothRfComm.Win32 {
             return defaultValue;
         }
 
+
+        /// <summary>The read task</summary>
+        private void LaunchReadTask() {
+            Task.Run(async () => {
+                this.log.InfoEntry("DoReadTask +++");
+                while (this.continueReading) {
+                    try {
+                        int count = (int)await this.reader.LoadAsync(READ_BUFF_MAX_SIZE);
+                        if (count > 0) {
+                            byte[] tmpBuff = new byte[count];
+                            this.reader.ReadBytes(tmpBuff);
+                            this.MsgReceivedEvent?.Invoke(this, tmpBuff);
+                        }
+                    }
+                    catch (TaskCanceledException) {
+                        this.log.Info("DoReadTask", "Cancelation");
+                        break;
+                    }
+                    catch (Exception e) {
+                        this.log.Exception(9999, "", e);
+                        break;
+                    }
+                }
+                this.log.InfoExit("DoReadTask ---");
+            });
+        }
 
         #endregion
 
