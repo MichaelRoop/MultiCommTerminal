@@ -80,8 +80,9 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void DisconnectAll() {
-            //this.BLE_Disconnect();
-            //this.BTClassicDisconnect();
+            this.BLE_Disconnect();
+            this.BTClassicDisconnect();
+            // TODO - add all others in future
         }
 
         #endregion

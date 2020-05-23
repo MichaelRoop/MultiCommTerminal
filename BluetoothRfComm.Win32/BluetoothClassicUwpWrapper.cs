@@ -30,6 +30,7 @@ namespace BluetoothRfComm.Win32 {
         private CancellationTokenSource readCancelationToken = null;
         private bool continueReading = false;
         private static uint READ_BUFF_MAX_SIZE = 256;
+        private ManualResetEvent readFinishedEvent = new ManualResetEvent(false);
 
         #endregion
 
@@ -80,18 +81,17 @@ namespace BluetoothRfComm.Win32 {
 
         /// <summary>Tear down an existing connection are reset for next</summary>
         public void Disconnect() {
-            this.TearDown();
-            this.Connected = false;
+            this.TearDown(false);
         }
 
 
         /// <summary>Run asynchronous connection where ConnectionCompleted is raised on completion</summary>
         /// <param name="deviceDataModel">The data model with information on the device</param>
         public void ConnectAsync(BTDeviceInfo deviceDataModel) {
-            this.Disconnect();
             Task.Run(async () => {
                 try {
                     this.log.InfoEntry("ConnectAsync");
+                    this.TearDown(true);
                     await this.GetExtraInfo(deviceDataModel);
 
                     this.socket = new StreamSocket();
@@ -157,7 +157,7 @@ namespace BluetoothRfComm.Win32 {
         #region IDisposable
 
         public void Dispose() {
-            this.TearDown();
+            this.TearDown(false);
         }
 
         #endregion
@@ -165,29 +165,44 @@ namespace BluetoothRfComm.Win32 {
         #region Private
 
         /// <summary>Tear down any connections, dispose and reset all resources</summary>
-        private void TearDown() {
-            if (this.writer != null) {
-                this.writer.DetachStream();
-                this.writer.Dispose();
-                this.writer = null;
-            }
+        private void TearDown(bool sleepAfterSocketDispose) {
+            try {
+                this.continueReading = false;
+                if (this.readCancelationToken != null) {
+                    this.readCancelationToken.Cancel();
+                    this.readCancelationToken.Dispose();
+                    this.readCancelationToken = null;
+                    if (!this.readFinishedEvent.WaitOne(2000)) {
+                        this.log.Error(9999, "Timed out waiting for read cancelation");
+                    }
+                }
 
-            this.continueReading = false;
-            if (this.readCancelationToken != null) {
-                this.readCancelationToken.Cancel();
-                this.readCancelationToken.Dispose();
-                this.readCancelationToken = null;
-            }
+                if (this.writer != null) {
+                    try { this.writer.DetachStream(); } catch(Exception e) { this.log.Exception(9999, "", e); }
+                    this.writer.Dispose();
+                    this.writer = null;
+                }
 
-            if (this.reader != null) {
-                this.reader.DetachStream();
-                this.reader.Dispose();
-                this.reader = null;
-            }
 
-            if (this.socket != null) {
-                this.socket.Dispose();
-                this.socket = null;
+                if (this.reader != null) {
+                    try { this.reader.DetachStream(); } catch (Exception e) { this.log.Exception(9999, "", e); }
+                    this.reader.Dispose();
+                    this.reader = null;
+                }
+
+                if (this.socket != null) {
+                    // The socket was closed so cannot cancel IO
+                    this.socket.Dispose();
+                    this.socket = null;
+                    // Seems socket does not shut itself down fast enough before next call to connect
+                    if (sleepAfterSocketDispose) {
+                        Thread.Sleep(500);
+                    }
+                }
+                this.Connected = false;
+            }
+            catch (Exception e) {
+                this.log.Exception(9999, "", e);
             }
         }
 
@@ -319,9 +334,11 @@ namespace BluetoothRfComm.Win32 {
         private void LaunchReadTask() {
             Task.Run(async () => {
                 this.log.InfoEntry("DoReadTask +++");
+                this.readFinishedEvent.Reset();
+
                 while (this.continueReading) {
                     try {
-                        int count = (int)await this.reader.LoadAsync(READ_BUFF_MAX_SIZE);
+                        int count = (int)await this.reader.LoadAsync(READ_BUFF_MAX_SIZE).AsTask(this.readCancelationToken.Token);
                         if (count > 0) {
                             byte[] tmpBuff = new byte[count];
                             this.reader.ReadBytes(tmpBuff);
@@ -338,6 +355,7 @@ namespace BluetoothRfComm.Win32 {
                     }
                 }
                 this.log.InfoExit("DoReadTask ---");
+                this.readFinishedEvent.Set();
             });
         }
 

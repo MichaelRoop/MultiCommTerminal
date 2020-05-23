@@ -64,6 +64,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         #region Public
 
         public void BLE_DiscoverAsync() {
+            this.DisconnectAll();
             this.bleBluetooth.DiscoverDevices();
         }
 

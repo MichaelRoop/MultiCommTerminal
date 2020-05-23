@@ -4,14 +4,8 @@ using BluetoothCommon.Net;
 using BluetoothCommon.Net.interfaces;
 using LogUtils.Net;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using VariousUtils;
-using Windows.Devices.Bluetooth;
-using Windows.Devices.Enumeration;
-using Windows.Foundation;
 
 namespace BluetoothRfComm.Win32 {
 
@@ -38,15 +32,23 @@ namespace BluetoothRfComm.Win32 {
 
     public partial class BluetoothRfCommImpl : IBTInterface {
 
+        #region Data
+
+        private ClassLog log = new ClassLog("BluetoothRfCommImpl");
+        private BluetoothClassicUwpWrapper btWrapper = null;
+
+        #endregion
+
+        #region Events
+
         public event EventHandler<BTDeviceInfo> DiscoveredBTDevice;
         public event EventHandler<bool> DiscoveryComplete;
         public event EventHandler<bool> ConnectionCompleted;
         public event EventHandler<byte[]> MsgReceivedEvent;
 
-        private ClassLog log = new ClassLog("BluetoothRfCommImpl");
-        private BluetoothClassicUwpWrapper btWrapper = null;
+        #endregion
 
-
+        #region Constructors
 
         public BluetoothRfCommImpl() {
             this.btWrapper = new BluetoothClassicUwpWrapper();
@@ -56,49 +58,57 @@ namespace BluetoothRfComm.Win32 {
             this.btWrapper.MsgReceivedEvent += BtWrapper_MsgReceivedEvent;
         }
 
+        #endregion
 
-        public bool Connect(BTDeviceInfo device) {
-            throw new NotImplementedException();
+        #region Public IBTInterface
+
+        /// <summary>Synchronous connection</summary>
+        /// <param name="deviceDataModel">Data model with device information</param>
+        /// <returns>true on connection, false on failure</returns>
+        public bool Connect(BTDeviceInfo deviceDataModel) {
+            AutoResetEvent done = new AutoResetEvent(false);
+            bool result = false;
+            this.btWrapper.ConnectionCompleted += (sender, isOk) => {
+                result = isOk;
+                done.Set();
+            };
+            this.ConnectAsync(deviceDataModel);
+            if (!done.WaitOne(5000)) {
+                result = false;
+            }
+            return result;
         }
 
 
         public void ConnectAsync(BTDeviceInfo device) {
-#if USE_BT_WRAPPER
             this.btWrapper.ConnectAsync(device);
-#endif
         }
 
 
         public void Disconnect() {
-#if USE_BT_WRAPPER
-            this.btWrapper.Disconnect();
-#else
-            throw new NotImplementedException();
-#endif
+            try {
+                this.btWrapper.Disconnect();
+            }
+            catch (Exception e) {
+                this.log.Exception(9999, "", e);
+            }
         }
 
 
         public void DiscoverDevicesAsync() {
-#if USE_BT_WRAPPER
-            this.btWrapper.DiscoverPairedDevicesAsync();
-#else
-            Task.Run(() => {
-                try {
-                    this.DoDiscovery();
-                }
-                catch (Exception e) {
-                    this.log.Exception(9999, "", e);
-                }
-            });
-#endif
+            try {
+                this.btWrapper.DiscoverPairedDevicesAsync();
+            }
+            catch(Exception e) {
+                this.log.Exception(9999, "", e);
+            }
         }
 
 
+        // TODO - ADD THIS TO INTERFACE AND MAKE IT ASYNC LIKE THE BLE IMPLEMENTATION
         /// <summary>Complete by connecting and filling in the device information</summary>
         /// <param name="device"></param>
         public void GetDeviceInfo(BTDeviceInfo deviceDataModel) {
-            // TODO - add to interface. 
-            // TODO - add event with newly populated device data model
 #if USE_BT_WRAPPER
             //this.btWrapper.DiscoverPairedDevicesAsync();
 #else
@@ -113,33 +123,35 @@ namespace BluetoothRfComm.Win32 {
 #endif
         }
 
+        #endregion
 
+        #region Public ICommStackChannel interface
 
         public bool SendOutMsg(byte[] msg) {
-#if USE_BT_WRAPPER
             this.btWrapper.WriteAsync(msg);
             return true;
-#else
-            throw new NotImplementedException();
-#endif
         }
 
-#region Private
+        #endregion
+
+        #region Private Bluetooth Wrapper event handlers
 
         private void BtWrapper_ConnectionCompleted(object sender, bool e) {
             this.ConnectionCompleted?.Invoke(sender, e);
         }
 
+
         private void BtWrapper_DeviceDiscovered(object sender, BTDeviceInfo e) {
             this.DiscoveredBTDevice?.Invoke(sender, e);
         }
+
 
         private void BtWrapper_DiscoveryComplete(object sender, bool e) {
             this.DiscoveryComplete?.Invoke(this, e);
         }
 
-        private void BtWrapper_MsgReceivedEvent(object sender, byte[] e) {
 
+        private void BtWrapper_MsgReceivedEvent(object sender, byte[] e) {
             this.log.Info("BtWrapper_MsgReceivedEvent", () =>
                 string.Format("Received:{0}", e.ToFormatedByteString()));
 
