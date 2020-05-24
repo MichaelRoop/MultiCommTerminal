@@ -1,14 +1,10 @@
 ﻿using BluetoothCommon.Net;
-using BluetoothCommon.Net.Enumerations;
 using LogUtils.Net;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using VariousUtils;
-using Windows.Devices.Bluetooth;
-using Windows.Devices.Bluetooth.Rfcomm;
-using Windows.Devices.Enumeration;
 using Windows.Networking;
 using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
@@ -168,6 +164,7 @@ namespace BluetoothRfComm.Win32 {
         /// <summary>Tear down any connections, dispose and reset all resources</summary>
         private void TearDown(bool sleepAfterSocketDispose) {
             try {
+                #region Cancel Read Thread
                 this.continueReading = false;
                 if (this.readCancelationToken != null) {
                     this.readCancelationToken.Cancel();
@@ -177,20 +174,23 @@ namespace BluetoothRfComm.Win32 {
                         this.log.Error(9999, "Timed out waiting for read cancelation");
                     }
                 }
+                #endregion
 
+                #region Close Writer and Reader
                 if (this.writer != null) {
                     try { this.writer.DetachStream(); } catch(Exception e) { this.log.Exception(9999, "", e); }
                     this.writer.Dispose();
                     this.writer = null;
                 }
 
-
                 if (this.reader != null) {
                     try { this.reader.DetachStream(); } catch (Exception e) { this.log.Exception(9999, "", e); }
                     this.reader.Dispose();
                     this.reader = null;
                 }
+                #endregion
 
+                #region Close socket
                 if (this.socket != null) {
                     // The socket was closed so cannot cancel IO
                     this.socket.Dispose();
@@ -200,6 +200,7 @@ namespace BluetoothRfComm.Win32 {
                         Thread.Sleep(500);
                     }
                 }
+                #endregion
                 this.Connected = false;
             }
             catch (Exception e) {
