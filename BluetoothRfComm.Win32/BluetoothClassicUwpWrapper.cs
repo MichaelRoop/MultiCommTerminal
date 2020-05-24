@@ -14,7 +14,8 @@ using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
 
 namespace BluetoothRfComm.Win32 {
-    public class BluetoothClassicUwpWrapper : IDisposable {
+
+    public partial class BluetoothClassicUwpWrapper : IDisposable {
 
         #region Data
 
@@ -92,7 +93,7 @@ namespace BluetoothRfComm.Win32 {
                 try {
                     this.log.InfoEntry("ConnectAsync");
                     this.TearDown(true);
-                    await this.GetExtraInfo(deviceDataModel);
+                    await this.GetExtraInfo(deviceDataModel, false);
 
                     this.socket = new StreamSocket();
                     await this.socket.ConnectAsync(
@@ -203,112 +204,6 @@ namespace BluetoothRfComm.Win32 {
             }
             catch (Exception e) {
                 this.log.Exception(9999, "", e);
-            }
-        }
-
-
-        /// <summary>Discover devices</summary>
-        /// <param name="paired">If discovery limited to paired or non paired devices</param>
-        private async void DoDiscovery(bool paired) {
-            try {
-                DeviceInformationCollection devices = await DeviceInformation.FindAllAsync(
-                    BluetoothDevice.GetDeviceSelectorFromPairingState(paired));
-                foreach (DeviceInformation info in devices) {
-                    try {
-                        this.log.Info("DoDiscovery", () => string.Format("Found device {0}", info.Name));
-
-                        BTDeviceInfo deviceInfo = new BTDeviceInfo() {
-                            Name = info.Name,
-                            Connected = false,
-                            Address = info.Id,
-                        };
-                        
-                        using (BluetoothDevice device = await BluetoothDevice.FromIdAsync(info.Id)) {
-                            deviceInfo.Connected = device.ConnectionStatus == BluetoothConnectionStatus.Connected;
-                            deviceInfo.CanPair = this.GetBoolProperty(device.DeviceInformation.Properties, KEY_CAN_PAIR, false);
-                            deviceInfo.IsPaired = this.GetBoolProperty(device.DeviceInformation.Properties, KEY_IS_PAIRED, false);
-                            // Container Id also
-                            //device.DeviceAccessInformation.CurrentStatus == DeviceAccessStatus. // Allowed, denied by user, by system, unspecified
-                            //device.DeviceInformation.EnclosureLocation.; // Dock, lid, panel, etc
-                            //device.DeviceInformation.IsDefault;
-                            //device.DeviceInformation.IsEnabled;
-                            //device.DeviceInformation.Kind == //AssociationEndpoint, Device, etc
-                            //device.DeviceInformation.Properties
-
-                            if (device.ClassOfDevice != null) {
-                                deviceInfo.DeviceClassInt = (uint)device.ClassOfDevice.MajorClass;
-                                deviceInfo.DeviceClassName = string.Format("{0}:{1}",
-                                    device.ClassOfDevice.MajorClass.ToString(),
-                                    device.ClassOfDevice.MinorClass.ToString());
-                                //device.ClassOfDevice.ServiceCapabilities == BluetoothServiceCapabilities.ObjectTransferService, etc
-                            }
-
-                            // Serial port service name
-                            // Bluetooth#Bluetooth10:08:b1:8a:b0:02-20:16:04:07:61:01#RFCOMM:00000000:{00001101-0000-1000-8000-00805f9b34fb}
-                            // TODO - determine if all the info in device is disposed by the device.Dispose
-                        } // end of using (device)
-                        
-                        this.DeviceDiscovered?.Invoke(this, deviceInfo);
-                    }
-                    catch (Exception ex2) {
-                        this.log.Exception(9999, "", ex2);
-                    }
-                }
-                this.DiscoveryComplete?.Invoke(this, true);
-            }
-            catch (Exception e) {
-                this.log.Exception(9999, "", e);
-                this.DiscoveryComplete?.Invoke(this, false);
-            }
-        }
-
-
-        /// <summary>Get extra info for connection and other not gathered at discovery to save time</summary>
-        /// <param name="deviceInfo">The device information data model to populate</param>
-        /// <returns>An asynchronous task result</returns>
-        /// <returns>An asynchronous task result</returns>
-        private async Task GetExtraInfo(BTDeviceInfo deviceInfo) {
-            this.log.InfoEntry("GetExtraInfo");
-
-            if (deviceInfo.RemoteHostName.Length == 0) {
-                using (BluetoothDevice device = await BluetoothDevice.FromIdAsync(deviceInfo.Address)) {
-                    // TODO - defer this to before connection or info request                            
-                    // SDP records only after services
-                    // Must use uncached
-                    RfcommDeviceServicesResult serviceResult = await device.GetRfcommServicesAsync(BluetoothCacheMode.Uncached);
-                    if (serviceResult.Error == BluetoothError.Success) {
-                        foreach (var service in serviceResult.Services) {
-                            BT_ServiceType serviceType = BT_ParseHelpers.GetServiceType(service.ConnectionServiceName);
-                            if (serviceType == BT_ServiceType.SerialPort) {
-                                // TODO get extra info on attributes
-                                //var sdpAttr = await service.GetSdpRawAttributesAsync(BluetoothCacheMode.Uncached);
-                                //foreach (var attr in sdpAttr) {
-                                //    this.log.Info("HarvestInfo", () => string.Format("             SDP Attribute:{0} Capacity:{1} Length:{2}", attr.Key, attr.Value.Capacity, attr.Value.Length));
-                                //}
-                                // Sample output. See: https://www.bluetooth.com/specifications/assigned-numbers/service-discovery/
-                                //SDP Attribute id | Capacity | Length | Description(?)
-                                //    256               7           7
-                                //      0               5           5
-                                //      6              11          11
-                                //      4              14          14
-                                //      1               5           5      (service class ID list
-                                deviceInfo.ServiceType = BT_ServiceType.SerialPort;
-                                deviceInfo.RemoteHostName = service.ConnectionHostName.ToString();
-                                deviceInfo.RemoteServiceName = service.ConnectionServiceName;
-                                // TODO info on access 
-                                //service.DeviceAccessInformation.CurrentStatus == DeviceAccessStatus.Allowed
-                                this.log.Info("****", () => string.Format("Device:{0} Host Name:{1} Service:{2}",
-                                    deviceInfo.Name, deviceInfo.RemoteHostName, deviceInfo.RemoteServiceName));
-                            }
-                            else {
-                                // Not used. 
-                            }
-                        }
-                    }
-                    else {
-                        this.log.Error(9999, () => string.Format("Get Service result:{0}", serviceResult.Error.ToString()));
-                    }
-                }
             }
         }
 

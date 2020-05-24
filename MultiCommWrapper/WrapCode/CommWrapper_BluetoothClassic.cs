@@ -72,10 +72,10 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.classicBluetooth.Disconnect();
         }
 
+
         public void BTClassicSend(string msg) {
             this.btClassicStack.SendToComm(msg);
         }
-
 
         #region Init and teardown
 
