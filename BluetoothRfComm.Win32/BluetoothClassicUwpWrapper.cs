@@ -90,6 +90,9 @@ namespace BluetoothRfComm.Win32 {
                     this.log.InfoEntry("ConnectAsync");
                     this.TearDown(true);
                     await this.GetExtraInfo(deviceDataModel, false);
+                        
+                    this.log.Info("ConnectAsync", () => string.Format(
+                        "Host:{0} Service:{1}", deviceDataModel.RemoteHostName, deviceDataModel.RemoteServiceName));
 
                     this.socket = new StreamSocket();
                     await this.socket.ConnectAsync(
@@ -115,7 +118,7 @@ namespace BluetoothRfComm.Win32 {
                     this.ConnectionCompleted?.Invoke(this, true);
                 }
                 catch (Exception e) {
-                    this.log.Exception(9999, "", e);
+                    this.log.Exception(9999, "Connect Asyn Error", e);
                     this.ConnectionCompleted?.Invoke(this, false);
                 }
             });

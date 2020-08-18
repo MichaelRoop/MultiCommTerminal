@@ -318,6 +318,9 @@ namespace MultiCommTerminal.WindowObjs {
             this.log.InfoEntry("BT_ConnectionCompletedHandler");
             this.Dispatcher.Invoke(() => {
                 this.gridWait.Visibility = Visibility.Collapsed;
+                if (e == false) {
+                    MsgBoxSimple.ShowBox("Failed connection", "Reason unknown");
+                }
             });
         }
 
