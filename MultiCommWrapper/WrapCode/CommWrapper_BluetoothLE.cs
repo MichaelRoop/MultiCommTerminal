@@ -5,7 +5,7 @@ using MultiCommWrapper.Net.interfaces;
 using System;
 using System.Text;
 using System.Threading;
-using VariousUtils;
+using VariousUtils.Net;
 
 namespace MultiCommWrapper.Net.WrapCode {
 

@@ -11,8 +11,8 @@
         "dependencies": {
           "BluetoothCommon.Net": "1.0.0",
           "BluetoothLE.Net": "1.0.0",
-          "DependencyInjectorFactory": "1.0.0",
-          "IconFactory": "1.0.0",
+          "DependencyInjectorFactory.Net": "1.0.0",
+          "IconFactory.Net": "1.0.0",
           "LanguageFactory.Net": "1.0.0",
           "MultiCommData.Net": "1.0.0",
           "NETStandard.Library": "2.0.3",
@@ -60,23 +60,23 @@
       },
       "CommunicationStack.Net/1.0.0": {
         "dependencies": {
-          "VariousUtils": "1.0.0"
+          "VariousUtils.Net": "1.0.0"
         },
         "runtime": {
           "CommunicationStack.Net.dll": {}
         }
       },
-      "DependencyInjectorFactory/1.0.0": {
+      "DependencyInjectorFactory.Net/1.0.0": {
         "dependencies": {
           "LogUtils.Net": "1.0.0"
         },
         "runtime": {
-          "DependencyInjectorFactory.dll": {}
+          "DependencyInjectorFactory.Net.dll": {}
         }
       },
-      "IconFactory/1.0.0": {
+      "IconFactory.Net/1.0.0": {
         "runtime": {
-          "IconFactory.dll": {}
+          "IconFactory.Net.dll": {}
         }
       },
       "LanguageFactory.Net/1.0.0": {
@@ -109,19 +109,19 @@
           "ChkUtils.Net": "1.0.0",
           "LogUtils.Net": "1.0.0",
           "Newtonsoft.Json": "12.0.3",
-          "VariousUtils": "1.0.0"
+          "VariousUtils.Net": "1.0.0"
         },
         "runtime": {
           "StorageFactory.Net.dll": {}
         }
       },
-      "VariousUtils/1.0.0": {
+      "VariousUtils.Net/1.0.0": {
         "dependencies": {
           "ChkUtils.Net": "1.0.0",
           "LogUtils.Net": "1.0.0"
         },
         "runtime": {
-          "VariousUtils.dll": {}
+          "VariousUtils.Net.dll": {}
         }
       }
     }
@@ -173,12 +173,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "DependencyInjectorFactory/1.0.0": {
+    "DependencyInjectorFactory.Net/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "IconFactory/1.0.0": {
+    "IconFactory.Net/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -203,7 +203,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "VariousUtils/1.0.0": {
+    "VariousUtils.Net/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

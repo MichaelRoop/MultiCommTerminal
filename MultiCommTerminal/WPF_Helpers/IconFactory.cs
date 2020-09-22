@@ -1,5 +1,5 @@
-﻿using IconFactory.data;
-using IconFactory.interfaces;
+﻿using IconFactory.Net.data;
+using IconFactory.Net.interfaces;
 
 namespace MultiCommTerminal.WPF_Helpers {
 

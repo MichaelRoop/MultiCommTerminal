@@ -4,7 +4,7 @@ using ChkUtils.Net.ErrObjects;
 using MultiCommWrapper.Net.interfaces;
 using System;
 using System.Text;
-using VariousUtils;
+using VariousUtils.Net;
 
 namespace MultiCommWrapper.Net.WrapCode {
 

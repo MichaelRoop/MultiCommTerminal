@@ -1,7 +1,7 @@
 ﻿using BluetoothCommon.Net.interfaces;
 using BluetoothLE.Net.interfaces;
 using CommunicationStack.Net.interfaces;
-using IconFactory.interfaces;
+using IconFactory.Net.interfaces;
 using LanguageFactory.interfaces;
 using LogUtils.Net;
 using MultiCommData.Net.StorageDataModels;

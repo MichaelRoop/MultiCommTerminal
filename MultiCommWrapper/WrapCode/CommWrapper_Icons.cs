@@ -1,6 +1,6 @@
 ﻿using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
-using IconFactory.data;
+using IconFactory.Net.data;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommWrapper.Net.interfaces;
 using System;

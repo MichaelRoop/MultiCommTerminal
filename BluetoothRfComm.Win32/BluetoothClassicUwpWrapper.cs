@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using VariousUtils;
+using VariousUtils.Net;
 using Windows.Networking;
 using Windows.Networking.Sockets;
 using Windows.Storage.Streams;

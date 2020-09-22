@@ -79,9 +79,9 @@
       <Project>{DB9AA64B-945B-41D5-A0DA-83407D2BFCC8}</Project>
       <Name>LogUtils.Net</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\SharedNetLibs\VariousUtils\VariousUtils.csproj">
+    <ProjectReference Include="..\..\SharedNetLibs\VariousUtils\VariousUtils.Net.csproj">
       <Project>{8702AF2D-436D-485D-B6A7-F2854E56B9C4}</Project>
-      <Name>VariousUtils</Name>
+      <Name>VariousUtils.Net</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

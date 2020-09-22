@@ -2,8 +2,8 @@
 using BluetoothLE.Net.interfaces;
 using CommunicationStack.Net.interfaces;
 using CommunicationStack.Net.Stacks;
-using DependencyInjectorFactory;
-using IconFactory.interfaces;
+using DependencyInjectorFactory.Net;
+using IconFactory.Net.interfaces;
 using LanguageFactory.interfaces;
 using LanguageFactory.Messaging;
 using MultiCommWrapper.Net.Factories;

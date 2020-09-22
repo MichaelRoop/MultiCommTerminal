@@ -104,11 +104,11 @@
               "D:\\Dev\\SharedNetLibs\\BluetoothLE\\BluetoothLE.Net.csproj": {
                 "projectPath": "D:\\Dev\\SharedNetLibs\\BluetoothLE\\BluetoothLE.Net.csproj"
               },
-              "D:\\Dev\\SharedNetLibs\\DependencyInjectorFactory\\DependencyInjectorFactory.csproj": {
-                "projectPath": "D:\\Dev\\SharedNetLibs\\DependencyInjectorFactory\\DependencyInjectorFactory.csproj"
+              "D:\\Dev\\SharedNetLibs\\DependencyInjectorFactory\\DependencyInjectorFactory.Net.csproj": {
+                "projectPath": "D:\\Dev\\SharedNetLibs\\DependencyInjectorFactory\\DependencyInjectorFactory.Net.csproj"
               },
-              "D:\\Dev\\SharedNetLibs\\IconFactory\\IconFactory.csproj": {
-                "projectPath": "D:\\Dev\\SharedNetLibs\\IconFactory\\IconFactory.csproj"
+              "D:\\Dev\\SharedNetLibs\\IconFactory\\IconFactory.Net.csproj": {
+                "projectPath": "D:\\Dev\\SharedNetLibs\\IconFactory\\IconFactory.Net.csproj"
               },
               "D:\\Dev\\SharedNetLibs\\LanguageFactory\\LanguageFactory.Net.csproj": {
                 "projectPath": "D:\\Dev\\SharedNetLibs\\LanguageFactory\\LanguageFactory.Net.csproj"
@@ -360,8 +360,8 @@
         "frameworks": {
           "netstandard2.0": {
             "projectReferences": {
-              "D:\\Dev\\SharedNetLibs\\VariousUtils\\VariousUtils.csproj": {
-                "projectPath": "D:\\Dev\\SharedNetLibs\\VariousUtils\\VariousUtils.csproj"
+              "D:\\Dev\\SharedNetLibs\\VariousUtils\\VariousUtils.Net.csproj": {
+                "projectPath": "D:\\Dev\\SharedNetLibs\\VariousUtils\\VariousUtils.Net.csproj"
               }
             }
           }
@@ -396,12 +396,12 @@
         }
       }
     },
-    "D:\\Dev\\SharedNetLibs\\DependencyInjectorFactory\\DependencyInjectorFactory.csproj": {
+    "D:\\Dev\\SharedNetLibs\\DependencyInjectorFactory\\DependencyInjectorFactory.Net.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Dev\\SharedNetLibs\\DependencyInjectorFactory\\DependencyInjectorFactory.csproj",
-        "projectName": "DependencyInjectorFactory",
-        "projectPath": "D:\\Dev\\SharedNetLibs\\DependencyInjectorFactory\\DependencyInjectorFactory.csproj",
+        "projectUniqueName": "D:\\Dev\\SharedNetLibs\\DependencyInjectorFactory\\DependencyInjectorFactory.Net.csproj",
+        "projectName": "DependencyInjectorFactory.Net",
+        "projectPath": "D:\\Dev\\SharedNetLibs\\DependencyInjectorFactory\\DependencyInjectorFactory.Net.csproj",
         "packagesPath": "C:\\Users\\Michael\\.nuget\\packages\\",
         "outputPath": "D:\\Dev\\SharedNetLibs\\DependencyInjectorFactory\\obj\\",
         "projectStyle": "PackageReference",
@@ -458,12 +458,12 @@
         }
       }
     },
-    "D:\\Dev\\SharedNetLibs\\IconFactory\\IconFactory.csproj": {
+    "D:\\Dev\\SharedNetLibs\\IconFactory\\IconFactory.Net.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Dev\\SharedNetLibs\\IconFactory\\IconFactory.csproj",
-        "projectName": "IconFactory",
-        "projectPath": "D:\\Dev\\SharedNetLibs\\IconFactory\\IconFactory.csproj",
+        "projectUniqueName": "D:\\Dev\\SharedNetLibs\\IconFactory\\IconFactory.Net.csproj",
+        "projectName": "IconFactory.Net",
+        "projectPath": "D:\\Dev\\SharedNetLibs\\IconFactory\\IconFactory.Net.csproj",
         "packagesPath": "C:\\Users\\Michael\\.nuget\\packages\\",
         "outputPath": "D:\\Dev\\SharedNetLibs\\IconFactory\\obj\\",
         "projectStyle": "PackageReference",
@@ -672,8 +672,8 @@
               "D:\\Dev\\SharedNetLibs\\LogUtils.Net\\LogUtils.Net.csproj": {
                 "projectPath": "D:\\Dev\\SharedNetLibs\\LogUtils.Net\\LogUtils.Net.csproj"
               },
-              "D:\\Dev\\SharedNetLibs\\VariousUtils\\VariousUtils.csproj": {
-                "projectPath": "D:\\Dev\\SharedNetLibs\\VariousUtils\\VariousUtils.csproj"
+              "D:\\Dev\\SharedNetLibs\\VariousUtils\\VariousUtils.Net.csproj": {
+                "projectPath": "D:\\Dev\\SharedNetLibs\\VariousUtils\\VariousUtils.Net.csproj"
               }
             }
           }
@@ -712,12 +712,12 @@
         }
       }
     },
-    "D:\\Dev\\SharedNetLibs\\VariousUtils\\VariousUtils.csproj": {
+    "D:\\Dev\\SharedNetLibs\\VariousUtils\\VariousUtils.Net.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Dev\\SharedNetLibs\\VariousUtils\\VariousUtils.csproj",
-        "projectName": "VariousUtils",
-        "projectPath": "D:\\Dev\\SharedNetLibs\\VariousUtils\\VariousUtils.csproj",
+        "projectUniqueName": "D:\\Dev\\SharedNetLibs\\VariousUtils\\VariousUtils.Net.csproj",
+        "projectName": "VariousUtils.Net",
+        "projectPath": "D:\\Dev\\SharedNetLibs\\VariousUtils\\VariousUtils.Net.csproj",
         "packagesPath": "C:\\Users\\Michael\\.nuget\\packages\\",
         "outputPath": "D:\\Dev\\SharedNetLibs\\VariousUtils\\obj\\",
         "projectStyle": "PackageReference",

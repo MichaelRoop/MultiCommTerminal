@@ -2,9 +2,9 @@
 using BluetoothCommon.Net.interfaces;
 using BluetoothLE.Net.interfaces;
 //using BluetoothLE.Win32;
-using DependencyInjectorFactory;
-using DependencyInjectorFactory.interfaces;
-using IconFactory.interfaces;
+using DependencyInjectorFactory.Net;
+using DependencyInjectorFactory.Net.interfaces;
+using IconFactory.Net.interfaces;
 using System;
 using System.Collections.Generic;
 

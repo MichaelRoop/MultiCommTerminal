@@ -5,7 +5,7 @@ using BluetoothCommon.Net.interfaces;
 using LogUtils.Net;
 using System;
 using System.Threading;
-using VariousUtils;
+using VariousUtils.Net;
 
 namespace BluetoothRfComm.Win32 {
 

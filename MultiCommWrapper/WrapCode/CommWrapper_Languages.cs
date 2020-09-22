@@ -1,6 +1,6 @@
 ﻿using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
-using IconFactory.data;
+using IconFactory.Net.data;
 using LanguageFactory.data;
 using LanguageFactory.Messaging;
 using MultiCommData.Net.StorageDataModels;

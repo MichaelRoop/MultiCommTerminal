@@ -17,9 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogUtils.Net", "..\SharedNe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LanguageFactory.Net", "..\SharedNetLibs\LanguageFactory\LanguageFactory.Net.csproj", "{4F6445CD-1589-465A-864D-DC597B44745C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IconFactory", "..\SharedNetLibs\IconFactory\IconFactory.csproj", "{8CA4272F-AFD9-4737-A941-AB24ED051D40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IconFactory.Net", "..\SharedNetLibs\IconFactory\IconFactory.Net.csproj", "{8CA4272F-AFD9-4737-A941-AB24ED051D40}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DependencyInjectorFactory", "..\SharedNetLibs\DependencyInjectorFactory\DependencyInjectorFactory.csproj", "{6D911CDF-3F4F-45F8-A698-BCB47FF53E08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DependencyInjectorFactory.Net", "..\SharedNetLibs\DependencyInjectorFactory\DependencyInjectorFactory.Net.csproj", "{6D911CDF-3F4F-45F8-A698-BCB47FF53E08}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiCommWrapper.Net", "MultiCommWrapper\MultiCommWrapper.Net.csproj", "{F86E019F-F046-4DC2-A949-D0EA0F0D0964}"
 EndProject
@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StorageFactory.Net", "..\Sh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfHelperClasses.Core", "..\SharedNetCoreLibs\WpfHelpers.Core\WpfHelperClasses.Core.csproj", "{C7371D08-8844-4C42-88A7-9E612314E13D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VariousUtils", "..\SharedNetLibs\VariousUtils\VariousUtils.csproj", "{8702AF2D-436D-485D-B6A7-F2854E56B9C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VariousUtils.Net", "..\SharedNetLibs\VariousUtils\VariousUtils.Net.csproj", "{8702AF2D-436D-485D-B6A7-F2854E56B9C4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommunicationStack.Net", "..\SharedNetLibs\CommunicationStack.Net\CommunicationStack.Net.csproj", "{34EB157E-2489-4B3E-9E6A-BE92D5ED4711}"
 EndProject

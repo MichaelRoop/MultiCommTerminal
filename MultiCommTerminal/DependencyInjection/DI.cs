@@ -1,4 +1,4 @@
-﻿using DependencyInjectorFactory.interfaces;
+﻿using DependencyInjectorFactory.Net.interfaces;
 using MultiCommWrapper.Net.DI;
 using MultiCommWrapper.Net.interfaces;
 

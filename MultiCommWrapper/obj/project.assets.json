@@ -76,7 +76,7 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "VariousUtils": "1.0.0"
+          "VariousUtils.Net": "1.0.0"
         },
         "compile": {
           "bin/placeholder/CommunicationStack.Net.dll": {}
@@ -85,27 +85,27 @@
           "bin/placeholder/CommunicationStack.Net.dll": {}
         }
       },
-      "DependencyInjectorFactory/1.0.0": {
+      "DependencyInjectorFactory.Net/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
           "LogUtils.Net": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/DependencyInjectorFactory.dll": {}
+          "bin/placeholder/DependencyInjectorFactory.Net.dll": {}
         },
         "runtime": {
-          "bin/placeholder/DependencyInjectorFactory.dll": {}
+          "bin/placeholder/DependencyInjectorFactory.Net.dll": {}
         }
       },
-      "IconFactory/1.0.0": {
+      "IconFactory.Net/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "compile": {
-          "bin/placeholder/IconFactory.dll": {}
+          "bin/placeholder/IconFactory.Net.dll": {}
         },
         "runtime": {
-          "bin/placeholder/IconFactory.dll": {}
+          "bin/placeholder/IconFactory.Net.dll": {}
         }
       },
       "LanguageFactory.Net/1.0.0": {
@@ -155,7 +155,7 @@
           "ChkUtils.Net": "1.0.0",
           "LogUtils.Net": "1.0.0",
           "Newtonsoft.Json": "12.0.3",
-          "VariousUtils": "1.0.0"
+          "VariousUtils.Net": "1.0.0"
         },
         "compile": {
           "bin/placeholder/StorageFactory.Net.dll": {}
@@ -164,7 +164,7 @@
           "bin/placeholder/StorageFactory.Net.dll": {}
         }
       },
-      "VariousUtils/1.0.0": {
+      "VariousUtils.Net/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
@@ -172,10 +172,10 @@
           "LogUtils.Net": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/VariousUtils.dll": {}
+          "bin/placeholder/VariousUtils.Net.dll": {}
         },
         "runtime": {
-          "bin/placeholder/VariousUtils.dll": {}
+          "bin/placeholder/VariousUtils.Net.dll": {}
         }
       }
     }
@@ -375,15 +375,15 @@
       "path": "../../SharedNetLibs/CommunicationStack.Net/CommunicationStack.Net.csproj",
       "msbuildProject": "../../SharedNetLibs/CommunicationStack.Net/CommunicationStack.Net.csproj"
     },
-    "DependencyInjectorFactory/1.0.0": {
+    "DependencyInjectorFactory.Net/1.0.0": {
       "type": "project",
-      "path": "../../SharedNetLibs/DependencyInjectorFactory/DependencyInjectorFactory.csproj",
-      "msbuildProject": "../../SharedNetLibs/DependencyInjectorFactory/DependencyInjectorFactory.csproj"
+      "path": "../../SharedNetLibs/DependencyInjectorFactory/DependencyInjectorFactory.Net.csproj",
+      "msbuildProject": "../../SharedNetLibs/DependencyInjectorFactory/DependencyInjectorFactory.Net.csproj"
     },
-    "IconFactory/1.0.0": {
+    "IconFactory.Net/1.0.0": {
       "type": "project",
-      "path": "../../SharedNetLibs/IconFactory/IconFactory.csproj",
-      "msbuildProject": "../../SharedNetLibs/IconFactory/IconFactory.csproj"
+      "path": "../../SharedNetLibs/IconFactory/IconFactory.Net.csproj",
+      "msbuildProject": "../../SharedNetLibs/IconFactory/IconFactory.Net.csproj"
     },
     "LanguageFactory.Net/1.0.0": {
       "type": "project",
@@ -405,18 +405,18 @@
       "path": "../../SharedNetLibs/StorageFactory.Net/StorageFactory.Net.csproj",
       "msbuildProject": "../../SharedNetLibs/StorageFactory.Net/StorageFactory.Net.csproj"
     },
-    "VariousUtils/1.0.0": {
+    "VariousUtils.Net/1.0.0": {
       "type": "project",
-      "path": "../../SharedNetLibs/VariousUtils/VariousUtils.csproj",
-      "msbuildProject": "../../SharedNetLibs/VariousUtils/VariousUtils.csproj"
+      "path": "../../SharedNetLibs/VariousUtils/VariousUtils.Net.csproj",
+      "msbuildProject": "../../SharedNetLibs/VariousUtils/VariousUtils.Net.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
       "BluetoothCommon.Net >= 1.0.0",
       "BluetoothLE.Net >= 1.0.0",
-      "DependencyInjectorFactory >= 1.0.0",
-      "IconFactory >= 1.0.0",
+      "DependencyInjectorFactory.Net >= 1.0.0",
+      "IconFactory.Net >= 1.0.0",
       "LanguageFactory.Net >= 1.0.0",
       "MultiCommData.Net >= 1.0.0",
       "NETStandard.Library >= 2.0.3",
@@ -462,11 +462,11 @@
             "D:\\Dev\\SharedNetLibs\\BluetoothLE\\BluetoothLE.Net.csproj": {
               "projectPath": "D:\\Dev\\SharedNetLibs\\BluetoothLE\\BluetoothLE.Net.csproj"
             },
-            "D:\\Dev\\SharedNetLibs\\DependencyInjectorFactory\\DependencyInjectorFactory.csproj": {
-              "projectPath": "D:\\Dev\\SharedNetLibs\\DependencyInjectorFactory\\DependencyInjectorFactory.csproj"
+            "D:\\Dev\\SharedNetLibs\\DependencyInjectorFactory\\DependencyInjectorFactory.Net.csproj": {
+              "projectPath": "D:\\Dev\\SharedNetLibs\\DependencyInjectorFactory\\DependencyInjectorFactory.Net.csproj"
             },
-            "D:\\Dev\\SharedNetLibs\\IconFactory\\IconFactory.csproj": {
-              "projectPath": "D:\\Dev\\SharedNetLibs\\IconFactory\\IconFactory.csproj"
+            "D:\\Dev\\SharedNetLibs\\IconFactory\\IconFactory.Net.csproj": {
+              "projectPath": "D:\\Dev\\SharedNetLibs\\IconFactory\\IconFactory.Net.csproj"
             },
             "D:\\Dev\\SharedNetLibs\\LanguageFactory\\LanguageFactory.Net.csproj": {
               "projectPath": "D:\\Dev\\SharedNetLibs\\LanguageFactory\\LanguageFactory.Net.csproj"
