@@ -40,7 +40,7 @@ namespace BluetoothLE.Win32 {
                 //BluetoothDevice.GetRfcommServicesAsync();
 
 
-                this.log.Info("ConnectToDevice", () => string.Format("Device {0} Connection status {1}",
+                this.log.Info("ConnectToDevice", () => string.Format("Device:{0} Connection status {1}",
                     this.currentDevice.Name, this.currentDevice.ConnectionStatus.ToString()));
 
                 GattDeviceServicesResult services = await this.currentDevice.GetGattServicesAsync();
@@ -106,7 +106,7 @@ namespace BluetoothLE.Win32 {
 
             }
             catch (Exception e) {
-                this.log.Exception(9999, "Exception", e);
+                this.log.Exception(9999, "BLE Connect Exception", e);
             }
 
             try {
