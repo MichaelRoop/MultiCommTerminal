@@ -1,7 +1,7 @@
 ﻿using IconFactory.Net.data;
-using LanguageFactory.data;
-using LanguageFactory.interfaces;
-using LanguageFactory.Messaging;
+using LanguageFactory.Net.data;
+using LanguageFactory.Net.interfaces;
+using LanguageFactory.Net.Messaging;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommTerminal.DependencyInjection;
 using MultiCommTerminal.WPF_Helpers;
@@ -88,7 +88,7 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
-        private void Languages_LanguageChanged(object sender, LanguageFactory.Messaging.SupportedLanguage language) {
+        private void Languages_LanguageChanged(object sender, LanguageFactory.Net.Messaging.SupportedLanguage language) {
             this.Dispatcher.Invoke(this.LoadList);
         }
 

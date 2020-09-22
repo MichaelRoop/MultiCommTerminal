@@ -1,4 +1,4 @@
-﻿using LanguageFactory.Messaging;
+﻿using LanguageFactory.Net.Messaging;
 using MultiCommWrapper.Net.interfaces;
 using System;
 using System.Collections.Generic;

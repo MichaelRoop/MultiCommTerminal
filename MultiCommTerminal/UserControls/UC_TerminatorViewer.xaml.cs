@@ -71,7 +71,7 @@ namespace MultiCommTerminal.UserControls {
         }
 
 
-        private void Wrapper_LanguageChanged(object sender, LanguageFactory.Messaging.SupportedLanguage e) {
+        private void Wrapper_LanguageChanged(object sender, LanguageFactory.Net.Messaging.SupportedLanguage e) {
             this.lblTerminators.Content = TxtBinder.Terminators;
         }
 

@@ -1,4 +1,4 @@
-﻿using LanguageFactory.data;
+﻿using LanguageFactory.Net.data;
 using LogUtils.Net;
 using MultiCommTerminal.DependencyInjection;
 using MultiCommTerminal.WPF_Helpers;
@@ -88,7 +88,7 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
-        private void Languages_LanguageChanged(object sender, LanguageFactory.Messaging.SupportedLanguage lang) {
+        private void Languages_LanguageChanged(object sender, LanguageFactory.Net.Messaging.SupportedLanguage lang) {
             this.Dispatcher.Invoke(() => { 
                 this.Title = lang.GetText(MsgCode.language);
 

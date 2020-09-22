@@ -1,7 +1,7 @@
 ﻿using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
 using CommunicationStack.Net.Stacks;
-using LanguageFactory.data;
+using LanguageFactory.Net.data;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommWrapper.Net.interfaces;
 using StorageFactory.Net.interfaces;

@@ -1,5 +1,5 @@
 ﻿using ChkUtils.Net;
-using LanguageFactory.data;
+using LanguageFactory.Net.data;
 using LogUtils.Net;
 using MultiCommTerminal.DependencyInjection;
 using MultiCommTerminal.WindowObjs;

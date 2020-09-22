@@ -1,6 +1,6 @@
-﻿using LanguageFactory.data;
-using LanguageFactory.Languages.en;
-using LanguageFactory.Messaging;
+﻿using LanguageFactory.Net.data;
+using LanguageFactory.Net.Languages.en;
+using LanguageFactory.Net.Messaging;
 using MultiCommTerminal.DependencyInjection;
 using MultiCommWrapper.Net.interfaces;
 using System;

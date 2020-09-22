@@ -1,7 +1,7 @@
 ﻿using AurelienRibon.Ui.SyntaxHighlightBox.src;
 using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
-using LanguageFactory.data;
+using LanguageFactory.Net.data;
 using LogUtils.Net;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommTerminal.DependencyInjection;

@@ -1,8 +1,8 @@
 ﻿using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
 using IconFactory.Net.data;
-using LanguageFactory.data;
-using LanguageFactory.Messaging;
+using LanguageFactory.Net.data;
+using LanguageFactory.Net.Messaging;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommWrapper.Net.interfaces;

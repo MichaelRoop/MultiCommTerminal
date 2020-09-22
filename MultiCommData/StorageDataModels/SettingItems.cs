@@ -1,5 +1,5 @@
 ﻿using CommunicationStack.Net.Stacks;
-using LanguageFactory.data;
+using LanguageFactory.Net.data;
 
 namespace MultiCommData.Net.StorageDataModels {
 

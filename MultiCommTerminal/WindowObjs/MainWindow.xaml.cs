@@ -1,7 +1,7 @@
 ﻿using BluetoothCommon.Net;
 using BluetoothLE.Net.DataModels;
 using ChkUtils.Net;
-using LanguageFactory.data;
+using LanguageFactory.Net.data;
 using LogUtils.Net;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommData.UserDisplayData.Net;
@@ -481,7 +481,7 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         /// <summary>Handle the language changed event to update controls text</summary>
-        private void LanguageChangedHandler(object sender, LanguageFactory.Messaging.SupportedLanguage lang) {
+        private void LanguageChangedHandler(object sender, LanguageFactory.Net.Messaging.SupportedLanguage lang) {
             // The button text change will trigger resize
             this.buttonSizer_BT.PrepForChange();
             this.buttonSizer_BLE.PrepForChange();
