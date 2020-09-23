@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.WindowObjs {
@@ -29,6 +30,7 @@ namespace MultiCommTerminal.WindowObjs {
         MenuWin menu = null;
         private ICommWrapper wrapper = null;
         private ClassLog log = new ClassLog("MainWindow");
+        private ScrollViewer inScroll = null;
 
         #endregion
 
@@ -49,7 +51,6 @@ namespace MultiCommTerminal.WindowObjs {
 
             this.OnStartupSuccess();
             this.SizeToContent = SizeToContent.WidthAndHeight;
-
         }
 
 
@@ -61,6 +62,9 @@ namespace MultiCommTerminal.WindowObjs {
         private void Window_ContentRendered(object sender, EventArgs e) {
             this.menu = new MenuWin(this);
             this.menu.Visibility = Visibility.Collapsed;
+
+            Border b = (Border)VisualTreeHelper.GetChild(this.lbIncoming, 0);
+            this.inScroll = (ScrollViewer)VisualTreeHelper.GetChild(b, 0);
         }
 
 
@@ -309,7 +313,11 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void BT_BytesReceivedHandler(object sender, string msg) {
             this.Dispatcher.Invoke(() => {
+                if (this.lbIncoming.Items.Count > 100) {
+                    this.lbIncoming.Items.RemoveAt(0);
+                }
                 this.lbIncoming.Items.Add(msg);
+                this.inScroll.ScrollToBottom();
             });
         }
 
