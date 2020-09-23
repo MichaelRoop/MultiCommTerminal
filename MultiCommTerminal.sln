@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AurelienRibon.Ui.SyntaxHigh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BluetoothRfComm.Win32", "BluetoothRfComm.Win32\BluetoothRfComm.Win32.csproj", "{F7BC863B-DAFF-4680-A038-289572D1DABC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BluetoothLE.UWP.Core", "BluetoothLE.UWP.Core\BluetoothLE.UWP.Core.csproj", "{31A222E3-7470-4102-A087-F6902FEDCC17}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +119,10 @@ Global
 		{F7BC863B-DAFF-4680-A038-289572D1DABC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7BC863B-DAFF-4680-A038-289572D1DABC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7BC863B-DAFF-4680-A038-289572D1DABC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31A222E3-7470-4102-A087-F6902FEDCC17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31A222E3-7470-4102-A087-F6902FEDCC17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31A222E3-7470-4102-A087-F6902FEDCC17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31A222E3-7470-4102-A087-F6902FEDCC17}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

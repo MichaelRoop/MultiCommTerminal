@@ -28,8 +28,16 @@ namespace MultiCommTerminal.DependencyInjection {
                 typeof(IBTInterface), new ObjSingletonCreator(() => new BluetoothRfComm.Win32.BluetoothRfCommImpl()));
 
 
+            //this.SingletonCreators.Add(
+            //    typeof(IBLETInterface), new ObjSingletonCreator(() => new BluetoothLE.Win32.BluetoothLEImplWin32()));
+
             this.SingletonCreators.Add(
-                typeof(IBLETInterface), new ObjSingletonCreator(() => new BluetoothLE.Win32.BluetoothLEImplWin32()));
+                typeof(IBLETInterface), new ObjSingletonCreator(() => new BluetoothLE.UWP.Core.BluetoothLEImplWin32Core()));
+
+
+
+            //BluetoothLEImplWin32Core
+
         }
     }
 

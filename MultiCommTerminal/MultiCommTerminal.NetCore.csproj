@@ -57,7 +57,7 @@
     <ProjectReference Include="..\..\SharedNetLibs\LogUtils.Net\LogUtils.Net.csproj" />
     <ProjectReference Include="..\AurelienRibon.Ui.SyntaxHighlightBox\AurelienRibon.Ui.SyntaxHighlightBox.csproj" />
     <ProjectReference Include="..\BluetoothClassic\BluetoothClassic.Net.csproj" />
-    <ProjectReference Include="..\BluetoothLE.Win32\BluetoothLE.Win32.csproj" />
+    <ProjectReference Include="..\BluetoothLE.UWP.Core\BluetoothLE.UWP.Core.csproj" />
     <ProjectReference Include="..\BluetoothRfComm.Win32\BluetoothRfComm.Win32.csproj" />
     <ProjectReference Include="..\MultiCommData\MultiCommData.Net.csproj" />
     <ProjectReference Include="..\MultiCommWrapper\MultiCommWrapper.Net.csproj" />
