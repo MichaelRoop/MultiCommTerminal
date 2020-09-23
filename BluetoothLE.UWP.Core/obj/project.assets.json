@@ -149,7 +149,7 @@
       },
       "BluetoothLE.Net/1.0.0": {
         "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
+        "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
           "CommunicationStack.Net": "1.0.0",
           "LogUtils.Net": "1.0.0"
@@ -163,7 +163,7 @@
       },
       "ChkUtils.Net/1.0.0": {
         "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
+        "framework": ".NETStandard,Version=v2.1",
         "compile": {
           "bin/placeholder/ChkUtils.Net.dll": {}
         },
@@ -173,7 +173,7 @@
       },
       "CommunicationStack.Net/1.0.0": {
         "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
+        "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
           "VariousUtils.Net": "1.0.0"
         },
@@ -186,7 +186,7 @@
       },
       "LogUtils.Net/1.0.0": {
         "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
+        "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
           "ChkUtils.Net": "1.0.0"
         },
@@ -199,7 +199,7 @@
       },
       "VariousUtils.Net/1.0.0": {
         "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
+        "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
           "ChkUtils.Net": "1.0.0",
           "LogUtils.Net": "1.0.0"
