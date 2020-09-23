@@ -1,7 +1,7 @@
-﻿//using BluetoothClassic.Net;
-using BluetoothCommon.Net.interfaces;
+﻿using BluetoothCommon.Net.interfaces;
 using BluetoothLE.Net.interfaces;
-//using BluetoothLE.Win32;
+using BluetoothLE.UWP.Core;
+using BluetoothRfComm.UWP.Core;
 using DependencyInjectorFactory.Net;
 using DependencyInjectorFactory.Net.interfaces;
 using IconFactory.Net.interfaces;
@@ -24,15 +24,16 @@ namespace MultiCommTerminal.DependencyInjection {
             //    typeof(IBTInterface), new ObjSingletonCreator(() => new BluetoothClassic.Net.BluetoothClassicImpl()));
 
 
+            //this.SingletonCreators.Add(
+            //    typeof(IBTInterface), new ObjSingletonCreator(() => new BluetoothRfComm.Win32.BluetoothRfCommImpl()));
             this.SingletonCreators.Add(
-                typeof(IBTInterface), new ObjSingletonCreator(() => new BluetoothRfComm.Win32.BluetoothRfCommImpl()));
+                typeof(IBTInterface), new ObjSingletonCreator(() => new BluetoothRfCommUwpCore()));
 
 
             //this.SingletonCreators.Add(
             //    typeof(IBLETInterface), new ObjSingletonCreator(() => new BluetoothLE.Win32.BluetoothLEImplWin32()));
-
             this.SingletonCreators.Add(
-                typeof(IBLETInterface), new ObjSingletonCreator(() => new BluetoothLE.UWP.Core.BluetoothLEImplWin32Core()));
+                typeof(IBLETInterface), new ObjSingletonCreator(() => new BluetoothLEImplWin32Core()));
 
 
 
