@@ -68,6 +68,7 @@ namespace BluetoothRfComm.UWP.Core {
             Task.Run(() => {
                 try {
                     this.DoDiscovery(true);
+                    //this.DoDiscovery(false); // for unpaired
                 }
                 catch (Exception e) {
                     this.log.Exception(9999, "", e);
@@ -85,6 +86,16 @@ namespace BluetoothRfComm.UWP.Core {
         /// <summary>Run asynchronous connection where ConnectionCompleted is raised on completion</summary>
         /// <param name="deviceDataModel">The data model with information on the device</param>
         public void ConnectAsync(BTDeviceInfo deviceDataModel) {
+
+            //// temp to do pairing
+            //Task.Run(async () => {
+            //    await this.DoPairing(deviceDataModel);
+            //    this.ConnectionCompleted?.Invoke(this, true); // Raise whatever event
+            //});
+            //return;
+
+
+
             Task.Run(async () => {
                 try {
                     this.log.InfoEntry("ConnectAsync");
