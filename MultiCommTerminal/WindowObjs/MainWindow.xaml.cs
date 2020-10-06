@@ -6,6 +6,7 @@ using LogUtils.Net;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommTerminal.DependencyInjection;
+using MultiCommTerminal.NetCore.WindowObjs;
 using MultiCommWrapper.Net.interfaces;
 using System;
 using System.Collections.Generic;
@@ -82,6 +83,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper.BT_DiscoveryComplete -= this.BT_DiscoveryCompleteHandler;
             this.wrapper.BT_ConnectionCompleted -= this.BT_ConnectionCompletedHandler;
             this.wrapper.BT_BytesReceived -= this.BT_BytesReceivedHandler;
+            this.wrapper.BT_PairInfoRequested -= this.BT_PairInfoRequestedHandler;
             this.wrapper.BTClassicDisconnect();
 
             if (this.menu != null) {
@@ -332,6 +334,23 @@ namespace MultiCommTerminal.WindowObjs {
             });
         }
 
+
+        private void BT_PairInfoRequestedHandler(object sender, BT_PairInfoRequest info) {
+            this.log.InfoEntry("BT_PairInfoRequestedHandler");
+            this.Dispatcher.Invoke(() => {
+                this.gridWait.Visibility = Visibility.Collapsed;
+                if (info.PinRequested) {
+                    var result = MsgBoxEnterText.ShowBox(this, "The title", "the msg", "1991");
+                    info.Pin = result.Text;
+                    info.Response = result.Result == MsgBoxEnterText.MsgBoxTextInputResult.OK;
+                }
+                else {
+                    MsgBoxYesNo.MsgBoxResult result2 = MsgBoxYesNo.ShowBox(this, "Pairing", "Pair device");
+                    info.Response = result2 == MsgBoxYesNo.MsgBoxResult.Yes;                }
+            });
+        }
+
+
         #endregion
 
         #region Private Init and teardown
@@ -359,6 +378,8 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper.BT_DiscoveryComplete += this.BT_DiscoveryCompleteHandler;
             this.wrapper.BT_ConnectionCompleted += this.BT_ConnectionCompletedHandler;
             this.wrapper.BT_BytesReceived += this.BT_BytesReceivedHandler;
+            this.wrapper.BT_PairInfoRequested += this.BT_PairInfoRequestedHandler;
+
             // Call before rendering which will trigger initial resize events
             buttonSizer_BT = new ButtonGroupSizeSyncManager(this.btnBTConnect, this.btnBTDiscover);
             this.buttonSizer_BT.PrepForChange();

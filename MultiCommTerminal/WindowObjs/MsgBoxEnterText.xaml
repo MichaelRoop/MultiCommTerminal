@@ -1,0 +1,32 @@
+﻿<Window x:Class="MultiCommTerminal.NetCore.WindowObjs.MsgBoxEnterText"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MultiCommTerminal.NetCore.WindowObjs"
+        mc:Ignorable="d"
+        xmlns:controls="clr-namespace:MultiCommTerminal.UserControls"
+        xmlns:wpfHelper="clr-namespace:MultiCommTerminal.WPF_Helpers"
+        Style="{StaticResource MyWindowStyle}" Title="" 
+        WindowStartupLocation="CenterScreen" ContentRendered="Window_ContentRendered" Closing="Window_Closing"
+        MinHeight="100" MinWidth="200" MaxHeight="500" MaxWidth="400">
+    <Grid>
+        <StackPanel>
+            <TextBlock x:Name="txtBlock" HorizontalAlignment="Left" FontSize="16" Text="sldfkjsdklfjsldkf" MaxHeight="450" TextWrapping="WrapWithOverflow" Margin="15,15,15,0" />
+            <!--<TextBlock x:Name="txtContinue" HorizontalAlignment="Center" FontSize="16" Text="{Binding Source={x:Static wpfHelper:TxtBinder.Continue}}"  Margin="10,10,10,0" />-->
+
+            <TextBox x:Name="txtInput" HorizontalAlignment="Center" FontSize="16" Text="9999" Margin="0,10,0,0"/>
+
+            <DockPanel HorizontalAlignment="Center" Margin="10">
+                <controls:UC_IconButton x:Name="btnOk" Style="{StaticResource TextIconButton}" Margin="5" 
+                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.OK}}"
+                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Save}}" 
+                    Click="btnOk_Click" />
+                <controls:UC_IconButton x:Name="btnCancel" Style="{StaticResource TextIconButton}" Margin="5" 
+                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Cancel}}"
+                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}" 
+                    Click="btnCancel_Click" />
+            </DockPanel>
+        </StackPanel>
+    </Grid>
+</Window>

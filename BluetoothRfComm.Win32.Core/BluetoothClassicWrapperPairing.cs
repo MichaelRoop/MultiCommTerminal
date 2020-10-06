@@ -67,6 +67,8 @@ namespace BluetoothRfComm.UWP.Core {
             DevicePairingRequestedEventArgs args) {
 
             this.log.Info("OnPairRequested", () => string.Format("Paring kind {0}", args.PairingKind.ToString()));
+
+            BT_PairInfoRequest pairInfo = new BT_PairInfoRequest();
             switch (args.PairingKind) {
                 case DevicePairingKinds.ConfirmOnly:
                     // Windows itself will pop the confirmation dialog as part of "consent" if this is running on Desktop or Mobile
@@ -79,10 +81,29 @@ namespace BluetoothRfComm.UWP.Core {
                     // A PIN may be shown on the target device and the user needs to enter the matching PIN on 
                     // this Windows device. Get a deferral so we can perform the async request to the user.
                     Windows.Foundation.Deferral collectPinDeferral = args.GetDeferral();
-                    string pinFromUser = "1234";
-                    if (!string.IsNullOrEmpty(pinFromUser)) {
-                        args.Accept(pinFromUser);
+
+                    //string pinFromUser = "1234";
+                    pairInfo.PinRequested = true;
+                    if (this.BT_PairInfoRequested != null) {
+                        this.BT_PairInfoRequested(this, pairInfo);
                     }
+                    else {
+                        this.log.Error(9999, "No subscriber to pin request");
+                    }
+
+                    this.log.Info("OnPairRequested", 
+                        () => string.Format("Pin '{0}' Response:{1}",
+                        pairInfo.Pin, pairInfo.Response));
+
+                    //pinFromUser = pairInfo.Pin;
+                    if (pairInfo.Response) {
+                        // TODO Check for the result to see if you go ahead
+                    }
+
+                    if (!string.IsNullOrEmpty(pairInfo.Pin)) {
+                        args.Accept(pairInfo.Pin);
+                    }
+                    // TODO - needs to be disposed
                     collectPinDeferral.Complete();
                     break;
             }

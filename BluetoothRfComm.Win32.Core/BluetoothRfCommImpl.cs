@@ -45,6 +45,7 @@ namespace BluetoothRfComm.UWP.Core {
         public event EventHandler<bool> DiscoveryComplete;
         public event EventHandler<bool> ConnectionCompleted;
         public event EventHandler<byte[]> MsgReceivedEvent;
+        public event EventHandler<BT_PairInfoRequest> BT_PairInfoRequested;
 
         #endregion
 
@@ -56,7 +57,9 @@ namespace BluetoothRfComm.UWP.Core {
             this.btWrapper.DeviceDiscovered += BtWrapper_DeviceDiscovered;
             this.btWrapper.ConnectionCompleted += BtWrapper_ConnectionCompleted;
             this.btWrapper.MsgReceivedEvent += BtWrapper_MsgReceivedEvent;
+            this.btWrapper.BT_PairInfoRequested += BtWrapper_BT_PairInfoRequested;
         }
+
 
         #endregion
 
@@ -157,6 +160,22 @@ namespace BluetoothRfComm.UWP.Core {
 
             this.MsgReceivedEvent?.Invoke(sender, e);
         }
+
+
+        private void BtWrapper_BT_PairInfoRequested(object sender, BT_PairInfoRequest e) {
+            this.log.Info("BtWrapper_BT_PairInfoRequested", () => string.Format("Received:{0}", e.Pin));
+
+            //this.BT_PairInfoRequested?.Invoke(sender, e);
+            if (this.BT_PairInfoRequested != null) {
+                this.BT_PairInfoRequested?.Invoke(sender, e);
+            }
+            else {
+                this.log.Error(9999, "No subscribers to RF comm Impl pair info");
+            }
+
+
+        }
+
 
         #endregion
 

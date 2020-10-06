@@ -15,6 +15,10 @@ namespace MultiCommWrapper.Net.WrapCode {
         public event EventHandler<bool> BT_ConnectionCompleted;
         public event EventHandler<string> BT_BytesReceived;
 
+        /// <summary>Raised when pairing with BT</summary>
+        public event EventHandler<BT_PairInfoRequest> BT_PairInfoRequested;
+
+
         #region Event handlers
 
         private void BTClassic_BytesReceivedHandler(object sender, byte[] data) {
@@ -45,6 +49,16 @@ namespace MultiCommWrapper.Net.WrapCode {
         private void BTClassic_DiscoveredDeviceHandler(object sender, BTDeviceInfo e) {
             if (this.BT_DeviceDiscovered != null) {
                 this.BT_DeviceDiscovered(this, e);
+            }
+        }
+
+
+        private void BTClassic_PairInfoRequested(object sender, BT_PairInfoRequest e) {
+            if (this.BT_PairInfoRequested != null) {
+                this.BT_PairInfoRequested(sender, e);
+            }
+            else {
+                this.log.Error(9999, "No subscribers to the wrapper pair info");
             }
         }
 
@@ -89,6 +103,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.classicBluetooth.DiscoveryComplete += this.BTClassic_DiscoveryCompleteHandler;
             this.classicBluetooth.ConnectionCompleted += this.BTClassic_ConnectionCompletedHander;
             this.btClassicStack.MsgReceived += this.BTClassic_BytesReceivedHandler;
+            this.classicBluetooth.BT_PairInfoRequested += BTClassic_PairInfoRequested; 
         }
 
 
@@ -98,6 +113,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.classicBluetooth.DiscoveryComplete -= this.BTClassic_DiscoveryCompleteHandler;
             this.classicBluetooth.ConnectionCompleted -= this.BTClassic_ConnectionCompletedHander;
             this.btClassicStack.MsgReceived -= this.BTClassic_BytesReceivedHandler;
+            this.classicBluetooth.BT_PairInfoRequested += BTClassic_PairInfoRequested;
         }
 
         #endregion

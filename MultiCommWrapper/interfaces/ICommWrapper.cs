@@ -125,6 +125,10 @@ namespace MultiCommWrapper.Net.interfaces {
         event EventHandler<bool> BT_ConnectionCompleted;
         event EventHandler<string> BT_BytesReceived;
 
+        /// <summary>Raised when pairing with BT</summary>
+        event EventHandler<BT_PairInfoRequest> BT_PairInfoRequested;
+
+
         void BTClassicDiscoverAsync();
         void BTClassicConnectAsync(BTDeviceInfo device);
 
