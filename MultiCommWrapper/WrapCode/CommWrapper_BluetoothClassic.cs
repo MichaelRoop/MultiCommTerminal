@@ -1,6 +1,8 @@
 ﻿using BluetoothCommon.Net;
 using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
+using LanguageFactory.Net.data;
+using MultiCommWrapper.Net.DataModels;
 using MultiCommWrapper.Net.interfaces;
 using System;
 using System.Text;
@@ -16,7 +18,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         public event EventHandler<string> BT_BytesReceived;
 
         /// <summary>Raised when pairing with BT</summary>
-        public event EventHandler<BT_PairInfoRequest> BT_PairInfoRequested;
+        public event EventHandler<BT_PairingInfoDataModel> BT_PairInfoRequested;
 
 
         #region Event handlers
@@ -55,7 +57,24 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         private void BTClassic_PairInfoRequested(object sender, BT_PairInfoRequest e) {
             if (this.BT_PairInfoRequested != null) {
-                this.BT_PairInfoRequested(sender, e);
+                // Build title
+                BT_PairingInfoDataModel dataModel = new BT_PairingInfoDataModel() {
+                    RequestTitle = string.Format("{0} ({1})",
+                        this.GetText(MsgCode.PairBluetooth), e.DeviceName)
+                };
+                dataModel.IsPinRequested = e.PinRequested;
+
+                // Build message
+                dataModel.RequestMsg = e.PinRequested ?
+                     this.GetText(MsgCode.EnterPin) :
+                     this.GetText(MsgCode.Continue);
+
+                // push up to user
+                this.BT_PairInfoRequested(sender, dataModel);
+
+                // copy data from user so BT calling up can determine what to do
+                e.Response = dataModel.HasUserConfirmed;
+                e.Pin = dataModel.PIN;
             }
             else {
                 this.log.Error(9999, "No subscribers to the wrapper pair info");

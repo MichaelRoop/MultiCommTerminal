@@ -6,6 +6,7 @@ using LanguageFactory.Net.data;
 using LanguageFactory.Net.Messaging;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommData.UserDisplayData.Net;
+using MultiCommWrapper.Net.DataModels;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System;
@@ -126,7 +127,7 @@ namespace MultiCommWrapper.Net.interfaces {
         event EventHandler<string> BT_BytesReceived;
 
         /// <summary>Raised when pairing with BT</summary>
-        event EventHandler<BT_PairInfoRequest> BT_PairInfoRequested;
+        event EventHandler<BT_PairingInfoDataModel> BT_PairInfoRequested;
 
 
         void BTClassicDiscoverAsync();

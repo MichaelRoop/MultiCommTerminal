@@ -45,6 +45,9 @@ namespace BluetoothRfComm.UWP.Core {
         /// <summary>Raised when bytes are read</summary>
         public event EventHandler<byte[]> MsgReceivedEvent;
 
+        /// <summary>Raised when pairing with BT</summary>
+        public event EventHandler<BT_PairInfoRequest> BT_PairInfoRequested;
+
         #endregion
 
         #region Properties

@@ -7,6 +7,7 @@ using MultiCommData.Net.StorageDataModels;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommTerminal.DependencyInjection;
 using MultiCommTerminal.NetCore.WindowObjs;
+using MultiCommWrapper.Net.DataModels;
 using MultiCommWrapper.Net.interfaces;
 using System;
 using System.Collections.Generic;
@@ -335,18 +336,18 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
-        private void BT_PairInfoRequestedHandler(object sender, BT_PairInfoRequest info) {
+        private void BT_PairInfoRequestedHandler(object sender, BT_PairingInfoDataModel info) {
             this.log.InfoEntry("BT_PairInfoRequestedHandler");
             this.Dispatcher.Invoke(() => {
                 this.gridWait.Visibility = Visibility.Collapsed;
-                if (info.PinRequested) {
-                    var result = MsgBoxEnterText.ShowBox(this, "Pairing", info.DeviceName, "");
-                    info.Pin = result.Text;
-                    info.Response = result.Result == MsgBoxEnterText.MsgBoxTextInputResult.OK;
+                if (info.IsPinRequested) {
+                    var result = MsgBoxEnterText.ShowBox(this, info.RequestTitle, info.RequestMsg);
+                    info.PIN = result.Text;
+                    info.HasUserConfirmed = (result.Result == MsgBoxEnterText.MsgBoxTextInputResult.OK);
                 }
                 else {
-                    MsgBoxYesNo.MsgBoxResult result2 = MsgBoxYesNo.ShowBox(this, "Pairing", info.DeviceName);
-                    info.Response = result2 == MsgBoxYesNo.MsgBoxResult.Yes;     
+                    MsgBoxYesNo.MsgBoxResult result2 = MsgBoxYesNo.ShowBox(this, info.RequestMsg, info.RequestMsg);
+                    info.HasUserConfirmed = (result2 == MsgBoxYesNo.MsgBoxResult.Yes);     
                 }
             });
         }
