@@ -1,7 +1,5 @@
 ﻿using BluetoothCommon.Net;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Enumeration;
@@ -41,6 +39,7 @@ namespace BluetoothRfComm.UWP.Core {
                     else {
                         DeviceInformationCustomPairing cpi = pairing.Custom;
                         cpi.PairingRequested += this.OnPairRequested;
+                        // TODO - need to figure out if requesting PIN or just confirm
                         DevicePairingResult result = await cpi.PairAsync(DevicePairingKinds.ProvidePin);
                         cpi.PairingRequested -= this.OnPairRequested;
 
@@ -48,17 +47,7 @@ namespace BluetoothRfComm.UWP.Core {
                             string.Format("'{0}' Pair status {1}", info.Name, result.Status.ToString()));
                     }
                 }
-
-
-                /*
-                // pair without any info. This is supposed to bring up the UWP dialogs but does not. So use custom
-                DevicePairingResult result = await device.DeviceInformation.Pairing.PairAsync();
-                //result.Status == DevicePairingResultStatus.Paired
-                this.log.Info("DoPairing", () =>
-                    string.Format("'{0}' Pair status {1}", info.Name, result.Status.ToString()));
-                */
             }
-
         }
 
 
@@ -82,31 +71,30 @@ namespace BluetoothRfComm.UWP.Core {
                 case DevicePairingKinds.ProvidePin:
                     // A PIN may be shown on the target device and the user needs to enter the matching PIN on 
                     // this Windows device. Get a deferral so we can perform the async request to the user.
-                    Windows.Foundation.Deferral collectPinDeferral = args.GetDeferral();
+                    using (Windows.Foundation.Deferral collectPinDeferral = args.GetDeferral()) {
+                        pairInfo.PinRequested = true;
+                        if (this.BT_PairInfoRequested != null) {
+                            this.BT_PairInfoRequested(this, pairInfo);
+                        }
+                        else {
+                            this.log.Error(9999, "No subscriber to pin request");
+                        }
 
-                    //string pinFromUser = "1234";
-                    pairInfo.PinRequested = true;
-                    if (this.BT_PairInfoRequested != null) {
-                        this.BT_PairInfoRequested(this, pairInfo);
-                    }
-                    else {
-                        this.log.Error(9999, "No subscriber to pin request");
-                    }
+                        this.log.Info("OnPairRequested",
+                            () => string.Format("Pin '{0}' Response:{1}",
+                            pairInfo.Pin, pairInfo.Response));
 
-                    this.log.Info("OnPairRequested", 
-                        () => string.Format("Pin '{0}' Response:{1}",
-                        pairInfo.Pin, pairInfo.Response));
+                        //pinFromUser = pairInfo.Pin;
+                        if (pairInfo.Response) {
+                            // TODO Check for the result to see if you go ahead
+                        }
 
-                    //pinFromUser = pairInfo.Pin;
-                    if (pairInfo.Response) {
-                        // TODO Check for the result to see if you go ahead
-                    }
-
-                    if (!string.IsNullOrEmpty(pairInfo.Pin)) {
-                        args.Accept(pairInfo.Pin);
-                    }
-                    // TODO - needs to be disposed
-                    collectPinDeferral.Complete();
+                        if (!string.IsNullOrEmpty(pairInfo.Pin)) {
+                            args.Accept(pairInfo.Pin);
+                        }
+                        // TODO - needs to be disposed
+                        collectPinDeferral.Complete();
+                    };
                     break;
             }
         }
