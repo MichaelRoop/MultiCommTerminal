@@ -23,31 +23,40 @@ namespace BluetoothRfComm.UWP.Core {
 
             using (BluetoothDevice device = await BluetoothDevice.FromIdAsync(info.Address)) {
 
-                // 1. pair without any info
+                DeviceInformationPairing pairing = device.DeviceInformation.Pairing;
+                // TODO find if encryption required etc
+                //DevicePairingProtectionLevel pl = p.ProtectionLevel;
+                //pl.
+
+                if (pairing == null) {
+                    // TODO raise a failed event. Done. not supported
+                }
+                else if (!pairing.CanPair) {
+                    // TODO raise a failed event. Done. not supported
+                }
+                else {
+                    if (pairing.IsPaired) {
+                        // TODO Done. Already paired. Raise event
+                    }
+                    else {
+                        DeviceInformationCustomPairing cpi = pairing.Custom;
+                        cpi.PairingRequested += this.OnPairRequested;
+                        DevicePairingResult result = await cpi.PairAsync(DevicePairingKinds.ProvidePin);
+                        cpi.PairingRequested -= this.OnPairRequested;
+
+                        this.log.Info("DoPairing", () =>
+                            string.Format("'{0}' Pair status {1}", info.Name, result.Status.ToString()));
+                    }
+                }
+
 
                 /*
-                // Could do an initial try and if failed try the second custom option
+                // pair without any info. This is supposed to bring up the UWP dialogs but does not. So use custom
                 DevicePairingResult result = await device.DeviceInformation.Pairing.PairAsync();
                 //result.Status == DevicePairingResultStatus.Paired
                 this.log.Info("DoPairing", () =>
                     string.Format("'{0}' Pair status {1}", info.Name, result.Status.ToString()));
-                
-                //if (result.Status != DevicePairingResultStatus.AlreadyPaired)
                 */
-
-
-                // 2. pair with confirm only
-
-
-                // 3. pair with provide PIN handler
-                DeviceInformationCustomPairing cpi = device.DeviceInformation.Pairing.Custom;
-                cpi.PairingRequested += this.OnPairRequested;
-                DevicePairingResult result = await cpi.PairAsync(DevicePairingKinds.ProvidePin);
-                cpi.PairingRequested -= this.OnPairRequested;
-
-                this.log.Info("DoPairing", () =>
-                    string.Format("'{0}' Pair status {1}", info.Name, result.Status.ToString()));
-
             }
 
         }
@@ -69,7 +78,7 @@ namespace BluetoothRfComm.UWP.Core {
                 case DevicePairingKinds.ProvidePin:
                     // A PIN may be shown on the target device and the user needs to enter the matching PIN on 
                     // this Windows device. Get a deferral so we can perform the async request to the user.
-                    var collectPinDeferral = args.GetDeferral();
+                    Windows.Foundation.Deferral collectPinDeferral = args.GetDeferral();
                     string pinFromUser = "1234";
                     if (!string.IsNullOrEmpty(pinFromUser)) {
                         args.Accept(pinFromUser);
