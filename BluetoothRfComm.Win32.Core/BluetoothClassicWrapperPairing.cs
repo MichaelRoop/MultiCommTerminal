@@ -69,6 +69,8 @@ namespace BluetoothRfComm.UWP.Core {
             this.log.Info("OnPairRequested", () => string.Format("Paring kind {0}", args.PairingKind.ToString()));
 
             BT_PairInfoRequest pairInfo = new BT_PairInfoRequest();
+            pairInfo.DeviceName = args.DeviceInformation.Name;
+
             switch (args.PairingKind) {
                 case DevicePairingKinds.ConfirmOnly:
                     // Windows itself will pop the confirmation dialog as part of "consent" if this is running on Desktop or Mobile

@@ -340,7 +340,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.Dispatcher.Invoke(() => {
                 this.gridWait.Visibility = Visibility.Collapsed;
                 if (info.PinRequested) {
-                    var result = MsgBoxEnterText.ShowBox(this, "The title", "the msg", "1991");
+                    var result = MsgBoxEnterText.ShowBox(this, "Pairing", info.DeviceName, "1991");
                     info.Pin = result.Text;
                     info.Response = result.Result == MsgBoxEnterText.MsgBoxTextInputResult.OK;
                 }
