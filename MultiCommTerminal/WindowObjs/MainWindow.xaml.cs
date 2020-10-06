@@ -340,12 +340,12 @@ namespace MultiCommTerminal.WindowObjs {
             this.Dispatcher.Invoke(() => {
                 this.gridWait.Visibility = Visibility.Collapsed;
                 if (info.PinRequested) {
-                    var result = MsgBoxEnterText.ShowBox(this, "Pairing", info.DeviceName, "1991");
+                    var result = MsgBoxEnterText.ShowBox(this, "Pairing", info.DeviceName, "");
                     info.Pin = result.Text;
                     info.Response = result.Result == MsgBoxEnterText.MsgBoxTextInputResult.OK;
                 }
                 else {
-                    MsgBoxYesNo.MsgBoxResult result2 = MsgBoxYesNo.ShowBox(this, "Pairing", "Pair device");
+                    MsgBoxYesNo.MsgBoxResult result2 = MsgBoxYesNo.ShowBox(this, "Pairing", info.DeviceName);
                     info.Response = result2 == MsgBoxYesNo.MsgBoxResult.Yes;     
                 }
             });

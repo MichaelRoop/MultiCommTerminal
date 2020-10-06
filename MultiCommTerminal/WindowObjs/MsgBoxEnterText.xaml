@@ -15,7 +15,7 @@
             <TextBlock x:Name="txtBlock" HorizontalAlignment="Left" FontSize="16" Text="sldfkjsdklfjsldkf" MaxHeight="450" TextWrapping="WrapWithOverflow" Margin="15,15,15,0" />
             <!--<TextBlock x:Name="txtContinue" HorizontalAlignment="Center" FontSize="16" Text="{Binding Source={x:Static wpfHelper:TxtBinder.Continue}}"  Margin="10,10,10,0" />-->
 
-            <TextBox x:Name="txtInput" HorizontalAlignment="Center" FontSize="16" Text="9999" Margin="0,10,0,0"/>
+            <TextBox x:Name="txtInput" HorizontalAlignment="Center" FontSize="16" Text="" MinWidth="130" Margin="0,10,0,0"/>
 
             <DockPanel HorizontalAlignment="Center" Margin="10">
                 <controls:UC_IconButton x:Name="btnOk" Style="{StaticResource TextIconButton}" Margin="5" 
