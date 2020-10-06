@@ -17,7 +17,9 @@
                 <!--  Prevent any control from getting input during spinner visibility -->
                 <SolidColorBrush Color="AntiqueWhite" Opacity=".1"/>
             </Grid.Background>
-            <controls:UC_BusyImageSpinner/>
+            <!--Image spinner no longer showing-->
+            <!--<controls:UC_BusyImageSpinner />-->
+            <controls:UC_BusySpinner />
         </Grid>
         <Border BorderBrush="Blue" BorderThickness="1" >
             <StackPanel x:Name="spMain" HorizontalAlignment="Center" VerticalAlignment="Center">

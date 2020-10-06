@@ -346,7 +346,8 @@ namespace MultiCommTerminal.WindowObjs {
                 }
                 else {
                     MsgBoxYesNo.MsgBoxResult result2 = MsgBoxYesNo.ShowBox(this, "Pairing", "Pair device");
-                    info.Response = result2 == MsgBoxYesNo.MsgBoxResult.Yes;                }
+                    info.Response = result2 == MsgBoxYesNo.MsgBoxResult.Yes;     
+                }
             });
         }
 
