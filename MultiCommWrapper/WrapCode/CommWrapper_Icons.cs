@@ -10,12 +10,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
     public partial class CommWrapper : ICommWrapper {
 
-        public void IconInfo(UIIcon code, Action<IconDataModel> onSuccess) {
-            this.IconInfo(code, onSuccess, (msg) => { });
-        }
-
-
-        public void IconInfo(UIIcon code, Action<IconDataModel> onSuccess, Action<string> onError) {
+        private void IconInfo(UIIcon code, Action<IconDataModel> onSuccess, Action<string> onError) {
             ErrReport report;
             WrapErr.ToErrReport(out report, 9999,
                 () => string.Format("No icon for {0}", code),

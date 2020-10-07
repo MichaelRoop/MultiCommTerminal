@@ -68,9 +68,6 @@ namespace MultiCommWrapper.Net.interfaces {
 
         #region Icons
 
-        void IconInfo(UIIcon code, Action<IconDataModel> onSuccess, Action<string> onError);
-        void IconInfo(UIIcon code, Action<IconDataModel> onSuccess);
-
         string IconSource(UIIcon code);
 
         void CommMediumList(Action<List<CommMedialDisplay>> mediums);

@@ -2,6 +2,7 @@
 using LanguageFactory.Net.data;
 using LanguageFactory.Net.interfaces;
 using LanguageFactory.Net.Messaging;
+using LogUtils.Net;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommTerminal.DependencyInjection;
 using MultiCommTerminal.WPF_Helpers;
@@ -112,8 +113,14 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void AddItem(MenuCode menuCode, MsgCode msgCode, UIIcon uIIcon, string padding) {
-            this.wrapper.GetMenuItemDataModel(menuCode, msgCode, uIIcon, padding,
-                (dm) => { this.items.Add(dm); }, (dm) => { this.items.Add(dm); });
+            MenuItemDataModel dataModel = new MenuItemDataModel() {
+                Code = menuCode,
+                Display = DI.Wrapper.GetText(msgCode),
+                IconSource = IconBinder.Source(uIIcon),
+                Padding = padding,
+            };
+            this.items.Add(dataModel);
+
         }
 
         #endregion

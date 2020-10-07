@@ -94,49 +94,34 @@ namespace MultiCommTerminal.WPF_Helpers {
         }
 
 
-        /// <summary>Access to the 
-        /// 
-        /// </summary>
-        /// <param name="icon"></param>
-        /// <returns></returns>
-        public static string PacketSource(this UIIcon icon) {
-            return string.Format("pack://application:,,,{0}", IconBinder.Source(icon));
-        }
-
-
-        public static string PacketSource(this CommMediumType medium) {
-            return string.Format("pack://application:,,,{0}", IconBinder.CommMediumSource(medium));
-        }
-
-
-        public static BitmapImage ResourceBlackBitmap(this UIIcon icon) {
-            return new BitmapImage(new Uri(icon.PacketSource(), UriKind.Absolute));
-        }
-
-
         public static BitmapImage ResourceWhiteBitmap(this CommMediumType medium) {
             return new BitmapImage(new Uri(medium.PacketSourceWhite(), UriKind.Absolute));
         }
 
-        public static BitmapImage ResourceBlackBitmap(this CommMediumType medium) {
-            return new BitmapImage(new Uri(medium.PacketSource(), UriKind.Absolute));
-        }
-
 
         public static string PacketSourceWhite(this CommMediumType medium) {
-           return string.Format("pack://application:,,,{0}", IconBinder.CommMediumSourceWhite(medium));
+            return string.Format("{0}{1}", GetIconPrefix(), IconBinder.CommMediumSourceWhite(medium));
         }
 
 
         /// <summary>Get the source from factory directly if in design mode or from DI</summary>
         /// <param name="code">The icon identifier code </param>
         /// <returns>String with icon path</returns>
-        private static string Source(UIIcon code) {
+        public static string Source(UIIcon code) {
             if (System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime) {
                 string result = IconBinder.designFactory.GetIcon(code).IconSource as string;
                 return result != null ? result : "";
             }
-            return DI.Wrapper.IconSource(code);
+            return string.Format("{0}{1}", GetIconPrefix(), DI.Wrapper.IconSource(code));
+        }
+
+
+        public static string GetIconPrefix() {
+            // Used to be pack://application:,,,
+            // Then the file name in ... would add the ... before the path
+            // The site of origine requires the icons to be defined as Embeded Resource 
+            // and Copy when new in buld steps
+            return "pack://siteoforigin:,,,";
         }
 
     }

@@ -88,12 +88,9 @@ namespace MultiCommTerminal.WPF_Helpers {
         }
 
         private string AddDir(string name) {
-            return string.Format("/MultiCommTerminal;component/images/icons/{0}", name);
+            // Any prefix added in OS specific
+            return string.Format("/images/icons/{0}", name);
         }
-
-
-
-
 
     }
 }

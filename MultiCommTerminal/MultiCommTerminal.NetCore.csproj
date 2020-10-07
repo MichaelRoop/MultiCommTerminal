@@ -74,44 +74,120 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="images\icons\icons8-add-50-noborder.png" />
-    <Resource Include="images\icons\icons8-arduino-50.png" />
-    <Resource Include="images\icons\icons8-arduino-board-50.png" />
-    <Resource Include="images\icons\icons8-arduino-board-emitting-50.png" />
-    <Resource Include="images\icons\icons8-bluetooth-50.png" />
-    <Resource Include="images\icons\icons8-bluetooth-white-50.png" />
-    <Resource Include="images\icons\icons8-checkmark-50.png" />
-    <Resource Include="images\icons\icons8-close-window-50-noborder.png" />
-    <Resource Include="images\icons\icons8-close-window-50.png" />
-    <Resource Include="images\icons\icons8-cmd-50.png" />
-    <Resource Include="images\icons\icons8-cmd-white-50.png" />
-    <Resource Include="images\icons\icons8-edit-50.png" />
-    <Resource Include="images\icons\icons8-ethernet-on-50.png" />
-    <Resource Include="images\icons\icons8-exit-50.png" />
-    <Resource Include="images\icons\icons8-eye-50.png" />
-    <Resource Include="images\icons\icons8-file-preview-50.png" />
-    <Resource Include="images\icons\icons8-gear-32.png" />
-    <Resource Include="images\icons\icons8-help-50.png" />
-    <Resource Include="images\icons\icons8-help-white-50.png" />
-    <Resource Include="images\icons\icons8-iphone-spinner-100.png" />
-    <Resource Include="images\icons\icons8-job-50.png" />
-    <Resource Include="images\icons\icons8-language-50.png" />
-    <Resource Include="images\icons\icons8-language-white-50.png" />
-    <Resource Include="images\icons\icons8-menu-white-50.png" />
-    <Resource Include="images\icons\icons8-null-symbol-30.png" />
-    <Resource Include="images\icons\icons8-null-symbol-white-30.png" />
-    <Resource Include="images\icons\icons8-phonelink-no-ring-50.png" />
-    <Resource Include="images\icons\icons8-phonelink-ring-50.png" />
-    <Resource Include="images\icons\icons8-quick-mode-on-100.png" />
-    <Resource Include="images\icons\icons8-rs-232-male-white-50.png" />
-    <Resource Include="images\icons\icons8-running-24.png" />
-    <Resource Include="images\icons\icons8-search-50.png" />
-    <Resource Include="images\icons\icons8-trash-can-50.png" />
-    <Resource Include="images\icons\icons8-usb-2-50.png" />
-    <Resource Include="images\icons\icons8-wi-fi-32.png" />
-    <Resource Include="images\icons\language-white.png" />
-    <Resource Include="images\icons\language.png" />
-    <Resource Include="images\icons\view.png" />
+    <EmbeddedResource Include="images\icons\icons8-add-50-noborder.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-arduino-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-arduino-board-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-arduino-board-emitting-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-bluetooth-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-bluetooth-white-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-checkmark-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-close-window-50-noborder.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-close-window-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-cmd-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-cmd-white-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-edit-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-ethernet-on-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-exit-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-eye-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-file-preview-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-gear-32.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-help-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-help-white-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-iphone-spinner-100.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-job-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-language-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-language-white-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-menu-white-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-null-symbol-30.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-null-symbol-white-30.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-phonelink-no-ring-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-phonelink-ring-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-quick-mode-on-100.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-rs-232-male-white-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-running-24.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-search-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-trash-can-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-usb-2-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-wi-fi-32.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\language-white.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\language.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <Resource Include="images\icons\view.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>

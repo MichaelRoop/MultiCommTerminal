@@ -10,3 +10,9 @@
 /MultiCommWrapper/bin/Release/*
 /MultiCommWrapper/obj/*
 /BluetoothRfComm.Win32/obj/Debug/.NETFramework,Version=v4.7.2.AssemblyAttributes.cs
+/BluetoothLE.UWP.Core/obj/*
+/BluetoothLE.UWP.Core/bin/*
+/BluetoothLE.UWP.Core/bin/Debug/netcoreapp3.1/BluetoothLE.UWP.Core.deps.json
+/BluetoothRfComm.Win32.Core/bin/*
+/BluetoothLE.UWP.Core/obj/*
+/BluetoothRfComm.Win32.Core/obj/*
