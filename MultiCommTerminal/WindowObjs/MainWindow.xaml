@@ -105,19 +105,32 @@
                         <StackPanel x:Name="spBluetooth" VerticalAlignment="Center" Visibility="Visible" Margin="20,0,10,10">
                             <DockPanel>
                                 <StackPanel Margin="0,0,10,0">
+                                    <CheckBox x:Name="btPairCheck" VerticalAlignment="Center" Margin="5" IsChecked="True" HorizontalAlignment="Center" Checked="btPairCheck_Checked" Unchecked="btPairCheck_Unchecked" >
+                                        <TextBlock x:Name="txtPairedDevices" FlowDirection="LeftToRight" Text="{Binding Source={x:Static wpfHelper:TxtBinder.PairedDevice}}"/>
+                                    </CheckBox>
                                     <controls:UC_IconButton x:Name="btnBTDiscover" Style="{StaticResource TextIconButton}"
                                             HorizontalContentAlignment="Left"
-                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Discover}}" 
+                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Discover}}" Margin="0,2.5"
                                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Search}}"                                                                                            
                                             Background="Transparent" Click="btnBTDiscover_Click" />
+                                    <controls:UC_IconButton x:Name="btnBTPair" Style="{StaticResource TextIconButton}"
+                                            HorizontalContentAlignment="Left" Visibility="Collapsed"
+                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Pair}}" Margin="0,2.5"
+                                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Pair}}"                                                                                            
+                                            Background="Transparent" Click="btnBTPair_Click" />
+                                    <controls:UC_IconButton x:Name="btnBTUnPair" Style="{StaticResource TextIconButton}"
+                                            HorizontalContentAlignment="Left" Visibility="Collapsed"
+                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.UnPair}}" Margin="0,2.5"
+                                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Unpair}}"                                                                                            
+                                            Background="Transparent" Click="btnBTUnPair_Click" />
                                     <controls:UC_IconButton x:Name="btnInfoBT" Style="{StaticResource TextIconButton}"
                                             HorizontalContentAlignment="Left"
-                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Info}}" Margin="0,5"
+                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Info}}" Margin="0,2.5"
                                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.View}}"                                                        
                                             Background="Transparent" Click="btnInfoBT_Click" />
                                     <controls:UC_IconButton x:Name="btnBTConnect" Style="{StaticResource TextIconButton}"
                                             HorizontalContentAlignment="Left"
-                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Connect}}" 
+                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Connect}}" Margin="0,2.5"
                                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Connect}}"                                                                                            
                                             Background="Transparent" Click="btnBTConnect_Click" />
                                 </StackPanel>

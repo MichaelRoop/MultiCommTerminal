@@ -58,6 +58,9 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string EnterName { get { return GetTxt(MsgCode.EnterName); } }
         public static string Continue { get { return GetTxt(MsgCode.Continue); } }
         public  static string Configure { get { return GetTxt(MsgCode.Configure); } }
+        public static string PairedDevice { get { return GetTxt(MsgCode.PairedDevices); } }
+        public static string Pair { get { return GetTxt(MsgCode.Pair); } }
+        public static string UnPair { get { return GetTxt(MsgCode.Unpair); } }
 
         #endregion
 

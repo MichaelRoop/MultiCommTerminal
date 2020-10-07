@@ -59,6 +59,8 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string Help { get { return Source(UIIcon.Help); } }
         public static string HelpWhite { get { return Source(UIIcon.HelpWhite); } }
         public static string Configure { get { return Source(UIIcon.Configure); } }
+        public static string Pair { get { return Source(UIIcon.Pair); } }
+        public static string Unpair { get { return Source(UIIcon.Unpair); } }
 
         #endregion
 

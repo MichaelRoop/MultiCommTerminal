@@ -273,10 +273,7 @@ namespace MultiCommTerminal.WindowObjs {
         #region Bluetooth
 
         private void btnBTDiscover_Click(object sender, RoutedEventArgs e) {
-            // Asynchronous call
-            this.listBox_BT.ItemsSource = null;
-            this.infoList_BT.Clear();
-            this.listBox_BT.ItemsSource = this.infoList_BT;
+            this.BT_ClearAllEntries();
             this.gridWait.Visibility = Visibility.Visible;
             this.wrapper.BTClassicDiscoverAsync();
         }
@@ -314,7 +311,24 @@ namespace MultiCommTerminal.WindowObjs {
             this.log.InfoEntry("BT_DiscoveryCompleteHandler");
             this.Dispatcher.Invoke(() => {
                 this.gridWait.Visibility = Visibility.Collapsed;
+                this.SetCheckUncheckButtons();
             });
+        }
+
+
+        private void SetCheckUncheckButtons() {
+            this.btnBTUnPair.Visibility = Visibility.Collapsed;
+            this.btnBTPair.Visibility = Visibility.Collapsed;
+            if (this.listBox_BT.Items.Count > 0) {
+                if (this.btPairCheck.IsChecked != null) {
+                    if (this.btPairCheck.IsChecked.GetValueOrDefault(false)) {
+                        this.btnBTPair.Visibility = Visibility.Visible;
+                    }
+                    else {
+                        this.btnBTUnPair.Visibility = Visibility.Visible;
+                    }
+                }
+            }
         }
 
 
@@ -395,7 +409,36 @@ namespace MultiCommTerminal.WindowObjs {
             }
         }
 
+        private void btPairCheck_Checked(object sender, RoutedEventArgs e) {
+            this.BT_ClearAllEntries();
+        }
 
+
+        private void btPairCheck_Unchecked(object sender, RoutedEventArgs e) {
+            this.BT_ClearAllEntries();
+        }
+
+        private void BT_ClearAllEntries() {
+            if (this.listBox_BT != null && this.listBox_BT.ItemsSource != null) {
+                this.listBox_BT.ItemsSource = null;
+                this.infoList_BT.Clear();
+                this.listBox_BT.ItemsSource = this.infoList_BT;
+            }
+            if (this.btnBTPair != null) {
+                this.btnBTPair.Visibility = Visibility.Collapsed;
+            }
+            if (this.btnBTUnPair != null) {
+                this.btnBTUnPair.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void btnBTPair_Click(object sender, RoutedEventArgs e) {
+            this.SetCheckUncheckButtons();
+        }
+
+        private void btnBTUnPair_Click(object sender, RoutedEventArgs e) {
+            this.SetCheckUncheckButtons();
+        }
 
         #endregion
 
@@ -578,9 +621,13 @@ namespace MultiCommTerminal.WindowObjs {
             this.btnDiscoverLE.Content = lang.GetText(MsgCode.discover);
             this.btnInfoLE.Content =lang.GetText(MsgCode.info);
 
+            this.btnBTPair.Content = lang.GetText(MsgCode.Pair);
+            this.btnBTUnPair.Content = lang.GetText(MsgCode.Unpair);
+
             // Labels
             this.lbCommand.Content = lang.GetText(MsgCode.command);
             this.lbResponse.Content = lang.GetText(MsgCode.response);
+            this.txtPairedDevices.Text = lang.GetText(MsgCode.PairedDevices);
 
             // TODO Other texts
         }
