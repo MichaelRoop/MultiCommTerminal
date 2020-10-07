@@ -11,7 +11,7 @@ namespace BluetoothRfComm.UWP.Core {
     public partial class BluetoothRfCommWrapperUwpCore : IDisposable {
 
 
-        private async Task DoPairing(BTDeviceInfo info) {
+        public async Task DoPairing(BTDeviceInfo info) {
 
             // Code in example does not work but has the calls. This one forces a prompt
             // https://stackoverflow.com/questions/53010320/uwp-bluetooth-pairing-without-prompt
@@ -113,14 +113,7 @@ namespace BluetoothRfComm.UWP.Core {
 
 
         //https://stackoverflow.com/questions/45191412/deviceinformation-pairasync-not-working-in-wpf
-        private async Task DoUnPairing(BTDeviceInfo info) {
-            // call with following. Works perfectly
-            //Task.Run(async () => {
-            //    await this.DoUnPairing(deviceDataModel);
-            //    this.ConnectionCompleted?.Invoke(this, true); // Raise whatever event
-            //});
-            //return;
-
+        public async Task DoUnPairing(BTDeviceInfo info) {
             using (BluetoothDevice device = await BluetoothDevice.FromIdAsync(info.Address)) {
                 this.log.Info("DoUnPairing", () => string.Format("'{0}'", info.Name));
                 DeviceUnpairingResult result = await device.DeviceInformation.Pairing.UnpairAsync();

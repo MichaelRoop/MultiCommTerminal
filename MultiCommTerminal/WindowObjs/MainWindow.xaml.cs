@@ -275,7 +275,7 @@ namespace MultiCommTerminal.WindowObjs {
         private void btnBTDiscover_Click(object sender, RoutedEventArgs e) {
             this.BT_ClearAllEntries();
             this.gridWait.Visibility = Visibility.Visible;
-            this.wrapper.BTClassicDiscoverAsync();
+            this.wrapper.BTClassicDiscoverAsync(this.btPairCheck.IsChecked.GetValueOrDefault(false));
         }
 
         private void btnBTConnect_Click(object sender, RoutedEventArgs e) {
@@ -295,6 +295,30 @@ namespace MultiCommTerminal.WindowObjs {
                     DeviceInfo_BT win = new DeviceInfo_BT(this, item);
                     win.ShowDialog();
                 }
+            }
+        }
+
+
+        private void btnBTPair_Click(object sender, RoutedEventArgs e) {
+            this.SetCheckUncheckButtons();
+            this.log.InfoEntry("btnBTPair_Click");
+            BTDeviceInfo item = this.listBox_BT.SelectedItem as BTDeviceInfo;
+            if (item != null) {
+                this.log.Info("btnBTConnect_Click", "item not NULL - so call connect async");
+                this.gridWait.Visibility = Visibility.Visible;
+                this.wrapper.BTClassicPairAsync(item);
+            }
+        }
+
+
+        private void btnBTUnPair_Click(object sender, RoutedEventArgs e) {
+            this.SetCheckUncheckButtons();
+            this.log.InfoEntry("btnBTUnPair_Click");
+            BTDeviceInfo item = this.listBox_BT.SelectedItem as BTDeviceInfo;
+            if (item != null) {
+                this.log.Info("btnBTConnect_Click", "item not NULL - so call connect async");
+                this.gridWait.Visibility = Visibility.Visible;
+                this.wrapper.BTClassicUnPairAsync(item);
             }
         }
 
@@ -322,10 +346,10 @@ namespace MultiCommTerminal.WindowObjs {
             if (this.listBox_BT.Items.Count > 0) {
                 if (this.btPairCheck.IsChecked != null) {
                     if (this.btPairCheck.IsChecked.GetValueOrDefault(false)) {
-                        this.btnBTPair.Visibility = Visibility.Visible;
+                        this.btnBTUnPair.Visibility = Visibility.Visible;
                     }
                     else {
-                        this.btnBTUnPair.Visibility = Visibility.Visible;
+                        this.btnBTPair.Visibility = Visibility.Visible;
                     }
                 }
             }
@@ -377,6 +401,7 @@ namespace MultiCommTerminal.WindowObjs {
                 this.gridWait.Visibility = Visibility.Collapsed;
                 if (e.IsSuccessful) {
                     this.BT_RemoveEntry(e.Name);
+                    this.SetCheckUncheckButtons();
                 }
                 else {
                     this.ShowMsgBox(this.wrapper.GetText(MsgCode.Error), e.UnpairStatus.ToString());
@@ -391,6 +416,7 @@ namespace MultiCommTerminal.WindowObjs {
                 this.gridWait.Visibility = Visibility.Collapsed;
                 if (e.IsSuccessful) {
                     this.BT_RemoveEntry(e.Name);
+                    this.SetCheckUncheckButtons();
                 }
                 else {
                     this.ShowMsgBox(this.wrapper.GetText(MsgCode.Error), e.PairStatus.ToString());
@@ -432,13 +458,6 @@ namespace MultiCommTerminal.WindowObjs {
             }
         }
 
-        private void btnBTPair_Click(object sender, RoutedEventArgs e) {
-            this.SetCheckUncheckButtons();
-        }
-
-        private void btnBTUnPair_Click(object sender, RoutedEventArgs e) {
-            this.SetCheckUncheckButtons();
-        }
 
         #endregion
 

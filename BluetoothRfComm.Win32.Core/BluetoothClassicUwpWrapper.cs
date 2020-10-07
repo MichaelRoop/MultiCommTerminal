@@ -73,11 +73,10 @@ namespace BluetoothRfComm.UWP.Core {
         /// Launch asynchronous device discovery where DeviceDiscovered is raised on each device
         /// discovered, and DiscoveryComplete when the discovery ends
         /// </summary>
-        public void DiscoverPairedDevicesAsync() {
+        public void DiscoverPairedDevicesAsync(bool paired) {
             Task.Run(() => {
                 try {
-                    this.DoDiscovery(true);
-                    //this.DoDiscovery(false); // for unpaired
+                    this.DoDiscovery(paired);
                 }
                 catch (Exception e) {
                     this.log.Exception(9999, "", e);

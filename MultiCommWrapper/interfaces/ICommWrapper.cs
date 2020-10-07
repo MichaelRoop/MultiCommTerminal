@@ -132,12 +132,16 @@ namespace MultiCommWrapper.Net.interfaces {
         /// <summary>Raised on completion of unpair operation</summary>
         event EventHandler<BTUnPairOperationStatus> BT_UnPairStatus;
 
-        void BTClassicDiscoverAsync();
+        void BTClassicDiscoverAsync(bool paired);
         void BTClassicConnectAsync(BTDeviceInfo device);
 
         void BTClassicDisconnect();
 
         void BTClassicSend(string msg);
+
+        void BTClassicPairAsync(BTDeviceInfo device);
+
+        void BTClassicUnPairAsync(BTDeviceInfo device);
 
         #endregion
 

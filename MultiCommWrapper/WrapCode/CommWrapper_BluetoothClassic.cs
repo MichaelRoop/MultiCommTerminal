@@ -92,9 +92,9 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         #endregion
 
-        public void BTClassicDiscoverAsync() {
+        public void BTClassicDiscoverAsync(bool paired) {
             this.DisconnectAll();
-            this.classicBluetooth.DiscoverDevicesAsync();
+            this.classicBluetooth.DiscoverDevicesAsync(paired);
         }
 
 
@@ -115,9 +115,20 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
+        public void BTClassicPairAsync(BTDeviceInfo device) {
+            this.classicBluetooth.PairgAsync(device);
+        }
+
+
+        public void BTClassicUnPairAsync(BTDeviceInfo device) {
+            this.classicBluetooth.UnPairAsync(device);
+        }
+
+
         public void BTClassicSend(string msg) {
             this.btClassicStack.SendToComm(msg);
         }
+
 
         #region Init and teardown
 

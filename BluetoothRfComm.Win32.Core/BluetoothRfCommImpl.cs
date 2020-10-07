@@ -5,6 +5,7 @@ using BluetoothCommon.Net.interfaces;
 using LogUtils.Net;
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using VariousUtils.Net;
 
 namespace BluetoothRfComm.UWP.Core {
@@ -101,9 +102,9 @@ namespace BluetoothRfComm.UWP.Core {
         }
 
 
-        public void DiscoverDevicesAsync() {
+        public void DiscoverDevicesAsync(bool paired) {
             try {
-                this.btWrapper.DiscoverPairedDevicesAsync();
+                this.btWrapper.DiscoverPairedDevicesAsync(paired);
             }
             catch(Exception e) {
                 this.log.Exception(9999, "", e);
@@ -127,6 +128,22 @@ namespace BluetoothRfComm.UWP.Core {
                 }
             });
 #endif
+        }
+
+
+        public void UnPairAsync(BTDeviceInfo info) {
+            Task.Run(async () => {
+                await this.btWrapper.DoUnPairing(info);
+            });
+            return;
+        }
+
+
+        public void PairgAsync(BTDeviceInfo info) {
+            Task.Run(async () => {
+                await this.btWrapper.DoPairing(info);
+            });
+            return;
         }
 
         #endregion
