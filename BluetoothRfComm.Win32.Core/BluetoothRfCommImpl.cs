@@ -46,6 +46,8 @@ namespace BluetoothRfComm.UWP.Core {
         public event EventHandler<bool> ConnectionCompleted;
         public event EventHandler<byte[]> MsgReceivedEvent;
         public event EventHandler<BT_PairInfoRequest> BT_PairInfoRequested;
+        public event EventHandler<BTPairOperationStatus> BT_PairStatus;
+        public event EventHandler<BTUnPairOperationStatus> BT_UnPairStatus;
 
         #endregion
 
@@ -58,8 +60,9 @@ namespace BluetoothRfComm.UWP.Core {
             this.btWrapper.ConnectionCompleted += BtWrapper_ConnectionCompleted;
             this.btWrapper.MsgReceivedEvent += BtWrapper_MsgReceivedEvent;
             this.btWrapper.BT_PairInfoRequested += BtWrapper_BT_PairInfoRequested;
+            this.btWrapper.BT_PairStatus += this.BtWrapper_BT_PairStatus;
+            this.btWrapper.BT_UnPairStatus += this.BtWrapper_BT_UnPairStatus;
         }
-
 
         #endregion
 
@@ -164,18 +167,20 @@ namespace BluetoothRfComm.UWP.Core {
 
         private void BtWrapper_BT_PairInfoRequested(object sender, BT_PairInfoRequest e) {
             this.log.Info("BtWrapper_BT_PairInfoRequested", () => string.Format("Received:{0}", e.Pin));
-
-            //this.BT_PairInfoRequested?.Invoke(sender, e);
-            if (this.BT_PairInfoRequested != null) {
-                this.BT_PairInfoRequested?.Invoke(sender, e);
-            }
-            else {
-                this.log.Error(9999, "No subscribers to RF comm Impl pair info");
-            }
-
-
+            this.BT_PairInfoRequested?.Invoke(sender, e);
         }
 
+
+        private void BtWrapper_BT_UnPairStatus(object sender, BTUnPairOperationStatus args) {
+            this.log.Info("BtWrapper_BT_UnPairStatus", () => string.Format("{0} - {1}", args.Name, args.UnpairStatus));
+            this.BT_UnPairStatus?.Invoke(sender, args);
+        }
+
+
+        private void BtWrapper_BT_PairStatus(object sender, BTPairOperationStatus args) {
+            this.log.Info("BtWrapper_BT_PairStatus", () => string.Format("{0} - {1}", args.Name, args.PairStatus));
+            this.BT_PairStatus?.Invoke(sender, args);
+        }
 
         #endregion
 

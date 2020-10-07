@@ -48,6 +48,12 @@ namespace BluetoothRfComm.UWP.Core {
         /// <summary>Raised when pairing with BT</summary>
         public event EventHandler<BT_PairInfoRequest> BT_PairInfoRequested;
 
+        /// <summary>Raised on completion of pair operation</summary>
+        public event EventHandler<BTPairOperationStatus> BT_PairStatus;
+
+        /// <summary>Raised on completion of unpair operation</summary>
+        public event EventHandler<BTUnPairOperationStatus> BT_UnPairStatus;
+
         #endregion
 
         #region Properties

@@ -10,11 +10,13 @@ using MultiCommTerminal.NetCore.WindowObjs;
 using MultiCommWrapper.Net.DataModels;
 using MultiCommWrapper.Net.interfaces;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using WpfHelperClasses.Core;
+using MultiCommTerminal.WPF_Helpers;
 
 namespace MultiCommTerminal.WindowObjs {
 
@@ -85,6 +87,8 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper.BT_ConnectionCompleted -= this.BT_ConnectionCompletedHandler;
             this.wrapper.BT_BytesReceived -= this.BT_BytesReceivedHandler;
             this.wrapper.BT_PairInfoRequested -= this.BT_PairInfoRequestedHandler;
+            this.wrapper.BT_PairStatus -= this.BT_PairStatusHandler;
+            this.wrapper.BT_UnPairStatus -= this.BT_UnPairStatusHandler;
             this.wrapper.BTClassicDisconnect();
 
             if (this.menu != null) {
@@ -353,6 +357,46 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
+        private void BT_UnPairStatusHandler(object sender, BTUnPairOperationStatus e) {
+            this.log.InfoEntry("BT_UnPairStatusHandler");
+            this.Dispatcher.Invoke(() => {
+                this.gridWait.Visibility = Visibility.Collapsed;
+                if (e.IsSuccessful) {
+                    this.BT_RemoveEntry(e.Name);
+                }
+                else {
+                    this.ShowMsgBox(this.wrapper.GetText(MsgCode.Error), e.UnpairStatus.ToString());
+                }
+            });
+        }
+
+
+        private void BT_PairStatusHandler(object sender, BTPairOperationStatus e) {
+            this.log.InfoEntry("BT_PairStatusHandler");
+            this.Dispatcher.Invoke(() => {
+                this.gridWait.Visibility = Visibility.Collapsed;
+                if (e.IsSuccessful) {
+                    this.BT_RemoveEntry(e.Name);
+                }
+                else {
+                    this.ShowMsgBox(this.wrapper.GetText(MsgCode.Error), e.PairStatus.ToString());
+                }
+            });
+        }
+
+
+        private void BT_RemoveEntry(string name) {
+            // TODO - just using the same list box. Will need more logic
+            BTDeviceInfo item = this.infoList_BT.FirstOrDefault(x => x.Name == name);
+            if (item != null) {
+                this.listBox_BT.ItemsSource = null;
+                this.infoList_BT.Remove(item);
+                this.listBox_BT.ItemsSource = this.infoList_BT;
+            }
+        }
+
+
+
         #endregion
 
         #region Private Init and teardown
@@ -381,6 +425,9 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper.BT_ConnectionCompleted += this.BT_ConnectionCompletedHandler;
             this.wrapper.BT_BytesReceived += this.BT_BytesReceivedHandler;
             this.wrapper.BT_PairInfoRequested += this.BT_PairInfoRequestedHandler;
+            this.wrapper.BT_PairStatus += this.BT_PairStatusHandler;
+            this.wrapper.BT_UnPairStatus += this.BT_UnPairStatusHandler;
+
 
             // Call before rendering which will trigger initial resize events
             buttonSizer_BT = new ButtonGroupSizeSyncManager(this.btnBTConnect, this.btnBTDiscover);

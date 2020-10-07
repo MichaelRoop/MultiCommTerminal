@@ -16,10 +16,9 @@ namespace MultiCommWrapper.Net.WrapCode {
         public event EventHandler<bool> BT_DiscoveryComplete;
         public event EventHandler<bool> BT_ConnectionCompleted;
         public event EventHandler<string> BT_BytesReceived;
-
-        /// <summary>Raised when pairing with BT</summary>
         public event EventHandler<BT_PairingInfoDataModel> BT_PairInfoRequested;
-
+        public event EventHandler<BTPairOperationStatus> BT_PairStatus;
+        public event EventHandler<BTUnPairOperationStatus> BT_UnPairStatus;
 
         #region Event handlers
 
@@ -81,6 +80,16 @@ namespace MultiCommWrapper.Net.WrapCode {
             }
         }
 
+
+        private void BTClassic_PairStatus(object sender, BTPairOperationStatus e) {
+            this.BT_PairStatus?.Invoke(sender, e);
+        }
+
+
+        private void BTClassic_UnPairStatus(object sender, BTUnPairOperationStatus e) {
+            this.BT_UnPairStatus?.Invoke(sender, e);
+        }
+
         #endregion
 
         public void BTClassicDiscoverAsync() {
@@ -122,7 +131,9 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.classicBluetooth.DiscoveryComplete += this.BTClassic_DiscoveryCompleteHandler;
             this.classicBluetooth.ConnectionCompleted += this.BTClassic_ConnectionCompletedHander;
             this.btClassicStack.MsgReceived += this.BTClassic_BytesReceivedHandler;
-            this.classicBluetooth.BT_PairInfoRequested += BTClassic_PairInfoRequested; 
+            this.classicBluetooth.BT_PairInfoRequested += BTClassic_PairInfoRequested;
+            this.classicBluetooth.BT_PairStatus += this.BTClassic_PairStatus;
+            this.classicBluetooth.BT_UnPairStatus += this.BTClassic_UnPairStatus;
         }
 
 
