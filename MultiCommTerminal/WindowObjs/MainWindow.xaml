@@ -58,7 +58,7 @@
                         <StackPanel x:Name="spResps" VerticalAlignment="Center">
                             <Label x:Name="lbResponse" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Response}}" HorizontalAlignment="Center" />
                             <Border BorderBrush="Blue" BorderThickness="1" Margin="10">
-                                <ListBox x:Name="lbIncoming" Width="250" Height="300" FontSize="16" HorizontalAlignment="Stretch"
+                                <ListBox x:Name="lbIncoming" Width="250" Height="300" FontSize="16" HorizontalAlignment="Stretch" SelectionChanged="lbIncoming_SelectionChanged"
                                     ScrollViewer.VerticalScrollBarVisibility="Auto" 
                                     ScrollViewer.HorizontalScrollBarVisibility="Auto" />
                             </Border>
@@ -123,12 +123,12 @@
                                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.UnPair}}" Margin="0,2.5"
                                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Unpair}}"                                                                                            
                                             Background="Transparent" Click="btnBTUnPair_Click" />
-                                    <controls:UC_IconButton x:Name="btnInfoBT" Style="{StaticResource TextIconButton}"
+                                    <controls:UC_IconButton x:Name="btnInfoBT" Style="{StaticResource TextIconButton}" Visibility="Collapsed"
                                             HorizontalContentAlignment="Left"
                                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Info}}" Margin="0,2.5"
                                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.View}}"                                                        
                                             Background="Transparent" Click="btnInfoBT_Click" />
-                                    <controls:UC_IconButton x:Name="btnBTConnect" Style="{StaticResource TextIconButton}"
+                                    <controls:UC_IconButton x:Name="btnBTConnect" Style="{StaticResource TextIconButton}" Visibility="Collapsed"
                                             HorizontalContentAlignment="Left"
                                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Connect}}" Margin="0,2.5"
                                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Connect}}"                                                                                            

@@ -275,6 +275,7 @@ namespace MultiCommTerminal.WindowObjs {
         private void btnBTDiscover_Click(object sender, RoutedEventArgs e) {
             this.BT_ClearAllEntries();
             this.gridWait.Visibility = Visibility.Visible;
+            this.btnBTConnect.Visibility = Visibility.Collapsed;
             this.wrapper.BTClassicDiscoverAsync(this.btPairCheck.IsChecked.GetValueOrDefault(false));
         }
 
@@ -339,19 +340,32 @@ namespace MultiCommTerminal.WindowObjs {
             });
         }
 
+        private void SetVisibility(Button btn, Visibility visibility) {
+            if (btn != null) {
+                btn.Visibility = visibility;
+            }
+        }
+
 
         private void SetCheckUncheckButtons() {
-            this.btnBTUnPair.Visibility = Visibility.Collapsed;
-            this.btnBTPair.Visibility = Visibility.Collapsed;
-            if (this.listBox_BT.Items.Count > 0) {
+            this.SetVisibility(this.btnBTUnPair, Visibility.Collapsed);
+            this.SetVisibility(btnBTPair, Visibility.Collapsed);
+            this.SetVisibility(btnBTConnect, Visibility.Collapsed);
+            this.SetVisibility(btnInfoBT, Visibility.Collapsed);
+            if (this.listBox_BT != null && this.listBox_BT.Items.Count > 0) {
+                this.SetVisibility(this.btnInfoBT, Visibility.Visible);
                 if (this.btPairCheck.IsChecked != null) {
                     if (this.btPairCheck.IsChecked.GetValueOrDefault(false)) {
                         this.btnBTUnPair.Visibility = Visibility.Visible;
+                        this.btnBTConnect.Visibility = Visibility.Visible;
                     }
                     else {
                         this.btnBTPair.Visibility = Visibility.Visible;
                     }
                 }
+            }
+            else {
+                // hide connect
             }
         }
 
@@ -435,13 +449,20 @@ namespace MultiCommTerminal.WindowObjs {
             }
         }
 
+        private void lbIncoming_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+
+        }
+
+
         private void btPairCheck_Checked(object sender, RoutedEventArgs e) {
             this.BT_ClearAllEntries();
+            this.SetCheckUncheckButtons();
         }
 
 
         private void btPairCheck_Unchecked(object sender, RoutedEventArgs e) {
             this.BT_ClearAllEntries();
+            this.SetCheckUncheckButtons();
         }
 
         private void BT_ClearAllEntries() {
