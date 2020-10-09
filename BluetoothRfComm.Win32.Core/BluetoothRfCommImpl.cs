@@ -4,6 +4,7 @@ using BluetoothCommon.Net;
 using BluetoothCommon.Net.interfaces;
 using LogUtils.Net;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using VariousUtils.Net;
@@ -31,12 +32,21 @@ namespace BluetoothRfComm.UWP.Core {
     //https://stackoverflow.com/questions/38845320/uwp-serialdevice-fromidasync-throws-element-not-found-exception-from-hresult
 
 
+
+    // UPDATE: It looks like you only have to add the package:
+    // Microsoft.Windows.SDK.Contracts(nn.n.nnnn.n)
+    // You do this through the NuGet package manager. Not sure if you need to add to manifest. If so, would only be in main App
+
+
     public partial class BluetoothRfCommUwpCore : IBTInterface {
 
         #region Data
 
         private ClassLog log = new ClassLog("BluetoothRfCommImpl");
         private BluetoothRfCommWrapperUwpCore btWrapper = null;
+
+        private readonly string KEY_CAN_PAIR = "System.Devices.Aep.CanPair";
+        private readonly string KEY_IS_PAIRED = "System.Devices.Aep.IsPaired";
 
         #endregion
 
@@ -56,8 +66,6 @@ namespace BluetoothRfComm.UWP.Core {
 
         public BluetoothRfCommUwpCore() {
             this.btWrapper = new BluetoothRfCommWrapperUwpCore();
-            this.btWrapper.DiscoveryComplete += BtWrapper_DiscoveryComplete;
-            this.btWrapper.DeviceDiscovered += BtWrapper_DeviceDiscovered;
             this.btWrapper.ConnectionCompleted += BtWrapper_ConnectionCompleted;
             this.btWrapper.MsgReceivedEvent += BtWrapper_MsgReceivedEvent;
             this.btWrapper.BT_PairInfoRequested += BtWrapper_BT_PairInfoRequested;
@@ -104,9 +112,16 @@ namespace BluetoothRfComm.UWP.Core {
 
         public void DiscoverDevicesAsync(bool paired) {
             try {
-                this.btWrapper.DiscoverPairedDevicesAsync(paired);
+                Task.Run(() => {
+                    try {
+                        this.DoDiscovery(paired);
+                    }
+                    catch (Exception e) {
+                        this.log.Exception(9999, "", e);
+                    }
+                });
             }
-            catch(Exception e) {
+            catch (Exception e) {
                 this.log.Exception(9999, "", e);
             }
         }
@@ -198,6 +213,27 @@ namespace BluetoothRfComm.UWP.Core {
             this.log.Info("BtWrapper_BT_PairStatus", () => string.Format("{0} - {1}", args.Name, args.PairStatus));
             this.BT_PairStatus?.Invoke(sender, args);
         }
+
+        #endregion
+
+        #region Private tools
+
+        /// <summary>Get the boolean value from a Device Information property</summary>
+        /// <param name="property">The device information property</param>
+        /// <param name="key">The property key to lookup</param>
+        /// <param name="defaultValue">Default value on error</param>
+        /// <returns></returns>
+        private bool GetBoolProperty(IReadOnlyDictionary<string, object> property, string key, bool defaultValue) {
+            if (property.ContainsKey(key)) {
+                if (property[key] is Boolean) {
+                    return (bool)property[key];
+                }
+                this.log.Error(9999, () => string.Format(
+                    "{0} Property is {1} rather than Boolean", key, property[key].GetType().Name));
+            }
+            return defaultValue;
+        }
+
 
         #endregion
 

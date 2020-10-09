@@ -33,12 +33,6 @@ namespace BluetoothRfComm.UWP.Core {
 
         #region Events
 
-        /// <summary>Raised when the discovery is complete. T/F indicates success</summary>
-        public event EventHandler<bool> DiscoveryComplete;
-
-        /// <summary>Raised on each device discovered</summary>
-        public event EventHandler<BTDeviceInfo> DeviceDiscovered;
-
         /// <summary>Raised when connection completed good or bad</summary>
         public event EventHandler<bool> ConnectionCompleted;
 
@@ -69,22 +63,6 @@ namespace BluetoothRfComm.UWP.Core {
 
         #region Public
 
-        /// <summary>
-        /// Launch asynchronous device discovery where DeviceDiscovered is raised on each device
-        /// discovered, and DiscoveryComplete when the discovery ends
-        /// </summary>
-        public void DiscoverPairedDevicesAsync(bool paired) {
-            Task.Run(() => {
-                try {
-                    this.DoDiscovery(paired);
-                }
-                catch (Exception e) {
-                    this.log.Exception(9999, "", e);
-                }
-            });
-        }
-
-
         /// <summary>Tear down an existing connection are reset for next</summary>
         public void Disconnect() {
             this.TearDown(false);
@@ -94,16 +72,6 @@ namespace BluetoothRfComm.UWP.Core {
         /// <summary>Run asynchronous connection where ConnectionCompleted is raised on completion</summary>
         /// <param name="deviceDataModel">The data model with information on the device</param>
         public void ConnectAsync(BTDeviceInfo deviceDataModel) {
-
-            //// temp to do pairing
-            //Task.Run(async () => {
-            //    await this.DoPairing(deviceDataModel);
-            //    this.ConnectionCompleted?.Invoke(this, true); // Raise whatever event
-            //});
-            //return;
-
-
-
             Task.Run(async () => {
                 try {
                     this.log.InfoEntry("ConnectAsync");
