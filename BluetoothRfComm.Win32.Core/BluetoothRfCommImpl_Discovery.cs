@@ -1,6 +1,7 @@
 ﻿using BluetoothCommon.Net;
 using BluetoothCommon.Net.interfaces;
 using System;
+using System.Threading.Tasks;
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Enumeration;
 
@@ -8,6 +9,23 @@ namespace BluetoothRfComm.UWP.Core {
 
     /// <summary>Discovery portion of implementation class : BluetoothRfCommImpl_Discovery </summary>
     public partial class BluetoothRfCommUwpCore : IBTInterface {
+
+        public void DiscoverDevicesAsync(bool paired) {
+            try {
+                Task.Run(() => {
+                    try {
+                        this.DoDiscovery(paired);
+                    }
+                    catch (Exception e) {
+                        this.log.Exception(9999, "", e);
+                    }
+                });
+            }
+            catch (Exception e) {
+                this.log.Exception(9999, "", e);
+            }
+        }
+
 
         /// <summary>Discover devices</summary>
         /// <param name="paired">If discovery limited to paired or non paired devices</param>
