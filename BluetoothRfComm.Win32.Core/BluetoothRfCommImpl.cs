@@ -66,6 +66,7 @@ namespace BluetoothRfComm.UWP.Core {
         #region Events
 
         public event EventHandler<BTDeviceInfo> DiscoveredBTDevice;
+        public event EventHandler<BTDeviceInfo> BT_DeviceInfoGathered;
         public event EventHandler<bool> DiscoveryComplete;
         public event EventHandler<bool> ConnectionCompleted;
         public event EventHandler<byte[]> MsgReceivedEvent;

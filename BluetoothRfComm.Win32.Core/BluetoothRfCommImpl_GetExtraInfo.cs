@@ -1,6 +1,4 @@
-﻿#define USE_BT_WRAPPER
-
-using BluetoothCommon.Net;
+﻿using BluetoothCommon.Net;
 using BluetoothCommon.Net.Enumerations;
 using BluetoothCommon.Net.interfaces;
 using System;
@@ -15,23 +13,18 @@ namespace BluetoothRfComm.UWP.Core {
     /// <summary>Extra info portion of RFComm implementation: BluetoothRfCommImpl_GetExtraInfo</summary>
     public partial class BluetoothRfCommUwpCore : IBTInterface {
 
-
-        // TODO - ADD THIS TO INTERFACE AND MAKE IT ASYNC LIKE THE BLE IMPLEMENTATION
         /// <summary>Complete by connecting and filling in the device information</summary>
         /// <param name="device"></param>
-        public void GetDeviceInfo(BTDeviceInfo deviceDataModel) {
-#if USE_BT_WRAPPER
-            //this.btWrapper.DiscoverPairedDevicesAsync();
-#else
+        public void GetDeviceInfoAsync(BTDeviceInfo deviceDataModel) {
             Task.Run(async () => {
                 try {
-                    await this.HarvestInfo(deviceDataModel);
+                    await this.GetExtraInfo(deviceDataModel, true);
                 }
                 catch (Exception e) {
                     this.log.Exception(9999, "", e);
+                    // TODO - raise error event
                 }
             });
-#endif
         }
 
 
@@ -88,6 +81,8 @@ namespace BluetoothRfComm.UWP.Core {
                                 //service.DeviceAccessInformation.CurrentStatus == DeviceAccessStatus.Allowed
                                 this.log.Info("****", () => string.Format("Device:{0} Host Name:{1} Service:{2}",
                                     deviceInfo.Name, deviceInfo.RemoteHostName, deviceInfo.RemoteServiceName));
+
+                                this.BT_DeviceInfoGathered?.Invoke(this, deviceInfo);
                             }
                             else {
                                 // Not used. 

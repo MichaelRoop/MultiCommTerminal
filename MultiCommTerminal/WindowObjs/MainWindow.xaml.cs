@@ -84,6 +84,7 @@ namespace MultiCommTerminal.WindowObjs {
 
             this.wrapper.BT_DeviceDiscovered -= this.BT_DeviceDiscoveredHandler;
             this.wrapper.BT_DiscoveryComplete -= this.BT_DiscoveryCompleteHandler;
+            this.wrapper.BT_DeviceInfoGathered -= this.BT_DeviceInfoGatheredHandler;
             this.wrapper.BT_ConnectionCompleted -= this.BT_ConnectionCompletedHandler;
             this.wrapper.BT_BytesReceived -= this.BT_BytesReceivedHandler;
             this.wrapper.BT_PairInfoRequested -= this.BT_PairInfoRequestedHandler;
@@ -293,8 +294,8 @@ namespace MultiCommTerminal.WindowObjs {
             if (this.listBox_BT.SelectedItem != null) {
                 BTDeviceInfo item = this.listBox_BT.SelectedItem as BTDeviceInfo;
                 if (item != null) {
-                    DeviceInfo_BT win = new DeviceInfo_BT(this, item);
-                    win.ShowDialog();
+                    // TODO - spinner
+                    this.wrapper.BTClassicGetExtraInfoAsync(item);                    
                 }
             }
         }
@@ -332,6 +333,7 @@ namespace MultiCommTerminal.WindowObjs {
             });
         }
 
+
         private void BT_DiscoveryCompleteHandler(object sender, bool e) {
             this.log.InfoEntry("BT_DiscoveryCompleteHandler");
             this.Dispatcher.Invoke(() => {
@@ -339,6 +341,15 @@ namespace MultiCommTerminal.WindowObjs {
                 this.SetCheckUncheckButtons();
             });
         }
+
+
+        private void BT_DeviceInfoGatheredHandler(object sender, BTDeviceInfo e) {
+            this.Dispatcher.Invoke(() => {
+                DeviceInfo_BT win = new DeviceInfo_BT(this, e);
+                win.ShowDialog();
+            });
+        }
+
 
         private void SetVisibility(Button btn, Visibility visibility) {
             if (btn != null) {
@@ -507,6 +518,7 @@ namespace MultiCommTerminal.WindowObjs {
             //Bluetooth Classic
             this.wrapper.BT_DeviceDiscovered += this.BT_DeviceDiscoveredHandler;
             this.wrapper.BT_DiscoveryComplete += this.BT_DiscoveryCompleteHandler;
+            this.wrapper.BT_DeviceInfoGathered += this.BT_DeviceInfoGatheredHandler;
             this.wrapper.BT_ConnectionCompleted += this.BT_ConnectionCompletedHandler;
             this.wrapper.BT_BytesReceived += this.BT_BytesReceivedHandler;
             this.wrapper.BT_PairInfoRequested += this.BT_PairInfoRequestedHandler;

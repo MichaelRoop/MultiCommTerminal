@@ -14,6 +14,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         public event EventHandler<BTDeviceInfo> BT_DeviceDiscovered;
         public event EventHandler<bool> BT_DiscoveryComplete;
+        public event EventHandler<BTDeviceInfo> BT_DeviceInfoGathered;
         public event EventHandler<bool> BT_ConnectionCompleted;
         public event EventHandler<string> BT_BytesReceived;
         public event EventHandler<BT_PairingInfoDataModel> BT_PairInfoRequested;
@@ -51,6 +52,11 @@ namespace MultiCommWrapper.Net.WrapCode {
             if (this.BT_DeviceDiscovered != null) {
                 this.BT_DeviceDiscovered(this, e);
             }
+        }
+
+
+        private void BTClassic_DeviceInfoGathered(object sender, BTDeviceInfo e) {
+            this.BT_DeviceInfoGathered?.Invoke(this, e);
         }
 
 
@@ -97,6 +103,10 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.classicBluetooth.DiscoverDevicesAsync(paired);
         }
 
+        public void BTClassicGetExtraInfoAsync(BTDeviceInfo device) {
+            this.classicBluetooth.GetDeviceInfoAsync(device);                
+        }
+
 
         public void BTClassicConnectAsync(BTDeviceInfo device) {
             this.log.InfoEntry("BTClassicConnectAsync");
@@ -140,6 +150,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
             this.classicBluetooth.DiscoveredBTDevice += this.BTClassic_DiscoveredDeviceHandler;
             this.classicBluetooth.DiscoveryComplete += this.BTClassic_DiscoveryCompleteHandler;
+            this.classicBluetooth.BT_DeviceInfoGathered += this.BTClassic_DeviceInfoGathered;
             this.classicBluetooth.ConnectionCompleted += this.BTClassic_ConnectionCompletedHander;
             this.btClassicStack.MsgReceived += this.BTClassic_BytesReceivedHandler;
             this.classicBluetooth.BT_PairInfoRequested += BTClassic_PairInfoRequested;
@@ -151,6 +162,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         private void TeardownBluetoothClassic() {
             this.classicBluetooth.Disconnect();
             this.classicBluetooth.DiscoveredBTDevice -= this.BTClassic_DiscoveredDeviceHandler;
+            this.classicBluetooth.BT_DeviceInfoGathered -= BTClassic_DeviceInfoGathered;
             this.classicBluetooth.DiscoveryComplete -= this.BTClassic_DiscoveryCompleteHandler;
             this.classicBluetooth.ConnectionCompleted -= this.BTClassic_ConnectionCompletedHander;
             this.btClassicStack.MsgReceived -= this.BTClassic_BytesReceivedHandler;

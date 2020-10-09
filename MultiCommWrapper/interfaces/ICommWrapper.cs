@@ -119,6 +119,7 @@ namespace MultiCommWrapper.Net.interfaces {
         #region Bluetooth Classic
 
         event EventHandler<BTDeviceInfo> BT_DeviceDiscovered;
+        event EventHandler<BTDeviceInfo> BT_DeviceInfoGathered;
         event EventHandler<bool> BT_DiscoveryComplete;
         event EventHandler<bool> BT_ConnectionCompleted;
         event EventHandler<string> BT_BytesReceived;
@@ -134,6 +135,8 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void BTClassicDiscoverAsync(bool paired);
         void BTClassicConnectAsync(BTDeviceInfo device);
+
+        void BTClassicGetExtraInfoAsync(BTDeviceInfo device);
 
         void BTClassicDisconnect();
 
