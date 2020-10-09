@@ -47,6 +47,7 @@ namespace BluetoothRfComm.UWP.Core {
                             deviceInfo.Connected = device.ConnectionStatus == BluetoothConnectionStatus.Connected;
                             deviceInfo.CanPair = this.GetBoolProperty(device.DeviceInformation.Properties, KEY_CAN_PAIR, false);
                             deviceInfo.IsPaired = this.GetBoolProperty(device.DeviceInformation.Properties, KEY_IS_PAIRED, false);
+                            deviceInfo.Strength = this.GetIntProperty(device.DeviceInformation.Properties, KEY_SIGNAL_STRENGTH, 0);
                             // Container Id also
                             //device.DeviceAccessInformation.CurrentStatus == DeviceAccessStatus. // Allowed, denied by user, by system, unspecified
                             //device.DeviceInformation.EnclosureLocation.; // Dock, lid, panel, etc

@@ -46,6 +46,7 @@ namespace BluetoothRfComm.UWP.Core {
         private readonly string KEY_CAN_PAIR = "System.Devices.Aep.CanPair";
         private readonly string KEY_IS_PAIRED = "System.Devices.Aep.IsPaired";
         private readonly string KEY_CONTAINER_ID = "System.Devices.Aep.ContainerId";
+        private readonly string KEY_SIGNAL_STRENGTH = "System.Devices.Aep.SignalStrength";
 
         private StreamSocket socket = null;
         private DataWriter writer = null;
@@ -100,6 +101,19 @@ namespace BluetoothRfComm.UWP.Core {
             }
             return defaultValue;
         }
+
+
+        private int GetIntProperty(IReadOnlyDictionary<string, object> property, string key, int defaultValue) {
+            if (property.ContainsKey(key)) {
+                if (property[key] is int) {
+                    return (int)property[key];
+                }
+                this.log.Error(9999, () => string.Format(
+                    "{0} Property is {1} rather than int", key, property[key].GetType().Name));
+            }
+            return defaultValue;
+        }
+
 
         #endregion
 

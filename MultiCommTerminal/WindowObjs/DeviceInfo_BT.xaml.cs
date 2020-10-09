@@ -59,7 +59,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.lbName.Content = info.Name;
             this.lbAddress.Content = info.Address;
             this.lbDeviceClass.Content = string.Format("{0} ({1})", info.DeviceClassName, info.DeviceClassInt);
-            this.lbServiceClass.Content = string.Format("{0} ({1})", info.ServiceClassName, info.ServiceClassInt);
+            this.lbServiceClass.Content = string.Format("{0} (0x{1:X})", info.ServiceClassName, info.ServiceClassInt);
             this.lbStrength.Content = info.Strength.ToString();
             this.lbLastSeen.Content = info.LastSeen.ToString();
             this.lbLastUsed.Content = info.LastUsed.ToString();
