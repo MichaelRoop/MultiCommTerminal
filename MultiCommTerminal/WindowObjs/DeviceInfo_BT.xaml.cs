@@ -82,7 +82,9 @@ namespace MultiCommTerminal.WindowObjs {
             // Cannot get RSSI for now
             this.Collapse(this.lbStrength);
             this.Collapse(this.lblStrengthLabel);
-
+            // Not displaying properties for the moment
+            this.Collapse(this.lblProperties);
+            this.comboBoxProperties.Visibility = Visibility.Collapsed;
         }
 
 
