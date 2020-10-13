@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Enumeration;
+using Windows.Devices.Radios;
 
 namespace BluetoothRfComm.UWP.Core {
 
@@ -36,6 +37,12 @@ namespace BluetoothRfComm.UWP.Core {
                 foreach (DeviceInformation info in devices) {
                     try {
                         this.log.Info("DoDiscovery", () => string.Format("Found device {0}", info.Name));
+                        this.log.Info("DoDiscovery", () => string.Format("Id: {0}", info.Id));
+                        this.log.Info("DoDiscovery", () => string.Format("Kind: {0}", info.Kind));
+                        //this.log.Info("DoDiscovery", () => string.Format("Panel {0}", info.EnclosureLocation.Panel));
+                        //this.log.Info("DoDiscovery", () => string.Format("Rotation: {0}", info.EnclosureLocation.RotationAngleInDegreesClockwise));
+                        this.ListProperties(info.Properties);
+                        
 
                         BTDeviceInfo deviceInfo = new BTDeviceInfo() {
                             Name = info.Name,
@@ -55,6 +62,9 @@ namespace BluetoothRfComm.UWP.Core {
                             //device.DeviceInformation.IsEnabled;
                             //device.DeviceInformation.Kind == //AssociationEndpoint, Device, etc
                             //device.DeviceInformation.Properties
+                            this.log.Info("DoDiscovery", () => string.Format("BluetoothDevice.DeviceId: {0}", device.DeviceId));
+
+
 
                             if (device.ClassOfDevice != null) {
                                 deviceInfo.DeviceClassInt = (uint)device.ClassOfDevice.MajorClass;
@@ -63,6 +73,9 @@ namespace BluetoothRfComm.UWP.Core {
                                     device.ClassOfDevice.MinorClass.ToString());
                                 //device.ClassOfDevice.ServiceCapabilities == BluetoothServiceCapabilities.ObjectTransferService, etc
                             }
+
+                            // TODO - get properties to display
+
 
                             // Serial port service name
                             // Bluetooth#Bluetooth10:08:b1:8a:b0:02-20:16:04:07:61:01#RFCOMM:00000000:{00001101-0000-1000-8000-00805f9b34fb}

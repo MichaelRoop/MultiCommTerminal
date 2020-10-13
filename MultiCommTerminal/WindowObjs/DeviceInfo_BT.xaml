@@ -34,7 +34,7 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                
+
                 <Label Grid.Row="0" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Name}}" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
                 <Label Grid.Row="0" Grid.Column="1" x:Name="lbName" Content="xxxxxxxxxxxx" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  />
 
@@ -47,7 +47,7 @@
                 <Label Grid.Row="3" Grid.Column="0" Content="Service Class" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
                 <Label Grid.Row="3" Grid.Column="1" x:Name="lbServiceClass" Content="" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  />
 
-                <Label Grid.Row="4" Grid.Column="0" Content="RSSI" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
+                <Label Grid.Row="4" Grid.Column="0" x:Name="lblStrengthLabel" Content="RSSI" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
                 <Label Grid.Row="4" Grid.Column="1" x:Name="lbStrength" Content="" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  />
 
                 <Label Grid.Row="5" Grid.Column="0" Content="Last Seen" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
@@ -57,15 +57,15 @@
                 <Label Grid.Row="6" Grid.Column="1" x:Name="lbLastUsed" Content="" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  />
 
 
-                <Label Grid.Row="7" Grid.ColumnSpan="2" Content="Radio" HorizontalAlignment="Center" />
-                
-                <Label Grid.Row="8" Grid.Column="0" Content="Manufacturer" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
+                <Label Grid.Row="7" Grid.ColumnSpan="2" x:Name="lblRadioLabel" Content="Radio" HorizontalAlignment="Center" />
+
+                <Label Grid.Row="8" Grid.Column="0" x:Name="lbRadioManufacturerLabel" Content="Manufacturer" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
                 <Label Grid.Row="8" Grid.Column="1" x:Name="lbRadioManufacturer" Content="" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  />
-                
-                <Label Grid.Row="9" Grid.Column="0" Content="Protocol" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
+
+                <Label Grid.Row="9" Grid.Column="0" x:Name="lblRadioProtocolLabel" Content="Protocol" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
                 <Label Grid.Row="9" Grid.Column="1" x:Name="lbRadioLmp" Content="" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  />
-                
-                <Label Grid.Row="10" Grid.Column="0" Content="Features" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
+
+                <Label Grid.Row="10" Grid.Column="0" x:Name="lblRadioFeaturesLable" Content="Features" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
                 <!--<Label Grid.Row="10" Grid.Column="1" x:Name="lbRadioFeatures" Content="" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  />-->
                 <ComboBox Grid.Row="10" Grid.Column="1" x:Name="comboBoxFeatures" MinWidth="125" MaxDropDownHeight="100" 
                           HorizontalContentAlignment="Left" HorizontalAlignment="Left" SelectionChanged="comboBoxFeatures_SelectionChanged" />
@@ -79,6 +79,6 @@
                             Click="btnExit_Click"/>
             </DockPanel>
         </StackPanel>
-       
+
     </Grid>
 </Window>

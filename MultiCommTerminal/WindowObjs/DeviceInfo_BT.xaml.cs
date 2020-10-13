@@ -63,10 +63,33 @@ namespace MultiCommTerminal.WindowObjs {
             this.lbStrength.Content = info.Strength.ToString();
             this.lbLastSeen.Content = info.LastSeen.ToString();
             this.lbLastUsed.Content = info.LastUsed.ToString();
-            this.lbRadioManufacturer.Content = info.Radio.Manufacturer;
-            this.lbRadioLmp.Content = info.Radio.LinkManagerProtocol;
-            this.comboBoxFeatures.ItemsSource = info.Radio.Features;
+            if (info.Radio.IsInitialized) {
+                this.lbRadioManufacturer.Content = info.Radio.Manufacturer;
+                this.lbRadioLmp.Content = info.Radio.LinkManagerProtocol;
+                this.comboBoxFeatures.ItemsSource = info.Radio.Features;
+            }
+            else {
+                // TODO Disable radio display
+                this.Collapse(this.lblRadioLabel);
+                this.Collapse(this.lblRadioFeaturesLable);
+                this.Collapse(this.lblRadioProtocolLabel);
+                this.Collapse(this.lbRadioLmp);
+                this.Collapse(this.lbRadioManufacturerLabel);
+                this.Collapse(this.lbRadioManufacturer);
+                this.comboBoxFeatures.Visibility = Visibility.Collapsed;
+            }
+
+            // Cannot get RSSI for now
+            this.Collapse(this.lbStrength);
+            this.Collapse(this.lblStrengthLabel);
+
         }
+
+
+        private void Collapse(Label label) {
+            WPF_ControlHelpers.Collapse(label);
+        }
+
 
     }
 }
