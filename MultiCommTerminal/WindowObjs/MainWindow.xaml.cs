@@ -28,6 +28,7 @@ namespace MultiCommTerminal.WindowObjs {
         private List<CommMedialDisplay> mediums = new List<CommMedialDisplay>();
         private List<BTDeviceInfo> infoList_BT = new List<BTDeviceInfo>();
         private List<BluetoothLEDeviceInfo> infoList_BLE = new List<BluetoothLEDeviceInfo>();
+        private List<ScriptItem> scriptItems = new List<ScriptItem>();
         private ButtonGroupSizeSyncManager buttonSizer_BT = null;
         private ButtonGroupSizeSyncManager buttonSizer_BLE = null;
 
@@ -533,14 +534,20 @@ namespace MultiCommTerminal.WindowObjs {
             buttonSizer_BLE = new ButtonGroupSizeSyncManager(this.btnDiscoverLE, this.btnInfoLE, this.btnLEConnect);
             buttonSizer_BLE.PrepForChange();
 
-            // TODO - remove - temp populate command box
-            this.outgoing.Items.Add("First msg");
-            this.outgoing.Items.Add("Second msg");
-            this.outgoing.Items.Add("A bit of nothing");
-            this.outgoing.Items.Add("Start doing something");
-            this.outgoing.Items.Add("Stop doing int");
+            this.wrapper.GetCurrentScript(this.PopulateScriptData, WindowHelpers.ShowMsg);
 
         }
+
+
+        private void PopulateScriptData(ScriptIndexDataModel dataModel) {
+            this.outgoing.ItemsSource = null;
+            this.scriptItems.Clear();
+            foreach (ScriptItem item in dataModel.Items) {
+                this.scriptItems.Add(item);
+            }
+            this.outgoing.ItemsSource = this.scriptItems;
+        }
+
 
         #endregion
 
@@ -604,12 +611,12 @@ namespace MultiCommTerminal.WindowObjs {
         //}
 
         private void btnSend_Click(object sender, RoutedEventArgs e) {
-            string cmd = this.outgoing.SelectedItem as string;
-            if (cmd != null) {
+            ScriptItem item = this.outgoing.SelectedItem as ScriptItem;
+            if (item != null) {
                 // TODO - send to current device
                 switch ((this.cbComm.SelectedItem as CommMedialDisplay).MediumType) {
                     case CommMediumType.Bluetooth:
-                        this.wrapper.BTClassicSend(cmd);
+                        this.wrapper.BTClassicSend(item.Command);
                         break;
                     case CommMediumType.BluetoothLE:
                         break;

@@ -52,7 +52,19 @@
                             <Border BorderBrush="Blue" BorderThickness="1" Margin="10">
                                 <ListBox x:Name="outgoing" Width="250" Height="300" FontSize="16" HorizontalAlignment="Stretch"
                                          ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                                         SelectionChanged="outgoing_SelectionChanged" />
+                                         SelectionChanged="outgoing_SelectionChanged">
+
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding Display}" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox> 
                             </Border>
                         </StackPanel>
                         <StackPanel x:Name="spResps" VerticalAlignment="Center">

@@ -116,6 +116,16 @@ namespace MultiCommWrapper.Net.interfaces {
 
         #endregion
 
+        #region Scripts
+
+        /// <summary>Retrieve the currently selected script</summary>
+        /// <param name="onSuccess">Raised on successful retrieval</param>
+        /// <param name="onError">Raised on Error</param>
+        void GetCurrentScript(Action<ScriptIndexDataModel> onSuccess, OnErr onError);
+
+
+        #endregion
+
         #region Bluetooth Classic
 
         event EventHandler<BTDeviceInfo> BT_DeviceDiscovered;
