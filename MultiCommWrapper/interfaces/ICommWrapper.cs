@@ -134,6 +134,10 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void GetScriptList(Action<List<IIndexItem<DefaultFileExtraInfo>>> onSuccess, OnErr onError);
 
+        void RetrieveScriptData(IIndexItem<DefaultFileExtraInfo> index, Action<ScriptIndexDataModel> onSuccess, OnErr onError);
+
+        void SaveScript(IIndexItem<DefaultFileExtraInfo> idx, ScriptIndexDataModel data, Action onSuccess, OnErr onError);
+
 
         void DeleteScriptData(IIndexItem<DefaultFileExtraInfo> index, Action<bool> onComplete, OnErr onError);
 

@@ -1,5 +1,6 @@
 ﻿using MultiCommData.Net.StorageDataModels;
 using MultiCommTerminal.DependencyInjection;
+using MultiCommTerminal.NetCore.WindowObjs;
 using MultiCommTerminal.WPF_Helpers;
 using MultiCommWrapper.Net.interfaces;
 using StorageFactory.Net.interfaces;
@@ -24,6 +25,7 @@ namespace MultiCommTerminal.WindowObjs {
 
         private Window parent = null;
         private ICommWrapper wrapper = null;
+        private ButtonGroupSizeSyncManager widthManager = null;
 
 
         public Commands(Window parent) {
@@ -31,7 +33,16 @@ namespace MultiCommTerminal.WindowObjs {
             InitializeComponent();
             this.SizeToContent = SizeToContent.WidthAndHeight;
             this.wrapper = DI.Wrapper;
+            this.wrapper.CurrentScriptChanged += Wrapper_CurrentScriptChanged;
             this.spEditButtons.Visibility = Visibility.Collapsed;
+
+            // Call before rendering which will trigger initial resize events
+            this.widthManager = new ButtonGroupSizeSyncManager(this.btnCancel, this.btnSelect);
+            this.widthManager.PrepForChange();
+        }
+
+        private void Wrapper_CurrentScriptChanged(object sender, ScriptIndexDataModel e) {
+            this.ReloadList(true);
         }
 
         public override void OnApplyTemplate() {
@@ -42,6 +53,8 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             this.lbxCmds.SelectionChanged -= this.lbxCmds_SelectionChanged;
+            this.wrapper.CurrentScriptChanged -= this.Wrapper_CurrentScriptChanged;
+            this.widthManager.Teardown();
         }
 
         private void Window_ContentRendered(object sender, EventArgs e) {
@@ -62,15 +75,14 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void btnView_Click(object sender, RoutedEventArgs e) {
-            // Need to open a window to view but not edit
-            App.ShowMsg("Not Implemented");
+            this.OpenViewer(false);
         }
 
+
         private void btnEdit_Click(object sender, RoutedEventArgs e) {
-            // Need to open new window to edit a script
-            App.ShowMsg("Not Implemented");
-            //this.ReloadList(win.IsChanged);
+            this.OpenViewer(true);
         }
+
 
         private void btnAdd_Click(object sender, RoutedEventArgs e) {
             // Need to open new window to create new script
@@ -102,6 +114,15 @@ namespace MultiCommTerminal.WindowObjs {
                     }, App.ShowMsg);
 
                 this.lbxCmds.SelectionChanged += this.lbxCmds_SelectionChanged;
+            }
+        }
+
+
+        private void OpenViewer(bool edit) {
+            var item = this.lbxCmds.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
+            if (item != null) {
+                ScriptEdit win = new ScriptEdit(this, item, edit);
+                win.ShowDialog();
             }
         }
 
