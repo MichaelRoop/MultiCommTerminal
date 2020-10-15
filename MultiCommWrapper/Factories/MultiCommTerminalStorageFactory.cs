@@ -20,6 +20,12 @@ namespace MultiCommWrapper.Net.Factories {
                 new JsonReadWriteSerializerIndented<TerminatorDataModel>(),
                 new JsonReadWriteSerializerIndented<IIndexGroup<DefaultFileExtraInfo>>());
 
+        private IIndexedStorageManager<ScriptIndexDataModel, DefaultFileExtraInfo> scriptStorage =
+            new IndexedStorageManager<ScriptIndexDataModel, DefaultFileExtraInfo>(
+                new JsonReadWriteSerializerIndented<ScriptIndexDataModel>(),
+                new JsonReadWriteSerializerIndented<IIndexGroup<DefaultFileExtraInfo>>());
+
+
         public MultiCommTerminalStorageFactory() { }
 
 
@@ -62,6 +68,9 @@ namespace MultiCommWrapper.Net.Factories {
 
             if (typeof(TData).Name == typeof(TerminatorDataModel).Name) {
                 return this.terminatorStorage as IIndexedStorageManager<TData,TIndexExtraInfo>;
+            }
+            else if (typeof(TData).Name == typeof(ScriptIndexDataModel).Name) {
+                return this.scriptStorage as IIndexedStorageManager<TData, TIndexExtraInfo>;
             }
             // Add others
 

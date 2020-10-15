@@ -16,6 +16,8 @@ namespace MultiCommWrapper.Net.WrapCode {
         private readonly string SETTINGS_FILE = "MultiCommSettings.txt";
         private readonly string TERMINATOR_DIR = "Terminators";
         private readonly string TERMINATOR_INDEX_FILE = "TerminatorsIndex.txt";
+        private readonly string SCRIPTS_DIR = "Scripts";
+        private readonly string SCRIPTS_INDEX_FILE = "ScriptsIndex.txt";
 
         #endregion
 
@@ -28,6 +30,10 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.terminatorStorage = 
                 this.storageFactory.GetIndexedManager<TerminatorDataModel, DefaultFileExtraInfo>(this.Dir(TERMINATOR_DIR), TERMINATOR_INDEX_FILE);
             this.AssureTerminatorsDefault();
+
+            this.scriptStorage =
+                this.storageFactory.GetIndexedManager<ScriptIndexDataModel, DefaultFileExtraInfo>(this.Dir(SCRIPTS_DIR), SCRIPTS_INDEX_FILE);
+            this.AssureScriptDefault();
         }
 
 
@@ -69,6 +75,27 @@ namespace MultiCommWrapper.Net.WrapCode {
                         this.SaveSettings(settings, () => { }, (err) => { });
                     },
                     (err) => { });
+            }
+        }
+
+
+        private void AssureScriptDefault() {
+            List<IIndexItem<DefaultFileExtraInfo>> index = this.scriptStorage.IndexedItems;
+            if (index.Count == 0) {
+                List<ScriptItem> items = new List<ScriptItem>();
+                items.Add(new ScriptItem() { Display = "Command 1", Command = "This is first command" });
+                items.Add(new ScriptItem() { Display = "Command 2", Command = "This is second command" });
+                items.Add(new ScriptItem() { Display = "Command 3", Command = "This is third command" });
+                items.Add(new ScriptItem() { Display = "Command 4", Command = "This is fourth command" });
+                ScriptIndexDataModel dm = new ScriptIndexDataModel(items) { 
+                    Display = "Default script"
+                };
+                IIndexItem<DefaultFileExtraInfo> idx = new IndexItem<DefaultFileExtraInfo>(dm.UId) {
+                    Display = "Default script",
+                };
+                this.scriptStorage.Store(dm, idx);
+                // TODO - add entry to settings and populate it with default
+
             }
         }
 
