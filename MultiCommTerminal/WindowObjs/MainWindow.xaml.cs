@@ -53,6 +53,7 @@ namespace MultiCommTerminal.WindowObjs {
                     this.terminatorView.Initialise(new TerminatorDataModel());
                 });
             this.wrapper.CurrentTerminatorChanged += Wrapper_CurrentTerminatorChanged;
+            this.wrapper.CurrentScriptChanged += this.Wrapper_CurrentScriptChanged;
 
             this.OnStartupSuccess();
             this.SizeToContent = SizeToContent.WidthAndHeight;
@@ -636,6 +637,10 @@ namespace MultiCommTerminal.WindowObjs {
             // TODO modify so that only when connected
         }
 
+
+        private void Wrapper_CurrentScriptChanged(object sender, ScriptIndexDataModel data) {
+            this.PopulateScriptData(data);
+        }
 
 
         #endregion

@@ -32,6 +32,9 @@ namespace MultiCommWrapper.Net.interfaces {
         /// <summary>When the current terminator is changed</summary>
         event EventHandler<TerminatorDataModel> CurrentTerminatorChanged;
 
+        /// <summary>Raised when the current script has changed</summary>
+        event EventHandler<ScriptIndexDataModel> CurrentScriptChanged;
+
         #endregion
 
         #region Languages
@@ -123,6 +126,16 @@ namespace MultiCommWrapper.Net.interfaces {
         /// <param name="onError">Raised on Error</param>
         void GetCurrentScript(Action<ScriptIndexDataModel> onSuccess, OnErr onError);
 
+
+        void SetCurrentScript(ScriptIndexDataModel data, OnErr onError);
+
+
+        void SetCurrentScript(IIndexItem<DefaultFileExtraInfo> index, Action onSuccess, OnErr onError);
+
+        void GetScriptList(Action<List<IIndexItem<DefaultFileExtraInfo>>> onSuccess, OnErr onError);
+
+
+        void DeleteScriptData(IIndexItem<DefaultFileExtraInfo> index, Action<bool> onComplete, OnErr onError);
 
         #endregion
 
