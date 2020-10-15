@@ -1,5 +1,4 @@
-﻿using CommunicationStack.Net.Stacks;
-using LanguageFactory.Net.data;
+﻿using LanguageFactory.Net.data;
 
 namespace MultiCommData.Net.StorageDataModels {
 
@@ -13,6 +12,9 @@ namespace MultiCommData.Net.StorageDataModels {
 
         /// <summary>Currently selected terminator</summary>
         public TerminatorDataModel CurrentTerminator { get; set; } = new TerminatorDataModel();
+
+        /// <summary>Currently selected command script</summary>
+        public ScriptIndexDataModel CurrentScript { get; set; } = new ScriptIndexDataModel();
 
     }
 }

@@ -94,8 +94,13 @@ namespace MultiCommWrapper.Net.WrapCode {
                     Display = "Default script",
                 };
                 this.scriptStorage.Store(dm, idx);
-                // TODO - add entry to settings and populate it with default
 
+                this.GetSettings(
+                    (settings) => {
+                        settings.CurrentScript = dm;
+                        this.SaveSettings(settings, () => { }, (err) => { });
+                    },
+                    (err) => { });
             }
         }
 
