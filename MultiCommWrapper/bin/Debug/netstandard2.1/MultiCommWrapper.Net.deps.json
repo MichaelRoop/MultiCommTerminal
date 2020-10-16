@@ -119,6 +119,9 @@
         }
       },
       "WifiCommon.Net/1.0.0": {
+        "dependencies": {
+          "VariousUtils.Net": "1.0.0"
+        },
         "runtime": {
           "WifiCommon.Net.dll": {}
         }

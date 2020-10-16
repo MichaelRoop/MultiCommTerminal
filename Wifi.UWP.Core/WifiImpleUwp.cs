@@ -17,5 +17,11 @@ namespace Wifi.UWP.Core {
 
         public event EventHandler<List<WifiAdapterInfo>> DiscoveredAdapters;
 
+
+        public event EventHandler<List<WifiNetworkInfo>> DiscoveredNetworks;
+
+
+        public event EventHandler<WifiError> OnError;
+
     }
 }

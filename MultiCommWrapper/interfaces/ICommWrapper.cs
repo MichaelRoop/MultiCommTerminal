@@ -11,6 +11,7 @@ using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System;
 using System.Collections.Generic;
+using WifiCommon.Net.DataModels;
 
 namespace MultiCommWrapper.Net.interfaces {
 
@@ -217,6 +218,9 @@ namespace MultiCommWrapper.Net.interfaces {
         #endregion
 
         #region WIFI
+
+        event EventHandler<List<WifiNetworkInfo>> DiscoveredNetworks;
+        event EventHandler<WifiError> OnWifiError;
 
         void WifiDiscoverAsync();
 

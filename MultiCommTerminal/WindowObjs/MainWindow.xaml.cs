@@ -17,6 +17,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using WpfHelperClasses.Core;
 using MultiCommTerminal.WPF_Helpers;
+using WifiCommon.Net.DataModels;
 
 namespace MultiCommTerminal.WindowObjs {
 
@@ -29,6 +30,7 @@ namespace MultiCommTerminal.WindowObjs {
         private List<BTDeviceInfo> infoList_BT = new List<BTDeviceInfo>();
         private List<BluetoothLEDeviceInfo> infoList_BLE = new List<BluetoothLEDeviceInfo>();
         private List<ScriptItem> scriptItems = new List<ScriptItem>();
+        private List<WifiNetworkInfo> wifiNetworks = new List<WifiNetworkInfo>();
         private ButtonGroupSizeSyncManager buttonSizer_BT = null;
         private ButtonGroupSizeSyncManager buttonSizer_BLE = null;
 
@@ -54,6 +56,8 @@ namespace MultiCommTerminal.WindowObjs {
                 });
             this.wrapper.CurrentTerminatorChanged += Wrapper_CurrentTerminatorChanged;
             this.wrapper.CurrentScriptChanged += this.Wrapper_CurrentScriptChanged;
+            this.wrapper.OnWifiError += this.Wrapper_OnWifiError;
+            this.wrapper.DiscoveredNetworks += this.Wrapper_DiscoveredNetworks;
 
             this.OnStartupSuccess();
             this.SizeToContent = SizeToContent.WidthAndHeight;
@@ -498,9 +502,23 @@ namespace MultiCommTerminal.WindowObjs {
         #region Wifi
 
         private void btnWifiDiscover_Click(object sender, RoutedEventArgs e) {
+            this.gridWait.Visibility = Visibility.Visible;
             this.wrapper.WifiDiscoverAsync();
         }
 
+        private void Wrapper_DiscoveredNetworks(object sender, List<WifiNetworkInfo> networks) {
+            this.Dispatcher.Invoke(() => {
+                this.gridWait.Visibility = Visibility.Collapsed;
+                this.log.Info("Wrapper_DiscoveredNetworks", () => string.Format("Found {0} networks", networks.Count));
+                this.lbWifi.ItemsSource = null;
+                this.wifiNetworks = networks;
+                this.lbWifi.ItemsSource = this.wifiNetworks;
+            });
+        }
+
+        private void Wrapper_OnWifiError(object sender, WifiError e) {
+            this.gridWait.Visibility = Visibility.Collapsed;
+        }
 
         #endregion
 

@@ -72,6 +72,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.TeardownLanguages();
             this.TeardownBluetoothClassic();
             this.BLE_TearDown();
+            this.WifiTeardown();
         }
 
 
@@ -81,6 +82,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.InitStorage();
             this.InitBluetoothClassic();
             this.BLE_Init();
+            this.WifiInit();
         }
 
 

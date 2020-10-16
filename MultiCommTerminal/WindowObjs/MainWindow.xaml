@@ -220,14 +220,28 @@
                             </DockPanel>
                         </StackPanel>
                         <StackPanel x:Name="spWifi" VerticalAlignment="Center" Visibility="Collapsed">
-                            <DockPanel>
-                                <controls:UC_IconButton x:Name="btnWifiDiscover" Style="{StaticResource TextIconButton}"
-                                                HorizontalContentAlignment="Left"
-                                                Content="{Binding Source={x:Static wpfHelper:TxtBinder.Discover}}" Margin="0,2.5"
-                                                IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Search}}"                                                                                            
-                                                Background="Transparent" Click="btnWifiDiscover_Click" />
-                                <Label Content="Net:"/>
-                                <ListBox x:Name="lbWifi" MinHeight="30" MinWidth="100"/>
+                            <DockPanel Margin="10">
+                                <StackPanel Margin="5">
+                                    <controls:UC_IconButton x:Name="btnWifiDiscover" Style="{StaticResource TextIconButton}"
+                                                    HorizontalContentAlignment="Left"
+                                                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Discover}}" Margin="0,2.5"
+                                                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Search}}"                                                                                            
+                                                    Background="Transparent" Click="btnWifiDiscover_Click" />
+                                </StackPanel>
+                                <ListBox x:Name="lbWifi" MinHeight="30" MinWidth="200" MaxHeight="115" 
+                                             ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                                             ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding SSID}" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
                             </DockPanel>
                         </StackPanel>
                     </DockPanel>
