@@ -65,6 +65,27 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
+        public void CreateNewScript(string display, ScriptIndexDataModel data, Action onSuccess, OnErr onError) {
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    if (display.Length == 0) {
+                        onError.Invoke(this.GetText(MsgCode.EmptyName));
+                    }
+                    else {
+                        IIndexItem<DefaultFileExtraInfo> idx = new IndexItem<DefaultFileExtraInfo>(data.UId) {
+                            Display = display,
+                        };
+                        this.SaveScript(idx, data, onSuccess, onError);
+                    }
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.SaveFailed));
+                }
+            });
+        }
+
+
         public void GetScriptList(Action<List<IIndexItem<DefaultFileExtraInfo>>> onSuccess, OnErr onError) {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;

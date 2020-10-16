@@ -88,6 +88,19 @@ namespace MultiCommTerminal.WindowObjs {
             // Need to open new window to create new script
             App.ShowMsg("Not Implemented");
             //this.ReloadList(win.IsChanged);
+
+            /*
+            
+            // TODO - need radical different functionality
+            var item = this.lbxCmds.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
+            if (item != null) {
+                ScriptEdit win = new ScriptEdit(this, item, edit);
+                win.ShowDialog();
+            }
+
+
+            this.wrapper.CreateNewScript("", null, () => { }, App.ShowMsg);
+            */
         }
 
 
