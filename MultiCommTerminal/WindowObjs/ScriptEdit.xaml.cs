@@ -108,16 +108,43 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e) {
-            App.ShowMsg("Add Not Implemented");
+            ScriptItem item = new ScriptItem() {
+                Display = "Display Name",
+                Command = "Command text",
+            };
+            ScriptCmdEdit win = new ScriptCmdEdit(this, item);
+            win.ShowDialog();
+            if (win.IsChanged) {
+                this.lbxCmds.ItemsSource = null;
+                this.copy.Items.Add(item);
+                this.lbxCmds.ItemsSource = this.copy.Items;
+            }
         }
+
 
         private void btnView_Click(object sender, RoutedEventArgs e) {
-            App.ShowMsg("View Not Implemented");
+            ScriptItem item = this.lbxCmds.SelectedItem as ScriptItem;
+            if (item != null) {
+                ScriptCmdEdit win = new ScriptCmdEdit(this, item, true);
+                win.ShowDialog();
+            }
         }
 
+
         private void btnEdit_Click(object sender, RoutedEventArgs e) {
-            App.ShowMsg("Edit Not Implemented");
+            ScriptItem item = this.lbxCmds.SelectedItem as ScriptItem;
+            if (item != null) {
+                ScriptCmdEdit win = new ScriptCmdEdit(this, item);
+                win.ShowDialog();
+                if (win.IsChanged) {
+                    this.lbxCmds.ItemsSource = null;
+                    this.copy.Items.Remove(item);
+                    this.copy.Items.Add(item);
+                    this.lbxCmds.ItemsSource = this.copy.Items;
+                }
+            }
         }
+
 
         private void btnDelete_Click(object sender, RoutedEventArgs e) {
             ScriptItem item = this.lbxCmds.SelectedItem as ScriptItem;

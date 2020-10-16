@@ -1,0 +1,48 @@
+﻿<Window x:Class="MultiCommTerminal.NetCore.WindowObjs.ScriptCmdEdit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MultiCommTerminal.NetCore.WindowObjs"
+        xmlns:controls="clr-namespace:MultiCommTerminal.UserControls"
+        xmlns:wpfHelper="clr-namespace:MultiCommTerminal.WPF_Helpers"
+        mc:Ignorable="d"
+        Style="{StaticResource MyWindowStyle}"
+        Title="{Binding Source={x:Static wpfHelper:TxtBinder.Info}}" 
+        Icon="{Binding Source={x:Static wpfHelper:IconBinder.Command_W}}"
+        WindowStartupLocation="Manual" MinHeight="50" MinWidth="150"
+        ContentRendered="Window_ContentRendered" Closing="Window_Closing"
+        >
+    <Grid HorizontalAlignment="Stretch">
+        <Border BorderBrush="Blue" BorderThickness="1">
+            <StackPanel>
+                <StackPanel Grid.ColumnSpan="2" HorizontalAlignment="Center">
+                    <Grid Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto" MinWidth="200" />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Name}}" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                        <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtName" VerticalContentAlignment="Center" Margin="2" />
+                        <Label Grid.Row="1" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Commands}}" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                        <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtCommand" VerticalContentAlignment="Center" Margin="2" />
+                    </Grid>
+                    <DockPanel HorizontalAlignment="Center" Margin="0,0,0,10">
+                        <controls:UC_IconButton x:Name="btnCancel" Margin="5" Style="{StaticResource TextIconButton}" 
+                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Cancel}}"
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}"
+                            Click="btnCancel_Click" />
+                        <controls:UC_IconButton x:Name="btnOk" Margin="5" Style="{StaticResource TextIconButton}" 
+                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.OK}}"
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Save}}"
+                            Click="btnOk_Click" />
+                    </DockPanel>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
