@@ -91,11 +91,11 @@ namespace Wifi.UWP.Core {
         private void DisplayAdapterValues(WiFiAdapter adapter) {
             this.log.InfoEntry("ListAdapterValues");
             // TODO fill in object for use in display
-            this.log.Info("ListAdapterValues", () => string.Format("IATA Type {0}", adapter.NetworkAdapter.IanaInterfaceType.ToEnum()));
-            this.log.Info("ListAdapterValues", () => string.Format("Max BPS In {0}", adapter.NetworkAdapter.InboundMaxBitsPerSecond));
-            this.log.Info("ListAdapterValues", () => string.Format("Max BPS Out {0}", adapter.NetworkAdapter.OutboundMaxBitsPerSecond));
-            this.log.Info("ListAdapterValues", () => string.Format("Adapter Id {0}", adapter.NetworkAdapter.NetworkAdapterId.ToString()));
-            this.log.Info("ListAdapterValues", () => string.Format("Network Id {0}", adapter.NetworkAdapter.NetworkItem.NetworkId.ToString()));
+            this.log.Info("ListAdapterValues", () => string.Format("  IATA Type: {0}", adapter.NetworkAdapter.IanaInterfaceType.ToEnum()));
+            this.log.Info("ListAdapterValues", () => string.Format(" Max BPS In: {0}", adapter.NetworkAdapter.InboundMaxBitsPerSecond));
+            this.log.Info("ListAdapterValues", () => string.Format("Max BPS Out: {0}", adapter.NetworkAdapter.OutboundMaxBitsPerSecond));
+            this.log.Info("ListAdapterValues", () => string.Format(" Adapter Id: {0}", adapter.NetworkAdapter.NetworkAdapterId.ToString()));
+            this.log.Info("ListAdapterValues", () => string.Format(" Network Id: {0}", adapter.NetworkAdapter.NetworkItem.NetworkId.ToString()));
         }
 
 
