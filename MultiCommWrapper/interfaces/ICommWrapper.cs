@@ -216,6 +216,12 @@ namespace MultiCommWrapper.Net.interfaces {
 
         #endregion
 
+        #region WIFI
+
+        void WifiDiscoverAsync();
+
+        #endregion
+
         void Teardown();
 
         void DisconnectAll();

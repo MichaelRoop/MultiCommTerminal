@@ -16,3 +16,5 @@
 /BluetoothRfComm.Win32.Core/bin/*
 /BluetoothLE.UWP.Core/obj/*
 /BluetoothRfComm.Win32.Core/obj/*
+/Wifi.UWP.Core/bin/*
+/Wifi.UWP.Core/obj/*

@@ -7,6 +7,8 @@ using DependencyInjectorFactory.Net.interfaces;
 using IconFactory.Net.interfaces;
 using System;
 using System.Collections.Generic;
+using Wifi.UWP.Core;
+using WifiCommon.Net.interfaces;
 
 namespace MultiCommTerminal.DependencyInjection {
 
@@ -35,6 +37,8 @@ namespace MultiCommTerminal.DependencyInjection {
             this.SingletonCreators.Add(
                 typeof(IBLETInterface), new ObjSingletonCreator(() => new BluetoothLEImplWin32Core()));
 
+            this.SingletonCreators.Add(
+                typeof(IWifiInterface), new ObjSingletonCreator(() => new WifiImpleUwp()));
 
 
             //BluetoothLEImplWin32Core

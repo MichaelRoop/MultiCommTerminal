@@ -8,6 +8,7 @@ using MultiCommData.Net.StorageDataModels;
 using MultiCommWrapper.Net.interfaces;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
+using WifiCommon.Net.interfaces;
 
 namespace MultiCommWrapper.Net.WrapCode {
 
@@ -21,6 +22,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         IIconFactory iconFactory = null;
         IBTInterface classicBluetooth = null;
         IBLETInterface bleBluetooth = null;
+        IWifiInterface wifi = null;
         IStorageManager<SettingItems> settings = null;
         IIndexedStorageManager<TerminatorDataModel, DefaultFileExtraInfo> terminatorStorage = null;
         IIndexedStorageManager<ScriptDataModel, DefaultFileExtraInfo> scriptStorage = null;
@@ -47,7 +49,8 @@ namespace MultiCommWrapper.Net.WrapCode {
             IBTInterface classicBluetooth,
             ICommStackLevel0 classicBluetoothStack,
             IBLETInterface bleBluetooth,
-            ICommStackLevel0 bleStack) {
+            ICommStackLevel0 bleStack,
+            IWifiInterface wifi) {
 
             this.storageFactory = storageFactory;
             this.languages = languages;
@@ -56,6 +59,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.btClassicStack = classicBluetoothStack;
             this.bleBluetooth = bleBluetooth;
             this.bleStack = bleStack;
+            this.wifi = wifi;
             this.InitializeAll();
         }
 

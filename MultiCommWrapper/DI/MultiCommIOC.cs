@@ -12,6 +12,7 @@ using MultiCommWrapper.Net.WrapCode;
 using StorageFactory.Net.interfaces;
 using System;
 using System.Collections.Generic;
+using WifiCommon.Net.interfaces;
 
 namespace MultiCommWrapper.Net.DI {
 
@@ -41,7 +42,8 @@ namespace MultiCommWrapper.Net.DI {
                             this.GetObjSingleton<IBTInterface>(),
                             this.GetObjInstance<ICommStackLevel0>(),
                             this.GetObjSingleton<IBLETInterface>(),
-                            this.GetObjInstance<ICommStackLevel0>())));
+                            this.GetObjInstance<ICommStackLevel0>(),
+                            this.GetObjSingleton<IWifiInterface>())));
 
         }
     }

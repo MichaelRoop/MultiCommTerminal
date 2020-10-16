@@ -57,11 +57,13 @@
     <ProjectReference Include="..\..\SharedNetLibs\IconFactory\IconFactory.Net.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\LanguageFactory\LanguageFactory.Net.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\LogUtils.Net\LogUtils.Net.csproj" />
+    <ProjectReference Include="..\..\SharedNetLibs\WifiCommon.Net\WifiCommon.Net.csproj" />
     <ProjectReference Include="..\AurelienRibon.Ui.SyntaxHighlightBox\AurelienRibon.Ui.SyntaxHighlightBox.csproj" />
     <ProjectReference Include="..\BluetoothLE.UWP.Core\BluetoothLE.UWP.Core.csproj" />
     <ProjectReference Include="..\BluetoothRfComm.Win32.Core\BluetoothRfComm.UWP.Core.csproj" />
     <ProjectReference Include="..\MultiCommData\MultiCommData.Net.csproj" />
     <ProjectReference Include="..\MultiCommWrapper\MultiCommWrapper.Net.csproj" />
+    <ProjectReference Include="..\Wifi.UWP.Core\Wifi.UWP.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

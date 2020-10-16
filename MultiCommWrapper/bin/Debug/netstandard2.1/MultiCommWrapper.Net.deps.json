@@ -15,7 +15,8 @@
           "IconFactory.Net": "1.0.0",
           "LanguageFactory.Net": "1.0.0",
           "MultiCommData.Net": "1.0.0",
-          "StorageFactory.Net": "1.0.0"
+          "StorageFactory.Net": "1.0.0",
+          "WifiCommon.Net": "1.0.0"
         },
         "runtime": {
           "MultiCommWrapper.Net.dll": {}
@@ -116,6 +117,11 @@
         "runtime": {
           "VariousUtils.Net.dll": {}
         }
+      },
+      "WifiCommon.Net/1.0.0": {
+        "runtime": {
+          "WifiCommon.Net.dll": {}
+        }
       }
     }
   },
@@ -183,6 +189,11 @@
       "sha512": ""
     },
     "VariousUtils.Net/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "WifiCommon.Net/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

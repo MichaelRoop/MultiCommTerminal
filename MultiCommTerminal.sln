@@ -39,9 +39,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AurelienRibon.Ui.SyntaxHigh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BluetoothRfComm.Win32", "BluetoothRfComm.Win32\BluetoothRfComm.Win32.csproj", "{F7BC863B-DAFF-4680-A038-289572D1DABC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BluetoothLE.UWP.Core", "BluetoothLE.UWP.Core\BluetoothLE.UWP.Core.csproj", "{31A222E3-7470-4102-A087-F6902FEDCC17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BluetoothLE.UWP.Core", "BluetoothLE.UWP.Core\BluetoothLE.UWP.Core.csproj", "{31A222E3-7470-4102-A087-F6902FEDCC17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BluetoothRfComm.UWP.Core", "BluetoothRfComm.Win32.Core\BluetoothRfComm.UWP.Core.csproj", "{02BCC200-E4C3-4A45-A911-1471693E07A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BluetoothRfComm.UWP.Core", "BluetoothRfComm.Win32.Core\BluetoothRfComm.UWP.Core.csproj", "{02BCC200-E4C3-4A45-A911-1471693E07A0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WifiCommon.Net", "..\SharedNetLibs\WifiCommon.Net\WifiCommon.Net.csproj", "{640C4743-4899-4CC0-8B1F-AC6B7A9CA08F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wifi.UWP.Core", "Wifi.UWP.Core\Wifi.UWP.Core.csproj", "{60F7FA9D-29A0-4410-9008-EA062D2F8AFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -129,6 +133,14 @@ Global
 		{02BCC200-E4C3-4A45-A911-1471693E07A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02BCC200-E4C3-4A45-A911-1471693E07A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02BCC200-E4C3-4A45-A911-1471693E07A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{640C4743-4899-4CC0-8B1F-AC6B7A9CA08F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{640C4743-4899-4CC0-8B1F-AC6B7A9CA08F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{640C4743-4899-4CC0-8B1F-AC6B7A9CA08F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{640C4743-4899-4CC0-8B1F-AC6B7A9CA08F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60F7FA9D-29A0-4410-9008-EA062D2F8AFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60F7FA9D-29A0-4410-9008-EA062D2F8AFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60F7FA9D-29A0-4410-9008-EA062D2F8AFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60F7FA9D-29A0-4410-9008-EA062D2F8AFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

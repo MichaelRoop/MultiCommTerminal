@@ -153,6 +153,16 @@
         "runtime": {
           "bin/placeholder/VariousUtils.Net.dll": {}
         }
+      },
+      "WifiCommon.Net/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/WifiCommon.Net.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WifiCommon.Net.dll": {}
+        }
       }
     }
   },
@@ -242,6 +252,11 @@
       "type": "project",
       "path": "../../SharedNetLibs/VariousUtils/VariousUtils.Net.csproj",
       "msbuildProject": "../../SharedNetLibs/VariousUtils/VariousUtils.Net.csproj"
+    },
+    "WifiCommon.Net/1.0.0": {
+      "type": "project",
+      "path": "../../SharedNetLibs/WifiCommon.Net/WifiCommon.Net.csproj",
+      "msbuildProject": "../../SharedNetLibs/WifiCommon.Net/WifiCommon.Net.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -252,7 +267,8 @@
       "IconFactory.Net >= 1.0.0",
       "LanguageFactory.Net >= 1.0.0",
       "MultiCommData.Net >= 1.0.0",
-      "StorageFactory.Net >= 1.0.0"
+      "StorageFactory.Net >= 1.0.0",
+      "WifiCommon.Net >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -305,6 +321,9 @@
             },
             "D:\\Dev\\SharedNetLibs\\StorageFactory.Net\\StorageFactory.Net.csproj": {
               "projectPath": "D:\\Dev\\SharedNetLibs\\StorageFactory.Net\\StorageFactory.Net.csproj"
+            },
+            "D:\\Dev\\SharedNetLibs\\WifiCommon.Net\\WifiCommon.Net.csproj": {
+              "projectPath": "D:\\Dev\\SharedNetLibs\\WifiCommon.Net\\WifiCommon.Net.csproj"
             }
           }
         }

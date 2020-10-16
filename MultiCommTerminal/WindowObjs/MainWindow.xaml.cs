@@ -495,6 +495,15 @@ namespace MultiCommTerminal.WindowObjs {
 
         #endregion
 
+        #region Wifi
+
+        private void btnWifiDiscover_Click(object sender, RoutedEventArgs e) {
+            this.wrapper.WifiDiscoverAsync();
+        }
+
+
+        #endregion
+
         #region Private Init and teardown
 
         private void OnStartupSuccess() {
