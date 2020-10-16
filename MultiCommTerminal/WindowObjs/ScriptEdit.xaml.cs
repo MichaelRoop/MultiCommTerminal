@@ -22,6 +22,16 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
     /// <summary>Interaction logic for ScriptEdit.xaml</summary>
     public partial class ScriptEdit : Window {
 
+        #region Data types
+
+        public enum UseType {
+            View,
+            Edit,
+            New,
+        }
+
+        #endregion
+
         #region Data
 
         Window parent = null;
@@ -29,10 +39,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         private ButtonGroupSizeSyncManager widthManager = null;
         private ScriptIndexDataModel original = null;
         private ScriptIndexDataModel copy = null;
-
-        IIndexItem<DefaultFileExtraInfo> index = null;
-
-        private bool edit = false;
+        private IIndexItem<DefaultFileExtraInfo> index = null;
+        private UseType useType = UseType.View;
 
         #endregion
 
@@ -56,21 +64,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
                     Command = item.Command,
                 });
             }
-            this.txtName.Text = this.copy.Display;
-            this.lbxCmds.ItemsSource = copy.Items;
-
-            // TODO Hide or show
-            if (this.edit) {
-                // Call before rendering which will trigger initial resize events
-                this.widthManager = new ButtonGroupSizeSyncManager(this.btnCancel, this.btnOk);
-                this.widthManager.PrepForChange();
-            }
-            else {
-                this.btnCancel.Visibility = Visibility.Collapsed;
-                this.txtName.IsEnabled = false;
-                this.lbxCmds.IsEnabled = false;
-                this.stPanelSideButtons.Visibility = Visibility.Collapsed;
-            }
+            //this.txtName.Text = this.copy.Display;
+            //this.lbxCmds.ItemsSource = copy.Items;
         }
 
         private void Delegate_OnRetrieveFailure(string msg) {
@@ -79,14 +74,60 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         }
 
 
+        private void InitializeNewScript() {
+            List<ScriptItem> items = new List<ScriptItem>();
+            items.Add(new ScriptItem("Command Name 1", "Sample Command Text 1"));
+            items.Add(new ScriptItem("Command Name 2", "Sample Command Text 2"));
+            this.copy = new ScriptIndexDataModel(items) {
+                Display = "Sample Script Name",
+            };
+            //this.txtName.Text = this.copy.Display;
+            //this.lbxCmds.ItemsSource = copy.Items;
+        }
 
-        public ScriptEdit(Window parent, IIndexItem<DefaultFileExtraInfo> index, bool edit = true) {
+        private void PopulateFields() {
+            switch (this.useType) {
+                case UseType.View:
+                case UseType.Edit:
+                    this.RetrieveScript();
+                    break;
+                case UseType.New:
+                    this.InitializeNewScript();
+                    break;
+            }
+            this.txtName.Text = this.copy.Display;
+            this.lbxCmds.ItemsSource = copy.Items;
+        }
+
+
+
+        private void ShowControls() {
+            switch (this.useType) {
+                case UseType.View:
+                    this.btnCancel.Visibility = Visibility.Collapsed;
+                    this.txtName.IsEnabled = false;
+                    this.lbxCmds.IsEnabled = false;
+                    this.stPanelSideButtons.Visibility = Visibility.Collapsed;
+                    break;
+                case UseType.Edit:
+                case UseType.New:
+                    // Call before rendering which will trigger initial resize events
+                    this.widthManager = new ButtonGroupSizeSyncManager(this.btnCancel, this.btnOk);
+                    this.widthManager.PrepForChange();
+                    break;
+            }
+        }
+
+
+
+        public ScriptEdit(Window parent, IIndexItem<DefaultFileExtraInfo> index, UseType useType) {
             this.parent = parent;
             this.index = index;
-            this.edit = edit;
+            this.useType = useType;
             this.wrapper = DI.Wrapper;
             InitializeComponent();
-            this.RetrieveScript();
+            this.PopulateFields();
+            this.ShowControls();
             this.SizeToContent = SizeToContent.WidthAndHeight;
         }
 
@@ -102,9 +143,19 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
-            if (this.edit) {
+            switch (this.useType) {
+                case UseType.View:
+                    break;
+                case UseType.Edit:
+                    break;
+                case UseType.New:
+                    break;
+            }
+
+            if (this.widthManager != null) {
                 this.widthManager.Teardown();
             }
+
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e) {
@@ -164,21 +215,29 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         private void btnOk_Click(object sender, RoutedEventArgs e) {
             // TODO determine if true
-            if (this.edit) {
-                // Update index item
-                this.index.Display = this.txtName.Text;
-                // Update original from the copy
-                this.original.Display = this.txtName.Text;
-                this.original.UId = this.copy.UId;
-                this.original.Items.Clear();
-                foreach (var objItem in this.lbxCmds.Items) {
-                    ScriptItem item = objItem as ScriptItem;
-                    this.original.Items.Add(new ScriptItem() {
-                        Display = item.Display,
-                        Command = item.Command,
-                    });
-                }
-                this.wrapper.SaveScript(this.index, this.original, () => { }, App.ShowMsg);
+
+            switch (this.useType) {
+                case UseType.View:
+                    break;
+                case UseType.Edit:
+                    // Update index item
+                    this.index.Display = this.txtName.Text;
+                    // Update original from the copy
+                    this.original.Display = this.txtName.Text;
+                    this.original.UId = this.copy.UId;
+                    this.original.Items.Clear();
+                    foreach (var objItem in this.lbxCmds.Items) {
+                        ScriptItem item = objItem as ScriptItem;
+                        this.original.Items.Add(new ScriptItem() {
+                            Display = item.Display,
+                            Command = item.Command,
+                        });
+                    }
+                    this.wrapper.SaveScript(this.index, this.original, () => { }, App.ShowMsg);
+                    break;
+                case UseType.New:
+                    this.wrapper.CreateNewScript(this.copy.Display, this.copy, () => { }, App.ShowMsg);
+                    break;
             }
             this.Close();
         }

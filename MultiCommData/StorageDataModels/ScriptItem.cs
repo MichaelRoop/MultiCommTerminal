@@ -9,5 +9,12 @@
         /// <summary>The actual string sent via the terminal</summary>
         public string Command { get; set; } = "NA";
 
+        public ScriptItem() { }
+        public ScriptItem(string name, string command) {
+            this.Display = name;
+            this.Command = command;
+        }
+
+
     }
 }

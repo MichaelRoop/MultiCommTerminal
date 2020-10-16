@@ -75,32 +75,18 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void btnView_Click(object sender, RoutedEventArgs e) {
-            this.OpenViewer(false);
+            this.OpenViewer(ScriptEdit.UseType.View);
         }
 
 
         private void btnEdit_Click(object sender, RoutedEventArgs e) {
-            this.OpenViewer(true);
+            this.OpenViewer(ScriptEdit.UseType.Edit);
         }
 
 
         private void btnAdd_Click(object sender, RoutedEventArgs e) {
-            // Need to open new window to create new script
-            App.ShowMsg("Not Implemented");
-            //this.ReloadList(win.IsChanged);
-
-            /*
-            
-            // TODO - need radical different functionality
-            var item = this.lbxCmds.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
-            if (item != null) {
-                ScriptEdit win = new ScriptEdit(this, item, edit);
-                win.ShowDialog();
-            }
-
-
-            this.wrapper.CreateNewScript("", null, () => { }, App.ShowMsg);
-            */
+            ScriptEdit win = new ScriptEdit(this, null, ScriptEdit.UseType.New);
+            win.ShowDialog();
         }
 
 
@@ -131,10 +117,10 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
-        private void OpenViewer(bool edit) {
+        private void OpenViewer(ScriptEdit.UseType useType) {
             var item = this.lbxCmds.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
             if (item != null) {
-                ScriptEdit win = new ScriptEdit(this, item, edit);
+                ScriptEdit win = new ScriptEdit(this, item, useType);
                 win.ShowDialog();
             }
         }
