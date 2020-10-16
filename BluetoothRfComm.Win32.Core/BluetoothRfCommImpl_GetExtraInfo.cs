@@ -20,7 +20,7 @@ namespace BluetoothRfComm.UWP.Core {
         public void GetDeviceInfoAsync(BTDeviceInfo deviceDataModel) {
             Task.Run(async () => {
                 try {
-                    await this.GetExtraInfo(deviceDataModel, true);
+                    await this.GetExtraInfo(deviceDataModel, false, true);
                 }
                 catch (Exception e) {
                     this.log.Exception(9999, "", e);
@@ -34,8 +34,10 @@ namespace BluetoothRfComm.UWP.Core {
         /// <param name="deviceInfo">The device information data model to populate</param>
         /// <param name="forceRetrieve">Force re-reading of all extra information</param>
         /// <returns>An asynchronous task result</returns>
-        private async Task GetExtraInfo(BTDeviceInfo deviceInfo, bool forceRetrieve) {
+        private async Task GetExtraInfo(BTDeviceInfo deviceInfo, bool forceRetrieve, bool display) {
             this.log.InfoEntry("GetExtraInfo");
+
+            // TODO Cannot call this after the services have already been retrieved. So do not force
 
             // 0 length remote host name indicates that we require more information for connection
             if (deviceInfo.RemoteHostName.Length == 0 || forceRetrieve) {
@@ -98,18 +100,24 @@ namespace BluetoothRfComm.UWP.Core {
                                 // List of radios available on current device
                                 //await this.ListRadios();
 
-
-                                this.BT_DeviceInfoGathered?.Invoke(this, deviceInfo);
+                                if (display) {
+                                    this.BT_DeviceInfoGathered?.Invoke(this, deviceInfo);
+                                }
                             }
                             else {
                                 //Not used. 
                             }
+                            service.Dispose();
                         }
+                        
                     }
                     else {
                         this.log.Error(9999, () => string.Format("Get Service result:{0}", serviceResult.Error.ToString()));
                     }
                 }
+            }
+            else if (deviceInfo.RemoteHostName.Length > 0 && display) {
+                this.BT_DeviceInfoGathered?.Invoke(this, deviceInfo);
             }
         }
 

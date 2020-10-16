@@ -39,7 +39,7 @@ namespace BluetoothRfComm.UWP.Core {
                 try {
                     this.log.InfoEntry("ConnectAsync");
                     this.TearDown(true);
-                    await this.GetExtraInfo(deviceDataModel, false);
+                    await this.GetExtraInfo(deviceDataModel, false, false);
 
                     this.log.Info("ConnectAsync", () => string.Format(
                         "Host:{0} Service:{1}", deviceDataModel.RemoteHostName, deviceDataModel.RemoteServiceName));
