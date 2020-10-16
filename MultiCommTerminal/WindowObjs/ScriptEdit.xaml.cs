@@ -6,15 +6,7 @@ using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.NetCore.WindowObjs {
@@ -24,6 +16,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         #region Data types
 
+        /// <summary>Functionality differs by use type</summary>
         public enum UseType {
             View,
             Edit,
@@ -44,81 +37,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         #endregion
 
-        private void RetrieveScript() {
-            this.wrapper.RetrieveScriptData(
-                this.index, 
-                this.Delegate_OnRetrieveSuccess, 
-                this.Delegate_OnRetrieveFailure);
-        }
-
-        private void Delegate_OnRetrieveSuccess(ScriptIndexDataModel dataModel) {
-            this.original = dataModel;
-            // Make a copy of the original to avoid changing it unless OK
-            this.copy = new ScriptIndexDataModel() {
-                Display = this.original.Display,
-                UId = this.original.UId,
-            };
-            foreach (var item in original.Items) {
-                this.copy.Items.Add(new ScriptItem() {
-                    Display = item.Display,
-                    Command = item.Command,
-                });
-            }
-            //this.txtName.Text = this.copy.Display;
-            //this.lbxCmds.ItemsSource = copy.Items;
-        }
-
-        private void Delegate_OnRetrieveFailure(string msg) {
-            App.ShowMsg(msg);
-            this.Close();
-        }
-
-
-        private void InitializeNewScript() {
-            List<ScriptItem> items = new List<ScriptItem>();
-            items.Add(new ScriptItem("Command Name 1", "Sample Command Text 1"));
-            items.Add(new ScriptItem("Command Name 2", "Sample Command Text 2"));
-            this.copy = new ScriptIndexDataModel(items) {
-                Display = "Sample Script Name",
-            };
-            //this.txtName.Text = this.copy.Display;
-            //this.lbxCmds.ItemsSource = copy.Items;
-        }
-
-        private void PopulateFields() {
-            switch (this.useType) {
-                case UseType.View:
-                case UseType.Edit:
-                    this.RetrieveScript();
-                    break;
-                case UseType.New:
-                    this.InitializeNewScript();
-                    break;
-            }
-            this.txtName.Text = this.copy.Display;
-            this.lbxCmds.ItemsSource = copy.Items;
-        }
-
-
-
-        private void ShowControls() {
-            switch (this.useType) {
-                case UseType.View:
-                    this.btnCancel.Visibility = Visibility.Collapsed;
-                    this.txtName.IsEnabled = false;
-                    this.lbxCmds.IsEnabled = false;
-                    this.stPanelSideButtons.Visibility = Visibility.Collapsed;
-                    break;
-                case UseType.Edit:
-                case UseType.New:
-                    // Call before rendering which will trigger initial resize events
-                    this.widthManager = new ButtonGroupSizeSyncManager(this.btnCancel, this.btnOk);
-                    this.widthManager.PrepForChange();
-                    break;
-            }
-        }
-
-
+        #region Constructors and window events
 
         public ScriptEdit(Window parent, IIndexItem<DefaultFileExtraInfo> index, UseType useType) {
             this.parent = parent;
@@ -126,7 +45,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
             this.useType = useType;
             this.wrapper = DI.Wrapper;
             InitializeComponent();
-            this.PopulateFields();
+            this.PopulateDataFields();
             this.ShowControls();
             this.SizeToContent = SizeToContent.WidthAndHeight;
         }
@@ -142,21 +61,16 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
             WPF_ControlHelpers.CenterChild(parent, this);
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
-            switch (this.useType) {
-                case UseType.View:
-                    break;
-                case UseType.Edit:
-                    break;
-                case UseType.New:
-                    break;
-            }
 
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             if (this.widthManager != null) {
                 this.widthManager.Teardown();
             }
-
         }
+
+        #endregion
+
+        #region Side button event handlers
 
         private void btnAdd_Click(object sender, RoutedEventArgs e) {
             ScriptItem item = new ScriptItem() {
@@ -206,6 +120,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
             }
         }
 
+        #endregion
+
         #region Main buttons
 
         private void btnCancel_Click(object sender, RoutedEventArgs e) {
@@ -214,10 +130,9 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
 
         private void btnOk_Click(object sender, RoutedEventArgs e) {
-            // TODO determine if true
-
             switch (this.useType) {
                 case UseType.View:
+                    // Nothing to do
                     break;
                 case UseType.Edit:
                     // Update index item
@@ -243,5 +158,91 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         }
 
         #endregion
+
+        #region Private
+
+        /// <summary>Retrieve the script from storage</summary>
+        private void RetrieveScript() {
+            this.wrapper.RetrieveScriptData(
+                this.index, this.Delegate_OnRetrieveSuccess, this.Delegate_OnRetrieveFailure);
+        }
+
+
+        /// <summary>Create a new dummy script template</summary>
+        private void InitializeNewScript() {
+            List<ScriptItem> items = new List<ScriptItem>();
+            items.Add(new ScriptItem("Command Name 1", "Sample Command Text 1"));
+            items.Add(new ScriptItem("Command Name 2", "Sample Command Text 2"));
+            this.copy = new ScriptIndexDataModel(items) {
+                Display = "Sample Script Name",
+            };
+        }
+
+
+        /// <summary>Populate controls in the dialog depending on use type</summary>
+        private void PopulateDataFields() {
+            switch (this.useType) {
+                case UseType.View:
+                case UseType.Edit:
+                    this.RetrieveScript();
+                    break;
+                case UseType.New:
+                    this.InitializeNewScript();
+                    break;
+            }
+            this.txtName.Text = this.copy.Display;
+            this.lbxCmds.ItemsSource = copy.Items;
+        }
+
+
+        /// <summary>Show or hide controls based on use type</summary>
+        private void ShowControls() {
+            switch (this.useType) {
+                case UseType.View:
+                    this.btnCancel.Visibility = Visibility.Collapsed;
+                    this.txtName.IsEnabled = false;
+                    this.lbxCmds.IsEnabled = false;
+                    this.stPanelSideButtons.Visibility = Visibility.Collapsed;
+                    break;
+                case UseType.Edit:
+                case UseType.New:
+                    // Call before rendering which will trigger initial resize events
+                    this.widthManager = new ButtonGroupSizeSyncManager(this.btnCancel, this.btnOk);
+                    this.widthManager.PrepForChange();
+                    break;
+            }
+        }
+
+        #endregion
+
+        #region Private Delegates
+
+        /// <summary>On successful retrieval make a copy of the script</summary>
+        /// <param name="dataModel">The script data to dopy</param>
+        private void Delegate_OnRetrieveSuccess(ScriptIndexDataModel dataModel) {
+            this.original = dataModel;
+            // Make a copy of the original to avoid changing it unless OK
+            this.copy = new ScriptIndexDataModel() {
+                Display = this.original.Display,
+                UId = this.original.UId,
+            };
+            foreach (var item in original.Items) {
+                this.copy.Items.Add(new ScriptItem() {
+                    Display = item.Display,
+                    Command = item.Command,
+                });
+            }
+        }
+
+
+        /// <summary>On failure of retrieval post message and close</summary>
+        /// <param name="msg">The message to display</param>
+        private void Delegate_OnRetrieveFailure(string msg) {
+            App.ShowMsg(msg);
+            this.Close();
+        }
+
+        #endregion
+
     }
 }
