@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace MultiCommData.Net.StorageDataModels {
 
     /// <summary>Storage data for one script with multiple commands</summary>
-    public class ScriptIndexDataModel {
+    public class ScriptDataModel {
 
         #region Properties
 
@@ -21,12 +21,12 @@ namespace MultiCommData.Net.StorageDataModels {
 
         #region Constructors
 
-        public ScriptIndexDataModel() {
+        public ScriptDataModel() {
             this.UId = Guid.NewGuid().ToString();
         }
 
 
-        public ScriptIndexDataModel(List<ScriptItem> scripts) : this() {
+        public ScriptDataModel(List<ScriptItem> scripts) : this() {
             this.Items = new List<ScriptItem>();
             foreach(ScriptItem script in scripts) {
                 this.Items.Add(script);

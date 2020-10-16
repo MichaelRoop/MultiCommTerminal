@@ -32,7 +32,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.AssureTerminatorsDefault();
 
             this.scriptStorage =
-                this.storageFactory.GetIndexedManager<ScriptIndexDataModel, DefaultFileExtraInfo>(this.Dir(SCRIPTS_DIR), SCRIPTS_INDEX_FILE);
+                this.storageFactory.GetIndexedManager<ScriptDataModel, DefaultFileExtraInfo>(this.Dir(SCRIPTS_DIR), SCRIPTS_INDEX_FILE);
             this.AssureScriptDefault();
         }
 
@@ -87,7 +87,7 @@ namespace MultiCommWrapper.Net.WrapCode {
                 items.Add(new ScriptItem() { Display = "Command 2", Command = "This is second command" });
                 items.Add(new ScriptItem() { Display = "Command 3", Command = "This is third command" });
                 items.Add(new ScriptItem() { Display = "Command 4", Command = "This is fourth command" });
-                ScriptIndexDataModel dm = new ScriptIndexDataModel(items) { 
+                ScriptDataModel dm = new ScriptDataModel(items) { 
                     Display = "Default script"
                 };
                 IIndexItem<DefaultFileExtraInfo> idx = new IndexItem<DefaultFileExtraInfo>(dm.UId) {

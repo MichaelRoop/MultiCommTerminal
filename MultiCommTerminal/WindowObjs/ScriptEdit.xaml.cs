@@ -30,8 +30,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         Window parent = null;
         private ICommWrapper wrapper = null;
         private ButtonGroupSizeSyncManager widthManager = null;
-        private ScriptIndexDataModel original = null;
-        private ScriptIndexDataModel copy = null;
+        private ScriptDataModel original = null;
+        private ScriptDataModel copy = null;
         private IIndexItem<DefaultFileExtraInfo> index = null;
         private UseType useType = UseType.View;
 
@@ -173,7 +173,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
             List<ScriptItem> items = new List<ScriptItem>();
             items.Add(new ScriptItem("Command Name 1", "Sample Command Text 1"));
             items.Add(new ScriptItem("Command Name 2", "Sample Command Text 2"));
-            this.copy = new ScriptIndexDataModel(items) {
+            this.copy = new ScriptDataModel(items) {
                 Display = "Sample Script Name",
             };
         }
@@ -219,10 +219,10 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         /// <summary>On successful retrieval make a copy of the script</summary>
         /// <param name="dataModel">The script data to dopy</param>
-        private void Delegate_OnRetrieveSuccess(ScriptIndexDataModel dataModel) {
+        private void Delegate_OnRetrieveSuccess(ScriptDataModel dataModel) {
             this.original = dataModel;
             // Make a copy of the original to avoid changing it unless OK
-            this.copy = new ScriptIndexDataModel() {
+            this.copy = new ScriptDataModel() {
                 Display = this.original.Display,
                 UId = this.original.UId,
             };

@@ -41,7 +41,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.widthManager.PrepForChange();
         }
 
-        private void Wrapper_CurrentScriptChanged(object sender, ScriptIndexDataModel e) {
+        private void Wrapper_CurrentScriptChanged(object sender, ScriptDataModel e) {
             this.ReloadList(true);
         }
 

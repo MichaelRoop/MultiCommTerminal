@@ -33,7 +33,7 @@ namespace MultiCommWrapper.Net.interfaces {
         event EventHandler<TerminatorDataModel> CurrentTerminatorChanged;
 
         /// <summary>Raised when the current script has changed</summary>
-        event EventHandler<ScriptIndexDataModel> CurrentScriptChanged;
+        event EventHandler<ScriptDataModel> CurrentScriptChanged;
 
         #endregion
 
@@ -124,22 +124,22 @@ namespace MultiCommWrapper.Net.interfaces {
         /// <summary>Retrieve the currently selected script</summary>
         /// <param name="onSuccess">Raised on successful retrieval</param>
         /// <param name="onError">Raised on Error</param>
-        void GetCurrentScript(Action<ScriptIndexDataModel> onSuccess, OnErr onError);
+        void GetCurrentScript(Action<ScriptDataModel> onSuccess, OnErr onError);
 
 
-        void SetCurrentScript(ScriptIndexDataModel data, OnErr onError);
+        void SetCurrentScript(ScriptDataModel data, OnErr onError);
 
 
         void SetCurrentScript(IIndexItem<DefaultFileExtraInfo> index, Action onSuccess, OnErr onError);
 
         void GetScriptList(Action<List<IIndexItem<DefaultFileExtraInfo>>> onSuccess, OnErr onError);
 
-        void CreateNewScript(string display, ScriptIndexDataModel data, Action onSuccess, OnErr onError);
+        void CreateNewScript(string display, ScriptDataModel data, Action onSuccess, OnErr onError);
 
 
-        void RetrieveScriptData(IIndexItem<DefaultFileExtraInfo> index, Action<ScriptIndexDataModel> onSuccess, OnErr onError);
+        void RetrieveScriptData(IIndexItem<DefaultFileExtraInfo> index, Action<ScriptDataModel> onSuccess, OnErr onError);
 
-        void SaveScript(IIndexItem<DefaultFileExtraInfo> idx, ScriptIndexDataModel data, Action onSuccess, OnErr onError);
+        void SaveScript(IIndexItem<DefaultFileExtraInfo> idx, ScriptDataModel data, Action onSuccess, OnErr onError);
 
 
         void DeleteScriptData(IIndexItem<DefaultFileExtraInfo> index, Action<bool> onComplete, OnErr onError);

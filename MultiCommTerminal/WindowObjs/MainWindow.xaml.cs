@@ -540,7 +540,7 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
-        private void PopulateScriptData(ScriptIndexDataModel dataModel) {
+        private void PopulateScriptData(ScriptDataModel dataModel) {
             this.outgoing.ItemsSource = null;
             this.scriptItems.Clear();
             foreach (ScriptItem item in dataModel.Items) {
@@ -638,7 +638,7 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
-        private void Wrapper_CurrentScriptChanged(object sender, ScriptIndexDataModel data) {
+        private void Wrapper_CurrentScriptChanged(object sender, ScriptDataModel data) {
             this.PopulateScriptData(data);
         }
 

@@ -14,7 +14,7 @@ namespace MultiCommData.Net.StorageDataModels {
         public TerminatorDataModel CurrentTerminator { get; set; } = new TerminatorDataModel();
 
         /// <summary>Currently selected command script</summary>
-        public ScriptIndexDataModel CurrentScript { get; set; } = new ScriptIndexDataModel();
+        public ScriptDataModel CurrentScript { get; set; } = new ScriptDataModel();
 
     }
 }

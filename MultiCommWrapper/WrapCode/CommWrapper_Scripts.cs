@@ -13,9 +13,9 @@ namespace MultiCommWrapper.Net.WrapCode {
 
     public partial class CommWrapper : ICommWrapper {
 
-        public event EventHandler<ScriptIndexDataModel> CurrentScriptChanged;
+        public event EventHandler<ScriptDataModel> CurrentScriptChanged;
 
-        public void GetCurrentScript(Action<ScriptIndexDataModel> onSuccess, OnErr onError) {
+        public void GetCurrentScript(Action<ScriptDataModel> onSuccess, OnErr onError) {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;
                 WrapErr.ToErrReport(out report, 9999, () => {
@@ -29,7 +29,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-        public void SetCurrentScript(ScriptIndexDataModel data, OnErr onError) {
+        public void SetCurrentScript(ScriptDataModel data, OnErr onError) {
             this.GetSettings((settings) => {
                 settings.CurrentScript = data;
                 this.SaveSettings(settings, () => {
@@ -51,7 +51,7 @@ namespace MultiCommWrapper.Net.WrapCode {
                 onError);
         }
 
-        public void RetrieveScriptData(IIndexItem<DefaultFileExtraInfo> index, Action<ScriptIndexDataModel> onSuccess, OnErr onError) {
+        public void RetrieveScriptData(IIndexItem<DefaultFileExtraInfo> index, Action<ScriptDataModel> onSuccess, OnErr onError) {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;
                 WrapErr.ToErrReport(out report, 9999, () => {
@@ -65,7 +65,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-        public void CreateNewScript(string display, ScriptIndexDataModel data, Action onSuccess, OnErr onError) {
+        public void CreateNewScript(string display, ScriptDataModel data, Action onSuccess, OnErr onError) {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;
                 WrapErr.ToErrReport(out report, 9999, () => {
@@ -99,7 +99,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-        public void SaveScript(IIndexItem<DefaultFileExtraInfo> idx, ScriptIndexDataModel data, Action onSuccess, OnErr onError) {
+        public void SaveScript(IIndexItem<DefaultFileExtraInfo> idx, ScriptDataModel data, Action onSuccess, OnErr onError) {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;
                 WrapErr.ToErrReport(out report, 9999, () => {
