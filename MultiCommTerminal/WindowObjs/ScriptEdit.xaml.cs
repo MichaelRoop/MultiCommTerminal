@@ -108,19 +108,24 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e) {
-            App.ShowMsg("Not Implemented");
+            App.ShowMsg("Add Not Implemented");
         }
 
         private void btnView_Click(object sender, RoutedEventArgs e) {
-            App.ShowMsg("Not Implemented");
+            App.ShowMsg("View Not Implemented");
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e) {
-            App.ShowMsg("Not Implemented");
+            App.ShowMsg("Edit Not Implemented");
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e) {
-            App.ShowMsg("Not Implemented");
+            ScriptItem item = this.lbxCmds.SelectedItem as ScriptItem;
+            if (item != null) {
+                this.lbxCmds.ItemsSource = null;
+                this.copy.Items.Remove(item);
+                this.lbxCmds.ItemsSource = this.copy.Items;
+            }
         }
 
         #region Main buttons
