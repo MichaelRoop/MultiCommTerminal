@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using VariousUtils.Net;
 using Wifi.UWP.Core.Helpers;
 using WifiCommon.Net.DataModels;
 using WifiCommon.Net.Enumerations;
@@ -171,13 +172,13 @@ namespace Wifi.UWP.Core {
 
 
         private void DumpNetworkInfo(WifiNetworkInfo info) {
-            this.log.Info("DumpNetworkInfo", () => string.Format("------------------------------- {0} --------------------------------",info.SSID));
+            this.log.Info("DumpNetworkInfo", () => string.Format("-----------------------------------------------------"));
             this.log.Info("DumpNetworkInfo", () => string.Format("                    SSID: {0}", info.SSID));
             this.log.Info("DumpNetworkInfo", () => string.Format("             Wifi Direct: {0}", info.IsWifiDirect));
             this.log.Info("DumpNetworkInfo", () => string.Format("                    Kind: {0}", info.Kind));
             this.log.Info("DumpNetworkInfo", () => string.Format("                     MAC: {0}", info.MacAddress_BSSID));
-            this.log.Info("DumpNetworkInfo", () => string.Format("     Authentication Type: {0}", info.AuthenticationType));
-            this.log.Info("DumpNetworkInfo", () => string.Format("         Encryption Type: {0}", info.EncryptionType));
+            this.log.Info("DumpNetworkInfo", () => string.Format("     Authentication Type: {0}", info.AuthenticationType.ToString().UnderlineToSpaces()));
+            this.log.Info("DumpNetworkInfo", () => string.Format("         Encryption Type: {0}", info.EncryptionType.ToString().UnderlineToSpaces()));
             this.log.Info("DumpNetworkInfo", () => string.Format("         Beacon Interval: {0}", info.BeaconInterval));
             this.log.Info("DumpNetworkInfo", () => string.Format("Center Channel Frequency: {0}", info.ChanneCenterFrequencyKlhz));
             this.log.Info("DumpNetworkInfo", () => string.Format("          Physical Layer: {0}", info.PhysicalLayerKind));
