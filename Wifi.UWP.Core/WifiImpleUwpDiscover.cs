@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using VariousUtils.Net;
 using Wifi.UWP.Core.Helpers;
@@ -9,8 +10,10 @@ using WifiCommon.Net.Enumerations;
 using WifiCommon.Net.interfaces;
 using Windows.Devices.WiFi;
 using Windows.Networking;
+using Windows.Networking.Connectivity;
 using Windows.Networking.Sockets;
 using Windows.Security.Credentials;
+using Windows.Storage.Streams;
 
 namespace Wifi.UWP.Core {
 
@@ -64,19 +67,8 @@ namespace Wifi.UWP.Core {
             // TODO - change to send up the whole adapter
             this.DiscoveredNetworks?.Invoke(this, this.adapterInfo.Networks);
 
-          //  await this.ConnectToNetworkAndSendTest(this.wifiAdapter, "MikieArduinoWifi", "1234567890");
-
-            #region junk
-            //this.log.Info("DoDiscovery", () => string.Format("Count {0}", result.Count));
-            //foreach(var adapter in result) {
-            //    this.log.Info("DoDiscovery", () => string.Format("Available networks {0}", adapter.NetworkReport.AvailableNetworks.Count));
-            //    //// This gets all the available networks
-            //    //await adapter.ScanAsync();
-            //    //this.DisplayNetworkReport(adapter.NetworkReport);
-            //    // Yes, this successfuly connects with passed in credentials
-            //    //await this.ConnectToNetwork(adapter, "MikieArduinoWifi", "1234567890");
-            //}
-            #endregion
+            // Hack test to connect and send
+            //await this.ConnectToNetworkAndSendTest(this.wifiAdapter, "MikieArduinoWifi", "1234567890");
         }
 
 
@@ -102,12 +94,8 @@ namespace Wifi.UWP.Core {
                         SignalStrengthInBars = net.SignalBars,
                         UpTime = net.Uptime,
                     };
-
                     this.DumpNetworkInfo(netInfo);
                     info.Networks.Add(netInfo);
-
-
-
                 }
             }
             this.log.Info("ScanForNetworks", () => string.Format("Found {0} networks", info.Networks.Count));
@@ -137,34 +125,26 @@ namespace Wifi.UWP.Core {
 
 
 
-        private async Task ConnectToNetwork(WiFiAdapter adapter, string ssid, string password) {
-            await adapter.ScanAsync();
+        private async Task<WifiErrorCode> ConnectToNetwork(WiFiAdapter adapter, string ssid, string password) {
+            // Should already be scanned
             WiFiNetworkReport report = adapter.NetworkReport;
-
-            this.log.Info("DisplayNetworkReport", () =>
-                string.Format("Timestamp {0} Count {1}", report.Timestamp, report.AvailableNetworks.Count));
+            WifiErrorCode returnValue = WifiErrorCode.NetworkNotAvailable;
             foreach (var net in report.AvailableNetworks) {
-                this.log.Info("DisplayNetworkReport", () =>
-                    string.Format(
-                        "SSID:{0}",
-                        net.Ssid));
-
                 if (net.Ssid == ssid) {
+                    // TODO Will need to have multiple types of authentication
                     PasswordCredential cred = new PasswordCredential() {
                         Password = password
                     };
-
-                   var result = await adapter.ConnectAsync(net, WiFiReconnectionKind.Automatic, cred);
-                    this.log.Info("DisplayNetworkReport", () =>
-                        string.Format("Connection result {0}", result.ConnectionStatus));
-
-
-
-
+                    returnValue = (await adapter.ConnectAsync(net, WiFiReconnectionKind.Automatic, cred)).ConnectionStatus.Convert();
+                    break;
                 }
-
             }
+            if (returnValue != WifiErrorCode.Success) {
+                this.OnError?.Invoke(this, new WifiError(returnValue));
+            }
+            return returnValue;
         }
+
 
 
         /// <summary>Working hack function to connect to device, open socket and send data string
@@ -195,6 +175,25 @@ namespace Wifi.UWP.Core {
                         try {
                             //StreamSocket ss = new StreamSocket();
 
+                            ConnectionProfile profile = await this.wifiAdapter.NetworkAdapter.GetConnectedProfileAsync();
+                            //connectProfile.ProfileName
+                            this.log.Info("ConnectToNetworkAndSendTest", () => 
+                                string.Format("Connected to:{0}", profile.ProfileName));
+                            if (profile.IsWlanConnectionProfile) {
+                                // Only get the SSID - no socket information
+                                //profile.WlanConnectionProfileDetails.GetConnectedSsid();
+                            }
+
+
+                            //foreach (var ep in NetworkInformation.GetInternetConnectionProfile) {
+
+                            //}
+
+
+                            //foreach (var ids in NetworkInformation.GetLanIdentifiers()) {
+                            //foreach (var prf in NetworkInformation.GetConnectionProfiles()) {
+
+
                             using (StreamSocket ss = new StreamSocket()) {
                                 HostName host = new HostName("192.168.4.1"); // IP of the Arduino WIFI
 
@@ -206,7 +205,27 @@ namespace Wifi.UWP.Core {
                                 this.log.Info("ConnectToNetworkAndSendTest", () => string.Format("Connected to socket Local {0}:{1} Remote {2}:{3} - {4}",
                                     i.LocalAddress, i.LocalPort,
                                     i.RemoteHostName, i.RemotePort, i.RemoteServiceName));
+                                /*
+                                // This works
+                                Stream outStream = ss.OutputStream.AsStreamForWrite();
+                                StreamWriter writer = new StreamWriter(outStream);
+                                string data = "This is test from UWP";
+                                this.log.Info("ConnectToNetworkAndSendTest", "Sending");
+                                //await writer.WriteLineAsync(data);
+                                var arr = data.ToAsciiByteArray();
+                                //await writer.WriteAsync(arr, 0, arr.Length);
+                                await outStream.WriteAsync(arr, 0, arr.Length);
+                                this.log.Info("ConnectToNetworkAndSendTest", "Flushing");
+                                await outStream.FlushAsync();
+                                this.log.Info("ConnectToNetworkAndSendTest", "Sending");
+                                await outStream.WriteAsync(arr, 0, arr.Length);
+                                this.log.Info("ConnectToNetworkAndSendTest", "Flushing");
+                                await outStream.FlushAsync();
+                                // Hmm do not seem to need the writer
+                                */
 
+
+                                /*
                                 Stream outStream = ss.OutputStream.AsStreamForWrite();
                                 StreamWriter writer = new StreamWriter(outStream);
                                 string data = "This is test from UWP";
@@ -215,6 +234,31 @@ namespace Wifi.UWP.Core {
                                 this.log.Info("ConnectToNetworkAndSendTest", "Flushing");
                                 await writer.FlushAsync();
                                 this.log.Info("ConnectToNetworkAndSendTest", "Finished flush");
+                                this.log.Info("ConnectToNetworkAndSendTest", "Sending");
+                                await writer.WriteLineAsync(data);
+                                this.log.Info("ConnectToNetworkAndSendTest", "Flushing");
+                                await writer.FlushAsync();
+                                this.log.Info("ConnectToNetworkAndSendTest", "Finished flush");
+                                */
+
+                                // This also works - 10 seconds for first, second instant
+                                // The time is due to establishing the socket first time. Will go to the connection routine
+                                this.writer = new DataWriter(ss.OutputStream);
+                                string data = "This is test from UWP";
+                                this.log.Info("ConnectToNetworkAndSendTest", "Sending");
+                                this.writer.UnicodeEncoding = UnicodeEncoding.Utf8;
+                                this.writer.WriteBytes(data.ToAsciiByteArray());
+                                this.writer.WriteByte(0x0A);
+                                //this.writer.WriteString(data);
+                                await ss.OutputStream.WriteAsync(this.writer.DetachBuffer());
+                                this.log.Info("ConnectToNetworkAndSendTest", "Finished sending");
+                                //this.writer.WriteString(data);
+                                this.writer.WriteBytes(data.ToAsciiByteArray());
+                                this.writer.WriteByte(0x0A);
+                                await ss.OutputStream.WriteAsync(this.writer.DetachBuffer());
+                                this.log.Info("ConnectToNetworkAndSendTest", "Finished sending");
+
+
                             }
                         }
                         catch (Exception e) {
@@ -228,9 +272,6 @@ namespace Wifi.UWP.Core {
                 }
             }
         }
-
-
-
 
         #region Debug dump methods
 
@@ -259,6 +300,32 @@ namespace Wifi.UWP.Core {
         }
 
         #endregion
+
+
+        //private async Task ConnectToNetwork(WiFiAdapter adapter, string ssid, string password) {
+        //    await adapter.ScanAsync();
+        //    WiFiNetworkReport report = adapter.NetworkReport;
+
+        //    this.log.Info("DisplayNetworkReport", () =>
+        //        string.Format("Timestamp {0} Count {1}", report.Timestamp, report.AvailableNetworks.Count));
+        //    foreach (var net in report.AvailableNetworks) {
+        //        this.log.Info("DisplayNetworkReport", () =>
+        //            string.Format(
+        //                "SSID:{0}",
+        //                net.Ssid));
+        //        if (net.Ssid == ssid) {
+        //            PasswordCredential cred = new PasswordCredential() {
+        //                Password = password
+        //            };
+
+        //            var result = await adapter.ConnectAsync(net, WiFiReconnectionKind.Automatic, cred);
+        //            this.log.Info("DisplayNetworkReport", () =>
+        //                string.Format("Connection result {0}", result.ConnectionStatus));
+        //        }
+        //    }
+        //}
+
+
 
     }
 }

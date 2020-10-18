@@ -158,6 +158,7 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
+          "CommunicationStack.Net": "1.0.0",
           "VariousUtils.Net": "1.0.0"
         },
         "compile": {

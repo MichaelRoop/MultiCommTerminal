@@ -120,6 +120,7 @@
       },
       "WifiCommon.Net/1.0.0": {
         "dependencies": {
+          "CommunicationStack.Net": "1.0.0",
           "VariousUtils.Net": "1.0.0"
         },
         "runtime": {

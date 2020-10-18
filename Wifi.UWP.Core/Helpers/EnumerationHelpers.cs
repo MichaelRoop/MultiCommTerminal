@@ -33,5 +33,21 @@ namespace Wifi.UWP.Core.Helpers {
                 EnumHelpers.ToInt(encryptionType));
         }
 
+
+        public static WifiErrorCode Convert (this WiFiConnectionStatus connectionStatus) {
+            switch (connectionStatus) {
+                case WiFiConnectionStatus.UnspecifiedFailure: return WifiErrorCode.Unknown;
+                case WiFiConnectionStatus.Success: return WifiErrorCode.Success;
+                case WiFiConnectionStatus.AccessRevoked: return WifiErrorCode.AccessRevoked;
+                case WiFiConnectionStatus.InvalidCredential: return WifiErrorCode.InvalidCredentials;
+                case WiFiConnectionStatus.NetworkNotAvailable: return WifiErrorCode.NetworkNotAvailable;
+                case WiFiConnectionStatus.Timeout: return WifiErrorCode.Timeout;
+                case WiFiConnectionStatus.UnsupportedAuthenticationProtocol: return WifiErrorCode.UnsupportedAuthenticationProtocol;
+                default: return WifiErrorCode.Unknown;
+            }
+        }
+
+
+
     }
 }

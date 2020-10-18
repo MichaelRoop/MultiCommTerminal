@@ -772,6 +772,9 @@
         "frameworks": {
           "netstandard2.1": {
             "projectReferences": {
+              "D:\\Dev\\SharedNetLibs\\CommunicationStack.Net\\CommunicationStack.Net.csproj": {
+                "projectPath": "D:\\Dev\\SharedNetLibs\\CommunicationStack.Net\\CommunicationStack.Net.csproj"
+              },
               "D:\\Dev\\SharedNetLibs\\VariousUtils\\VariousUtils.Net.csproj": {
                 "projectPath": "D:\\Dev\\SharedNetLibs\\VariousUtils\\VariousUtils.Net.csproj"
               }
