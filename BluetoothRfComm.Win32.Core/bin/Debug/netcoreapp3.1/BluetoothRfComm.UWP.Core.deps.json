@@ -9,6 +9,7 @@
       "BluetoothRfComm.UWP.Core/1.0.0": {
         "dependencies": {
           "BluetoothCommon.Net": "1.0.0",
+          "Communications.UWP.Core": "1.0.0",
           "Microsoft.Windows.SDK.Contracts": "10.0.19041.1"
         },
         "runtime": {
@@ -44,6 +45,15 @@
       "ChkUtils.Net/1.0.0": {
         "runtime": {
           "ChkUtils.Net.dll": {}
+        }
+      },
+      "Communications.UWP.Core/1.0.0": {
+        "dependencies": {
+          "CommunicationStack.Net": "1.0.0",
+          "Microsoft.Windows.SDK.Contracts": "10.0.19041.1"
+        },
+        "runtime": {
+          "Communications.UWP.Core.dll": {}
         }
       },
       "CommunicationStack.Net/1.0.0": {
@@ -113,6 +123,11 @@
       "sha512": ""
     },
     "ChkUtils.Net/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Communications.UWP.Core/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

@@ -2,6 +2,8 @@
 using BluetoothLE.Net.interfaces;
 using BluetoothLE.UWP.Core;
 using BluetoothRfComm.UWP.Core;
+using Communications.UWP.Core.MsgPumps;
+using CommunicationStack.Net.interfaces;
 using DependencyInjectorFactory.Net;
 using DependencyInjectorFactory.Net.interfaces;
 using IconFactory.Net.interfaces;
@@ -40,6 +42,8 @@ namespace MultiCommTerminal.DependencyInjection {
             this.SingletonCreators.Add(
                 typeof(IWifiInterface), new ObjSingletonCreator(() => new WifiImpleUwp()));
 
+            this.InstanceCreators.Add(
+                typeof(IMsgPump<SocketMsgPumpConnectData>), new ObjInstanceCreator(() => new SocketMsgPump()));
 
             //BluetoothLEImplWin32Core
 

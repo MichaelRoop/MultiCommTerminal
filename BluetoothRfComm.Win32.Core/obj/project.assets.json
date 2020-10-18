@@ -170,6 +170,20 @@
           "bin/placeholder/ChkUtils.Net.dll": {}
         }
       },
+      "Communications.UWP.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "CommunicationStack.Net": "1.0.0",
+          "Microsoft.Windows.SDK.Contracts": "10.0.19041.1"
+        },
+        "compile": {
+          "bin/placeholder/Communications.UWP.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Communications.UWP.Core.dll": {}
+        }
+      },
       "CommunicationStack.Net/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
@@ -566,6 +580,11 @@
       "path": "../../SharedNetLibs/ChkUtils.Net/ChkUtils.Net.csproj",
       "msbuildProject": "../../SharedNetLibs/ChkUtils.Net/ChkUtils.Net.csproj"
     },
+    "Communications.UWP.Core/1.0.0": {
+      "type": "project",
+      "path": "../../SharedNetCoreLibs/Communications.UWP.Core/Communications.UWP.Core.csproj",
+      "msbuildProject": "../../SharedNetCoreLibs/Communications.UWP.Core/Communications.UWP.Core.csproj"
+    },
     "CommunicationStack.Net/1.0.0": {
       "type": "project",
       "path": "../../SharedNetLibs/CommunicationStack.Net/CommunicationStack.Net.csproj",
@@ -585,6 +604,7 @@
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
       "BluetoothCommon.Net >= 1.0.0",
+      "Communications.UWP.Core >= 1.0.0",
       "Microsoft.Windows.SDK.Contracts >= 10.0.19041.1"
     ]
   },
@@ -618,6 +638,9 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
+            "D:\\Dev\\SharedNetCoreLibs\\Communications.UWP.Core\\Communications.UWP.Core.csproj": {
+              "projectPath": "D:\\Dev\\SharedNetCoreLibs\\Communications.UWP.Core\\Communications.UWP.Core.csproj"
+            },
             "D:\\Dev\\SharedNetLibs\\BluetoothCommon.Net\\BluetoothCommon.Net.csproj": {
               "projectPath": "D:\\Dev\\SharedNetLibs\\BluetoothCommon.Net\\BluetoothCommon.Net.csproj"
             }

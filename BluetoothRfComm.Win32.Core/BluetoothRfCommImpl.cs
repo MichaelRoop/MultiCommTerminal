@@ -2,6 +2,9 @@
 
 using BluetoothCommon.Net;
 using BluetoothCommon.Net.interfaces;
+using Communications.UWP.Core.MsgPumps;
+using CommunicationStack.Net.DataModels;
+using CommunicationStack.Net.interfaces;
 using LogUtils.Net;
 using System;
 using System.Collections.Generic;
@@ -48,13 +51,15 @@ namespace BluetoothRfComm.UWP.Core {
         private readonly string KEY_CONTAINER_ID = "System.Devices.Aep.ContainerId";
         private readonly string KEY_SIGNAL_STRENGTH = "System.Devices.Aep.SignalStrength";
 
-        private StreamSocket socket = null;
-        private DataWriter writer = null;
-        private DataReader reader = null;
-        private CancellationTokenSource readCancelationToken = null;
-        private bool continueReading = false;
+        //private StreamSocket socket = null;
+        //private DataWriter writer = null;
+        //private DataReader reader = null;
+        //private CancellationTokenSource readCancelationToken = null;
+        //private bool continueReading = false;
         private static uint READ_BUFF_MAX_SIZE = 256;
-        private ManualResetEvent readFinishedEvent = new ManualResetEvent(false);
+        //private ManualResetEvent readFinishedEvent = new ManualResetEvent(false);
+
+        IMsgPump<SocketMsgPumpConnectData> msgPump = new SocketMsgPump();
 
         #endregion
 
@@ -80,6 +85,17 @@ namespace BluetoothRfComm.UWP.Core {
         #region Constructors
 
         public BluetoothRfCommUwpCore() {
+            this.msgPump.ConnectResultEvent += this.MsgPump_ConnectResultEvent;
+            this.msgPump.MsgReceivedEvent += this.MsgPump_MsgReceivedEventHandler;
+        }
+
+
+        private void MsgPump_ConnectResultEvent(object sender, MsgPumpConnectResults results) {
+            //throw new NotImplementedException();
+            this.Connected = results.IsSuccessful;
+
+            this.ConnectionCompleted?.Invoke(this, results.IsSuccessful);
+
         }
 
         #endregion

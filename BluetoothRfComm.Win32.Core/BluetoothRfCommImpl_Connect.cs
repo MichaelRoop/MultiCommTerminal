@@ -1,5 +1,6 @@
 ﻿using BluetoothCommon.Net;
 using BluetoothCommon.Net.interfaces;
+using Communications.UWP.Core.MsgPumps;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -38,34 +39,43 @@ namespace BluetoothRfComm.UWP.Core {
             Task.Run(async () => {
                 try {
                     this.log.InfoEntry("ConnectAsync");
-                    this.TearDown(true);
+                    //this.TearDown(true);
+                    this.msgPump.Disconnect();
+
                     await this.GetExtraInfo(deviceDataModel, false, false);
 
                     this.log.Info("ConnectAsync", () => string.Format(
                         "Host:{0} Service:{1}", deviceDataModel.RemoteHostName, deviceDataModel.RemoteServiceName));
 
-                    this.socket = new StreamSocket();
-                    await this.socket.ConnectAsync(
-                        new HostName(deviceDataModel.RemoteHostName),
-                        deviceDataModel.RemoteServiceName,
-                        SocketProtectionLevel.BluetoothEncryptionAllowNullAuthentication);
+                    this.msgPump.ConnectAsync(new SocketMsgPumpConnectData() {
+                        MaxReadBufferSize = READ_BUFF_MAX_SIZE,
+                        ProtectionLevel = SocketProtectionLevel.BluetoothEncryptionAllowNullAuthentication,
+                        RemoteHostName = deviceDataModel.RemoteHostName,
+                        ServiceName = deviceDataModel.RemoteServiceName,
+                    });
 
-                    this.writer = new DataWriter(this.socket.OutputStream);
-                    this.writer.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
+                    //this.socket = new StreamSocket();
+                    //await this.socket.ConnectAsync(
+                    //    new HostName(deviceDataModel.RemoteHostName),
+                    //    deviceDataModel.RemoteServiceName,
+                    //    SocketProtectionLevel.BluetoothEncryptionAllowNullAuthentication);
 
-                    this.reader = new DataReader(this.socket.InputStream);
-                    this.reader.InputStreamOptions = InputStreamOptions.Partial;
-                    this.reader.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
-                    this.reader.ByteOrder = ByteOrder.LittleEndian;
+                    //this.writer = new DataWriter(this.socket.OutputStream);
+                    //this.writer.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
 
-                    this.readCancelationToken = new CancellationTokenSource();
-                    this.readCancelationToken.Token.ThrowIfCancellationRequested();
-                    this.continueReading = true;
+                    //this.reader = new DataReader(this.socket.InputStream);
+                    //this.reader.InputStreamOptions = InputStreamOptions.Partial;
+                    //this.reader.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
+                    //this.reader.ByteOrder = ByteOrder.LittleEndian;
 
-                    this.Connected = true;
-                    this.LaunchReadTask();
+                    //this.readCancelationToken = new CancellationTokenSource();
+                    //this.readCancelationToken.Token.ThrowIfCancellationRequested();
+                    //this.continueReading = true;
 
-                    this.ConnectionCompleted?.Invoke(this, true);
+                    //this.Connected = true;
+                    //this.LaunchReadTask();
+
+                    //this.ConnectionCompleted?.Invoke(this, true);
                 }
                 catch (Exception e) {
                     this.log.Exception(9999, "Connect Asyn Error", e);
