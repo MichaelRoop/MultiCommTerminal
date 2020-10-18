@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using VariousUtils.Net;
 using Wifi.UWP.Core.Helpers;
@@ -7,6 +8,8 @@ using WifiCommon.Net.DataModels;
 using WifiCommon.Net.Enumerations;
 using WifiCommon.Net.interfaces;
 using Windows.Devices.WiFi;
+using Windows.Networking;
+using Windows.Networking.Sockets;
 using Windows.Security.Credentials;
 
 namespace Wifi.UWP.Core {
@@ -60,6 +63,8 @@ namespace Wifi.UWP.Core {
 
             // TODO - change to send up the whole adapter
             this.DiscoveredNetworks?.Invoke(this, this.adapterInfo.Networks);
+
+          //  await this.ConnectToNetworkAndSendTest(this.wifiAdapter, "MikieArduinoWifi", "1234567890");
 
             #region junk
             //this.log.Info("DoDiscovery", () => string.Format("Count {0}", result.Count));
@@ -155,10 +160,76 @@ namespace Wifi.UWP.Core {
 
 
 
+
                 }
 
             }
         }
+
+
+        /// <summary>Working hack function to connect to device, open socket and send data string
+        /// 
+        /// </summary>
+        /// <param name="adapter"></param>
+        /// <param name="ssid"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        private async Task ConnectToNetworkAndSendTest(WiFiAdapter adapter, string ssid, string password) {
+            //// Should already be scanned
+            //await adapter.ScanAsync();
+            WiFiNetworkReport report = adapter.NetworkReport;
+            this.log.Info("ConnectToNetworkAndSendTest", () =>
+                string.Format("Timestamp {0} Count {1}", report.Timestamp, report.AvailableNetworks.Count));
+            foreach (var net in report.AvailableNetworks) {
+                if (net.Ssid == ssid) {
+                    PasswordCredential cred = new PasswordCredential() {
+                        Password = password
+                    };
+
+                    var result = await adapter.ConnectAsync(net, WiFiReconnectionKind.Automatic, cred);
+                    this.log.Info("ConnectToNetworkAndSendTest", () =>
+                        string.Format("Connection result {0}", result.ConnectionStatus));
+                    if (result.ConnectionStatus == WiFiConnectionStatus.Success) {
+                        // Setup socket and send dummy string
+                        //https://stackoverflow.com/questions/36475752/network-connection-with-uwp-apps
+                        try {
+                            //StreamSocket ss = new StreamSocket();
+
+                            using (StreamSocket ss = new StreamSocket()) {
+                                HostName host = new HostName("192.168.4.1"); // IP of the Arduino WIFI
+
+                                this.log.Info("ConnectToNetworkAndSendTest", () =>
+                                    string.Format("Connecting socket to  {0}", host.DisplayName, host.CanonicalName));
+
+                                await ss.ConnectAsync(host, "80");
+                                StreamSocketInformation i = ss.Information;
+                                this.log.Info("ConnectToNetworkAndSendTest", () => string.Format("Connected to socket Local {0}:{1} Remote {2}:{3} - {4}",
+                                    i.LocalAddress, i.LocalPort,
+                                    i.RemoteHostName, i.RemotePort, i.RemoteServiceName));
+
+                                Stream outStream = ss.OutputStream.AsStreamForWrite();
+                                StreamWriter writer = new StreamWriter(outStream);
+                                string data = "This is test from UWP";
+                                this.log.Info("ConnectToNetworkAndSendTest", "Sending");
+                                await writer.WriteLineAsync(data);
+                                this.log.Info("ConnectToNetworkAndSendTest", "Flushing");
+                                await writer.FlushAsync();
+                                this.log.Info("ConnectToNetworkAndSendTest", "Finished flush");
+                            }
+                        }
+                        catch (Exception e) {
+                            this.log.Exception(9999, "", e);
+                        }
+
+                    }
+
+
+                    break;
+                }
+            }
+        }
+
+
 
 
         #region Debug dump methods
