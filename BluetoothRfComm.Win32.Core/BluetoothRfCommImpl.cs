@@ -8,13 +8,13 @@ using CommunicationStack.Net.interfaces;
 using LogUtils.Net;
 using System;
 using System.Collections.Generic;
-using System.Threading;
+using System.Threading.Tasks;
+using VariousUtils.Net;
 using Windows.Networking.Sockets;
-using Windows.Storage.Streams;
 
 namespace BluetoothRfComm.UWP.Core {
 
-
+    #region OLD DATA NOT SURE IF IT APPLIES - SEE BELOW
     // STEPS TO USE UWP libs in Win32
     // Windows.Foundation.UniversalApiContract
     // C:\Program Files(x86)\Windows Kits\10\References\10.0.18362.0\Windows.Foundation.UniversalApiContract\8.0.0.0\Windows.Foundation.UniversalApiContract.winmd
@@ -33,13 +33,11 @@ namespace BluetoothRfComm.UWP.Core {
 
     // Add to manifest
     //https://stackoverflow.com/questions/38845320/uwp-serialdevice-fromidasync-throws-element-not-found-exception-from-hresult
+    #endregion
 
-
-
-    // UPDATE: It looks like you only have to add the package:
+    // *** UPDATE: Looks like you only have to add the NuGet package:
     // Microsoft.Windows.SDK.Contracts(nn.n.nnnn.n)
-    // You do this through the NuGet package manager. Not sure if you need to add to manifest. If so, would only be in main App
-
+    //Not sure if you need to add to manifest. If so, would only be in main App
 
     public partial class BluetoothRfCommUwpCore : IBTInterface {
 
@@ -48,17 +46,9 @@ namespace BluetoothRfComm.UWP.Core {
         private ClassLog log = new ClassLog("BluetoothRfCommImpl");
         private readonly string KEY_CAN_PAIR = "System.Devices.Aep.CanPair";
         private readonly string KEY_IS_PAIRED = "System.Devices.Aep.IsPaired";
-        private readonly string KEY_CONTAINER_ID = "System.Devices.Aep.ContainerId";
+        //private readonly string KEY_CONTAINER_ID = "System.Devices.Aep.ContainerId";
         private readonly string KEY_SIGNAL_STRENGTH = "System.Devices.Aep.SignalStrength";
-
-        //private StreamSocket socket = null;
-        //private DataWriter writer = null;
-        //private DataReader reader = null;
-        //private CancellationTokenSource readCancelationToken = null;
-        //private bool continueReading = false;
         private static uint READ_BUFF_MAX_SIZE = 256;
-        //private ManualResetEvent readFinishedEvent = new ManualResetEvent(false);
-
         IMsgPump<SocketMsgPumpConnectData> msgPump = new SocketMsgPump();
 
         #endregion
@@ -89,18 +79,73 @@ namespace BluetoothRfComm.UWP.Core {
             this.msgPump.MsgReceivedEvent += this.MsgPump_MsgReceivedEventHandler;
         }
 
+        #endregion
 
-        private void MsgPump_ConnectResultEvent(object sender, MsgPumpConnectResults results) {
-            //throw new NotImplementedException();
-            this.Connected = results.IsSuccessful;
+        #region IBTInterface Methods
 
-            this.ConnectionCompleted?.Invoke(this, results.IsSuccessful);
+        /// <summary>Run asynchronous connection where ConnectionCompleted is raised on completion</summary>
+        /// <param name="deviceDataModel">The data model with information on the device</param>
+        public void ConnectAsync(BTDeviceInfo deviceDataModel) {
+            Task.Run(async () => {
+                try {
+                    this.log.InfoEntry("ConnectAsync");
+                    this.msgPump.Disconnect();
 
+                    await this.GetExtraInfo(deviceDataModel, false, false);
+
+                    this.log.Info("ConnectAsync", () => string.Format(
+                        "Host:{0} Service:{1}", deviceDataModel.RemoteHostName, deviceDataModel.RemoteServiceName));
+
+                    this.msgPump.ConnectAsync(new SocketMsgPumpConnectData() {
+                        MaxReadBufferSize = READ_BUFF_MAX_SIZE,
+                        ProtectionLevel = SocketProtectionLevel.BluetoothEncryptionAllowNullAuthentication,
+                        RemoteHostName = deviceDataModel.RemoteHostName,
+                        ServiceName = deviceDataModel.RemoteServiceName,
+                    });
+                }
+                catch (Exception e) {
+                    this.log.Exception(9999, "Connect Asyn Error", e);
+                    this.ConnectionCompleted?.Invoke(this, false);
+                }
+            });
+        }
+
+
+        public void Disconnect() {
+            this.msgPump.Disconnect();
+            // TODO - check if BT has some things to tear down
+        }
+
+        #endregion
+
+        #region ICommStackChannel methods
+
+        /// <summary>Write message from ICommStackChannel interface</summary>
+        /// <param name="msg">The message to write out</param>
+        /// <returns>always true</returns>
+        public bool SendOutMsg(byte[] msg) {
+            this.msgPump.WriteAsync(msg);
+            return true;
         }
 
         #endregion
 
         #region Private tools
+
+        /// <summary>Handle the msg pump connect result</summary>
+        private void MsgPump_ConnectResultEvent(object sender, MsgPumpConnectResults results) {
+            this.Connected = results.IsSuccessful;
+            this.ConnectionCompleted?.Invoke(this, results.IsSuccessful);
+        }
+
+
+        /// <summary>Handle the msg pump incoming message</summary>
+        private void MsgPump_MsgReceivedEventHandler(object sender, byte[] e) {
+            this.log.Info("BtWrapper_MsgReceivedEvent", () =>
+                string.Format("Received:{0}", e.ToFormatedByteString()));
+            this.MsgReceivedEvent?.Invoke(sender, e);
+        }
+
 
         /// <summary>Get the boolean value from a Device Information property</summary>
         /// <param name="property">The device information property</param>
