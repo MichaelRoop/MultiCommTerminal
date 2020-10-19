@@ -224,6 +224,8 @@ namespace MultiCommWrapper.Net.interfaces {
         event EventHandler<WifiError> OnWifiError;
         event EventHandler<MsgPumpConnectResults> OnWifiConnectionAttemptCompleted;
         event EventHandler<string> Wifi_BytesReceived;
+        /// <summary>Raised if there is no password, host name or service name in the connection data model</summary>
+        event EventHandler<WifiCredentials> CredentialsRequestedEvent;
 
         void WifiDiscoverAsync();
 

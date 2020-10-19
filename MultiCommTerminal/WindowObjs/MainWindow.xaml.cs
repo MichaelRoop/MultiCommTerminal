@@ -523,6 +523,8 @@ namespace MultiCommTerminal.WindowObjs {
         private void Wrapper_OnWifiError(object sender, WifiError e) {
             this.Dispatcher.Invoke(() => {
                 this.gridWait.Visibility = Visibility.Collapsed;
+                string err = string.Format("{0} ({1})", e.Code.ToString(), e.ExtraInfo.Length == 0 ? "--" : e.ExtraInfo);
+                App.ShowMsg(err);
             });
         }
 

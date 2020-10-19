@@ -77,6 +77,10 @@ namespace Wifi.UWP.Core {
 
         public event EventHandler<MsgPumpConnectResults> OnWifiConnectionAttemptCompleted;
 
+
+        public event EventHandler<WifiCredentials> CredentialsRequestedEvent;
+
+
         #endregion
 
         #region IWifiInterface methods

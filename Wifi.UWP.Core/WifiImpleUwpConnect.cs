@@ -1,4 +1,6 @@
-﻿using Communications.UWP.Core.MsgPumps;
+﻿using ChkUtils.Net;
+using ChkUtils.Net.ErrObjects;
+using Communications.UWP.Core.MsgPumps;
 using System;
 using System.Threading.Tasks;
 using Wifi.UWP.Core.Helpers;
@@ -21,10 +23,6 @@ namespace Wifi.UWP.Core {
                 try {
                     this.log.InfoEntry("ConnectAsync");
                     this.msgPump.Disconnect();
-
-                    // TODO - Renmove Hack
-                    dataModel.RemoteHostName = "192.168.4.1"; // IP of Arduino socket
-                    dataModel.RemoteServiceName = "80"; // Arduino HTTP port 80
                     this.log.Info("ConnectAsync", () => string.Format(
                         "Host:{0} Service:{1}", dataModel.RemoteHostName, dataModel.RemoteServiceName));
 
@@ -32,9 +30,7 @@ namespace Wifi.UWP.Core {
                     if (net != null) {
                         // Connect WIFI level
                         // TODO Need to establish WIFI connection first with credentials
-                        // TODO - Hack need to establish where to get password
                         // TODO How to establish kind of authentication
-                        string pwd = "1234567890";
 
                         switch (dataModel.AuthenticationType) {
                             // Arduino authentication - requires password but no user name
@@ -43,8 +39,8 @@ namespace Wifi.UWP.Core {
                         }
 
                         PasswordCredential cred = new PasswordCredential() {
-                            Password = pwd,
-                            //UserName = "",
+                            Password = dataModel.Password,
+                            //UserName = dataModel.UserName, // this blows up
                         };
                         WiFiConnectionResult result = await this.wifiAdapter.ConnectAsync(net, WiFiReconnectionKind.Automatic, cred);
                         if (result.ConnectionStatus == WiFiConnectionStatus.Success) {
@@ -72,6 +68,9 @@ namespace Wifi.UWP.Core {
                         }
                     }
                 }
+                catch (ErrReportException erE) {
+                    this.OnError?.Invoke(this, new WifiError(WifiErrorCode.Unknown) { ExtraInfo = erE.Report.Msg });
+                }
                 catch (Exception e) {
                     this.log.Exception(9999, "Connect Asyn Error", e);
                     this.OnError?.Invoke(this, new WifiError(WifiErrorCode.Unknown));
@@ -90,6 +89,15 @@ namespace Wifi.UWP.Core {
             this.OnError(this, new WifiError(WifiErrorCode.NetworkNotAvailable));
             return null;
         }
+
+
+
+
+
+
+
+
+
 
 
     }
