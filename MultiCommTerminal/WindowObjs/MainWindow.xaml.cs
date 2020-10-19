@@ -18,6 +18,7 @@ using System.Windows.Media;
 using WpfHelperClasses.Core;
 using MultiCommTerminal.WPF_Helpers;
 using WifiCommon.Net.DataModels;
+using WifiCommon.Net.Enumerations;
 
 namespace MultiCommTerminal.WindowObjs {
 
@@ -525,15 +526,25 @@ namespace MultiCommTerminal.WindowObjs {
         private void Wrapper_OnWifiError(object sender, WifiError e) {
             this.Dispatcher.Invoke(() => {
                 this.gridWait.Visibility = Visibility.Collapsed;
-                string err = string.Format("{0} ({1})", e.Code.ToString(), e.ExtraInfo.Length == 0 ? "--" : e.ExtraInfo);
-                App.ShowMsg(err);
+                if (e.Code != WifiErrorCode.UserCanceled) {
+                    string err = string.Format("{0} ({1})", e.Code.ToString(), e.ExtraInfo.Length == 0 ? "--" : e.ExtraInfo);
+                    App.ShowMsg(err);
+                }
             });
         }
 
         private void Wifi_CredentialsRequestedEventHandler(object sender, WifiCredentials cred) {
-            cred.RemoteHostName = "192.168.4.1";
-            cred.RemoteServiceName = "80";
-            cred.WifiPassword = "1234567890";
+
+            var result = MsgBoxWifiCred.ShowBox(this, "CREDS");
+            cred.IsUserCanceled = !result.IsOk;
+            cred.RemoteHostName = result.HostName;
+            cred.RemoteServiceName = result.ServiceName;
+            cred.WifiPassword = result.Password;
+
+
+            //cred.RemoteHostName = "192.168.4.1";
+            //cred.RemoteServiceName = "80";
+            //cred.WifiPassword = "1234567890";
 
             // TODO - implement dialog
 

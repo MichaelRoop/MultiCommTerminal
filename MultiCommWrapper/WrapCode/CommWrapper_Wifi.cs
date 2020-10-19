@@ -13,11 +13,17 @@ namespace MultiCommWrapper.Net.WrapCode {
 
     public partial class CommWrapper : ICommWrapper {
 
+        #region ICommWrapper events
+
         public event EventHandler<List<WifiNetworkInfo>> DiscoveredNetworks;
         public event EventHandler<WifiError> OnWifiError;
         public event EventHandler<MsgPumpConnectResults> OnWifiConnectionAttemptCompleted;
         public event EventHandler<string> Wifi_BytesReceived;
         public event EventHandler<WifiCredentials> CredentialsRequestedEvent;
+
+        #endregion
+
+        #region ICommWrapper methods
 
         public void WifiDiscoverAsync() {
             this.wifi.DiscoverWifiAdaptersAsync();
@@ -30,7 +36,11 @@ namespace MultiCommWrapper.Net.WrapCode {
 
             // TODO use a try catch and change signature to have an error delegate return?
             try {
-                if (this.WifiGetConnectCredentials(dataModel)) {
+                WifiErrorCode result = this.WifiGetConnectCredentials(dataModel);
+                if (result != WifiErrorCode.Success) {
+                    this.OnWifiError?.Invoke(this, new WifiError(result));
+                }
+                else {
                     this.wifi.ConnectAsync(dataModel);
                 }
             }
@@ -46,15 +56,17 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         }
 
+
         public void WifiDisconect() {
             this.wifi.Disconnect();
         }
 
 
         public void WifiSend(string msg) {
-            //this.wifi.SendOutMsg()
             this.wifiStack.SendToComm(msg);
         }
+
+        #endregion
 
 
         private void WifiInit() {
@@ -69,32 +81,41 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
+        private void WifiTeardown() {
+            this.wifi.DiscoveredNetworks -= this.Wifi_DiscoveredNetworksHandler;
+            this.wifi.OnError -= this.Wifi_OnErrorHandler;
+            this.wifi.OnWifiConnectionAttemptCompleted -= this.Wifi_OnWifiConnectionAttemptCompletedHandler;
+            this.wifiStack.MsgReceived -= this.WifiStack_BytesReceivedHander;
+        }
+
+
+        #region Private Connection and credentials
+
         /// <summary>Retrieve credentials if not already stored with data model</summary>
         /// <param name="dataModel">The data on the connection</param>
-        private bool WifiGetConnectCredentials(WifiNetworkInfo dataModel) {
+        private WifiErrorCode WifiGetConnectCredentials(WifiNetworkInfo dataModel) {
+            WifiErrorCode result = WifiErrorCode.Success;
             if (dataModel.RemoteHostName.Trim().Length == 0 ||
                 dataModel.RemoteServiceName.Trim().Length == 0 ||
                 dataModel.Password.Trim().Length == 0) {
 
-                if (this.WifiGetStoredCredentials(dataModel)) {
-                    return true;
+                if (!this.WifiGetStoredCredentials(dataModel)) {
+                    result = this.GetUserCredentials(dataModel);
+                    if (result == WifiErrorCode.Success) {
+                        this.WifiStoreCredentials(dataModel);
+                    }
                 }
-
-                if (this.GetUserCredentials(dataModel) == WifiErrorCode.Success) {
-                    this.WifiStoreCredentials(dataModel);
-                    return true;
-                }
-                return false;
             }
-            return true;
+            return result;
         }
 
 
-
+        /// <summary>Retrieve the stored credentials for this network</summary>
+        /// <param name="dataModel">Data about the network</param>
+        /// <returns>true on success, otherwise false</returns>
         private bool WifiGetStoredCredentials(WifiNetworkInfo dataModel) {
             // TODO - implement. Could wifi ssid or GUID to retrieve a stored WifiCredentials object
             return false;
-
 
             //dataModel.RemoteHostName = "192.168.4.1"; // IP of Arduino socket
             //dataModel.RemoteServiceName = "80"; // Arduino HTTP port 80
@@ -104,30 +125,44 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
+        /// <summary>Store credentials entered by user</summary>
+        /// <param name="dataModel">The network data model with the network credentials</param>
         private void WifiStoreCredentials(WifiNetworkInfo dataModel) {
             // TODO implement - put data in credentials object and store
 
         }
 
 
-        /// <summary>Raise an event to request credentials from user
-        /// 
-        /// </summary>
-        /// <param name="ssid"></param>
-        /// <returns></returns>
+        /// <summary>Raise an event to request credentials from user</summary>
+        /// <param name="dataModel">The network info data model</param>
+        /// <returns>WifiErrorCode.Success on success, otherwise and error</returns>
         private WifiErrorCode GetUserCredentials(WifiNetworkInfo dataModel) {
             // TODO - implement. Could also use the wifi GUID
             WifiCredentials cred = new WifiCredentials();
             WrapErr.ChkVar(this.CredentialsRequestedEvent, 9999, "No subscribers to CredentialsRequestedEvent");
             this.CredentialsRequestedEvent?.Invoke(this, cred);
 
-            // TODO - check on validity of entries
+            if (cred.IsUserCanceled) {
+                return WifiErrorCode.UserCanceled;
+            }
+
+            if (cred.RemoteHostName.Trim().Length == 0) {
+                return WifiErrorCode.EmptyHostName;
+            }
+            else if (cred.RemoteServiceName.Trim().Length == 0) {
+                return WifiErrorCode.EmptyServiceName;
+            }
+            else if (cred.WifiPassword.Trim().Length == 0) {
+                return WifiErrorCode.EmptyPassword;
+            }
+
             dataModel.RemoteHostName = cred.RemoteHostName;
             dataModel.RemoteServiceName = cred.RemoteServiceName;
             dataModel.Password = cred.WifiPassword;
             return WifiErrorCode.Success;
         }
 
+        #endregion
 
         #region Wifi event handlers
 
@@ -135,13 +170,6 @@ namespace MultiCommWrapper.Net.WrapCode {
             string msg = Encoding.ASCII.GetString(e, 0, e.Length);
             this.log.Info("", () => string.Format("Msg In: '{0}'", msg));
             this.Wifi_BytesReceived?.Invoke(sender, msg);
-        }
-
-        private void WifiTeardown() {
-            this.wifi.DiscoveredNetworks -= this.Wifi_DiscoveredNetworksHandler;
-            this.wifi.OnError -= this.Wifi_OnErrorHandler;
-            this.wifi.OnWifiConnectionAttemptCompleted -= this.Wifi_OnWifiConnectionAttemptCompletedHandler;
-            this.wifiStack.MsgReceived -= this.WifiStack_BytesReceivedHander;
         }
 
 
