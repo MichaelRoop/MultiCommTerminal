@@ -154,124 +154,124 @@ namespace Wifi.UWP.Core {
         /// <param name="ssid"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        private async Task ConnectToNetworkAndSendTest(WiFiAdapter adapter, string ssid, string password) {
-            //// Should already be scanned
-            //await adapter.ScanAsync();
-            WiFiNetworkReport report = adapter.NetworkReport;
-            this.log.Info("ConnectToNetworkAndSendTest", () =>
-                string.Format("Timestamp {0} Count {1}", report.Timestamp, report.AvailableNetworks.Count));
-            foreach (var net in report.AvailableNetworks) {
-                if (net.Ssid == ssid) {
-                    PasswordCredential cred = new PasswordCredential() {
-                        Password = password
-                    };
+        //private async Task ConnectToNetworkAndSendTest(WiFiAdapter adapter, string ssid, string password) {
+        //    //// Should already be scanned
+        //    //await adapter.ScanAsync();
+        //    WiFiNetworkReport report = adapter.NetworkReport;
+        //    this.log.Info("ConnectToNetworkAndSendTest", () =>
+        //        string.Format("Timestamp {0} Count {1}", report.Timestamp, report.AvailableNetworks.Count));
+        //    foreach (var net in report.AvailableNetworks) {
+        //        if (net.Ssid == ssid) {
+        //            PasswordCredential cred = new PasswordCredential() {
+        //                Password = password
+        //            };
 
-                    var result = await adapter.ConnectAsync(net, WiFiReconnectionKind.Automatic, cred);
-                    this.log.Info("ConnectToNetworkAndSendTest", () =>
-                        string.Format("Connection result {0}", result.ConnectionStatus));
-                    if (result.ConnectionStatus == WiFiConnectionStatus.Success) {
-                        // Setup socket and send dummy string
-                        //https://stackoverflow.com/questions/36475752/network-connection-with-uwp-apps
-                        try {
-                            //StreamSocket ss = new StreamSocket();
+        //            var result = await adapter.ConnectAsync(net, WiFiReconnectionKind.Automatic, cred);
+        //            this.log.Info("ConnectToNetworkAndSendTest", () =>
+        //                string.Format("Connection result {0}", result.ConnectionStatus));
+        //            if (result.ConnectionStatus == WiFiConnectionStatus.Success) {
+        //                // Setup socket and send dummy string
+        //                //https://stackoverflow.com/questions/36475752/network-connection-with-uwp-apps
+        //                try {
+        //                    //StreamSocket ss = new StreamSocket();
 
-                            ConnectionProfile profile = await this.wifiAdapter.NetworkAdapter.GetConnectedProfileAsync();
-                            //connectProfile.ProfileName
-                            this.log.Info("ConnectToNetworkAndSendTest", () => 
-                                string.Format("Connected to:{0}", profile.ProfileName));
-                            if (profile.IsWlanConnectionProfile) {
-                                // Only get the SSID - no socket information
-                                //profile.WlanConnectionProfileDetails.GetConnectedSsid();
-                            }
-
-
-                            //foreach (var ep in NetworkInformation.GetInternetConnectionProfile) {
-
-                            //}
+        //                    ConnectionProfile profile = await this.wifiAdapter.NetworkAdapter.GetConnectedProfileAsync();
+        //                    //connectProfile.ProfileName
+        //                    this.log.Info("ConnectToNetworkAndSendTest", () => 
+        //                        string.Format("Connected to:{0}", profile.ProfileName));
+        //                    if (profile.IsWlanConnectionProfile) {
+        //                        // Only get the SSID - no socket information
+        //                        //profile.WlanConnectionProfileDetails.GetConnectedSsid();
+        //                    }
 
 
-                            //foreach (var ids in NetworkInformation.GetLanIdentifiers()) {
-                            //foreach (var prf in NetworkInformation.GetConnectionProfiles()) {
+        //                    //foreach (var ep in NetworkInformation.GetInternetConnectionProfile) {
+
+        //                    //}
 
 
-                            using (StreamSocket ss = new StreamSocket()) {
-                                HostName host = new HostName("192.168.4.1"); // IP of the Arduino WIFI
-
-                                this.log.Info("ConnectToNetworkAndSendTest", () =>
-                                    string.Format("Connecting socket to  {0}", host.DisplayName, host.CanonicalName));
-
-                                await ss.ConnectAsync(host, "80");
-                                StreamSocketInformation i = ss.Information;
-                                this.log.Info("ConnectToNetworkAndSendTest", () => string.Format("Connected to socket Local {0}:{1} Remote {2}:{3} - {4}",
-                                    i.LocalAddress, i.LocalPort,
-                                    i.RemoteHostName, i.RemotePort, i.RemoteServiceName));
-                                /*
-                                // This works
-                                Stream outStream = ss.OutputStream.AsStreamForWrite();
-                                StreamWriter writer = new StreamWriter(outStream);
-                                string data = "This is test from UWP";
-                                this.log.Info("ConnectToNetworkAndSendTest", "Sending");
-                                //await writer.WriteLineAsync(data);
-                                var arr = data.ToAsciiByteArray();
-                                //await writer.WriteAsync(arr, 0, arr.Length);
-                                await outStream.WriteAsync(arr, 0, arr.Length);
-                                this.log.Info("ConnectToNetworkAndSendTest", "Flushing");
-                                await outStream.FlushAsync();
-                                this.log.Info("ConnectToNetworkAndSendTest", "Sending");
-                                await outStream.WriteAsync(arr, 0, arr.Length);
-                                this.log.Info("ConnectToNetworkAndSendTest", "Flushing");
-                                await outStream.FlushAsync();
-                                // Hmm do not seem to need the writer
-                                */
+        //                    //foreach (var ids in NetworkInformation.GetLanIdentifiers()) {
+        //                    //foreach (var prf in NetworkInformation.GetConnectionProfiles()) {
 
 
-                                /*
-                                Stream outStream = ss.OutputStream.AsStreamForWrite();
-                                StreamWriter writer = new StreamWriter(outStream);
-                                string data = "This is test from UWP";
-                                this.log.Info("ConnectToNetworkAndSendTest", "Sending");
-                                await writer.WriteLineAsync(data);
-                                this.log.Info("ConnectToNetworkAndSendTest", "Flushing");
-                                await writer.FlushAsync();
-                                this.log.Info("ConnectToNetworkAndSendTest", "Finished flush");
-                                this.log.Info("ConnectToNetworkAndSendTest", "Sending");
-                                await writer.WriteLineAsync(data);
-                                this.log.Info("ConnectToNetworkAndSendTest", "Flushing");
-                                await writer.FlushAsync();
-                                this.log.Info("ConnectToNetworkAndSendTest", "Finished flush");
-                                */
+        //                    using (StreamSocket ss = new StreamSocket()) {
+        //                        HostName host = new HostName("192.168.4.1"); // IP of the Arduino WIFI
 
-                                // This also works - 10 seconds for first, second instant
-                                // The time is due to establishing the socket first time. Will go to the connection routine
-                                this.writer = new DataWriter(ss.OutputStream);
-                                string data = "This is test from UWP";
-                                this.log.Info("ConnectToNetworkAndSendTest", "Sending");
-                                this.writer.UnicodeEncoding = UnicodeEncoding.Utf8;
-                                this.writer.WriteBytes(data.ToAsciiByteArray());
-                                this.writer.WriteByte(0x0A);
-                                //this.writer.WriteString(data);
-                                await ss.OutputStream.WriteAsync(this.writer.DetachBuffer());
-                                this.log.Info("ConnectToNetworkAndSendTest", "Finished sending");
-                                //this.writer.WriteString(data);
-                                this.writer.WriteBytes(data.ToAsciiByteArray());
-                                this.writer.WriteByte(0x0A);
-                                await ss.OutputStream.WriteAsync(this.writer.DetachBuffer());
-                                this.log.Info("ConnectToNetworkAndSendTest", "Finished sending");
+        //                        this.log.Info("ConnectToNetworkAndSendTest", () =>
+        //                            string.Format("Connecting socket to  {0}", host.DisplayName, host.CanonicalName));
+
+        //                        await ss.ConnectAsync(host, "80");
+        //                        StreamSocketInformation i = ss.Information;
+        //                        this.log.Info("ConnectToNetworkAndSendTest", () => string.Format("Connected to socket Local {0}:{1} Remote {2}:{3} - {4}",
+        //                            i.LocalAddress, i.LocalPort,
+        //                            i.RemoteHostName, i.RemotePort, i.RemoteServiceName));
+        //                        /*
+        //                        // This works
+        //                        Stream outStream = ss.OutputStream.AsStreamForWrite();
+        //                        StreamWriter writer = new StreamWriter(outStream);
+        //                        string data = "This is test from UWP";
+        //                        this.log.Info("ConnectToNetworkAndSendTest", "Sending");
+        //                        //await writer.WriteLineAsync(data);
+        //                        var arr = data.ToAsciiByteArray();
+        //                        //await writer.WriteAsync(arr, 0, arr.Length);
+        //                        await outStream.WriteAsync(arr, 0, arr.Length);
+        //                        this.log.Info("ConnectToNetworkAndSendTest", "Flushing");
+        //                        await outStream.FlushAsync();
+        //                        this.log.Info("ConnectToNetworkAndSendTest", "Sending");
+        //                        await outStream.WriteAsync(arr, 0, arr.Length);
+        //                        this.log.Info("ConnectToNetworkAndSendTest", "Flushing");
+        //                        await outStream.FlushAsync();
+        //                        // Hmm do not seem to need the writer
+        //                        */
 
 
-                            }
-                        }
-                        catch (Exception e) {
-                            this.log.Exception(9999, "", e);
-                        }
+        //                        /*
+        //                        Stream outStream = ss.OutputStream.AsStreamForWrite();
+        //                        StreamWriter writer = new StreamWriter(outStream);
+        //                        string data = "This is test from UWP";
+        //                        this.log.Info("ConnectToNetworkAndSendTest", "Sending");
+        //                        await writer.WriteLineAsync(data);
+        //                        this.log.Info("ConnectToNetworkAndSendTest", "Flushing");
+        //                        await writer.FlushAsync();
+        //                        this.log.Info("ConnectToNetworkAndSendTest", "Finished flush");
+        //                        this.log.Info("ConnectToNetworkAndSendTest", "Sending");
+        //                        await writer.WriteLineAsync(data);
+        //                        this.log.Info("ConnectToNetworkAndSendTest", "Flushing");
+        //                        await writer.FlushAsync();
+        //                        this.log.Info("ConnectToNetworkAndSendTest", "Finished flush");
+        //                        */
 
-                    }
+        //                        // This also works - 10 seconds for first, second instant
+        //                        // The time is due to establishing the socket first time. Will go to the connection routine
+        //                        this.writer = new DataWriter(ss.OutputStream);
+        //                        string data = "This is test from UWP";
+        //                        this.log.Info("ConnectToNetworkAndSendTest", "Sending");
+        //                        this.writer.UnicodeEncoding = UnicodeEncoding.Utf8;
+        //                        this.writer.WriteBytes(data.ToAsciiByteArray());
+        //                        this.writer.WriteByte(0x0A);
+        //                        //this.writer.WriteString(data);
+        //                        await ss.OutputStream.WriteAsync(this.writer.DetachBuffer());
+        //                        this.log.Info("ConnectToNetworkAndSendTest", "Finished sending");
+        //                        //this.writer.WriteString(data);
+        //                        this.writer.WriteBytes(data.ToAsciiByteArray());
+        //                        this.writer.WriteByte(0x0A);
+        //                        await ss.OutputStream.WriteAsync(this.writer.DetachBuffer());
+        //                        this.log.Info("ConnectToNetworkAndSendTest", "Finished sending");
 
 
-                    break;
-                }
-            }
-        }
+        //                    }
+        //                }
+        //                catch (Exception e) {
+        //                    this.log.Exception(9999, "", e);
+        //                }
+
+        //            }
+
+
+        //            break;
+        //        }
+        //    }
+        //}
 
         #region Debug dump methods
 

@@ -1,5 +1,6 @@
 ﻿using BluetoothCommon.Net;
 using BluetoothLE.Net.DataModels;
+using CommunicationStack.Net.DataModels;
 using CommunicationStack.Net.Stacks;
 using IconFactory.Net.data;
 using LanguageFactory.Net.data;
@@ -221,13 +222,21 @@ namespace MultiCommWrapper.Net.interfaces {
 
         event EventHandler<List<WifiNetworkInfo>> DiscoveredNetworks;
         event EventHandler<WifiError> OnWifiError;
+        event EventHandler<MsgPumpConnectResults> OnWifiConnectionAttemptCompleted;
+        event EventHandler<string> Wifi_BytesReceived;
 
         void WifiDiscoverAsync();
+
+        void WifiConnectAsync(WifiNetworkInfo dataModel);
+        void WifiDisconect();
+
+        void WifiSend(string msg);
 
         #endregion
 
         void Teardown();
 
         void DisconnectAll();
+
     }
 }

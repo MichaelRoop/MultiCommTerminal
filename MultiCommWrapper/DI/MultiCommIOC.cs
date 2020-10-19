@@ -43,7 +43,8 @@ namespace MultiCommWrapper.Net.DI {
                             this.GetObjInstance<ICommStackLevel0>(),
                             this.GetObjSingleton<IBLETInterface>(),
                             this.GetObjInstance<ICommStackLevel0>(),
-                            this.GetObjSingleton<IWifiInterface>())));
+                            this.GetObjSingleton<IWifiInterface>(),
+                            this.GetObjInstance<ICommStackLevel0>())));
 
         }
     }

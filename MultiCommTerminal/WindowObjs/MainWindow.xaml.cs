@@ -58,6 +58,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper.CurrentScriptChanged += this.Wrapper_CurrentScriptChanged;
             this.wrapper.OnWifiError += this.Wrapper_OnWifiError;
             this.wrapper.DiscoveredNetworks += this.Wrapper_DiscoveredNetworks;
+            this.wrapper.OnWifiConnectionAttemptCompleted += this.Wrapper_OnWifiConnectionAttemptCompletedHandler;
 
             this.OnStartupSuccess();
             this.SizeToContent = SizeToContent.WidthAndHeight;
@@ -97,6 +98,9 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper.BT_PairStatus -= this.BT_PairStatusHandler;
             this.wrapper.BT_UnPairStatus -= this.BT_UnPairStatusHandler;
             this.wrapper.BTClassicDisconnect();
+
+            this.wrapper.Wifi_BytesReceived -= Wrapper_Wifi_BytesReceivedHandler;
+            this.wrapper.WifiDisconect();
 
             if (this.menu != null) {
                 this.menu.Close();
@@ -517,7 +521,43 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
         private void Wrapper_OnWifiError(object sender, WifiError e) {
-            this.gridWait.Visibility = Visibility.Collapsed;
+            this.Dispatcher.Invoke(() => {
+                this.gridWait.Visibility = Visibility.Collapsed;
+            });
+        }
+
+
+        private void btnWifiConnect_Click(object sender, RoutedEventArgs e) {
+            WifiNetworkInfo info = this.lbWifi.SelectedItem as WifiNetworkInfo;
+            if (info != null) {
+                this.gridWait.Visibility = Visibility.Visible;
+                this.wrapper.WifiConnectAsync(info);
+            }
+        }
+
+        private void btnWifiDisconnect_Click(object sender, RoutedEventArgs e) {
+            this.wrapper.WifiDisconect();
+        }
+
+
+        private void Wrapper_OnWifiConnectionAttemptCompletedHandler(object sender, CommunicationStack.Net.DataModels.MsgPumpConnectResults e) {
+            this.Dispatcher.Invoke(() => {
+                this.gridWait.Visibility = Visibility.Collapsed;
+                if (!e.IsSuccessful) {
+                    App.ShowMsg("Failed connection");
+                }
+            });
+        }
+
+
+        private void Wrapper_Wifi_BytesReceivedHandler(object sender, string msg) {
+            this.Dispatcher.Invoke(() => {
+                if (this.lbIncoming.Items.Count > 100) {
+                    this.lbIncoming.Items.RemoveAt(0);
+                }
+                this.lbIncoming.Items.Add(msg);
+                this.inScroll.ScrollToBottom();
+            });
         }
 
         #endregion
@@ -554,6 +594,8 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper.BT_PairStatus += this.BT_PairStatusHandler;
             this.wrapper.BT_UnPairStatus += this.BT_UnPairStatusHandler;
 
+            // Wifi
+            this.wrapper.Wifi_BytesReceived += Wrapper_Wifi_BytesReceivedHandler;
 
             // Call before rendering which will trigger initial resize events
             buttonSizer_BT = new ButtonGroupSizeSyncManager(this.btnBTConnect, this.btnBTDiscover);
@@ -651,6 +693,8 @@ namespace MultiCommTerminal.WindowObjs {
                     case CommMediumType.Ethernet:
                         break;
                     case CommMediumType.Wifi:
+                        this.log.Info("btnSend_Click", "To WIFI");
+                        this.wrapper.WifiSend(item.Command);
                         break;
                     default:
                         break;

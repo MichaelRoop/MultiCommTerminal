@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
+﻿using Communications.UWP.Core.MsgPumps;
+using System;
 using System.Threading.Tasks;
+using Wifi.UWP.Core.Helpers;
 using WifiCommon.Net.DataModels;
 using WifiCommon.Net.Enumerations;
 using WifiCommon.Net.interfaces;
 using Windows.Devices.WiFi;
-using Windows.Networking;
+using Windows.Networking.Connectivity;
 using Windows.Networking.Sockets;
-using Windows.Storage.Streams;
+using Windows.Security.Credentials;
 
 namespace Wifi.UWP.Core {
 
     public partial class WifiImpleUwp : IWifiInterface {
-
-        // TODO - this goes in the interface
 
         /// <summary>Run asynchronous connection where ConnectionCompleted is raised on completion</summary>
         /// <param name="deviceDataModel">The data model with information on the device</param>
@@ -23,51 +20,61 @@ namespace Wifi.UWP.Core {
             Task.Run(async () => {
                 try {
                     this.log.InfoEntry("ConnectAsync");
-                    // TODO Implement the tear down
-                    //this.TearDown(true);
-                    //await this.GetExtraInfo(deviceDataModel, false, false);
+                    this.msgPump.Disconnect();
 
-                    // TODO - can we get the host name and port (service) on scan?
-                    string hostName = "192.168.4.1"; // IP of Arduino
-                    string serviceName = "80"; // Current exposed port (service)
+                    // TODO - Renmove Hack
+                    dataModel.RemoteHostName = "192.168.4.1"; // IP of Arduino socket
+                    dataModel.RemoteServiceName = "80"; // Arduino HTTP port 80
                     this.log.Info("ConnectAsync", () => string.Format(
-                        "Host:{0} Service:{1}", hostName, serviceName));
+                        "Host:{0} Service:{1}", dataModel.RemoteHostName, dataModel.RemoteServiceName));
 
                     WiFiAvailableNetwork net = this.GetNetwork(dataModel.SSID);
                     if (net != null) {
                         // Connect WIFI level
                         // TODO Need to establish WIFI connection first with credentials
-                        
+                        // TODO - Hack need to establish where to get password
+                        // TODO How to establish kind of authentication
+                        string pwd = "1234567890";
 
+                        switch (dataModel.AuthenticationType) {
+                            // Arduino authentication - requires password but no user name
+                            case NetAuthenticationType.RSNA_PSK:
+                                break;
+                        }
 
-                        this.socket = new StreamSocket();
-                        await this.socket.ConnectAsync(new HostName(hostName), serviceName);
+                        PasswordCredential cred = new PasswordCredential() {
+                            Password = pwd,
+                            //UserName = "",
+                        };
+                        WiFiConnectionResult result = await this.wifiAdapter.ConnectAsync(net, WiFiReconnectionKind.Automatic, cred);
+                        if (result.ConnectionStatus == WiFiConnectionStatus.Success) {
+                            //ConnectionProfile profile = await this.wifiAdapter.NetworkAdapter.GetConnectedProfileAsync();
+                            //this.log.Info("ConnectAsync", () => string.Format("Connected to:{0}", profile.ProfileName));
+                            //if (profile.IsWlanConnectionProfile) {
 
-                        // TODO establish credential requirements
-
-                        this.writer = new DataWriter(this.socket.OutputStream);
-                        this.writer.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
-
-                        this.reader = new DataReader(this.socket.InputStream);
-                        this.reader.InputStreamOptions = InputStreamOptions.Partial;
-                        this.reader.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
-                        this.reader.ByteOrder = ByteOrder.LittleEndian;
-
-                        this.readCancelationToken = new CancellationTokenSource();
-                        this.readCancelationToken.Token.ThrowIfCancellationRequested();
-                        this.continueReading = true;
-
-                        this.Connected = true;
-                        this.LaunchReadTask();
-
-                        // TODO event on connection complete
-                        //this.ConnectionCompleted?.Invoke(this, true);
+                            this.log.Info("ConnectAsync", () => string.Format("Connecting to {0}:{1}", dataModel.RemoteHostName, dataModel.RemoteServiceName));
+                            this.msgPump.ConnectAsync(new SocketMsgPumpConnectData() {
+                                    MaxReadBufferSize = 255,
+                                    RemoteHostName = dataModel.RemoteHostName,
+                                    ServiceName = dataModel.RemoteServiceName,
+                                    // TODO - determine protection level according to connection
+                                    ProtectionLevel = SocketProtectionLevel.PlainSocket,
+                                });
+                            //}
+                            //else {
+                            //    // TODO Add error. Not WIFI
+                            //    this.OnError?.Invoke(this, new WifiError(WifiErrorCode.NetworkNotAvailable));
+                            //}
+                        }
+                        else {
+                            this.OnError?.Invoke(this,
+                                new WifiError(EnumerationHelpers.Convert(result.ConnectionStatus)));
+                        }
                     }
                 }
                 catch (Exception e) {
                     this.log.Exception(9999, "Connect Asyn Error", e);
-                    // TODO event on connection complete
-                    //this.ConnectionCompleted?.Invoke(this, false);
+                    this.OnError?.Invoke(this, new WifiError(WifiErrorCode.Unknown));
                 }
             });
         }

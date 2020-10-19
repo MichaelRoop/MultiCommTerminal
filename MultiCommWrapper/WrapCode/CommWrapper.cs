@@ -28,6 +28,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         IIndexedStorageManager<ScriptDataModel, DefaultFileExtraInfo> scriptStorage = null;
         ICommStackLevel0 btClassicStack = null;
         ICommStackLevel0 bleStack = null;
+        ICommStackLevel0 wifiStack = null;
 
         private ClassLog log = new ClassLog("CommWrapper");
 
@@ -50,7 +51,8 @@ namespace MultiCommWrapper.Net.WrapCode {
             ICommStackLevel0 classicBluetoothStack,
             IBLETInterface bleBluetooth,
             ICommStackLevel0 bleStack,
-            IWifiInterface wifi) {
+            IWifiInterface wifi,
+            ICommStackLevel0 wifiStack) {
 
             this.storageFactory = storageFactory;
             this.languages = languages;
@@ -60,6 +62,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.bleBluetooth = bleBluetooth;
             this.bleStack = bleStack;
             this.wifi = wifi;
+            this.wifiStack = wifiStack;
             this.InitializeAll();
         }
 
