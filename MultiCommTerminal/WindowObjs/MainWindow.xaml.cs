@@ -59,6 +59,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper.OnWifiError += this.Wrapper_OnWifiError;
             this.wrapper.DiscoveredNetworks += this.Wrapper_DiscoveredNetworks;
             this.wrapper.OnWifiConnectionAttemptCompleted += this.Wrapper_OnWifiConnectionAttemptCompletedHandler;
+            this.wrapper.CredentialsRequestedEvent += this.Wifi_CredentialsRequestedEventHandler;
 
             this.OnStartupSuccess();
             this.SizeToContent = SizeToContent.WidthAndHeight;
@@ -100,6 +101,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper.BTClassicDisconnect();
 
             this.wrapper.Wifi_BytesReceived -= Wrapper_Wifi_BytesReceivedHandler;
+            this.wrapper.CredentialsRequestedEvent -= this.Wifi_CredentialsRequestedEventHandler;
             this.wrapper.WifiDisconect();
 
             if (this.menu != null) {
@@ -527,6 +529,19 @@ namespace MultiCommTerminal.WindowObjs {
                 App.ShowMsg(err);
             });
         }
+
+        private void Wifi_CredentialsRequestedEventHandler(object sender, WifiCredentials cred) {
+            cred.RemoteHostName = "192.168.4.1";
+            cred.RemoteServiceName = "80";
+            cred.WifiPassword = "1234567890";
+
+            // TODO - implement dialog
+
+
+            //App.ShowMsg("Returning cred for wifi");
+            // Not using UserName
+        }
+
 
 
         private void btnWifiConnect_Click(object sender, RoutedEventArgs e) {

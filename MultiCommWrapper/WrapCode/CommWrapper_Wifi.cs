@@ -93,14 +93,14 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         private bool WifiGetStoredCredentials(WifiNetworkInfo dataModel) {
             // TODO - implement. Could wifi ssid or GUID to retrieve a stored WifiCredentials object
-            //return false;
+            return false;
 
 
-            dataModel.RemoteHostName = "192.168.4.1"; // IP of Arduino socket
-            dataModel.RemoteServiceName = "80"; // Arduino HTTP port 80
-            dataModel.Password = "1234567890";
-            dataModel.UserName = ""; // Not using User name for now
-            return true;
+            //dataModel.RemoteHostName = "192.168.4.1"; // IP of Arduino socket
+            //dataModel.RemoteServiceName = "80"; // Arduino HTTP port 80
+            //dataModel.Password = "1234567890";
+            //dataModel.UserName = ""; // Not using User name for now
+            //return true;
         }
 
 
