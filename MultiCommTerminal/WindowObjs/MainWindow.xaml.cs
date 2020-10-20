@@ -535,7 +535,7 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void Wifi_CredentialsRequestedEventHandler(object sender, WifiCredentials cred) {
 
-            var result = MsgBoxWifiCred.ShowBox(this, cred.SSID);
+            var result = MsgBoxWifiCred.ShowBox(this, cred.SSID, cred.RemoteHostName, cred.RemoteServiceName);
             cred.IsUserCanceled = !result.IsOk;
             cred.IsUserSaveRequest = result.Save;
             cred.RemoteHostName = result.HostName;

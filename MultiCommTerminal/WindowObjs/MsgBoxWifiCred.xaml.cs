@@ -40,8 +40,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         #region Static methods
 
-        public static WifiCredResult ShowBox(Window win, string title) {
-            MsgBoxWifiCred box = new MsgBoxWifiCred(win, title);
+        public static WifiCredResult ShowBox(Window win, string title, string host, string service) {
+            MsgBoxWifiCred box = new MsgBoxWifiCred(win, title, host, service);
             box.ShowDialog();
             return box.Result;
         }
@@ -49,10 +49,12 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         #endregion
 
 
-        public MsgBoxWifiCred(Window parent, string title) {
+        public MsgBoxWifiCred(Window parent, string title, string host, string service) {
             this.parent = parent;
             InitializeComponent();
             this.Title = title;
+            this.txtHostName.Text = host;
+            this.txtServiceName.Text = service;
             WPF_ControlHelpers.CenterChild(parent, this);
             this.SizeToContent = SizeToContent.WidthAndHeight;
             // Call before rendering which will trigger initial resize events

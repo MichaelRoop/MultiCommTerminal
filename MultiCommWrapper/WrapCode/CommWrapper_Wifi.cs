@@ -17,6 +17,9 @@ namespace MultiCommWrapper.Net.WrapCode {
 
     public partial class CommWrapper : ICommWrapper {
 
+        WifiNetworkInfo pendingSaveConnectNetInfo = null;
+
+
         #region ICommWrapper events
 
         public event EventHandler<List<WifiNetworkInfo>> DiscoveredNetworks;
@@ -47,11 +50,20 @@ namespace MultiCommWrapper.Net.WrapCode {
                 }
                 else {
                     if (save) {
-                        this.wifi.OnWifiConnectionAttemptCompleted += (sender, result)=> {
-                            if (result.IsSuccessful) {
-                                this.WifiStoreNewCredentials(dataModel);
-                            }
-                        };
+                        this.pendingSaveConnectNetInfo = dataModel;
+
+                        //this.wifi.OnWifiConnectionAttemptCompleted += (sender, result)=> {
+                        //    if (result.IsSuccessful) {
+                        //        // First check on save will create the event handler. Need to check save each time to avoid creating multiples
+                        //        if (save) {
+                        //            this.WifiStoreNewCredentials(dataModel);
+                        //        }
+                        //    }
+                        //    else {
+                        //        // Wipping out password will cause dialog to come up on next connect
+                        //        dataModel.Password = "";
+                        //    }
+                        //};
                     }
                     this.wifi.ConnectAsync(dataModel);
                 }
@@ -209,6 +221,8 @@ namespace MultiCommWrapper.Net.WrapCode {
             // TODO - implement. Could also use the wifi GUID
             WifiCredentials cred = new WifiCredentials() {
                 SSID = dataModel.SSID,
+                RemoteHostName = dataModel.RemoteHostName,
+                RemoteServiceName = dataModel.RemoteServiceName,
             };
             WrapErr.ChkVar(this.CredentialsRequestedEvent, 9999, "No subscribers to CredentialsRequestedEvent");
             this.CredentialsRequestedEvent?.Invoke(this, cred);
@@ -246,16 +260,35 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-        private void Wifi_OnWifiConnectionAttemptCompletedHandler(object sender, MsgPumpConnectResults e) {
+        private void Wifi_OnWifiConnectionAttemptCompletedHandler(object sender, MsgPumpConnectResults result) {
             this.log.Info("Wifi_OnWifiConnectionAttemptCompletedHandler", () => string.Format(
                 "Is OnWifiConnectionAttemptCompleted null={0}",
                 this.OnWifiConnectionAttemptCompleted == null));
-            this.OnWifiConnectionAttemptCompleted?.Invoke(sender, e);
+
+            // Set when the current connection is using new parameters
+            if (this.pendingSaveConnectNetInfo != null) {
+                if (result.IsSuccessful) {
+                    this.WifiStoreNewCredentials(this.pendingSaveConnectNetInfo);
+                }
+                else {
+                    // Wipping out password will cause dialog to come up on next connect
+                    this.pendingSaveConnectNetInfo.Password = "";
+                }
+                this.pendingSaveConnectNetInfo = null;
+            }
+            this.OnWifiConnectionAttemptCompleted?.Invoke(sender, result);
         }
 
 
         private void Wifi_OnErrorHandler(object sender, WifiError e) {
             this.log.Info("Wifi_OnErrorHandler", () => string.Format("Is OnWifiError null={0}", this.OnWifiError == null));
+            // Possible to have other errors on connect so we will also wipe out connect params here
+            if (this.pendingSaveConnectNetInfo != null) {
+                // Wipping out password will cause dialog to come up on next connect
+                this.pendingSaveConnectNetInfo.Password = "";
+                this.pendingSaveConnectNetInfo = null;
+            }
+
             this.OnWifiError?.Invoke(sender, e);
         }
 
