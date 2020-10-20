@@ -26,6 +26,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         IStorageManager<SettingItems> settings = null;
         IIndexedStorageManager<TerminatorDataModel, DefaultFileExtraInfo> terminatorStorage = null;
         IIndexedStorageManager<ScriptDataModel, DefaultFileExtraInfo> scriptStorage = null;
+        IIndexedStorageManager<WifiCredentialsDataModel, DefaultFileExtraInfo> wifiCredStorage = null;
         ICommStackLevel0 btClassicStack = null;
         ICommStackLevel0 bleStack = null;
         ICommStackLevel0 wifiStack = null;

@@ -18,6 +18,8 @@ namespace MultiCommWrapper.Net.WrapCode {
         private readonly string TERMINATOR_INDEX_FILE = "TerminatorsIndex.txt";
         private readonly string SCRIPTS_DIR = "Scripts";
         private readonly string SCRIPTS_INDEX_FILE = "ScriptsIndex.txt";
+        private readonly string WIFI_CRED_DIR = "WifiCredentials";
+        private readonly string WIFI_CRED_INDEX_FILE = "WifiCredIndex.txt";
 
         #endregion
 
@@ -34,6 +36,10 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.scriptStorage =
                 this.storageFactory.GetIndexedManager<ScriptDataModel, DefaultFileExtraInfo>(this.Dir(SCRIPTS_DIR), SCRIPTS_INDEX_FILE);
             this.AssureScriptDefault();
+
+            this.wifiCredStorage =
+                this.storageFactory.GetIndexedManager<WifiCredentialsDataModel, DefaultFileExtraInfo>(this.Dir(WIFI_CRED_DIR), WIFI_CRED_INDEX_FILE);
+            // We do not have a dummy entry
         }
 
 

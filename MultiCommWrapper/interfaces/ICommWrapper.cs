@@ -236,6 +236,21 @@ namespace MultiCommWrapper.Net.interfaces {
 
         #endregion
 
+        #region Wifi credentials storage
+
+        void GetWifiCredList(Action<List<IIndexItem<DefaultFileExtraInfo>>> onSuccess, OnErr onError);
+
+        void CreateNewWifiCred(string display, WifiCredentialsDataModel data, Action onSuccess, OnErr onError);
+
+        void RetrieveWifiCredData(IIndexItem<DefaultFileExtraInfo> index, Action<WifiCredentialsDataModel> onSuccess, OnErr onError);
+
+        void SaveWifiCred(IIndexItem<DefaultFileExtraInfo> idx, WifiCredentialsDataModel data, Action onSuccess, OnErr onError);
+
+
+        void DeleteWifiCredData(IIndexItem<DefaultFileExtraInfo> index, Action<bool> onComplete, OnErr onError);
+
+        #endregion
+
         void Teardown();
 
         void DisconnectAll();
