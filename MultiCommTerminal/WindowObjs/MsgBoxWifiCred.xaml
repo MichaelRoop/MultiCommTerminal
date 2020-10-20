@@ -10,7 +10,7 @@
         Style="{StaticResource MyWindowStyle}" Title="" 
         WindowStartupLocation="CenterScreen" 
         ContentRendered="Window_ContentRendered" Closing="Window_Closing"
-        MinHeight="100" MinWidth="200" MaxHeight="800" MaxWidth="600">
+        MinHeight="100" MinWidth="200" MaxHeight="800" MaxWidth="900">
     <Grid>
         <StackPanel>
             <Grid Margin="10">
@@ -23,17 +23,21 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Name}}"  Style="{StaticResource NameLabelLeft}" />
+                <Label Grid.Row="0" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.HostNameIp}}"  Style="{StaticResource NameLabelLeft}" />
                 <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtHostName"  Style="{ StaticResource TxtBoxRight}" />
 
-                <Label Grid.Row="1" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Copy}}" Style="{StaticResource NameLabelLeft}" />
+                <Label Grid.Row="1" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.NetworkServicePort}}" Style="{StaticResource NameLabelLeft}" />
                 <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtServiceName" Style="{ StaticResource TxtBoxRight}" />
 
-                <Label Grid.Row="2" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Configure}}"  Style="{StaticResource NameLabelLeft}"/>
+                <Label Grid.Row="2" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.NetworkSecurityKey}}"  Style="{StaticResource NameLabelLeft}"/>
                 <PasswordBox Grid.Row="2" Grid.Column="1" x:Name="txtPwd"  Style="{StaticResource PwdBoxRight}"/>
             </Grid>
 
             <DockPanel HorizontalAlignment="Center" Margin="10">
+
+                <TextBlock FlowDirection="LeftToRight" VerticalAlignment="Center"  Text="{Binding Source={x:Static wpfHelper:TxtBinder.Save}}" />
+                <CheckBox x:Name="chkSave" VerticalAlignment="Center" FlowDirection="LeftToRight" IsChecked="True" Margin="5,0,10,0" />
+
                 <controls:UC_IconButton x:Name="btnOk" Style="{StaticResource TextIconButton}" Margin="5" 
                     Content="{Binding Source={x:Static wpfHelper:TxtBinder.OK}}"
                     IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Save}}" 

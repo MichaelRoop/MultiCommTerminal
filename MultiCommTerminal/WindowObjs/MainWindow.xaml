@@ -234,7 +234,7 @@
                                             Background="Transparent" Click="btnWifiConnect_Click" />
                                     <controls:UC_IconButton x:Name="btnWifiDisconnect" Style="{StaticResource TextIconButton}"
                                             HorizontalContentAlignment="Left"
-                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Connect}}" Margin="0,2.5"
+                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Disconnect}}" Margin="0,2.5"
                                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}"                                                                                            
                                             Background="Transparent" Click="btnWifiDisconnect_Click" />
 

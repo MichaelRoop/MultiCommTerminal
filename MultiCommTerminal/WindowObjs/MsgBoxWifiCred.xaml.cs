@@ -21,6 +21,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         public class WifiCredResult {
             public bool IsOk { get; set; } = false;
+            public bool Save { get; set; } = false;
             public string HostName { get; set; } = string.Empty;
             public string ServiceName { get; set; } = string.Empty;
             public string Password { get; set; } = string.Empty;
@@ -51,6 +52,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         public MsgBoxWifiCred(Window parent, string title) {
             this.parent = parent;
             InitializeComponent();
+            this.Title = title;
             WPF_ControlHelpers.CenterChild(parent, this);
             this.SizeToContent = SizeToContent.WidthAndHeight;
             // Call before rendering which will trigger initial resize events
@@ -80,6 +82,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         private void btnOk_Click(object sender, RoutedEventArgs e) {
             // Validate entries in wrapper level
             this.Result.IsOk = true;
+            this.Result.Save = this.chkSave.IsChecked.GetValueOrDefault(false);
             this.Result.HostName = txtHostName.Text;
             this.Result.ServiceName = txtServiceName.Text;
             this.Result.Password = this.txtPwd.Password;

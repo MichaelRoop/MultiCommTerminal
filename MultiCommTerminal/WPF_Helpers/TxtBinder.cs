@@ -52,6 +52,7 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string Response { get { return GetTxt(MsgCode.response); } }
         public static string Discover { get { return GetTxt(MsgCode.discover); } }
         public static string Connect { get { return GetTxt(MsgCode.connect); } }
+        public static string Disconnect { get { return GetTxt(MsgCode.Disconnect); } }
         public static string Info { get { return GetTxt(MsgCode.info); } }
         public static string Terminators { get { return GetTxt(MsgCode.Terminators); } }
         public static string Name { get { return GetTxt(MsgCode.Name); } }
@@ -61,6 +62,17 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string PairedDevice { get { return GetTxt(MsgCode.PairedDevices); } }
         public static string Pair { get { return GetTxt(MsgCode.Pair); } }
         public static string UnPair { get { return GetTxt(MsgCode.Unpair); } }
+
+        public static string Password { get { return GetTxt(MsgCode.Password); } }
+        public static string HostName { get { return GetTxt(MsgCode.HostName); } }
+        public static string NetworkService { get { return GetTxt(MsgCode.NetworkService); } }
+        public static string Port { get { return GetTxt(MsgCode.Port); } }
+
+        public static string HostNameIp { get { return string.Format("{0}/IP", HostName); } }
+        public static string NetworkServicePort { get { return string.Format("{0}/{1}", NetworkService, Port); } }
+
+        public static string NetworkSecurityKey { get { return GetTxt(MsgCode.NetworkSecurityKey); } }
+
 
         #endregion
 

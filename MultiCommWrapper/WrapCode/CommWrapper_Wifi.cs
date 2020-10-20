@@ -100,9 +100,12 @@ namespace MultiCommWrapper.Net.WrapCode {
                 dataModel.Password.Trim().Length == 0) {
 
                 if (!this.WifiGetStoredCredentials(dataModel)) {
-                    result = this.GetUserCredentials(dataModel);
+                    bool save = false;
+                    result = this.GetUserCredentials(dataModel, ref save);
                     if (result == WifiErrorCode.Success) {
-                        this.WifiStoreCredentials(dataModel);
+                        if (save) {
+                            this.WifiStoreCredentials(dataModel);
+                        }
                     }
                 }
             }
@@ -136,7 +139,9 @@ namespace MultiCommWrapper.Net.WrapCode {
         /// <summary>Raise an event to request credentials from user</summary>
         /// <param name="dataModel">The network info data model</param>
         /// <returns>WifiErrorCode.Success on success, otherwise and error</returns>
-        private WifiErrorCode GetUserCredentials(WifiNetworkInfo dataModel) {
+        private WifiErrorCode GetUserCredentials(WifiNetworkInfo dataModel, ref bool save) {
+            save = false;
+            
             // TODO - implement. Could also use the wifi GUID
             WifiCredentials cred = new WifiCredentials();
             WrapErr.ChkVar(this.CredentialsRequestedEvent, 9999, "No subscribers to CredentialsRequestedEvent");
@@ -156,6 +161,8 @@ namespace MultiCommWrapper.Net.WrapCode {
                 return WifiErrorCode.EmptyPassword;
             }
 
+            save = cred.IsUserSaveRequest;
+            dataModel.SSID = dataModel.SSID;
             dataModel.RemoteHostName = cred.RemoteHostName;
             dataModel.RemoteServiceName = cred.RemoteServiceName;
             dataModel.Password = cred.WifiPassword;
