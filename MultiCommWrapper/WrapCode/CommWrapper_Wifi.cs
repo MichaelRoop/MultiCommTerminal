@@ -141,9 +141,11 @@ namespace MultiCommWrapper.Net.WrapCode {
         /// <returns>WifiErrorCode.Success on success, otherwise and error</returns>
         private WifiErrorCode GetUserCredentials(WifiNetworkInfo dataModel, ref bool save) {
             save = false;
-            
+
             // TODO - implement. Could also use the wifi GUID
-            WifiCredentials cred = new WifiCredentials();
+            WifiCredentials cred = new WifiCredentials() {
+                SSID = dataModel.SSID,
+            };
             WrapErr.ChkVar(this.CredentialsRequestedEvent, 9999, "No subscribers to CredentialsRequestedEvent");
             this.CredentialsRequestedEvent?.Invoke(this, cred);
 
@@ -162,7 +164,6 @@ namespace MultiCommWrapper.Net.WrapCode {
             }
 
             save = cred.IsUserSaveRequest;
-            dataModel.SSID = dataModel.SSID;
             dataModel.RemoteHostName = cred.RemoteHostName;
             dataModel.RemoteServiceName = cred.RemoteServiceName;
             dataModel.Password = cred.WifiPassword;
