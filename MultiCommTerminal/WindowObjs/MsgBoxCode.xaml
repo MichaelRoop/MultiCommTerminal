@@ -6,7 +6,6 @@
         xmlns:local="clr-namespace:MultiCommTerminal.WindowObjs"
         xmlns:controls="clr-namespace:MultiCommTerminal.UserControls"
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.WPF_Helpers"
-        xmlns:cbox="clr-namespace:AurelienRibon.Ui.SyntaxHighlightBox.src;assembly=AurelienRibon.Ui.SyntaxHighlightBox"        
         WindowStartupLocation="Manual" 
         mc:Ignorable="d"
         Title="" 
@@ -15,7 +14,13 @@
         ContentRendered="Window_ContentRendered" Closing="Window_Closing">
     <Grid>
         <StackPanel>
-            <cbox:SyntaxHighlightBox x:Name="codeBox" IsLineNumbersMarginVisible="True" MinHeight="100" MaxHeight="600" IsReadOnly="True" />
+            <!--<SyntaxControlBox />-->
+            <!--xmlns:cbox="clr-namespace:AurelienRibon.Ui.SyntaxHighlightBox.src;assembly=AurelienRibon.Ui.SyntaxHighlightBox"-->
+            <!--<cbox:SyntaxHighlightBox x:Name="codeBox" IsLineNumbersMarginVisible="True" MinHeight="100" MaxHeight="600" IsReadOnly="True" />-->
+            
+            <!-- The aurelian is NET Framework so I cannot use it. So just do regular text box for now -->
+            <TextBox x:Name="codeBox" MinHeight="100" MaxHeight="600" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True" />
+
             <DockPanel Margin="5" Height="70" HorizontalAlignment="Center">
                 <controls:UC_IconButton x:Name="btnExit" Margin="5" HorizontalAlignment="Center"
                     Style="{StaticResource TextIconButton}" 

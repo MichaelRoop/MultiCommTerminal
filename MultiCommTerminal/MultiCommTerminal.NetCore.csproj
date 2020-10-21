@@ -59,7 +59,6 @@
     <ProjectReference Include="..\..\SharedNetLibs\LanguageFactory\LanguageFactory.Net.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\LogUtils.Net\LogUtils.Net.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\WifiCommon.Net\WifiCommon.Net.csproj" />
-    <ProjectReference Include="..\AurelienRibon.Ui.SyntaxHighlightBox\AurelienRibon.Ui.SyntaxHighlightBox.csproj" />
     <ProjectReference Include="..\BluetoothLE.UWP.Core\BluetoothLE.UWP.Core.csproj" />
     <ProjectReference Include="..\BluetoothRfComm.Win32.Core\BluetoothRfComm.UWP.Core.csproj" />
     <ProjectReference Include="..\MultiCommData\MultiCommData.Net.csproj" />
@@ -68,6 +67,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Alsing.SyntaxBox" Version="2.0.0" />
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="System.Runtime.WindowsRuntime" Version="4.7.0" />
   </ItemGroup>

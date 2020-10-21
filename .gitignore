@@ -18,3 +18,5 @@
 /BluetoothRfComm.Win32.Core/obj/*
 /Wifi.UWP.Core/bin/*
 /Wifi.UWP.Core/obj/*
+/MultiCommTerminal.MSIX/bin/*
+/MultiCommTerminal.MSIX/obj/*

@@ -1,4 +1,4 @@
-﻿using AurelienRibon.Ui.SyntaxHighlightBox.src;
+﻿//using AurelienRibon.Ui.SyntaxHighlightBox.src;
 using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
 using LanguageFactory.Net.data;
@@ -36,7 +36,7 @@ namespace MultiCommTerminal.WindowObjs {
             InitializeComponent();
             this.Title = DI.Wrapper.GetText(medium);
             WrapErr.ToErrReport(9999, () => this.Icon = medium.ResourceWhiteBitmap());
-            this.codeBox.CurrentHighlighter = HighlighterManager.Instance.Highlighters["CPPDL"];
+            //this.codeBox.CurrentHighlighter = HighlighterManager.Instance.Highlighters["CPPDL"];
             this.buttonWidthManager = new ButtonGroupSizeSyncManager(this.btnCopy, this.btnExit);
             this.buttonWidthManager.PrepForChange();
         }
