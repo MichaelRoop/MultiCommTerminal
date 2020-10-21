@@ -86,7 +86,15 @@ namespace Wifi.UWP.Core {
         #region IWifiInterface methods
 
         public void Disconnect() {
+            this.log.InfoEntry("Disconnect");
             this.msgPump.Disconnect();
+
+            if (this.wifiAdapter != null) {
+                this.log.Info("Disconnect", "Disconnecting adapter");
+                // This just kills the Arduino. No possibility of future connections
+                //this.wifiAdapter.Disconnect();
+            }
+
         }
 
         #endregion

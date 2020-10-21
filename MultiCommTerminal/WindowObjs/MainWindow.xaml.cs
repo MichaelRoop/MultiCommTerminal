@@ -562,6 +562,9 @@ namespace MultiCommTerminal.WindowObjs {
                 this.gridWait.Visibility = Visibility.Visible;
                 this.wrapper.WifiConnectAsync(info);
             }
+            else {
+                this.log.Warning(9999, "btnWifiConnect_Click", "No wifi selected");
+            }
         }
 
         private void btnWifiDisconnect_Click(object sender, RoutedEventArgs e) {

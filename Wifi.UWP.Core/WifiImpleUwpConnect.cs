@@ -22,7 +22,7 @@ namespace Wifi.UWP.Core {
             Task.Run(async () => {
                 try {
                     this.log.InfoEntry("ConnectAsync");
-                    this.msgPump.Disconnect();
+                    this.Disconnect();
                     this.log.Info("ConnectAsync", () => string.Format(
                         "Host:{0} Service:{1}", dataModel.RemoteHostName, dataModel.RemoteServiceName));
 
@@ -48,6 +48,7 @@ namespace Wifi.UWP.Core {
                             //this.log.Info("ConnectAsync", () => string.Format("Connected to:{0}", profile.ProfileName));
                             //if (profile.IsWlanConnectionProfile) {
 
+                            await this.DumpWifiAdapterInfo(this.wifiAdapter);
                             this.log.Info("ConnectAsync", () => string.Format("Connecting to {0}:{1}", dataModel.RemoteHostName, dataModel.RemoteServiceName));
                             this.msgPump.ConnectAsync(new SocketMsgPumpConnectData() {
                                     MaxReadBufferSize = 255,
@@ -66,6 +67,9 @@ namespace Wifi.UWP.Core {
                             this.OnError?.Invoke(this,
                                 new WifiError(EnumerationHelpers.Convert(result.ConnectionStatus)));
                         }
+                    }
+                    else {
+                        this.OnError?.Invoke(this, new WifiError(WifiErrorCode.NetworkNotAvailable) { ExtraInfo = dataModel.SSID });
                     }
                 }
                 catch (ErrReportException erE) {
@@ -90,7 +94,55 @@ namespace Wifi.UWP.Core {
             return null;
         }
 
+        private async Task DumpWifiAdapterInfo(WiFiAdapter adapter) {
+            if (adapter == null) {
+                this.log.Info("DumpWifiAdapterInfo", () => string.Format("Entry"));
+            }
+            else {
+                if (adapter.NetworkAdapter == null) {
+                    this.log.Info("DumpWifiAdapterInfo", () => string.Format("NULL Wifi Adapter.NetworkAdapter"));
+                }
+                else {
+                    ConnectionProfile profile = await adapter.NetworkAdapter.GetConnectedProfileAsync();
+                    if (profile == null) {
+                        this.log.Info("DumpWifiAdapterInfo", () => string.Format("NULL Wifi Adapter.NetworkAdapter Profile"));
+                    }
+                    else {
+                        this.log.Info("DumpWifiAdapterInfo", () => string.Format("Connected to:{0}", profile.ProfileName));
+                        if (profile.IsWlanConnectionProfile) {
+                            this.log.Info("DumpWifiAdapterInfo", () => string.Format("WLan connection"));
+                            this.log.Info("DumpWifiAdapterInfo", () => string.Format("          SSID:{0}", profile.WlanConnectionProfileDetails.GetConnectedSsid()));
+                            this.log.Info("DumpWifiAdapterInfo", () => string.Format("Authentication:{0}", profile.NetworkSecuritySettings.NetworkAuthenticationType));
+                            this.log.Info("DumpWifiAdapterInfo", () => string.Format("    Encryption:{0}", profile.NetworkSecuritySettings.NetworkEncryptionType));
+                        }
+                        else if (profile.IsWwanConnectionProfile) {
+                            this.log.Info("DumpWifiAdapterInfo", () => string.Format("WWan connection"));
+                        }
+                        else {
+                            this.log.Info("DumpWifiAdapterInfo", () => string.Format("UNKNOWN connection type"));
+                        }
 
+                        //this.log.Info("DumpWifiAdapterInfo", () => string.Format("Connected to:{0}", profile.ProfileName));
+                        //this.log.Info("DumpWifiAdapterInfo", () => string.Format("Connected to:{0}", profile.ProfileName));
+                        //this.log.Info("DumpWifiAdapterInfo", () => string.Format("Connected to:{0}", profile.ProfileName));
+                        //this.log.Info("DumpWifiAdapterInfo", () => string.Format("Connected to:{0}", profile.ProfileName));
+                    }
+                }
+
+            }
+
+
+            //this.log.Info("DumpWifiAdapterInfo", () => string.Format(""));
+            //this.log.Info("DumpWifiAdapterInfo", () => string.Format(""));
+            //this.log.Info("DumpWifiAdapterInfo", () => string.Format(""));
+            //this.log.Info("DumpWifiAdapterInfo", () => string.Format(""));
+            //this.log.Info("DumpWifiAdapterInfo", () => string.Format(""));
+            //this.log.Info("DumpWifiAdapterInfo", () => string.Format(""));
+            //this.log.Info("DumpWifiAdapterInfo", () => string.Format(""));
+            //this.log.Info("DumpWifiAdapterInfo", () => string.Format(""));
+
+
+        }
 
 
 

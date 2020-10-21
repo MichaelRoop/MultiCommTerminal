@@ -38,8 +38,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void WifiConnectAsync(WifiNetworkInfo dataModel) {
-            // We could check for cred here
-            // Could put a simple request event from Wifi code if it determines it needs password
+            this.log.InfoEntry("WifiConnectAsync");
 
             // TODO use a try catch and change signature to have an error delegate return?
             try {
@@ -51,19 +50,6 @@ namespace MultiCommWrapper.Net.WrapCode {
                 else {
                     if (save) {
                         this.pendingSaveConnectNetInfo = dataModel;
-
-                        //this.wifi.OnWifiConnectionAttemptCompleted += (sender, result)=> {
-                        //    if (result.IsSuccessful) {
-                        //        // First check on save will create the event handler. Need to check save each time to avoid creating multiples
-                        //        if (save) {
-                        //            this.WifiStoreNewCredentials(dataModel);
-                        //        }
-                        //    }
-                        //    else {
-                        //        // Wipping out password will cause dialog to come up on next connect
-                        //        dataModel.Password = "";
-                        //    }
-                        //};
                     }
                     this.wifi.ConnectAsync(dataModel);
                 }
