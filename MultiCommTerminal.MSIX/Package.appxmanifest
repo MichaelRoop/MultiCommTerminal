@@ -8,12 +8,12 @@
 
   <Identity
     Name="1c27e46d-d1d0-4f21-aabf-d63f3600c3a2"
-    Publisher="CN=Michael"
-    Version="1.0.0.0" />
+    Publisher="CN=MichaelRoop"
+    Version="1.1.22.0" />
 
   <Properties>
-    <DisplayName>MultiCommTerminal.MSIX</DisplayName>
-    <PublisherDisplayName>Michael</PublisherDisplayName>
+    <DisplayName>Multi Comm Terminal</DisplayName>
+    <PublisherDisplayName>MichaelRoopUtils</PublisherDisplayName>
     <Logo>Images\StoreLogo.png</Logo>
   </Properties>
 
@@ -31,8 +31,8 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="MultiCommTerminal.MSIX"
-        Description="MultiCommTerminal.MSIX"
+        DisplayName="Multi Comm Terminal"
+        Description="MultiCommTerminal is a hobiest tool to connect and send commands via multiple communications channel. Now supporting Bluetooth Classic and WIFI"
         BackgroundColor="transparent"
         Square150x150Logo="Images\Square150x150Logo.png"
         Square44x44Logo="Images\Square44x44Logo.png">
@@ -43,7 +43,8 @@
   </Applications>
 
   <Capabilities>
-    <Capability Name="internetClient" />
     <rescap:Capability Name="runFullTrust" />
+    <Capability Name="internetClientServer"/>
+    <DeviceCapability Name="bluetooth"/>
   </Capabilities>
 </Package>
