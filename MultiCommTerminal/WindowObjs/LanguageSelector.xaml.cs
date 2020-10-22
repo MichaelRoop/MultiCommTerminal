@@ -41,7 +41,7 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
-        private void Window_ContentRendered(object sender, EventArgs e) {
+        private void Window_Loaded(object sender, RoutedEventArgs e) {
             this.wrapper.LanguageList((items) => {
                 this.lbxLanguages.ItemsSource = items;
                 // Only create the selected index here to avoid it firing on load

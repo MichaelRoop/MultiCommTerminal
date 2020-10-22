@@ -37,7 +37,7 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
-        private void Window_ContentRendered(object sender, EventArgs e) {
+        private void Window_Loaded(object sender, RoutedEventArgs e) {
             ReloadList(true);
             WPF_ControlHelpers.CenterChild(parent, this);
         }

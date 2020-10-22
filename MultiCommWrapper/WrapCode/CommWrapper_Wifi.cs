@@ -22,7 +22,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         #region ICommWrapper events
 
-        public event EventHandler<List<WifiNetworkInfo>> DiscoveredNetworks;
+        public event EventHandler<List<WifiNetworkInfo>> DiscoveredWifiNetworks;
         public event EventHandler<WifiError> OnWifiError;
         public event EventHandler<MsgPumpConnectResults> OnWifiConnectionAttemptCompleted;
         public event EventHandler<string> Wifi_BytesReceived;
@@ -280,8 +280,8 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         private void Wifi_DiscoveredNetworksHandler(object sender, List<WifiNetworkInfo> e) {
-            this.log.Info("Wifi_DiscoveredNetworksHandler", () => string.Format("Is DiscoveredNetworks null={0}", this.DiscoveredNetworks == null));
-            this.DiscoveredNetworks?.Invoke(sender, e);
+            this.log.Info("Wifi_DiscoveredNetworksHandler", () => string.Format("Is DiscoveredNetworks null={0}", this.DiscoveredWifiNetworks == null));
+            this.DiscoveredWifiNetworks?.Invoke(sender, e);
         }
 
         #endregion

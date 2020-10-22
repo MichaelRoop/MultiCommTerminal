@@ -49,7 +49,7 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
-        private void Window_ContentRendered(object sender, EventArgs e) {
+        private void Window_Loaded(object sender, RoutedEventArgs e) {
             DI.Wrapper.GetCodeSample(medium, this.OnSampleLoad, this.OnError);
             // Have to size after text is loaded. Bug with highlight box
             this.SizeToContent = SizeToContent.WidthAndHeight;

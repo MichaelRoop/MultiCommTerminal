@@ -57,7 +57,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.widthManager.Teardown();
         }
 
-        private void Window_ContentRendered(object sender, EventArgs e) {
+        private void Window_Loaded(object sender, RoutedEventArgs e) {
             this.ReloadList(true);
             WPF_ControlHelpers.CenterChild(parent, this);
         }

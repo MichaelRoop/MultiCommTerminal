@@ -13,7 +13,7 @@
         Title="" 
         Style="{StaticResource MyWindowStyle}"
         MinHeight="150" MinWidth="150"
-        ContentRendered="Window_ContentRendered" Closing="Window_Closing">
+        Loaded="Window_Loaded" Closing="Window_Closing">
     <Grid>
         <StackPanel>
             <!--<SyntaxControlBox />-->
@@ -21,7 +21,7 @@
             <!--<cbox:SyntaxHighlightBox x:Name="codeBox" IsLineNumbersMarginVisible="True" MinHeight="100" MaxHeight="600" IsReadOnly="True" />-->
             
             <!-- The aurelian is NET Framework so I cannot use it. So just do regular text box for now -->
-            <TextBox x:Name="codeBox" MinHeight="100" MaxHeight="600" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True" />
+            <TextBox x:Name="codeBox" Padding="20" MinHeight="100" MaxHeight="600" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True" ScrollViewer.VerticalScrollBarVisibility="Auto" />
 
             <!--<RichTextBox x:Name="rtCodeBox"  />-->
 

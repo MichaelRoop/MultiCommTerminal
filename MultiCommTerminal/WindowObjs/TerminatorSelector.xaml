@@ -10,7 +10,7 @@
         Title="{Binding Source={x:Static wpfHelper:TxtBinder.Terminators}}" 
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.Terminator_W}}"
         mc:Ignorable="d"
-        ContentRendered="Window_ContentRendered" Closing="Window_Closing">
+        Loaded="Window_Loaded" Closing="Window_Closing">
     <Grid>
         <StackPanel>
             <ListBox x:Name="listBoxTerminators" MinWidth="200" Height="300" Margin="10" FontSize="16" HorizontalAlignment="Stretch"

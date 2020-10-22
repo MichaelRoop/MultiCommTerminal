@@ -11,7 +11,7 @@
         Title="{Binding Source={x:Static wpfHelper:TxtBinder.Terminators}}" 
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.Terminator_W}}"
         WindowStartupLocation="Manual" MinHeight="150" MinWidth="150" 
-        ContentRendered="Window_ContentRendered" Loaded="Window_Loaded"
+        Loaded="Window_Loaded"
         >
     <Grid>
         <StackPanel>

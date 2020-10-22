@@ -7,18 +7,17 @@ using MultiCommData.Net.StorageDataModels;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommTerminal.DependencyInjection;
 using MultiCommTerminal.NetCore.WindowObjs;
+using MultiCommTerminal.WPF_Helpers;
 using MultiCommWrapper.Net.DataModels;
 using MultiCommWrapper.Net.interfaces;
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using WpfHelperClasses.Core;
-using MultiCommTerminal.WPF_Helpers;
 using WifiCommon.Net.DataModels;
 using WifiCommon.Net.Enumerations;
+using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.WindowObjs {
 
@@ -34,6 +33,7 @@ namespace MultiCommTerminal.WindowObjs {
         private List<WifiNetworkInfo> wifiNetworks = new List<WifiNetworkInfo>();
         private ButtonGroupSizeSyncManager buttonSizer_BT = null;
         private ButtonGroupSizeSyncManager buttonSizer_BLE = null;
+        private ButtonGroupSizeSyncManager buttonSizer_WIFI = null;
 
         MenuWin menu = null;
         private ICommWrapper wrapper = null;
@@ -47,28 +47,8 @@ namespace MultiCommTerminal.WindowObjs {
         public MainWindow() {
             this.wrapper = DI.Wrapper;
             InitializeComponent();
-            this.wrapper.GetCurrentTerminator(
-                (data) => { 
-                    this.terminatorView.Initialise(data);
-                }, 
-                (err) => {
-                    App.ShowMsg(err);
-                    this.terminatorView.Initialise(new TerminatorDataModel());
-                });
-            this.wrapper.CurrentTerminatorChanged += Wrapper_CurrentTerminatorChanged;
-            this.wrapper.CurrentScriptChanged += this.Wrapper_CurrentScriptChanged;
-            this.wrapper.OnWifiError += this.Wrapper_OnWifiError;
-            this.wrapper.DiscoveredNetworks += this.Wrapper_DiscoveredNetworks;
-            this.wrapper.OnWifiConnectionAttemptCompleted += this.Wrapper_OnWifiConnectionAttemptCompletedHandler;
-            this.wrapper.CredentialsRequestedEvent += this.Wifi_CredentialsRequestedEventHandler;
-
             this.OnStartupSuccess();
             this.SizeToContent = SizeToContent.WidthAndHeight;
-        }
-
-
-        private void Wrapper_CurrentTerminatorChanged(object sender, TerminatorDataModel data) {
-            this.terminatorView.Initialise(data);
         }
 
 
@@ -81,40 +61,20 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
-            this.buttonSizer_BT.Teardown();
-            this.buttonSizer_BLE.Teardown();
-            
-            this.wrapper.BLE_DeviceDiscovered -= this.BLE_DeviceDiscoveredHandler;
-            this.wrapper.BLE_DeviceRemoved -= this.BLE_DeviceRemovedHandler;
-            this.wrapper.BLE_DeviceUpdated -= this.BLE_DeviceUpdatedHandler;
-            this.wrapper.BLE_DeviceDiscoveryComplete -= BLE_DeviceDiscoveryCompleteHandler;
-            this.wrapper.BLE_Disconnect();
-
-            this.wrapper.BT_DeviceDiscovered -= this.BT_DeviceDiscoveredHandler;
-            this.wrapper.BT_DiscoveryComplete -= this.BT_DiscoveryCompleteHandler;
-            this.wrapper.BT_DeviceInfoGathered -= this.BT_DeviceInfoGatheredHandler;
-            this.wrapper.BT_ConnectionCompleted -= this.BT_ConnectionCompletedHandler;
-            this.wrapper.BT_BytesReceived -= this.BT_BytesReceivedHandler;
-            this.wrapper.BT_PairInfoRequested -= this.BT_PairInfoRequestedHandler;
-            this.wrapper.BT_PairStatus -= this.BT_PairStatusHandler;
-            this.wrapper.BT_UnPairStatus -= this.BT_UnPairStatusHandler;
-            this.wrapper.BTClassicDisconnect();
-
-            this.wrapper.Wifi_BytesReceived -= Wrapper_Wifi_BytesReceivedHandler;
-            this.wrapper.CredentialsRequestedEvent -= this.Wifi_CredentialsRequestedEventHandler;
-            this.wrapper.WifiDisconect();
-
-            if (this.menu != null) {
-                this.menu.Close();
-            }
-
-            this.wrapper.Teardown();
+            this.OnTeardown();
         }
 
 
         /// <summary>Close opened menu window anywhere on window on mouse down</summary>
         private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
             this.HideMenu();
+        }
+
+
+        /// <summary>Grab to window to move when click on title bar</summary>
+        private void TitleBarBorder_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+            this.HideMenu();
+            this.DragMove();
         }
 
         #endregion
@@ -484,7 +444,6 @@ namespace MultiCommTerminal.WindowObjs {
             this.listBox_BT.Clear(this.infoList_BT);
         }
 
-
         #endregion
 
         #region Wifi
@@ -495,7 +454,7 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
-        private void Wrapper_DiscoveredNetworks(object sender, List<WifiNetworkInfo> networks) {
+        private void Wrapper_DiscoveredWifiNetworks(object sender, List<WifiNetworkInfo> networks) {
             this.Dispatcher.Invoke(() => {
                 this.gridWait.Collapse();
                 this.log.Info("Wrapper_DiscoveredNetworks", () => string.Format("Found {0} networks", networks.Count));
@@ -585,17 +544,24 @@ namespace MultiCommTerminal.WindowObjs {
             });
             this.cbComm.ItemsSource = this.mediums;
             this.cbComm.SelectedIndex = 0;
-            this.SizeToContent = SizeToContent.WidthAndHeight;
 
+            // Terminators
+            this.wrapper.GetCurrentTerminator(this.GetTerminatorsOk, this.GetTerminatorsOnErr);
+            this.wrapper.CurrentTerminatorChanged += Wrapper_CurrentTerminatorChanged;
+
+            // Language
             this.wrapper.LanguageChanged += this.LanguageChangedHandler;
 
-            // Bluetooth LE
+            // Scripts
+            this.wrapper.CurrentScriptChanged += this.Wrapper_CurrentScriptChanged;
+
+            // BLE
             this.wrapper.BLE_DeviceDiscovered += this.BLE_DeviceDiscoveredHandler;
             this.wrapper.BLE_DeviceRemoved += this.BLE_DeviceRemovedHandler;
             this.wrapper.BLE_DeviceUpdated += this.BLE_DeviceUpdatedHandler;
             this.wrapper.BLE_DeviceDiscoveryComplete += BLE_DeviceDiscoveryCompleteHandler;
 
-            //Bluetooth Classic
+            // BT
             this.wrapper.BT_DeviceDiscovered += this.BT_DeviceDiscoveredHandler;
             this.wrapper.BT_DiscoveryComplete += this.BT_DiscoveryCompleteHandler;
             this.wrapper.BT_DeviceInfoGathered += this.BT_DeviceInfoGatheredHandler;
@@ -605,18 +571,74 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper.BT_PairStatus += this.BT_PairStatusHandler;
             this.wrapper.BT_UnPairStatus += this.BT_UnPairStatusHandler;
 
-            // Wifi
+            // WIFI
+            this.wrapper.OnWifiError += this.Wrapper_OnWifiError;
+            this.wrapper.DiscoveredWifiNetworks += this.Wrapper_DiscoveredWifiNetworks;
+            this.wrapper.OnWifiConnectionAttemptCompleted += this.Wrapper_OnWifiConnectionAttemptCompletedHandler;
+            this.wrapper.CredentialsRequestedEvent += this.Wifi_CredentialsRequestedEventHandler;
             this.wrapper.Wifi_BytesReceived += Wrapper_Wifi_BytesReceivedHandler;
 
             // Call before rendering which will trigger initial resize events
-            buttonSizer_BT = new ButtonGroupSizeSyncManager(this.btnBTConnect, this.btnBTDiscover);
+            this.buttonSizer_BT = new ButtonGroupSizeSyncManager(this.btnBTConnect, this.btnBTDiscover);
             this.buttonSizer_BT.PrepForChange();
 
-            buttonSizer_BLE = new ButtonGroupSizeSyncManager(this.btnDiscoverLE, this.btnInfoLE, this.btnLEConnect);
-            buttonSizer_BLE.PrepForChange();
+            this.buttonSizer_BLE = new ButtonGroupSizeSyncManager(this.btnDiscoverLE, this.btnInfoLE, this.btnLEConnect);
+            this.buttonSizer_BLE.PrepForChange();
+
+            this.buttonSizer_WIFI = new ButtonGroupSizeSyncManager(this.btnWifiDiscover, this.btnWifiConnect, this.btnWifiDisconnect);
+            this.buttonSizer_WIFI.PrepForChange();
 
             this.wrapper.GetCurrentScript(this.PopulateScriptData, WindowHelpers.ShowMsg);
+        }
 
+
+        private void OnTeardown() {
+            this.buttonSizer_BT.Teardown();
+            this.buttonSizer_BLE.Teardown();
+            this.buttonSizer_WIFI.Teardown();
+
+            // Languages
+            this.wrapper.LanguageChanged -= this.LanguageChangedHandler;
+
+            // Scripts
+            this.wrapper.CurrentScriptChanged -= this.Wrapper_CurrentScriptChanged;
+
+            // Terminators
+            this.wrapper.CurrentTerminatorChanged += Wrapper_CurrentTerminatorChanged;
+
+            // BLE
+            this.wrapper.BLE_DeviceDiscovered -= this.BLE_DeviceDiscoveredHandler;
+            this.wrapper.BLE_DeviceRemoved -= this.BLE_DeviceRemovedHandler;
+            this.wrapper.BLE_DeviceUpdated -= this.BLE_DeviceUpdatedHandler;
+            this.wrapper.BLE_DeviceDiscoveryComplete -= BLE_DeviceDiscoveryCompleteHandler;
+            this.wrapper.BLE_Disconnect();
+
+            //BT
+            this.wrapper.BT_DeviceDiscovered -= this.BT_DeviceDiscoveredHandler;
+            this.wrapper.BT_DiscoveryComplete -= this.BT_DiscoveryCompleteHandler;
+            this.wrapper.BT_DeviceInfoGathered -= this.BT_DeviceInfoGatheredHandler;
+            this.wrapper.BT_ConnectionCompleted -= this.BT_ConnectionCompletedHandler;
+            this.wrapper.BT_BytesReceived -= this.BT_BytesReceivedHandler;
+            this.wrapper.BT_PairInfoRequested -= this.BT_PairInfoRequestedHandler;
+            this.wrapper.BT_PairStatus -= this.BT_PairStatusHandler;
+            this.wrapper.BT_UnPairStatus -= this.BT_UnPairStatusHandler;
+            this.wrapper.BTClassicDisconnect();
+
+            // WIFI
+            this.wrapper.OnWifiError -= this.Wrapper_OnWifiError;
+            this.wrapper.DiscoveredWifiNetworks -= this.Wrapper_DiscoveredWifiNetworks;
+            this.wrapper.OnWifiConnectionAttemptCompleted -= this.Wrapper_OnWifiConnectionAttemptCompletedHandler;
+            this.wrapper.Wifi_BytesReceived -= Wrapper_Wifi_BytesReceivedHandler;
+            this.wrapper.CredentialsRequestedEvent -= this.Wifi_CredentialsRequestedEventHandler;
+            this.wrapper.WifiDisconect();
+
+            // USB
+
+            if (this.menu != null) {
+                this.menu.Close();
+            }
+
+            this.wrapper.Teardown();
         }
 
 
@@ -628,7 +650,7 @@ namespace MultiCommTerminal.WindowObjs {
 
         #endregion
 
-        #region Private
+        #region Private Medium Selection
 
         private void SelectBTClassic() {
             this.spBluetooth.Show();
@@ -651,6 +673,10 @@ namespace MultiCommTerminal.WindowObjs {
             this.spWifi.Show();
         }
 
+        private void SelectUSB() {
+            // TODO USB functionality
+        }
+
 
         private void UnselectBTClassic() {
             this.spBluetooth.Collapse();
@@ -667,9 +693,11 @@ namespace MultiCommTerminal.WindowObjs {
             this.listBox_BLE.Clear(this.infoList_BLE);
         }
 
+
         private void UnselectEthernet() {
             this.spEthernet.Collapse();
         }
+
 
         private void UnselectWifi() {
             this.spWifi.Collapse();
@@ -680,12 +708,18 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
+        private void UnselectUsb() {
+            // TODO USB functionality
+        }
+
+
         private void cbComm_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             this.lbIncoming.Items.Clear();
             this.UnselectBTClassic();
             this.UnselectLE();
             this.UnselectEthernet();
             this.UnselectWifi();
+            this.UnselectUsb();
             DI.Wrapper.DisconnectAll();
             this.cbComm.GetSelected<CommMedialDisplay>((media) => {
                 switch (media.MediumType) {
@@ -701,12 +735,18 @@ namespace MultiCommTerminal.WindowObjs {
                     case CommMediumType.Wifi:
                         this.SelectWifi();
                         break;
+                    case CommMediumType.Usb:
+                        this.SelectUSB();
+                        break;
                     default:
                         break;
                 }
             });
         }
 
+        #endregion
+
+        #region Private
 
         private void btnSend_Click(object sender, RoutedEventArgs e) {
             this.outgoing.GetSelected<ScriptItem>((item) => {
@@ -730,6 +770,12 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
+        private void btnCommTypeHelp_Click(object sender, RoutedEventArgs e) {
+            Help_CommunicationMediums win = new Help_CommunicationMediums(this);
+            win.ShowDialog();
+        }
+
+
         private void outgoing_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             this.btnSend.Show();
         }
@@ -740,9 +786,24 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
+        private void Wrapper_CurrentTerminatorChanged(object sender, TerminatorDataModel data) {
+            this.terminatorView.Initialise(data);
+        }
+
+
+        private void GetTerminatorsOk(TerminatorDataModel data) {
+            this.terminatorView.Initialise(data);
+        }
+
+
+        private void GetTerminatorsOnErr(string err) {
+            App.ShowMsg(err);
+            this.terminatorView.Initialise(new TerminatorDataModel());
+        }
+
         #endregion
 
-        #region Menu events
+        #region Private Menu events
 
         /// <summary>Click event on the hamburger icon to toggle menu window</summary>
         private void imgMenu_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
@@ -769,6 +830,7 @@ namespace MultiCommTerminal.WindowObjs {
             // The button text change will trigger resize
             this.buttonSizer_BT.PrepForChange();
             this.buttonSizer_BLE.PrepForChange();
+            this.buttonSizer_WIFI.PrepForChange();
 
             // Buttons
             this.btnExit.Content = lang.GetText(MsgCode.exit);
@@ -793,13 +855,6 @@ namespace MultiCommTerminal.WindowObjs {
             // TODO Other texts
         }
 
-
-        private void TitleBarBorder_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
-            this.HideMenu();
-            this.DragMove();
-        }
-
-
         private void HideMenu() {
             if (this.menu.IsVisible) {
                 this.menu.Hide();
@@ -808,10 +863,6 @@ namespace MultiCommTerminal.WindowObjs {
 
         #endregion
 
-        private void btnCommTypeHelp_Click(object sender, RoutedEventArgs e) {
-            Help_CommunicationMediums win = new Help_CommunicationMediums(this);
-            win.ShowDialog();
-        }
 
     }
 }

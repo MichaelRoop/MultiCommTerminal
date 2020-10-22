@@ -220,7 +220,7 @@ namespace MultiCommWrapper.Net.interfaces {
 
         #region WIFI
 
-        event EventHandler<List<WifiNetworkInfo>> DiscoveredNetworks;
+        event EventHandler<List<WifiNetworkInfo>> DiscoveredWifiNetworks;
         event EventHandler<WifiError> OnWifiError;
         event EventHandler<MsgPumpConnectResults> OnWifiConnectionAttemptCompleted;
         event EventHandler<string> Wifi_BytesReceived;

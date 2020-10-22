@@ -56,10 +56,6 @@ namespace MultiCommTerminal.WindowObjs {
             }
 
             this.tEditor.OnSave += TEditor_OnSave;
-        }
-
-
-        private void Window_ContentRendered(object sender, EventArgs e) {
             WPF_ControlHelpers.CenterChild(parent, this);
         }
 
