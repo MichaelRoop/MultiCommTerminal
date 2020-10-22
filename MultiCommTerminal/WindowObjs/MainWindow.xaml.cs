@@ -392,7 +392,7 @@ namespace MultiCommTerminal.WindowObjs {
         private void BT_PairInfoRequestedHandler(object sender, BT_PairingInfoDataModel info) {
             this.log.InfoEntry("BT_PairInfoRequestedHandler");
             this.Dispatcher.Invoke(() => {
-                this.gridWait.Visibility = Visibility.Collapsed;
+                this.gridWait.Collapse();
                 if (info.IsPinRequested) {
                     var result = MsgBoxEnterText.ShowBox(this, info.RequestTitle, info.RequestMsg);
                     info.PIN = result.Text;
