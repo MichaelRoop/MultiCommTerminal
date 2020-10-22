@@ -70,7 +70,7 @@
                         <StackPanel x:Name="spResps" VerticalAlignment="Center">
                             <Label x:Name="lbResponse" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Response}}" HorizontalAlignment="Center" />
                             <Border BorderBrush="Blue" BorderThickness="1" Margin="10">
-                                <ListBox x:Name="lbIncoming" Width="250" Height="300" FontSize="16" HorizontalAlignment="Stretch" SelectionChanged="lbIncoming_SelectionChanged"
+                                <ListBox x:Name="lbIncoming" Width="250" Height="300" FontSize="16" HorizontalAlignment="Stretch"
                                     ScrollViewer.VerticalScrollBarVisibility="Auto" 
                                     ScrollViewer.HorizontalScrollBarVisibility="Auto" />
                             </Border>
@@ -141,6 +141,11 @@
                                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Connect}}" Margin="0,2.5"
                                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Connect}}"                                                                                            
                                             Background="Transparent" Click="btnBTConnect_Click" />
+                                    <controls:UC_IconButton x:Name="btnBTDisconnect" Style="{StaticResource TextIconButton}" Visibility="Collapsed"
+                                            HorizontalContentAlignment="Left"
+                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Disconnect}}" Margin="0,2.5"
+                                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}"                                                                                            
+                                            Background="Transparent" Click="btnBTDisconnect_Click" />
                                 </StackPanel>
                                 <StackPanel Margin="10,0">
                                     <Label Content="Device:" HorizontalAlignment="Center"/>

@@ -74,7 +74,7 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void Window_ContentRendered(object sender, EventArgs e) {
             this.menu = new MenuWin(this);
-            this.menu.Visibility = Visibility.Collapsed;
+            this.menu.Collapse();
             this.inScroll = this.lbIncoming.GetScrollViewer();
 
         }
@@ -181,7 +181,7 @@ namespace MultiCommTerminal.WindowObjs {
         private void BLE_DeviceDiscoveryCompleteHandler(object sender, bool e) {
             this.Dispatcher.Invoke(() => {
                 WrapErr.ToErrReport(9999, "Failure on BLE Device Discovery Complete", () => {
-                    this.gridWait.Visibility = Visibility.Collapsed;
+                    this.gridWait.Collapse();
                 });
             });
         }
@@ -190,7 +190,7 @@ namespace MultiCommTerminal.WindowObjs {
         private void Wrapper_BLE_DeviceInfoGatheredForConfig(object sender, BluetoothLEDeviceInfo info) {
             this.Dispatcher.Invoke(() => {
                 WrapErr.ToErrReport(9999, "Failure on BLE Device info gathered Complete", () => {
-                    this.gridWait.Visibility = Visibility.Collapsed;
+                    this.gridWait.Collapse();
                     this.wrapper.BLE_DeviceInfoGathered -= this.Wrapper_BLE_DeviceInfoGatheredForConfig;
                     if (info != null) {
                         DeviceInfo_BLESerial bleInfo = new DeviceInfo_BLESerial(this, info);
@@ -239,7 +239,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.listBox_BLE.ItemsSource = null;
             this.infoList_BLE.Clear();
             this.listBox_BLE.ItemsSource = this.infoList_BLE;
-            this.grdMain.Visibility = Visibility.Visible;
+            this.grdMain.Show();
             this.wrapper.BLE_DiscoverAsync();
         }
 
@@ -255,7 +255,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.listBox_BLE.GetSelected<BluetoothLEDeviceInfo>((info) => {
                 try {
                     // Will connect to complete the info
-                    this.gridWait.Visibility = Visibility.Visible;
+                    this.gridWait.Show();
                     this.wrapper.BLE_DeviceInfoGathered += this.Wrapper_BLE_DeviceInfoGatheredForConfig;
                     DI.Wrapper.BLE_GetInfo(info);
                 }
@@ -281,10 +281,12 @@ namespace MultiCommTerminal.WindowObjs {
 
         #region Bluetooth
 
+        #region Bluetooth Button handlers
+
         private void btnBTDiscover_Click(object sender, RoutedEventArgs e) {
             this.BT_ClearAllEntries();
-            this.gridWait.Visibility = Visibility.Visible;
-            this.btnBTConnect.Visibility = Visibility.Collapsed;
+            this.gridWait.Show();
+            this.btnBTConnect.Collapse();
             this.wrapper.BTClassicDiscoverAsync(this.btPairCheck.IsChecked.GetValueOrDefault(false));
         }
 
@@ -293,10 +295,20 @@ namespace MultiCommTerminal.WindowObjs {
             this.log.InfoEntry("btnBTConnect_Click");
             this.listBox_BT.GetSelected<BTDeviceInfo>((item) => {
                 this.log.Info("btnBTConnect_Click", "item not NULL - so call connect async");
-                this.gridWait.Visibility = Visibility.Visible;
+                this.btnBTDisconnect.Collapse();
+                this.btnBTConnect.Collapse();
+                this.gridWait.Show();
                 this.wrapper.BTClassicConnectAsync(item);
             });
         }
+
+
+        private void btnBTDisconnect_Click(object sender, RoutedEventArgs e) {
+            this.wrapper.BTClassicDisconnect();
+            this.btnBTDisconnect.Collapse();
+            this.btnBTConnect.Show();
+        }
+
 
         private void btnInfoBT_Click(object sender, RoutedEventArgs e) {
             this.listBox_BT.GetSelected<BTDeviceInfo>((item) => {
@@ -307,26 +319,29 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void btnBTPair_Click(object sender, RoutedEventArgs e) {
-            this.SetCheckUncheckButtons();
+            this.SetBTCheckUncheckButtons();
             this.log.InfoEntry("btnBTPair_Click");
             this.listBox_BT.GetSelected<BTDeviceInfo>((item) => {
                 this.log.Info("btnBTConnect_Click", "item not NULL - so call connect async");
-                this.gridWait.Visibility = Visibility.Visible;
+                this.gridWait.Show();
                 this.wrapper.BTClassicPairAsync(item);
             });
         }
 
 
         private void btnBTUnPair_Click(object sender, RoutedEventArgs e) {
-            this.SetCheckUncheckButtons();
+            this.SetBTCheckUncheckButtons();
             this.log.InfoEntry("btnBTUnPair_Click");
             this.listBox_BT.GetSelected<BTDeviceInfo>((item) => {
                 this.log.Info("btnBTConnect_Click", "item not NULL - so call connect async");
-                this.gridWait.Visibility = Visibility.Visible;
+                this.gridWait.Show();
                 this.wrapper.BTClassicUnPairAsync(item);
             });
         }
 
+        #endregion
+
+        #region BT Event Handlers
 
         private void BT_DeviceDiscoveredHandler(object sender, BTDeviceInfo dev) {
             this.Dispatcher.Invoke(() => {
@@ -338,8 +353,8 @@ namespace MultiCommTerminal.WindowObjs {
         private void BT_DiscoveryCompleteHandler(object sender, bool e) {
             this.log.InfoEntry("BT_DiscoveryCompleteHandler");
             this.Dispatcher.Invoke(() => {
-                this.gridWait.Visibility = Visibility.Collapsed;
-                this.SetCheckUncheckButtons();
+                this.gridWait.Collapse();
+                this.SetBTCheckUncheckButtons();
             });
         }
 
@@ -352,36 +367,6 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
-        private void SetVisibility(Button btn, Visibility visibility) {
-            if (btn != null) {
-                btn.Visibility = visibility;
-            }
-        }
-
-
-        private void SetCheckUncheckButtons() {
-            this.SetVisibility(this.btnBTUnPair, Visibility.Collapsed);
-            this.SetVisibility(btnBTPair, Visibility.Collapsed);
-            this.SetVisibility(btnBTConnect, Visibility.Collapsed);
-            this.SetVisibility(btnInfoBT, Visibility.Collapsed);
-            if (this.listBox_BT != null && this.listBox_BT.Items.Count > 0) {
-                this.SetVisibility(this.btnInfoBT, Visibility.Visible);
-                if (this.btPairCheck.IsChecked != null) {
-                    if (this.btPairCheck.IsChecked.GetValueOrDefault(false)) {
-                        this.btnBTUnPair.Visibility = Visibility.Visible;
-                        this.btnBTConnect.Visibility = Visibility.Visible;
-                    }
-                    else {
-                        this.btnBTPair.Visibility = Visibility.Visible;
-                    }
-                }
-            }
-            else {
-                // hide connect
-            }
-        }
-
-
         private void BT_BytesReceivedHandler(object sender, string msg) {
             this.Dispatcher.Invoke(() => {
                 this.lbIncoming.AddAndScroll(msg, this.inScroll, 100);
@@ -389,11 +374,15 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
-        private void BT_ConnectionCompletedHandler(object sender, bool e) {
+        private void BT_ConnectionCompletedHandler(object sender, bool isOk) {
             this.log.InfoEntry("BT_ConnectionCompletedHandler");
             this.Dispatcher.Invoke(() => {
-                this.gridWait.Visibility = Visibility.Collapsed;
-                if (e == false) {
+                this.gridWait.Collapse();
+                if (isOk) {
+                    this.btnBTDisconnect.Show();
+                }
+                else {
+                    this.btnBTConnect.Show();
                     MsgBoxSimple.ShowBox("Failed connection", "Reason unknown");
                 }
             });
@@ -420,10 +409,10 @@ namespace MultiCommTerminal.WindowObjs {
         private void BT_UnPairStatusHandler(object sender, BTUnPairOperationStatus e) {
             this.log.InfoEntry("BT_UnPairStatusHandler");
             this.Dispatcher.Invoke(() => {
-                this.gridWait.Visibility = Visibility.Collapsed;
+                this.gridWait.Collapse();
                 if (e.IsSuccessful) {
                     this.BT_RemoveEntry(e.Name);
-                    this.SetCheckUncheckButtons();
+                    this.SetBTCheckUncheckButtons();
                 }
                 else {
                     this.ShowMsgBox(this.wrapper.GetText(MsgCode.Error), e.UnpairStatus.ToString());
@@ -435,15 +424,34 @@ namespace MultiCommTerminal.WindowObjs {
         private void BT_PairStatusHandler(object sender, BTPairOperationStatus e) {
             this.log.InfoEntry("BT_PairStatusHandler");
             this.Dispatcher.Invoke(() => {
-                this.gridWait.Visibility = Visibility.Collapsed;
+                this.gridWait.Collapse();
                 if (e.IsSuccessful) {
                     this.BT_RemoveEntry(e.Name);
-                    this.SetCheckUncheckButtons();
+                    this.SetBTCheckUncheckButtons();
                 }
                 else {
                     this.ShowMsgBox(this.wrapper.GetText(MsgCode.Error), e.PairStatus.ToString());
                 }
             });
+        }
+
+        #endregion
+
+        private void SetBTCheckUncheckButtons() {
+            this.btnBTUnPair.Collapse();
+            this.btnBTPair.Collapse();
+            this.btnBTConnect.Collapse();
+            this.btnInfoBT.Collapse();
+            if (this.listBox_BT.Count() > 0) {
+                this.btnInfoBT.Show();
+                if (this.btPairCheck.IsChecked.GetValueOrDefault(false)) {
+                    this.btnBTUnPair.Show();
+                    this.btnBTConnect.Show();
+                }
+                else {
+                    this.btnBTPair.Show();
+                }
+            }
         }
 
 
@@ -457,34 +465,23 @@ namespace MultiCommTerminal.WindowObjs {
             }
         }
 
-        private void lbIncoming_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-
-        }
-
 
         private void btPairCheck_Checked(object sender, RoutedEventArgs e) {
             this.BT_ClearAllEntries();
-            this.SetCheckUncheckButtons();
+            this.SetBTCheckUncheckButtons();
         }
 
 
         private void btPairCheck_Unchecked(object sender, RoutedEventArgs e) {
             this.BT_ClearAllEntries();
-            this.SetCheckUncheckButtons();
+            this.SetBTCheckUncheckButtons();
         }
 
+
         private void BT_ClearAllEntries() {
-            if (this.listBox_BT != null && this.listBox_BT.ItemsSource != null) {
-                this.listBox_BT.ItemsSource = null;
-                this.infoList_BT.Clear();
-                this.listBox_BT.ItemsSource = this.infoList_BT;
-            }
-            if (this.btnBTPair != null) {
-                this.btnBTPair.Visibility = Visibility.Collapsed;
-            }
-            if (this.btnBTUnPair != null) {
-                this.btnBTUnPair.Visibility = Visibility.Collapsed;
-            }
+            this.btnBTPair.Collapse();
+            this.btnBTUnPair.Collapse();
+            this.listBox_BT.Clear(this.infoList_BT);
         }
 
 
@@ -493,14 +490,14 @@ namespace MultiCommTerminal.WindowObjs {
         #region Wifi
 
         private void btnWifiDiscover_Click(object sender, RoutedEventArgs e) {
-            this.gridWait.Visibility = Visibility.Visible;
+            this.gridWait.Show();
             this.wrapper.WifiDiscoverAsync();
         }
 
 
         private void Wrapper_DiscoveredNetworks(object sender, List<WifiNetworkInfo> networks) {
             this.Dispatcher.Invoke(() => {
-                this.gridWait.Visibility = Visibility.Collapsed;
+                this.gridWait.Collapse();
                 this.log.Info("Wrapper_DiscoveredNetworks", () => string.Format("Found {0} networks", networks.Count));
                 this.lbWifi.SetNewSource(ref this.wifiNetworks, networks);
                 this.btnWifiConnect.Show();
@@ -510,7 +507,7 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void Wrapper_OnWifiError(object sender, WifiError e) {
             this.Dispatcher.Invoke(() => {
-                this.gridWait.Visibility = Visibility.Collapsed;
+                this.gridWait.Collapse();
                 if (e.Code != WifiErrorCode.UserCanceled) {
                     string err = string.Format("{0} ({1})", e.Code.ToString(), e.ExtraInfo.Length == 0 ? "--" : e.ExtraInfo);
                     App.ShowMsg(err);
@@ -543,7 +540,7 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void btnWifiConnect_Click(object sender, RoutedEventArgs e) {
             this.lbWifi.GetSelected<WifiNetworkInfo>((item) => {
-                this.gridWait.Visibility = Visibility.Visible;
+                this.gridWait.Show();
                 this.wrapper.WifiConnectAsync(item);
             });
         }
@@ -557,7 +554,7 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void Wrapper_OnWifiConnectionAttemptCompletedHandler(object sender, CommunicationStack.Net.DataModels.MsgPumpConnectResults e) {
             this.Dispatcher.Invoke(() => {
-                this.gridWait.Visibility = Visibility.Collapsed;
+                this.gridWait.Collapse();
                 if (!e.IsSuccessful) {
                     App.ShowMsg("Failed connection");
                 }
@@ -641,7 +638,7 @@ namespace MultiCommTerminal.WindowObjs {
         private void SelectLE() {
             this.spBluetoothLE.Show();
             this.btnDiscoverLE.Show();
-            //this.btnLEConnect.Visibility = Visibility.Visible;
+            //this.btnLEConnect.Show();
         }
 
 
@@ -658,9 +655,8 @@ namespace MultiCommTerminal.WindowObjs {
         private void UnselectBTClassic() {
             this.spBluetooth.Collapse();
             this.btnBTDiscover.Collapse();
-            this.listBox_BT.ItemsSource = null;
-            this.infoList_BT.Clear();
-            this.listBox_BT.ItemsSource = this.infoList_BT;
+            this.btnBTDisconnect.Collapse();
+            this.listBox_BT.Clear(this.infoList_BT);
         }
 
 
@@ -668,9 +664,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.spBluetoothLE.Collapse();
             this.btnLEConnect.Collapse();
             this.btnDiscoverLE.Collapse();
-            this.listBox_BLE.ItemsSource = null;
-            this.infoList_BLE.Clear();
-            this.listBox_BLE.ItemsSource = this.infoList_BLE;
+            this.listBox_BLE.Clear(this.infoList_BLE);
         }
 
         private void UnselectEthernet() {
@@ -687,9 +681,7 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void cbComm_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-
             this.lbIncoming.Items.Clear();
-            
             this.UnselectBTClassic();
             this.UnselectLE();
             this.UnselectEthernet();
@@ -728,7 +720,6 @@ namespace MultiCommTerminal.WindowObjs {
                         case CommMediumType.Ethernet:
                             break;
                         case CommMediumType.Wifi:
-                            this.log.Info("btnSend_Click", "To WIFI");
                             this.wrapper.WifiSend(item.Command);
                             break;
                         default:
@@ -740,8 +731,7 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void outgoing_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            this.btnSend.Visibility = Visibility.Visible;
-            // TODO modify so that only when connected
+            this.btnSend.Show();
         }
 
 
