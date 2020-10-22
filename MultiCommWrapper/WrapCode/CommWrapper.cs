@@ -93,6 +93,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         public void DisconnectAll() {
             this.BLE_Disconnect();
             this.BTClassicDisconnect();
+            this.WifiDisconect();
             // TODO - add all others in future
         }
 

@@ -105,11 +105,7 @@
                                         </ComboBox.ItemTemplate>
                                     </ComboBox>
                                 </DockPanel>
-
-                                <!--<controls:UC_TerminatorEdit x:Name="terminatorEdit" />-->
-
                                 <controls:UC_TerminatorViewer x:Name="terminatorView"  />
-
                             </StackPanel>
                         </Border>
 

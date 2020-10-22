@@ -520,6 +520,7 @@ namespace MultiCommTerminal.WindowObjs {
                 this.lbWifi.ItemsSource = null;
                 this.wifiNetworks = networks;
                 this.lbWifi.ItemsSource = this.wifiNetworks;
+                this.btnWifiConnect.Show();
             });
         }
 
@@ -569,6 +570,7 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void btnWifiDisconnect_Click(object sender, RoutedEventArgs e) {
             this.wrapper.WifiDisconect();
+            this.btnWifiDisconnect.Collapse();
         }
 
 
@@ -577,6 +579,9 @@ namespace MultiCommTerminal.WindowObjs {
                 this.gridWait.Visibility = Visibility.Collapsed;
                 if (!e.IsSuccessful) {
                     App.ShowMsg("Failed connection");
+                }
+                else {
+                    this.btnWifiDisconnect.Show();
                 }
             });
         }
@@ -655,62 +660,88 @@ namespace MultiCommTerminal.WindowObjs {
 
         #region Private
 
+        private void SelectBTClassic() {
+            this.spBluetooth.Show();
+            this.btnBTDiscover.Show();
+        }
+
+        private void SelectLE() {
+            this.spBluetoothLE.Show();
+            this.btnDiscoverLE.Show();
+            //this.btnLEConnect.Visibility = Visibility.Visible;
+        }
+
+
+        private void SelectEthernet() {
+            this.spEthernet.Show();
+        }
+
+
+        private void SelectWifi() {
+            this.spWifi.Show();
+        }
+
+
+        private void UnselectBTClassic() {
+            this.spBluetooth.Collapse();
+            this.btnBTDiscover.Collapse();
+            this.listBox_BT.ItemsSource = null;
+            this.infoList_BT.Clear();
+            this.listBox_BT.ItemsSource = this.infoList_BT;
+        }
+
+
+        private void UnselectLE() {
+            this.spBluetoothLE.Collapse();
+            this.btnLEConnect.Collapse();
+            this.btnDiscoverLE.Collapse();
+            this.listBox_BLE.ItemsSource = null;
+            this.infoList_BLE.Clear();
+            this.listBox_BLE.ItemsSource = this.infoList_BLE;
+        }
+
+        private void UnselectEthernet() {
+            this.spEthernet.Collapse();
+        }
+
+        private void UnselectWifi() {
+            this.spWifi.Collapse();
+            this.btnWifiConnect.Collapse();
+            this.btnWifiDisconnect.Collapse();
+            // TODO extra buttons
+
+            this.lbWifi.ItemsSource = null;
+            this.wifiNetworks.Clear();
+            this.lbWifi.ItemsSource = this.wifiNetworks;
+        }
+
+
         private void cbComm_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            // Hide all the options
-            this.spBluetooth.Visibility = Visibility.Collapsed;
-            this.spBluetoothLE.Visibility = Visibility.Collapsed;
-            this.btnLEConnect.Visibility = Visibility.Collapsed;
-            this.spEthernet.Visibility = Visibility.Collapsed;
-            this.spWifi.Visibility = Visibility.Collapsed;
+            this.UnselectBTClassic();
+            this.UnselectLE();
+            this.UnselectEthernet();
+            this.UnselectWifi();
 
-            this.btnBTDiscover.Visibility = Visibility.Collapsed;
-            this.btnDiscoverLE.Visibility = Visibility.Collapsed;
-
-            // Disconnect on switch
             DI.Wrapper.DisconnectAll();
 
             switch ((this.cbComm.SelectedItem as CommMedialDisplay).MediumType) {
                 case CommMediumType.Bluetooth:
-                    this.spBluetooth.Visibility = Visibility.Visible;
-                    this.btnBTDiscover.Visibility = Visibility.Visible;
+                    this.SelectBTClassic();
                     break;
                 case CommMediumType.BluetoothLE:
-                    this.spBluetoothLE.Visibility = Visibility.Visible;
-                    this.btnDiscoverLE.Visibility = Visibility.Visible;
-                    this.btnLEConnect.Visibility = Visibility.Visible;
+                    this.SelectLE();
                     break;
                 case CommMediumType.Ethernet:
-                    this.spEthernet.Visibility = Visibility.Visible;
+                    this.SelectEthernet();
                     break;
                 case CommMediumType.Wifi:
-                    this.spWifi.Visibility = Visibility.Visible;
+                    this.SelectWifi();
                     break;
                 default:
                     break;
             }
         }
 
-        // This will be moved out of UI
-        //private void DoDisconnect(CommMediumType newMedium) {
-        //    if (this.currentMedium != CommMediumType.None && 
-        //        this.currentMedium != newMedium) {
-        //        // Disconnect whatever we are connected to
-        //        switch (this.currentMedium) {
-        //            case CommMediumType.Bluetooth:
-        //                break;
-        //            case CommMediumType.BluetoothLE:
-        //                break;
-        //            case CommMediumType.Ethernet:
-        //                break;
-        //            case CommMediumType.Wifi:
-        //                break;
-        //            default:
-        //                break;
-        //        }
-        //        this.currentMedium = CommMediumType.None;
-        //        this.btnConnect.Visibility = Visibility.Collapsed;
-        //    }
-        //}
 
         private void btnSend_Click(object sender, RoutedEventArgs e) {
             ScriptItem item = this.outgoing.SelectedItem as ScriptItem;
