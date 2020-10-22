@@ -1,17 +1,8 @@
 ﻿using BluetoothCommon.Net;
 using MultiCommTerminal.WPF_Helpers;
-using MultiCommWrapper.Net.interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.WindowObjs {
@@ -70,28 +61,22 @@ namespace MultiCommTerminal.WindowObjs {
             }
             else {
                 // TODO Disable radio display
-                this.Collapse(this.lblRadioLabel);
-                this.Collapse(this.lblRadioFeaturesLable);
-                this.Collapse(this.lblRadioProtocolLabel);
-                this.Collapse(this.lbRadioLmp);
-                this.Collapse(this.lbRadioManufacturerLabel);
-                this.Collapse(this.lbRadioManufacturer);
-                this.comboBoxFeatures.Visibility = Visibility.Collapsed;
+                this.lblRadioLabel.Collapse();
+                this.lblRadioFeaturesLable.Collapse();
+                this.lblRadioProtocolLabel.Collapse();
+                this.lbRadioLmp.Collapse();
+                this.lbRadioManufacturerLabel.Collapse();
+                this.lbRadioManufacturer.Collapse();
+                this.comboBoxFeatures.Collapse();
             }
 
             // Cannot get RSSI for now
-            this.Collapse(this.lbStrength);
-            this.Collapse(this.lblStrengthLabel);
+            this.lbStrength.Collapse();
+            this.lblStrengthLabel.Collapse();
             // Not displaying properties for the moment
-            this.Collapse(this.lblProperties);
-            this.comboBoxProperties.Visibility = Visibility.Collapsed;
+            this.lblProperties.Collapse();
+            this.comboBoxProperties.Collapse();
         }
-
-
-        private void Collapse(Label label) {
-            WPF_ControlHelpers.Collapse(label);
-        }
-
 
     }
 }
