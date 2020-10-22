@@ -75,9 +75,8 @@ namespace MultiCommTerminal.WindowObjs {
         private void Window_ContentRendered(object sender, EventArgs e) {
             this.menu = new MenuWin(this);
             this.menu.Visibility = Visibility.Collapsed;
+            this.inScroll = this.lbIncoming.GetScrollViewer();
 
-            Border b = (Border)VisualTreeHelper.GetChild(this.lbIncoming, 0);
-            this.inScroll = (ScrollViewer)VisualTreeHelper.GetChild(b, 0);
         }
 
 
@@ -139,11 +138,8 @@ namespace MultiCommTerminal.WindowObjs {
                     lock (this.listBox_BLE) {
                         this.log.Info("BLE_DeviceDiscoveredHandler", () => string.Format("Adding '{0}' '{1}'", info.Name, info.Id));
                         this.RemoveIfFound(info.Id, false, true);
-                        // Disconnect the list from control before changing. Maybe change to Observable collection
-                        this.listBox_BLE.ItemsSource = null;
-                        this.infoList_BLE.Add(info);
                         this.log.Info("BLE_DeviceDiscoveredHandler", () => string.Format("Adding DONE"));
-                        this.listBox_BLE.ItemsSource = this.infoList_BLE;
+                        this.listBox_BLE.Add(this.infoList_BLE, info);
                     }
                 });
             });
@@ -254,10 +250,10 @@ namespace MultiCommTerminal.WindowObjs {
             }
         }
 
+
         private void btnConfigureBLE_Click(object sender, RoutedEventArgs e) {
-            if (this.listBox_BLE.SelectedItem != null) {
+            this.listBox_BLE.GetSelected<BluetoothLEDeviceInfo>((info) => {
                 try {
-                    BluetoothLEDeviceInfo info = this.listBox_BLE.SelectedItem as BluetoothLEDeviceInfo;
                     // Will connect to complete the info
                     this.gridWait.Visibility = Visibility.Visible;
                     this.wrapper.BLE_DeviceInfoGathered += this.Wrapper_BLE_DeviceInfoGatheredForConfig;
@@ -266,20 +262,19 @@ namespace MultiCommTerminal.WindowObjs {
                 catch (Exception ex) {
                     this.log.Exception(9999, "Failed on BLE config access to device", ex);
                 }
-            }
+            });
         }
 
 
         private void btnLEConnect_Click(object sender, RoutedEventArgs e) {
-            if (this.listBox_BLE.SelectedItem != null) {
+            this.listBox_BLE.GetSelected<BluetoothLEDeviceInfo>((info) => {
                 try {
-                    BluetoothLEDeviceInfo info = this.listBox_BLE.SelectedItem as BluetoothLEDeviceInfo;
                     this.wrapper.BLE_ConnectAsync(info);
                 }
                 catch (Exception ex) {
                     this.log.Exception(9999, "Failed on BLE connect", ex);
                 }
-            }
+            });
         }
 
         #endregion
@@ -293,56 +288,49 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper.BTClassicDiscoverAsync(this.btPairCheck.IsChecked.GetValueOrDefault(false));
         }
 
+
         private void btnBTConnect_Click(object sender, RoutedEventArgs e) {
             this.log.InfoEntry("btnBTConnect_Click");
-            BTDeviceInfo item = this.listBox_BT.SelectedItem as BTDeviceInfo;
-            if (item != null) {
+            this.listBox_BT.GetSelected<BTDeviceInfo>((item) => {
                 this.log.Info("btnBTConnect_Click", "item not NULL - so call connect async");
                 this.gridWait.Visibility = Visibility.Visible;
                 this.wrapper.BTClassicConnectAsync(item);
-            }
+            });
         }
 
         private void btnInfoBT_Click(object sender, RoutedEventArgs e) {
-            if (this.listBox_BT.SelectedItem != null) {
-                BTDeviceInfo item = this.listBox_BT.SelectedItem as BTDeviceInfo;
-                if (item != null) {
+            this.listBox_BT.GetSelected<BTDeviceInfo>((item) => {
                     // TODO - spinner
                     this.wrapper.BTClassicGetExtraInfoAsync(item);                    
-                }
-            }
+            });
         }
 
 
         private void btnBTPair_Click(object sender, RoutedEventArgs e) {
             this.SetCheckUncheckButtons();
             this.log.InfoEntry("btnBTPair_Click");
-            BTDeviceInfo item = this.listBox_BT.SelectedItem as BTDeviceInfo;
-            if (item != null) {
+            this.listBox_BT.GetSelected<BTDeviceInfo>((item) => {
                 this.log.Info("btnBTConnect_Click", "item not NULL - so call connect async");
                 this.gridWait.Visibility = Visibility.Visible;
                 this.wrapper.BTClassicPairAsync(item);
-            }
+            });
         }
 
 
         private void btnBTUnPair_Click(object sender, RoutedEventArgs e) {
             this.SetCheckUncheckButtons();
             this.log.InfoEntry("btnBTUnPair_Click");
-            BTDeviceInfo item = this.listBox_BT.SelectedItem as BTDeviceInfo;
-            if (item != null) {
+            this.listBox_BT.GetSelected<BTDeviceInfo>((item) => {
                 this.log.Info("btnBTConnect_Click", "item not NULL - so call connect async");
                 this.gridWait.Visibility = Visibility.Visible;
                 this.wrapper.BTClassicUnPairAsync(item);
-            }
+            });
         }
 
 
         private void BT_DeviceDiscoveredHandler(object sender, BTDeviceInfo dev) {
             this.Dispatcher.Invoke(() => {
-                this.listBox_BT.ItemsSource = null;
-                this.infoList_BT.Add(dev);
-                this.listBox_BT.ItemsSource = this.infoList_BT;
+                this.listBox_BT.Add(this.infoList_BT, dev);
             });
         }
 
@@ -396,11 +384,7 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void BT_BytesReceivedHandler(object sender, string msg) {
             this.Dispatcher.Invoke(() => {
-                if (this.lbIncoming.Items.Count > 100) {
-                    this.lbIncoming.Items.RemoveAt(0);
-                }
-                this.lbIncoming.Items.Add(msg);
-                this.inScroll.ScrollToBottom();
+                this.lbIncoming.AddAndScroll(msg, this.inScroll, 100);
             });
         }
 
@@ -513,16 +497,16 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper.WifiDiscoverAsync();
         }
 
+
         private void Wrapper_DiscoveredNetworks(object sender, List<WifiNetworkInfo> networks) {
             this.Dispatcher.Invoke(() => {
                 this.gridWait.Visibility = Visibility.Collapsed;
                 this.log.Info("Wrapper_DiscoveredNetworks", () => string.Format("Found {0} networks", networks.Count));
-                this.lbWifi.ItemsSource = null;
-                this.wifiNetworks = networks;
-                this.lbWifi.ItemsSource = this.wifiNetworks;
+                this.lbWifi.SetNewSource(ref this.wifiNetworks, networks);
                 this.btnWifiConnect.Show();
             });
         }
+
 
         private void Wrapper_OnWifiError(object sender, WifiError e) {
             this.Dispatcher.Invoke(() => {
@@ -558,15 +542,12 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void btnWifiConnect_Click(object sender, RoutedEventArgs e) {
-            WifiNetworkInfo info = this.lbWifi.SelectedItem as WifiNetworkInfo;
-            if (info != null) {
+            this.lbWifi.GetSelected<WifiNetworkInfo>((item) => {
                 this.gridWait.Visibility = Visibility.Visible;
-                this.wrapper.WifiConnectAsync(info);
-            }
-            else {
-                this.log.Warning(9999, "btnWifiConnect_Click", "No wifi selected");
-            }
+                this.wrapper.WifiConnectAsync(item);
+            });
         }
+
 
         private void btnWifiDisconnect_Click(object sender, RoutedEventArgs e) {
             this.wrapper.WifiDisconect();
@@ -589,11 +570,7 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void Wrapper_Wifi_BytesReceivedHandler(object sender, string msg) {
             this.Dispatcher.Invoke(() => {
-                if (this.lbIncoming.Items.Count > 100) {
-                    this.lbIncoming.Items.RemoveAt(0);
-                }
-                this.lbIncoming.Items.Add(msg);
-                this.inScroll.ScrollToBottom();
+                this.lbIncoming.AddAndScroll(msg, this.inScroll, 100);
             });
         }
 
@@ -647,12 +624,8 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void PopulateScriptData(ScriptDataModel dataModel) {
-            this.outgoing.ItemsSource = null;
-            this.scriptItems.Clear();
-            foreach (ScriptItem item in dataModel.Items) {
-                this.scriptItems.Add(item);
-            }
-            this.outgoing.ItemsSource = this.scriptItems;
+            this.outgoing.Clear(this.scriptItems);
+            this.outgoing.Add(this.scriptItems, dataModel.Items);
         }
 
 
@@ -708,61 +681,61 @@ namespace MultiCommTerminal.WindowObjs {
             this.spWifi.Collapse();
             this.btnWifiConnect.Collapse();
             this.btnWifiDisconnect.Collapse();
+            this.lbWifi.Clear(this.wifiNetworks);
             // TODO extra buttons
-
-            this.lbWifi.ItemsSource = null;
-            this.wifiNetworks.Clear();
-            this.lbWifi.ItemsSource = this.wifiNetworks;
         }
 
 
         private void cbComm_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+
+            this.lbIncoming.Items.Clear();
+            
             this.UnselectBTClassic();
             this.UnselectLE();
             this.UnselectEthernet();
             this.UnselectWifi();
-
             DI.Wrapper.DisconnectAll();
-
-            switch ((this.cbComm.SelectedItem as CommMedialDisplay).MediumType) {
-                case CommMediumType.Bluetooth:
-                    this.SelectBTClassic();
-                    break;
-                case CommMediumType.BluetoothLE:
-                    this.SelectLE();
-                    break;
-                case CommMediumType.Ethernet:
-                    this.SelectEthernet();
-                    break;
-                case CommMediumType.Wifi:
-                    this.SelectWifi();
-                    break;
-                default:
-                    break;
-            }
-        }
-
-
-        private void btnSend_Click(object sender, RoutedEventArgs e) {
-            ScriptItem item = this.outgoing.SelectedItem as ScriptItem;
-            if (item != null) {
-                // TODO - send to current device
-                switch ((this.cbComm.SelectedItem as CommMedialDisplay).MediumType) {
+            this.cbComm.GetSelected<CommMedialDisplay>((media) => {
+                switch (media.MediumType) {
                     case CommMediumType.Bluetooth:
-                        this.wrapper.BTClassicSend(item.Command);
+                        this.SelectBTClassic();
                         break;
                     case CommMediumType.BluetoothLE:
+                        this.SelectLE();
                         break;
                     case CommMediumType.Ethernet:
+                        this.SelectEthernet();
                         break;
                     case CommMediumType.Wifi:
-                        this.log.Info("btnSend_Click", "To WIFI");
-                        this.wrapper.WifiSend(item.Command);
+                        this.SelectWifi();
                         break;
                     default:
                         break;
                 }
-            }
+            });
+        }
+
+
+        private void btnSend_Click(object sender, RoutedEventArgs e) {
+            this.outgoing.GetSelected<ScriptItem>((item) => {
+                this.cbComm.GetSelected<CommMedialDisplay>((media) => {
+                    switch (media.MediumType) {
+                        case CommMediumType.Bluetooth:
+                            this.wrapper.BTClassicSend(item.Command);
+                            break;
+                        case CommMediumType.BluetoothLE:
+                            break;
+                        case CommMediumType.Ethernet:
+                            break;
+                        case CommMediumType.Wifi:
+                            this.log.Info("btnSend_Click", "To WIFI");
+                            this.wrapper.WifiSend(item.Command);
+                            break;
+                        default:
+                            break;
+                    }
+                });
+            });
         }
 
 
