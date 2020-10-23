@@ -29,7 +29,6 @@ namespace Wifi.UWP.Core {
                     WiFiAvailableNetwork net = this.GetNetwork(dataModel.SSID);
                     if (net != null) {
                         // Connect WIFI level
-                        // TODO Need to establish WIFI connection first with credentials
                         // TODO How to establish kind of authentication
 
                         switch (dataModel.AuthenticationType) {
@@ -38,34 +37,43 @@ namespace Wifi.UWP.Core {
                                 break;
                         }
 
-                        PasswordCredential cred = new PasswordCredential() {
-                            Password = dataModel.Password,
-                            //UserName = dataModel.UserName, // this blows up
-                        };
-                        WiFiConnectionResult result = await this.wifiAdapter.ConnectAsync(net, WiFiReconnectionKind.Automatic, cred);
-                        if (result.ConnectionStatus == WiFiConnectionStatus.Success) {
-                            //ConnectionProfile profile = await this.wifiAdapter.NetworkAdapter.GetConnectedProfileAsync();
-                            //this.log.Info("ConnectAsync", () => string.Format("Connected to:{0}", profile.ProfileName));
-                            //if (profile.IsWlanConnectionProfile) {
+                        WiFiConnectionResult result = null;
+                        PasswordCredential cred = this.GetCredentials(dataModel);
+                        if (cred == null) {
+                            result = await this.wifiAdapter.ConnectAsync(net, WiFiReconnectionKind.Automatic);
+                        }
+                        else {
+                            result = await this.wifiAdapter.ConnectAsync(net, WiFiReconnectionKind.Automatic, cred);
+                        }
 
-                            await this.DumpWifiAdapterInfo(this.wifiAdapter);
-                            this.log.Info("ConnectAsync", () => string.Format("Connecting to {0}:{1}", dataModel.RemoteHostName, dataModel.RemoteServiceName));
-                            this.msgPump.ConnectAsync(new SocketMsgPumpConnectData() {
+                        switch (result.ConnectionStatus) {
+                            case WiFiConnectionStatus.Success:
+                                //ConnectionProfile profile = await this.wifiAdapter.NetworkAdapter.GetConnectedProfileAsync();
+                                //this.log.Info("ConnectAsync", () => string.Format("Connected to:{0}", profile.ProfileName));
+                                //if (profile.IsWlanConnectionProfile) {
+
+                                await this.DumpWifiAdapterInfo(this.wifiAdapter);
+                                this.log.Info("ConnectAsync", () => string.Format("Connecting to {0}:{1}", dataModel.RemoteHostName, dataModel.RemoteServiceName));
+                                // Connect socket
+                                this.msgPump.ConnectAsync(new SocketMsgPumpConnectData() {
                                     MaxReadBufferSize = 255,
                                     RemoteHostName = dataModel.RemoteHostName,
                                     ServiceName = dataModel.RemoteServiceName,
                                     // TODO - determine protection level according to connection
                                     ProtectionLevel = SocketProtectionLevel.PlainSocket,
                                 });
-                            //}
-                            //else {
-                            //    // TODO Add error. Not WIFI
-                            //    this.OnError?.Invoke(this, new WifiError(WifiErrorCode.NetworkNotAvailable));
-                            //}
-                        }
-                        else {
-                            this.OnError?.Invoke(this,
-                                new WifiError(EnumerationHelpers.Convert(result.ConnectionStatus)));
+                                break;
+                            case WiFiConnectionStatus.UnspecifiedFailure:
+                            case WiFiConnectionStatus.AccessRevoked:
+                            case WiFiConnectionStatus.InvalidCredential:
+                            case WiFiConnectionStatus.NetworkNotAvailable:
+                            case WiFiConnectionStatus.Timeout:
+                            case WiFiConnectionStatus.UnsupportedAuthenticationProtocol:
+                                this.OnError?.Invoke(this, new WifiError(result.ConnectionStatus.Convert()));
+                                break;
+                            default:
+                                this.OnError?.Invoke(this, new WifiError( WifiErrorCode.Unknown));
+                                break;
                         }
                     }
                     else {
@@ -150,7 +158,17 @@ namespace Wifi.UWP.Core {
         }
 
 
-
+        private PasswordCredential GetCredentials(WifiNetworkInfo info) {
+            if (info.AuthenticationType == NetAuthenticationType.Open_802_11 &&
+                info.EncryptionType == NetEncryptionType.None) {
+                return null;
+            }
+            else {
+                return new PasswordCredential() {
+                    Password = info.Password,
+                };
+            }
+        }
 
 
 
