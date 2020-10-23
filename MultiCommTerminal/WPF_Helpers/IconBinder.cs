@@ -61,6 +61,8 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string Configure { get { return Source(UIIcon.Configure); } }
         public static string Pair { get { return Source(UIIcon.Pair); } }
         public static string Unpair { get { return Source(UIIcon.Unpair); } }
+        public static string Credentials { get { return Source(UIIcon.Credentials); } }
+        public static string Credentials_W { get { return Source(UIIcon.CredentialsWhite); } }
 
         #endregion
 

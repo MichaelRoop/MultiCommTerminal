@@ -6,6 +6,6 @@ namespace MultiCommData.UserDisplayData.Net {
         Settings,
         Terminators,
         Commands,
-
+        Credentials,
     }
 }

@@ -61,10 +61,6 @@ namespace MultiCommTerminal.WindowObjs {
                         win.ShowDialog();
                         break;
                     case MenuCode.Settings:
-
-                        WifiCredentialsWin winCred = new WifiCredentialsWin(this);
-                        winCred.ShowDialog();
-
                         // TODO - settings window
                         break;
                     case MenuCode.Terminators:
@@ -79,6 +75,10 @@ namespace MultiCommTerminal.WindowObjs {
                         Commands cmds = new Commands(this.mainWindow);
                         cmds.ShowDialog();
                         //this.lbxMenuItems.se
+                        break;
+                    case MenuCode.Credentials:
+                        WifiCredentialsWin winCred = new WifiCredentialsWin(this);
+                        winCred.ShowDialog();
                         break;
                     default:
                         // Not supported
@@ -109,7 +109,7 @@ namespace MultiCommTerminal.WindowObjs {
                 this.AddItem(MenuCode.Settings, MsgCode.Settings, UIIcon.Settings, "0");
                 this.AddItem(MenuCode.Terminators, MsgCode.Terminators, UIIcon.Terminator, "0");
                 this.AddItem(MenuCode.Commands, MsgCode.command, UIIcon.Command, "0"); // TODO Get a new icon
-
+                this.AddItem(MenuCode.Credentials, MsgCode.Credentials, UIIcon.Credentials, "0");
 
                 this.lbxMenuItems.ItemsSource = this.items;
                 lbxMenuItems.SelectionChanged += this.lbxMenuItems_SelectionChanged;

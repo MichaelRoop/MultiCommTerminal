@@ -8,6 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="images\icons\icons8-access-50.png" />
+    <None Remove="images\icons\icons8-access-50_W.png" />
     <None Remove="images\icons\icons8-add-50-noborder.png" />
     <None Remove="images\icons\icons8-arduino-50.png" />
     <None Remove="images\icons\icons8-arduino-board-50.png" />
@@ -79,6 +81,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="images\icons\icons8-access-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-access-50_W.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="images\icons\icons8-add-50-noborder.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
