@@ -1,9 +1,9 @@
-﻿
+﻿//-----------------------------------------------------------------------------
 // Name:		ArduinoBluetoothDataTests.ino
 // Created:	12/12/2019 3:14:05 PM
 // Author:	Michael
 //
-// Sample to send and receive date to and from Arduino Bluetooth shield via serial monitor
+// Sample to send and receive date to and from Arduino Bluetooth shield 
 //
 // Written and tested in Visual Studio using Visual Micro
 // Tested against Arduino Uno and itea Bluetooth shield with HC-05 module
@@ -16,10 +16,9 @@
 // MUST HAVE DEBUG SERIAL SET TO 9600 Baud
 // MUST HAVE BT SERIAL SET TO 38400 Baud
 //
-// Use a Bluetooth terminal program to send data. For example, BT Serial Terminal 
-// on Windows
-//
-// Must pair with Bluetooth first
+// Must pair with Bluetooth first. The Multi Comm Terminal provides that
+// functionality
+//-----------------------------------------------------------------------------
 #include <SoftwareSerial.h>
 
 #ifndef SECTION_DATA
