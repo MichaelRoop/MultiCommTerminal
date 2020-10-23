@@ -5,6 +5,7 @@ using LanguageFactory.Net.Messaging;
 using LogUtils.Net;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommTerminal.DependencyInjection;
+using MultiCommTerminal.NetCore.WindowObjs;
 using MultiCommTerminal.WPF_Helpers;
 using MultiCommWrapper.Net.interfaces;
 using System;
@@ -60,6 +61,10 @@ namespace MultiCommTerminal.WindowObjs {
                         win.ShowDialog();
                         break;
                     case MenuCode.Settings:
+
+                        WifiCredentialsWin winCred = new WifiCredentialsWin(this);
+                        winCred.ShowDialog();
+
                         // TODO - settings window
                         break;
                     case MenuCode.Terminators:

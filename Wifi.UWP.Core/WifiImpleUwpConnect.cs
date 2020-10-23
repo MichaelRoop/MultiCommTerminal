@@ -164,6 +164,7 @@ namespace Wifi.UWP.Core {
                 return null;
             }
             else {
+                // We only ever use the password. Never user name
                 return new PasswordCredential() {
                     Password = info.Password,
                 };
