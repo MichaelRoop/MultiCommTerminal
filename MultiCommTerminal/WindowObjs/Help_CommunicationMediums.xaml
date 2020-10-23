@@ -14,7 +14,7 @@
         WindowStartupLocation="Manual" 
         Title="{Binding Source={x:Static wpfHelper:TxtBinder.Info}}" 
         mc:Ignorable="d"
-        ContentRendered="Window_ContentRendered"
+        Loaded="Window_Loaded"
         >
     <Grid>
         <StackPanel>

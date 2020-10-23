@@ -1,4 +1,5 @@
-﻿using MultiCommData.UserDisplayData.Net;
+﻿using MultiCommData.Net.UserDisplayData;
+using MultiCommData.UserDisplayData.Net;
 using MultiCommTerminal.DependencyInjection;
 using MultiCommTerminal.WPF_Helpers;
 using System;
@@ -32,7 +33,7 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
-        private void Window_ContentRendered(object sender, EventArgs e) {
+        private void Window_Loaded(object sender, RoutedEventArgs e) {
             this.CenterToParent(this.parent);
         }
 
@@ -64,15 +65,15 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
-        private void OnHasCodeSampleView(CommMediumType medium) {
+        private void OnHasCodeSampleView(CommHelpType helpType) {
             // This to avoid opening the code highlighted box because
             // its control malfunctions with no content
-            MsgBoxCode win = new MsgBoxCode(this, medium);
+            MsgBoxCode win = new MsgBoxCode(this, helpType);
             win.ShowDialog();
         }
 
 
-        private void OnSelectedHasCodeSample(CommMediumType medium) {
+        private void OnSelectedHasCodeSample(CommHelpType medium) {
             this.spView.Visibility = Visibility.Visible;
         }
 

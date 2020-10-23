@@ -1,15 +1,10 @@
 ﻿//using AurelienRibon.Ui.SyntaxHighlightBox.src;
 using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
-using LanguageFactory.Net.data;
-using LogUtils.Net;
-using MultiCommData.UserDisplayData.Net;
+using MultiCommData.Net.UserDisplayData;
 using MultiCommTerminal.DependencyInjection;
 using MultiCommTerminal.WPF_Helpers;
-using System;
 using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.WindowObjs {
@@ -26,16 +21,16 @@ namespace MultiCommTerminal.WindowObjs {
     public partial class MsgBoxCode : Window {
 
         private Window parent = null;
-        private CommMediumType medium = CommMediumType.None;
+        private CommHelpType medium = CommHelpType.Application;
         private ButtonGroupSizeSyncManager buttonWidthManager = null;
 
 
-        public MsgBoxCode(Window parent, CommMediumType medium) {
+        public MsgBoxCode(Window parent, CommHelpType helpType) {
             this.parent = parent;
-            this.medium = medium;
+            this.medium = helpType;
             InitializeComponent();
-            this.Title = DI.Wrapper.GetText(medium);
-            WrapErr.ToErrReport(9999, () => this.Icon = medium.ResourceWhiteBitmap());
+            this.Title = DI.Wrapper.GetText(helpType);
+            WrapErr.ToErrReport(9999, () => this.Icon = helpType.ResourceWhiteBitmap());
             //this.codeBox.CurrentHighlighter = HighlighterManager.Instance.Highlighters["CPPDL"];
             this.buttonWidthManager = new ButtonGroupSizeSyncManager(this.btnCopy, this.btnExit);
             this.buttonWidthManager.PrepForChange();

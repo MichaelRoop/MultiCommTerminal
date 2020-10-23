@@ -1,0 +1,11 @@
+﻿Multi Comm Terminal
+
+Hobbyist Communications terminal
+
+Designed for controlling Arduino and other embedded devices 
+Bluetooth Classic
+BLE (Not implemented)
+WIFI
+USB (Not Implemented)
+Ethernet
+

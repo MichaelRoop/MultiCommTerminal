@@ -6,6 +6,7 @@ using IconFactory.Net.data;
 using LanguageFactory.Net.data;
 using LanguageFactory.Net.Messaging;
 using MultiCommData.Net.StorageDataModels;
+using MultiCommData.Net.UserDisplayData;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommWrapper.Net.DataModels;
 using StorageFactory.Net.interfaces;
@@ -52,7 +53,7 @@ namespace MultiCommWrapper.Net.interfaces {
 
         string GetText(MsgCode code);
 
-        string GetText(CommMediumType medium);
+        string GetText(CommHelpType medium);
 
         void GetMenuItemDataModel(
             MenuCode menuCode,
@@ -78,6 +79,8 @@ namespace MultiCommWrapper.Net.interfaces {
         void CommMediumList(Action<List<CommMedialDisplay>> mediums);
 
 
+        //void CommHelpList(Action<List>)
+
         #endregion
 
         #region Help            
@@ -90,10 +93,10 @@ namespace MultiCommWrapper.Net.interfaces {
         /// <param name="medium">The type of communication medium to find sample</param>
         /// <param name="onSuccess">Raised when file is found and opened</param>
         /// <param name="onError">Raised on error</param>
-        void GetCodeSample(CommMediumType medium, Action<string> onSuccess, OnErrTitle onError);
+        void GetCodeSample(CommHelpType medium, Action<string> onSuccess, OnErrTitle onError);
 
 
-        void HasCodeSample(CommMediumType medium, Action<CommMediumType> onSuccess, OnErrTitle onError);
+        void HasCodeSample(CommHelpType medium, Action<CommHelpType> onSuccess, OnErrTitle onError);
 
         #endregion
 

@@ -4,6 +4,7 @@ using IconFactory.Net.data;
 using LanguageFactory.Net.data;
 using LanguageFactory.Net.Messaging;
 using MultiCommData.Net.StorageDataModels;
+using MultiCommData.Net.UserDisplayData;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommWrapper.Net.interfaces;
 using System;
@@ -107,13 +108,14 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-        public string GetText(CommMediumType medium) {
+        public string GetText(CommHelpType medium) {
             switch (medium) {
-                case CommMediumType.Bluetooth: return "Classic";
-                case CommMediumType.BluetoothLE: return String.Format("BLE  {0} {1}", '\u2b84', '\u2b86');
-                case CommMediumType.Wifi: return "Wifi";
-                case CommMediumType.Ethernet: return "Ethernet";
-                case CommMediumType.Usb: return "USB";
+                case CommHelpType.Bluetooth: return "Classic";
+                case CommHelpType.BluetoothLE: return String.Format("BLE  {0} {1}", '\u2b84', '\u2b86');
+                case CommHelpType.Wifi: return "Wifi";
+                case CommHelpType.Ethernet: return "Ethernet";
+                case CommHelpType.Usb: return "USB";
+                case CommHelpType.Application: return "Application"; // TODO Language support
                 default: return "N/A";
                     // TODO - others
             }

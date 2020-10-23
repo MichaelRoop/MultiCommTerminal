@@ -1,9 +1,9 @@
 ﻿using IconFactory.Net.data;
 using IconFactory.Net.interfaces;
+using MultiCommData.Net.UserDisplayData;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommTerminal.DependencyInjection;
 using System;
-using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace MultiCommTerminal.WPF_Helpers {
@@ -79,30 +79,31 @@ namespace MultiCommTerminal.WPF_Helpers {
         }
 
 
-        public static string CommMediumSourceWhite(this CommMediumType medium) {
-            switch (medium) {
-                case CommMediumType.Bluetooth:
+        public static string CommMediumSourceWhite(this CommHelpType helpType) {
+            switch (helpType) {
+                case CommHelpType.Bluetooth:
                     return BluetoothClassic_W;
-                case CommMediumType.BluetoothLE:
+                case CommHelpType.BluetoothLE:
                     return BluetoothLE_W;
-                case CommMediumType.Ethernet:
+                case CommHelpType.Ethernet:
                     // TODO need white
                     return Source(UIIcon.Ethernet);
-                case CommMediumType.Wifi:
+                case CommHelpType.Wifi:
                     return Source(UIIcon.Wifi);
+                case CommHelpType.Application:
+                    return Source(UIIcon.Help);
                 default:
                     return Cancel;
             }
         }
 
 
-        public static BitmapImage ResourceWhiteBitmap(this CommMediumType medium) {
-            return new BitmapImage(new Uri(medium.PacketSourceWhite(), UriKind.Absolute));
+        public static BitmapImage ResourceWhiteBitmap(this CommHelpType helpType) {
+            return new BitmapImage(new Uri(helpType.PacketSourceWhite(), UriKind.Absolute));
         }
 
-
-        public static string PacketSourceWhite(this CommMediumType medium) {
-            return string.Format("{0}{1}", GetIconPrefix(), IconBinder.CommMediumSourceWhite(medium));
+        public static string PacketSourceWhite(this CommHelpType helpType) {
+            return string.Format("{0}{1}", GetIconPrefix(), IconBinder.CommMediumSourceWhite(helpType));
         }
 
 

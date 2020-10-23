@@ -1,6 +1,7 @@
 ﻿using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
 using IconFactory.Net.data;
+using MultiCommData.Net.UserDisplayData;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommWrapper.Net.interfaces;
 using System;
@@ -66,9 +67,29 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
+        private void CommHelpList(Action<List<CommHelpDisplay>> helps) {
+            List<CommHelpDisplay> items = new List<CommHelpDisplay>();
+            items.Add(this.HelpItem("Classic", UIIcon.BluetoothClassic, CommHelpType.Bluetooth));
+            // TODO - for now serial, need a full BLE
+            items.Add(this.HelpItem(String.Format("BLE  {0} {1}", '\u2b84', '\u2b86'),
+                UIIcon.BluetoothLE, CommHelpType.BluetoothLE));
+            items.Add(this.HelpItem("Ethernet", UIIcon.Ethernet, CommHelpType.Ethernet));
+            items.Add(this.HelpItem("Wifi", UIIcon.Wifi, CommHelpType.Wifi));
+            items.Add(this.HelpItem("USB", UIIcon.Usb, CommHelpType.Usb));
+            items.Add(this.HelpItem("Help", UIIcon.Help, CommHelpType.Application));
+            helps.Invoke(items);
+        }
 
 
-
+        private CommHelpDisplay HelpItem(string name, UIIcon icon, CommHelpType helpType) {
+            return new CommHelpDisplay() {
+                Display = name,
+                HelpType = helpType,
+                IconHeight = 16,
+                IconWidth = 16,
+                IconSource = this.IconSource(icon),
+            };
+        }
 
     }
 }

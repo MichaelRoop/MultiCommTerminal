@@ -1,25 +1,25 @@
 ﻿using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
 using LanguageFactory.Net.data;
+using MultiCommData.Net.UserDisplayData;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommWrapper.Net.interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace MultiCommWrapper.Net.WrapCode {
-    
-    
+
+
     public partial class CommWrapper : ICommWrapper {
 
 
         public void CommMediumHelpList(Action<List<CommMediumHelp>> onSuccess) {
             List<CommMediumHelp> helps = new List<CommMediumHelp>();
-            this.CommMediumList((list) => {
-                foreach (CommMedialDisplay item in list) {
+            this.CommHelpList((list) => {
+                foreach (CommHelpDisplay item in list) {
                     helps.Add(new CommMediumHelp() {
-                        Id = item.MediumType,
+                        Id =  item.HelpType,
                         Title = item.Display,
                         Icon = item.IconSource,
                         Text = "N/A",
@@ -31,20 +31,23 @@ namespace MultiCommWrapper.Net.WrapCode {
             // TODO Add specific text and code here from storage
             foreach (var i in helps) {
                 switch (i.Id) {
-                    case CommMediumType.Bluetooth:
+                    case CommHelpType.Bluetooth:
                         i.Text = "Communicate with device using traditional Bluetooth like Arduino with HC50 chip";
                         break;
-                    case CommMediumType.BluetoothLE:
+                    case CommHelpType.BluetoothLE:
                         i.Text = "Communicate with devices on BLE with 2 characteristics defined for serial input and output";
                         break;
-                    case CommMediumType.Wifi:
+                    case CommHelpType.Wifi:
                         i.Text = "Communicate with devices using WIFI to send commands and receive responses";
                         break;
-                    case CommMediumType.Ethernet:
+                    case CommHelpType.Ethernet:
                         i.Text = "Communicate with devices using a hard wired ethernet connection to send commands and receive responses";
                         break;
-                    case CommMediumType.Usb:
+                    case CommHelpType.Usb:
                         i.Text = "Communicate with devices using a hard wired USB serial connection to send commands and receive responses";
+                        break;
+                    case CommHelpType.Application:
+                        i.Text = "User Document";
                         break;
 
                         // TODO - others
@@ -56,14 +59,14 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
     
 
-        public void HasCodeSample(CommMediumType medium, Action<CommMediumType> onSuccess, OnErrTitle onError) {
+        public void HasCodeSample(CommHelpType helpType, Action<CommHelpType> onSuccess, OnErrTitle onError) {
             ErrReport report;
             WrapErr.ToErrReport(out report, 9999,
                 () => string.Format(""),
                 () => {
-                    string tmp = this.GetFilename(medium);
+                    string tmp = this.GetFilename(helpType);
                     if (tmp.Length > 0) {
-                        onSuccess(medium);
+                        onSuccess(helpType);
                     }
                     else {
                         onError(this.GetText(MsgCode.Error), this.GetText(MsgCode.LoadFailed));
@@ -77,12 +80,12 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-        public void GetCodeSample(CommMediumType medium, Action<string> onSuccess, OnErrTitle onError) {
+        public void GetCodeSample(CommHelpType helpType, Action<string> onSuccess, OnErrTitle onError) {
             ErrReport report;
             WrapErr.ToErrReport(out report, 9999,
                 () => string.Format(""),
                 () => {
-                    string filename = this.GetFilename(medium);
+                    string filename = this.GetFilename(helpType);
                     if (filename.Length > 0) {
                         // TODO - Move to cross platform access
                         if (File.Exists(filename)) {
@@ -100,12 +103,20 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
     
     
-        private string GetFilename(CommMediumType medium) {
+        private string GetFilename(CommHelpType medium) {
             switch (medium) {
-                case CommMediumType.Bluetooth:
+                case CommHelpType.Bluetooth:
                     return "./Samples/BTSample.txt";
-                case CommMediumType.BluetoothLE:
+                case CommHelpType.BluetoothLE:
                     return "./Samples/BLESample.txt";
+                case CommHelpType.Wifi:
+                    return "./Samples/WifiSample.txt";
+                case CommHelpType.Usb:
+                    return "./Samples/USBSample.txt";
+                case CommHelpType.Ethernet:
+                    return "./Samples/EthernetSample.txt";
+                case CommHelpType.Application:
+                    return "./Documents/MultiCommTerminal.txt";
                 default: return "";
             }
         }

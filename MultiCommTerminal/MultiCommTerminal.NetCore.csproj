@@ -202,6 +202,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Documents\MultiCommTerminal.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -209,6 +212,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Samples\BTSample.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Samples\EthernetSample.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Samples\USBSample.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Samples\WifiSample.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

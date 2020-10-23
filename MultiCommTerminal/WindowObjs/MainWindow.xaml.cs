@@ -537,9 +537,11 @@ namespace MultiCommTerminal.WindowObjs {
         private void OnStartupSuccess() {
             this.wrapper.CommMediumList((items) => {
                 foreach (var item in items) {
-                    // The cross platform wrapper only returns the immediate icon path
-                    item.IconSource = string.Format("{0}{1}", IconBinder.GetIconPrefix(), item.IconSource); 
-                    this.mediums.Add(item);
+                    if (item.MediumType != CommMediumType.None) {
+                        // The cross platform wrapper only returns the immediate icon path
+                        item.IconSource = string.Format("{0}{1}", IconBinder.GetIconPrefix(), item.IconSource);
+                        this.mediums.Add(item);
+                    }
                 }
             });
             this.cbComm.ItemsSource = this.mediums;

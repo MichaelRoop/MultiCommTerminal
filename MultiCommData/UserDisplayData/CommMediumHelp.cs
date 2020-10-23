@@ -1,4 +1,4 @@
-﻿using MultiCommData.UserDisplayData.Net;
+﻿using MultiCommData.Net.UserDisplayData;
 
 namespace MultiCommData.UserDisplayData.Net {
 
@@ -7,7 +7,7 @@ namespace MultiCommData.UserDisplayData.Net {
     public class CommMediumHelp {
 
         /// <summary>Unique identifier for medium type</summary>
-        public CommMediumType Id { get; set; }
+        public CommHelpType Id { get; set; }
 
         /// <summary>OS Specific source of the icon to display</summary>
         public object Icon { get; set; }
