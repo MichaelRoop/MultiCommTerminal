@@ -75,6 +75,9 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string Network { get { return GetTxt(MsgCode.Network); } }
         public static string Socket { get { return GetTxt(MsgCode.Socket); } }
         public static string Credentials { get { return GetTxt(MsgCode.Credentials); } }
+        public static string Icons { get { return GetTxt(MsgCode.Icons); } }
+        public static string About { get { return GetTxt(MsgCode.About); } }
+        public static string Author { get { return GetTxt(MsgCode.Author); } }
 
         #endregion
 

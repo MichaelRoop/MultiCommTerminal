@@ -77,8 +77,13 @@ namespace MultiCommTerminal.WindowObjs {
                         //this.lbxMenuItems.se
                         break;
                     case MenuCode.Credentials:
-                        WifiCredentialsWin winCred = new WifiCredentialsWin(this);
+                        WifiCredentialsWin winCred = new WifiCredentialsWin(this.mainWindow);
                         winCred.ShowDialog();
+                        break;
+
+                    case MenuCode.About:
+                        AboutWin aboutWin = new AboutWin(this.mainWindow);
+                        aboutWin.ShowDialog();
                         break;
                     default:
                         // Not supported
