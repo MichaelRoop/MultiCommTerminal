@@ -72,6 +72,8 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string NetworkServicePort { get { return string.Format("{0}/{1}", NetworkService, Port); } }
 
         public static string NetworkSecurityKey { get { return GetTxt(MsgCode.NetworkSecurityKey); } }
+        public static string Network { get { return GetTxt(MsgCode.Network); } }
+        public static string Socket { get { return GetTxt(MsgCode.Socket); } }
 
 
         #endregion
