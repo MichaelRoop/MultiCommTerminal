@@ -10,6 +10,18 @@
         <Setter Property="HorizontalAlignment" Value="Right"/>
         <Setter Property="Margin" Value="2,0"/>
     </Style>
+    <Style x:Key="NameLabelRight" TargetType="Label" >
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="Margin" Value="1,0"/>
+    </Style>
+    <Style x:Key="NameLabelCenter" TargetType="Label" >
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="2,0"/>
+    </Style>
 
 
     <Style x:Key="TxtBoxRight" TargetType="TextBox">
@@ -28,6 +40,14 @@
         <Setter Property="MinWidth" Value="170"/>
     </Style>
 
+
+    <Style x:Key="TxtBlockRight" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="Margin" Value="2,0"/>
+        <Setter Property="MinWidth" Value="170"/>
+    </Style>
 
 
 </ResourceDictionary>
