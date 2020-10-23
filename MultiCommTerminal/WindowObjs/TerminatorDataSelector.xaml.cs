@@ -19,6 +19,12 @@ namespace MultiCommTerminal.WindowObjs {
 
         #region Constructors and window events
 
+        public static void ShowBox(Window parent) {
+            TerminatorDataSelector win = new TerminatorDataSelector(parent);
+            win.ShowDialog();
+        }
+
+
         public TerminatorDataSelector(Window parent) {
             this.wrapper = DI.Wrapper;
             this.parent = parent;

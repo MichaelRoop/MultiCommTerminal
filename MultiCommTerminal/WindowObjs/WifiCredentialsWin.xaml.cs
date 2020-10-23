@@ -24,6 +24,12 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         List<IIndexItem<DefaultFileExtraInfo>> indexItems = new List<IIndexItem<DefaultFileExtraInfo>>();
 
 
+        public static void ShowBox(Window parent) {
+            WifiCredentialsWin win = new WifiCredentialsWin(parent);
+            win.ShowDialog();
+        }
+
+
         /// <summary>List the stored WIFI credentials for edit or delete</summary>
         public WifiCredentialsWin(Window parent) {
             this.parent = parent;

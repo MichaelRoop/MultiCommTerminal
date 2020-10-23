@@ -57,33 +57,23 @@ namespace MultiCommTerminal.WindowObjs {
                 this.Hide();
                 switch (item.Code) {
                     case MenuCode.Language:
-                        LanguageSelector win = new LanguageSelector(this.mainWindow);
-                        win.ShowDialog();
+                        LanguageSelector.ShowBox(this.mainWindow);
+                        break;
+                    case MenuCode.Terminators:
+                        TerminatorDataSelector.ShowBox(this.mainWindow);
+                        break;
+                    case MenuCode.Commands:
+                        Commands cmds = new Commands(this.mainWindow);
+                        cmds.ShowDialog();
+                        break;
+                    case MenuCode.Credentials:
+                        WifiCredentialsWin.ShowBox(this.mainWindow);
                         break;
                     case MenuCode.Settings:
                         // TODO - settings window
                         break;
-                    case MenuCode.Terminators:
-                        TerminatorDataSelector terminatorSelector = new TerminatorDataSelector(this.mainWindow);
-                        terminatorSelector.ShowDialog();
-                        break;
-                    case MenuCode.Commands:
-                        //DeviceInfo_BLESerial bleInfo = new DeviceInfo_BLESerial(this.mainWindow);
-                        //bleInfo.ShowDialog();
-
-
-                        Commands cmds = new Commands(this.mainWindow);
-                        cmds.ShowDialog();
-                        //this.lbxMenuItems.se
-                        break;
-                    case MenuCode.Credentials:
-                        WifiCredentialsWin winCred = new WifiCredentialsWin(this.mainWindow);
-                        winCred.ShowDialog();
-                        break;
-
                     case MenuCode.About:
-                        AboutWin aboutWin = new AboutWin(this.mainWindow);
-                        aboutWin.ShowDialog();
+                        AboutWin.ShowBox(this.mainWindow);
                         break;
                     default:
                         // Not supported

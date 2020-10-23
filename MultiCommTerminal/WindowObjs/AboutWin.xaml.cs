@@ -24,6 +24,12 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         #endregion
 
+
+        public static void ShowBox(Window parent) {
+            AboutWin win = new AboutWin(parent);
+            win.ShowDialog();
+        }
+
         public AboutWin(Window parent) {
             this.parent = parent;
             InitializeComponent();

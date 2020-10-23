@@ -24,6 +24,12 @@ namespace MultiCommTerminal.WindowObjs {
 
         #region Constructors and windows events
 
+        public static void ShowBox(Window parent) {
+            LanguageSelector win = new LanguageSelector(parent);
+            win.ShowDialog();
+        }
+
+
         public LanguageSelector(Window parent) {
             this.wrapper = DI.Wrapper;
             this.parent = parent;
