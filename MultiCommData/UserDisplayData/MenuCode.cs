@@ -7,5 +7,6 @@ namespace MultiCommData.UserDisplayData.Net {
         Terminators,
         Commands,
         Credentials,
+        About,
     }
 }
