@@ -1,4 +1,6 @@
 ﻿using BluetoothLE.Net.DataModels;
+using LogUtils.Net;
+using MultiCommTerminal.DependencyInjection;
 using MultiCommTerminal.WPF_Helpers;
 using System;
 using System.Collections.Generic;
@@ -49,8 +51,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
 
         Window parent = null;
-        ServiceTreeDict treeDict = new ServiceTreeDict();
-        BluetoothLEDeviceInfo info = null;
+        //BluetoothLEDeviceInfo info = null;
         private List<DisplaySet> mainValues = new List<DisplaySet>();
         private List<DisplaySet> serviceProperties = new List<DisplaySet>();
 
@@ -64,76 +65,11 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         public DeviceInfo_BLE(Window parent, BluetoothLEDeviceInfo info) {
             this.parent = parent;
             InitializeComponent();
-
-            #region Test data for info display
-            // ---------------------------------------------
-            BLE_ServiceDataModel service1 = new BLE_ServiceDataModel();
-            service1.DisplayName = "Hogwarts 1 service";
-            service1.Characteristics.Add("1", new BLE_CharacteristicDataModel());
-            service1.Characteristics["1"].CharName = "George Characteristic";
-            service1.Characteristics["1"].Descriptors.Add("1", new BLE_DescriptorDataModel());
-            service1.Characteristics["1"].Descriptors["1"].DisplayName = "Output descriptor";
-            service1.Characteristics.Add("2", new BLE_CharacteristicDataModel());
-            service1.Characteristics["2"].CharName = "Fred Characteristic";
-            service1.Characteristics["2"].Descriptors.Add("1", new BLE_DescriptorDataModel());
-            service1.Characteristics["2"].Descriptors["1"].DisplayName = "Input descriptor";
-            service1.Characteristics["2"].Descriptors.Add("2", new BLE_DescriptorDataModel());
-            service1.Characteristics["2"].Descriptors["2"].DisplayName = "Name of stuff";
-            this.treeDict.Add("1", service1);
-            // ---------------------------------------------
-
-            // ---------------------------------------------
-            BLE_ServiceDataModel service2 = new BLE_ServiceDataModel();
-            service2.DisplayName = "Hogwarts 2 service";
-            service2.Characteristics.Add("1", new BLE_CharacteristicDataModel());
-            service2.Characteristics["1"].CharName = "Hermioni characteristic";
-            service2.Characteristics.Add("2", new BLE_CharacteristicDataModel());
-            service2.Characteristics["2"].CharName = "Ginny characteristic";
-            this.treeDict.Add("2", service2);
-
-            //// Just pass list of Values to avoid headach in XAML    
-            //this.treeServices.ItemsSource = this.treeDict.Values;
-            #endregion
-
-            this.info = info;
-            this.mainValues.Add(new DisplaySet("Name", this.info.Name));
-            this.mainValues.Add(new DisplaySet("Id", this.info.Id));
-            this.mainValues.Add(new DisplaySet("Access Status", this.info.AccessStatus.ToString().CamelCaseToSpaces()));
-            this.mainValues.Add(new DisplaySet("Address", this.info.AddressAsULong.ToString()));
-            this.mainValues.Add(new DisplaySet("Address Type", this.info.AddressType.ToString().CamelCaseToSpaces()));
-            this.mainValues.Add(new DisplaySet("Default", this.info.IsDefault.ToString()));
-            this.mainValues.Add(new DisplaySet("Enabled", this.info.IsEnabled.ToString()));
-            this.mainValues.Add(new DisplaySet("Kind", this.info.Kind.ToString().CamelCaseToSpaces()));
-            this.mainValues.Add(new DisplaySet("Can Pair", this.info.CanPair.ToString()));
-            this.mainValues.Add(new DisplaySet("Paired", this.info.IsPaired.ToString()));
-            this.mainValues.Add(new DisplaySet("Paired using secure connection", this.info.WasPairedUsingSecureConnection.ToString()));
-            this.mainValues.Add(new DisplaySet("Connectable", this.info.IsConnectable.ToString()));
-            this.mainValues.Add(new DisplaySet("Connected", this.info.IsConnected.ToString()));
-            this.mainValues.Add(new DisplaySet("Protection Level", this.info.ProtectionLevel.ToString().CamelCaseToSpaces()));
-            this.mainValues.Add(new DisplaySet("Type", this.info.TypeBluetooth.ToString().CamelCaseToSpaces()));
-            this.listboxMain.ItemsSource = this.mainValues;
-
-            //this.info.EnclosureLocation
-
-            foreach (var sp in this.info.ServiceProperties) {
-                this.serviceProperties.Add(new DisplaySet(sp.Key, sp.Value));
-            }
-            this.listboxProperties.ItemsSource = this.serviceProperties;
-
-
-            //this.info.Services
-            if (this.info.Services == null || this.info.Services.Count == 0) {
-                // Just pass list of Values to avoid headach in XAML    
-                this.treeServices.ItemsSource = this.treeDict.Values;
-            }
-            else {
-                // TODO - check if any previous selections
-                this.treeServices.ItemsSource = this.info.Services.Values;
-            }
-
+            //this.info = info;
+            this.PopulateFields(info);
             this.SizeToContent = SizeToContent.WidthAndHeight;
-
         }
+
 
         public override void OnApplyTemplate() {
             this.BindMouseDownToCustomTitleBar();
@@ -157,6 +93,79 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         private void btnExit_Click(object sender, RoutedEventArgs e) {
             this.Close();
         }
+
+
+        private void PopulateFields(BluetoothLEDeviceInfo info) {
+            this.mainValues.Add(new DisplaySet("Name", info.Name));
+            this.mainValues.Add(new DisplaySet("Id", info.Id));
+            this.mainValues.Add(new DisplaySet("Access Status", info.AccessStatus.ToString().CamelCaseToSpaces()));
+            this.mainValues.Add(new DisplaySet("Address", info.AddressAsULong.ToString()));
+            this.mainValues.Add(new DisplaySet("Address Type", info.AddressType.ToString().CamelCaseToSpaces()));
+            this.mainValues.Add(new DisplaySet("Default", info.IsDefault.ToString()));
+            this.mainValues.Add(new DisplaySet("Enabled", info.IsEnabled.ToString()));
+            this.mainValues.Add(new DisplaySet("Kind", info.Kind.ToString().CamelCaseToSpaces()));
+            this.mainValues.Add(new DisplaySet("Can Pair", info.CanPair.ToString()));
+            this.mainValues.Add(new DisplaySet("Paired", info.IsPaired.ToString()));
+            this.mainValues.Add(new DisplaySet("Paired using secure connection", info.WasPairedUsingSecureConnection.ToString()));
+            this.mainValues.Add(new DisplaySet("Connectable", info.IsConnectable.ToString()));
+            this.mainValues.Add(new DisplaySet("Connected", info.IsConnected.ToString()));
+            this.mainValues.Add(new DisplaySet("Protection Level", info.ProtectionLevel.ToString().CamelCaseToSpaces()));
+            this.mainValues.Add(new DisplaySet("Type", info.TypeBluetooth.ToString().CamelCaseToSpaces()));
+            this.mainValues.Add(new DisplaySet("Enclosure Location - Dock", info.EnclosureLocation.InDock.ToString()));
+            this.mainValues.Add(new DisplaySet("Enclosure Location - Lid", info.EnclosureLocation.InLid.ToString()));
+            this.mainValues.Add(new DisplaySet("Enclosure Location - Clockwise Rotation", info.EnclosureLocation.ClockWiseRotationInDegrees.ToString()));
+            this.mainValues.Add(new DisplaySet("Enclosure Panel Location", info.EnclosureLocation.Location.ToString()));
+            this.listboxMain.ItemsSource = this.mainValues;
+
+
+            foreach (var sp in info.ServiceProperties) {
+                this.serviceProperties.Add(new DisplaySet(sp.Key, sp.Value));
+            }
+            this.listboxProperties.ItemsSource = this.serviceProperties;
+
+
+            //this.info.Services
+            if (info.Services == null || info.Services.Count == 0) {
+                this.treeServices.Collapse();
+            }
+            else {
+                this.treeServices.ItemsSource = info.Services.Values;
+            }
+        }
+
+
+        #region Debug code for dev
+
+        ServiceTreeDict treeDict = new ServiceTreeDict();
+        private void CreateDebugTree() {
+            BLE_ServiceDataModel service1 = new BLE_ServiceDataModel();
+            service1.DisplayName = "Hogwarts 1 service";
+            service1.Characteristics.Add("1", new BLE_CharacteristicDataModel());
+            service1.Characteristics["1"].CharName = "George Characteristic";
+            service1.Characteristics["1"].Descriptors.Add("1", new BLE_DescriptorDataModel());
+            service1.Characteristics["1"].Descriptors["1"].DisplayName = "Output descriptor";
+            service1.Characteristics.Add("2", new BLE_CharacteristicDataModel());
+            service1.Characteristics["2"].CharName = "Fred Characteristic";
+            service1.Characteristics["2"].Descriptors.Add("1", new BLE_DescriptorDataModel());
+            service1.Characteristics["2"].Descriptors["1"].DisplayName = "Input descriptor";
+            service1.Characteristics["2"].Descriptors.Add("2", new BLE_DescriptorDataModel());
+            service1.Characteristics["2"].Descriptors["2"].DisplayName = "Name of stuff";
+            this.treeDict.Add("1", service1);
+
+            BLE_ServiceDataModel service2 = new BLE_ServiceDataModel();
+            service2.DisplayName = "Hogwarts 2 service";
+            service2.Characteristics.Add("1", new BLE_CharacteristicDataModel());
+            service2.Characteristics["1"].CharName = "Hermioni characteristic";
+            service2.Characteristics.Add("2", new BLE_CharacteristicDataModel());
+            service2.Characteristics["2"].CharName = "Ginny characteristic";
+            this.treeDict.Add("2", service2);
+
+            // Just pass list of Values to avoid headach in XAML    
+            this.treeServices.ItemsSource = this.treeDict.Values;
+        }
+
+
+        #endregion
 
     }
 }

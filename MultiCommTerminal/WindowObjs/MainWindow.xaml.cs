@@ -207,13 +207,27 @@ namespace MultiCommTerminal.WindowObjs {
         private void btnInfoLE_Click(object sender, RoutedEventArgs e) {
             if (this.listBox_BLE.SelectedItem != null) {
                 BluetoothLEDeviceInfo ble = this.listBox_BLE.SelectedItem as BluetoothLEDeviceInfo;
-                DeviceInfo_BLE.ShowBox(this, ble);
-
+                if (ble.Services.Count == 0) {
+                    this.wrapper.BLE_DeviceInfoGathered -= Wrapper_BLE_DeviceInfoGatheredOnGetInfo;
+                    this.wrapper.BLE_DeviceInfoGathered += Wrapper_BLE_DeviceInfoGatheredOnGetInfo;
+                    this.gridWait.Show();
+                    this.wrapper.BLE_GetInfo(ble);
+                }
+                else {
+                    DeviceInfo_BLE.ShowBox(this, ble);
+                }
                 //App.ShowMsg("BPIPO");
                 //this.wrapper.BLE_GetDbgInfoStringDump(this.listBox_BLE.SelectedItem, App.ShowMsgTitle);
             }
         }
 
+        private void Wrapper_BLE_DeviceInfoGatheredOnGetInfo(object sender, BluetoothLEDeviceInfo info) {
+            this.Dispatcher.Invoke(() => {
+                this.wrapper.BLE_DeviceInfoGathered -= this.Wrapper_BLE_DeviceInfoGatheredOnGetInfo;
+                this.gridWait.Collapse();
+                DeviceInfo_BLE.ShowBox(this, info);
+            });
+        }
 
         private void btnConfigureBLE_Click(object sender, RoutedEventArgs e) {
             this.listBox_BLE.GetSelected<BluetoothLEDeviceInfo>((info) => {
