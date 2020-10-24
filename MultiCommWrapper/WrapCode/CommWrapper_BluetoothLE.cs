@@ -1,8 +1,10 @@
 ﻿using BluetoothLE.Net.DataModels;
 using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
+using MultiCommWrapper.Net.DataModels;
 using MultiCommWrapper.Net.interfaces;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using VariousUtils.Net;
@@ -147,6 +149,54 @@ namespace MultiCommWrapper.Net.WrapCode {
         public void BLE_Disconnect() {
             this.bleBluetooth.Disconnect();
         }
+
+
+        public List<KeyValuePropertyDisplay> BLE_GetDeviceInfoForDisplay(BluetoothLEDeviceInfo info) {
+            try {
+                // TODO - language
+                List<KeyValuePropertyDisplay> list = new List<KeyValuePropertyDisplay>();
+                list.Add(new KeyValuePropertyDisplay("Name", info.Name));
+                list.Add(new KeyValuePropertyDisplay("Id", info.Id));
+                list.Add(new KeyValuePropertyDisplay("Access Status", info.AccessStatus.ToString().CamelCaseToSpaces()));
+                list.Add(new KeyValuePropertyDisplay("Address", info.AddressAsULong.ToString()));
+                list.Add(new KeyValuePropertyDisplay("Address Type", info.AddressType.ToString().CamelCaseToSpaces()));
+                list.Add(new KeyValuePropertyDisplay("Default", info.IsDefault.ToString()));
+                list.Add(new KeyValuePropertyDisplay("Enabled", info.IsEnabled.ToString()));
+                list.Add(new KeyValuePropertyDisplay("Kind", info.Kind.ToString().CamelCaseToSpaces()));
+                list.Add(new KeyValuePropertyDisplay("Can Pair", info.CanPair.ToString()));
+                list.Add(new KeyValuePropertyDisplay("Paired", info.IsPaired.ToString()));
+                list.Add(new KeyValuePropertyDisplay("Paired using secure connection", info.WasPairedUsingSecureConnection.ToString()));
+                list.Add(new KeyValuePropertyDisplay("Connectable", info.IsConnectable.ToString()));
+                list.Add(new KeyValuePropertyDisplay("Connected", info.IsConnected.ToString()));
+                list.Add(new KeyValuePropertyDisplay("Protection Level", info.ProtectionLevel.ToString().CamelCaseToSpaces()));
+                list.Add(new KeyValuePropertyDisplay("Type", info.TypeBluetooth.ToString().CamelCaseToSpaces()));
+                list.Add(new KeyValuePropertyDisplay("Enclosure Location - Dock", info.EnclosureLocation.InDock.ToString()));
+                list.Add(new KeyValuePropertyDisplay("Enclosure Location - Lid", info.EnclosureLocation.InLid.ToString()));
+                list.Add(new KeyValuePropertyDisplay("Enclosure Location - Clockwise Rotation", info.EnclosureLocation.ClockWiseRotationInDegrees.ToString()));
+                list.Add(new KeyValuePropertyDisplay("Enclosure Panel Location", info.EnclosureLocation.Location.ToString()));
+                return list;
+            }
+            catch (Exception e) {
+                this.log.Exception(9999, "", e);
+                return new List<KeyValuePropertyDisplay>();
+            }
+        }
+
+
+        public List<BLE_PropertyDataModelDisplay> BLE_GetServiceProperties(BluetoothLEDeviceInfo info) {
+            try {
+                List<BLE_PropertyDataModelDisplay> list = new List<BLE_PropertyDataModelDisplay>();
+                foreach (var sp in info.ServiceProperties) {
+                    list.Add(new BLE_PropertyDataModelDisplay(sp.Value));
+                }
+                return list;
+            }
+            catch(Exception e) {
+                this.log.Exception(9999, "", e);
+                return new List<BLE_PropertyDataModelDisplay>();
+            }
+        }
+
 
         #endregion
 

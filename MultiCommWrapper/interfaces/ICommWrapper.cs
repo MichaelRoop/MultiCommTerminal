@@ -211,13 +211,26 @@ namespace MultiCommWrapper.Net.interfaces {
         /// <summary>Get complete info populated in device</summary>
         /// <param name="device"></param>
         void BLE_GetInfo(BluetoothLEDeviceInfo device);
+        
+        void BLE_Disconnect();
+
+
+        /// <summary>Create a list of key value pairs for display of LE Device fields</summary>
+        /// <param name="info">The info to parse</param>
+        /// <returns>A display list of the fields</returns>
+        List<KeyValuePropertyDisplay> BLE_GetDeviceInfoForDisplay(BluetoothLEDeviceInfo info);
+
+
+        /// <summary>Get a displayable list for the BLE device Service Properties</summary>
+        /// <param name="info">The device info to parse</param>
+        /// <returns>A display list of BLE device service properties</returns>
+        List<BLE_PropertyDataModelDisplay> BLE_GetServiceProperties(BluetoothLEDeviceInfo info);
+
 
         /// <summary>Debug method to get string of properties</summary>
         /// <param name="obj">The selected BLE info object</param>
         /// <param name="onComplete">Raisd with title and text for message box</param>
         void BLE_GetDbgInfoStringDump(object obj, Action<string, string> onComplete);
-
-        void BLE_Disconnect();
 
         #endregion
 

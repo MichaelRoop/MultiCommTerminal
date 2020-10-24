@@ -14,7 +14,7 @@
         Style="{StaticResource MyWindowStyle}"
         MinHeight="150" MinWidth="250"
         mc:Ignorable="d"
-        Loaded="Window_Loaded" ContentRendered="Window_ContentRendered" Closing="Window_Closing" >
+        Loaded="Window_Loaded" >
     <Window.Resources>
         <!-- The main data source as List of BLE_Service -->
         <wpfHelper:ServicesTree x:Key="servicesSource"/>
@@ -66,7 +66,7 @@
                                         <ColumnDefinition Width="Auto"  />
                                         <ColumnDefinition Width="Auto" SharedSizeGroup="B" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Text="{Binding Description}" Margin="4,0" Style="{StaticResource TxtBlockRight}" />
+                                    <TextBlock Grid.Column="0" Text="{Binding Key}" Margin="4,0" Style="{StaticResource TxtBlockRight}" />
                                     <TextBlock Grid.Column="1" Text=":" Margin="4,0" />
                                     <TextBlock Grid.Column="2" Text="{Binding Value}" Margin="4,0" Style="{StaticResource TxtBlockRight }" />
                                 </Grid>
@@ -86,7 +86,7 @@
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="Auto" SharedSizeGroup="C" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Text="{Binding Description}" Margin="4,0" />
+                                    <TextBlock Grid.Column="0" Text="{Binding Key}" Margin="4,0" />
                                     <TextBlock Grid.Column="1" Text=":" Margin="4,0" />
                                     <TextBlock Grid.Column="2" Text="{Binding Value}"  Margin="4,0"/>
                                     <TextBlock Grid.Column="3" Text=":" Margin="4,0" />
