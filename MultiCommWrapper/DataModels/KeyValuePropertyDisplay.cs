@@ -9,5 +9,11 @@
             this.Key = key;
             this.Value = value;
         }
+
+        public KeyValuePropertyDisplay(string key, object value) {
+            this.Key = key;
+            this.Value = value.ToString();
+        }
+
     }
 }
