@@ -10,6 +10,7 @@ namespace BluetoothLE.UWP.Core {
 
         /// <summary>Called from syncronous Interface method .. to call async methods</summary>
         private void DoLEWatcherSearch() {
+            this.TearDownWatcher();
             if (this.devWatcher == null) {
                 this.SetupWatcher();
                 this.devWatcher.Start();
@@ -72,13 +73,18 @@ namespace BluetoothLE.UWP.Core {
 
 
         // Events stay all the time. Only added once. Caller can disable as required
-        //private void TearDownEvents() {
-        //    devWatcher.Added -= DevWatcher_Added;
-        //    devWatcher.Updated -= DevWatcher_Updated;
-        //    devWatcher.Removed -= DevWatcher_Removed;
-        //    devWatcher.EnumerationCompleted -= DevWatcher_EnumerationCompleted;
-        //    devWatcher.Stopped -= DevWatcher_Stopped;
-        //}
+        private void TearDownWatcher() {
+            if (devWatcher != null) {
+                this.devWatcher.Added -= DevWatcher_Added;
+                this.devWatcher.Updated -= DevWatcher_Updated;
+                this.devWatcher.Removed -= DevWatcher_Removed;
+                this.devWatcher.EnumerationCompleted -= DevWatcher_EnumerationCompleted;
+                this.devWatcher.Stopped -= DevWatcher_Stopped;
+                this.devWatcher.Stop();
+                this.devWatcher = null;
+                
+            }
+        }
 
 
         /// <summary>Event fired when the watcher is stopped</summary>
