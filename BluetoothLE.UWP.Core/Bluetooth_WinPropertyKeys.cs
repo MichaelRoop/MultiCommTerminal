@@ -1,8 +1,8 @@
-﻿using BluetoothLE.Net.interfaces;
+﻿using Common.Net.Network.interfaces;
 
 namespace Bluetooth.UWP.Core {
 
-    public class Bluetooth_WinPropertyKeys : IPropertyKeys {
+    public class Bluetooth_WinPropertyKeys : INetPropertyKeys {
         public string IsConnected => "System.Devices.Aep.IsConnected";
 
         public string IsConnectable => "System.Devices.Aep.IsConnectable";

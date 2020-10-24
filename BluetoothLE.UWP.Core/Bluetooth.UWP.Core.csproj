@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\SharedNetLibs\BluetoothCommon.Net\BluetoothCommon.Net.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\BluetoothLE\BluetoothLE.Net.csproj" />
+    <ProjectReference Include="..\..\SharedNetLibs\Common.Net\Common.Net.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\LogUtils.Net\LogUtils.Net.csproj" />
   </ItemGroup>
 

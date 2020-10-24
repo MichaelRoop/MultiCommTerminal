@@ -65,13 +65,7 @@ namespace BluetoothRfComm.UWP.Core {
                             //device.DeviceInformation.Properties
                             this.log.Info("DoDiscovery", () => string.Format("BluetoothDevice.DeviceId: {0}", device.DeviceId));
 
-                            //device.DeviceInformation.Properties
-                            // TODO - move to a generic Core for both BT and BLE
-                            //BLE_WinExtensions
                             deviceInfo.Properties = device.DeviceInformation.CreatePropertiesDictionary();
-
-
-
 
                             if (device.ClassOfDevice != null) {
                                 deviceInfo.DeviceClassInt = (uint)device.ClassOfDevice.MajorClass;

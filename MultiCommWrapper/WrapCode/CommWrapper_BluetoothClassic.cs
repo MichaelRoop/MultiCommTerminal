@@ -1,8 +1,7 @@
 ﻿using BluetoothCommon.Net;
-using BluetoothCommon.Net.DataModels;
-using BluetoothLE.Net.DataModels;
 using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
+using Common.Net.Network;
 using LanguageFactory.Net.data;
 using MultiCommWrapper.Net.DataModels;
 using MultiCommWrapper.Net.interfaces;
@@ -147,7 +146,6 @@ namespace MultiCommWrapper.Net.WrapCode {
             List<KeyValuePropertyDisplay> list = new List<KeyValuePropertyDisplay>();
             list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Name), info.Name));
             list.Add(new KeyValuePropertyDisplay("Address", info.Address));
-
             list.Add(new KeyValuePropertyDisplay("Device Class", string.Format("{0} ({1})", info.DeviceClassName, info.DeviceClassInt)));
             list.Add(new KeyValuePropertyDisplay("Service Class", string.Format("{0} (0x{1:X})", info.ServiceClassName, info.ServiceClassInt)));
             list.Add(new KeyValuePropertyDisplay("Last Seen", info.LastSeen.ToString()));
@@ -159,32 +157,22 @@ namespace MultiCommWrapper.Net.WrapCode {
             list.Add(new KeyValuePropertyDisplay("Can Pair", info.CanPair));
             list.Add(new KeyValuePropertyDisplay("Is Paired", info.IsPaired));
             list.Add(new KeyValuePropertyDisplay("Strength", info.Strength));
-
-            //list.Add(new KeyValuePropertyDisplay("", info.RemoteHostName));
-
-
-            //// Temp for properties
-            //foreach(var p in info.Properties) {
-            //    // TODO - this will have extra field of data type
-            //    list.Add(new KeyValuePropertyDisplay(p.Key, p.Value.Value));
-
-            //}
             return list;
         }
 
 
         // TODO - change names. Properties for both BT and BLE
-        public List<BluetoothPropertyDataModelDisplay> BT_GetProperties(BTDeviceInfo info) {
+        public List<NetPropertyDataModelDisplay> BT_GetProperties(BTDeviceInfo info) {
             try {
-                List<BluetoothPropertyDataModelDisplay> list = new List<BluetoothPropertyDataModelDisplay>();
+                List<NetPropertyDataModelDisplay> list = new List<NetPropertyDataModelDisplay>();
                 foreach (var sp in info.Properties) {
-                    list.Add(new BluetoothPropertyDataModelDisplay(sp.Value));
+                    list.Add(new NetPropertyDataModelDisplay(sp.Value));
                 }
                 return list;
             }
             catch (Exception e) {
                 this.log.Exception(9999, "", e);
-                return new List<BluetoothPropertyDataModelDisplay>();
+                return new List<NetPropertyDataModelDisplay>();
             }
         }
 

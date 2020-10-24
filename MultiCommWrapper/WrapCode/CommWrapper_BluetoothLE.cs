@@ -1,7 +1,7 @@
-﻿using BluetoothCommon.Net.DataModels;
-using BluetoothLE.Net.DataModels;
+﻿using BluetoothLE.Net.DataModels;
 using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
+using Common.Net.Network;
 using MultiCommWrapper.Net.DataModels;
 using MultiCommWrapper.Net.interfaces;
 using System;
@@ -26,7 +26,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         public event EventHandler<bool> BLE_DeviceDiscoveryComplete;
 
         /// <summary>Event raised when BLE device properties change</summary>
-        public event EventHandler<BluetoothPropertiesUpdateDataModel> BLE_DeviceUpdated;
+        public event EventHandler<NetPropertiesUpdateDataModel> BLE_DeviceUpdated;
 
         /// <summary>Raised when BLE info on a device is finished gathering</summary>
         public event EventHandler<BluetoothLEDeviceInfo> BLE_DeviceInfoGathered;
@@ -46,7 +46,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-        private void BLE_DeviceUpdatedHandler(object sender, BluetoothPropertiesUpdateDataModel args) {
+        private void BLE_DeviceUpdatedHandler(object sender, NetPropertiesUpdateDataModel args) {
             this.BLE_DeviceUpdated?.Invoke(this, args);
         }
 
@@ -167,7 +167,6 @@ namespace MultiCommWrapper.Net.WrapCode {
                 list.Add(new KeyValuePropertyDisplay("Can Pair", info.CanPair.ToString()));
                 list.Add(new KeyValuePropertyDisplay("Paired", info.IsPaired.ToString()));
                 list.Add(new KeyValuePropertyDisplay("Paired using secure connection", info.WasPairedUsingSecureConnection.ToString()));
-                //list.Add(new KeyValuePropertyDisplay("Connectable", info.IsConnectable.ToString()));
                 list.Add(new KeyValuePropertyDisplay("Connected", info.IsConnected.ToString()));
                 list.Add(new KeyValuePropertyDisplay("Protection Level", info.ProtectionLevel.ToString().CamelCaseToSpaces()));
                 list.Add(new KeyValuePropertyDisplay("Bluetooth Type", info.TypeBluetooth.ToString().CamelCaseToSpaces()));
@@ -184,17 +183,17 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-        public List<BluetoothPropertyDataModelDisplay> BLE_GetServiceProperties(BluetoothLEDeviceInfo info) {
+        public List<NetPropertyDataModelDisplay> BLE_GetServiceProperties(BluetoothLEDeviceInfo info) {
             try {
-                List<BluetoothPropertyDataModelDisplay> list = new List<BluetoothPropertyDataModelDisplay>();
+                List<NetPropertyDataModelDisplay> list = new List<NetPropertyDataModelDisplay>();
                 foreach (var sp in info.ServiceProperties) {
-                    list.Add(new BluetoothPropertyDataModelDisplay(sp.Value));
+                    list.Add(new NetPropertyDataModelDisplay(sp.Value));
                 }
                 return list;
             }
             catch(Exception e) {
                 this.log.Exception(9999, "", e);
-                return new List<BluetoothPropertyDataModelDisplay>();
+                return new List<NetPropertyDataModelDisplay>();
             }
         }
 
