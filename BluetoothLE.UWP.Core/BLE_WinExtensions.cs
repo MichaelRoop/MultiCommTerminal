@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Windows.Devices.Enumeration;
 using Windows.Storage.Streams;
 
-namespace BluetoothLE.UWP.Core {
+namespace Bluetooth.UWP.Core {
 
     /// <summary>Windows specific extensions for helper</summary>
     public static class BLE_WinExtensions {

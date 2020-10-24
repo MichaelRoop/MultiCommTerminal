@@ -4,7 +4,7 @@ using BluetoothLE.Net.interfaces;
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Enumeration;
 
-namespace BluetoothLE.UWP.Core {
+namespace Bluetooth.UWP.Core {
 
     public partial class BluetoothLEImplWin32Core : IBLETInterface {
     

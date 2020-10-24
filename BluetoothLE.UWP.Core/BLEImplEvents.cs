@@ -2,7 +2,7 @@
 using BluetoothLE.Net.interfaces;
 using System;
 
-namespace BluetoothLE.UWP.Core {
+namespace Bluetooth.UWP.Core {
 
     public partial class BluetoothLEImplWin32Core : IBLETInterface {
 

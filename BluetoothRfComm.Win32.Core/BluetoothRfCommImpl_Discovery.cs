@@ -1,6 +1,6 @@
 ﻿using BluetoothCommon.Net;
 using BluetoothCommon.Net.interfaces;
-using BluetoothLE.UWP.Core;
+using Bluetooth.UWP.Core;
 using System;
 using System.Threading.Tasks;
 using Windows.Devices.Bluetooth;

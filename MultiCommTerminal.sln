@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BluetoothLE.Net", "..\Share
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AurelienRibon.Ui.SyntaxHighlightBox", "AurelienRibon.Ui.SyntaxHighlightBox\AurelienRibon.Ui.SyntaxHighlightBox.csproj", "{10A9ECD3-AE1E-494D-9A27-8A32DD581759}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BluetoothLE.UWP.Core", "BluetoothLE.UWP.Core\BluetoothLE.UWP.Core.csproj", "{31A222E3-7470-4102-A087-F6902FEDCC17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bluetooth.UWP.Core", "BluetoothLE.UWP.Core\Bluetooth.UWP.Core.csproj", "{31A222E3-7470-4102-A087-F6902FEDCC17}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BluetoothRfComm.UWP.Core", "BluetoothRfComm.Win32.Core\BluetoothRfComm.UWP.Core.csproj", "{02BCC200-E4C3-4A45-A911-1471693E07A0}"
 EndProject

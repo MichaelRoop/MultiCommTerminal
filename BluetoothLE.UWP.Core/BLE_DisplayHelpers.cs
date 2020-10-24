@@ -1,9 +1,7 @@
-﻿using BluetoothLE.Net.Enumerations;
-using BluetoothLE.Net.Parsers;
-using System.Collections.Generic;
+﻿using BluetoothLE.Net.Parsers;
 using Windows.Devices.Bluetooth.GenericAttributeProfile;
 
-namespace BluetoothLE.UWP.Core {
+namespace Bluetooth.UWP.Core {
 
     /// <summary>
     /// From MS examples. Created OS independent copy and kept this as wrapper

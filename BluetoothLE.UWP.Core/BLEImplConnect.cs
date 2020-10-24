@@ -2,13 +2,12 @@
 using BluetoothLE.Net.interfaces;
 using BluetoothLE.Net.Parsers;
 using System;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Bluetooth.GenericAttributeProfile;
 // The using for the RFCOMM to communicate with classic items
 
-namespace BluetoothLE.UWP.Core {
+namespace Bluetooth.UWP.Core {
 
 
     public partial class BluetoothLEImplWin32Core : IBLETInterface {

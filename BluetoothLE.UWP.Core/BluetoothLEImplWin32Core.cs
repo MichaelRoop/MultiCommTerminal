@@ -2,14 +2,12 @@
 using BluetoothLE.Net.interfaces;
 using LogUtils.Net;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Enumeration;
 
-namespace BluetoothLE.UWP.Core {
+namespace Bluetooth.UWP.Core {
 
     public partial class BluetoothLEImplWin32Core : IBLETInterface {
 

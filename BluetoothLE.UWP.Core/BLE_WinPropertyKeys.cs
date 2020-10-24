@@ -1,6 +1,6 @@
 ﻿using BluetoothLE.Net.interfaces;
 
-namespace BluetoothLE.UWP.Core {
+namespace Bluetooth.UWP.Core {
 
     public class BLE_WinPropertyKeys : IPropertyKeys {
         public string IsConnected => "System.Devices.Aep.IsConnected";

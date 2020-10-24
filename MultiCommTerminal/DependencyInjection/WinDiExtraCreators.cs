@@ -1,6 +1,6 @@
 ﻿using BluetoothCommon.Net.interfaces;
 using BluetoothLE.Net.interfaces;
-using BluetoothLE.UWP.Core;
+using Bluetooth.UWP.Core;
 using BluetoothRfComm.UWP.Core;
 using Communications.UWP.Core.MsgPumps;
 using CommunicationStack.Net.interfaces;

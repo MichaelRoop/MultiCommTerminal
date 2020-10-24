@@ -11,7 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\SharedNetCoreLibs\Communications.UWP.Core\Communications.UWP.Core.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\BluetoothCommon.Net\BluetoothCommon.Net.csproj" />
-    <ProjectReference Include="..\BluetoothLE.UWP.Core\BluetoothLE.UWP.Core.csproj" />
+    <ProjectReference Include="..\BluetoothLE.UWP.Core\Bluetooth.UWP.Core.csproj" />
   </ItemGroup>
 
 </Project>

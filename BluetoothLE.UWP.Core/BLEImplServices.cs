@@ -13,7 +13,7 @@ using Windows.Devices.Bluetooth.GenericAttributeProfile;
 // https://www.c-sharpcorner.com/code/1912/uwp-bluetooth-le-implementation
 // https://github.com/nexussays/ble.net/blob/master/Readme.md
 
-namespace BluetoothLE.UWP.Core {
+namespace Bluetooth.UWP.Core {
 
     // Using the UWP Bluetooth LE calls from Win 32 desktop - NOT USING THIS ONE ANYMORE
     //https://social.msdn.microsoft.com/Forums/vstudio/en-US/e261aeb5-104d-43ba-9b2b-97447614dec0/how-to-use-windowsdevices-api-in-a-c-winform-desktop-application-in-windows-10?forum=winforms
