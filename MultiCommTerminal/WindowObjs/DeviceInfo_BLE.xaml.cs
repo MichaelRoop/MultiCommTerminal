@@ -1,5 +1,6 @@
 ﻿using BluetoothLE.Net.DataModels;
 using MultiCommTerminal.DependencyInjection;
+using MultiCommTerminal.NetCore.WindowObjs.BLE;
 using MultiCommTerminal.WPF_Helpers;
 using System.Windows;
 using WpfHelperClasses.Core;
@@ -11,7 +12,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
 
         Window parent = null;
-
+        BluetoothLEDeviceInfo info = null;
 
         public static void ShowBox(Window parent, BluetoothLEDeviceInfo info) {
             DeviceInfo_BLE win = new DeviceInfo_BLE(parent, info);
@@ -21,8 +22,9 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         public DeviceInfo_BLE(Window parent, BluetoothLEDeviceInfo info) {
             this.parent = parent;
+            this.info = info;
             InitializeComponent();
-            this.PopulateFields(info);
+            this.PopulateFields();
             this.SizeToContent = SizeToContent.WidthAndHeight;
         }
 
@@ -43,7 +45,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         }
 
 
-        private void PopulateFields(BluetoothLEDeviceInfo info) {
+        private void PopulateFields() {
             this.listboxMain.ItemsSource = DI.Wrapper.BLE_GetDeviceInfoForDisplay(info);
             this.listboxProperties.ItemsSource = DI.Wrapper.BLE_GetServiceProperties(info);
             if (info.Services == null || info.Services.Count == 0) {
@@ -89,5 +91,18 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         #endregion
 
+        private void btnServices_Click(object sender, RoutedEventArgs e) {
+            BLE_ServicesDisplay.ShowBox(this, this.info);
+
+            //if (info.Services == null || info.Services.Count == 0) {
+            //    this.treeServices.Collapse();
+            //    this.txtServices.Collapse();
+            //}
+            //else {
+            //    this.treeServices.ItemsSource = info.Services.Values;
+            //}
+
+
+        }
     }
 }
