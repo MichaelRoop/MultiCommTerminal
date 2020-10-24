@@ -59,15 +59,20 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         private void PopulateFields() {
             this.listboxMain.ItemsSource = DI.Wrapper.BLE_GetDeviceInfoForDisplay(info);
-            this.listboxProperties.ItemsSource = DI.Wrapper.BLE_GetServiceProperties(info);
             if (info.Services.Count == 0) {
                 this.btnServices.Collapse();
+                this.widthManager = new ButtonGroupSizeSyncManager(this.btnProperties, this.btnExit);
             }
             else {
-                this.widthManager = new ButtonGroupSizeSyncManager(this.btnServices, this.btnExit);
-                this.widthManager.PrepForChange();
+                this.widthManager = new ButtonGroupSizeSyncManager(this.btnProperties, this.btnServices, this.btnExit);
             }
+            this.widthManager.PrepForChange();
         }
 
+
+        private void btnProperties_Click(object sender, RoutedEventArgs e) {
+            BLE_PropertiesDisplay.ShowBox(this.parent, this.info);
+
+        }
     }
 }
