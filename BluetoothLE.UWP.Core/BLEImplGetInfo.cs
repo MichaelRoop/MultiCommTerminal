@@ -21,6 +21,7 @@ namespace BluetoothLE.UWP.Core {
                 this.log.Info("HarvestDeviceInfo", () => string.Format("--------------------------------------------------------------------"));
                 this.log.Info("HarvestDeviceInfo", () => string.Format(" Param Device Info ID {0}", deviceDataModel.Id));
                 device = await BluetoothLEDevice.FromIdAsync(deviceDataModel.Id);
+                deviceDataModel.InfoAttempted = true;
                 this.UpdateDeviceOnConnect(device, deviceDataModel);
 
                 // Clear services and get a new set for the passed in device info

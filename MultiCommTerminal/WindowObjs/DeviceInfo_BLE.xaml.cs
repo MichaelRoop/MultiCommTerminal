@@ -127,6 +127,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
             //this.info.Services
             if (info.Services == null || info.Services.Count == 0) {
                 this.treeServices.Collapse();
+                this.txtServices.Collapse();
             }
             else {
                 this.treeServices.ItemsSource = info.Services.Values;

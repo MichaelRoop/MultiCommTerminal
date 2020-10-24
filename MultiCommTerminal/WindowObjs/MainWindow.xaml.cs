@@ -207,7 +207,7 @@ namespace MultiCommTerminal.WindowObjs {
         private void btnInfoLE_Click(object sender, RoutedEventArgs e) {
             if (this.listBox_BLE.SelectedItem != null) {
                 BluetoothLEDeviceInfo ble = this.listBox_BLE.SelectedItem as BluetoothLEDeviceInfo;
-                if (ble.Services.Count == 0) {
+                if (ble.Services.Count == 0 && !ble.InfoAttempted) {
                     this.wrapper.BLE_DeviceInfoGathered -= Wrapper_BLE_DeviceInfoGatheredOnGetInfo;
                     this.wrapper.BLE_DeviceInfoGathered += Wrapper_BLE_DeviceInfoGatheredOnGetInfo;
                     this.gridWait.Show();
