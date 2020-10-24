@@ -1,4 +1,5 @@
 ﻿using BluetoothCommon.Net;
+using BluetoothCommon.Net.DataModels;
 using BluetoothLE.Net.DataModels;
 using ChkUtils.Net;
 using LanguageFactory.Net.data;
@@ -124,7 +125,7 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
-        private void BLE_DeviceUpdatedHandler(object sender, BLE_PropertiesUpdateDataModel args) {
+        private void BLE_DeviceUpdatedHandler(object sender, BluetoothPropertiesUpdateDataModel args) {
             this.Dispatcher.Invoke(() => {
                 WrapErr.ToErrReport(9999, "Failure on BLE Device Updated", () => {
                     this.log.Info("", () => string.Format("Updating '{0}'", args.Id));

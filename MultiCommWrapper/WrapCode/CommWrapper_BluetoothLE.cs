@@ -1,4 +1,5 @@
-﻿using BluetoothLE.Net.DataModels;
+﻿using BluetoothCommon.Net.DataModels;
+using BluetoothLE.Net.DataModels;
 using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
 using MultiCommWrapper.Net.DataModels;
@@ -25,7 +26,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         public event EventHandler<bool> BLE_DeviceDiscoveryComplete;
 
         /// <summary>Event raised when BLE device properties change</summary>
-        public event EventHandler<BLE_PropertiesUpdateDataModel> BLE_DeviceUpdated;
+        public event EventHandler<BluetoothPropertiesUpdateDataModel> BLE_DeviceUpdated;
 
         /// <summary>Raised when BLE info on a device is finished gathering</summary>
         public event EventHandler<BluetoothLEDeviceInfo> BLE_DeviceInfoGathered;
@@ -45,7 +46,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-        private void BLE_DeviceUpdatedHandler(object sender, BLE_PropertiesUpdateDataModel args) {
+        private void BLE_DeviceUpdatedHandler(object sender, BluetoothPropertiesUpdateDataModel args) {
             this.BLE_DeviceUpdated?.Invoke(this, args);
         }
 
@@ -183,17 +184,17 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-        public List<BLE_PropertyDataModelDisplay> BLE_GetServiceProperties(BluetoothLEDeviceInfo info) {
+        public List<BluetoothPropertyDataModelDisplay> BLE_GetServiceProperties(BluetoothLEDeviceInfo info) {
             try {
-                List<BLE_PropertyDataModelDisplay> list = new List<BLE_PropertyDataModelDisplay>();
+                List<BluetoothPropertyDataModelDisplay> list = new List<BluetoothPropertyDataModelDisplay>();
                 foreach (var sp in info.ServiceProperties) {
-                    list.Add(new BLE_PropertyDataModelDisplay(sp.Value));
+                    list.Add(new BluetoothPropertyDataModelDisplay(sp.Value));
                 }
                 return list;
             }
             catch(Exception e) {
                 this.log.Exception(9999, "", e);
-                return new List<BLE_PropertyDataModelDisplay>();
+                return new List<BluetoothPropertyDataModelDisplay>();
             }
         }
 

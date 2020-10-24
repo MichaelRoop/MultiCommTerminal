@@ -2,7 +2,7 @@
 
 namespace Bluetooth.UWP.Core {
 
-    public class BLE_WinPropertyKeys : IPropertyKeys {
+    public class Bluetooth_WinPropertyKeys : IPropertyKeys {
         public string IsConnected => "System.Devices.Aep.IsConnected";
 
         public string IsConnectable => "System.Devices.Aep.IsConnectable";

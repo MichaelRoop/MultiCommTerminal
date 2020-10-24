@@ -1,4 +1,5 @@
 ﻿using BluetoothCommon.Net;
+using BluetoothCommon.Net.DataModels;
 using BluetoothLE.Net.DataModels;
 using CommunicationStack.Net.DataModels;
 using CommunicationStack.Net.Stacks;
@@ -187,7 +188,7 @@ namespace MultiCommWrapper.Net.interfaces {
         /// <returns>A display list of the fields</returns>
         List<KeyValuePropertyDisplay> BT_GetDeviceInfoForDisplay(BTDeviceInfo info);
 
-        List<BLE_PropertyDataModelDisplay> BT_GetProperties(BTDeviceInfo info);
+        List<BluetoothPropertyDataModelDisplay> BT_GetProperties(BTDeviceInfo info);
 
         #endregion
 
@@ -207,7 +208,7 @@ namespace MultiCommWrapper.Net.interfaces {
         event EventHandler<bool> BLE_DeviceDiscoveryComplete;
 
         /// <summary>Event raised when BLE device properties change</summary>
-        event EventHandler<BLE_PropertiesUpdateDataModel> BLE_DeviceUpdated;
+        event EventHandler<BluetoothPropertiesUpdateDataModel> BLE_DeviceUpdated;
 
         /// <summary>Raised when BLE info on a device is finished gathering</summary>
         event EventHandler<BluetoothLEDeviceInfo> BLE_DeviceInfoGathered;
@@ -232,7 +233,7 @@ namespace MultiCommWrapper.Net.interfaces {
         /// <summary>Get a displayable list for the BLE device Service Properties</summary>
         /// <param name="info">The device info to parse</param>
         /// <returns>A display list of BLE device service properties</returns>
-        List<BLE_PropertyDataModelDisplay> BLE_GetServiceProperties(BluetoothLEDeviceInfo info);
+        List<BluetoothPropertyDataModelDisplay> BLE_GetServiceProperties(BluetoothLEDeviceInfo info);
 
 
         /// <summary>Debug method to get string of properties</summary>

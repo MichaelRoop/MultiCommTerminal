@@ -1,4 +1,5 @@
-﻿using BluetoothLE.Net.DataModels;
+﻿using BluetoothCommon.Net.DataModels;
+using BluetoothLE.Net.DataModels;
 using BluetoothLE.Net.interfaces;
 using System;
 
@@ -14,7 +15,7 @@ namespace Bluetooth.UWP.Core {
 
         public event EventHandler<bool> DeviceDiscoveryCompleted;
 
-        public event EventHandler<BLE_PropertiesUpdateDataModel> DeviceUpdated;
+        public event EventHandler<BluetoothPropertiesUpdateDataModel> DeviceUpdated;
 
         public event EventHandler<BluetoothLEDeviceInfo> DeviceInfoAssembled;
 

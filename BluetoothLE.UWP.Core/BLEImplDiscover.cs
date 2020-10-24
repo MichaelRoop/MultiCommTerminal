@@ -1,4 +1,5 @@
-﻿using BluetoothLE.Net.DataModels;
+﻿using BluetoothCommon.Net.DataModels;
+using BluetoothLE.Net.DataModels;
 using BluetoothLE.Net.interfaces;
 using ChkUtils.Net;
 using Windows.Devices.Enumeration;
@@ -122,7 +123,7 @@ namespace Bluetooth.UWP.Core {
             this.log.Info("DevWatcher_Updated", () => string.Format("***** {0}", updateInfo.Id));
             WrapErr.ToErrReport(9999, () => {
 
-                BLE_PropertiesUpdateDataModel dm = updateInfo.CreatePropertiesUpdateData();
+                BluetoothPropertiesUpdateDataModel dm = updateInfo.CreatePropertiesUpdateData();
                 this.DeviceUpdated?.Invoke(this, dm);
 
                 //this.devic
@@ -168,7 +169,7 @@ namespace Bluetooth.UWP.Core {
                     this.DebugDumpDeviceInfo(deviceInfo);
                     
                     if (this.DeviceDiscovered != null) {
-                        BluetoothLEDeviceInfo dev = new BluetoothLEDeviceInfo(new BLE_WinPropertyKeys()) {
+                        BluetoothLEDeviceInfo dev = new BluetoothLEDeviceInfo(new Bluetooth_WinPropertyKeys()) {
                             Name = deviceInfo.Name,
                             Id = deviceInfo.Id,
                             IsDefault = deviceInfo.IsDefault,

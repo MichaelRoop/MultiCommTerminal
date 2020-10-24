@@ -1,4 +1,5 @@
-﻿using BluetoothLE.Net.DataModels;
+﻿using BluetoothCommon.Net.DataModels;
+using BluetoothLE.Net.DataModels;
 using BluetoothLE.Net.interfaces;
 using LogUtils.Net;
 using System;
@@ -12,7 +13,7 @@ namespace Bluetooth.UWP.Core {
     public static class BLE_WinExtensions {
 
         private static ClassLog log = new ClassLog("BLE_WinExtensions");
-        private static IPropertyKeys KEYS = new BLE_WinPropertyKeys();
+        private static IPropertyKeys KEYS = new Bluetooth_WinPropertyKeys();
 
 
         /// <summary>Convert from Windows IBuffer to properly sized byte array</summary>
@@ -64,27 +65,27 @@ namespace Bluetooth.UWP.Core {
         }
 
 
-        public static Dictionary<string, BLE_PropertyDataModel> CreatePropertiesDictionary(this DeviceInformation info) {
+        public static Dictionary<string, BluetoothPropertyDataModel> CreatePropertiesDictionary(this DeviceInformation info) {
             if (info != null) {
                 return CreatePropertiesDictionary(info.Properties);
             }
-            return new Dictionary<string, BLE_PropertyDataModel>();
+            return new Dictionary<string, BluetoothPropertyDataModel>();
         }
 
 
-        public static BLE_PropertiesUpdateDataModel CreatePropertiesUpdateData(this DeviceInformationUpdate updateInfo) {
-            BLE_PropertiesUpdateDataModel dm = new BLE_PropertiesUpdateDataModel() {
+        public static BluetoothPropertiesUpdateDataModel CreatePropertiesUpdateData(this DeviceInformationUpdate updateInfo) {
+            BluetoothPropertiesUpdateDataModel dm = new BluetoothPropertiesUpdateDataModel() {
                 Id = updateInfo.Id,
                 ServiceProperties = CreatePropertiesDictionary(updateInfo.Properties),
             };
             return dm;
         }
 
-        private static Dictionary<string, BLE_PropertyDataModel> CreatePropertiesDictionary(IReadOnlyDictionary<string,object> propertyDict) {
-            Dictionary<string, BLE_PropertyDataModel> properties = new Dictionary<string, BLE_PropertyDataModel>();
+        private static Dictionary<string, BluetoothPropertyDataModel> CreatePropertiesDictionary(IReadOnlyDictionary<string,object> propertyDict) {
+            Dictionary<string, BluetoothPropertyDataModel> properties = new Dictionary<string, BluetoothPropertyDataModel>();
             if (propertyDict != null) {
                 foreach (var p in propertyDict) {
-                    BLE_PropertyDataModel model = new BLE_PropertyDataModel() {
+                    BluetoothPropertyDataModel model = new BluetoothPropertyDataModel() {
                         Key = p.Key,
                         Target = GetPropertyTarget(p.Key),
                     };
@@ -137,7 +138,7 @@ namespace Bluetooth.UWP.Core {
         }
 
 
-        private static void SetPropertyValue(object value, BLE_PropertyDataModel model) {
+        private static void SetPropertyValue(object value, BluetoothPropertyDataModel model) {
             if (value == null) {
                 model.DataType = PropertyDataType.TypeString;
                 model.Value = "";

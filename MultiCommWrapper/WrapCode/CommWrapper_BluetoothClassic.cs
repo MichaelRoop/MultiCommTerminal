@@ -1,4 +1,5 @@
 ﻿using BluetoothCommon.Net;
+using BluetoothCommon.Net.DataModels;
 using BluetoothLE.Net.DataModels;
 using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
@@ -173,17 +174,17 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         // TODO - change names. Properties for both BT and BLE
-        public List<BLE_PropertyDataModelDisplay> BT_GetProperties(BTDeviceInfo info) {
+        public List<BluetoothPropertyDataModelDisplay> BT_GetProperties(BTDeviceInfo info) {
             try {
-                List<BLE_PropertyDataModelDisplay> list = new List<BLE_PropertyDataModelDisplay>();
+                List<BluetoothPropertyDataModelDisplay> list = new List<BluetoothPropertyDataModelDisplay>();
                 foreach (var sp in info.Properties) {
-                    list.Add(new BLE_PropertyDataModelDisplay(sp.Value));
+                    list.Add(new BluetoothPropertyDataModelDisplay(sp.Value));
                 }
                 return list;
             }
             catch (Exception e) {
                 this.log.Exception(9999, "", e);
-                return new List<BLE_PropertyDataModelDisplay>();
+                return new List<BluetoothPropertyDataModelDisplay>();
             }
         }
 
