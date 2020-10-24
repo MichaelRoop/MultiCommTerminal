@@ -104,7 +104,7 @@ namespace MultiCommTerminal.WindowObjs {
                 this.AddItem(MenuCode.Terminators, MsgCode.Terminators, UIIcon.Terminator, "0");
                 this.AddItem(MenuCode.Commands, MsgCode.command, UIIcon.Command, "0"); // TODO Get a new icon
                 this.AddItem(MenuCode.Credentials, MsgCode.Credentials, UIIcon.Credentials, "0");
-                this.AddItem(MenuCode.Settings, MsgCode.Settings, UIIcon.Settings, "0");
+                //this.AddItem(MenuCode.Settings, MsgCode.Settings, UIIcon.Settings, "0");
                 this.AddItem(MenuCode.About, MsgCode.About, UIIcon.About, "1");
 
                 this.lbxMenuItems.ItemsSource = this.items;

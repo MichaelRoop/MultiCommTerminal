@@ -206,7 +206,11 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void btnInfoLE_Click(object sender, RoutedEventArgs e) {
             if (this.listBox_BLE.SelectedItem != null) {
-                this.wrapper.BLE_GetDbgInfoStringDump(this.listBox_BLE.SelectedItem, App.ShowMsgTitle);
+                BluetoothLEDeviceInfo ble = this.listBox_BLE.SelectedItem as BluetoothLEDeviceInfo;
+                DeviceInfo_BLE.ShowBox(this, ble);
+
+                //App.ShowMsg("BPIPO");
+                //this.wrapper.BLE_GetDbgInfoStringDump(this.listBox_BLE.SelectedItem, App.ShowMsgTitle);
             }
         }
 

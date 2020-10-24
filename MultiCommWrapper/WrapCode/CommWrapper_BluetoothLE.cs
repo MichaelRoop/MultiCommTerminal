@@ -94,14 +94,14 @@ namespace MultiCommWrapper.Net.WrapCode {
                 }
 
                 StringBuilder sb = new StringBuilder();
-                sb.Append(string.Format("Id: {0}", info.Id)).AppendLine();
-                sb.Append(string.Format("IsDefault: {0}", info.IsDefault)).AppendLine();
-                sb.Append(string.Format("IsEnabled: {0}", info.IsEnabled)).AppendLine();
+                sb.Append(string.Format("        Id: {0}", info.Id)).AppendLine();
+                sb.Append(string.Format(" IsDefault: {0}", info.IsDefault)).AppendLine();
+                sb.Append(string.Format(" IsEnabled: {0}", info.IsEnabled)).AppendLine();
                 //sb.Append("     Kind: {0}", device.Kind);
                 // Properties
                 sb.Append(string.Format("Properties: ({0})", info.ServiceProperties.Count)).AppendLine();
                 foreach (var p in info.ServiceProperties) {
-                    sb.Append(p.Key).Append(" : ").Append(p.Value.Value.ToString()).AppendLine();
+                    sb.Append("    ").Append(p.Key).Append(" : ").Append(p.Value.Value.ToString()).AppendLine();
                 }
                 #region OS Specific to implement in the abstract
                 //// Enclosure location
