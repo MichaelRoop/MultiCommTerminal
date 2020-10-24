@@ -15,67 +15,23 @@
         ContentRendered="Window_ContentRendered">
     <Grid>
         <StackPanel>
-            <Grid HorizontalAlignment="Left" Margin="10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition MaxWidth="180" />
-                    <ColumnDefinition Width="auto" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <!-- Radio -->
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-
-                <Label Grid.Row="0" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Name}}" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
-                <Label Grid.Row="0" Grid.Column="1" x:Name="lbName" Content="xxxxxxxxxxxx" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  />
-
-                <Label Grid.Row="1" Grid.Column="0" Content="Address" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
-                <Label Grid.Row="1" Grid.Column="1" x:Name="lbAddress" Content="" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  />
-
-                <Label Grid.Row="2" Grid.Column="0" Content="Device Class" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
-                <Label Grid.Row="2" Grid.Column="1" x:Name="lbDeviceClass" Content="" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  />
-
-                <Label Grid.Row="3" Grid.Column="0" Content="Service Class" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
-                <Label Grid.Row="3" Grid.Column="1" x:Name="lbServiceClass" Content="" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  />
-
-                <Label Grid.Row="4" Grid.Column="0" x:Name="lblStrengthLabel" Content="RSSI" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
-                <Label Grid.Row="4" Grid.Column="1" x:Name="lbStrength" Content="" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  />
-
-                <Label Grid.Row="5" Grid.Column="0" Content="Last Seen" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
-                <Label Grid.Row="5" Grid.Column="1" x:Name="lbLastSeen" Content="" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  />
-
-                <Label Grid.Row="6" Grid.Column="0" Content="Last Used" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
-                <Label Grid.Row="6" Grid.Column="1" x:Name="lbLastUsed" Content="" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  />
-
-                <Label Grid.Row="7" Grid.Column="0" x:Name="lblProperties" Content="Properties" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
-                <ComboBox Grid.Row="7" Grid.Column="1" x:Name="comboBoxProperties" MinWidth="125" MaxDropDownHeight="100" 
-                          HorizontalContentAlignment="Left" HorizontalAlignment="Left" SelectionChanged="comboBoxFeatures_SelectionChanged" />
-
-                <!-- Radio -->
-                <Label Grid.Row="8" Grid.ColumnSpan="2" x:Name="lblRadioLabel" Content="Radio" HorizontalAlignment="Center" />
-
-                <Label Grid.Row="9" Grid.Column="0" x:Name="lbRadioManufacturerLabel" Content="Manufacturer" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
-                <Label Grid.Row="9" Grid.Column="1" x:Name="lbRadioManufacturer" Content="" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  />
-
-                <Label Grid.Row="10" Grid.Column="0" x:Name="lblRadioProtocolLabel" Content="Protocol" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
-                <Label Grid.Row="10" Grid.Column="1" x:Name="lbRadioLmp" Content="" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  />
-
-                <Label Grid.Row="11" Grid.Column="0" x:Name="lblRadioFeaturesLable" Content="Features" HorizontalContentAlignment="Right" HorizontalAlignment="Right" />
-                <!--<Label Grid.Row="10" Grid.Column="1" x:Name="lbRadioFeatures" Content="" HorizontalContentAlignment="Left" HorizontalAlignment="Left"  />-->
-                <ComboBox Grid.Row="11" Grid.Column="1" x:Name="comboBoxFeatures" MinWidth="125" MaxDropDownHeight="100" 
-                          HorizontalContentAlignment="Left" HorizontalAlignment="Left" SelectionChanged="comboBoxFeatures_SelectionChanged" />
-
-            </Grid>
+            <ListBox x:Name="listboxMain" MaxHeight="500" MinWidth="300" MinHeight="50" Margin="5" FontSize="16" Grid.IsSharedSizeScope="True"
+                     ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="A" />
+                                <ColumnDefinition Width="Auto"  />
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="B" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{Binding Key}" Margin="4,0" Style="{StaticResource TxtBlockRight}" />
+                            <TextBlock Grid.Column="1" Text=":" Margin="4,0" />
+                            <TextBlock Grid.Column="2" Text="{Binding Value}" Margin="4,0" Style="{StaticResource TxtBlockRight }" />
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
             <DockPanel HorizontalAlignment="Center" Margin="10,5,10,15">
                 <controls:UC_IconButton x:Name="btnExit"  Margin="0,0,10,0"
                             Style="{StaticResource TextIconButton}" 

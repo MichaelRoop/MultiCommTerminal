@@ -1,8 +1,8 @@
 ﻿using BluetoothCommon.Net;
+using MultiCommTerminal.DependencyInjection;
 using MultiCommTerminal.WPF_Helpers;
 using System;
 using System.Windows;
-using System.Windows.Controls;
 using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.WindowObjs {
@@ -41,41 +41,15 @@ namespace MultiCommTerminal.WindowObjs {
             this.Close();
         }
 
-        private void comboBoxFeatures_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            this.comboBoxFeatures.SelectedIndex = -1;
-        }
-
 
         private void Init(BTDeviceInfo info) {
-            this.lbName.Content = info.Name;
-            this.lbAddress.Content = info.Address;
-            this.lbDeviceClass.Content = string.Format("{0} ({1})", info.DeviceClassName, info.DeviceClassInt);
-            this.lbServiceClass.Content = string.Format("{0} (0x{1:X})", info.ServiceClassName, info.ServiceClassInt);
-            this.lbStrength.Content = info.Strength.ToString();
-            this.lbLastSeen.Content = info.LastSeen.ToString();
-            this.lbLastUsed.Content = info.LastUsed.ToString();
-            if (info.Radio.IsInitialized) {
-                this.lbRadioManufacturer.Content = info.Radio.Manufacturer;
-                this.lbRadioLmp.Content = info.Radio.LinkManagerProtocol;
-                this.comboBoxFeatures.ItemsSource = info.Radio.Features;
-            }
-            else {
-                // TODO Disable radio display
-                this.lblRadioLabel.Collapse();
-                this.lblRadioFeaturesLable.Collapse();
-                this.lblRadioProtocolLabel.Collapse();
-                this.lbRadioLmp.Collapse();
-                this.lbRadioManufacturerLabel.Collapse();
-                this.lbRadioManufacturer.Collapse();
-                this.comboBoxFeatures.Collapse();
-            }
 
-            // Cannot get RSSI for now
-            this.lbStrength.Collapse();
-            this.lblStrengthLabel.Collapse();
-            // Not displaying properties for the moment
-            this.lblProperties.Collapse();
-            this.comboBoxProperties.Collapse();
+            this.listboxMain.ItemsSource = DI.Wrapper.BT_GetDeviceInfoForDisplay(info);
+            if (info.Radio.IsInitialized) {
+                // Could have a radio info dialog
+            }
+            // TODO - assemble all the properties in a properties box
+
         }
 
     }

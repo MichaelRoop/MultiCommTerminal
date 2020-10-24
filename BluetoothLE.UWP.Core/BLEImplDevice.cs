@@ -17,7 +17,7 @@ namespace BluetoothLE.UWP.Core {
                 deviceDataModel.IsConnectable = di.IsConnectable();
                 deviceDataModel.IsDefault = di.IsDefault;
                 deviceDataModel.IsEnabled = di.IsEnabled;
-                deviceDataModel.Kind = (BLE_DeviceInfoKind)di.Kind; 
+                deviceDataModel.DeviceKind = (BLE_DeviceInfoKind)di.Kind; 
                 if (di.Pairing != null) {
                     deviceDataModel.CanPair = di.Pairing.CanPair;
                     deviceDataModel.IsPaired = di.Pairing.IsPaired;

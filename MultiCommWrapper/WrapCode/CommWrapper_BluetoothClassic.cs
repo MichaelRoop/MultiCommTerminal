@@ -5,6 +5,7 @@ using LanguageFactory.Net.data;
 using MultiCommWrapper.Net.DataModels;
 using MultiCommWrapper.Net.interfaces;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using VariousUtils.Net;
 
@@ -137,6 +138,36 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         public void BTClassicSend(string msg) {
             this.btClassicStack.SendToComm(msg);
+        }
+
+
+        public List<KeyValuePropertyDisplay> BT_GetDeviceInfoForDisplay(BTDeviceInfo info) {
+            List<KeyValuePropertyDisplay> list = new List<KeyValuePropertyDisplay>();
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Name), info.Name));
+            list.Add(new KeyValuePropertyDisplay("Address", info.Address));
+
+            list.Add(new KeyValuePropertyDisplay("Device Class", string.Format("{0} ({1})", info.DeviceClassName, info.DeviceClassInt)));
+            list.Add(new KeyValuePropertyDisplay("Service Class", string.Format("{0} (0x{1:X})", info.ServiceClassName, info.ServiceClassInt)));
+            list.Add(new KeyValuePropertyDisplay("Last Seen", info.LastSeen.ToString()));
+            list.Add(new KeyValuePropertyDisplay("Last Used", info.LastUsed.ToString()));
+            list.Add(new KeyValuePropertyDisplay("Authenticated", info.Authenticated));
+            list.Add(new KeyValuePropertyDisplay("Remote Host Name", info.RemoteHostName));
+            list.Add(new KeyValuePropertyDisplay("Remote Service Name", info.RemoteServiceName));
+            list.Add(new KeyValuePropertyDisplay("Connected", info.Connected));
+            list.Add(new KeyValuePropertyDisplay("Can Pair", info.CanPair));
+            list.Add(new KeyValuePropertyDisplay("Is Paired", info.IsPaired));
+            list.Add(new KeyValuePropertyDisplay("Strength", info.Strength));
+
+            //list.Add(new KeyValuePropertyDisplay("", info.RemoteHostName));
+
+            // Always 0
+            //this.lbStrength.Content = info.Strength.ToString();
+
+            // Temp for properties
+
+
+
+            return list;
         }
 
 

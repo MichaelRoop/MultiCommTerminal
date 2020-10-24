@@ -181,6 +181,13 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void BTClassicUnPairAsync(BTDeviceInfo device);
 
+
+        /// <summary>Create a list of key value pairs for display of BT Device fields</summary>
+        /// <param name="info">The info to parse</param>
+        /// <returns>A display list of the fields</returns>
+        List<KeyValuePropertyDisplay> BT_GetDeviceInfoForDisplay(BTDeviceInfo info);
+
+
         #endregion
 
         #region BluetoothLE
