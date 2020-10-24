@@ -113,14 +113,18 @@
                         <StackPanel x:Name="spBluetooth" VerticalAlignment="Center" Visibility="Visible" Margin="20,0,10,10">
                             <DockPanel>
                                 <StackPanel Margin="0,0,10,0">
-                                    <CheckBox x:Name="btPairCheck" VerticalAlignment="Center" Margin="5" IsChecked="True" HorizontalAlignment="Center" Checked="btPairCheck_Checked" Unchecked="btPairCheck_Unchecked" >
-                                        <TextBlock x:Name="txtPairedDevices" FlowDirection="LeftToRight" Text="{Binding Source={x:Static wpfHelper:TxtBinder.PairedDevice}}"/>
-                                    </CheckBox>
-                                    <controls:UC_IconButton x:Name="btnBTDiscover" Style="{StaticResource TextIconButton}"
-                                            HorizontalContentAlignment="Left"
-                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Discover}}" Margin="0,2.5"
-                                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Search}}"                                                                                            
-                                            Background="Transparent" Click="btnBTDiscover_Click" />
+                                    <Border BorderThickness=".5" BorderBrush="Blue" Padding="2,0">
+                                        <StackPanel>
+                                            <CheckBox x:Name="btPairCheck" VerticalAlignment="Center" Margin="5" IsChecked="True" HorizontalAlignment="Center" Checked="btPairCheck_Checked" Unchecked="btPairCheck_Unchecked" >
+                                                <TextBlock x:Name="txtPairedDevices" FlowDirection="LeftToRight" Text="{Binding Source={x:Static wpfHelper:TxtBinder.PairedDevice}}"/>
+                                            </CheckBox>
+                                            <controls:UC_IconButton x:Name="btnBTDiscover" Style="{StaticResource TextIconButton}"
+                                                    HorizontalContentAlignment="Left"
+                                                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Discover}}" Margin="0,2.5"
+                                                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Search}}"                                                                                            
+                                                    Background="Transparent" Click="btnBTDiscover_Click" />
+                                            </StackPanel>
+                                    </Border>
                                     <controls:UC_IconButton x:Name="btnBTPair" Style="{StaticResource TextIconButton}"
                                             HorizontalContentAlignment="Left" Visibility="Collapsed"
                                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Pair}}" Margin="0,2.5"
@@ -148,8 +152,7 @@
                                             Background="Transparent" Click="btnBTDisconnect_Click" />
                                 </StackPanel>
                                 <StackPanel Margin="10,0">
-                                    <Label Content="Device:" HorizontalAlignment="Center"/>
-                                    <ListBox x:Name="listBox_BT" MinHeight="30" MinWidth="200" MaxHeight="85" 
+                                    <ListBox x:Name="listBox_BT" MinHeight="60" MinWidth="200" MaxHeight="110" 
                                              ScrollViewer.VerticalScrollBarVisibility="Auto" 
                                              ScrollViewer.HorizontalScrollBarVisibility="Auto">
                                         <ListBox.ItemTemplate>
@@ -177,12 +180,12 @@
                                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Discover}}"                                        
                                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Search}}"                                    
                                             Background="Transparent" Click="btnDiscoverLE_Click" />
-                                    <controls:UC_IconButton x:Name="btnInfoLE" Style="{StaticResource TextIconButton}"
+                                    <controls:UC_IconButton x:Name="btnInfoLE" Style="{StaticResource TextIconButton}" Visibility="Collapsed"
                                             HorizontalContentAlignment="Left"
                                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Info}}" Margin="0,5"
                                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.View}}"                                                        
                                             Background="Transparent" Click="btnInfoLE_Click" />
-                                    <controls:UC_IconButton x:Name="btnConfigureBLE" Style="{StaticResource TextIconButton}"
+                                    <controls:UC_IconButton x:Name="btnConfigureBLE" Style="{StaticResource TextIconButton}" Visibility="Collapsed"
                                             HorizontalContentAlignment="Left"
                                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Configure}}" Margin="0,5"
                                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Configure}}"                                                        
@@ -196,8 +199,7 @@
                                 </StackPanel>
 
                                 <StackPanel Margin="10,0">
-                                    <Label Content="Device:" HorizontalAlignment="Center"/>
-                                    <ListBox x:Name="listBox_BLE" MinHeight="30" MinWidth="200" MaxHeight="90" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                                    <ListBox x:Name="listBox_BLE" MinHeight="60" MinWidth="200" MaxHeight="120" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <Grid Margin="1">

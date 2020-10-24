@@ -100,6 +100,9 @@ namespace MultiCommTerminal.WindowObjs {
                         this.RemoveIfFound(info.Id, false, true);
                         this.log.Info("BLE_DeviceDiscoveredHandler", () => string.Format("Adding DONE"));
                         this.listBox_BLE.Add(this.infoList_BLE, info);
+                        this.btnLEConnect.Show();
+                        this.btnInfoLE.Show();
+                        //this.btnConfigureBLE.Show();
                     }
                 });
             });
@@ -196,9 +199,11 @@ namespace MultiCommTerminal.WindowObjs {
         /// <param name="sender">Click sender</param>
         /// <param name="e">Routed argument. Not used</param>
         private void btnDiscoverLE_Click(object sender, RoutedEventArgs e) {
-            this.listBox_BLE.ItemsSource = null;
-            this.infoList_BLE.Clear();
-            this.listBox_BLE.ItemsSource = this.infoList_BLE;
+            this.btnLEConnect.Collapse();
+            this.btnInfoLE.Collapse();
+            //this.btnConfigureBLE.Collapse();
+
+            this.listBox_BLE.Clear(this.infoList_BLE);
             this.grdMain.Show();
             this.wrapper.BLE_DiscoverAsync();
         }
@@ -710,6 +715,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.spBluetoothLE.Collapse();
             this.btnLEConnect.Collapse();
             this.btnDiscoverLE.Collapse();
+            this.btnConfigureBLE.Collapse();
             this.listBox_BLE.Clear(this.infoList_BLE);
         }
 
