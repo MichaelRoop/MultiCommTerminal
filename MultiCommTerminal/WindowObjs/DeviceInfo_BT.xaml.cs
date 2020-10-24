@@ -1,5 +1,6 @@
 ﻿using BluetoothCommon.Net;
 using MultiCommTerminal.DependencyInjection;
+using MultiCommTerminal.NetCore.WindowObjs.BLE;
 using MultiCommTerminal.WPF_Helpers;
 using System;
 using System.Windows;
@@ -13,14 +14,21 @@ namespace MultiCommTerminal.WindowObjs {
         #region Data
 
         private Window parent = null;
+        private BTDeviceInfo info = null;
+        private ButtonGroupSizeSyncManager widthManager = null;
 
         #endregion
 
 
         public DeviceInfo_BT(Window parent, BTDeviceInfo info) {
             this.parent = parent;
+            this.info = info;
             InitializeComponent();
-            this.Init(info);
+            this.Init();
+
+            // Call before rendering which will trigger initial resize events
+            this.widthManager = new ButtonGroupSizeSyncManager(this.btnExit, this.btnProperties);
+            this.widthManager.PrepForChange();
             this.SizeToContent = SizeToContent.WidthAndHeight;
         }
 
@@ -32,8 +40,18 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
-        private void Window_ContentRendered(object sender, EventArgs e) {
+        private void Window_Loaded(object sender, RoutedEventArgs e) {
             this.CenterToParent(this.parent);
+        }
+
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+            this.widthManager.Teardown();
+        }
+
+
+        private void btnProperties_Click(object sender, RoutedEventArgs e) {
+            BLE_PropertiesDisplay.ShowBox(this, this.info);
         }
 
 
@@ -42,10 +60,10 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
-        private void Init(BTDeviceInfo info) {
+        private void Init() {
 
-            this.listboxMain.ItemsSource = DI.Wrapper.BT_GetDeviceInfoForDisplay(info);
-            if (info.Radio.IsInitialized) {
+            this.listboxMain.ItemsSource = DI.Wrapper.BT_GetDeviceInfoForDisplay(this.info);
+            if (this.info.Radio.IsInitialized) {
                 // Could have a radio info dialog
             }
             // TODO - assemble all the properties in a properties box

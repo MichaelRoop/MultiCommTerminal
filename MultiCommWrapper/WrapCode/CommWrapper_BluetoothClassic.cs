@@ -1,4 +1,5 @@
 ﻿using BluetoothCommon.Net;
+using BluetoothLE.Net.DataModels;
 using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
 using LanguageFactory.Net.data;
@@ -160,15 +161,34 @@ namespace MultiCommWrapper.Net.WrapCode {
 
             //list.Add(new KeyValuePropertyDisplay("", info.RemoteHostName));
 
-            // Always 0
-            //this.lbStrength.Content = info.Strength.ToString();
 
-            // Temp for properties
+            //// Temp for properties
+            //foreach(var p in info.Properties) {
+            //    // TODO - this will have extra field of data type
+            //    list.Add(new KeyValuePropertyDisplay(p.Key, p.Value.Value));
 
-
-
+            //}
             return list;
         }
+
+
+        // TODO - change names. Properties for both BT and BLE
+        public List<BLE_PropertyDataModelDisplay> BT_GetProperties(BTDeviceInfo info) {
+            try {
+                List<BLE_PropertyDataModelDisplay> list = new List<BLE_PropertyDataModelDisplay>();
+                foreach (var sp in info.Properties) {
+                    list.Add(new BLE_PropertyDataModelDisplay(sp.Value));
+                }
+                return list;
+            }
+            catch (Exception e) {
+                this.log.Exception(9999, "", e);
+                return new List<BLE_PropertyDataModelDisplay>();
+            }
+        }
+
+
+
 
 
         #region Init and teardown

@@ -166,7 +166,7 @@ namespace MultiCommWrapper.Net.WrapCode {
                 list.Add(new KeyValuePropertyDisplay("Can Pair", info.CanPair.ToString()));
                 list.Add(new KeyValuePropertyDisplay("Paired", info.IsPaired.ToString()));
                 list.Add(new KeyValuePropertyDisplay("Paired using secure connection", info.WasPairedUsingSecureConnection.ToString()));
-                list.Add(new KeyValuePropertyDisplay("Connectable", info.IsConnectable.ToString()));
+                //list.Add(new KeyValuePropertyDisplay("Connectable", info.IsConnectable.ToString()));
                 list.Add(new KeyValuePropertyDisplay("Connected", info.IsConnected.ToString()));
                 list.Add(new KeyValuePropertyDisplay("Protection Level", info.ProtectionLevel.ToString().CamelCaseToSpaces()));
                 list.Add(new KeyValuePropertyDisplay("Bluetooth Type", info.TypeBluetooth.ToString().CamelCaseToSpaces()));

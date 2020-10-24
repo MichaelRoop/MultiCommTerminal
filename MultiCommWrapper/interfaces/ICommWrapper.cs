@@ -187,6 +187,7 @@ namespace MultiCommWrapper.Net.interfaces {
         /// <returns>A display list of the fields</returns>
         List<KeyValuePropertyDisplay> BT_GetDeviceInfoForDisplay(BTDeviceInfo info);
 
+        List<BLE_PropertyDataModelDisplay> BT_GetProperties(BTDeviceInfo info);
 
         #endregion
 

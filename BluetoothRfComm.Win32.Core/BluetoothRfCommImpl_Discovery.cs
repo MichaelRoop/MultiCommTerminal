@@ -1,5 +1,6 @@
 ﻿using BluetoothCommon.Net;
 using BluetoothCommon.Net.interfaces;
+using BluetoothLE.UWP.Core;
 using System;
 using System.Threading.Tasks;
 using Windows.Devices.Bluetooth;
@@ -63,6 +64,12 @@ namespace BluetoothRfComm.UWP.Core {
                             //device.DeviceInformation.Kind == //AssociationEndpoint, Device, etc
                             //device.DeviceInformation.Properties
                             this.log.Info("DoDiscovery", () => string.Format("BluetoothDevice.DeviceId: {0}", device.DeviceId));
+
+                            //device.DeviceInformation.Properties
+                            // TODO - move to a generic Core for both BT and BLE
+                            //BLE_WinExtensions
+                            deviceInfo.Properties = device.DeviceInformation.CreatePropertiesDictionary();
+
 
 
 

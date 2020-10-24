@@ -28,26 +28,32 @@ namespace BluetoothLE.UWP.Core {
         }
 
 
-        /// <summary>Uses the Win BLE DeviceInformation Properties with Connectable key</summary>
-        /// <param name="info">The Win device information object</param>
-        /// <returns>true if connectable, otherwise false</returns>
-        public static bool IsConnectable(this DeviceInformation info) {
-            if (info.HasProperty(KEYS.IsConnectable)) {
-                return (bool?)info.Properties[KEYS.IsConnectable] == true;
-            }
-            return false;
-        }
+        // TODO - never seen it so remove from variables. Can still access through Properties
+        ///// <summary>Uses the Win BLE DeviceInformation Properties with Connectable key</summary>
+        ///// <param name="info">The Win device information object</param>
+        ///// <returns>true if connectable, otherwise false</returns>
+        //public static bool IsConnectable(this DeviceInformation info) {
+        //    if (info.HasProperty(KEYS.IsConnectable)) {
+        //        Log.Error(5555, "+++++++ IS CONNECTABLE IS IN PROPERTIES +++++++");
+        //
+        //        return (bool?)info.Properties[KEYS.IsConnectable] == true;
+        //    }
+        //    Log.Error(9999, "*** IS CONNECTABLE NOT IN PROPERTIES ***");
+        //    return false;
+        //}
 
 
         /// <summary>Uses the Win BLE DeviceInformation Properties with Connected key</summary>
         /// <param name="info">The Win device information object</param>
         /// <returns>true if connected, otherwise false</returns>
-        public static bool IsConnected(this DeviceInformation info) {
-            if (info.HasProperty(KEYS.IsConnected)) {
-                return (bool?)info.Properties[KEYS.IsConnected] == true;
-            }
-            return false;
-        }
+        //public static bool IsConnected(this DeviceInformation info) {
+        //    if (info.HasProperty(KEYS.IsConnected)) {
+        //        Log.Error(5555, "+++++++ IS CONNECTED IS IN PROPERTIES +++++++");
+        //        return (bool?)info.Properties[KEYS.IsConnected] == true;
+        //    }
+        //    Log.Error(9999, "*** IS CONNECTED NOT IN PROPERTIES ***");
+        //    return false;
+        //}
 
 
         private static bool HasProperty(this DeviceInformation info, string key) {

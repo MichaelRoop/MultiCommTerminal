@@ -14,7 +14,6 @@ namespace BluetoothLE.UWP.Core {
         public void UpdateDeviceOnConnect(BluetoothLEDevice device, BluetoothLEDeviceInfo deviceDataModel) {
             if (device.DeviceInformation != null) {
                 DeviceInformation di = device.DeviceInformation;
-                deviceDataModel.IsConnectable = di.IsConnectable();
                 deviceDataModel.IsDefault = di.IsDefault;
                 deviceDataModel.IsEnabled = di.IsEnabled;
                 deviceDataModel.DeviceKind = (BLE_DeviceInfoKind)di.Kind; 

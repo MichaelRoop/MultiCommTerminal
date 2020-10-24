@@ -1,4 +1,5 @@
-﻿using BluetoothLE.Net.DataModels;
+﻿using BluetoothCommon.Net;
+using BluetoothLE.Net.DataModels;
 using MultiCommTerminal.DependencyInjection;
 using MultiCommTerminal.WPF_Helpers;
 using System.Windows;
@@ -16,6 +17,11 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             win.ShowDialog();
         }
 
+        public static void ShowBox(Window parent, BTDeviceInfo info) {
+            BLE_PropertiesDisplay win = new BLE_PropertiesDisplay(parent, info);
+            win.ShowDialog();
+        }
+
 
         public BLE_PropertiesDisplay(Window parent, BluetoothLEDeviceInfo info) {
             this.parent = parent;
@@ -23,6 +29,15 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.listboxProperties.ItemsSource = DI.Wrapper.BLE_GetServiceProperties(info);
             this.SizeToContent = SizeToContent.WidthAndHeight;
         }
+
+
+        public BLE_PropertiesDisplay(Window parent, BTDeviceInfo info) {
+            this.parent = parent;
+            InitializeComponent();
+            this.listboxProperties.ItemsSource = DI.Wrapper.BT_GetProperties(info);
+            this.SizeToContent = SizeToContent.WidthAndHeight;
+        }
+
 
 
         public override void OnApplyTemplate() {

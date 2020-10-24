@@ -175,8 +175,7 @@ namespace BluetoothLE.UWP.Core {
                             IsDefault = deviceInfo.IsDefault,
                             CanPair = deviceInfo?.Pairing.CanPair ?? false,
                             IsPaired = deviceInfo?.Pairing.IsPaired ?? false,
-                            IsConnectable = deviceInfo.IsConnectable(),
-                            IsConnected = deviceInfo.IsConnected(),
+                            IsConnected = false,
                             ServiceProperties = deviceInfo.CreatePropertiesDictionary(),
                             // This would be the DeviceInformation object. Not required
                             // but handy for updates in Windows
