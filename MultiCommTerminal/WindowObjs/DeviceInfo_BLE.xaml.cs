@@ -13,6 +13,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         Window parent = null;
         BluetoothLEDeviceInfo info = null;
+        private ButtonGroupSizeSyncManager widthManager = null;
+
 
         public static void ShowBox(Window parent, BluetoothLEDeviceInfo info) {
             DeviceInfo_BLE win = new DeviceInfo_BLE(parent, info);
@@ -40,6 +42,16 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         }
 
 
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+            this.widthManager.Teardown();
+        }
+
+
+        private void btnServices_Click(object sender, RoutedEventArgs e) {
+            BLE_ServicesDisplay.ShowBox(this, this.info);
+        }
+
+
         private void btnExit_Click(object sender, RoutedEventArgs e) {
             this.Close();
         }
@@ -48,61 +60,14 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         private void PopulateFields() {
             this.listboxMain.ItemsSource = DI.Wrapper.BLE_GetDeviceInfoForDisplay(info);
             this.listboxProperties.ItemsSource = DI.Wrapper.BLE_GetServiceProperties(info);
-            if (info.Services == null || info.Services.Count == 0) {
-                this.treeServices.Collapse();
-                this.txtServices.Collapse();
+            if (info.Services.Count == 0) {
+                this.btnServices.Collapse();
             }
             else {
-                this.treeServices.ItemsSource = info.Services.Values;
+                this.widthManager = new ButtonGroupSizeSyncManager(this.btnServices, this.btnExit);
+                this.widthManager.PrepForChange();
             }
         }
 
-
-        #region Debug code for dev
-
-        ServiceTreeDict treeDict = new ServiceTreeDict();
-        private void CreateDebugTree() {
-            BLE_ServiceDataModel service1 = new BLE_ServiceDataModel();
-            service1.DisplayName = "Hogwarts 1 service";
-            service1.Characteristics.Add("1", new BLE_CharacteristicDataModel());
-            service1.Characteristics["1"].CharName = "George Characteristic";
-            service1.Characteristics["1"].Descriptors.Add("1", new BLE_DescriptorDataModel());
-            service1.Characteristics["1"].Descriptors["1"].DisplayName = "Output descriptor";
-            service1.Characteristics.Add("2", new BLE_CharacteristicDataModel());
-            service1.Characteristics["2"].CharName = "Fred Characteristic";
-            service1.Characteristics["2"].Descriptors.Add("1", new BLE_DescriptorDataModel());
-            service1.Characteristics["2"].Descriptors["1"].DisplayName = "Input descriptor";
-            service1.Characteristics["2"].Descriptors.Add("2", new BLE_DescriptorDataModel());
-            service1.Characteristics["2"].Descriptors["2"].DisplayName = "Name of stuff";
-            this.treeDict.Add("1", service1);
-
-            BLE_ServiceDataModel service2 = new BLE_ServiceDataModel();
-            service2.DisplayName = "Hogwarts 2 service";
-            service2.Characteristics.Add("1", new BLE_CharacteristicDataModel());
-            service2.Characteristics["1"].CharName = "Hermioni characteristic";
-            service2.Characteristics.Add("2", new BLE_CharacteristicDataModel());
-            service2.Characteristics["2"].CharName = "Ginny characteristic";
-            this.treeDict.Add("2", service2);
-
-            // Just pass list of Values to avoid headach in XAML    
-            this.treeServices.ItemsSource = this.treeDict.Values;
-        }
-
-
-        #endregion
-
-        private void btnServices_Click(object sender, RoutedEventArgs e) {
-            BLE_ServicesDisplay.ShowBox(this, this.info);
-
-            //if (info.Services == null || info.Services.Count == 0) {
-            //    this.treeServices.Collapse();
-            //    this.txtServices.Collapse();
-            //}
-            //else {
-            //    this.treeServices.ItemsSource = info.Services.Values;
-            //}
-
-
-        }
     }
 }

@@ -46,6 +46,10 @@
     <None Remove="images\icons\icons8-rs-232-male-white-50.png" />
     <None Remove="images\icons\icons8-running-24.png" />
     <None Remove="images\icons\icons8-search-50.png" />
+    <None Remove="images\icons\icons8-services-50.png" />
+    <None Remove="images\icons\icons8-services-52-white.png" />
+    <None Remove="images\icons\icons8-table-properties-64-white.png" />
+    <None Remove="images\icons\icons8-table-properties-64.png" />
     <None Remove="images\icons\icons8-trash-can-50.png" />
     <None Remove="images\icons\icons8-usb-2-50.png" />
     <None Remove="images\icons\icons8-wi-fi-32.png" />
@@ -195,6 +199,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="images\icons\icons8-search-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-services-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-services-52-white.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-table-properties-64-white.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-table-properties-64.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="images\icons\icons8-trash-can-50.png">

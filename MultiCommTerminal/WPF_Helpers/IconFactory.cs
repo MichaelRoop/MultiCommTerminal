@@ -93,6 +93,17 @@ namespace MultiCommTerminal.WPF_Helpers {
                 case UIIcon.AboutWhite:
                     return new IconDataModel(UIIcon.Configure, this.AddDir("icons8-about-50_W.png"), "1");
 
+                case UIIcon.Services:
+                    return new IconDataModel(UIIcon.Configure, this.AddDir("icons8-services-50.png"), "1");
+                case UIIcon.ServicesWhite:
+                    return new IconDataModel(UIIcon.Configure, this.AddDir("icons8-services-52-white.png"), "1");
+
+                case UIIcon.Properties:
+                    return new IconDataModel(UIIcon.Configure, this.AddDir("icons8-table-properties-64.png"), "1");
+                case UIIcon.PropertiesWhite:
+                    return new IconDataModel(UIIcon.Configure, this.AddDir("icons8-table-properties-64-white.png"), "1");
+
+
                 default:
                     return new IconDataModel(UIIcon.Cancel, this.AddDir("icons8-close-window-50-noborder.png"), "6");
             }

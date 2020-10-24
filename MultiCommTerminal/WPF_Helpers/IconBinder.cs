@@ -65,6 +65,10 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string Credentials_W { get { return Source(UIIcon.CredentialsWhite); } }
         public static string About { get { return Source(UIIcon.About); } }
         public static string AboutWhite { get { return Source(UIIcon.AboutWhite); } }
+        public static string Services { get { return Source(UIIcon.Services); } }
+        public static string ServicesWhite { get { return Source(UIIcon.ServicesWhite); } }
+        public static string Properties { get { return Source(UIIcon.Properties); } }
+        public static string PropertiesWhite { get { return Source(UIIcon.PropertiesWhite); } }
 
         #endregion
 

@@ -78,6 +78,8 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string Icons { get { return GetTxt(MsgCode.Icons); } }
         public static string About { get { return GetTxt(MsgCode.About); } }
         public static string Author { get { return GetTxt(MsgCode.Author); } }
+        public static string Services { get { return GetTxt(MsgCode.Services); } }
+        public static string Properties { get { return GetTxt(MsgCode.Properties); } }
 
         #endregion
 
