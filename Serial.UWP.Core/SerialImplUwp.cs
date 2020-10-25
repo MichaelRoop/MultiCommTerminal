@@ -16,6 +16,36 @@ namespace Serial.UWP.Core {
 
         ClassLog log = new ClassLog("SerialImplUwp");
 
+        // Query looked good but only retrieved Apple virtual USB
+        // The Guid is differnent than that from the SerialDevice.GetDevice selectors
+        private string usbAQS = string.Format("System.Devices.InterfaceClassGuid:=\"{0}\"", "{DEE824EF-729B-4A0E-9C14-B7117D33A817}");
+
+        //private string usbAQS2 = string.Format(
+        //    "System.Devices.InterfaceClassGuid:=\"{0}\" {1} {2} {3}",
+        //    "{86E0D1E0-8089-11D0-9CE4-08003E301F73}",
+        //    "AND System.Devices.InterfaceEnabled:=System.StructuredQueryType.Boolean#True",
+        //    "AND System.DeviceInterface.Serial.UsbVendorId:=0",
+        //    "AND System.DeviceInterface.Serial.UsbProductId:=0");
+
+
+        // Yay! this one works
+        // Much faster (20x) than getting all the devices and parsing the ID for USB
+        // 22ms rather than 1353ms
+        // Even worst if a USB device is not connected. 
+        //   They still show up on the list but still attempt 
+        //   to connect and time out on connect. Takes over 5000ms for 
+        //   each not connected
+        // On the other hand, if not connected, it completes in 1ms with this querry
+        private string usbAQS2 = string.Format(
+            "System.Devices.InterfaceClassGuid:=\"{0}\" {1} {2} {3}",
+            "{86E0D1E0-8089-11D0-9CE4-08003E301F73}",
+            "AND System.Devices.InterfaceEnabled:=System.StructuredQueryType.Boolean#True",
+            "AND System.DeviceInterface.Serial.UsbVendorId:>0",
+            "AND System.DeviceInterface.Serial.UsbProductId:>0");
+
+
+        //GetDeviceSelectorFromUsbVidPid:  System.Devices.InterfaceClassGuid:="{86E0D1E0-8089-11D0-9CE4-08003E301F73}" AND System.Devices.InterfaceEnabled:=System.StructuredQueryType.Boolean#True AND System.DeviceInterface.Serial.UsbVendorId:=10 AND System.DeviceInterface.Serial.UsbProductId:=10
+
         public void DiscoverAsync() {
             try {
                 Task.Run(this.DoDiscovery);
@@ -30,9 +60,35 @@ namespace Serial.UWP.Core {
             try {
                 //DeviceInformationCollection infos = await DeviceInformation.FindAllAsync(SerialDevice.GetDeviceSelector());
 
-                DeviceInformationCollection infos =
-                    await DeviceInformation.FindAllAsync(
-                        SerialDevice.GetDeviceSelector());
+                //DeviceInformationCollection infos =
+                //    await DeviceInformation.FindAllAsync(
+                //        SerialDevice.GetDeviceSelector());
+
+
+
+
+                string s = string.Empty;
+                s =  SerialDevice.GetDeviceSelector();
+                this.log.Info("", () => string.Format("            GetDeviceSelector:  {0}", s));
+                s = SerialDevice.GetDeviceSelectorFromUsbVidPid(10, 10);
+                this.log.Info("", () => string.Format("GetDeviceSelectorFromUsbVidPid:  {0}", s));
+                s = this.usbAQS;
+                this.log.Info("", () => string.Format(" Custom USB AQS{0}", s));
+                s = UsbDevice.GetDeviceSelector(9025, 67); // Arduino
+                this.log.Info("", () => string.Format("     UsbDevice.GetDeviceSelector  {0}", s));
+
+                s = usbAQS2;
+                this.log.Info("", () => string.Format("     GetDeviceSelectorFromUsbVidPid with ids != 0  \n{0}", s));
+
+
+
+                //this.log.Info("", () => string.Format("{0}", s));
+                //this.log.Info("", () => string.Format("{0}", s));
+                //this.log.Info("", () => string.Format("{0}", s));
+
+
+                DeviceInformationCollection infos = await DeviceInformation.FindAllAsync(s);
+
 
 
                 //DeviceInformationCollection infos = 
@@ -51,6 +107,7 @@ namespace Serial.UWP.Core {
                 //        UsbDevice.GetDeviceClassSelector(UsbDeviceClasses.Measurement));
 
 
+                this.log.Info("**", () => string.Format("AQS = '{0}'", this.usbAQS));
 
 
                 Stopwatch sw = new Stopwatch();
@@ -63,7 +120,7 @@ namespace Serial.UWP.Core {
                 int found = 0;
                 foreach (DeviceInformation info in infos) {
                     // Strange but cannot find an AQS string to narrow to only and any USB
-                    if (info.Id.Contains("USB") && info.Id.Contains("VID_") && info.Id.Contains("PID")) {
+                    if (true /*info.Id.Contains("USB") && info.Id.Contains("VID_") && info.Id.Contains("PID")*/) {
                         found++;
                         this.log.Info("DoDiscovery", "--------------------------------------------------------------");
                         this.log.Info("DoDiscovery", () => string.Format("{0}", info.Name));
@@ -108,7 +165,23 @@ namespace Serial.UWP.Core {
 
                             //UsbDevice device = await UsbDevice.FromIdAsync();
 
+
+                            
+
                             //int i = 0;
+
+                            this.log.Info("", () => string.Format("AQS = '{0}'", UsbDevice.GetDeviceSelector(dev.UsbVendorId, dev.UsbProductId)));
+                            // AQS = 'System.Devices.InterfaceClassGuid:="{DEE824EF-729B-4A0E-9C14-B7117D33A817}" AND 
+                            //        System.Devices.InterfaceEnabled:=System.StructuredQueryType.Boolean#True AND 
+                            //        System.DeviceInterface.WinUsb.UsbVendorId:=9025 AND 
+                            //        System.DeviceInterface.WinUsb.UsbProductId:=67'
+                            // 
+                            // AQS = 'System.Devices.InterfaceClassGuid:="{DEE824EF-729B-4A0E-9C14-B7117D33A817}" AND 
+                            //        System.Devices.InterfaceEnabled:=System.StructuredQueryType.Boolean#True AND 
+                            //        System.DeviceInterface.WinUsb.UsbVendorId:=1003 AND 
+                            //        System.DeviceInterface.WinUsb.UsbProductId:=8517'
+
+
 
                         }
                         catch (Exception e) {
