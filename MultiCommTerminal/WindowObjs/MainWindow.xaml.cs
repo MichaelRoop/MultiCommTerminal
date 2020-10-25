@@ -11,6 +11,7 @@ using MultiCommTerminal.NetCore.WindowObjs;
 using MultiCommTerminal.WPF_Helpers;
 using MultiCommWrapper.Net.DataModels;
 using MultiCommWrapper.Net.interfaces;
+using Serial.UWP.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,9 @@ namespace MultiCommTerminal.WindowObjs {
 
     /// <summary>Interaction logic for MainWindow.xaml</summary>
     public partial class MainWindow : Window {
+
+        // TODO REMOVE
+        SerialImplUwp serial = new SerialImplUwp();
 
         #region Data
 
@@ -556,6 +560,13 @@ namespace MultiCommTerminal.WindowObjs {
 
         #endregion
 
+        #region Serial USB
+        private void btnSerialDiscover_Click(object sender, RoutedEventArgs e) {
+            this.serial.DiscoverAsync();
+        }
+
+        #endregion
+
         #region Private Init and teardown
 
         private void OnStartupSuccess() {
@@ -888,8 +899,8 @@ namespace MultiCommTerminal.WindowObjs {
             }
         }
 
-        #endregion
 
+        #endregion
 
     }
 }

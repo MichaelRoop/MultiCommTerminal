@@ -21,3 +21,5 @@
 /MultiCommTerminal.MSIX/bin/*
 /MultiCommTerminal.MSIX/obj/*
 /MultiCommWrapper/bin/*
+/Serial.UWP.Core/bin/*
+/Serial.UWP.Core/obj/*

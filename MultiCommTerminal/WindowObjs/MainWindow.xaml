@@ -220,6 +220,11 @@
                             <DockPanel>
                                 <Label Content="IP:"/>
                                 <TextBox x:Name="txtIp" MinHeight="30" MinWidth="100"/>
+                                <controls:UC_IconButton x:Name="btnSerialDiscover" Style="{StaticResource TextIconButton}"
+                                                    HorizontalContentAlignment="Left"
+                                                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Discover}}" Margin="0,2.5"
+                                                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Search}}"                                                                                            
+                                                    Background="Transparent" Click="btnSerialDiscover_Click" />
                             </DockPanel>
                         </StackPanel>
                         <StackPanel x:Name="spWifi" VerticalAlignment="Center" Visibility="Collapsed">
