@@ -105,7 +105,9 @@
                                         </ComboBox.ItemTemplate>
                                     </ComboBox>
                                 </DockPanel>
-                                <controls:UC_TerminatorViewer x:Name="terminatorView"  />
+                                <Border MouseLeftButtonUp="terminatorView_MouseLeftButtonUp" Background="White" Opacity="1">
+                                    <controls:UC_TerminatorViewer x:Name="terminatorView" Margin="0, 30,0,0" />
+                                </Border>
                             </StackPanel>
                         </Border>
 
