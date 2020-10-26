@@ -49,9 +49,10 @@ namespace MultiCommWrapper.Net.WrapCode {
             // TODO - for now serial, need a full BLE
             items.Add(this.CommItem(String.Format("BLE  {0} {1}", '\u2b84', '\u2b86'), 
                 UIIcon.BluetoothLE, CommMediumType.BluetoothLE));
-            items.Add(this.CommItem("Ethernet", UIIcon.Ethernet, CommMediumType.Ethernet));
             items.Add(this.CommItem("Wifi", UIIcon.Wifi, CommMediumType.Wifi));
-            items.Add(this.CommItem("USB", UIIcon.Usb, CommMediumType.Usb));
+            // TODO - add in future
+            //items.Add(this.CommItem("Ethernet", UIIcon.Ethernet, CommMediumType.Ethernet));
+            //items.Add(this.CommItem("USB", UIIcon.Usb, CommMediumType.Usb));
             mediums.Invoke(items);
         }
 
@@ -73,9 +74,9 @@ namespace MultiCommWrapper.Net.WrapCode {
             // TODO - for now serial, need a full BLE
             items.Add(this.HelpItem(String.Format("BLE  {0} {1}", '\u2b84', '\u2b86'),
                 UIIcon.BluetoothLE, CommHelpType.BluetoothLE));
-            items.Add(this.HelpItem("Ethernet", UIIcon.Ethernet, CommHelpType.Ethernet));
             items.Add(this.HelpItem("Wifi", UIIcon.Wifi, CommHelpType.Wifi));
-            items.Add(this.HelpItem("USB", UIIcon.Usb, CommHelpType.Usb));
+            //items.Add(this.HelpItem("USB", UIIcon.Usb, CommHelpType.Usb));
+            //items.Add(this.HelpItem("Ethernet", UIIcon.Ethernet, CommHelpType.Ethernet));
             items.Add(this.HelpItem("Help", UIIcon.Help, CommHelpType.Application));
             helps.Invoke(items);
         }

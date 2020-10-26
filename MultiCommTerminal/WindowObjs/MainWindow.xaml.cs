@@ -105,7 +105,7 @@ namespace MultiCommTerminal.WindowObjs {
                         this.RemoveIfFound(info.Id, false, true);
                         this.log.Info("BLE_DeviceDiscoveredHandler", () => string.Format("Adding DONE"));
                         this.listBox_BLE.Add(this.infoList_BLE, info);
-                        this.btnLEConnect.Show();
+                        //this.btnLEConnect.Show();
                         this.btnInfoLE.Show();
                         //this.btnConfigureBLE.Show();
                     }
