@@ -25,12 +25,11 @@ namespace MultiCommWrapper.Net.Factories {
                 new JsonReadWriteSerializerIndented<ScriptDataModel>(),
                 new JsonReadWriteSerializerIndented<IIndexGroup<DefaultFileExtraInfo>>());
 
-        // TODO - change to encrypted
-        /// <summary>Storage for the WIFI credentials</summary>
+        /// <summary>Encrypted storage for the WIFI credentials</summary>
         private IIndexedStorageManager<WifiCredentialsDataModel, DefaultFileExtraInfo> wifiCredStorage =
             new IndexedStorageManager<WifiCredentialsDataModel, DefaultFileExtraInfo>(
-                new JsonReadWriteSerializerIndented<WifiCredentialsDataModel>(),
-                new JsonReadWriteSerializerIndented<IIndexGroup<DefaultFileExtraInfo>>());
+                new EncryptingReadWriteSerializer<WifiCredentialsDataModel>(),
+                new EncryptingReadWriteSerializer<IIndexGroup<DefaultFileExtraInfo>>());
 
         public MultiCommTerminalStorageFactory() { }
 
