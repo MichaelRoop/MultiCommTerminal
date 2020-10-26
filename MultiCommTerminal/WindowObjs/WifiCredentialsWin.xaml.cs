@@ -60,7 +60,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         private void btnEdit_Click(object sender, RoutedEventArgs e) {
             var item = this.listBoxCreds.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
             if (item != null) {
-                MsgBoxWifiCred.ShowBox(this, item);
+                MsgBoxWifiCred.ShowBox(this.parent, item);
 
                 //ScriptEdit win = new ScriptEdit(this, item, useType);
                 //win.ShowDialog();
