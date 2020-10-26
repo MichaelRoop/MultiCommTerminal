@@ -76,7 +76,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
             var item = this.listBoxCreds.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
             if (item != null) {
                 if (MsgBoxYesNo.ShowBoxDelete(this, item.Display) == MsgBoxYesNo.MsgBoxResult.Yes) {
-                    DI.Wrapper.DeleteTerminatorData(item, this.ReloadList, App.ShowMsg);
+                    DI.Wrapper.DeleteWifiCredData(item, this.ReloadList, App.ShowMsg);
                 }
             }
         }
