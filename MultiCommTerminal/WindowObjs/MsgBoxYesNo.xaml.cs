@@ -1,4 +1,5 @@
-﻿using MultiCommTerminal.DependencyInjection;
+﻿using LanguageFactory.Net.data;
+using MultiCommTerminal.DependencyInjection;
 using MultiCommTerminal.WPF_Helpers;
 using MultiCommWrapper.Net.interfaces;
 using System.Windows;
@@ -35,6 +36,14 @@ namespace MultiCommTerminal.WindowObjs {
         #endregion
 
         #region Static methods
+
+        public static MsgBoxResult ShowBoxDelete(Window win, string msg) {
+            MsgBoxYesNo box = new MsgBoxYesNo(win, DI.Wrapper.GetText(MsgCode.Delete), msg, false);
+            box.ShowDialog();
+            return box.Result;
+        }
+
+
 
         public static MsgBoxResult ShowBox(Window win, string msg, bool suppressContinue = false) {
             MsgBoxYesNo box = new MsgBoxYesNo(win, msg, suppressContinue);

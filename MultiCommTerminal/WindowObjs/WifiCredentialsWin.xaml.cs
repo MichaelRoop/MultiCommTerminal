@@ -1,4 +1,5 @@
 ﻿using MultiCommTerminal.DependencyInjection;
+using MultiCommTerminal.WindowObjs;
 using MultiCommTerminal.WPF_Helpers;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
@@ -74,7 +75,9 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         private void btnDelete_Click(object sender, RoutedEventArgs e) {
             var item = this.listBoxCreds.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
             if (item != null) {
-                DI.Wrapper.DeleteTerminatorData(item, this.ReloadList, App.ShowMsg);
+                if (MsgBoxYesNo.ShowBoxDelete(this, item.Display) == MsgBoxYesNo.MsgBoxResult.Yes) {
+                    DI.Wrapper.DeleteTerminatorData(item, this.ReloadList, App.ShowMsg);
+                }
             }
         }
 

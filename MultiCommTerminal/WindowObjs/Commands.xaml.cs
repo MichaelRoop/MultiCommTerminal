@@ -93,7 +93,9 @@ namespace MultiCommTerminal.WindowObjs {
         private void btnDelete_Click(object sender, RoutedEventArgs e) {
             var item = this.lbxCmds.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
             if (item != null) {
-                this.wrapper.DeleteScriptData(item, this.ReloadList, App.ShowMsg);
+                if (MsgBoxYesNo.ShowBoxDelete(this, item.Display) == MsgBoxYesNo.MsgBoxResult.Yes) {
+                    this.wrapper.DeleteScriptData(item, this.ReloadList, App.ShowMsg);
+                }
             }
         }
 
