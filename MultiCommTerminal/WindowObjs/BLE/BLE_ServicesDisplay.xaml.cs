@@ -28,6 +28,11 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.CenterToParent(this.parent);
         }
 
+        public override void OnApplyTemplate() {
+            this.BindMouseDownToCustomTitleBar();
+            base.OnApplyTemplate();
+        }
+
 
         private void btnExit_Click(object sender, RoutedEventArgs e) {
             this.Close();
