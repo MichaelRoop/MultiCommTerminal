@@ -28,6 +28,19 @@ namespace MultiCommTerminal {
 
         #endregion
 
+        #region Properties
+
+        /// <summary>Build to display
+        /// 
+        /// </summary>
+        public static string Build {
+            get {
+                return "2020.10.25.2";
+            }
+        }
+
+        #endregion
+
         #region Constructors
 
         public App() {

@@ -55,9 +55,9 @@
                 <TextBlock Grid.Row="2" Grid.Column="2" Style="{StaticResource TxtBlockRight}">
                     <Hyperlink  NavigateUri="https://icons8.com" RequestNavigate="Hyperlink_RequestNavigate">ICONS8</Hyperlink>
                 </TextBlock>
-
-
-
+                <Label Grid.Row="3" Grid.Column="0" Content="Build" Style="{StaticResource NameLabelLeft}" />
+                <Label Grid.Row="3" Grid.Column="1" Content=":" Style="{StaticResource NameLabelCenter}" />
+                <Label Grid.Row="3" Grid.Column="2" Content="2020.10.25.1" x:Name="lblBuild"  Style="{StaticResource NameLabelRight}" FontStyle="Italic" />
 
             </Grid>
             <DockPanel HorizontalAlignment="Center" Margin="10,5,10,15">

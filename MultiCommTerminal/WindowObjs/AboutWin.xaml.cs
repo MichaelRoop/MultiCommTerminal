@@ -33,6 +33,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         public AboutWin(Window parent) {
             this.parent = parent;
             InitializeComponent();
+            this.lblBuild.Content = App.Build;
             this.SizeToContent = SizeToContent.WidthAndHeight;
         }
 
