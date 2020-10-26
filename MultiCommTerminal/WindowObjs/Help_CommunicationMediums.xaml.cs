@@ -1,9 +1,11 @@
-﻿using MultiCommData.Net.UserDisplayData;
+﻿using LogUtils.Net;
+using MultiCommData.Net.UserDisplayData;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommTerminal.DependencyInjection;
 using MultiCommTerminal.WPF_Helpers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 using WpfHelperClasses.Core;
 
@@ -21,6 +23,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.parent = parent;
             InitializeComponent();
             this.spView.Visibility = Visibility.Collapsed;
+            this.lblUserManual.Text = DI.Wrapper.UserManualFullFileName;
             this.SizeToContent = SizeToContent.WidthAndHeight;
             DI.Wrapper.CommMediumHelpList(this.OnBuildMediumHelp);
         }
@@ -80,6 +83,16 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void OnSelectedNoCodeSample(string title, string msg) {
             this.spView.Visibility = Visibility.Collapsed;
+        }
+
+        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e) {
+            try {
+                Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri) { UseShellExecute = true });
+                e.Handled = true;
+            }
+            catch(Exception ex) {
+                Log.Exception(9999, "", ex);
+            }
         }
 
     }

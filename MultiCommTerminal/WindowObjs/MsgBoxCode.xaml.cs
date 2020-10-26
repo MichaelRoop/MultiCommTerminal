@@ -21,7 +21,7 @@ namespace MultiCommTerminal.WindowObjs {
     public partial class MsgBoxCode : Window {
 
         private Window parent = null;
-        private CommHelpType medium = CommHelpType.Application;
+        private CommHelpType medium = CommHelpType.None;
         private ButtonGroupSizeSyncManager buttonWidthManager = null;
 
 

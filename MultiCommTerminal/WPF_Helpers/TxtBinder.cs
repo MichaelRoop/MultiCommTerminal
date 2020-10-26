@@ -81,6 +81,15 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string Services { get { return GetTxt(MsgCode.Services); } }
         public static string Properties { get { return GetTxt(MsgCode.Properties); } }
 
+
+        /// <summary>To access the user manual in the browser</summary>
+        public static string UserManualUri {
+            get {
+                return string.Format(@"file:///{0}", DI.Wrapper.UserManualFullFileName);
+            }
+        }
+
+
         #endregion
 
         #region Private

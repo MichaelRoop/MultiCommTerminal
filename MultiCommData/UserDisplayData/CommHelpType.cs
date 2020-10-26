@@ -7,7 +7,6 @@
         Bluetooth,
         BluetoothLE,
         Usb,
-        Application,
     }
 
 

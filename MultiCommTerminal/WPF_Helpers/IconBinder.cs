@@ -98,8 +98,6 @@ namespace MultiCommTerminal.WPF_Helpers {
                     return Source(UIIcon.Ethernet);
                 case CommHelpType.Wifi:
                     return Source(UIIcon.Wifi);
-                case CommHelpType.Application:
-                    return Source(UIIcon.Help);
                 default:
                     return Cancel;
             }

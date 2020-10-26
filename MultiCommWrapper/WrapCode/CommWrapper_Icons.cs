@@ -77,7 +77,6 @@ namespace MultiCommWrapper.Net.WrapCode {
             items.Add(this.HelpItem("Wifi", UIIcon.Wifi, CommHelpType.Wifi));
             //items.Add(this.HelpItem("USB", UIIcon.Usb, CommHelpType.Usb));
             //items.Add(this.HelpItem("Ethernet", UIIcon.Ethernet, CommHelpType.Ethernet));
-            items.Add(this.HelpItem("Help", UIIcon.Help, CommHelpType.Application));
             helps.Invoke(items);
         }
 

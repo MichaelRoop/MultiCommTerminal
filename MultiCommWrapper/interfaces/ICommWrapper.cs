@@ -41,7 +41,14 @@ namespace MultiCommWrapper.Net.interfaces {
 
         #endregion
 
-        #region Languages
+        #region Properties
+
+        /// <summary>Full path and file name of user manual PDF</summary>
+        public string UserManualFullFileName { get; }
+        
+        #endregion
+
+            #region Languages
 
         void CurrentStoredLanguage();
 

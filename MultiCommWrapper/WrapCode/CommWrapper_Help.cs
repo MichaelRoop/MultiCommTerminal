@@ -13,7 +13,6 @@ namespace MultiCommWrapper.Net.WrapCode {
 
     public partial class CommWrapper : ICommWrapper {
 
-
         public void CommMediumHelpList(Action<List<CommMediumHelp>> onSuccess) {
             List<CommMediumHelp> helps = new List<CommMediumHelp>();
             this.CommHelpList((list) => {
@@ -45,9 +44,6 @@ namespace MultiCommWrapper.Net.WrapCode {
                         break;
                     case CommHelpType.Usb:
                         i.Text = "Communicate with devices using a hard wired USB serial connection to send commands and receive responses";
-                        break;
-                    case CommHelpType.Application:
-                        i.Text = "User Document";
                         break;
 
                         // TODO - others
@@ -102,24 +98,28 @@ namespace MultiCommWrapper.Net.WrapCode {
             }
         }
     
+
+        private string AssembleWithSamplePath(string filename) {
+            return string.Format("{0}/{1}", AppDomain.CurrentDomain.BaseDirectory, filename);
+        }
     
+
         private string GetFilename(CommHelpType medium) {
             switch (medium) {
                 case CommHelpType.Bluetooth:
-                    return "./Samples/BTSample.txt";
+                    return this.AssembleWithSamplePath("Samples/BTSample.txt");
                 case CommHelpType.BluetoothLE:
-                    return "./Samples/BLESample.txt";
+                    return this.AssembleWithSamplePath("Samples/BLESample.txt");
                 case CommHelpType.Wifi:
-                    return "./Samples/WifiSample.txt";
+                    return this.AssembleWithSamplePath("Samples/WifiSample.txt");
                 case CommHelpType.Usb:
-                    return "./Samples/USBSample.txt";
+                    return this.AssembleWithSamplePath("Samples/USBSample.txt");
                 case CommHelpType.Ethernet:
-                    return "./Samples/EthernetSample.txt";
-                case CommHelpType.Application:
-                    return "./Documents/MultiCommTerminal.txt";
+                    return this.AssembleWithSamplePath("Samples/EthernetSample.txt");
                 default: return "";
             }
         }
+
     }
 
 }

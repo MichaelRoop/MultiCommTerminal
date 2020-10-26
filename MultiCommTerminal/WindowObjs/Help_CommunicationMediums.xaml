@@ -46,8 +46,13 @@
                             Click="btnCode_Click"/>
                 </StackPanel>
             </DockPanel>
-
-
+            <TextBlock HorizontalAlignment="Center" Margin="5">
+                <Hyperlink NavigateUri="{Binding Source={x:Static wpfHelper:TxtBinder.UserManualUri }}" RequestNavigate="Hyperlink_RequestNavigate">
+                    User Manual</Hyperlink>
+            </TextBlock>
+            <Grid HorizontalAlignment="Center" Margin="5,0" Visibility="Collapsed">
+                <TextBlock x:Name="lblUserManual" HorizontalAlignment="Center" Text="" FontSize="14" TextWrapping="Wrap" />
+            </Grid>
             <Border HorizontalAlignment="Center">
                 <controls:UC_IconButton x:Name="btnExit" Margin="5"
                             Style="{StaticResource TextIconButton}" 

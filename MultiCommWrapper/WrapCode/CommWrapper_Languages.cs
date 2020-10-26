@@ -115,7 +115,6 @@ namespace MultiCommWrapper.Net.WrapCode {
                 case CommHelpType.Wifi: return "Wifi";
                 case CommHelpType.Ethernet: return "Ethernet";
                 case CommHelpType.Usb: return "USB";
-                case CommHelpType.Application: return "Application"; // TODO Language support
                 default: return "N/A";
                     // TODO - others
             }
