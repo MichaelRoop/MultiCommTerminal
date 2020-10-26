@@ -35,7 +35,7 @@ namespace MultiCommTerminal {
         /// </summary>
         public static string Build {
             get {
-                return "2020.10.25.2";
+                return "2020.10.26.1";
             }
         }
 
