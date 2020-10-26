@@ -1,4 +1,5 @@
-﻿using MultiCommTerminal.WPF_Helpers;
+﻿using LogUtils.Net;
+using MultiCommTerminal.WPF_Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -55,8 +56,13 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         }
 
         private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e) {
-            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri) { UseShellExecute = true });
+            try {
+                Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri) { UseShellExecute = true });
             e.Handled = true;
+            }
+            catch (Exception ex) {
+                Log.Exception(9999, "", ex);
+            }
         }
 
     }
