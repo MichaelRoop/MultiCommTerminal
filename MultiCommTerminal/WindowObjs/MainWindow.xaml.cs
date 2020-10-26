@@ -892,6 +892,11 @@ namespace MultiCommTerminal.WindowObjs {
             this.btnBTPair.Content = lang.GetText(MsgCode.Pair);
             this.btnBTUnPair.Content = lang.GetText(MsgCode.Unpair);
 
+            // WIFI
+            this.btnWifiDiscover.Content = lang.GetText(MsgCode.discover);
+            this.btnWifiConnect.Content = lang.GetText(MsgCode.connect);
+            this.btnWifiDisconnect.Content = lang.GetText(MsgCode.Disconnect);
+
             // Labels
             this.lbCommand.Content = lang.GetText(MsgCode.command);
             this.lbResponse.Content = lang.GetText(MsgCode.response);

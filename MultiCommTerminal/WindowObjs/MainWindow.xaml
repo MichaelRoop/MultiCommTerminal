@@ -247,8 +247,6 @@
                                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Disconnect}}" Margin="0,2.5"
                                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}"                                                                                            
                                             Background="Transparent" Click="btnWifiDisconnect_Click" />
-
-
                                 </StackPanel>
                                 <ListBox x:Name="lbWifi" MinHeight="30" MinWidth="200" MaxHeight="115" 
                                              ScrollViewer.VerticalScrollBarVisibility="Auto" 
