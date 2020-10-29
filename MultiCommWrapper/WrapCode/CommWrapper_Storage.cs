@@ -6,12 +6,15 @@ using StorageFactory.Net.StorageManagers;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using VariousUtils.Net;
 
 namespace MultiCommWrapper.Net.WrapCode {
     public partial class CommWrapper : ICommWrapper {
 
         #region Data
+
+        private static string PDF_USER_MANUAL_DIR_AND_FILE = "Documents/MultiCommTerminalUserDocRelease.pdf";
 
         private readonly string APP_DIR = "MultiCommSerialTerminal";
         private readonly string SETTINGS_DIR = "Settings";
@@ -22,19 +25,16 @@ namespace MultiCommWrapper.Net.WrapCode {
         private readonly string SCRIPTS_INDEX_FILE = "ScriptsIndex.txt";
         private readonly string WIFI_CRED_DIR = "WifiCredentials";
         private readonly string WIFI_CRED_INDEX_FILE = "WifiCredIndex.txt";
-        private readonly string DOCUMENTS_DIR = "Documents";
 
-        // TODO BAD gets the directory on the D drive where app is developed
-        // *** When installed as an APP package you get the correct path
-        // TODO - move this into the 
+        // UWP path and file name for document
         private readonly string UWP_ORIGINE_USER_MANUAL_PATH_AND_FILE = string.Format("{0}{1}",             
-            AppDomain.CurrentDomain.BaseDirectory, "Documents/MultiCommTerminalUserDocRelease.pdf");
+            AppDomain.CurrentDomain.BaseDirectory, PDF_USER_MANUAL_DIR_AND_FILE);
+
+        // Windows path and file name for document
         private readonly string WIN_ORIGINE_USER_MANUAL_PATH_AND_FILE =
-            "./Documents/MultiCommTerminalUserDocRelease.pdf";
-
-        private readonly string PDF_USER_MANUAL_FILE = "MultiCommTerminalUserDocRelease.pdf";
-
-
+            string.Format(@"/{0}", 
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), 
+                PDF_USER_MANUAL_DIR_AND_FILE);
 
         #endregion
 
@@ -54,8 +54,6 @@ namespace MultiCommWrapper.Net.WrapCode {
 
             this.wifiCredStorage =
                 this.storageFactory.GetIndexedManager<WifiCredentialsDataModel, DefaultFileExtraInfo>(this.Dir(WIFI_CRED_DIR), WIFI_CRED_INDEX_FILE);
-
-            this.MoveUserManualPdf();
         }
 
 
@@ -68,33 +66,20 @@ namespace MultiCommWrapper.Net.WrapCode {
             return Path.Combine(this.scriptStorage.StorageRootDir, this.Dir(subDir));
         }
 
+
         public string UserManualFullFileName { get {
-                // TODO - check if file exists in regular exe path to 
-                // determine if UWP or WIN
-
+                // Check WIN first
+                if (File.Exists(this.WIN_ORIGINE_USER_MANUAL_PATH_AND_FILE)) {
+                    this.log.Info("UserManualFullFileName", () => string.Format("Using WIN Path:{0}",
+                        this.WIN_ORIGINE_USER_MANUAL_PATH_AND_FILE));
+                    return this.WIN_ORIGINE_USER_MANUAL_PATH_AND_FILE;
+                }
+                // UWP path
+                this.log.Info("UserManualFullFileName", () => string.Format("Using UWP Path:{0}",
+                    this.UWP_ORIGINE_USER_MANUAL_PATH_AND_FILE));
                 return this.UWP_ORIGINE_USER_MANUAL_PATH_AND_FILE;
-
-
-                //return FileHelpers.GetFullFileName(
-                //    this.FullStorageDirectory(this.DOCUMENTS_DIR), this.PDF_USER_MANUAL_FILE);
             }
         }
-
-
-        private void MoveUserManualPdf() {
-            try {
-                // TODO - REMOVE THIS FUNCTIONALITY
-                // Just get it out of exe directory based on Win or UWP
-                //DirectoryHelpers.CreateStorageDir(this.FullStorageDirectory(this.DOCUMENTS_DIR));
-                //if (!File.Exists(this.UserManualFullFileName)) {
-                //    File.Copy(this.ORIGINE_USER_MANUAL_PATH_AND_FILE, this.UserManualFullFileName);
-                //}
-            }
-            catch (Exception e) {
-                this.log.Exception(9999, "", e);
-            }
-        }
-
 
         #region Assure default methods
 
