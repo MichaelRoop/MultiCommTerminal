@@ -9,7 +9,7 @@
   <Identity
     Name="1c27e46d-d1d0-4f21-aabf-d63f3600c3a2"
     Publisher="CN=MichaelRoop"
-    Version="1.1.22.0" />
+    Version="1.1.39.0" />
 
   <Properties>
     <DisplayName>Multi Comm Terminal</DisplayName>

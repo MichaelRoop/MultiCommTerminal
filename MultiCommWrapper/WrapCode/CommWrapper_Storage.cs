@@ -23,9 +23,18 @@ namespace MultiCommWrapper.Net.WrapCode {
         private readonly string WIFI_CRED_DIR = "WifiCredentials";
         private readonly string WIFI_CRED_INDEX_FILE = "WifiCredIndex.txt";
         private readonly string DOCUMENTS_DIR = "Documents";
-        private readonly string ORIGINE_USER_MANUAL_PATH_AND_FILE = string.Format("{0}/{1}",             
+
+        // TODO BAD gets the directory on the D drive where app is developed
+        // *** When installed as an APP package you get the correct path
+        // TODO - move this into the 
+        private readonly string UWP_ORIGINE_USER_MANUAL_PATH_AND_FILE = string.Format("{0}{1}",             
             AppDomain.CurrentDomain.BaseDirectory, "Documents/MultiCommTerminalUserDocRelease.pdf");
+        private readonly string WIN_ORIGINE_USER_MANUAL_PATH_AND_FILE =
+            "./Documents/MultiCommTerminalUserDocRelease.pdf";
+
         private readonly string PDF_USER_MANUAL_FILE = "MultiCommTerminalUserDocRelease.pdf";
+
+
 
         #endregion
 
@@ -60,18 +69,26 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
         public string UserManualFullFileName { get {
-                return FileHelpers.GetFullFileName(
-                    this.FullStorageDirectory(this.DOCUMENTS_DIR), this.PDF_USER_MANUAL_FILE);
+                // TODO - check if file exists in regular exe path to 
+                // determine if UWP or WIN
+
+                return this.UWP_ORIGINE_USER_MANUAL_PATH_AND_FILE;
+
+
+                //return FileHelpers.GetFullFileName(
+                //    this.FullStorageDirectory(this.DOCUMENTS_DIR), this.PDF_USER_MANUAL_FILE);
             }
         }
 
 
         private void MoveUserManualPdf() {
             try {
-                DirectoryHelpers.CreateStorageDir(this.FullStorageDirectory(this.DOCUMENTS_DIR));
-                if (!File.Exists(this.UserManualFullFileName)) {
-                    File.Copy(this.ORIGINE_USER_MANUAL_PATH_AND_FILE, this.UserManualFullFileName);
-                }
+                // TODO - REMOVE THIS FUNCTIONALITY
+                // Just get it out of exe directory based on Win or UWP
+                //DirectoryHelpers.CreateStorageDir(this.FullStorageDirectory(this.DOCUMENTS_DIR));
+                //if (!File.Exists(this.UserManualFullFileName)) {
+                //    File.Copy(this.ORIGINE_USER_MANUAL_PATH_AND_FILE, this.UserManualFullFileName);
+                //}
             }
             catch (Exception e) {
                 this.log.Exception(9999, "", e);

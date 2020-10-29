@@ -1,0 +1,2 @@
+MainPackage=D:\Dev\MultiCommTerminal\MultiCommTerminal.MSIX\bin\x86\Debug\MultiCommTerminal.MSIX_1.1.39.0_x86_Debug.msix
+SymbolPackage=D:\Dev\MultiCommTerminal\MultiCommTerminal.MSIX\obj\x86\Debug\Symbols\MultiCommTerminal.MSIX_1.1.39.0_x86_Debug.appxsym

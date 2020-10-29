@@ -7,6 +7,10 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="images\icons\icons8-about-50.png" />
     <None Remove="images\icons\icons8-about-50_W.png" />
@@ -77,7 +81,7 @@
 
   <ItemGroup>
     <PackageReference Include="Alsing.SyntaxBox" Version="2.0.0" />
-    <PackageReference Include="log4net" Version="2.0.8" />
+    <PackageReference Include="log4net" Version="2.0.12" />
     <PackageReference Include="System.Runtime.WindowsRuntime" Version="4.7.0" />
   </ItemGroup>
 
