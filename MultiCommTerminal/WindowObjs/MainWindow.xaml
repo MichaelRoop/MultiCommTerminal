@@ -7,7 +7,7 @@
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.WPF_Helpers"
         xmlns:controls="clr-namespace:MultiCommTerminal.UserControls"
         mc:Ignorable="d"
-        Title="Multi Comm Serial Terminal" WindowStyle="None" AllowsTransparency="True"
+        Title="Multi Comm Terminal" WindowStyle="None" AllowsTransparency="True"
          ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
         ContentRendered="Window_ContentRendered" Closing="Window_Closing"
         MouseDown="Window_MouseDown" >
@@ -33,7 +33,7 @@
                         </Border>
                         <DockPanel HorizontalAlignment="Center">
                             <Image Source="{Binding Source={x:Static wpfHelper:IconBinder.SerialPort_W}}" Width="40"  />
-                            <Label x:Name="lbTitle" Content="Multi Comm Serial Terminal" 
+                            <Label x:Name="lbTitle" Content="Multi Comm Terminal" 
                            Foreground="White" Background="DarkBlue" FontSize="14" FontWeight="Bold" 
                                HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                         </DockPanel>
