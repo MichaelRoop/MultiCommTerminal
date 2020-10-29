@@ -55,6 +55,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
             this.Close();
         }
 
+
+        /// <summary>Opens the browser because of the execution of a hyperlink</summary>
         private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e) {
             try {
                 Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri) { UseShellExecute = true });
