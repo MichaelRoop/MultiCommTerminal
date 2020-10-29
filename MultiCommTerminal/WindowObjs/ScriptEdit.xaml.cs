@@ -151,6 +151,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
                     this.wrapper.SaveScript(this.index, this.original, () => { }, App.ShowMsg);
                     break;
                 case UseType.New:
+                    this.copy.Display = this.txtName.Text;
                     this.wrapper.CreateNewScript(this.copy.Display, this.copy, () => { }, App.ShowMsg);
                     break;
             }
