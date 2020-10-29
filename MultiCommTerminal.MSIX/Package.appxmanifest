@@ -7,13 +7,13 @@
   IgnorableNamespaces="uap rescap">
 
   <Identity
-    Name="1c27e46d-d1d0-4f21-aabf-d63f3600c3a2"
-    Publisher="CN=MichaelRoop"
-    Version="1.1.41.0" />
+    Name="61651MRProductions.MultiCommTerminal"
+    Publisher="CN=7734A2EB-64A7-45F9-9B6D-25AD392A5AB8"
+    Version="1.1.45.0" />
 
   <Properties>
     <DisplayName>Multi Comm Terminal</DisplayName>
-    <PublisherDisplayName>MichaelRoopUtils</PublisherDisplayName>
+    <PublisherDisplayName>MR Productions</PublisherDisplayName>
     <Logo>Images\StoreLogo.png</Logo>
   </Properties>
 
@@ -32,12 +32,13 @@
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
         DisplayName="Multi Comm Terminal"
-        Description="MultiCommTerminal is a hobiest tool to connect and send commands via multiple communications channel. Now supporting Bluetooth Classic and WIFI"
+        Description="MultiCommTerminal is a tool to connect and send commands via Bluetooth Classic and WIFI to embedded devices such as Arduinos. You can create lists of commands and pair them with selected message terminators.  Hard wired USB and Ethernet in a future release"
         BackgroundColor="transparent"
         Square150x150Logo="Images\Square150x150Logo.png"
         Square44x44Logo="Images\Square44x44Logo.png">
-        <uap:DefaultTile Wide310x150Logo="Images\Wide310x150Logo.png" />
+        <uap:DefaultTile Wide310x150Logo="Images\Wide310x150Logo.png"  Square71x71Logo="Images\SmallTile.png" Square310x310Logo="Images\LargeTile.png"/>
         <uap:SplashScreen Image="Images\SplashScreen.png" />
+        <uap:LockScreen BadgeLogo="Images\BadgeLogo.png" Notification="badgeAndTileText"/>
       </uap:VisualElements>
     </Application>
   </Applications>
