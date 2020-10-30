@@ -25,6 +25,7 @@ namespace MultiCommTerminal {
         private log4net.ILog loggerImpl = null;
         private ClassLog log = new ClassLog("App");
         private static App STATIC_APP = null;
+        private DateTime currentDate = DateTime.Now;
 
         #endregion
 
@@ -85,6 +86,15 @@ namespace MultiCommTerminal {
         void Log_OnLogMsgEvent(MsgLevel level, ErrReport err) {
             if (this.loggerImpl != null) {
                 try {
+                    if (err.TimeStamp.Day != this.currentDate.Day) {
+                        this.log.Warning(0, "******************* New Day *******************");
+                        this.log.Warning(0, "*");
+                        this.log.Warning(0, string.Format("*  Day {0}", DateTime.Now.ToString("dddd, dd MMMM yyyy HH:mm:ss")));
+                        this.log.Warning(0, "*");
+                        this.log.Warning(0, "************************************************");
+                        this.currentDate = err.TimeStamp;
+                    }
+
                     string msg = Log.GetMsgFormat1(level, err);
                     switch (level) {
                         case MsgLevel.Info:
