@@ -56,11 +56,12 @@
                     <Hyperlink  NavigateUri="https://icons8.com" RequestNavigate="Hyperlink_RequestNavigate">ICONS8</Hyperlink>
                 </TextBlock>
 
-                <Label Grid.Row="3" Grid.Column="0" Content="User Manual" Style="{StaticResource NameLabelLeft}" />
+                <Label Grid.Row="3" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.UserManual}}" Style="{StaticResource NameLabelLeft}" />
                 <Label Grid.Row="3" Grid.Column="1" Content=":" Style="{StaticResource NameLabelCenter}" />
                 <TextBlock Grid.Row="3" Grid.Column="2" Style="{StaticResource TxtBlockRight}" Margin="5">
                     <Hyperlink NavigateUri="{Binding Source={x:Static wpfHelper:TxtBinder.UserManualUri }}" RequestNavigate="Hyperlink_RequestNavigate">
-                        User Manual</Hyperlink>
+                        <TextBlock Text="{Binding Source={x:Static wpfHelper:TxtBinder.UserManual}}"/>                        
+                    </Hyperlink>
                 </TextBlock>
 
                 <Label Grid.Row="4" Grid.Column="0" Content="Build" Style="{StaticResource NameLabelLeft}" />

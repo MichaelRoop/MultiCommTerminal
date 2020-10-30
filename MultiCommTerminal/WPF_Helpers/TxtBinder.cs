@@ -80,6 +80,7 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string Author { get { return GetTxt(MsgCode.Author); } }
         public static string Services { get { return GetTxt(MsgCode.Services); } }
         public static string Properties { get { return GetTxt(MsgCode.Properties); } }
+        public static string UserManual { get { return GetTxt(MsgCode.UserManual); } }
 
 
         /// <summary>To access the user manual in the browser</summary>
