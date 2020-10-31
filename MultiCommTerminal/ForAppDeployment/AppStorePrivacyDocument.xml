@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+
+<html lang="en" style="" class=" js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers no-applicationcache svg inlinesvg smil svgclippaths">
+  <head>
+    <meta charset="utf-8">
+      <title>MultiCommTerminal Privacy Policy - MyAppPolicy</title>
+      <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+        <meta name="viewport" content="width=device-width">
+          <link href="/Content/themes/base/css?v=58KZ5iata6ouERaCYSZC3XN4JTpS9kDRB9t3LBZ1Ue81" rel="stylesheet">
+
+            <link href="/Content/bootstrap?v=8YCIH9299DddgE1MKHWh7q9nzhSIdUfJf5NkiSLBXG81" rel="stylesheet">
+
+              <script src="/bundles/modernizr?v=qVODBytEBVVePTNtSFXgRX0NCEjh9U_Oj8ePaSiRcGg1"></script>
+
+              <style type="text/css">
+                .footer
+                {
+                background-color: #ddd;
+                margin-top: 24px;
+                padding-top: 10px;
+                }
+              </style>
+
+              <style>
+                body
+                {
+                padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+                }
+              </style>
+            </head>
+  <body>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="/">My App Policy</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li>
+                <a href="/">Home</a>
+              </li>
+              <li>
+                <a href="/Policy">Policies</a>
+              </li>
+            </ul>
+            <ul class="nav pull-right">
+              <li>
+                <a href="/Account/Login" id="loginLink">Log in</a>
+              </li>
+            </ul>
+          </div>
+          <!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+    <div class="container">
+
+      <h2>MultiCommTerminal Privacy Policy</h2>
+      <div>
+        <p>MultiCommTerminal by Multi Comm Terminal collects the following information:</p>
+        <ul>
+          <li>The operating system requires certain information because the App runs as a Full Trust App. This is because the App is a Windows Desktop Application bridged to an UWP App</li>
+        </ul>
+        <p>Multi Comm Terminal collects this information in order to provide the following benefits:</p>
+        <ul>
+          <li>Any data collected is done by the operating system and only to satisfy the requirements of running as a Full Trust App</li>
+        </ul>
+        <p>Multi Comm Terminal shares this information with the following parties:</p>
+        <ul>
+          <li>No data outside of what is required by the operating system is collected. None is shared </li>
+        </ul>
+        <p>This policy is subject to change without notice. Please check this page for the latest privacy policy. If you disagree with this policy, please discontinue use of the application.</p>
+      </div>
+      <div class="row footer">
+        <div class="span12">
+          <p>
+            Brought to you by <a href="http://qedcode.com">Michael L Perry</a> and <a href="http://correspondencecloud.com">Correspondence</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+    <script src="/bundles/jquery?v=UgyEMAYOuSB9Bb6HcOEVHpd6fIIp54yF086SRNVcdIY1"></script>
+    <script src="/bundles/bootstrap?v=XDWh8ib09ONp0QXzxy1fAaOSIrDkkQj1cb8engxwMcY1"></script>
+  </body>
+</html>
