@@ -562,7 +562,7 @@ namespace MultiCommTerminal.WindowObjs {
 
         #region Serial USB
         private void btnSerialDiscover_Click(object sender, RoutedEventArgs e) {
-            this.serial.DiscoverAsync();
+            this.serial.DiscoverSerialDevicesAsync();
         }
 
         #endregion
