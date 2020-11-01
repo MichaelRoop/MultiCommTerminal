@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\SharedNetCoreLibs\Communications.UWP.Core\Communications.UWP.Core.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\LogUtils.Net\LogUtils.Net.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\SerialCommon.Net\SerialCommon.Net.csproj" />
   </ItemGroup>

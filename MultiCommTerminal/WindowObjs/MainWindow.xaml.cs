@@ -567,6 +567,16 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
+        private void btnSerialConnect_Click(object sender, RoutedEventArgs e) {
+            //this.wrapper.SerialUsbConnect();
+            this.lbUsb.GetSelected<SerialDeviceInfo>((item) => {
+                //this.gridWait.Show();
+                this.wrapper.SerialUsbConnect(item);
+            });
+
+        }
+
+
         private void Wrapper_SerialDiscoveredDevicesHandler(object sender, List<SerialDeviceInfo> data) {
             this.Dispatcher.Invoke(() => {
                 this.gridWait.Collapse();

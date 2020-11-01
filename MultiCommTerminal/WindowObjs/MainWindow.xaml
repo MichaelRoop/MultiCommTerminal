@@ -226,6 +226,13 @@
                                                         Content="{Binding Source={x:Static wpfHelper:TxtBinder.Discover}}" Margin="0,2.5"
                                                         IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Search}}"                                                                                            
                                                         Background="Transparent" Click="btnSerialDiscover_Click" />
+                                    <controls:UC_IconButton x:Name="btnSerialConnect" Style="{StaticResource TextIconButton}"
+                                                        HorizontalContentAlignment="Left"
+                                                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.Connect}}" Margin="0,2.5"
+                                                        IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Connect}}"                                                                                            
+                                                        Background="Transparent" Click="btnSerialConnect_Click" />
+
+
                                 </StackPanel>
                             <ListBox x:Name="lbUsb" MinHeight="30" MinWidth="200" MaxHeight="115" 
                                              ScrollViewer.VerticalScrollBarVisibility="Auto" 

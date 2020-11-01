@@ -4,11 +4,10 @@ using SerialCommon.Net.interfaces;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
+using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
 using Windows.Devices.SerialCommunication;
 using Windows.Devices.Usb;
-using Windows.Storage.Streams;
 
 namespace Serial.UWP.Core {
 
@@ -41,97 +40,98 @@ namespace Serial.UWP.Core {
         #endregion
 
 
-        private async void DoDiscovery() {
-            try {
-                DeviceInformationCollection infos = await DeviceInformation.FindAllAsync(this.AQSForUSB);
-                Stopwatch sw = new Stopwatch();
-                sw.Start();
+        public void DiscoverSerialDevicesAsync() {
+            Task.Run(async () => {
+                try {
+                    DeviceInformationCollection infos = await DeviceInformation.FindAllAsync(this.AQSForUSB);
+                    Stopwatch sw = new Stopwatch();
+                    sw.Start();
 
-                List<SerialDeviceInfo> devices = new List<SerialDeviceInfo>();
+                    List<SerialDeviceInfo> devices = new List<SerialDeviceInfo>();
 
-                // TODO - SerialDevice.FromIdAsync(deviceId). Except do not know if same ID as from DeviceInformation
-                foreach (DeviceInformation info in infos) {
-                    this.DumpSerialDeviceInfo(info);
+                    // TODO - SerialDevice.FromIdAsync(deviceId). Except do not know if same ID as from DeviceInformation
+                    foreach (DeviceInformation info in infos) {
+                        this.DumpSerialDeviceInfo(info);
 
-                    try {
-                        // Extra. Connect to get more info. Temp - Move to a GetInfo method
-                        SerialDevice dev = await SerialDevice.FromIdAsync(info.Id);
+                        try {
+                            // Extra. Connect to get more info. Temp - Move to a GetInfo method
+                            SerialDevice dev = await SerialDevice.FromIdAsync(info.Id);
 
-                        SerialDeviceInfo device = new SerialDeviceInfo() {
-                            Id = info.Id,
-                            IsDefault = info.IsDefault,
-                            IsEnabled = info.IsEnabled,
-                            Name = info.Name,
-                            Properties = NetPropertyHelpers.CreatePropertiesDictionary(info.Properties),
-                            // Ignore pairing
-                            // Ignore enclosure location
-                            // Ignore Kind
-                            PortName = dev.PortName,
-                            Baud = dev.BaudRate,
-                            DataBits = dev.DataBits,
-                            StopBits = dev.StopBits.Convert(),
-                            Parity = dev.Parity.Convert(),
-                            ReadTimeout = dev.ReadTimeout,
-                            WriteTimeout = dev.WriteTimeout,
-                            DSR_DataSetReadyState = dev.DataSetReadyState,
-                            BytesReceivedOnLastInput = dev.BytesReceived,
-                            TX_BreakSignalEnabled = dev.BreakSignalState,
-                            CTS_IsClearToSendEnabled = dev.ClearToSendState,
-                            DTR_IsDataTerminalReady = dev.IsDataTerminalReadyEnabled,
-                            CD_CarrierDetectLineState = dev.CarrierDetectState,
-                            CTS_ClearToSendLineState = dev.ClearToSendState,
-                            USB_VendorId = dev.UsbVendorId,
-                            USB_ProductId = dev.UsbProductId,
-                            USB_ProductIdDisplay = string.Format("0x{0:X}", dev.UsbProductId),
-                            USB_VendorIdDisplay = string.Format("0x{0:X}", dev.UsbVendorId),
-                            RTS_IsRequesttoSendEnabled = dev.IsRequestToSendEnabled,
-                            FlowHandshake = dev.Handshake.Convert(),
-                        };
-                        this.DumpSerialDevice(dev);
+                            SerialDeviceInfo device = new SerialDeviceInfo() {
+                                Id = info.Id,
+                                IsDefault = info.IsDefault,
+                                IsEnabled = info.IsEnabled,
+                                Name = info.Name,
+                                Properties = NetPropertyHelpers.CreatePropertiesDictionary(info.Properties),
+                                // Ignore pairing
+                                // Ignore enclosure location
+                                // Ignore Kind
+                                PortName = dev.PortName,
+                                Baud = dev.BaudRate,
+                                DataBits = dev.DataBits,
+                                StopBits = dev.StopBits.Convert(),
+                                Parity = dev.Parity.Convert(),
+                                ReadTimeout = dev.ReadTimeout,
+                                WriteTimeout = dev.WriteTimeout,
+                                DSR_DataSetReadyState = dev.DataSetReadyState,
+                                BytesReceivedOnLastInput = dev.BytesReceived,
+                                TX_BreakSignalEnabled = dev.BreakSignalState,
+                                CTS_IsClearToSendEnabled = dev.ClearToSendState,
+                                DTR_IsDataTerminalReady = dev.IsDataTerminalReadyEnabled,
+                                CD_CarrierDetectLineState = dev.CarrierDetectState,
+                                CTS_ClearToSendLineState = dev.ClearToSendState,
+                                USB_VendorId = dev.UsbVendorId,
+                                USB_ProductId = dev.UsbProductId,
+                                USB_ProductIdDisplay = string.Format("0x{0:X}", dev.UsbProductId),
+                                USB_VendorIdDisplay = string.Format("0x{0:X}", dev.UsbVendorId),
+                                RTS_IsRequesttoSendEnabled = dev.IsRequestToSendEnabled,
+                                FlowHandshake = dev.Handshake.Convert(),
+                            };
+                            this.DumpSerialDevice(dev);
 
-                        #region USB code does not seem to work
-                        //// https://docs.microsoft.com/en-us/windows-hardware/drivers/usbcon/how-to-connect-to-a-usb-device--uwp-app-
-                        ////UsbDevice u = await UsbDevice.FromIdAsync(info.Id);
-                        ////string uaqs = UsbDevice.GetDeviceSelector(dev.UsbVendorId, dev.UsbProductId);
-                        ////string uaqs = UsbDevice.GetDeviceSelector(0x2341, 0x43);
-                        //UInt32 ven = 0x2341;
-                        //UInt32 prod = 0x43;
-                        //string uaqs = UsbDevice.GetDeviceSelector(ven, prod);
-                        //this.log.Error(7, () => string.Format("AQS:{0}", uaqs));
-                        //var uDevs = await DeviceInformation.FindAllAsync(uaqs);
-                        //if (uDevs.Count > 0) {
-                        //    this.log.Error(7, () => string.Format("USB ID:{0}", uDevs[0].Id));
+                            #region USB code does not seem to work
+                            //// https://docs.microsoft.com/en-us/windows-hardware/drivers/usbcon/how-to-connect-to-a-usb-device--uwp-app-
+                            ////UsbDevice u = await UsbDevice.FromIdAsync(info.Id);
+                            ////string uaqs = UsbDevice.GetDeviceSelector(dev.UsbVendorId, dev.UsbProductId);
+                            ////string uaqs = UsbDevice.GetDeviceSelector(0x2341, 0x43);
+                            //UInt32 ven = 0x2341;
+                            //UInt32 prod = 0x43;
+                            //string uaqs = UsbDevice.GetDeviceSelector(ven, prod);
+                            //this.log.Error(7, () => string.Format("AQS:{0}", uaqs));
+                            //var uDevs = await DeviceInformation.FindAllAsync(uaqs);
+                            //if (uDevs.Count > 0) {
+                            //    this.log.Error(7, () => string.Format("USB ID:{0}", uDevs[0].Id));
 
-                        //    UsbDevice u = await UsbDevice.FromIdAsync(uDevs[0].Id);
-                        //    this.DumpUsbDevice(u);
-                        //}
-                        //else {
-                        //    this.log.Error(88, "NO USB DEVICE");
-                        //}
-                        #endregion
+                            //    UsbDevice u = await UsbDevice.FromIdAsync(uDevs[0].Id);
+                            //    this.DumpUsbDevice(u);
+                            //}
+                            //else {
+                            //    this.log.Error(88, "NO USB DEVICE");
+                            //}
+                            #endregion
 
 
-                        // Only bother to add if no exception on connection for more info
-                        devices.Add(device);
-                    }
-                    catch (Exception e) {
-                        this.log.Exception(2222, "", e);
-                    }
+                            // Only bother to add if no exception on connection for more info
+                            devices.Add(device);
+                        }
+                        catch (Exception e) {
+                            this.log.Exception(2222, "", e);
+                        }
 
-                } // For each
+                    } // For each
 
-                sw.Stop();
-                this.log.Info("DoDiscovery", () => string.Format("**** Number Devices {0} *****", infos.Count));
-                this.log.Info("DoDiscovery", () => string.Format("**** Elapsed MS {0} *****", sw.ElapsedMilliseconds));
-                this.DiscoveredDevices?.Invoke(this, devices);
+                    sw.Stop();
+                    this.log.Info("DoDiscovery", () => string.Format("**** Number Devices {0} *****", infos.Count));
+                    this.log.Info("DoDiscovery", () => string.Format("**** Elapsed MS {0} *****", sw.ElapsedMilliseconds));
+                    this.DiscoveredDevices?.Invoke(this, devices);
 
-            }
-            catch (Exception e) {
-                this.log.Exception(1111, "", e);
-                // TODO Add fields
-                this.OnError.Invoke(this, new SerialUsbError());
-            }
-
+                }
+                catch (Exception e) {
+                    this.log.Exception(1111, "", e);
+                    // TODO Add fields
+                    this.OnError.Invoke(this, new SerialUsbError());
+                }
+            });
         }
 
 
