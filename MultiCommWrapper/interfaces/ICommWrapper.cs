@@ -279,6 +279,7 @@ namespace MultiCommWrapper.Net.interfaces {
         void SerialUsbDiscoverAsync();
         void SerialUsbConnect(SerialDeviceInfo dataModel);
         void SerialUsbDisconnect();
+        void SerialUsbSend(string msg);
 
         #endregion
 

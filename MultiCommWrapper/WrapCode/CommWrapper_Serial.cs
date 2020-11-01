@@ -34,6 +34,10 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
+        public void SerialUsbSend(string msg) {
+            this.serialStack.SendToComm(msg);
+        }
+
         #endregion
 
 

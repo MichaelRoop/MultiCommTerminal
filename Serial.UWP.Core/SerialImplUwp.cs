@@ -24,7 +24,8 @@ namespace Serial.UWP.Core {
 
 
         public bool SendOutMsg(byte[] msg) {
-            throw new NotImplementedException();
+            this.msgPump.WriteAsync(msg);
+            return true;
         }
 
         #endregion
@@ -34,7 +35,7 @@ namespace Serial.UWP.Core {
         ClassLog log = new ClassLog("SerialImplUwp");
 
 
-        public bool Connected => throw new NotImplementedException();
+        public bool Connected { get; private set; } = false;
 
         public SerialImplUwp() {
             this.msgPump.ConnectResultEvent += this.MsgPump_ConnectResultEventHandler;

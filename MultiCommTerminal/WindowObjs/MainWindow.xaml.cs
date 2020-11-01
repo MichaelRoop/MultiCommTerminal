@@ -598,6 +598,11 @@ namespace MultiCommTerminal.WindowObjs {
         private void Wrapper_SerialOnErrorHandler(object sender, SerialUsbError e) {
             this.Dispatcher.Invoke(() => {
                 this.gridWait.Collapse();
+
+                string err = string.Format(
+                    "{0} Usb Error:{1}, {2}", 
+                    e.PortName, e.Code, e.Message);
+
                 App.ShowMsg("Usb Error"); // TODO Better errors
             });
         }
@@ -856,7 +861,7 @@ namespace MultiCommTerminal.WindowObjs {
                             break;
                         case CommMediumType.Usb:
                             // TODO implement
-                            //this.wrapper.SerialSend(item.Command)
+                            this.wrapper.SerialUsbSend(item.Command);
                             break;
                         default:
                             break;
