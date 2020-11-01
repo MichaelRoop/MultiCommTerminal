@@ -7,8 +7,8 @@
    You can apply the same code to boards with multiple serial
    ports by specifying the exact serial port
 
-   The terminal must be set to 
-   Baud 115,200, 8 Data bits, 1 Stop bit, no parity
+   When set in Arduino (see below), the terminal should set itself to: 
+		Baud 115,200, 8 Data bits, 1 Stop bit, no parity
 
 */
 #define IN_BUFF_SIZE 50
@@ -29,7 +29,8 @@ int CLOSE_CMD_LEN = 9;
 // the setup function runs once when you press reset or power the board
 void setup() {
 	// 115,200 Baud, 8 Data bits, no parity, 1 stop bit
-	// You must also setup the terminal with same parameters
+	// The terminal should find those same parameters. If you do not set
+	// it here, the values are not detected in the terminal
 	Serial.begin(115200, SERIAL_8N1);
 	while (!Serial) {
 	}

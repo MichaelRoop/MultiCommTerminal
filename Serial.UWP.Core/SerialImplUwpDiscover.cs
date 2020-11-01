@@ -54,8 +54,10 @@ namespace Serial.UWP.Core {
                     this.DumpSerialDeviceInfo(info);
 
                     try {
-                        // Extra. Connect to get more info. Temp - Move to a GetInfo method
-                        using (SerialDevice dev = await SerialDevice.FromIdAsync(info.Id)) {
+                            // Device picks up Baud, Parity, Data and Stop bits when 
+                            // set in the Arduino (see code sample). When left to 
+                            // default in Arduino it does not show
+                            using (SerialDevice dev = await SerialDevice.FromIdAsync(info.Id)) {
                             if (dev != null) {
                                 SerialDeviceInfo device = new SerialDeviceInfo() {
                                     Id = info.Id,

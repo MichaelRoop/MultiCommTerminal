@@ -40,17 +40,6 @@ namespace Serial.UWP.Core {
 
                         this.device = await SerialDevice.FromIdAsync(devices[0].Id);
                         if (this.device != null) {
-                            // TODO Could set the baud, data bits, stop bits, parity here
-                            //this.device.InputStream // IInputStream
-                            //this.device.OutputStream // IOutputStream
-
-                            // TODO - replace with configuration
-                            //this.device.BaudRate = 57600;
-                            this.device.BaudRate = 115200;
-                            this.device.DataBits = 8;
-                            this.device.Parity = SerialParity.None;
-                            this.device.StopBits = SerialStopBitCount.One;
-
                             this.msgPump.ConnectAsync(new SerialMsgPumpConnectData() {
                                 InStream = this.device.InputStream,
                                 OutStream = this.device.OutputStream,
