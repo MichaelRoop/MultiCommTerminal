@@ -582,8 +582,7 @@ namespace MultiCommTerminal.WindowObjs {
                 this.gridWait.Collapse();
                 this.log.Info("Wrapper_SerialDiscoveredDevicesHandler", () => string.Format("Found {0} networks", data.Count));
                 this.lbUsb.SetNewSource(ref this.usbDevices, data);
-                // TODO - show connect button
-                //this.btnWifiConnect.Show();
+                this.btnSerialConnect.Show();
             });
         }
 
@@ -764,6 +763,8 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void SelectUSB() {
             this.spUsb.Show();
+            this.btnSerialDiscover.Show();
+            this.btnSerialConnect.Collapse();
         }
 
 
@@ -800,6 +801,7 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void UnselectUsb() {
             this.spUsb.Collapse();
+            this.btnSerialConnect.Collapse();
         }
 
 
@@ -952,6 +954,10 @@ namespace MultiCommTerminal.WindowObjs {
             this.btnWifiDiscover.Content = lang.GetText(MsgCode.discover);
             this.btnWifiConnect.Content = lang.GetText(MsgCode.connect);
             this.btnWifiDisconnect.Content = lang.GetText(MsgCode.Disconnect);
+
+            // USB
+            this.btnSerialConnect.Content = lang.GetText(MsgCode.connect);
+            this.btnSerialDiscover.Content = lang.GetText(MsgCode.discover);
 
             // Labels
             this.lbCommand.Content = lang.GetText(MsgCode.command);

@@ -220,7 +220,7 @@
                         </StackPanel>
                         <StackPanel x:Name="spUsb" VerticalAlignment="Center" Visibility="Collapsed">
                             <DockPanel>
-                                <StackPanel>
+                                <StackPanel Margin="5">
                                     <controls:UC_IconButton x:Name="btnSerialDiscover" Style="{StaticResource TextIconButton}"
                                                         HorizontalContentAlignment="Left"
                                                         Content="{Binding Source={x:Static wpfHelper:TxtBinder.Discover}}" Margin="0,2.5"
@@ -231,10 +231,8 @@
                                                         Content="{Binding Source={x:Static wpfHelper:TxtBinder.Connect}}" Margin="0,2.5"
                                                         IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Connect}}"                                                                                            
                                                         Background="Transparent" Click="btnSerialConnect_Click" />
-
-
                                 </StackPanel>
-                            <ListBox x:Name="lbUsb" MinHeight="30" MinWidth="200" MaxHeight="115" 
+                            <ListBox x:Name="lbUsb" MinHeight="30" MinWidth="200" MaxHeight="115"  Margin="10,0"
                                              ScrollViewer.VerticalScrollBarVisibility="Auto" 
                                              ScrollViewer.HorizontalScrollBarVisibility="Auto">
                                 <ListBox.ItemTemplate>
