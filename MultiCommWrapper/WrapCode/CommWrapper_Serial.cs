@@ -44,8 +44,8 @@ namespace MultiCommWrapper.Net.WrapCode {
         //SerialImplUwp serial
         private void SerialInit() {
             this.serialStack.SetCommChannel(this.serial);
-            this.serialStack.InTerminators = "\n\r".ToAsciiByteArray();
-            this.serialStack.OutTerminators = "\n\r".ToAsciiByteArray();
+            this.serialStack.InTerminators = "\r\n".ToAsciiByteArray();
+            this.serialStack.OutTerminators = "\r\n".ToAsciiByteArray();
             this.serialStack.MsgReceived += this.SerialStack_MsgReceivedHandler;
 
             this.serial.DiscoveredDevices += this.Serial_DiscoveredDevicesHandler;
