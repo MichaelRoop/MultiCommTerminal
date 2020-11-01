@@ -11,6 +11,8 @@ using System;
 using System.Collections.Generic;
 using Wifi.UWP.Core;
 using WifiCommon.Net.interfaces;
+using SerialCommon.Net.interfaces;
+using Serial.UWP.Core;
 
 namespace MultiCommTerminal.DependencyInjection {
 
@@ -41,6 +43,9 @@ namespace MultiCommTerminal.DependencyInjection {
 
             this.SingletonCreators.Add(
                 typeof(IWifiInterface), new ObjSingletonCreator(() => new WifiImpleUwp()));
+
+            this.SingletonCreators.Add(
+                typeof(ISerialInterface), new ObjSingletonCreator(() => new SerialImplUwp()));
 
             this.InstanceCreators.Add(
                 typeof(IMsgPump<SocketMsgPumpConnectData>), new ObjInstanceCreator(() => new SocketMsgPump()));

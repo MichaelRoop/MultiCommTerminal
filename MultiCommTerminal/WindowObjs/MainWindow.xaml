@@ -218,16 +218,33 @@
                                 </StackPanel>
                             </DockPanel>
                         </StackPanel>
-                        <StackPanel x:Name="spEthernet" VerticalAlignment="Center" Visibility="Collapsed">
+                        <StackPanel x:Name="spUsb" VerticalAlignment="Center" Visibility="Collapsed">
                             <DockPanel>
-                                <Label Content="IP:"/>
-                                <TextBox x:Name="txtIp" MinHeight="30" MinWidth="100"/>
-                                <controls:UC_IconButton x:Name="btnSerialDiscover" Style="{StaticResource TextIconButton}"
-                                                    HorizontalContentAlignment="Left"
-                                                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Discover}}" Margin="0,2.5"
-                                                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Search}}"                                                                                            
-                                                    Background="Transparent" Click="btnSerialDiscover_Click" />
+                                <StackPanel>
+                                    <controls:UC_IconButton x:Name="btnSerialDiscover" Style="{StaticResource TextIconButton}"
+                                                        HorizontalContentAlignment="Left"
+                                                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.Discover}}" Margin="0,2.5"
+                                                        IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Search}}"                                                                                            
+                                                        Background="Transparent" Click="btnSerialDiscover_Click" />
+                                </StackPanel>
+                            <ListBox x:Name="lbUsb" MinHeight="30" MinWidth="200" MaxHeight="115" 
+                                             ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                                             ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding PortName}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
                             </DockPanel>
+
+
+
                         </StackPanel>
                         <StackPanel x:Name="spWifi" VerticalAlignment="Center" Visibility="Collapsed">
                             <DockPanel Margin="10">

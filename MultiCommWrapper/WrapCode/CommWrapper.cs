@@ -6,6 +6,7 @@ using LanguageFactory.Net.interfaces;
 using LogUtils.Net;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommWrapper.Net.interfaces;
+using SerialCommon.Net.interfaces;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using WifiCommon.Net.interfaces;
@@ -23,6 +24,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         IBTInterface classicBluetooth = null;
         IBLETInterface bleBluetooth = null;
         IWifiInterface wifi = null;
+        ISerialInterface serial = null;
         IStorageManager<SettingItems> settings = null;
         IIndexedStorageManager<TerminatorDataModel, DefaultFileExtraInfo> terminatorStorage = null;
         IIndexedStorageManager<ScriptDataModel, DefaultFileExtraInfo> scriptStorage = null;
@@ -30,6 +32,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         ICommStackLevel0 btClassicStack = null;
         ICommStackLevel0 bleStack = null;
         ICommStackLevel0 wifiStack = null;
+        ICommStackLevel0 serialStack = null;
 
         private ClassLog log = new ClassLog("CommWrapper");
 
@@ -53,7 +56,9 @@ namespace MultiCommWrapper.Net.WrapCode {
             IBLETInterface bleBluetooth,
             ICommStackLevel0 bleStack,
             IWifiInterface wifi,
-            ICommStackLevel0 wifiStack) {
+            ICommStackLevel0 wifiStack,
+            ISerialInterface serial,
+            ICommStackLevel0 serialStack) {
 
             this.storageFactory = storageFactory;
             this.languages = languages;
@@ -64,6 +69,8 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.bleStack = bleStack;
             this.wifi = wifi;
             this.wifiStack = wifiStack;
+            this.serial = serial;
+            this.serialStack = serialStack;
             this.InitializeAll();
         }
 
@@ -77,6 +84,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.TeardownBluetoothClassic();
             this.BLE_TearDown();
             this.WifiTeardown();
+            this.SerialTeardown();
         }
 
 
@@ -87,6 +95,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.InitBluetoothClassic();
             this.BLE_Init();
             this.WifiInit();
+            this.SerialInit();
         }
 
 
@@ -94,7 +103,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.BLE_Disconnect();
             this.BTClassicDisconnect();
             this.WifiDisconect();
-            // TODO - add all others in future
+            this.SerialUsbDisconnect();
         }
 
         #endregion

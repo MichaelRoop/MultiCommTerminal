@@ -9,6 +9,7 @@ using LanguageFactory.Net.Messaging;
 using MultiCommWrapper.Net.Factories;
 using MultiCommWrapper.Net.interfaces;
 using MultiCommWrapper.Net.WrapCode;
+using SerialCommon.Net.interfaces;
 using StorageFactory.Net.interfaces;
 using System;
 using System.Collections.Generic;
@@ -44,6 +45,8 @@ namespace MultiCommWrapper.Net.DI {
                             this.GetObjSingleton<IBLETInterface>(),
                             this.GetObjInstance<ICommStackLevel0>(),
                             this.GetObjSingleton<IWifiInterface>(),
+                            this.GetObjInstance<ICommStackLevel0>(),
+                            this.GetObjSingleton<ISerialInterface>(),
                             this.GetObjInstance<ICommStackLevel0>())));
 
         }

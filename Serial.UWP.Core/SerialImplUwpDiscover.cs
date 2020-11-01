@@ -80,8 +80,10 @@ namespace Serial.UWP.Core {
                             DTR_IsDataTerminalReady = dev.IsDataTerminalReadyEnabled,
                             CD_CarrierDetectLineState = dev.CarrierDetectState,
                             CTS_ClearToSendLineState = dev.ClearToSendState,
-                            USB_ProductId = dev.UsbProductId,
                             USB_VendorId = dev.UsbVendorId,
+                            USB_ProductId = dev.UsbProductId,
+                            USB_ProductIdDisplay = string.Format("0x{0:X}", dev.UsbProductId),
+                            USB_VendorIdDisplay = string.Format("0x{0:X}", dev.UsbVendorId),
                             RTS_IsRequesttoSendEnabled = dev.IsRequestToSendEnabled,
                             FlowHandshake = dev.Handshake.Convert(),
                         };
@@ -115,17 +117,19 @@ namespace Serial.UWP.Core {
                     catch (Exception e) {
                         this.log.Exception(2222, "", e);
                     }
+
                 } // For each
 
                 sw.Stop();
                 this.log.Info("DoDiscovery", () => string.Format("**** Number Devices {0} *****", infos.Count));
                 this.log.Info("DoDiscovery", () => string.Format("**** Elapsed MS {0} *****", sw.ElapsedMilliseconds));
-
-
                 this.DiscoveredDevices?.Invoke(this, devices);
+
             }
             catch (Exception e) {
                 this.log.Exception(1111, "", e);
+                // TODO Add fields
+                this.OnError.Invoke(this, new SerialUsbError());
             }
 
         }

@@ -10,6 +10,7 @@ using MultiCommData.Net.StorageDataModels;
 using MultiCommData.Net.UserDisplayData;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommWrapper.Net.DataModels;
+using SerialCommon.Net.DataModels;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System;
@@ -265,6 +266,19 @@ namespace MultiCommWrapper.Net.interfaces {
         void WifiDisconect();
 
         void WifiSend(string msg);
+
+        #endregion
+
+        #region Serial USB
+
+        event EventHandler<List<SerialDeviceInfo>> SerialDiscoveredDevices;
+        event EventHandler<SerialUsbError> SerialOnError;
+        event EventHandler<string> Serial_BytesReceived;
+        // TODO Connection complete event
+
+        void SerialUsbDiscoverAsync();
+        void SerialUsbConnect(SerialDeviceInfo dataModel);
+        void SerialUsbDisconnect();
 
         #endregion
 

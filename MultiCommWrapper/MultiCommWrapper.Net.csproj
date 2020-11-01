@@ -10,6 +10,7 @@
     <ProjectReference Include="..\..\SharedNetLibs\DependencyInjectorFactory\DependencyInjectorFactory.Net.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\IconFactory\IconFactory.Net.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\LanguageFactory\LanguageFactory.Net.csproj" />
+    <ProjectReference Include="..\..\SharedNetLibs\SerialCommon.Net\SerialCommon.Net.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\StorageFactory.Net\StorageFactory.Net.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\WifiCommon.Net\WifiCommon.Net.csproj" />
     <ProjectReference Include="..\MultiCommData\MultiCommData.Net.csproj" />

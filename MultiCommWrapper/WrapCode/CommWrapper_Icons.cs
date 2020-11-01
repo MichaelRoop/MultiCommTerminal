@@ -52,7 +52,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             items.Add(this.CommItem("Wifi", UIIcon.Wifi, CommMediumType.Wifi));
             // TODO - add in future
             //items.Add(this.CommItem("Ethernet", UIIcon.Ethernet, CommMediumType.Ethernet));
-            //items.Add(this.CommItem("USB", UIIcon.Usb, CommMediumType.Usb));
+            items.Add(this.CommItem("USB", UIIcon.Usb, CommMediumType.Usb));
             mediums.Invoke(items);
         }
 
@@ -75,7 +75,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             items.Add(this.HelpItem(String.Format("BLE  {0} {1}", '\u2b84', '\u2b86'),
                 UIIcon.BluetoothLE, CommHelpType.BluetoothLE));
             items.Add(this.HelpItem("Wifi", UIIcon.Wifi, CommHelpType.Wifi));
-            //items.Add(this.HelpItem("USB", UIIcon.Usb, CommHelpType.Usb));
+            items.Add(this.HelpItem("USB", UIIcon.Usb, CommHelpType.Usb));
             //items.Add(this.HelpItem("Ethernet", UIIcon.Ethernet, CommHelpType.Ethernet));
             helps.Invoke(items);
         }

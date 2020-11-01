@@ -12,6 +12,7 @@ using MultiCommTerminal.WPF_Helpers;
 using MultiCommWrapper.Net.DataModels;
 using MultiCommWrapper.Net.interfaces;
 using Serial.UWP.Core;
+using SerialCommon.Net.DataModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,9 +27,6 @@ namespace MultiCommTerminal.WindowObjs {
     /// <summary>Interaction logic for MainWindow.xaml</summary>
     public partial class MainWindow : Window {
 
-        // TODO REMOVE
-        SerialImplUwp serial = new SerialImplUwp();
-
         #region Data
 
         private List<CommMedialDisplay> mediums = new List<CommMedialDisplay>();
@@ -36,6 +34,7 @@ namespace MultiCommTerminal.WindowObjs {
         private List<BluetoothLEDeviceInfo> infoList_BLE = new List<BluetoothLEDeviceInfo>();
         private List<ScriptItem> scriptItems = new List<ScriptItem>();
         private List<WifiNetworkInfo> wifiNetworks = new List<WifiNetworkInfo>();
+        private List<SerialDeviceInfo> usbDevices = new List<SerialDeviceInfo>();
         private ButtonGroupSizeSyncManager buttonSizer_BT = null;
         private ButtonGroupSizeSyncManager buttonSizer_BLE = null;
         private ButtonGroupSizeSyncManager buttonSizer_WIFI = null;
@@ -561,9 +560,38 @@ namespace MultiCommTerminal.WindowObjs {
         #endregion
 
         #region Serial USB
+
         private void btnSerialDiscover_Click(object sender, RoutedEventArgs e) {
-            this.serial.DiscoverSerialDevicesAsync();
+            //this.gridWait.Show();
+            this.wrapper.SerialUsbDiscoverAsync();
         }
+
+
+        private void Wrapper_SerialDiscoveredDevicesHandler(object sender, List<SerialDeviceInfo> data) {
+            this.Dispatcher.Invoke(() => {
+                this.gridWait.Collapse();
+                this.log.Info("Wrapper_SerialDiscoveredDevicesHandler", () => string.Format("Found {0} networks", data.Count));
+                this.lbUsb.SetNewSource(ref this.usbDevices, data);
+                // TODO - show connect button
+                //this.btnWifiConnect.Show();
+            });
+        }
+
+
+        private void Wrapper_Serial_BytesReceivedHandler(object sender, string msg) {
+            this.Dispatcher.Invoke(() => {
+                this.lbIncoming.AddAndScroll(msg, this.inScroll, 100);
+            });
+        }
+
+
+        private void Wrapper_SerialOnErrorHandler(object sender, SerialUsbError e) {
+            this.Dispatcher.Invoke(() => {
+                this.gridWait.Collapse();
+                App.ShowMsg("Usb Error"); // TODO Better errors
+            });
+        }
+
 
         #endregion
 
@@ -614,6 +642,12 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper.OnWifiConnectionAttemptCompleted += this.Wrapper_OnWifiConnectionAttemptCompletedHandler;
             this.wrapper.CredentialsRequestedEvent += this.Wifi_CredentialsRequestedEventHandler;
             this.wrapper.Wifi_BytesReceived += Wrapper_Wifi_BytesReceivedHandler;
+
+            // Serial USB
+            this.wrapper.SerialOnError += this.Wrapper_SerialOnErrorHandler;
+            this.wrapper.SerialDiscoveredDevices += this.Wrapper_SerialDiscoveredDevicesHandler;
+            this.wrapper.Serial_BytesReceived += this.Wrapper_Serial_BytesReceivedHandler;
+
 
             // Call before rendering which will trigger initial resize events
             this.buttonSizer_BT = new ButtonGroupSizeSyncManager(this.btnBTConnect, this.btnBTDiscover);
@@ -670,6 +704,9 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper.WifiDisconect();
 
             // USB
+            this.wrapper.SerialOnError -= this.Wrapper_SerialOnErrorHandler;
+            this.wrapper.SerialDiscoveredDevices -= this.Wrapper_SerialDiscoveredDevicesHandler;
+            this.wrapper.Serial_BytesReceived -= this.Wrapper_Serial_BytesReceivedHandler;
 
             if (this.menu != null) {
                 this.menu.Close();
@@ -702,7 +739,7 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void SelectEthernet() {
-            this.spEthernet.Show();
+            // TODO USB functionality
         }
 
 
@@ -711,7 +748,7 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
         private void SelectUSB() {
-            // TODO USB functionality
+            this.spUsb.Show();
         }
 
 
@@ -733,7 +770,7 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void UnselectEthernet() {
-            this.spEthernet.Collapse();
+            // TODO USB functionality
         }
 
 
@@ -747,7 +784,7 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void UnselectUsb() {
-            // TODO USB functionality
+            this.spUsb.Collapse();
         }
 
 
@@ -806,6 +843,10 @@ namespace MultiCommTerminal.WindowObjs {
                             break;
                         case CommMediumType.Wifi:
                             this.wrapper.WifiSend(item.Command);
+                            break;
+                        case CommMediumType.Usb:
+                            // TODO implement
+                            //this.wrapper.SerialSend(item.Command)
                             break;
                         default:
                             break;

@@ -3,16 +3,16 @@ using SerialCommon.Net.DataModels;
 using SerialCommon.Net.interfaces;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
-using Windows.Devices.Enumeration;
-using Windows.Devices.SerialCommunication;
 
 namespace Serial.UWP.Core {
 
     public partial class SerialImplUwp : ISerialInterface {
 
         public event EventHandler<List<SerialDeviceInfo>> DiscoveredDevices;
+
+        public event EventHandler<SerialUsbError> OnError;
+
 
         #region ICommStack Implementations
 
@@ -47,11 +47,11 @@ namespace Serial.UWP.Core {
 
 
         public void ConnectAsync(SerialDeviceInfo dataModel) {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public void Disconnect() {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
     }
