@@ -92,31 +92,36 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
         }
 
 
-
-
-
         private void InitBauds() {
-            this.cbBaud.ItemsSource = DI.Wrapper.Serial_GetBaudsForDisplay();
-            this.cbBaud.SelectedIndex = 0; 
-            // Set from incoming
+            List<uint> b = DI.Wrapper.Serial_GetBaudsForDisplay();
+            int ndx = b.FindIndex(x => x == this.info.Baud);
+            this.cbBaud.ItemsSource = b;
+            this.cbBaud.SelectedIndex = (ndx == -1) ? 0 : ndx;
         }
 
 
         private void InitDataBits() {
             // Must be 5-8
-            this.cbDataBits.ItemsSource = DI.Wrapper.Serial_GetDataBits();
-            this.cbDataBits.SelectedIndex = 0;
+            List<ushort> db = DI.Wrapper.Serial_GetDataBits();
+            int ndx = db.FindIndex(x => x == this.info.DataBits);
+            this.cbDataBits.ItemsSource = db;
+            this.cbDataBits.SelectedIndex = (ndx == -1) ? 0 : ndx;
         }
 
 
         private void InitStopBits() {
-            this.cbStopBits.ItemsSource = DI.Wrapper.Serial_GetStopBitsForDisplay();
-            this.cbStopBits.SelectedIndex = 0;
+            List<StopBitDisplayClass> db = DI.Wrapper.Serial_GetStopBitsForDisplay();
+            int ndx = db.FindIndex(x => x.StopBits == this.info.StopBits);
+            this.cbStopBits.ItemsSource = db;
+            this.cbStopBits.SelectedIndex = (ndx == -1) ? 0 : ndx;
         }
 
+
         private void InitSerialParityTypes() {
-            this.cbParity.ItemsSource = DI.Wrapper.Serial_GetParitysForDisplay();
-            this.cbParity.SelectedIndex = 0;
+            List<SerialParityDisplayClass> sp = DI.Wrapper.Serial_GetParitysForDisplay();
+            int ndx = sp.FindIndex(x => x.ParityType == this.info.Parity);
+            this.cbParity.ItemsSource = sp;
+            this.cbParity.SelectedIndex = (ndx == -1) ? 0 : ndx;
         }
     }
 }
