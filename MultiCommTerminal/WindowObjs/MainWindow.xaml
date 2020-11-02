@@ -218,7 +218,7 @@
                                 </StackPanel>
                             </DockPanel>
                         </StackPanel>
-                        <StackPanel x:Name="spUsb" VerticalAlignment="Center" Visibility="Collapsed">
+                        <StackPanel x:Name="spUsb" VerticalAlignment="Center" Visibility="Visible">
                             <DockPanel>
                                 <StackPanel Margin="5">
                                     <controls:UC_IconButton x:Name="btnSerialDiscover" Style="{StaticResource TextIconButton}"
@@ -232,20 +232,71 @@
                                                         IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Connect}}"                                                                                            
                                                         Background="Transparent" Click="btnSerialConnect_Click" />
                                 </StackPanel>
-                            <ListBox x:Name="lbUsb" MinHeight="30" MinWidth="200" MaxHeight="115"  Margin="10,0"
+                                <StackPanel>
+                                    <!--<Grid Margin="10,5" Grid.IsSharedSizeScope="True" HorizontalAlignment="Center">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition SharedSizeGroup="A" Width="*" />
+                                            <ColumnDefinition SharedSizeGroup="A" Width="Auto"/>
+                                            <ColumnDefinition SharedSizeGroup="A" Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="{Binding Source={x:Static wpfHelper:TxtBinder.Port}}" />
+                                        <TextBlock Grid.Column="1" Text="Vendor"  />
+                                        <TextBlock Grid.Column="2" Text="Product" />
+
+                                    </Grid>-->
+                                    
+                                    
+                                    <!--<DockPanel Margin="10,0">
+                                        <TextBlock Text="{Binding Source={x:Static wpfHelper:TxtBinder.Port}}" HorizontalAlignment="Left" />
+                                        <TextBlock Text="USB Vendor" HorizontalAlignment="Center" />
+                                        <TextBlock Text="USB Product" HorizontalAlignment="Right" />
+                                    </DockPanel>-->
+
+                                    <ListView x:Name="lbUsb" MinHeight="30" MinWidth="200" MaxHeight="115"  Margin="10,0"
                                              ScrollViewer.VerticalScrollBarVisibility="Auto" 
                                              ScrollViewer.HorizontalScrollBarVisibility="Auto">
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid Margin="1">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="auto" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0" Text="{Binding PortName}" />
-                                        </Grid>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
+
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn x:Name="lvPortColumn" Width="Auto" 
+                                                    Header="{Binding Source={x:Static wpfHelper:TxtBinder.Port}}" 
+                                                    DisplayMemberBinding="{Binding PortName}" 
+                                                    />
+                                                <GridViewColumn x:Name="lvVendorColumn" Width="Auto"
+                                                    Header="{Binding Source={x:Static wpfHelper:TxtBinder.Vendor}}" 
+                                                    DisplayMemberBinding="{Binding USB_VendorIdDisplay}"/>
+                                                <GridViewColumn x:Name="lvProductColumn" Width="Auto"
+                                                    Header="{Binding Source={x:Static wpfHelper:TxtBinder.Product}}" 
+                                                    DisplayMemberBinding="{Binding USB_ProductIdDisplay}"/>
+                                            </GridView>
+                                        </ListView.View>
+                                        
+                                        <!--<ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="1">
+                                                    <Grid.RowDefinitions>
+                                                        --><!--<RowDefinition/>--><!--
+                                                        <RowDefinition/>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto" />
+                                                        <ColumnDefinition Width="auto" />
+                                                        <ColumnDefinition Width="auto" />
+                                                    </Grid.ColumnDefinitions>
+                                                    --><!--<TextBlock Grid.Column="0" Text="Port" />
+                                                <TextBlock Grid.Column="1" Text="USB Vendor" />
+                                                <TextBlock Grid.Column="2" Text="USB Product" />--><!--
+
+
+                                                    <TextBlock Grid.Column="0" Text="{Binding PortName}" />
+                                                    <TextBlock Grid.Column="1" Text="{Binding USB_VendorIdDisplay}" Margin="15,0" HorizontalAlignment="Right" />
+                                                    <TextBlock Grid.Column="2" Text="{Binding USB_ProductIdDisplay}" HorizontalAlignment="Right" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>-->
+
+                                    </ListView>
+                                </StackPanel>
                             </DockPanel>
 
 

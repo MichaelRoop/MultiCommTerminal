@@ -1,0 +1,3442 @@
+﻿08DE	???	
+18F8	[Maxxter]	
+1C87	2N TELEKOMUNIKACE a.s.	
+1630	2Wire, Inc.	
+08C8	2Wire, Inc.	
+6891	3Com	
+A727	3Com	
+0506	3Com Corp.	
+256F	3Dconnexion	
+05BC	3G Green Green Globe Co., Ltd	
+0E35	3Pea Technologies, Inc.	
+189F	3Shape A/S	
+29E8	4Links Limited	
+1737	802.11g Adapter [Linksys WUSB54GC v3]	
+3171	8086 Consultancy	
+2DC8	8BitDo	
+228D	8D Technologies inc.	
+125F	A-DATA Technology Co., Ltd.	
+13D1	A-Max Technology Macao Commercial Offshore Co. Ltd.	
+0874	A-Tec Subsystem, Inc.	
+059C	A-Trend Technology Co., Ltd	
+1AFE	A. Eberle GmbH & Co. KG	
+0DBC	A&D Medical	
+09DA	A4Tech Co., Ltd.	
+0FB9	AACom Corp.	
+06D6	Aashima Technology B.V.	
+1A61	Abbott Diabetes Care	
+1BA6	Abilis Systems	
+1419	ABILITY ENTERPRISE CO., LTD.	
+0EC1	Abit Computer Corp.	
+0794	ABL Electronics Corp.	
+07B8	AboCom Systems Inc	
+0678	ACard Technology Corp.	
+04E4	ACC Microelectronics	
+1CA0	ACCARIO Inc.	
+1605	ACCES I/O Products, Inc.	
+8070	ACCES I/O Products, Inc.	
+0FED	Access Co., Ltd	
+0DB5	Access IS	
+0DD0	Access Solutions	
+083A	Accton Technology Corp.	
+0460	Ace Cad Enterprise Co., Ltd	
+4766	Aceeca	
+049C	Acer Advanced Labs, Inc.	
+1189	Acer Communications & Multimedia	
+0967	Acer NeWeb Corp.	
+04A5	Acer Peripherals Inc. (now BenQ Corp.)	
+066E	Acer Semiconductor America, Inc.	
+5986	Acer, Inc	
+0502	Acer, Inc.	
+042E	Acer, Inc.	
+1CB3	Aces Electronic Co., Ltd.	
+0F13	Acetek Technology Co., Ltd	
+1990	Acron Precision Industrial Co., Ltd.	
+24FF	Acroname Inc.	
+0F62	Acrox Technologies Co., Ltd	
+1A34	ACRUX	
+0C6A	ACS	
+061C	Act Labs, Ltd	
+0515	ACTC	
+1514	Actel	
+1A41	Action Electronics Co., Ltd.	
+0835	Action Star Enterprise Co., Ltd	
+1DE1	Actions Microelectronics Co.	
+10D6	Actions Semiconductor Co., Ltd	
+2101	ActionStar	
+0684	Actiontec Electronics, Inc.	
+1668	Actiontec Electronics, Inc. [hex]	
+09C4	ACTiSYS Corp.	
+0E5A	Active Co., Ltd	
+0E5A	Active Co., Ltd	
+0854	ActiveWire, Inc.	
+0647	Acton Research Corp.	
+239A	Adafruit	
+03F3	Adaptec, Inc.	
+1C21	ADDMM LLC	
+09DF	Addonics Technologies Corp.	
+0BF6	Addonics Technologies, Inc.	
+087C	Adesso/Kbtek America, Inc.	
+0422	ADI Systems, Inc.	
+0976	Adirondack Wire & Cable	
+0B63	ADLink Technology, Inc.	
+07A6	ADMtek, Inc.	
+0459	Adobe Systems, Inc.	
+0627	Adomax Technology Co., Ltd	
+1CD4	adp corporation	
+06E1	ADS Technologies, Inc.	
+0E9B	ADTEC Corp.	
+15C5	Advance Multimedia Internet Technology Inc. (AMIT)	
+0E98	Advanced Analogic Technologies, Inc.	
+072F	Advanced Card Systems, Ltd	
+0522	Advanced Connectek, Inc.	
+17A5	Advanced Connection Technology Inc.	
+0B89	Advanced Digital Broadcast, Ltd	
+0428	Advanced Gravis Computer Tech, Ltd	
+059D	Advanced Input Devices	
+0438	Advanced Micro Devices, Inc.	
+0479	Advanced Peripheral Laboratories	
+2149	Advanced Silicon S.A.	
+0D67	Advanet, Inc.	
+1809	Advantech	
+3334	AEI	
+0476	AESP	
+2443	Aessent Technology Ltd	
+0659	Aethra	
+1B80	Afatech	
+15A4	Afatech Technologies, Inc.	
+2576	AFO Co., Ltd.	
+0C08	Agate	
+21D6	Agecodagis SARL	
+0D4E	Agere Systems Netherland BV	
+047E	Agere Systems, Inc. (Lucent)	
+06BD	AGFA-Gevaert NV	
+326D	Agile Display Solutions Co., Ltd	
+0957	Agilent Technologies, Inc.	
+C502	AGPTek	
+0EF1	Aichi Micro Intelligent Corp.	
+1633	AIM GmbH	
+09DC	Aimex Corp.	
+12FD	AIN Comm. Technology Co., Ltd	
+08CA	Aiptek International, Inc.	
+0FE2	Air Techniques	
+0521	Airborn Connectors	
+1E8E	Airbus Defence and Space	
+162A	Airgo Networks Inc.	
+0F3D	Airprime, Incorporated	
+0D33	AirSpeak, Inc.	
+1EDA	AirTies Wireless Networks	
+124A	AirVast	
+0667	Aiwa Co., Ltd	
+0677	Aiwa Co., Ltd	
+0A2C	AK-Modul-Bus Computer GmbH	
+09E8	AKAI Professional M.I. Corp.	
+0A89	Aktiv	
+0529	Aladdin Knowledge Systems	
+24DC	Aladdin R.D.	
+0620	Alaris, Inc.	
+0910	Alation Systems, Inc.	
+11F7	Alcatel (?)	
+06E4	Alcatel Microelectronics	
+0533	Alcatel Mobile Phones	
+06B9	Alcatel Telecom	
+3200	Alcatel-Lucent Enterprise	
+1914	Alco Digital Devices Limited	
+058F	Alcor Micro Corp.	
+1C13	ALECTRONIC LIMITED	
+1F84	Alere, Inc.	
+13DC	ALEREON, INC.	
+13B2	Alesis	
+079D	Alfadata Computer Corp.	
+0C4A	ALGE-TIMING GmbH	
+0402	ALi Corp.	
+187C	Alienware Corporation	
+1F6F	Aliph	
+07E6	Allied Cable Corp.	
+069F	Allied Data Technologies BV	
+0CAA	Allied Telesis KK.	
+07C9	Allied Telesyn International	
+1AB2	Allied Vision	
+0AE3	Allion Computer, Inc.	
+1570	ALLTOP TECHNOLOGY CO., LTD.	
+1F3A	Allwinner Technology	
+114D	Alpha Imaging Technology Corp.	
+1D14	ALPHA-SAT TECHNOLOGY LIMITED	
+081E	AlphaSmart, Inc.	
+1C98	ALPINE ELECTRONICS, INC.	
+044E	Alps Electric Co., Ltd	
+048C	Alps Electric Ireland, Ltd	
+0433	Alps Electric, Inc.	
+04D2	Altec Lansing Technologies	
+143C	Altek Corporation	
+09FB	Altera	
+0799	Altera	
+1B8C	Altium Limited	
+09B3	Altius Solutions, Inc.	
+0527	ALTRA	
+0F55	AmbiCom, Inc.	
+07E1	Ambient Technologies, Inc.	
+2AEC	Ambiq Micro, Inc.	
+0BB2	Ambit Microsystems Corp.	
+104C	AMCO TEC International, Inc.	
+06BE	AME Optimedia Technology Co., Ltd	
+0587	America Kotobuki Electronics Industries, Inc.	
+0929	American Biometric Co.	
+0D7E	American Computer & Digital Components	
+046B	American Megatrends, Inc.	
+0530	American Microsystems, Inc.	
+051D	American Power Conversion	
+0EE2	AMI Semiconductor, Inc.	
+0E0B	Amigo Technology Inc.	
+18C5	AMIT Technology, Inc.	
+0729	Amitm	
+1B8E	Amlogic, Inc.	
+1614	Amoi Electronics	
+0464	AMP/Tycoelectronics Corp.	
+0CCA	Amphenol	
+1A25	Amphenol East Asia Ltd.	
+1CE1	Amphenol KAE	
+1325	ams AG	
+1C73	AMT	
+1ECB	AMTelecom	
+0774	AmTRAN Technology Co., Ltd	
+2520	ANA-U GmbH	
+1110	Analog Devices Canada, Ltd (Allied Telesyn)	
+0456	Analog Devices, Inc.	
+064B	Analog Devices, Inc. (White Mountain DSP)	
+0555	ANAM S&T Co., Ltd	
+0605	Anchor C&C Co., Ltd	
+0547	Anchor Chips, Inc.	
+0D6B	And-Or Logic	
+0D2F	Andamiro	
+1CFC	ANDES TECHNOLOGY CORPORATION	
+136E	Andor Technology Ltd.	
+08A8	Andrea Electronics	
+0BD7	Andrew Pargeter & Associates	
+A128	AnMo Electronics Corp. / Dino-Lite (?)	
+A168	AnMo Electronics Corporation	
+04ED	Annabooks	
+1CD6	Antonio Precise Products Manufactory Ltd.	
+10FD	Anubis Electronics, Ltd	
+16D5	AnyDATA Corporation	
+05F6	AOC International	
+0FFF	Aopen, Inc.	
+0FFF	Aopen, Inc.	
+1005	Apacer Technology, Inc.	
+224F	APDM	
+07C5	APG Cash Drawer	
+AB12	aplic	
+0E96	Aplux Communications, Ltd	
+0C60	Apogee Electronics Corp.	
+125C	Apogee Inc.	
+0C05	Appian Graphics	
+05AC	Apple, Inc.	
+0C8F	Applied Microsystems	
+0984	Apricorn	
+1AD4	APS	
+0880	APT Technologies, Inc.	
+07D2	Aptio Products, Inc.	
+12D8	Araneus Information Systems Oy	
+07DA	Arasan Chip Systems	
+142B	Arbiter Systems, Inc.	
+05A3	ARC International	
+25C4	ARCAM	
+0E79	Archos, Inc.	
+0E79	Archos, Inc.	
+2341	Arduino SA	
+09F5	AresCom	
+25A7	Areson Technology Corp	
+0840	Argosy Research, Inc.	
+1B52	ARH Inc.	
+0706	Ariel Corp.	
+113C	Arin Tech Co., Ltd	
+126C	Aristocrat Technologies	
+071E	Ariston Technologies	
+18EC	Arkmicro Technologies Inc.	
+6547	Arkmicro Technologies Inc.	
+107D	Arlec Australia, Ltd	
+1776	Arowana	
+0D14	Array Comm, Inc.	
+09C1	Arris Interactive LLC	
+0AB0	Arrow Strong Electronics Co., Ltd	
+1707	ARTIMI	
+1C75	Arturia	
+2626	Aruba Networks	
+0556	Asahi Kasei Microsystems Co., Ltd	
+0B49	ASCII Corp.	
+0CAE	Ascom Business Systems, Ltd	
+0D8B	Ascom Telecommunications, Ltd	
+0D40	Ascor, Inc.	
+2433	ASETEK	
+0B95	ASIX Electronics Corp.	
+A600	ASIX s.r.o.	
+0D55	ASKA Technologies, Inc.	
+069A	Askey Computer Corp.	
+1690	Askey Computer Corp. [hex]	
+174C	ASMedia Technology Inc.	
+2245	Aspeed Technology, Inc.	
+1849	ASRock Incorporation	
+2554	ASSA ABLOY AB	
+0BBC	Assistive Technology, Inc.	
+0418	AST Research	
+9886	Astro Gaming	
+0B7D	Astrodesign, Inc.	
+0D0C	Astron Electronics Co., Ltd	
+1C8E	ASTRON INTERNATIONAL CORP.	
+1D27	ASUS	
+0486	ASUS Computers, Inc.	
+0735	Asuscom Network	
+2821	ASUSTek Computer Inc.	
+0B05	ASUSTek Computer, Inc.	
+1761	ASUSTek Computer, Inc. (wrong ID)	
+178E	ASUSTek Computer, Inc. (wrong ID)	
+06F9	ASYST electronic d.o.o.	
+0467	AT&T Paradyne	
+11B0	ATECH FLASH TECHNOLOGY	
+0523	ATEN GmbH	
+0557	ATEN International Co., Ltd	
+1B72	ATERGI TECHNOLOGY CO., LTD.	
+0DC3	Athena Smartcard Solutions, Inc.	
+168C	Atheros Communications	
+1787	ATI AIB	
+0528	ATI Technologies, Inc.	
+0FA4	ATL Technology	
+1029	Atlantic Coast Telesys	
+03EB	Atmel Corp.	
+14AF	ATP Electronics Inc.	
+1C82	Atracsys	
+F4EC	Atten Electronics / Siglent Technologies	
+060D	Auctor Corp.	
+0B99	Audio International, Inc.	
+0909	Audio-Technica Corp.	
+2912	Audioengine	
+21B4	AudioQuest	
+09BF	Auerswald GmbH & Co. KG	
+0755	Aureal Semiconductor	
+10DE	Authenex, Inc.	
+08FF	AuthenTec, Inc.	
+1C37	Authorizer Technologies, Inc.	
+12C4	Autocue Group Ltd	
+100A	AV Chaseway, Ltd	
+192F	Avago Technologies, Pte.	
+0D9E	Avaya	
+05EF	AVB, Inc. [anko?]	
+1871	Aveo Technology Corp.	
+2574	AVer Information, Inc.	
+50C2	Averatec (?)	
+07CA	AVerMedia Technologies, Inc.	
+052D	Avid Electronics Corp.	
+0B0F	AVID Technology	
+0638	Avision, Inc.	
+1BC5	AVIXE Technology (China) Ltd.	
+0D56	AVLAB Technology, Inc.	
+057C	AVM GmbH	
+170D	Avnera	
+0624	Avocent Corp.	
+0412	Award Software International	
+0EC3	Axell Co., Ltd	
+1726	Axesstel, Inc.	
+05D9	Axiohm Transaction Solutions	
+0792	Axis Communications AB	
+1400	Axxion Group Corp.	
+0509	Aztech Systems, Ltd	
+19B5	B & W Group	
+07C8	B.U.G., Inc.	
+0856	B&B Electronics	
+0AF7	B2C2, Inc.	
+0CA5	BAE Systems Canada, Inc.	
+0576	BAFO/Quality Computer Accessories	
+0EC4	Ballracing Developments, Ltd	
+13AD	Baltech	
+1A8D	BandRich, Inc.	
+0CD4	Bang Olufsen	
+1166	Bantam Interactive Technologies	
+0600	Barco Display Systems	
+2707	Bardac Corporation	
+2A6E	Bare Conductive	
+2080	Barnes & Noble	
+0AA9	Baromtec Co.	
+097F	Barun Electronics Co., Ltd	
+2555	Basis Science Inc.	
+2676	Basler AG	
+19B2	Batronix	
+09F9	Bay Associates	
+1A79	Bayer Health Care LLC	
+0DE0	BD Consumer Healthcare	
+0DE0	BD Consumer Healthcare	
+07A4	Be, Inc.	
+198F	Beceem Communications Inc.	
+0978	Beckhoff GmbH	
+046E	Behavior Tech. Computer Corp.	
+6000	Beholder International Ltd.	
+1397	BEHRINGER International GmbH	
+255E	Beijing Bonxeon Technology Co., Ltd.	
+3037	Beijing Chushifengmang Technology Development Co.,Ltd.	
+0B57	Beijing HanwangTechnology Co., Ltd	
+31C9	BeiJing LanXum Computer Technology Co., Ltd.	
+1BC0	Beijing Senseshield Technology Co.,Ltd.	
+7373	Beijing STONE Technology Co. Ltd.	
+2FEB	Beijing Veikk E-Commerce Co., Ltd.	
+126D	Bel Stewart	
+15EC	Belcarra Technologies Corp.	
+1241	Belkin	
+050D	Belkin Components	
+1293	Belkin Components [hex]	
+1A08	Bellwood International, Inc.	
+199F	Benica Corporation	
+0A6E	Benwin	
+0C98	Berkshire Products, Inc.	
+03DA	Bernd Walter Computer Technology	
+9849	Bestmedia CD Recordable GmbH & Co. KG	
+11C0	Betop	
+12D7	BETTER WIRE FACTORY CO., LTD.	
+1BD5	BG Systems, Inc.	
+23A0	BIFIT	
+19A8	Biforst Technology Inc.	
+146B	BigBen Interactive	
+0C56	Billion Bright, Ltd	
+08DD	Billionton Systems, Inc.	
+0614	Bio-Rad Laboratories	
+097E	Biopac Systems Inc.	
+04FB	Biostar Microtech International Corp.	
+0E5C	Bitland Information Technology Co., Ltd	
+2366	Bitmanufaktur GmbH	
+0964	BITRAN	
+1520	Bitwire Corp.	
+0FBB	Bitwise Systems, Inc.	
+1A36	Biwin Technology Ltd.	
+1504	Bixolon CO LTD	
+1168	BizConn International Corp.	
+06C4	Bizlink International Corp.	
+1EDB	Blackmagic design	
+27D4	Blackstar Amplification Limited	
+1188	Bloomberg L.P.	
+B58E	Blue Microphones	
+2458	Bluegiga Technologies	
+30A4	Blues Wireless	
+1706	BlueView Technologies, Inc.	
+1B0E	BLUTRONICS S.r.l.	
+09CA	BMC Messsysteme GmbH	
+0D13	BMF Corp.	
+1054	BMS International Beheer N.V.	
+0885	Boca Research, Inc.	
+0A43	Boca Systems, Inc.	
+1CCD	Bodatong Technology (Shenzhen) Co., Ltd.	
+19AB	Bodelin	
+0085	Boeye Technology Co., Ltd.	
+05A7	Bose Corp.	
+06FD	Boston Acoustics	
+3016	Boundary Devices, LLC	
+1402	Bowe Bell & Howell	
+1234	Brain Actuated Technologies	
+05D1	Brainboxes, Ltd	
+0C9C	Brand Innovators BV	
+0607	Bridge Information Co., Ltd	
+1108	Brightcom Technologies, Ltd	
+0599	Brilliance Semiconductor, Inc.	
+078E	Brincom, Inc.	
+0A5C	Broadcom Corp.	
+4317	Broadcom Corp.	
+0827	BroadLogic, Inc.	
+0CC9	BroadMAX Technologies, Inc.	
+2162	Broadxent (Creative Labs)	
+04EA	Brooktree Corp.	
+04F9	Brother Industries, Ltd	
+29E7	Brunel University	
+25BB	Brunner Elektronik AG	
+0956	BSquare Corp.	
+0411	BUFFALO INC. (formerly MelCo., Inc.)	
+0CAF	Buslink	
+0517	Butterfly Communications	
+0703	Bvtech Industry, Inc.	
+19D1	BYD	
+0A93	C Technologies AB	
+074C	C-C-C Group PLC	
+0D8C	C-Media Electronics, Inc.	
+1032	C-One Technology Corp.	
+1D17	C-Thru Music Ltd.	
+0E92	C's Glory Enterprise Co., Ltd	
+0783	C3PO	
+0985	cab Produkttechnik GmbH & Co KG	
+050B	Cable System International	
+094D	Cable Television Laboratories	
+10E1	CablePlus, Ltd	
+10AA	Cables To Go	
+CACE	CACE Technologies Inc.	
+0B69	CacheVision	
+0559	Cadence Design Systems, Inc.	
+27C0	Cadwell Laboratories, Inc.	
+08FA	Caere	
+1F28	Cal-Comp	
+0538	Caldera International, Inc. (SCO)	
+0DD5	California Micro Devices	
+22E8	Cambridge Audio	
+0A12	Cambridge Silicon Radio, Ltd	
+2CD9	Cambrionix Ltd	
+0768	Camtel Technology Corp.	
+29F1	Canaan Creative Co., Ltd	
+2087	Cando	
+0A90	Candy Technology Co., Ltd	
+07BC	Canon Computer Systems, Inc.	
+2C4F	Canon Electronic Business Machines Co., Ltd.	
+1083	Canon Electronics, Inc.	
+1736	CANON IMAGING SYSTEM TECHNOLOGIES INC.	
+052C	Canon Information Systems, Inc.	
+04A9	Canon, Inc.	
+05F0	Canopus Co., Ltd	
+0491	Capetronic	
+0498	Capetronic (Kaohsiung) Corp.	
+C216	Card Device Expert Co., LTD	
+2685	Cardo Peripheral Systems LTD	
+0758	Carl Zeiss Microscopy GmbH	
+07CC	Carry Computer Eng., Co., Ltd	
+0F0C	CAS Corp.	
+07CF	Casio Computer Co., Ltd	
+1967	CASIO HITACHI Mobile Communications Co., Ltd.	
+0CA6	Castles Technology Co., Ltd	
+0968	Catalyst Enterprises, Inc.	
+044C	CCL/ITRI	
+08EE	CCSI/Hesso	
+F3F0	CCT, Inc	
+1065	CCYU Technology	
+154A	Celectronic GmbH	
+0CB6	Celestix Networks, Pte., Ltd	
+19B4	Celestron	
+1B26	Cellex Power Products, Inc.	
+0CF5	Cellink Co., Ltd	
+1733	Cellink Technology Co., Ltd	
+112F	Cellon International, Inc.	
+09B5	Celltrix Technology Co., Ltd	
+211F	CELOT Corporation	
+0EA8	CenDyne, Inc.	
+0723	Centillium Communications Corp.	
+0CF9	Central System Research Co., Ltd	
+07F7	Century Corp.	
+0A22	Century Semiconductor USA, Inc.	
+0796	Certicom Corp.	
+0C8E	Cesscom Co., Ltd	
+10F8	Cesys GmbH	
+068E	CH Products, Inc.	
+8E06	CH Products, Inc.	
+24C0	Chaney Instrument	
+0C62	Chant Sincere Co., Ltd	
+1B5A	Chao Zhou Kai Yuan Electric Co., Ltd.	
+073A	Chaplet Systems, Inc.	
+0D9C	Chee Chen Hi-Technology Co., Ltd	
+2123	Cheeky Dream	
+09E9	Chen-Source, Inc.	
+05C8	Cheng Uei Precision Industry Co., Ltd (Foxlink)	
+1C49	Cherng Weei Technology Corp.	
+046A	Cherry GmbH	
+0A81	Chesen Electronics Corp.	
+1518	Cheshire Engineering Corp.	
+0FF7	CHI SHING Computer Accessories Co., Ltd	
+05FE	Chic Technology Corp.	
+0472	Chicony Electronics Co., Ltd	
+04F2	Chicony Electronics Co., Ltd	
+105F	Chin Shong Enterprise Co., Ltd	
+1677	China Huada Integrated Circuit Design (Group) Co., Ltd. (CIDC Group)	
+1A2C	China Resource Semico Co., Ltd	
+1BA8	China Telecommunication Technology Labs	
+0E82	Ching Tai Electric Wire & Cable Co., Ltd	
+11A0	Chipcon AS	
+1230	Chipidea-Microelectronica, S.A.	
+0B9F	Chippo Technologies	
+0420	Chips and Technologies	
+1E3D	Chipsbank Microelectronics Co., Ltd	
+0204	Chipsbank Microelectronics Co., Ltd	
+1976	Chipsbrand Microelectronics (HK) Co., Ltd.	
+164A	ChipX	
+108A	Chloride Power Protection	
+108A	Chloride Power Protection	
+245F	Chord Electronics Limited	
+100B	Chou Chin Industrial Co., Ltd	
+100B	Chou Chin Industrial Co., Ltd	
+0A69	Chroma ate, Inc.	
+04AB	Chromatic Research	
+0639	Chrontel, Inc.	
+0F31	Chrysalis Development	
+1044	Chu Yuen Enterprise Co., Ltd	
+0DB4	Chung Fu Chen Yeh Enterprise Corp.	
+0698	Chuntex (CTX)	
+050A	Cinch Connectors	
+07F6	Circuit Assembly Corp.	
+0488	Cirque Corp.	
+0429	Cirrus Logic	
+06D4	Cisco Systems	
+05A6	Cisco Systems, Inc.	
+1D90	Citizen	
+2730	Citizen	
+1343	Citizen Systems	
+08BD	Citizen Watch Co., Ltd	
+09CE	City Electronics, Ltd	
+0574	City University of Hong Kong	
+0508	Clarion Co., Ltd	
+0CF8	Clarisys, Inc.	
+A88A	Clas Ohlsson	
+0FFC	Clavia DMI AB	
+0FFC	Clavia DMI AB	
+20A0	Clay Logic	
+0A66	ClearCube Technology	
+5332	Clearly Superior Technologies, Inc.	
+1E41	Cleverscope	
+0D50	Cleware GmbH	
+166A	Clipsal	
+BA77	Clockmaker	
+28F3	Clover Network, Inc.	
+0003	Club Mac	
+0453	CMD Technology	
+7104	CME (Central Music Co.)	
+16D8	CMOTECH Co., Ltd.	
+2000	CMX Systems	
+1F0C	CMX Systems	
+1371	CNet Technology Inc.	
+0653	CNF, Inc.	
+0C8C	Coactive Networks	
+0D18	coaXmedia	
+1E74	Coby Electronics Corporation	
+07C0	Code Mercenaries Hard- und Software GmbH	
+27BD	Codethink Ltd.	
+2818	Codex Digital Limited	
+0D4D	Coherent, Inc.	
+0959	Cologne Chip AG	
+0B52	Colorado MicroDisplay, Inc.	
+085C	ColorVision, Inc.	
+09D3	Com One	
+05EC	COM21, Inc.	
+0A68	Comaide Corp.	
+1031	Comax Technology, Inc.	
+0777	Comda Enterprise Corp.	
+0B51	Comfort Keyboard Co.	
+0C09	Comjet Information System	
+1519	Comneon	
+10B5	Comodo (PLX?)	
+070D	Comoss Electronic Co., Ltd	
+04B7	Compal Electronics, Inc.	
+049F	Compaq Computer Corp.	
+1183	Compaq Computer Corp. [hex] (Digital Dream ??)	
+05F1	Compass Communications	
+1055	Complex Micro Interconnection Co., Ltd	
+185B	Compro	
+0CF6	Compucable Corp.	
+0958	CompuLink Research, Inc.	
+1516	CompUSA	
+0423	Computer Access Technology Corp.	
+0A4C	Computex Co., Ltd	
+0B73	Computone Corp.	
+0551	CompuTrend Systems, Inc.	
+0879	Comtrol Corp.	
+2FC6	Comtrue Inc.	
+0EE3	ComTrue Technology Corp.	
+0C67	Concept Telecom, Ltd	
+17A4	Concept2	
+0BB0	Concord Camera Corp.	
+106E	ConectL	
+0572	Conexant Systems (Rockwell), Inc.	
+1AF1	Connect One Ltd.	
+0710	Connect Tech, Inc.	
+154D	ConnectCounty Holdings Berhad	
+0478	Connectix Corp.	
+1AEF	Conntech Electronic (Suzhou) Corporation	
+FC08	Conrad Electronic SE	
+1BCE	Contac Cable Industrial Limited	
+06CE	Contec	
+09A4	Contech Research, Inc.	
+0DD1	Contek Electronics Co., Ltd	
+0D0B	Contemporary Controls	
+0B33	Contour Design, Inc.	
+135F	Control Development Inc.	
+3036	Control iD	
+0E5E	Conwise Technology Co., Ltd.	
+2516	Cooler Master Co., Ltd.	
+0791	Copartner Wire and Cable Mfg. Corp.	
+2226	Copper Mountain technologies	
+0A6F	Core Technology, Inc.	
+0FF6	Core Valley Co., Ltd	
+07AA	Corega K.K.	
+0B5A	Corel Corp.	
+636C	CoreLogic, Inc.	
+08F0	Corex Technologies	
+17EB	Cornice, Inc.	
+2BD6	Coroware, Inc.	
+1B1C	Corsair	
+0610	Costar Electronics, Inc.	
+15D5	Coulomb Electronics Ltd.	
+1264	Covidien Energy-based Devices	
+0E21	Cowon Systems, Inc.	
+237D	Cradlepoint	
+041E	Creative Technology, Ltd	
+1660	Creatix Polymedia GmbH	
+052A	Crescent Heart Software	
+0932	Crescentec Corp.	
+0E1B	Crewave	
+0544	Cristie Electronics, Ltd	
+080B	Cross Match Technologies	
+0FEB	CRS Electronic Co., Ltd	
+0C94	Cryptera	
+046F	Crystal Semiconductor	
+0852	CSEM	
+0D5F	CSI, Inc.	
+0F08	CSL Wire & Plug (Shen Zhen) Co.	
+18A4	CSSN	
+08F1	CTI Electronics Corp.	
+14AD	CTK Corporation	
+1136	CTS Electronincs	
+055E	CTX Opto-Electronics Corp.	
+1E4E	Cubeternet	
+0DAB	Cubig Group	
+0AFE	Cummins Engine Co.	
+324C	CUPRIS Ltd.	
+106C	Curitel Communications, Inc.	
+1B27	Current Electronics Inc.	
+049B	Curtis Computer Products	
+2405	Custom Computer Services, Inc	
+0DD4	Custom Engineering SPA	
+0F97	CviLux Corp.	
+1FF7	CVT Electronics.Co.,Ltd	
+08A9	CWAV Inc.	
+0764	Cyber Power System, Inc.	
+0F98	CyberBank Corp.	
+0C17	Cyberboard A/S	
+07D3	Cyberdata Corp.	
+0C19	cyberPIXIE, Inc.	
+1142	CyberScan Technologies, Inc.	
+129B	CyberTAN Technology	
+0A0B	Cybex Computer Products Co.	
+0B66	Cybiko Inc.	
+0665	Cypress Semiconductor	
+04B4	Cypress Semiconductor Corp.	
+0633	Cyrix Corp.	
+05EE	Cytechinfo Inc.	
+15C9	D-Box Technologies	
+2001	D-Link Corp.	
+07D1	D-Link System	
+0EEF	D-WAV Scientific Co., Ltd	
+041B	d'TV	
+154E	D&M Holdings, Inc. (Denon/Marantz)	
+154E	D&M Holdings, Inc. (Denon/Marantz)	
+06D1	Daewoo Electronics Co., Ltd	
+04F0	Daewoo Electronics Co., Ltd	
+04AA	DaeWoo Telecom, Ltd	
+0D35	Dah Kun Co., Ltd	
+1452	Dai Nippon Printing, Inc	
+1DD3	Dajc Inc.	
+04FA	Dallas Semiconductor	
+1970	Dane-Elec Corp. USA	
+0DA0	Danger Research	
+2002	DAP Technologies	
+0D62	Darfon Electronics Corp.	
+03EA	Data Broadcasting Corp.	
+1AA4	Data Drive Thru, Inc.	
+0ADA	Data Encryption Systems Ltd.	
+19B9	Data Robotics	
+0826	Data Transit	
+0867	Data Translation, Inc.	
+09A7	Data Transmission Network Corp.	
+0A27	Datacard Group	
+07C4	Datafab Systems, Inc.	
+0974	Datagraphix, a business unit of Anacomp	
+080C	Datalogic S.p.A.	
+0B0B	Datamax-O'Neil	
+1228	Datapaq Limited	
+0FC6	Dataplus Supplies, Inc.	
+1C78	Datascope Corp.	
+109A	DATASOFT Systems GmbH	
+1C1A	Datel Electronics Ltd.	
+0DDD	Datelink Technology Co., Ltd	
+0A46	Davicom Semiconductor, Inc.	
+07DF	David Electronics Co., Ltd	
+07D0	Dazzle	
+056B	Decicon, Inc.	
+2FAD	Definium Technologies	
+1297	DekTec	
+0FC5	Delcom Engineering	
+105D	Delkin Devices, Inc.	
+047C	Dell Computer Corp.	
+413C	Dell Computer Corp.	
+1685	Delock	
+1163	DeLorme Publishing, Inc.	
+1FBD	Delphin Technology AG	
+05DD	Delta Electronics, Inc.	
+1436	Denali Software, Inc.	
+0580	Denron, Inc.	
+1014	Densitron Technologies PLC	
+076D	Denso Corp.	
+23B4	Dental Wings Inc.	
+1233	Denver Electronics	
+0C38	Der An Electric Wire & Cable Co., Ltd	
+1FBA	DERMALOG Identification Systems GmbH	
+1AD1	Desay Wire Co., Ltd.	
+2003	detectomat	
+086C	DeTeWe - Deutsche Telephonwerke AG & Co.	
+0C78	Detto Corp.	
+2018	Deutsche Telekom AG	
+0AA4	Develco Elektronik	
+28D4	Devialet	
+1039	devolo AG	
+1D19	Dexatek Technology Ltd.	
+12CF	DEXIN	
+05F2	Dexin Corp., Ltd	
+0F73	DFI	
+0450	DFI, Inc.	
+2A88	DFU Technology Ltd	
+2DCF	Dialog Semiconductor	
+05B5	Dialogic Corp.	
+14E1	Dialogue Technology Corp.	
+07DE	Diamond Multimedia	
+0A5D	Diatrend Corp.	
+10B8	DiBcom	
+0554	Dictaphone Corp.	
+03F4	Diebold, Inc.	
+134E	Digby's Bitpile, Inc. DBA D Bit	
+04D0	Digi International	
+05C5	Digi International, Inc.	
+08FD	Digianswer A/S	
+07A1	Digicom S.p.A.	
+0DBA	Digidesign	
+0DBA	Digidesign	
+1443	Digilent	
+2375	Digit@lway, Inc.	
+04A0	Digital Equipment Corp.	
+074E	Digital Stream Corp.	
+0EEE	Digital Stream Technology, Inc.	
+0513	digital-X, Inc.	
+05BA	DigitalPersona, Inc.	
+2735	DigitalWay	
+0AAF	Digitalway Co., Ltd	
+1210	DigiTech	
+161C	Digitech Systems	
+268B	Dimension Engineering	
+10BC	Dinging Technology Co., Ltd	
+0892	DioGraphy, Inc.	
+0ABF	Diolan	
+0F69	Dionex Corp.	
+1D1F	Diostech Co., Ltd.	
+0B9B	Dipl.-Ing. Stefan Kunde	
+0FD5	Direct Access Technology, Inc.	
+0829	DirecTV Broadband, Inc. (Telocity)	
+226E	DISPLAX	
+17E9	DisplayLink	
+3579	DIVA	
+06A5	Divio	
+2CA3	DJI Technology Co., Ltd.	
+0AFA	DMC Co., Ltd.	
+2A03	dog hunter AG	
+0D87	Dolby Laboratories Inc.	
+2C1A	Dolphin Peripherals	
+071B	Domain Technologies, Inc.	
+0BE5	DOME imaging systems, Inc.	
+0CCC	Domex Technology Corp.	
+0BE6	Dong Guan Humen Wonderful Wire Cable Factory	
+0C59	Dong Guan Shinko Wire Co., Ltd	
+16AC	Dongguan ChingLung Wire & Cable Co., Ltd.	
+1B86	Dongguan Guanshang Electronics Co., Ltd.	
+1975	Dongguan Guneetal Wire & Cable Co., Ltd.	
+0F53	Dongguan White Horse Cable Factory, Ltd	
+04AD	Dooin Electronics	
+8EA3	Doosl	
+07F9	Dotop Technology, Inc.	
+07EB	Double-H Technology Co., Ltd	
+0F7C	DQ Technology, Inc.	
+289B	Dracal/Raphnet technologies	
+0079	DragonRise Inc.	
+0675	DrayTek Corp.	
+07FA	DrayTek Corp.	
+1D34	Dream Cheeky	
+1941	Dream Link	
+1CF1	Dresden Elektronik	
+0EF4	DSI Datotech	
+1487	DSP Group, Ltd.	
+0B50	Dumpries Co., Ltd	
+0C0B	Dura Micro, Inc. (Acomdata)	
+0449	Duta Multi Robotik	
+0FE9	DVICO	
+0D64	DXG Technology Corp.	
+FA11	DyingLight	
+0922	Dymo-CoStar Corp.	
+1A89	Dynalith Systems Co., Ltd.	
+12F5	Dynamic System Electronics Corp.	
+0650	Dynapro Systems	
+0FCF	Dynastream Innovations, Inc.	
+19FF	Dynex	
+0C36	E Ink Corp.	
+04FF	E-CMOS Corp.	
+2560	e-con Systems	
+0CF1	e-Conn Electronic Co., Ltd	
+0EDF	e-MDT Co., Ltd	
+1B8D	e-MOVE Technology Co., Ltd.	
+0C37	e.Digital	
+12B9	E28	
+18B4	e3C Technologies	
+08A5	e9, Inc.	
+232E	EA Elektro-Automatik GmbH & Co. KG	
+0D4F	EADS Airbus France	
+1EF6	EADS Deutschland GmbH	
+3125	Eagletron	
+0C35	Eagletron, Inc.	
+0FFD	EarlySense	
+0A5B	EAsics NV	
+1060	Easthome Industrial Co., Ltd	
+1101	EasyPass Industrial Co., Ltd	
+18CD	Ecamm	
+0920	Echelon Co.	
+040F	Echo Speech Corp.	
+0BC9	ECI Telecom, Ltd	
+06BB	EDA, Inc.	
+7392	Edimax Technology Co., Ltd	
+1CE0	EDIMAX TECHNOLOGY CO., LTD.	
+09F7	Edu-Science (H.K.), Ltd	
+060C	EEH Datalink GmbH	
+067C	Efficient Networks, Inc.	
+1AA6	eFortune Technology Corp.	
+8341	EGO Systems, Inc.	
+0A92	EGO SYStems, Inc.	
+071D	Eicon Networks Corp.	
+048F	Eicon Tech.	
+0BB9	Eiger M&C Co., Ltd	
+056D	EIZO Corp.	
+0440	Eizo Nanao Corp.	
+04F3	Elan Microelectronics Corp.	
+0D10	Elastic Networks	
+09D8	ELATEC GmbH	
+0DB7	ELCON Systemtechnik	
+0DB7	ELCON Systemtechnik	
+056E	Elecom Co., Ltd	
+26B5	Electrocompaniet	
+21A4	Electronic Arts Inc.	
+0B1E	Electronic Warfare Assoc., Inc. (EWA)	
+0A5A	Electronics For Imaging, Inc.	
+2650	Electronics For Imaging, Inc. [hex]	
+09CF	Electronics Testing Center, Taiwan	
+05E2	ElecVision, Inc.	
+25BF	Elegant Invention	
+07CD	Elektor	
+1935	Elektron Music Machines	
+0FD9	Elgato Systems GmbH	
+2FE7	ELGIN S.A.	
+0819	eLicenser	
+03FC	Elitegroup Computer Systems	
+1019	Elitegroup Computer Systems (ECS)	
+0BE4	Elka International, Ltd	
+0B85	Elkat Electronics, Sdn., Bhd.	
+1500	Ellisys	
+0ABA	Ellisys	
+07E2	Elmeg GmbH & Co., Ltd	
+04E7	Elo TouchSystems	
+0577	ELSA	
+05CC	ELSA AG	
+1484	Elsa AG [hex]	
+1C29	Elster GmbH	
+18EF	ELV Elektronik AG	
+0E93	eM Technics Co., Ltd	
+086A	Emagic Soft- und Hardware GmbH	
+0B72	Embedded Wireless Technology Co., Ltd	
+1BA4	Ember Corporation	
+06F2	Emine Technology Co.	
+0C65	Eminence Enterprise Co., Ltd	
+21A1	Emotiv Systems Pty. Ltd.	
+084F	Empeg	
+EB1A	eMPIA Technology, Inc.	
+12D6	EMS Dr. Thomas Wuensche	
+4670	EMS Production	
+0CC4	emsys GmbH	
+6557	Emtec	
+2A4B	EMULEX Corporation	
+1009	Emuzed, Inc.	
+203D	Encore Electronics Inc.	
+0EB7	Endor AG	
+03E8	EndPoints, Inc.	
+1524	ENE Technology Inc	
+0CF2	ENE Technology, Inc.	
+1756	ENENSYS Technologies	
+1B47	Energizer Holdings, Inc.	
+0F0E	Energy Full Corp.	
+2544	Energy Micro AS	
+1274	Ensoniq	
+1645	Entrega [hex]	
+066D	Entrega, Inc.	
+132A	Envara Inc.	
+132A	Envara Inc.	
+5555	Epiphan Systems Inc.	
+0FA7	Epox Computer Co., Ltd	
+0570	Epson America	
+03F8	Epson Imaging Technology Center	
+1B1F	eQ-3 Entwicklung GmbH	
+10CB	Eratech	
+042A	Ericsson Austrian, AG	
+0BDB	Ericsson Business Mobile Networks BV	
+0442	Ericsson, Inc.	
+08EA	Ericsson, Inc., Blue Ridge Labs	
+2573	ESI Audiotechnik GmbH	
+109F	eSOL Co., Ltd	
+0495	ESS Technology, Inc.	
+0D7F	Essential Reality LLC	
+0664	ET&T Technology Co., Ltd.	
+056C	eTEK Labs	
+102C	Etoms Electronics Corp.	
+2500	Ettus Research LLC	
+22B9	eTurboTouch Technology, Inc.	
+073D	Eutron S.p.a.	
+148E	EVATRONIX SA	
+1B12	Eventide	
+0749	EVer Electronics Corp.	
+1147	Ever Great Electric Wire and Cable Co., Ltd	
+080A	Evermuch Technology Co., Ltd	
+1897	Evertop Wire Cable Co.	
+0F49	Evolis SA	
+2D81	Evollve Inc.	
+1A7C	Evoluent	
+0A4D	Evolution Electronics, Ltd	
+04E2	Exar Corp.	
+070E	Excel Cell Electronic Co., Ltd	
+11AB	Exito Electronics Co., Ltd	
+0B65	Expert Magnetics Corp.	
+0B86	Exputer Systems, Inc.	
+08E9	Extended Systems, Inc.	
+1456	Extending Wire & Cable Co., Ltd.	
+1BF5	Extranet Systems Inc.	
+0BC6	ExWAY, Inc.	
+0518	EzKEY Corp.	
+1C40	EZPrototypes	
+2256	Faderfox	
+0B67	Fairbanks Scales	
+2AE5	Fairphone B.V.	
+3767	Fanatec	
+0906	Faraday Technology Corp.	
+03FE	Farallon Comunications	
+09B0	Fargo	
+12FF	Fascinating Electronics, Inc.	
+0850	Fast Point Technologies, Inc.	
+0514	FCI Electronics	
+1702	FDI-MATELEC	
+1934	Feature Integration Technology Inc. (Fintek)	
+0AB1	FEIG ELECTRONIC GmbH	
+096E	Feitian Technologies, Inc.	
+09DD	Fellowes, Inc.	
+1ED8	FENDER MUSICAL INSTRUMENTS CORPORATION	
+0D0F	Feng Shin Cable Co., Ltd	
+1E29	Festo AG & Co. KG	
+05EB	FFC, Ltd	
+0ED5	Fiberbyte	
+1582	Fiberline	
+2125	Fiberpro Inc.	
+2CB7	Fibocom	
+2972	FiiO Electronics Technology	
+0863	Filanet Corp.	
+18FD	FineArch Inc.	
+0F18	Finger Lakes Instrumentation	
+0E97	Fingerworks, Inc.	
+1CD5	Firecomms Ltd.	
+0C00	FireFly Mouse Mat	
+04A2	FirePower Systems	
+0DC7	First Cable Line, Inc.	
+05B1	First International Computer, Inc.	
+1509	First International Computer, Inc.	
+1457	First International Computer, Inc.	
+0AA5	First International Digital	
+2765	Firstbeat Technologies, Ltd.	
+2687	Fitbit Inc.	
+2687	Fitbit Inc.	
+0D3E	Fitcom, inc.	
+18E3	Fitipower Integrated Technology Inc	
+1923	FitLinxx	
+0585	FlashPoint Technology, Inc.	
+25B5	FlatFrog	
+0F24	Flex-P Industries, Snd., Bhd.	
+1CFD	Flextronics Digital Design Japan, LTD.	
+09CB	FLIR Systems	
+0F7E	Fluke Corp.	
+0CB0	Flying Pig Systems	
+2A62	Flymaster Avionics	
+1306	FM20 Barcode Scanner	
+FFEE	FNK Tech	
+1235	Focusrite-Novation	
+0CF4	Fomtex Corp.	
+063D	Fong Kai Industrial Co., Ltd	
+1451	Force Dimension	
+1BC4	Ford Motor Co.	
+147A	Formosa Industrial Computing, Inc.	
+1CBF	FORTAT SKYMARK INDUSTRIAL COMPANY	
+04D5	Forte Technologies, Inc.	
+22A7	Fortinet Technologies	
+077C	Forward Electronics Co., Ltd	
+0E67	Fossil, Inc.	
+05B0	Fountain Technologies, Inc.	
+0489	Foxconn / Hon Hai	
+105B	Foxconn International, Inc.	
+06DC	Foxlink Image Technology Co., Ltd	
+2466	Fractal Audio Systems	
+0437	Framatome Connectors USA	
+09B2	Franklin Electronic Publishers, Inc.	
+1FAC	Franklin Wireless	
+234B	Free Software Initiative of Japan	
+07AB	Freecom Technologies	
+0F4E	Freedom Scientific	
+15A2	Freescale Semiconductor, Inc.	
+1D5C	Fresco Logic	
+1B73	Fresco Logic	
+0D63	Fritz Gegauf AG	
+165B	Frontier Design Group	
+16D3	Frontline Test Equipment, Inc.	
+0001	Fry's Electronics	
+05E5	Fuji Electric Co., Ltd	
+1C20	Fuji Electric Device Technology Co., Ltd.	
+05A2	Fuji Film Microdevices Co., Ltd	
+04CB	Fuji Photo Film Co., Ltd	
+0550	Fuji Xerox Co., Ltd	
+1EAB	Fujian Newland Computer Co., Ltd	
+0501	Fujikura DDK, Ltd	
+087E	Fujitsu Computer Products of America	
+30EE	Fujitsu Connected Technologies Limited	
+090F	Fujitsu Devices, Inc.	
+06AC	Fujitsu Laboratories of America, Inc.	
+0A4B	Fujitsu Media Devices, Ltd	
+054A	Fujitsu Microelectronics, Inc.	
+0407	Fujitsu Personal Systems, Inc.	
+0BF8	Fujitsu Siemens Computers	
+08D4	Fujitsu Siemens Computers	
+0406	Fujitsu-ICL Computers	
+04F5	Fujitsu-ICL Systems, Inc.	
+04C5	Fujitsu, Ltd	
+2FB2	Fujitsu, Ltd	
+1010	Fukuda Denshi Co., Ltd	
+0D42	Full Der Co., Ltd	
+0DEF	Full Rise Electronic Co., Ltd	
+0F1C	Funai Electric Co., Ltd	
+1404	Fundamental Software, Inc.	
+0C3A	Furui Precise Component (Kunshan) Co., Ltd	
+1B71	Fushicai	
+1491	Futronic Technology Co. Ltd.	
+19C2	Futuba	
+0616	Future Techno Designs PVT, Ltd	
+0E95	Future Technology Co., Ltd	
+0403	Future Technology Devices International, Ltd	
+16F5	Futurelogic Inc.	
+04F8	FuturePlus Systems	
+0BC1	Fuw Yng Electronics Co., Ltd	
+2207	Fuzhou Rockchip Electronics Company	
+1F4D	G-Tek Electronics Group	
+0DC0	G7 Solutions (formerly Great Notions)	
+09FF	Gain Technology Corp.	
+06FE	Gallant Computer, Inc.	
+19FA	Gampaq Co.Ltd	
+049A	Gandalf Technologies, Ltd	
+091E	Garmin International	
+107B	Gateway, Inc.	
+0443	Gateway, Inc.	
+10CC	GBM Connector Co., Ltd	
+0825	GC Protronics	
+07D7	GCC Technologies, Inc.	
+1076	GCT Semiconductor, Inc.	
+28E9	GDMicroelectronics	
+1901	GE Healthcare	
+05D0	GE Medical Systems Lunar	
+0B38	Gear Head	
+15AA	Gearway Electronics (Dong Guan) Co., Ltd.	
+08E6	Gemalto (was Gemplus)	
+1E2D	Gemalto M2M GmbH	
+1908	GEMBIRD	
+12BD	Gembird	
+23C7	Gemini	
+14C2	Gemlight Computer, Ltd	
+0993	Gemstar eBook Group, Ltd	
+15A9	Gemtek	
+1743	General Atomics	
+1B1E	General Imaging / General Electric	
+0BBB	General Meters Corp.	
+1B3F	Generalplus Technology Inc.	
+0DFC	GeneralTouch Technology Co., Ltd	
+1209	Generic	
+05E3	Genesys Logic, Inc.	
+0F2E	Geniality Maple Technology Co., Ltd	
+0809	Genicom Technology, Inc.	
+03F1	Genoa Technology	
+09C0	Genpix Electronics, LLC	
+0608	Genrad Ads	
+9148	GeoLab, Ltd	
+1C4B	Geratherm Medical AG	
+1753	GERTEC Telecomunicacoes Ltda.	
+0E0C	Gesytec	
+0FD1	Giant Electronics Ltd.	
+1059	Giesecke & Devrient GmbH	
+0414	Giga-Byte Technology Co., Ltd	
+1667	GIGA-TMS INC.	
+116E	Gigastorage Corp.	
+0A39	Gilat Satellite Networks, Ltd	
+0CC1	Given Imaging, Ltd	
+16AB	Global Sun Technology	
+0D8E	Global Sun Technology, Inc.	
+1A6E	Global Unichip Corp.	
+083F	Global Village	
+053B	Global Village Communication	
+11AA	GlobalMedia Group, LLC	
+0915	GlobeSpan, Inc.	
+0A91	Globlink Technology, Inc.	
+0656	Glory Mark Electronic, Ltd	
+0C54	Glory, Ltd	
+0E7E	Gmate, Inc.	
+16F0	GN Hearing A/S	
+0B0E	GN Netcom	
+1684	Godspeed Computer Corp.	
+09F3	GoFlight, Inc.	
+0921	GoHubs, Inc.	
+1680	Golden Bridge Electech Inc.	
+0690	Golden Bridge Electech, Inc.	
+0732	Goldfull Electronics & Telecommunications Corp.	
+1C1F	Goldvish S.A.	
+1631	Good Way Technology	
+065F	Good Way Technology Co., Ltd & GWC technology Inc.	
+18D1	Google Inc.	
+4255	GoPro	
+2672	GoPro	
+08F2	Gotop Information Inc.	
+5654	Gotview	
+2A13	Grabba International	
+108B	Grand-tek Technology Co., Ltd	
+99FA	Grandtec	
+5032	Grandtec	
+0797	Grandtech Semiconductor Corp.	
+0654	Granite Microsystems, Inc.	
+0D4B	Grape Systems, Inc.	
+0B4D	Graphtec America, Inc.	
+0BFB	Grass Valley Group	
+06AD	Greatland Electronics Taiwan, Ltd	
+062B	Greatlink Electronics Taiwan, Ltd	
+0B5F	Green Electronics Co., Ltd	
+0E1E	Green Hills Software	
+0E1E	Green Hills Software	
+0A6B	Green House Co., Ltd	
+0E8F	GreenAsia Inc.	
+0FE5	Greenconn (U.S.A.), Inc.	
+0971	Gretag-Macbeth AG	
+05BB	Grey Cell Systems	
+17B3	Grey Innovation	
+077D	Griffin Technology	
+09BC	Grundig	
+0EC5	GT Information System Co., Ltd	
+078C	GTCO/CalComp	
+13D7	Guidance Software, Inc.	
+06F8	Guillemot Corp.	
+0F78	Guntermann & Drunck GmbH	
+0579	GVC Corp.	
+4757	GW Instek	
+2184	GW Instek	
+1831	Gwo Jinn Industries Co., Ltd.	
+0C16	Gyration, Inc.	
+1852	GYROCOM C&C Co., LTD	
+1F48	H-TRONIC GmbH	
+0D80	H.R. Silvine Electronics, Inc.	
+06C5	Hagenuk, GmbH	
+0693	Hagiwara Sys-Com Co., Ltd	
+201E	Haier	
+A466	Haikou Xingong Electronics Co.,Ltd	
+0B41	Hal Corp.	
+F766	Hama	
+147F	Hama GmbH & Co., KG	
+0AF9	Hama, Inc.	
+0661	Hamamatsu Photonics K.K.	
+1D0B	HAN HUA CABLE & WIRE TECHNOLOGY (J.X.) CO., LTD.	
+0536	Hand Held Products (Welch Allyn, Inc.)	
+082D	Handspring	
+15F4	HanfTek	
+0C1C	Hang Zhou Silan Electronics Co., Ltd	
+1BD0	Hangzhou Riyue Electronic Co., Ltd.	
+0218	Hangzhou Worlde	
+2CC0	Hangzhou Zero Zero Infinity Technology Co., Ltd.	
+0D19	Hank Connection Industrial Co., Ltd	
+0887	Hannstar Electronics Corp.	
+0D12	Hansol Electronics, Inc.	
+20B3	Hanvon	
+0C9A	Hanwool Robotics Corp.	
+078B	Happ Controls, Inc.	
+8301	Hapurs	
+05FC	Harman	
+0931	Harmonic Data Systems, Ltd	
+1BAD	Harmonix Music	
+19A5	HARRIS Corp.	
+04F4	Harting Elektronik, Inc.	
+06AF	Harting, Inc. of North America	
+0C06	Hasbro Games, Inc.	
+2E0E	Hatteland Display AS	
+2040	Hauppauge	
+0FB0	Haurtian Wire & Cable Co., Ltd	
+0E66	Hawking Technologies	
+0504	Hayes Microcomputer Products	
+0673	HCL	
+0943	HCL Technologies India Private, Ltd	
+0E30	HeartMath LLC	
+0E30	HeartMath LLC	
+0FB6	Heber Ltd	
+0A18	Heidelberger Druckmaschinen AG	
+06DE	Heisei Electronics Co., Ltd	
+13EA	Hengstler	
+F003	Hewlett Packard	
+09D7	Hexagon NovAtel Inc.	
+0D16	Hi-Touch Imaging Technologies Co., Ltd	
+09C3	HID Global	
+1AED	High Top Precision Electronic Co., Ltd.	
+0C0A	Highpoint Technologies, Inc.	
+0DD9	HighSpeed Surfing	
+04B6	Hint Corp.	
+17CF	Hip Hing Cable & Plug Mfy. Ltd.	
+3111	Hiperscan GmbH	
+0D71	Hirakawa Hewtech Corp.	
+0A47	Hirose Electric	
+10A0	Hirotech, Inc.	
+109B	Hisense	
+0D73	Hit's Communications, Inc.	
+0503	Hitachi America, Ltd	
+0EF0	Hitachi Cable, Ltd	
+0858	Hitachi Maxell, Ltd	
+0BB8	Hitachi Semiconductor and Devices Sales Co., Ltd	
+0CD9	Hitachi Shin Din Cable, Ltd	
+0B37	Hitachi ULSI Systems Co., Ltd	
+1696	Hitachi Video and Information System, Inc.	
+1696	Hitachi Video and Information System, Inc.	
+045B	Hitachi, Ltd	
+04A4	Hitachi, Ltd	
+0640	Hitex Development Tools	
+2E04	HMD Global	
+0D53	HMI Co., Ltd	
+067D	Hohner Corp.	
+0D54	Holon Corp.	
+1A81	Holtek Semiconductor, Inc.	
+1243	Holtek Semiconductor, Inc.	
+04D9	Holtek Semiconductor, Inc.	
+0C89	Honda Tsushin Kogyo Co., Ltd	
+12AB	Honey Bee Electronic International Ltd.	
+10AC	Honeywell, Inc.	
+105C	Hong Ji Electric Wire & Cable (Dongguan) Co., Ltd	
+1C89	HONGKONG WEIDIDA ELECTRON LIMITED	
+0F0D	Hori Co., Ltd	
+0507	Hosiden Corp.	
+10D1	Hottinger Baldwin Measurement	
+03F0	HP, Inc	
+06FA	HSD S.r.L	
+0E72	Hsi-Chin Electronics Co., Ltd	
+1056	Hsin Chen Ent Co., Ltd	
+0BB4	HTC (High Tech Computer Corp.)	
+0A19	Hua Geng Technologies, Inc.	
+0512	Hualon Microelectronics Corp.	
+04DC	Huan Hsin Holdings, Ltd	
+214B	Huasheng Electronics	
+29E2	Huatune Technology (Shanghai) Co., Ltd.	
+12D1	Huawei Technologies Co., Ltd.	
+1472	Huawei-3Com	
+120E	Hudson Soft Co., Ltd	
+069D	Hughes Network Systems (HNS)	
+273F	Hughski Limited	
+1C27	HuiYang D & S Cable Co., Ltd.	
+1832	Huizhou Shenghua Industrial Co., Ltd.	
+675D	Humanscale	
+1C71	Humanware Inc	
+0EAD	Humax Co., Ltd	
+02AD	HUMAX Co., Ltd.	
+0D0E	Hybrid Networks, Inc.	
+15DC	Hynix Semiconductor Inc.	
+1025	Hyper-Paltek	
+2E24	Hyperkin	
+2CCF	Hypersecu	
+1951	Hyperstone AG	
+04DB	Hypertec Pty, Ltd	
+238B	Hytera Communications	
+0F9C	Hyun Won, Inc.	
+0435	Hyundai Electronics America	
+0AC5	I & C Corp.	
+0B11	I Tech Solutions Co., Ltd	
+40BB	I-O Data	
+04BB	I-O Data Device, Inc.	
+4101	i-rocks	
+5219	I-Tetra	
+06EF	I.A.C. Geometrische Ingenieurs B.V.	
+13DD	i.Tech Dynamic Limited	
+0A48	I/O Interconnect	
+0EF2	I/O Magic Corp.	
+0942	i2Go.com, LLC	
+04B3	IBM Corp.	
+0127	IBP	
+0923	IC Media Corp.	
+1AE4	ic-design Reinhard Gottinger GmbH	
+05E8	ICC, Inc.	
+0AAC	iCompression, Inc.	
+1D03	iCON	
+1043	iCreate Technologies Corp.	
+089D	Icron Technologies Corp.	
+0FE6	ICS Advent	
+1312	ICS Electronics	
+0ACD	ID Tech	
+0B81	id3 Technologies	
+1CB6	IdeaCom Technology Inc.	
+1391	IdealTEK, Inc.	
+1FFF	Ideofy Inc.	
+0A85	Idexx Labs	
+1409	IDS Imaging Development Systems GmbH	
+0C39	IFR	
+04E1	Iiyama North America, Inc.	
+1963	IK Multimedia	
+222A	ILI Technology Corp.	
+088E	iLok	
+1FDE	ILX Lightwave Corporation	
+09EB	IM Networks, Inc.	
+149A	Imagination Technologies	
+0C57	Imaginative Design Operation Co., Ltd	
+0718	Imation Corp.	
+13D3	IMC Networks	
+1053	Immanuel Electronics Co., Ltd	
+0563	Immersion Corp.	
+07B1	IMP, Inc.	
+10F1	Importek	
+058C	In Focus Systems	
+05AB	In-System Design	
+0FE4	IN-Tech Electronics, Ltd	
+10DF	In-Win Development, Inc.	
+0776	Inalways Corp.	
+0593	Incite	
+0FB1	Inclose Design, Inc.	
+08D9	Increment P Corp.	
+098D	INDesign	
+081B	Indigita Corp.	
+073C	Industrial Electronic Engineers, Inc.	
+19E8	Industrial Technology Research Institute	
+058B	Infineon Technologies	
+0BB1	Infinilink Corp.	
+0C07	Infinite Data Storage, Ltd	
+2FB0	Infocrypt	
+0CA7	Information Systems Laboratories	
+19B6	Infotech Logistic, LLC	
+102B	Infotronic America, Inc.	
+06C6	Infowave Software, Inc.	
+A108	Ingenic Semiconductor Co.,Ltd	
+601A	Ingenic Semiconductor Ltd.	
+0B00	INGENICO	
+0F14	Ingenico	
+26E2	Ingenieurbuero Dietzsch und Thiele, PartG	
+0002	Ingram	
+13FD	Initio Corporation	
+3333	InLine	
+11C5	Inmax	
+0C99	Innochips Co., Ltd	
+0C3D	Innocom, Inc.	
+1292	Innomedia	
+050C	InnoMedia, Inc.	
+1F75	Innostor Technology Corporation	
+093D	InnoSync, Inc.	
+042C	Innovative Semiconductors, Inc.	
+191C	Innovative Technology LTD	
+0EC6	InnoVISION Multimedia, Ltd	
+0CB1	Innovonics, Inc.	
+2BCC	InoTec GmbH Organisationssysteme	
+1028	Inovys Corp.	
+308F	Input Club	
+1C11	Input Club Inc.	
+2314	INQ Mobile	
+160E	INRO	
+160E	INRO	
+0648	Inside Out Networks	
+1608	Inside Out Networks [hex]	
+A014	Insignia (Best Buy)	
+135E	Insta GmbH	
+053C	Institut of Microelectronic & Mechatronic Systems	
+062C	Institute for Information Industry	
+0B1F	Insyde Software Corp.	
+10C6	Intec, Inc.	
+26BD	Integral Memory	
+113F	Integrated Biometrics, LLC	
+0DDA	Integrated Circuit Solution, Inc.	
+0A6C	Integrated Circuit Systems, Inc.	
+0426	Integrated Device Technology, Inc.	
+098E	Integrated Intellectual Property, Inc.	
+08E8	Integrated Memory Logic	
+1131	Integrated System Solution Corp.	
+048D	Integrated Technology Express, Inc.	
+0996	Integrated Telecom Express, Inc.	
+03E7	Intel	
+8086	Intel Corp.	
+8087	Intel Corp.	
+042B	Intel Corp.	
+059E	Intelligent Instrumentation	
+0F6E	INTELLIGENT SYSTEMS	
+0AD0	Intellix Corp.	
+09E1	Intellon Corp.	
+8644	Intenso GmbG	
+05FD	InterAct, Inc.	
+0571	Interex, Inc.	
+0560	Interface Corp.	
+04DF	Interlink Electronics	
+0CC6	Intermagic Corp.	
+067E	Intermec Technologies Corp.	
+0A70	International Game Technology	
+0A94	Intersense	
+09AA	Intersil Corp.	
+0713	Interval Research Corp.	
+0ACF	Intoto, Inc.	
+0BF1	Intracom S.A.	
+093C	Intrepid Control Systems, Inc.	
+0578	Intrinsix Corp.	
+0537	Inventec Corp.	
+1E1F	INVIA	
+3636	InVibro	
+0CFA	Inviso, Inc.	
+2CE5	InX8 Inc [AKiTiO]	
+0DC4	inXtron, Inc.	
+051F	IO Systems (Elite Electronics), Inc.	
+0DA7	IOGear, Inc.	
+0F21	IOI Technology Corp.	
+059B	Iomega Corp.	
+1C0C	Ionics EMS, Inc.	
+0622	Iotech, Inc.	
+1B3B	iPassion Technology Inc.	
+0B3A	IPaxess	
+0BC3	IPWireless, Inc.	
+0C15	Iris Graphics	
+2420	IRiver	
+4102	iRiver, Ltd.	
+1006	iRiver, Ltd.	
+1953	Ironkey Inc.	
+6615	IRTOUCHSYSTEMS Co. Ltd.	
+595A	IRTOUCHSYSTEMS Co. Ltd.	
+0CF7	ishoni Networks	
+16B4	iStation	
+2009	iStorage	
+348F	ISY	
+0431	Itac Systems, Inc.	
+0B7C	ITRAN Communications, Ltd	
+195D	Itron Technology iONE	
+04D1	ITT Canon	
+0D60	IVL Technologies, Ltd	
+03EC	Iwatsu America, Inc.	
+07EA	Iwatsu Electric Co., Ltd	
+0F1D	Iwill Corp.	
+08D8	IXXAT Automation GmbH	
+0E26	J-Phone East Co., Ltd	
+0E26	J-Phone East Co., Ltd	
+08B8	J. Gordon Electronic Design, Inc.	
+9AC4	J. Westhues	
+093E	J.S.T. Mfg. Co., Ltd	
+16D6	JABLOCOM s.r.o.	
+1797	JALCO CO., LTD.	
+14D8	JAMER INDUSTRIES CO., LTD.	
+0A8E	Japan Aviation Electronics Industry, Ltd	
+09AB	Japan Cash Machine Co., Ltd.	
+0AAA	Japan CBM Corp.	
+0D78	Japan Distributor Corp.	
+1145	Japan Radio Company	
+0940	Japan Storage Battery Co., Ltd	
+0B22	Japan System Development Co., Ltd	
+087D	Jaton Corp.	
+0601	Jazz Hipster Corp.	
+0BC5	JCN Co., Ltd	
+158E	JDS Uniphase Corporation (JDSU)	
+0604	Jean Co., Ltd	
+0A52	Jebsee Electronics Co., Ltd	
+0979	Jeilin Technology Corp., Ltd	
+0F30	Jess Technology Co., Ltd	
+0DBF	Jess-Link International	
+0DBF	Jess-Link International	
+0766	Jess-Link Products Co., Ltd	
+0C6C	JETI Technische Instrumente GmbH	
+076F	Jhen Vei Electronic Co., Ltd	
+064C	Ji-Haw Industrial Co., Ltd	
+E2B7	Jie Li	
+05AF	Jing-Mold Enterprise Co., Ltd	
+1BA1	JINQ CHERN ENTERPRISE CO., LTD.	
+0DBE	Jiuh Shiuh Precision Industry Co., Ltd	
+0DBE	Jiuh Shiuh Precision Industry Co., Ltd	
+125D	JMicron	
+152D	JMicron Technology Corp. / JMicron USA Technology Corp.	
+0E16	JMTek, LLC	
+0C76	JMTek, LLC.	
+117E	JNC, Inc.	
+09E5	Jo-Dan International, Inc.	
+0C9B	Jobin Yvon, Inc.	
+1D0A	Johnson Controls, Inc. The Automotive Business Unit	
+060F	Joinsoon Electronics Mfg. Co., Ltd	
+2931	Jolla Oy	
+0BB7	Joytech Computer Co., Ltd	
+0CD8	JS Digitech, Inc.	
+0FB2	Juan-Chern Industrial Co., Ltd	
+08CD	Jue Hsun Ind. Corp.	
+0631	JUJO Electronics Corp.	
+0E48	Julia Corp., Ltd	
+0AFF	Jump Zone Network Products, Inc.	
+138E	Jungo LTD	
+121E	Jungsoft Co., Ltd	
+2166	JVC Kenwood	
+13CA	JyeTai Precision Industrial Co., Ltd.	
+095C	K-Tec Electronics	
+24E3	K-Touch	
+11E6	K.I. Technology Co. Ltd.	
+17F5	K.K. Rocky	
+1B59	K.S. Terminals Inc.	
+184F	K2L GmbH	
+18D9	Kaba	
+1C77	Kaetat Industrial Co., Ltd.	
+13E1	Kaibo Wire & Cable (Shenzhen) Co., Ltd.	
+17A8	Kamstrup A/S	
+0BE2	Kanda Tsushin Kogyo Co., Ltd	
+1E1D	Kanguru Solutions	
+0662	Kansai Electric Co., Ltd	
+1348	Katsuragawa Electric Co., Ltd.	
+0F54	Kawai Musical Instruments Mfg. Co., Ltd	
+05E9	Kawasaki LSI	
+05C1	Kawasaki Microelectronics, Inc.	
+084E	KB Gear	
+050F	KC Technology, Inc.	
+08F8	Keen Top International Enterprise Co., Ltd	
+2B24	KeepKey LLC	
+1AAD	KeeTouch	
+05C0	Keil Software	
+C251	Keil Software, Inc.	
+8282	Keio	
+07C1	Keisokugiken	
+05E6	Keithley Instruments	
+133E	Kemper Digital GmbH	
+047D	Kensington	
+0B28	Kenwood Corp.	
+098F	Kenwood TMI Corp.	
+055A	Kenwood USA	
+0CBE	Keryx Technologies, Inc.	
+1A12	KES Co., Ltd.	
+157B	Ketron SRL	
+0674	Key Mouse Electronic Enterprise Co., Ltd	
+08C7	Key Nice Enterprise Co., Ltd	
+0F5F	Key Technology Corp.	
+0720	Keyence Corp.	
+2A8D	Keysight Technologies, Inc.	
+06CD	Keyspan	
+03F9	KeyTronic Corp.	
+2F76	KeyXentic Inc.	
+19DB	KFI Printers	
+107F	KidzMouse, Inc.	
+0B3E	Kikusui Electronics Corp.	
+29EA	Kinesis Corporation	
+16DF	King Billion Electronics Co., Ltd.	
+0D8A	King Jim Co., Ltd	
+1687	Kingmax Digital Inc.	
+07CB	Kingmax Technology, Inc.	
+0F8E	Kingnet Technology Co., Ltd	
+3057	Kingsis Corporation	
+1AF3	Kingsis Technology Corporation	
+0951	Kingston Technology	
+13FE	Kingston Technology Company Inc.	
+0E56	Kingston Technology Company, Inc.	
+22CD	Kinova Robotics Inc.	
+1CAC	Kinstone	
+2DEF	Kirale Technologies	
+0D65	KMJP Co., Ltd	
+0BC0	Knilink Technology, Inc.	
+055B	KnowledgeTek, Inc.	
+097B	Knudsen Engineering, Ltd	
+0F68	Kobe Steel, Ltd	
+0F68	Kobe Steel, Ltd	
+0D46	Kobil Systems GmbH	
+2237	Kobo Inc.	
+0DD7	Kocom Co., Ltd	
+040A	Kodak Co.	
+0564	Kodak Digital Product Center, Japan Ltd. (formerly Chinon Industries Inc.)	
+0ACC	Koga Electronics Co.	
+0F37	Kokuyo Co., Ltd	
+0C3B	Komatsu, Ltd	
+165C	Kondo Kagaku	
+0BF2	Konexx	
+04C8	Konica Corp.	
+132B	Konica Minolta	
+056F	Korea Data Systems Co., Ltd	
+17D3	Korea Techtron Co., Ltd.	
+0944	KORG, Inc.	
+0832	Kouwell Electronics Corp.	
+1C02	Kreton Corporation	
+09D9	KRF Tech, Ltd	
+0948	Kronauer music in digital	
+2D25	Kronegger GmbH.	
+2116	KT Tech	
+15C8	KTF Technologies	
+076E	Kuan Tech Enterprise Co., Ltd	
+1598	Kunshan Guoji Electronics Co., Ltd.	
+0CC0	Kuon Yi Industrial Corp.	
+0BFD	Kvaser AB	
+EB2A	KWorld	
+10CD	Kycon, Inc.	
+0458	KYE Systems Corp. (Mouse Systems)	
+0482	Kyocera Corp.	
+1184	Kyocera Elco Corp.	
+0C88	Kyocera Wireless Corp.	
+0ED2	Kyoto Micro Computer Co., Ltd	
+1619	L & K Precision Technology Co., Ltd.	
+20F0	L3Harris Technologies	
+1949	Lab126, Inc.	
+0CD5	LabJack Corporation	
+15C6	Laboratoires MXM	
+07E8	Labsystems	
+1020	Labtec	
+0672	Labtec, Inc.	
+0747	Labway Corp.	
+059F	LaCie, Ltd	
+0B59	Lake Communications, Ltd	
+0925	Lakeview Research	
+0DA2	Land Instruments International, Ltd	
+1C10	Lanterra Industrial Co., Ltd.	
+06D0	LapLink, Inc.	
+0734	Lasat Communications A/S	
+0897	Lauterbach	
+2CC2	Lautsprecher Teufel GmbH	
+0AA3	Lava Computer Mfg., Inc.	
+22D4	Laview Technology	
+041F	LCS Telegraphics	
+0F11	LD Didactic GmbH	
+0F23	Leader Tech Manufacturer Co., Ltd	
+0413	Leadtek Research, Inc.	
+1EAF	Leaflabs	
+3344	Leaguer Microelectronics (LME)	
+F182	Leap Motion	
+0F63	LeapFrog Enterprises	
+0AC4	Leco Corp.	
+05FF	LeCroy Corp.	
+2C97	Ledger	
+2B0E	LeEco	
+1B76	Legend Silicon Corp.	
+0694	Lego Group	
+1A98	Leica Camera AG	
+1711	Leica Microsystems	
+17EF	Lenovo	
+2006	LenovoMobile	
+1DD2	Leo Bodnar Electronics Ltd	
+0D32	Leo Hui Electric Wire & Cable Co., Ltd	
+06BF	Leoco Corp.	
+0C23	Lernout + Hauspie	
+197D	Leuze electronic	
+29C2	Lewitt GmbH	
+05DC	Lexar Media, Inc.	
+043D	Lexmark International, Inc.	
+152E	LG (HLDS)	
+043E	LG Electronics USA, Inc.	
+1004	LG Electronics, Inc.	
+05B4	LG Semicon Co., Ltd	
+0EC0	LHI Technology (China) Co., Ltd	
+12BA	Licensed by Sony Computer Entertainment America	
+10AF	Liebert Corp.	
+2766	LifeScan	
+0DEE	Lifetime Memory Products	
+6244	LightingSoft AG	
+0977	Lightsurf Technologies	
+1C7A	LighTuning Technology Inc.	
+0535	LIH TZU Electric Co., Ltd	
+0651	Likom Technology Sdn. Bhd.	
+09A8	Lin Shiung Enterprise Co., Ltd	
+12D3	LINAK	
+12D2	LINE TECH INDUSTRIAL CO., LTD.	
+0E41	Line6, Inc.	
+0B24	Link Evolution Corp.	
+3195	Link Instruments	
+13B1	Linksys	
+077B	Linksys	
+066B	Linksys, Inc.	
+094B	Linkup Systems Corp.	
+1D6B	Linux Foundation	
+0E23	Liou Yuane Enterprise Co., Ltd	
+2DF2	LIPS Corporation	
+0A00	Liquid Audio	
+1BA2	Lite Metals & Plastic (Shenzhen) Co., Ltd.	
+0ECD	Lite-On IT Corp.	
+04CA	Lite-On Technology Corp.	
+08E5	Litronic	
+0623	Littelfuse, Inc.	
+0A4F	Litton Systems, Inc.	
+18DC	LKC Technologies, Inc.	
+04C4	Lockheed Martin Energy Research	
+08F6	Logic 3 International, Ltd	
+0FA8	Logic Controls, Inc.	
+0E6F	Logic3	
+1267	Logic3 / SpectraVideo plc	
+ABCD	LogiLink	
+D904	LogiLink	
+0789	Logitec Corp.	
+046D	Logitech, Inc.	
+08CE	Long Well Electronics Corp.	
+0775	Longshine Electronics Corp.	
+0516	Longwell Electronics	
+0736	Lorom Industrial Co., Ltd	
+108E	Lotes Co., Ltd.	
+106A	Loyal Legend, Ltd	
+1191	Loyalty Founder Enterprise Co., Ltd	
+1C31	LS Cable Ltd.	
+04D4	LSI Logic, Inc.	
+0BEE	LTK Industries, Ltd	
+0386	LTS	
+0F9E	Lucent Technologies	
+0445	Lucent Technologies, Inc.	
+1759	LucidPort Technology, Inc.	
+1A7B	Lumberg Connect GmbH & Co. KG	
+0939	Lumberg, Inc.	
+1FAE	Lumidigm	
+25E3	Lumigon	
+1CBE	Luminary Micro Inc.	
+17B5	Lunatone	
+1C7B	LUXSHARE PRECISION INDUSTRY (SHENZHEN) CO., LTD.	
+30C9	Luxvisions Innotech Limited	
+0EF3	Lynn Products, Inc.	
+24CF	Lytro, Inc.	
+0763	M-Audio	
+08EC	M-Systems Flash Disk Pioneers	
+249C	M2Tech s.r.l.	
+1B8F	MA LABS, Inc.	
+0618	MacAlly	
+2222	MacAlly	
+08AE	Macally (Mace Group, Inc.)	
+0A73	Mackie Designs	
+08AC	Macraigor Systems LLC	
+0851	Macronix International Co., Ltd	
+534D	MacroSilicon	
+0738	Mad Catz, Inc.	
+0493	MAG Technology Co., Ltd	
+120F	Magellan	
+0711	Magic Control Technology Corp.	
+2C55	Magic Leap, Inc.	
+0C1F	Magicard	
+0801	MagTek	
+1D88	Mahr GmbH	
+062E	Mainsuper Enterprises Co., Ltd	
+EB03	MakingThings	
+0802	Mako Technologies, LLC	
+10D4	Man Boon Manufactory, Ltd	
+0E3B	Mansella, Ltd	
+081F	Manta	
+113D	Mapower Electronics Co., Ltd	
+07FD	Mark of the Unicorn	
+0F12	Mars Engineering Corp.	
+0D98	Mars Semiconductor Corp.	
+07B6	Marubun Corp.	
+097C	Marunix Co., Ltd	
+1286	Marvell Semiconductor, Inc.	
+9E88	Marvell Semiconductor, Inc.	
+0D7A	MARX Datentechnik GmbH	
+0D11	Maspro Denkoh Corp.	
+088B	MassWorks, Inc.	
+112E	Master Hill Electric Wire and Cable Co., Ltd	
+1A64	Mastervolt	
+164C	Matrix Vision GmbH	
+18EA	Matrox Graphics, Inc.	
+0986	Matsushita Electric Works, Ltd.	
+0813	Mattel, Inc.	
+0A84	Maui Innovative Peripherals	
+04C3	Maxi Switch, Inc.	
+0B6A	Maxim Integrated Products	
+0D49	Maxtor	
+1682	Maxwise Production Enterprise Ltd.	
+248A	Maxxter	
+040E	MCCI	
+16D0	MCS	
+0C70	MCT Elektronikladen	
+09B4	MDS Telephone Systems	
+09DB	Measurement Computing Corp.	
+086F	MEC IMEX, Inc.	
+0A67	Medeli Electronics Co., Ltd	
+05C2	Media Phonics (Suisse) S.A.	
+095B	Medialogic Corp.	
+05B7	Medianix Semiconductor, Inc.	
+0DD3	MediaQ	
+08ED	MediaTek Inc.	
+0E8D	MediaTek Inc.	
+22DF	Medicom MTD, Ltd	
+1113	Medion AG	
+1513	medMobile	
+0A21	Medtronic Physio Control Corp.	
+07B5	Mega World International, Ltd	
+0D6A	Megapower International Corp.	
+0E6A	Megawin Technology Co., Ltd	
+2E57	MEGWARE Computer Vertrieb und Service GmbH	
+0BED	MEI	
+1B04	Meilhaus Electronic GmbH	
+0D61	Meilu Electronics (Shenzhen) Co., Ltd	
+1938	Meinberg Funkuhren GmbH & Co. KG	
+2A45	Meizu Corp.	
+22DC	Mellanox Technologies	
+4855	Memorex	
+12F7	Memorex Products, Inc.	
+09C5	Memory Corp.	
+1854	Memory Devices Ltd.	
+04D6	Mentor Graphics	
+2C4E	Mercucys INC	
+24F0	Metadot	
+3112	Meteca SA	
+04C2	Methode Electronics Far East PTE, Ltd	
+0635	Methode Electronics, Inc.	
+0870	Metricom	
+08B0	Metrohm	
+0C2E	Metrologic Instruments	
+0EB8	Mettler Toledo	
+24EA	Meva	
+5354	Meyer Instruments (MIS)	
+1724	Meyer Instruments (MIS)	
+0D76	MFP Korea, Inc.	
+081A	MG Logic	
+0463	MGE UPS Systems	
+17A7	MICOMSOFT CO., LTD.	
+17A7	MICOMSOFT CO., LTD.	
+058D	Micrel Semiconductor	
+04AC	Micro Audiometrics Corp.	
+0E34	Micro Computer Control Corp.	
+04C7	Micro Macro Technologies	
+0FDC	Micro Plus	
+0AC9	Micro Solutions, Inc.	
+3504	Micro Star	
+0DB0	Micro Star International	
+1462	Micro Star International	
+04D8	Microchip Technology, Inc.	
+0424	Microchip Technology, Inc. (formerly SMSC)	
+07F2	Microcomputer Applications, Inc.	
+0BC4	Microcube Corp.	
+0C45	Microdia	
+26F2	Micromega	
+0496	Micron Electronics	
+0634	Micron Technology, Inc.	
+074D	Micronas GmbH	
+042D	Micronics	
+0078	Microntek	
+1068	Micropi Elettronica	
+1DE6	MICRORISC s.r.o.	
+1777	Microscan Systems, Inc.	
+045E	Microsoft Corp.	
+06A7	MicroStore, Inc.	
+199B	MicroStrain, Inc.	
+07AF	Microtech	
+1498	Microtek International Inc.	
+05DA	Microtek International, Inc.	
+0596	MicroTouch Systems, Inc.	
+0F4D	Microtune, Inc.	
+1ACC	Midiplus Co, Ltd.	
+4752	Miditech	
+107E	Midoriya Electric Co., Ltd	
+18B6	Mikkon Technology Limited	
+2625	MilDef AB	
+0A50	Mimaki Engineering Co., Ltd	
+27DD	Mindeo	
+097A	Minds At Work LLC	
+04DE	MindShare, Inc.	
+19CA	Mindtribe	
+074A	Ming Fortune Industry Co., Ltd	
+0303	Mini Automation Controller	
+20CE	Minicircuits	
+0102	miniSTREAK	
+0686	Minolta Co., Ltd	
+0859	Minolta Systems Laboratory, Inc.	
+0CFC	Minolta-QMS, Inc.	
+084D	Minton Optic Industry Co., Inc.	
+0C1B	MIPS Technologies	
+081C	Mipsys	
+152B	MIR Srl	
+1E17	Mirion Technologies Dosimetry Services Division	
+07E7	Mirvo Toys, Inc.	
+2961	Miselu	
+0FC1	Mitac Internatinal Corp.	
+03ED	Mitel Corp.	
+06D3	Mitsubishi Electric Corp.	
+0452	Mitsubishi Electronics America, Inc.	
+10A3	Mitsubishi Materials Corp.	
+03EE	Mitsumi	
+0FEF	MJ Research, Inc.	
+0D0D	MKNet Corp.	
+017C	MLK	
+0DF7	Mobile Action Technology, Inc.	
+1011	Mobile Media Tech.	
+1342	Mobility	
+053E	Mobility Electronics	
+1EB8	Modacom Co., Ltd.	
+042F	Molex, Inc.	
+0447	Momentum Microsystems	
+106F	Money Controls	
+0566	Monterey International Corp.	
+2662	Moog Music Inc.	
+1347	Moravian Instruments	
+225D	Morpho	
+13EE	MosArt	
+062A	MosArt Semiconductor Corp.	
+9710	MosChip Semiconductor	
+0C04	MOTO Development Group, Inc.	
+07B2	Motorola BCS, Inc.	
+0CAD	Motorola CGISS	
+0427	Motorola Electronics Taiwan, Ltd	
+1063	Motorola Electronics Taiwan, Ltd [hex]	
+190D	Motorola GSG	
+0C44	Motorola iDEN	
+22B8	Motorola PCS	
+06FC	Motorola Semiconductor Products Sector	
+0425	Motorola Semiconductors HK, Ltd	
+0534	Motorola, Inc.	
+07E4	Movado Enterprise Co., Ltd	
+110A	Moxa Technologies Co., Ltd.	
+0A62	MPMan	
+1748	MQP Electronics	
+1770	MSI	
+1770	MSI	
+0EA7	MSL Enterprises Corp.	
+5131	MSR	
+1B20	MStar Semiconductor, Inc.	
+09FA	Mtek Vision	
+19FD	MTI Instruments Inc.	
+0D3F	MTS Systems Corp.	
+06E0	Multi-Tech Systems, Inc.	
+1781	Multiple Vendors	
+090D	Multiport Computer Vertriebs GmbH	
+04A8	Multivideo Labs, Inc.	
+2A47	Mundo Reader, S.L.	
+0BB5	Murata Manufacturing Co., Ltd	
+0B4E	Musical Electronics, Ltd	
+4D46	Musical Fidelity	
+055F	Mustek Systems, Inc.	
+0C30	Mutoh Industries Ltd	
+124C	MXI - Memory Experts International, Inc.	
+AAAA	MXT	
+0D5E	Myacom, Ltd	
+104B	Mylex / Buslogic	
+09BE	MySmart.Com	
+04CF	Myson Century, Inc.	
+1B96	N-Trig	
+0511	N'Able (DataBook) Technologies, Inc.	
+11C9	Nacon	
+10E2	Nada Electronics, Ltd	
+0B6F	Nagano Japan Radio Co., Ltd	
+0D17	NALTEC, Inc.	
+1415	Nam Tai E&E Products Ltd. or OmniVision Technologies, Inc.	
+2058	Nano River Technology	
+3923	National Instruments Corp.	
+0401	National Registry, Inc.	
+0400	National Semiconductor Corp.	
+07A2	National Technical Systems	
+17CC	Native Instruments	
+08B7	NATSU	
+131D	Natural Point	
+1873	Navilock	
+3136	Navini Networks	
+1B28	NAVIsis Inc.	
+07E0	NCP engineering GmbH	
+0404	NCR Corp.	
+0C86	NDA Technologies, Inc.	
+0004	Nebraska Furniture Mart	
+0409	NEC Corp.	
+0AAE	NEC infrontia Corp. (Nitsuko)	
+0B61	NEC Viewtechnology, Ltd	
+073E	NEC, Inc.	
+0C4C	Needham's Electronics	
+0E5D	Neltron Industrial Co., Ltd	
+0AEC	Neodio Technologies Corp.	
+0AE7	Neodym Systems, Inc.	
+09D1	NeoMagic, Inc.	
+050E	Neon Technology, Inc.	
+0E3A	Neostar Technology Co., Ltd	
+2464	Nest	
+20F1	NET New Electronic Technology GmbH	
+0DF4	NET&SYS	
+0DD8	Netac Technology Co., Ltd	
+0DD8	Netac Technology Co., Ltd	
+25DA	Netatmo	
+0F7D	NetBotz, Inc.	
+0525	Netchip Technology, Inc.	
+1385	Netgear, Inc	
+0846	NetGear, Inc.	
+0864	NetGear, Inc.	
+100D	Netopia, Inc.	
+2D6B	NetUP Inc.	
+0BB6	Network Alchemy	
+06D7	Network Computing Devices (NCD)	
+0757	Network Technologies, Inc.	
+0DCD	NetworkFab Corp.	
+090B	Neurosmith	
+054B	New Media Corp.	
+063F	New Technology Cable, Ltd	
+2B3E	NewAE Technology Inc.	
+0F5D	NewAge International, LLC	
+0CD7	NewChip S.r.l.	
+06CA	Newer Technology, Inc.	
+1026	Newly Corp.	
+0714	NewMotion, Inc.	
+04F7	Newnex Technology Corp.	
+104D	Newport Corporation	
+10F0	Nexio Co., Ltd	
+1870	Nexio Co., Ltd	
+298D	Next Biometrics	
+0C3E	Nextcell, Inc.	
+0A83	NextComm, Inc.	
+1CCA	NextWave Broadband Inc.	
+1926	NextWindow	
+0D4A	NF Corp.	
+2770	NHJ, Ltd	
+07CE	Nidec Copal	
+0F38	Nien-Yi Industrial Corp.	
+0EA6	Nihon Computer Co., Ltd	
+068F	Nihon KOHDEN	
+0598	Niigata Canotec Co., Inc.	
+11AC	Nike	
+04B0	Nikon Corp.	
+1931	Ningbo Broad Telecommunication Co., Ltd.	
+1D08	NINGBO HENTEK DRAGON ELECTRONICS CO., LTD.	
+057E	Nintendo Co., Ltd	
+13B3	Nippon Dics Co., Ltd.	
+0DA3	Nippon Electro-Sensory Devices Corp.	
+0626	Nippon Systems Development Co., Ltd	
+0E03	Nippon Systemware Co., Ltd	
+08C9	Nippon Telegraph and Telephone Corp.	
+09C2	Nisca Corp.	
+061E	Nissei Electric Co.	
+0F42	Nital Consulting Services, Inc.	
+0A86	NITGen Co., Ltd	
+0705	NKK Corp.	
+0446	NMB Technologies Corp.	
+2188	No brand	
+2C9D	Nod Inc	
+058A	Nohau Corp.	
+04A6	Nokia Display Products	
+0421	Nokia Mobile Phones	
+0485	Nokia Monitors	
+1C3D	NONIN MEDICAL INC.	
+59E3	Nonolith Labs	
+04F6	Norand Corp.	
+1915	Nordic Semiconductor ASA	
+2FE3	NordicSemiconductor	
+2537	Norelsys	
+0EDA	Noriake Itron Corp.	
+045D	Nortel Networks, Ltd	
+0AE9	North Shore Circuit Design L.L.P.	
+092F	Northern Embedded Science/CAVNEX	
+04EB	Northstar Systems, Inc.	
+0DED	Novasonics	
+0EB0	NovaTech	
+0603	Novatek Microelectronics Corp.	
+1410	Novatel Wireless	
+29C3	Noviga	
+0D69	NSI	
+0B60	Nsine, Ltd	
+089E	NST Co., Ltd	
+0A7D	NSTL, Inc.	
+0F60	NTK, Ltd	
+0A3C	NTT DoCoMo, Inc.	
+0785	NTT-ME	
+2CF0	Nuand LLC	
+1033	Nucam Corp.	
+1989	Nuconn Technology Corp.	
+0C79	NuConnex Technologies Pte., Ltd	
+1EBB	NuCORE Technology, Inc.	
+15E4	Numark	
+2A19	Numato Systems Pvt. Ltd	
+1091	Numerik Jena	
+0936	NuTesla	
+0955	NVIDIA Corp.	
+0D28	NXP	
+1FC9	NXP Semiconductors	
+124B	Nyko (Honey Bee)	
+1E71	NZXT	
+0B97	O2 Micro, Inc.	
+03F2	Oak Technology, Inc.	
+0981	Oak Technology, Ltd	
+158D	Oakley Inc.	
+0561	Oasis Design, Inc.	
+0EFD	Oasis Semiconductor	
+0771	Observator Instruments BV	
+2957	Obsidian Research Corporation	
+0669	Oce' Printing Systems GmbH	
+2457	Ocean Optics Inc.	
+0A7E	Octagon Systems Corp.	
+2833	Oculus VR, Inc.	
+0324	OCZ Technology Inc	
+0325	OCZ Technology Inc	
+9999	Odeon	
+0621	ODU-Steckverbindungssysteme GmbH & Co. KG	
+0BB3	Ofuji Technology	
+06BC	Oki Data Corp.	
+070A	Oki Electric Industry Co., Ltd	
+04D7	Oki Semiconductor	
+0975	OL'E Communications, Inc.	
+15BA	Olimex Ltd.	
+08E3	Olitec, Inc.	
+0B3C	Olivetti Techcenter	
+093F	Olympia Telecom Vertriebs GmbH	
+07B4	Olympus Optical Co., Ltd	
+1C9E	OMEGA TECHNOLOGY	
+0EBF	Omega Technology of Taiwan, Inc.	
+0B39	Omnidirectional Control Technology, Inc.	
+076B	OmniKey AG	
+05A9	OmniVision Technologies, Inc.	
+0590	Omron Corp.	
+1057	ON Semiconductor	
+0779	ON Semiconductor (formerly Fairchild)	
+0E7B	On-Tech Industry Co., Ltd	
+1EE8	ONDA COMMUNICATION S.p.a.	
+2A70	OnePlus Technology (Shenzhen) Co., Ltd.	
+0746	Onkyo Corp.	
+2378	OnLive	
+07A3	Onnto Corp.	
+0F1B	Onset Computer Corp.	
+55AA	OnSpec Electronic, Inc.	
+0D15	OnStream b.v.	
+0A07	Ontrak Control Systems Inc.	
+151F	Opal Kelly Incorporated	
+06F1	Opcode Systems, Inc.	
+0ACA	OPEN Networks Ltd	
+1D50	OpenMoko, Inc.	
+695C	Opera1	
+1CB4	OPEX CORPORATION	
+22D9	OPPO Electronics Corp.	
+0798	Optelec	
+03FB	OPTi, Inc.	
+0CB8	Opticis Co., Ltd	
+0AF0	Option	
+065A	Optoelectronics Co., Ltd	
+0C74	Optronic Laboratories Inc.	
+1557	OQO	
+0F19	Oracom Co., Ltd	
+0B62	Orange Micro, Inc.	
+0BDD	Orange PCS	
+2BC5	Orbbec 3D Technology International, Inc	
+0FDE	Oregon Scientific	
+1BF6	Orient Semiconductor Electronics, Ltd.	
+05A4	Ortek Technology, Inc.	
+0FE0	Osterhout Design Group	
+7825	Other World Computing	
+1E91	Other World Computing	
+0EA0	Ours Technology, Inc.	
+2836	OUYA	
+1B75	Ovislink Corp.	
+5345	Owon	
+2A1D	Oxford Nanopore Technologies, Ltd	
+0D89	Oz Software	
+1BDE	P-TWO INDUSTRIES, INC.	
+1357	P&E Microcomputer Systems	
+2349	P2 Engineering Group, LLC	
+0BF0	Pace Micro Technology PLC	
+15E9	Pacific Digital Corp.	
+04EF	Pacific Electronic International, Inc.	
+0583	Padix Co., Ltd (Rockfire)	
+09A3	PairGain Technologies	
+19EF	Pak Heng Technology (Shenzhen) Co., Ltd.	
+0830	Palm, Inc.	
+0CBC	Palmax Technology Co., Ltd	
+04B1	Pan International	
+0B23	Pan-Asia Electronics Co., Ltd	
+08E7	Pan-International Wire & Cable	
+04DA	Panasonic (Matsushita)	
+1111	Pandora International Ltd.	
+121F	Panini S.p.A.	
+134C	PanJit International Inc.	
+4586	Panram	
+1497	Panstrong Company Ltd.	
+1084	Pantech Co., Ltd	
+1084	Pantech Co., Ltd	
+232B	Pantum Ltd.	
+0AC7	Panwest Corp.	
+06DB	Paradyne	
+0E99	Parallel Dice Co., Ltd	
+203A	PARALLELS	
+24E1	Paratronic	
+19CF	Parrot SA	
+076C	Partner Tech	
+0945	Pasco Scientific	
+0C8A	Pathway Connectivity, Inc.	
+06EB	PC Expert Tech. Co., Ltd	
+04E9	PC-Tel, Inc.	
+0B10	Pcally	
+13BA	PCPlay	
+2013	PCTV Systems	
+0C72	PEAK System	
+0E20	Pegasus Technologies Ltd.	
+1D4D	PEGATRON CORPORATION	
+0A3A	PentaMedia Co., Ltd	
+0A17	Pentax Corp.	
+25FB	Pentax Ricoh Imaging Co., Ltd	
+0CBD	Pentel Co., Ltd (Electronics Equipment Div.)	
+0565	Peracom Networks, Inc.	
+0AA6	Perception Digital, Ltd	
+0BCB	Perfect Technic Enterprise Co., Ltd	
+13B0	PerkinElmer Optoelectronics	
+256B	Perreaux Industries Ltd	
+16B5	Persentec, Inc.	
+0810	Personal Communication Systems, Inc.	
+1431	Pertech Resources, Inc.	
+068A	Pertech, Inc.	
+18B1	Petalynx	
+2368	Peterson Electro-Musical Products Inc.	
+04FE	PFU, Ltd	
+22DB	Phase One	
+06C2	Phidgets Inc. (formerly GLAB)	
+2759	Philip Morris Products S.A.	
+0471	Philips (or NXP)	
+1C6B	Philips & Lite-ON Digital Solutions Corporation	
+0575	Philips Creative Display Solutions	
+0552	Philips Monitors	
+05B9	Philips Research Laboratories	
+05D6	Philips Semiconductors, CICT	
+0911	Philips Speech Processing	
+0D7D	Phison Electronics Corp.	
+041A	Phoenix Technologies, Ltd	
+06DA	Phoenixtec Power Co., Ltd	
+0ECF	Phogenix Imaging, LLC	
+0ECF	Phogenix Imaging, LLC	
+0941	Photobit Corp.	
+1A72	Physik Instrumente	
+05F3	PI Engineering, Inc.	
+0CE9	Pico Technology	
+0E0D	PicoQuant GmbH	
+2AD1	Picotronic GmbH	
+10FB	Pictos Technologies, Inc.	
+0A8D	Picturetel	
+22A6	Pie Digital, Inc.	
+1669	PiKRON Ltd. [hex]	
+0B4B	Pine Corp. Ltd.	
+1501	Pine-Tum Enterprise Co., Ltd.	
+2304	Pinnacle Systems, Inc.	
+0900	Pinnacle Systems, Inc.	
+08E4	Pioneer Corp.	
+1266	Pirelli Broadband Solutions	
+0D8F	Pitney Bowes	
+093A	Pixart Imaging, Inc.	
+06B8	Pixela Corp.	
+1996	PixeLINK	
+0549	Pixera Corp.	
+21AB	Planeta Informatica	
+2019	PLANEX	
+0053	Planex	
+2C02	Planex Communications	
+14EA	Planex Communications	
+07E3	Planex Communications, Inc.	
+18DD	Planon System Solutions Inc.	
+047F	Plantronics, Inc.	
+1CC0	PlantSense	
+1B48	Plastron Precision Co., Ltd.	
+0B43	Play.com, Inc.	
+0B98	Playmates Toys, Inc.	
+093B	Plextor Corp.	
+0A4A	Ploytec GmbH	
+0FC2	Plug and Jack Industrial, Inc.	
+2581	Plug-up	
+2230	Plugable	
+0B87	Plus-One I & T, Inc.	
+2578	Pluscom	
+07B3	Plustek, Inc.	
+0928	PLX Technology, Inc. (formerly Oxford Semiconductor, Ltd)	
+1C28	PMD Technologies	
+154B	PNY	
+0B30	PNY Technologies, Inc.	
+09A6	Poinchips	
+1E10	Point Grey Research, Inc.	
+0EF5	PointChips	
+0DA4	Polar Electro Oy	
+0546	Polaroid Corp.	
+074B	Polestar Tech. Corp.	
+0F44	Polhemus	
+1FFB	Pololu Corporation	
+095D	Polycom, Inc.	
+0A53	Portable Peripheral Co., Ltd	
+0B70	PortalPlayer, Inc.	
+095A	Portsmith	
+0D3A	Posiflex Technologies, Inc.	
+1424	Posnet Polska S.A.	
+10E0	Post-Op Video, Inc.	
+068B	Potrans International, Inc.	
+FF00	Power Delivery	
+0DD2	Power Quotient International Co., Ltd	
+3538	Power Quotient International Co., Ltd	
+0D77	Power Sentry/Newpoint	
+0D9F	Powercom Co., Ltd	
+07C7	Powertech Industrial Co., Ltd	
+05CB	PowerVision Technologies, Inc.	
+0592	Powerware Corp.	
+0F5C	Prairiecomm, Inc.	
+08C3	Precise Biometrics	
+0DC6	Precision Squared Technology Corp.	
+053A	PrehKeyTec GmbH	
+321C	Premio, Inc.	
+194F	PreSonus Audio Electronics, Inc.	
+1681	Prevo Technologies, Inc.	
+24A4	Primare AB	
+0461	Primax Electronics, Ltd	
+089F	Primex Aerospace Co.	
+0594	Princeton Graphic Systems	
+10AE	Princeton Technology Corp.	
+1796	Printrex, Inc.	
+14AE	Printronix Inc.	
+0F2F	Priva Design Services	
+0790	Pro-Image Manufacturing Co., Ltd	
+1928	Proceq SA	
+08CF	Productivity Enhancement Products	
+06AE	Professional Multimedia Testing Centre	
+28F9	Profitap HQ BV	
+73D8	Progeny Dental Equipment Specialists	
+0B0D	ProjectLab	
+11F6	Prolific	
+0C26	Prolific Technology Inc.	
+067B	Prolific Technology, Inc.	
+1554	Prolink Microsystems Corp.	
+0D48	Promethean Limited	
+04E5	Promise Technology	
+0D8D	Promotion & Display Technology, Ltd	
+061B	Promptus Communications, Inc.	
+054E	Proside Corp.	
+055C	Proton Electronic Ind.	
+6666	Prototype product Vendor ID	
+08C4	Proxim, Inc.	
+05B6	Proxima Corp.	
+2D2D	proxmark.org	
+2C99	Prusa	
+103A	PSA	
+05F9	PSC Scanning, Inc.	
+09CD	Psion Dacom Home Networks, Ltd	
+28E0	PT. Prasimax Inovasi Teknologi	
+2548	Pulse-Eight	
+2373	Pumatronix Ltda	
+167B	Pure Digital Technologies, Inc.	
+316D	Purism, SPC	
+0708	Putercom Co., Ltd	
+1398	Q-tec	
+18E8	Qcom	
+46F4	QEMU	
+20B7	Qi Hardware	
+1A86	QinHeng Electronics	
+1C04	QNAP System Inc.	
+07E5	QPS, Inc.	
+173D	QSENN	
+05C7	Qtronix Corp.	
+0615	Quabbin Wire & Cable Co., Inc.	
+1E0E	Qualcomm / Option	
+0CF3	Qualcomm Atheros Communications	
+1291	Qualcomm Flarion Technologies, Inc. / Leadtek Research, Inc.	
+05C6	Qualcomm, Inc.	
+087F	QualCore Logic Inc.	
+0408	Quanta Computer, Inc.	
+1A32	Quanta Microsystems, Inc.	
+0FDA	Quantec Networks GmbH	
+0933	Quantum Corp.	
+156F	Quantum Corporation	
+0568	Quartz Ingenierie	
+061D	Quatech, Inc.	
+2C7C	Quectel Wireless Solutions Co., Ltd.	
+0591	Questra Consulting	
+057F	QuickShot, Ltd	
+2FF4	Quixant Plc	
+290C	R. Hamilton & Co. Ltd.	
+11BE	R&D International NV	
+0581	Racal Data Group	
+07D5	Radiant Systems	
+0E4C	Radica Games, Ltd	
+1954	Radiient Technologies	
+0A35	Radikal Technologies	
+1453	Radio Shack	
+08B9	RadioShack Corp. (Tandy)	
+2233	RadioShack Corporation	
+043F	RadiSys Corp.	
+0C3C	Radius Co., Ltd	
+05BD	RAFI GmbH & Co. KG	
+04B9	Rainbow Technologies, Inc.	
+148F	Ralink Technology, Corp.	
+14B2	Ralink Technology, Corp.	
+102A	Ramos Technology Co., Ltd	
+13E5	Rane	
+14DD	Raritan Computer, Inc.	
+0584	RATOC System, Inc.	
+2546	Ravensburger	
+10D2	RayComposer - R. Adams	
+2386	Raydium Corporation	
+1532	Razer USA, Ltd	
+1689	Razer USA, Ltd	
+1689	Razer USA, Ltd	
+0F41	RDC Semiconductor Co., Ltd	
+2107	RDING TECH CO.,LTD	
+09E7	Real 3D, Inc.	
+0795	RealChip, Inc.	
+063E	RealMedia Technology, Inc.	
+0BDA	Realtek Semiconductor Corp.	
+0680	Realtek Semiconductor Corp., CPP Div. (Avance Logic)	
+1BF0	RealVision Inc.	
+0D34	Rearden Steel Technologies	
+0883	Recording Industry Association of America (RIAA)	
+2B23	Red Hat, Inc.	
+05E4	Red Wing Corp.	
+1430	RedOctane	
+112A	RedRat	
+2822	REFLEXdigital	
+0C4B	Reiner SCT Kartensysteme GmbH	
+0475	Relisys/Teco Information System	
+1C0D	Relm Wireless	
+200C	Reloop	
+0AD1	Remotec Technology, Ltd	
+0FCA	Research In Motion, Ltd.	
+26A9	Research Industrial Systems Engineering	
+0822	Reudo Corp.	
+0C66	Rexon Electronics Corp.	
+0A80	Rexon Technology Corp., Ltd	
+0B84	Rextron Technology, Inc.	
+05F7	RFC Distribution(s) PTE, Ltd	
+0C27	RFIDeas, Inc	
+179D	Ricavision International, Inc.	
+05CA	Ricoh Co., Ltd	
+13BE	Ricoh Printing Systems, Ltd.	
+1AB1	Rigol Technologies	
+0CC3	Rimage Corp.	
+0841	Rioport.com, Inc.	
+1294	RISO KAGAKU CORP.	
+0B27	Ritek Corp.	
+1001	Ritronics Components (S) Pte., Ltd	
+2A39	RME	
+108C	Robert Bosch GmbH	
+1E7D	ROCCAT	
+173A	Roche	
+09F6	RocketChips, Inc.	
+14C0	Rockwell Automation, Inc.	
+19F7	RODE Microphones	
+0AAD	Rohde & Schwarz GmbH & Co. KG	
+04B5	ROHM LSI Systems USA, LLC	
+0582	Roland Corp.	
+0B75	Roland DG Corp.	
+2AF4	ROLI Ltd.	
+1310	Roper	
+2BD8	ROPEX Industrie-Elektronik GmbH	
+270D	Rosand Technologies	
+097D	Rosun Technologies, Inc.	
+0606	Royal Information Electronics Co., Ltd	
+0954	RPM Systems Corp.	
+15E1	RSA	
+2100	RT Systems	
+2A37	RTD Embedded Technologies, Inc.	
+0D9A	RTX AS	
+119B	ruwido austria GmbH	
+05BF	S & S Research	
+19AF	S Life	
+048A	S-MOS Systems, Inc.	
+041D	S3, Inc.	
+1688	Saab AB	
+0CFF	SAFA MEDIA Co., Ltd.	
+1A4B	SafeBoot International B.V.	
+3145	SafeLogic Inc.	
+079B	Sagem	
+0780	Sagem Monetel GmbH	
+1A6F	Sagem Orga GmbH	
+14E5	SAIN Information & Communications Co., Ltd.	
+0EB3	Saint Technology Corp.	
+06A3	Saitek PLC	
+1ACB	Salcomp Plc	
+21A9	Saleae, Inc.	
+1167	Salient Systems Corp.	
+115B	Salix Technology Co., Ltd.	
+0C25	Sampo Corp.	
+05A5	Sampo Technology Corp.	
+17A0	Samson Technologies Corp.	
+055D	Samsung Electro-Mechanics Co.	
+057A	Samsung Electronics America	
+04E8	Samsung Electronics Co., Ltd	
+0419	Samsung Info. Systems America, Inc.	
+0434	Samsung Info. Systems America, Inc.	
+1FAB	Samsung Opto-Electroncs Co., Ltd.	
+0492	Samsung SemiConductor, Inc.	
+0839	Samsung Techwin Co., Ltd	
+1D20	SAMTACK INC.	
+2227	SAMWOO Enterprise	
+1A6D	SamYoung Electronics Co., Ltd	
+106D	San Chieh Manufacturing, Ltd	
+0FBA	San Shing Electronics Co., Ltd	
+0781	SanDisk Corp.	
+0871	SanDisk, Inc.	
+10C5	Sanei Electric, Inc.	
+17D0	Sanford L.P.	
+2406	SANHO Digital Electronics Co., Ltd.	
+077A	Sankyo Seiki Mfg. Co., Ltd	
+0D97	Santa Barbara Instrument Group	
+117D	Santa Electronic, Inc.	
+0A72	Sanwa Denshi	
+0D9D	Sanwa Supply, Inc.	
+0474	Sanyo Electric Co., Ltd	
+0473	Sanyo Information Business Co., Ltd	
+0AC3	Sanyo Semiconductor Company Micro	
+0588	Sapien Design	
+0EE1	Sarotech Co., Ltd	
+0828	Sato Corp.	
+534C	SatoshiLabs	
+17BA	SAURIS GmbH	
+262A	SAVITECH Corp.	
+0A15	Scalar Corp.	
+04CE	ScanLogic Corp.	
+137B	SCAPS GmbH	
+0CD6	Scheidt & Bachmann	
+0973	Schlumberger	
+1C83	Schomaecker GmbH	
+1ADB	Schweitzer Engineering Laboratories, Inc	
+05CE	sci-worx GmbH	
+051E	Scientific Atlanta, Inc.	
+0AEA	SciEssence, LLC	
+04E6	SCM Microsystems, Inc.	
+18FB	Scriptel Corporation	
+2E95	SCUF Gaming	
+0DC5	SDK Co., Ltd	
+1012	SDKM Fibres, Wires & Cables Berhad	
+2CDC	Sea & Sun Technology GmbH	
+0FD2	Seac Banche	
+0FD2	Seac Banche	
+1A2A	Seagate Branded Solutions	
+0BC2	Seagate RSS LLC	
+0477	Seagate Technology, Inc.	
+219C	Seal One AG	
+0C52	Sealevel Systems, Inc.	
+22B1	Secret Labs LLC	
+1162	Secugen Corp.	
+22E0	secunet Security Networks AG	
+2886	Seeed Technology Co., Ltd.	
+289D	Seek Thermal, Inc.	
+0CA3	Sega Corp.	
+0569	SegaSoft	
+1366	SEGGER	
+04B8	Seiko Epson Corp.	
+0619	Seiko Instruments, Inc.	
+0510	Sejin Electron, Inc.	
+047A	Semtech Corp.	
+05C9	Semtech Corp.	
+0C9D	SemTek	
+092B	Sena Technologies, Inc.	
+1740	Senao	
+0CC5	Sendo	
+0F22	Senior Industries, Inc.	
+1395	Sennheiser Communications	
+1377	Sennheiser electronic GmbH & Co. KG	
+2FC0	Sensidyne, LP	
+1421	Sensor Technology	
+1943	Sensoray Co., Inc.	
+15E0	Seong Ji Industrial Co., Ltd.	
+258D	Sequans Communications	
+0670	Sequel Imaging	
+0A0D	Servergy, Inc	
+0AD2	Service & Quality Technology Co., Ltd	
+23FC	SesKion GmbH	
+0B96	Sewon Telecom	
+1547	SG Intec Ltd & Co KG	
+1A8B	SGS Taiwan Ltd.	
+044A	Shamrock Tech. Co., Ltd	
+0CBB	Shanghai Darong Electronics Co., Ltd	
+1C26	Shanghai Haiying Electronics Co., Ltd.	
+6A75	Shanghai Jujo Electronics Co., Ltd	
+25F0	ShanWan	
+07C6	ShareWave, Inc.	
+13D2	Shark Multimedia	
+057D	Shark Multimedia, Inc.	
+357D	Sharkoon	
+1EA7	SHARKOON Technologies GmbH	
+04DD	Sharp Corp.	
+1175	Shengyih Steel Mold Co., Ltd	
+1B88	ShenMing Electron (Dong Guan) Co., Ltd.	
+1C05	Shenxhen Stager Electric	
+0E4A	Shenzhen Bao Hing Electric Wire & Cable Mfr. Co.	
+2A0E	Shenzhen DreamSource Technology Co., Ltd.	
+27C6	Shenzhen Goodix Technology Co.,Ltd.	
+1788	ShenZhen Litkconn Technology Co., Ltd.	
+24AE	Shenzhen Rapoo Technology Co., Ltd.	
+1997	Shenzhen Riitek Technology Co., Ltd	
+2563	ShenZhen ShanWan Technology Co., Ltd.	
+20BC	ShenZhen ShanWan Technology Co., Ltd.	
+F4ED	Shenzhen Siglent Co., Ltd.	
+03D9	Shenzhen Sinote Tech-Electron Co., Ltd	
+1BEF	Shenzhen Tongyuan Network-Communication Cables Co., Ltd	
+1930	Shenzhen Xianhe Technology Co., Ltd.	
+1930	Shenzhen Xianhe Technology Co., Ltd.	
+1B99	Shenzhen Yuanchuan Electronic	
+16A5	Shenzhen Zhengerya Cable Co., Ltd.	
+254E	SHF Communication Technologies AG	
+0DB2	Shian Hwi Plug Parts, Plastic Factory	
+0EE0	Shima Seiki Mfg., Ltd	
+1146	Shimane SANYO Electric Co., Ltd.	
+1E44	SHIMANO INC.	
+0E83	Shin An Wire & Cable Co.	
+0B71	SHIN-EI Sangyo Co., Ltd	
+1082	Shin-Etsukaken Co., Ltd	
+2318	Shining Technologies, Inc. [hex]	
+090E	Shining Technology, Inc.	
+1022	Shinko Shoji Co., Ltd	
+14ED	Shure Inc.	
+4572	Shuttle, Inc.	
+051C	Shuttle, Inc.	
+1308	Shuttle, Inc.	
+0539	Shyh Shiun Terminals Co., Ltd	
+0500	Siam United Hi-Tech	
+187F	Siano Mobile Silicon	
+236A	SiBEAM	
+08FC	Sicon Cable Technology Co., Ltd	
+11F5	Siemens AG	
+0908	Siemens AG	
+03F5	Siemens Electromechanical	
+0681	Siemens Information and Communication Products	
+044D	Siemens Nixdorf AG	
+05FA	Siemens Telecommunications Systems, Ltd	
+0636	Sierra Imaging, Inc.	
+1199	Sierra Wireless, Inc.	
+1003	Sigma Corp.	
+0658	Sigma Designs, Inc.	
+0B88	Sigma Koki Co., Ltd, Technology Center	
+1C4F	SiGma Micro	
+1D9D	Sigma Sport	
+316C	SigmaSense, LLC	
+066F	SigmaTel, Inc.	
+2817	Signal Hound, Inc.	
+0C64	Signality System Engineering Co., Ltd	
+2133	signotec GmbH	
+272C	Signum Systems	
+06C8	SIIG, Inc.	
+0F0F	Silego Technology Inc	
+16CC	silex technology, Inc.	
+1485	Silicom	
+05CD	Silicom, Ltd	
+116F	Silicon 10 Technology Corp.	
+053D	Silicon Architect	
+051B	Silicon Graphics	
+065E	Silicon Graphics	
+1A4A	Silicon Image	
+266E	Silicon Integrated Systems	
+0457	Silicon Integrated Systems Corp.	
+10C4	Silicon Labs	
+10CE	Silicon Labs	
+2232	Silicon Motion	
+0C1A	Silicon Motion, Inc.	
+090C	Silicon Motion, Inc. - Taiwan (formerly Feiya Technology Corp.)	
+1527	Silicon Portals	
+0709	Silicon Systems, Ltd (SSL)	
+05DF	Silicon Vision, Inc.	
+29BD	Silicon Works	
+047B	Silitek Corp.	
+09E6	Silutia, Inc.	
+0AF6	Silver I Co., Ltd	
+1AAB	Silvercreations Software AG	
+2806	SIMPASS	
+2086	SIMPASS	
+4971	SimpleTech	
+20DF	Simtec Electronics	
+062F	Sin Sheng Terminal & Machine, Inc.	
+0B54	Sinbon Electronics Co., Ltd	
+0CB7	Singatron Enterprise Co., Ltd	
+17C3	Singim International Corp.	
+0AC6	Singing Electrons, Inc.	
+1345	Sino Lite Technology Corp.	
+258A	Sino Wealth Electronic Ltd.	
+0C77	Sipix Group, Ltd	
+0541	Sirf Technology, Inc.	
+06EA	Sirius Technologies	
+9016	Sitecom	
+6189	Sitecom	
+0DF6	Sitecom Europe B.V.	
+1403	Sitronix	
+10A9	SK Teletech Co., Ltd	
+0D96	Skanhex Technology, Inc.	
+0CCB	SKNet Co., Ltd	
+1223	SKYCABLE ENTERPRISE. CO., LTD.	
+1C6C	Skydigital Inc.	
+0EF7	SM Tech Co., Ltd (Tulip)	
+1587	SMA Technologie AG	
+3219	Smak Tecnologia e Automacao LTDA	
+09A9	Smart Card Technologies Co., Ltd	
+0E39	Smart Modular Technologies, Inc.	
+0B8C	SMART Technologies Inc.	
+076A	Smart Technology Enablers, Inc.	
+CD12	SMART TECHNOLOGY INDUSTRIAL LTD.	
+EF18	SMART TECHNOLOGY INDUSTRIAL LTD.	
+08D1	smartBridges, Inc.	
+0917	SmartDisk Corp.	
+10BF	SmartHome	
+1D5B	Smartronix, Inc.	
+0D5C	SMC Networks, Inc.	
+0497	Smile International	
+0609	SMK Manufacturing, Inc.	
+06BA	Smooth Cord & Connector Co., Ltd	
+154F	SNBC CO., Ltd	
+08FB	Socket Communications	
+09F8	SoftConnex Technologies, Inc.	
+0DA8	softDSP Co., Ltd	
+1649	SofTec Microsystems	
+077E	Softing AG	
+2113	Softkinetic	
+27F2	Softnautics LLP	
+0B9D	Softprotec Co.	
+1015	Softronics Pty., Ltd	
+2527	Software Bisque	
+15E8	SohoWare	
+0524	Sola Electronics	
+060B	Solid Year	
+1D07	Solid-Motion	
+7302	Solinftec	
+04FD	Soliton Systems, K.K.	
+0D57	Solomon Microtech, Ltd	
+0F8F	Soma Networks	
+1C88	Somagic, Inc.	
+045A	SONICblue, Inc.	
+1D0F	Sonix Technology Co., Ltd.	
+6472	Sony Corp.	
+1617	Sony Corp.	
+054C	Sony Corp.	
+0A51	Sony Electronics, Inc.	
+0FCE	Sony Ericsson Mobile Communications AB	
+075B	Sophisticated Circuits, Inc.	
+08B4	Sorenson Vision, Inc.	
+0FA5	Sotec Co., Ltd	
+15C2	SoundGraph Inc.	
+0833	Sourcenext Corp.	
+0655	Space Shuttle Hi-Tech Co., Ltd	
+0A14	Spacelabs Medical, Inc.	
+05A8	Spacetec IMC Corp.	
+1A6A	Spansion Inc.	
+0484	Specialix	
+316E	SPECINFOSYSTEMS	
+1973	Spectralink Corporation	
+0C55	Spectrum Digital, Inc.	
+059A	Spectrum Signal Processing, Inc.	
+0E55	Speed Dragon Multimedia, Ltd	
+1000	Speed Tech Corp.	
+1017	Speedy Industrial Supplies, Pte., Ltd	
+114B	Sphairon Access Systems GmbH	
+06CF	SpheronVR AG	
+0934	Spirent Communications	
+0B47	Sportbug.com, Inc.	
+1782	Spreadtrum Communications Inc.	
+1C34	SpringCard	
+1C34	SpringCard	
+08DF	Spyrus, Inc.	
+27A8	Square, Inc.	
+0D3C	Sri Cable Technology, Ltd	
+04CC	ST-Ericsson	
+0F4B	St. John Technology Co., Ltd	
+0CA4	ST&T Instrument Corp.	
+1461	Staccato Communications	
+726C	StackFoundry LLC	
+0707	Standard Microsystems Corp.	
+1260	Standard Microsystems Corp.	
+052E	Standard Microsystems Corp.	
+286B	STANEO SAS	
+103D	Stanton	
+1F87	Stantum	
+0519	Star Micronics Co., Ltd	
+0FA3	Starconn Electronic Co., Ltd	
+0652	Stargate Solutions, Inc.	
+272A	StarLeaf Ltd.	
+1278	Starlight Xpress	
+18D5	Starline International Group Limited	
+2803	StarLine LLC.	
+1198	StarShine Technology Corp.	
+14B0	StarTech.com Ltd.	
+0BCA	Startek Engineering, Inc.	
+136B	STEC	
+1038	SteelSeries ApS	
+0A4E	Steinberg Soft-und Hardware GmbH	
+22C9	StepOver GmbH	
+2689	StepOver International GmbH	
+0ABE	Stereo-Link	
+2B03	STEREOLABS	
+0487	Stewart Connector	
+0483	STMicroelectronics	
+0553	STMicroelectronics Imaging Division (VLSI Vision)	
+0742	Stollmann	
+1628	Stonestreet One, Inc.	
+1980	Storage Appliance Corporation	
+0E38	Stratitec, Inc.	
+0E9C	Streamzap, Inc.	
+126E	Strobe Data, Inc.	
+0748	Strong Man Enterprise Co., Ltd	
+1657	Struck Innovative Systeme GmbH	
+07EF	STSN	
+9516	Studiologic	
+0927	Summus, Ltd	
+05DB	Sun Corp. (Suntac?)	
+0430	Sun Microsystems, Inc.	
+0E44	Sun-Riseful Technology Co., Ltd.	
+073B	Suncom Technologies	
+2659	Sundtek	
+1568	Sunf Pu Technology Co., Ltd	
+05CF	Sung Forn Co., Ltd	
+072E	Sunix Co., Ltd	
+0BF7	Sunny Giken, Inc.	
+1BCF	Sunplus Innovation Technology Inc.	
+04FC	Sunplus Technology Co., Ltd	
+0EE4	Sunrich Technology, Ltd	
+0B79	Sunrise Telecom, Inc.	
+05D5	Super Gate Technology Co., Ltd	
+0D68	Super Link Electronics Co., Ltd	
+14CD	Super Top	
+0701	Supercomal Wire & Cable SDN. BHD.	
+2C23	Supermicro Computer Incorporated	
+16D1	Suprema Inc.	
+0D90	Sure-Fire Electrical Corp.	
+0769	Surecom Technology Corp.	
+1099	Surface Optics Corp.	
+0731	Susteen, Inc.	
+1493	Suunto	
+064E	Suyin Corp.	
+0DA1	Suzhou Peter's Precise Industrial Co., Ltd	
+088C	Swecoin AB	
+0EC2	Sweetray Industrial, Ltd	
+177F	Sweex	
+5173	Sweex	
+2E69	Swift Navigation	
+214E	Swiftpoint	
+0617	Swiss Federal Insitute of Technology	
+1370	Swissbit	
+170B	Swissonic	
+0A3F	Swissonic AG	
+0E22	Symbian Ltd.	
+0417	Symbios Logic	
+05E0	Symbol Technologies	
+1CA1	Symwave	
+06CB	Synaptics, Inc.	
+0C18	SynerTek Korea, Inc.	
+05AE	Synopsys, Inc.	
+0405	Synopsys, Inc.	
+053F	Synopsys, Inc.	
+0745	Syntech Information Co., Ltd	
+174F	Syntek	
+05E1	Syntek Semiconductor Co., Ltd	
+0A82	Syscan	
+05B8	SYSGRATION	
+06AA	Sysgration, Ltd	
+08F5	SysTec Co., Ltd	
+0532	Systech Corp.	
+0BBD	System Connection, Inc.	
+1772	System Level Solutions, Inc.	
+0AE8	System Support Co., Ltd	
+086E	System TALKS, Inc.	
+1F52	Systems & Electronic Development FZCO (SEDCO)	
+04A1	SystemSoft Corp.	
+1BBB	T & A Mobile Phones	
+1977	T-Logic	
+06F0	T.N.C Industrial Co., Ltd	
+2AB6	T+A elektroakustik GmbH & Co KG, Germany	
+0E9A	TA HSING Industries, Ltd	
+0D41	Ta Yun Terminals Industrial Co., Ltd	
+2077	Taicang T&W Electronics Co. Ltd	
+0B7B	Taiko Denki Co., Ltd	
+0ECE	TaiSol Electronics Co., Ltd	
+0AE4	Taito Corp.	
+0D7C	Taiwan Line Tek Electronic Co., Ltd	
+0520	Taiwan Semiconductor Manufacturing Co.	
+062D	Taiwan Tai-Hao Enterprises Co., Ltd	
+07EC	Taiyo Electric Wire & Cable Co., Ltd	
+0C24	Taiyo Yuden	
+0C22	Tally Printer Corp.	
+0DC1	Tamagawa Seiki Co., Ltd	
+0DC1	Tamagawa Seiki Co., Ltd	
+0DDB	Tamarack, Inc.	
+0E9F	Tamura Corp.	
+1F82	TANDBERG	
+1A5A	Tandberg Data	
+0D3D	Tangtop Technology Co., Ltd	
+3147	Tanvas, Inc.	
+12EF	Tapwave, Inc.	
+4168	Targus	
+1048	Targus Group International	
+1604	Tascam	
+0628	Tasking Software, Inc.	
+0D9B	Tat Shing Electrical Co.	
+0AFD	Tateno Dennou, Inc.	
+1460	Tatung Co.	
+04CD	Tatung Co. Of America	
+063B	Taugagreining HF	
+0436	Taugagreining HF	
+06C9	Taxan (Europe), Ltd	
+29C1	Taztag	
+734C	TBS Technologies China	
+1220	TC Electronic	
+04BF	TDK Corp.	
+1D0D	TDKMedia	
+0644	TEAC Corp.	
+15A8	Teams Power Limited	
+1861	Tech Technology Industrial Company	
+1D09	TechFaith Wireless Technology Limited	
+06D8	Technical Marketing Research, Inc.	
+14F7	TechniSat Digital GmbH	
+0E50	TechnoData Interware	
+1197	Technoimagia Co., Ltd	
+22BA	Technology Innovation Holdings, Ltd	
+13E6	TechnoScope Co., Ltd.	
+0CC8	Technotools Corp.	
+0B48	TechnoTrend AG	
+11A3	Technovas Co., Ltd	
+0D81	TechnoVision	
+13D0	Techsan Electronics Co., Ltd.	
+13D0	Techsan Electronics Co., Ltd.	
+088A	TechTools	
+063A	Techwin Corp.	
+080D	Teco Image Systems Co., Ltd	
+0D4C	Tedas AG	
+2367	Teenage Engineering	
+0657	Tekcon Electronics Corp.	
+2890	Teknic, Inc	
+052B	Tekom Technologies, Inc.	
+0DB3	Tekram Technology Co., Ltd	
+0B3B	Tekram Technology Co., Ltd	
+0699	Tektronix, Inc.	
+0A13	Telebyte, Inc.	
+140E	Telechips, Inc.	
+1CDE	Telecommunications Technology Association (TTA)	
+2340	Teleepoch	
+1B24	Telegent Systems, Inc.	
+0455	Telematics International, Inc.	
+16DE	Telemecanique	
+0676	Teles AG	
+0862	Teletrol Systems, Inc.	
+0562	Telex Communications, Inc.	
+04BE	Telia Research AB	
+1BC7	Telit Wireless Solutions	
+0BC8	Telmax Communications	
+0D06	telos EDV Systementwicklung GmbH	
+1165	Telson Electronics Co., Ltd	
+0526	Temic MHS S.A.	
+0C8D	Tempo	
+2604	Tenda	
+0FD4	Tenovis GmbH & Co., KG	
+0FD4	Tenovis GmbH & Co., KG	
+1130	Tenx Technology, Inc.	
+230D	Teracom	
+06CC	Terayon Communication Systems	
+1862	Teridian Semiconductor Corp.	
+1A40	Terminus Technology Inc.	
+153B	TerraTec Electronic GmbH	
+0CCD	TerraTec Electronic GmbH	
+F007	Teslong	
+9022	TeVii Technology Ltd.	
+32B3	TEXA	
+08BB	Texas Instruments	
+2047	Texas Instruments	
+0451	Texas Instruments, Inc.	
+15CA	Textech International Ltd.	
+0F39	TG3 Electronics	
+0A34	TG3 Electronics, Inc.	
+142A	Thales E-Transactions	
+1799	Thales Norway A/S	
+1B65	The Hong Kong Standards and Testing Centre Ltd.	
+199E	The Imaging Source Europe GmbH	
+1F44	The Neat Company	
+264A	Thermaltake	
+0EBB	Thermo Fisher Scientific	
+152A	Thesycon Systemsoftware & Consulting GmbH	
+03E9	Thesys Microelectronics	
+0EC7	Theta Link Corp.	
+27B8	ThingM	
+0D83	Think Outside, Inc.	
+07FC	Thomann	
+05D7	Thomas & Betts Corp.	
+069B	Thomson, Inc.	
+1313	ThorLabs	
+10FE	Thrane & Thrane	
+044F	ThrustMaster, Inc.	
+24C6	ThrustMaster, Inc.	
+0E36	TiePie engineering	
+0919	Tiger Electronics	
+06E6	Tiger Jet Network, Inc.	
+1027	Time Domain	
+07B7	TIME Interconnect, Ltd	
+0625	TiMedia Technology Co., Ltd	
+0CC2	Timex Corp.	
+114C	Tinius Olsen Testing Machine Co., Inc.	
+1222	TiPro	
+10BB	TM Technology, Inc.	
+0D66	TMT	
+10BD	TMT Technology, Inc.	
+2104	Tobii Technology AB	
+0B0C	Todos AB	
+05D3	Tohoku Ricoh Co., Ltd	
+0767	Tokheim Corp.	
+0C63	Toko, Inc.	
+04EC	Tokyo Electron Device, Ltd	
+0E70	Tokyo Electronic Industry Co., Ltd	
+1390	TOMTOM B.V.	
+06A8	Topaz Systems, Inc.	
+11DB	Topfield Co., Ltd.	
+0663	Topmax Electronic Co., Ltd	
+0853	Topre Corporation	
+06A2	Topro Technology, Inc.	
+1894	Topseed	
+1784	TopSeed Technology Corp.	
+2899	Toptronic Industrial Co., Ltd	
+07EE	Torex Retail (formerly Logware)	
+06D5	Toshiba	
+04C6	Toshiba America Electronic Components	
+0480	Toshiba America Inc	
+0930	Toshiba Corp.	
+046C	Toshiba Corp., Digital Media Equipment	
+1132	Toshiba Corp., Digital Media Equipment [hex]	
+04BD	Toshiba Electronics Taiwan Corp.	
+092A	Toshiba Information & Industrial Sys. And Services	
+08A6	Toshiba TEC	
+1679	Total Phase	
+066A	Total Technologies, Ltd	
+0611	Totoku Electric Co., Ltd	
+04BA	Toucan Systems, Ltd	
+1D45	Touch	
+1BFD	TouchPack	
+0DFA	Toyo Communication Equipment Co., Ltd	
+0BE3	TOYO Corp.	
+2357	TP-Link	
+0200	TP-Link	
+065B	Tracewell Systems	
+0782	Trackerball	
+0613	TransAct Technologies, Inc.	
+8564	Transcend Information, Inc.	
+1307	Transcend Information, Inc.	
+0B20	TransDimension, Inc.	
+544D	Transmeta Corp.	
+060E	Transmonde Technologies, Inc.	
+0D99	Trazer Technologies, Inc.	
+0D59	TRC Simulators b.v.	
+0A16	Trek Technology (S) PTE, Ltd	
+0836	TrekStor	
+1E68	TrekStor GmbH & Co. KG	
+0719	Tremon Enterprises Co., Ltd	
+12A7	Trendchip Technologies Corp.	
+20F4	TRENDnet	
+157E	TRENDnet	
+04A3	Trident Microsystems, Inc.	
+0AA8	TriGem Computer, Inc.	
+1995	Trillium Technology Pty. Ltd.	
+099E	Trimble Navigation, Ltd	
+2A3C	Trinamic Motion Control GmbH & Co KG	
+1190	Tripace	
+058E	Tripath Technology, Inc.	
+09AE	Tripp Lite	
+2478	Tripp-Lite	
+259A	TriQuint Semiconductor	
+0597	Trisignal Communications	
+064D	TriTech Microelectronics, Ltd	
+23A6	Tronical Components GmbH	
+2319	Tronsmart	
+0C5A	TRS International Mfg., Inc.	
+0558	Truevision, Inc.	
+090A	Trumpion Microelectronics, Inc.	
+145F	Trust	
+0CBA	Trust Electronic (Shanghai) Co., Ltd	
+0105	Trust International B.V.	
+15D9	Trust International B.V.	
+07B0	Trust Technologies	
+0D70	Try Computer Co., Ltd	
+054D	Try Corp.	
+0660	TSAY-E (BVI) International, Inc.	
+1203	TSC Auto ID Technology Co., Ltd	
+0894	TSI Incorporated	
+1013	TST-Touchless Sensor Technology AG	
+0AEB	TTP Communications, Ltd	
+0FD0	Tulip Computers B.V.	
+0FD0	Tulip Computers B.V.	
+10F5	Turtle Beach	
+0E75	TVS Electronics, Ltd	
+1822	Twinhan	
+6253	TwinHan Technology Co., Ltd	
+126F	TwinMOS	
+2632	TwinMOS	
+0548	Tyan Computer Corp.	
+05BE	Tyco Electronics (Raychem)	
+0B56	TYI Systems, Ltd	
+1E54	TypeMatrix	
+1546	U-Blox AG	
+0BAF	U.S. Robotics	
+04C1	U.S. Robotics (3Com)	
+1AA5	UBeacon Technologies, Inc.	
+0DDE	Ubicom, Inc.	
+1529	UBIQUAM Co., Ltd.	
+1F9B	Ubiquiti Networks, Inc.	
+5543	UC-Logic Technology Corp.	
+1B32	Ugobe Life Forms, Inc.	
+05D8	Ultima Electronics Corp.	
+28C7	Ultimaker B.V.	
+D208	Ultimarc	
+D209	Ultimarc	
+2AC7	Ultrahaptics Ltd.	
+1606	Umax	
+0646	UMAX	
+0FEC	UMC Electronics Co., Ltd	
+3293	Unhuman Inc.	
+10D5	Uni Class Technology Co., Ltd	
+5656	Uni-Trend Group Limited	
+0540	UniAccess AB	
+17F6	Unicomp, Inc.	
+052F	Unicore Software, Inc.	
+1965	Uniden Corporation	
+1C79	Unigen Corporation	
+16A6	Unigraf	
+0CBF	Union Genius Computer Co., Ltd	
+0E5B	Union Power Information Industrial Co., Ltd	
+0E1A	Unisys	
+0432	Unisys Corp.	
+0FEA	United Computer Accessories	
+0490	United Microelectronics Corp.	
+089C	United Technologies Research Cntr.	
+0F03	Unitek UPS Systems	
+10C3	Universal Laser Systems, Inc.	
+1BDA	University Of Southampton	
+0F8D	Uniwill Computer Corp.	
+05F5	Unixtar Technology, Inc.	
+0011	Unknown	
+0080	Unknown	
+0145	Unknown	
+07FF	Unknown	
+0A05	Unknown Manufacturer	
+1221	Unknown manufacturer	
+30C2	UNPARALLEL Innovation, Lda	
+147E	Upek	
+0A6D	UPS Manufacturing	
+4242	USB Design by Example	
+1A0A	USB-IF non-workshop	
+4146	USBest Technology	
+0DE7	USBmicro	
+0DE7	USBmicro	
+05A1	USC Corp.	
+2E3B	uSens Inc.	
+10AB	USI Co., Ltd	
+0DEA	UTECH Electronic (D.G.) Co., Ltd.	
+05AA	Utilux South China, Ltd	
+0D08	UTStarcom	
+1141	V One Multimedia, Pte., Ltd	
+1482	Vaillant	
+1843	Vaisala	
+105E	Valence Semiconductor Design, Ltd	
+105E	Valence Semiconductor Design, Ltd	
+0CE5	Validation Technologies International	
+138A	Validity Sensors, Inc.	
+28DE	Valve Software	
+16C0	Van Ooijen Technische Informatica	
+0726	Vanguard International Semiconductor-America	
+30F2	Varex Imaging	
+0F61	Varian, Inc.	
+0A3D	Varo Vision	
+1A44	VASCO Data Security International	
+10EC	Vast Technologies, Inc.	
+1892	Vast Technologies, Inc.	
+2C9C	Vayyar Imaging Ltd.	
+09A5	VCON Telecommunications	
+1429	Vega Technologies Industrial (Austria) Co.	
+1A1D	Veho	
+10CF	Velleman Components, Inc.	
+7669	Venable Instruments	
+1182	Venture Corp., Ltd	
+18A5	Verbatim, Ltd	
+07BE	Veridicom	
+061A	Veridicom International, Inc.	
+11CA	VeriFone Inc	
+08F7	Vernier	
+1FE7	Vertex Wireless Co., Ltd.	
+22A4	VERZO Technology	
+05A0	Vetronix Corp.	
+2109	VIA Labs, Inc.	
+0642	VIA Medical Corp.	
+160A	VIA Technologies, Inc.	
+040D	VIA Technologies, Inc.	
+0A01	ViA, Inc.	
+0F6A	Vibren Technologies, Inc.	
+0682	Victor Company of Japan, Ltd	
+04F1	Victor Company of Japan, Ltd	
+2756	Victor Hasselblad AB	
+0589	Victron	
+0C58	Vidar Systems Corp.	
+1BBD	Videology Imaging Solutions, Inc.	
+04D3	VidUS, Inc.	
+3275	VidzMedia Pte Ltd	
+12F2	ViewPlus Technologies, Inc.	
+0C53	ViewPLUS, Inc.	
+0733	ViewQuest Technologies, Inc.	
+0543	ViewSonic Corp.	
+0B2C	Village Center, Inc.	
+1376	Vimtron Electronics Co., Ltd.	
+0E25	VinChip Systems, Inc.	
+0A71	VIPColor Technologies USA, Inc.	
+0F2D	ViPower, Inc.	
+067F	Virata, Ltd	
+1100	VirTouch, Ltd	
+08D3	Virtual Ink	
+80EE	VirtualBox	
+0AAB	Vision Shape Europe SA	
+04A7	Visioneer	
+0602	Vista Imaging, Inc.	
+0F06	Visual Frontier Enterprise Co., Ltd	
+25C8	Visual Planet Ltd	
+098C	Vitana Corp.	
+1725	Vitesse Semiconductor	
+25C6	Vitus Audio (AVA Group A/S)	
+0784	Vivitar, Inc.	
+183D	VIVOphone	
+1B36	ViXS Systems, Inc.	
+049D	VLSI Technology	
+15AD	VMware Inc.	
+0E0F	VMware, Inc.	
+0454	Vobis Microcomputer AG	
+0439	Voice Technologies Group	
+0D51	Volex (Asia) Pte., Ltd	
+0778	Volex, Inc.	
+1C1B	Volkswagen of America, Inc.	
+0912	Voquette, Inc.	
+242E	Vossloh-Schwabe Deutschland GmbH	
+09D2	Vreelin Engineering, Inc.	
+111E	VSO Electric Co., Ltd	
+0901	VST Technologies	
+1697	VTec Test, Inc.	
+040C	VTech Computers, Ltd	
+0E91	VTech Engineering Canada, Ltd	
+0F88	VTech Holdings, Ltd	
+1BAE	Vuzix Corporation	
+0EBE	VWeb Corp.	
+056A	Wacom Co., Ltd	
+2D1F	Wacom Taiwan Information Co. Ltd.	
+0531	Wacom Technology Corp.	
+06F7	Wailly Technology Ltd	
+12E6	Waldorf Music GmbH	
+0E17	Walex Electronic, Ltd	
+172F	Waltop International Corp.	
+05D2	Wave Systems Corp.	
+114F	Wavecom	
+0C8B	Wavefly Corp.	
+0C46	WaveRider Communications, Inc.	
+17F4	WaveSense	
+0BEF	Way2Call Communications	
+104F	WB Electronics	
+07BD	Webgear, Inc.	
+2575	Weida Hi-Tech Co., Ltd.	
+19E1	WeiDuan Electronic Accessory (S.Z.) Co., Ltd.	
+069E	Welcat Inc.	
+0770	Welch Allyn, Inc - Medical Division	
+0649	Weli Science Co., Ltd	
+077F	Well Excellent & Most Corp.	
+0E8C	Well Force Electronic Co., Ltd	
+0844	Welland Industrial Co., Ltd	
+0D7B	Wellco Technology Co., Ltd	
+040B	Weltrend Semiconductor	
+3838	WEM	
+0EFE	Wem Technology, Inc.	
+0DB1	Wen Te Electronics Co., Ltd	
+1C3E	Wep Peripherals	
+06A9	Westell	
+1058	Western Digital Technologies, Inc.	
+0DAD	Westover Scientific	
+22DE	WeTelecom Incorporated	
+0793	Wha Yu Industrial Co., Ltd	
+3176	Whanam Electronics Co., Ltd	
+0645	Who? Vision Systems, Inc.	
+064F	WIBU-Systems AG	
+14AA	WideView Technology Inc.	
+0E90	WiebeTech, LLC	
+16DC	Wiener, Plein & Baus	
+0468	Wieson Technologies Co., Ltd	
+1B22	WiLinx Corp.	
+0E08	Winbest Technology Co., Ltd	
+0416	Winbond Electronics Corp.	
+1046	Winbond Electronics Corp. [hex]	
+0441	Winbond Systems Lab.	
+4348	WinChipHead	
+0AA7	Wincor Nixdorf International GmbH	
+0F52	Wing Key Electrical Co., Ltd	
+0C7A	Wing-Span Enterprise Co., Ltd	
+0ED3	Wing-Tech Enterprise Co., Ltd	
+102D	Winic Corp.	
+0D72	Winmate Communication, Inc.	
+0ED1	WinMaxGroup	
+04AF	Winnov L.P.	
+0FAF	Winpoint Electronic Corp.	
+14E0	WiNRADiO Communications	
+06F6	Wintrend Technology Co., Ltd	
+1621	Wionics Research	
+08F9	Wipro Technologies	
+162F	WiQuest Communications, Inc.	
+16CA	Wireless Cables, Inc.	
+0EB1	WIS Technologies, Inc.	
+13CF	Wisair Ltd.	
+6677	WiseGroup, Ltd.	
+196B	Wispro Technology Inc.	
+0FB8	Wistron Corp.	
+1435	Wistron NeWeb	
+1FB2	Withings	
+0B64	Wonderful Wire Cable Co., Ltd	
+1CDF	WonTen Technology Co., Ltd.	
+0641	Woods Industries, Inc.	
+0668	WordWand	
+09CC	Workbit Corp.	
+0F4C	WorldWide Cable Opto Corp.	
+060A	Worthington Data Solutions, Inc.	
+044B	WSI	
+051A	WYSE Technology	
+054F	WYSE Technology Taiwan	
+0765	X-Rite, Inc.	
+1AE7	X-TENSIONS	
+1446	X.J.GROUP	
+0BC7	X10 Wireless Technology, Inc.	
+0886	XAC Automation Corp.	
+296B	Xacti Corporation	
+2FE0	Xaptum, Inc.	
+1275	Xaxero Marine Software Engineering, Ltd.	
+6022	Xektek	
+1D57	Xenta	
+0A11	Xentec, Inc.	
+0924	Xerox	
+06A4	Xiamen Doowell Electron Co., Ltd	
+1016	Xiamen Hung's Enterprise Co., Ltd	
+2717	Xiaomi Inc.	
+03FD	Xilinx, Inc.	
+20F7	XIMEA	
+071C	Xionics Document Technologies, Inc.	
+085A	Xircom	
+0545	Xirlink, Inc.	
+09EF	Xitel	
+15C0	XL Imaging	
+20B1	XMOS Ltd	
+E4E4	Xorcom Ltd.	
+28BD	XP-Pen	
+0873	Xpeed, Inc.	
+2639	Xsens	
+0FEE	Xsido Corp.	
+0567	Xyratex International, Ltd	
+0C5E	Xytronix Research & Design	
+0BDC	Y Media Corp.	
+057B	Y-E Data, Inc.	
+0EB2	Y-S Electronic Co., Ltd	
+05AD	Y.C. Cable U.S.A., Inc.	
+26AA	Yaesu Musen	
+3340	Yakumo	
+0499	Yamaha Corp.	
+063C	Yamaichi Electronics Co., Ltd (Sakura)	
+1196	Yankee Robotics, LLC	
+094F	Yano	
+137C	YASKAWA ELECTRIC CORP.	
+0F8B	Yazaki Corp.	
+6993	Yealink Network Technology Co., Ltd.	
+2476	YEI Technology	
+0F32	YFC-BonEagle Electric Co., Ltd	
+0EF6	Yield Microelectronics Corp.	
+1112	YM ELECTRIC CO., Ltd	
+1B98	YMax Communications Corp.	
+24E0	Yoctopuce Sarl	
+0B21	Yokogawa Electric Corp.	
+2916	Yota Devices	
+118F	You Yang Technology Co., Ltd	
+0F8C	Young Generation International Corp.	
+0772	Your data Our Care	
+1164	YUAN High-Tech Development Co., Ltd	
+1050	Yubico.com	
+0CDE	Z-Com	
+0AC8	Z-Star Microelectronics Corp.	
+2939	Zaber Technologies Inc.	
+0BBA	ZAccess Systems	
+1C57	Zalman Tech Co., Ltd.	
+0AFC	Zaptronix Ltd	
+0685	ZD Incorporated	
+0A5F	Zebra	
+1283	zebris Medical GmbH	
+0B7A	Zeevo, Inc.	
+24ED	Zen Group	
+0481	Zenith Data Systems	
+0C12	Zeroplus	
+119A	ZHAN QI Technology Co., Ltd	
+12B8	Zhejiang Xinya Electronic Technology Co., Ltd.	
+1C22	ZHONGSHAN CHIANG YU ELECTRIC CO., LTD.	
+2D37	Zhuhai Poskey Technology Co.,Ltd	
+2D84	Zhuhai Poskey Technology Co.,Ltd	
+0629	Zida Technologies, Ltd	
+04E3	Zilog, Inc.	
+5A57	Zinwell	
+099A	Zippy Technology Corp.	
+0717	ZNK Corp.	
+1686	ZOOM Corporation	
+0803	Zoom Telephonics, Inc.	
+0573	Zoran Co. Personal Media Division (Nogatech)	
+0595	Zoran Microelectronics, Ltd	
+18B7	Zotek Electronic Co., Ltd.	
+19D2	ZTE WCDMA Technologies MSM	
+221A	ZTEX GmbH	
+2B4C	ZUK	
+1E7B	Zurich Instruments	
+13EC	Zydacron	
+0ACE	ZyDAS	
+0CA2	Zyfer	
+14C8	Zytronic	
+0586	ZyXEL Communications Corp.	

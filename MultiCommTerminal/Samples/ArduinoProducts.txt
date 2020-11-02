@@ -1,0 +1,18 @@
+﻿
+Arduino is 0x2341
+
+8036	Leonardo (CDC ACM, HID)	
+8038	Robot Control Board (CDC ACM, HID)	
+8039	Robot Motor Board (CDC ACM, HID)	
+003F	Mega ADK (CDC ACM)	
+0042	Mega 2560 R3 (CDC ACM)	
+0043	Uno R3 (CDC ACM)	
+0044	Mega ADK R3 (CDC ACM)	
+0045	Serial R3 (CDC ACM)	
+0049	ISP	
+0001	Uno (CDC ACM)	
+0010	Mega 2560 (CDC ACM)	
+0036	Leonardo Bootloader	
+003B	Serial Adapter (CDC ACM)	
+003D	Due Programming Port	
+003E	Due

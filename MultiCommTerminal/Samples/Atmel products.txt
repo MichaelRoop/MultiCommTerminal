@@ -1,0 +1,95 @@
+﻿
+https://devicehunt.com/view/type/usb/vendor/03EB#search-results-table
+
+Atmel 0x3EB
+
+7617	AT76C505AS Wireless Adapter	
+7800	Mini Album	
+800C	Airspy HF+	
+FF01	WootingOne	
+FF02	WootingTwo	
+FF07	Tux Droid fish dongle	
+6200	AT91SAM HID Mouse Demo Application	
+7603	D-Link DWL-120 802.11b Wireless Adapter [Atmel at76c503a]	
+7604	at76c503a 802.11b Adapter	
+7605	at76c503a 802.11b Adapter	
+7606	at76c505 802.11b Adapter	
+7611	at76c510 rfmd2948 802.11b Access Point	
+7613	WL-1130 USB	
+7614	AT76c505a Wireless Adapter	
+7615	AT76C505AMX Wireless Adapter	
+3312	4-Port Hub	
+4102	AirVast W-Buddie WN210	
+5601	at76c510 Prism-II 802.11b Access Point	
+5603	Cisco 7920 WiFi IP Phone	
+6119	AT91SAM CDC Demo Application	
+6124	at91sam SAMBA bootloader	
+6127	AT91SAM HID Keyboard Demo Application	
+6129	AT91SAM Mass Storage Demo Application	
+2FF6	at32uc3b0/1 DFU bootloader	
+2FF7	at90usb82 DFU bootloader	
+2FF8	at32uc3a0/1 DFU bootloader	
+2FF9	at90usb646/647 DFU bootloader	
+2FFA	at90usb162 DFU bootloader	
+2FFB	at90usb AVR DFU bootloader	
+2FFD	at89c5130/c5131 DFU bootloader	
+2FFF	at89c5132/c51snd1c DFU bootloader	
+3301	at43301 4-Port Hub	
+2FE6	Cactus V6 (DFU)	
+2FEA	Cactus RF60 (DFU)	
+2FEE	atmega8u2 DFU bootloader	
+2FEF	atmega16u2 DFU bootloader	
+2FF0	atmega32u2 DFU bootloader	
+2FF1	at32uc3a3 DFU bootloader	
+2FF3	atmega16u4 DFU bootloader	
+2FF4	atmega32u4 DFU bootloader	
+2110	AVR JTAGICE3 Debugger and Programmer	
+2111	Xplained Pro board debugger and programmer	
+2122	XMEGA-A1 Explained evaluation kit	
+2140	AVR JTAGICE3 (v3.x) Debugger and Programmer	
+2141	ICE debugger	
+2145	ATMEGA328P-XMINI (CDC ACM)	
+2310	EVK11xx evaluation board	
+2404	The Micro	
+2FE4	ATxmega32A4U DFU bootloader	
+2068	LUFA Virtual Serial/Mass Storage Demo	
+2069	LUFA Webserver Project	
+2103	JTAG ICE mkII	
+2104	AVR ISP mkII	
+2105	AVRONE!	
+2106	STK600 development board	
+2107	AVR Dragon	
+2109	STK541 ZigBee Development Board	
+210A	AT86RF230 [RZUSBSTICK] transceiver	
+210D	XPLAIN evaluation kit (CDC ACM)	
+204F	LUFA Generic HID Demo Application	
+2060	Benito Programmer Project	
+2061	LUFA Combined Mass Storage and Keyboard Demo Application	
+2062	LUFA Combined CDC and Mouse Demo Application	
+2063	LUFA Datalogger Device	
+2064	Interfaceless Control-Only LUFA Devices	
+2065	LUFA Test and Measurement Demo Application	
+2066	LUFA Multiple Report HID Demo	
+2045	LUFA Mass Storage Demo Application	
+2046	LUFA Audio Output Demo Application	
+2047	LUFA Audio Input Demo Application	
+2048	LUFA MIDI Demo Application	
+2049	Stripe Snoop Magnetic Stripe Reader	
+204A	LUFA CDC Class Bootloader	
+204B	LUFA USB to Serial Adapter Project	
+204C	LUFA RNDIS Demo Application	
+204D	LUFA Combined Mouse and Keyboard Demo Application	
+204E	LUFA Dual CDC Demo Application	
+201C	at90usbkey sample firmware (HID mouse)	
+201D	at90usbkey sample firmware (HID generic)	
+2022	at90usbkey sample firmware (composite device)	
+2040	LUFA Test PID	
+2041	LUFA Mouse Demo Application	
+2042	LUFA Keyboard Demo Application	
+2043	LUFA Joystick Demo Application	
+2044	LUFA CDC Demo Application	
+0902	4-Port Hub	
+2002	Mass Storage Device	
+2015	at90usbkey sample firmware (HID keyboard)	
+2018	at90usbkey sample firmware (CDC ACM)	
+2019	stk525 sample firmware (microphone)	

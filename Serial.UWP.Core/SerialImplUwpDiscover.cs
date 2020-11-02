@@ -1,4 +1,5 @@
 ﻿using Common.Net.Network;
+using MultiCommData.Net.UserDisplayData;
 using SerialCommon.Net.DataModels;
 using SerialCommon.Net.interfaces;
 using System;
@@ -59,6 +60,9 @@ namespace Serial.UWP.Core {
                             // default in Arduino it does not show
                             using (SerialDevice dev = await SerialDevice.FromIdAsync(info.Id)) {
                             if (dev != null) {
+                                    UsbDisplay display = new UsbDisplay(dev.UsbVendorId, dev.UsbProductId);
+
+
                                 SerialDeviceInfo device = new SerialDeviceInfo() {
                                     Id = info.Id,
                                     IsDefault = info.IsDefault,
@@ -84,8 +88,10 @@ namespace Serial.UWP.Core {
                                     CTS_ClearToSendLineState = dev.ClearToSendState,
                                     USB_VendorId = dev.UsbVendorId,
                                     USB_ProductId = dev.UsbProductId,
-                                    USB_ProductIdDisplay = string.Format("0x{0:X}", dev.UsbProductId),
-                                    USB_VendorIdDisplay = string.Format("0x{0:X}", dev.UsbVendorId),
+                                    USB_VendorIdDisplay = display.Vendor,
+                                    USB_ProductIdDisplay = display.Product,
+                                    //USB_ProductIdDisplay = string.Format("0x{0:X}", dev.UsbProductId),
+                                    //USB_VendorIdDisplay = string.Format("0x{0:X}", dev.UsbVendorId),
                                     RTS_IsRequesttoSendEnabled = dev.IsRequestToSendEnabled,
                                     FlowHandshake = dev.Handshake.Convert(),
                                 };

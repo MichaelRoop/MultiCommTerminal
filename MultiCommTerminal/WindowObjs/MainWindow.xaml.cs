@@ -958,6 +958,9 @@ namespace MultiCommTerminal.WindowObjs {
             // USB
             this.btnSerialConnect.Content = lang.GetText(MsgCode.connect);
             this.btnSerialDiscover.Content = lang.GetText(MsgCode.discover);
+            this.lvPortColumn.Header = lang.GetText(MsgCode.Port);
+            this.lvVendorColumn.Header = lang.GetText(MsgCode.Vendor);
+            this.lvProductColumn.Header = lang.GetText(MsgCode.Product);
 
             // Labels
             this.lbCommand.Content = lang.GetText(MsgCode.command);
