@@ -281,6 +281,8 @@ namespace MultiCommWrapper.Net.interfaces {
         void SerialUsbDisconnect();
         void SerialUsbSend(string msg);
 
+        List<KeyValuePropertyDisplay> Serial_GetDeviceInfoForDisplay(SerialDeviceInfo info);
+
         #endregion
 
         #region Wifi credentials storage

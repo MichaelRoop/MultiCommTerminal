@@ -8,6 +8,7 @@ using MultiCommData.Net.StorageDataModels;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommTerminal.DependencyInjection;
 using MultiCommTerminal.NetCore.WindowObjs;
+using MultiCommTerminal.NetCore.WindowObjs.SerialWins;
 using MultiCommTerminal.WPF_Helpers;
 using MultiCommWrapper.Net.DataModels;
 using MultiCommWrapper.Net.interfaces;
@@ -567,6 +568,14 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
+        private void btnSerialInfo_Click(object sender, RoutedEventArgs e) {
+            SerialDeviceInfo info = this.lbUsb.SelectedItem as SerialDeviceInfo;
+            if (info != null) {
+                DeviceInfo_USB.ShowBox(this, info);
+            }
+        }
+
+
         private void btnSerialConnect_Click(object sender, RoutedEventArgs e) {
             //this.wrapper.SerialUsbConnect();
             this.lbUsb.GetSelected<SerialDeviceInfo>((item) => {
@@ -583,6 +592,7 @@ namespace MultiCommTerminal.WindowObjs {
                 this.log.Info("Wrapper_SerialDiscoveredDevicesHandler", () => string.Format("Found {0} networks", data.Count));
                 this.lbUsb.SetNewSource(ref this.usbDevices, data);
                 this.btnSerialConnect.Show();
+                this.btnSerialInfo.Show();
             });
         }
 
@@ -764,6 +774,7 @@ namespace MultiCommTerminal.WindowObjs {
         private void SelectUSB() {
             this.spUsb.Show();
             this.btnSerialDiscover.Show();
+            this.btnSerialInfo.Collapse();
             this.btnSerialConnect.Collapse();
         }
 
@@ -802,6 +813,7 @@ namespace MultiCommTerminal.WindowObjs {
         private void UnselectUsb() {
             this.spUsb.Collapse();
             this.btnSerialConnect.Collapse();
+            this.btnSerialInfo.Collapse();
         }
 
 
@@ -956,6 +968,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.btnWifiDisconnect.Content = lang.GetText(MsgCode.Disconnect);
 
             // USB
+            this.btnSerialInfo.Content = lang.GetText(MsgCode.info);
             this.btnSerialConnect.Content = lang.GetText(MsgCode.connect);
             this.btnSerialDiscover.Content = lang.GetText(MsgCode.discover);
             this.lvPortColumn.Header = lang.GetText(MsgCode.Port);

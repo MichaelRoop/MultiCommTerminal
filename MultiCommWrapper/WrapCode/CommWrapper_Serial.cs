@@ -1,5 +1,8 @@
-﻿using MultiCommWrapper.Net.interfaces;
+﻿using LanguageFactory.Net.data;
+using MultiCommWrapper.Net.DataModels;
+using MultiCommWrapper.Net.interfaces;
 using SerialCommon.Net.DataModels;
+using SerialCommon.Net.Enumerations;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -38,8 +41,33 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.serialStack.SendToComm(msg);
         }
 
+        public List<KeyValuePropertyDisplay> Serial_GetDeviceInfoForDisplay(SerialDeviceInfo info) {
+            List<KeyValuePropertyDisplay> list = new List<KeyValuePropertyDisplay>();
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Name), info.Name));
+            // Primary values
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Port), info.PortName));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.BaudRate), info.Baud));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.DataBits), info.DataBits));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.StopBits), info.StopBits.Display()));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Parity), info.Parity.ToString())); // Converter
+            list.Add(new KeyValuePropertyDisplay("Flow Handshake", info.FlowHandshake.ToString().CamelCaseToSpaces()));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Vendor), info.USB_VendorIdDisplay));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Product), info.USB_ProductIdDisplay));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Default), info.IsDefault));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Enabled), info.IsEnabled));
+
+            // TODO Add others
+
+            //list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Name), info.Name));
+
+
+            return list;
+        }
+
+
         #endregion
 
+        #region Init Teardown
 
         //SerialImplUwp serial
         private void SerialInit() {
@@ -53,6 +81,16 @@ namespace MultiCommWrapper.Net.WrapCode {
             // TODO connection complete
         }
 
+        private void SerialTeardown() {
+            this.serialStack.MsgReceived -= this.SerialStack_MsgReceivedHandler;
+
+            this.serial.DiscoveredDevices -= this.Serial_DiscoveredDevicesHandler;
+            this.serial.OnError -= this.Serial_OnErrorHandler;
+        }
+
+        #endregion
+
+        #region Event handlers
 
         private void Serial_OnErrorHandler(object sender, SerialUsbError err) {
             // TODO - determine if you have to clean up the serial USB
@@ -72,13 +110,8 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.Serial_BytesReceived?.Invoke(sender, msg);
         }
 
+        #endregion
 
-        private void SerialTeardown() {
-            this.serialStack.MsgReceived -= this.SerialStack_MsgReceivedHandler;
-
-            this.serial.DiscoveredDevices -= this.Serial_DiscoveredDevicesHandler;
-            this.serial.OnError -= this.Serial_OnErrorHandler;
-        }
 
     }
 }

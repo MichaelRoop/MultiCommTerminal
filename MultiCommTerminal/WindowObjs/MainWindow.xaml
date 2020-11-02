@@ -226,6 +226,11 @@
                                                         Content="{Binding Source={x:Static wpfHelper:TxtBinder.Discover}}" Margin="0,2.5"
                                                         IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Search}}"                                                                                            
                                                         Background="Transparent" Click="btnSerialDiscover_Click" />
+                                    <controls:UC_IconButton x:Name="btnSerialInfo" Style="{StaticResource TextIconButton}"
+                                                        HorizontalContentAlignment="Left"
+                                                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.Info}}" Margin="0,2.5"
+                                                        IconSource="{Binding Source={x:Static wpfHelper:IconBinder.View}}"                                                                                            
+                                                        Background="Transparent" Click="btnSerialInfo_Click" />
                                     <controls:UC_IconButton x:Name="btnSerialConnect" Style="{StaticResource TextIconButton}"
                                                         HorizontalContentAlignment="Left"
                                                         Content="{Binding Source={x:Static wpfHelper:TxtBinder.Connect}}" Margin="0,2.5"
