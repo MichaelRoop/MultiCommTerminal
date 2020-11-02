@@ -1,4 +1,5 @@
-﻿using MultiCommTerminal.WPF_Helpers;
+﻿using MultiCommTerminal.DependencyInjection;
+using MultiCommTerminal.WPF_Helpers;
 using SerialCommon.Net.DataModels;
 using SerialCommon.Net.Enumerations;
 using System;
@@ -30,32 +31,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
             win.ShowDialog();
             return win.Changed;
         }
-
-
-        public class StopBitDisplayClass {
-            public string Display { get; set; } = string.Empty;
-            public SerialStopBits StopBits { get; set; } = SerialStopBits.One;
-            public StopBitDisplayClass(SerialStopBits sb) {
-                this.Display = sb.Display();
-                this.StopBits = sb;
-            }
-        }
-
-        public class SerialParityDisplayClass {
-            public string Display { get; set; } = string.Empty;
-            public SerialParityType ParityType { get; set; } = SerialParityType.None;
-            public SerialParityDisplayClass(SerialParityType pt) {
-                this.Display = pt.Display();
-                this.ParityType = pt;
-            }
-        }
-
-
-
-        List<uint> bauds = new List<uint>();
-        List<ushort> dataBits = new List<ushort>();
-        List<StopBitDisplayClass> stopBits = new List<StopBitDisplayClass>();
-        List<SerialParityDisplayClass> paritys = new List<SerialParityDisplayClass>();
 
 
         public DeviceEdit_USB(Window parent, SerialDeviceInfo info) {
@@ -121,52 +96,26 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
 
 
         private void InitBauds() {
-            this.bauds.Add(300);
-            this.bauds.Add(600);
-            this.bauds.Add(1200);
-            this.bauds.Add(2400);
-            this.bauds.Add(4800);
-            this.bauds.Add(9600);
-            this.bauds.Add(14400);
-            this.bauds.Add(19200);
-            this.bauds.Add(28800);
-            this.bauds.Add(31250);
-            this.bauds.Add(38400);
-            this.bauds.Add(57600);
-            this.bauds.Add(115200);
-            this.cbBaud.ItemsSource = this.bauds;
+            this.cbBaud.ItemsSource = DI.Wrapper.Serial_GetBaudsForDisplay();
             this.cbBaud.SelectedIndex = 0; 
             // Set from incoming
-
         }
 
 
         private void InitDataBits() {
             // Must be 5-8
-            this.dataBits.Add(5);
-            this.dataBits.Add(6);
-            this.dataBits.Add(7);
-            this.dataBits.Add(8);
-            this.cbDataBits.ItemsSource = this.dataBits;
+            this.cbDataBits.ItemsSource = DI.Wrapper.Serial_GetDataBits();
             this.cbDataBits.SelectedIndex = 0;
         }
 
 
         private void InitStopBits() {
-            this.stopBits.Add(new StopBitDisplayClass(SerialStopBits.One));
-            this.stopBits.Add(new StopBitDisplayClass(SerialStopBits.OnePointFive));
-            this.stopBits.Add(new StopBitDisplayClass(SerialStopBits.Two));
-            this.cbStopBits.ItemsSource = this.stopBits;
+            this.cbStopBits.ItemsSource = DI.Wrapper.Serial_GetStopBitsForDisplay();
             this.cbStopBits.SelectedIndex = 0;
         }
 
         private void InitSerialParityTypes() {
-            this.paritys.Add(new SerialParityDisplayClass(SerialParityType.None));
-            this.paritys.Add(new SerialParityDisplayClass(SerialParityType.Even));
-            this.paritys.Add(new SerialParityDisplayClass(SerialParityType.Odd));
-            this.paritys.Add(new SerialParityDisplayClass(SerialParityType.Mark));
-            this.paritys.Add(new SerialParityDisplayClass(SerialParityType.Space));
-            this.cbParity.ItemsSource = this.paritys;
+            this.cbParity.ItemsSource = DI.Wrapper.Serial_GetParitysForDisplay();
             this.cbParity.SelectedIndex = 0;
         }
     }

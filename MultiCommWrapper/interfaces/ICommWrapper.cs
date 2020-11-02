@@ -283,6 +283,13 @@ namespace MultiCommWrapper.Net.interfaces {
 
         List<KeyValuePropertyDisplay> Serial_GetDeviceInfoForDisplay(SerialDeviceInfo info);
 
+        List<StopBitDisplayClass> Serial_GetStopBitsForDisplay();
+        List<SerialParityDisplayClass> Serial_GetParitysForDisplay();
+        List<uint> Serial_GetBaudsForDisplay();
+        List<ushort> Serial_GetDataBits();
+
+
+
         #endregion
 
         #region Wifi credentials storage

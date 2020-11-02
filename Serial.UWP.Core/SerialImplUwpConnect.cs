@@ -40,6 +40,15 @@ namespace Serial.UWP.Core {
 
                         this.device = await SerialDevice.FromIdAsync(devices[0].Id);
                         if (this.device != null) {
+                            // Set values from the device info
+                            this.device.BaudRate = info.Baud;
+                            this.device.DataBits = info.DataBits;
+                            this.device.StopBits = info.StopBits.Convert();
+                            this.device.Parity = info.Parity.Convert();
+                            this.device.ReadTimeout = TimeSpan.FromMilliseconds(5);
+                            this.device.WriteTimeout = TimeSpan.FromMilliseconds(5);
+
+
                             this.msgPump.ConnectAsync(new SerialMsgPumpConnectData() {
                                 InStream = this.device.InputStream,
                                 OutStream = this.device.OutputStream,

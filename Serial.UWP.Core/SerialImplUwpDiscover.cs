@@ -63,22 +63,6 @@ namespace Serial.UWP.Core {
                             if (dev != null) {
                                     UsbDisplay display = new UsbDisplay(dev.UsbVendorId, dev.UsbProductId);
 
-                                    // TODO - hack need to set from user
-                                    // Once this is set you have to power cycle the Arduino
-                                    // Need to save values to the UWP
-                                    // Temp hack
-                                    if (dev.BaudRate == 0 || dev.DataBits == 0) {
-                                        dev.BaudRate = 115200;
-                                        dev.DataBits = 8;
-                                        dev.StopBits = SerialStopBitCount.One;
-                                        // When we set the read at 5500ms it takes 5 seconds to 
-                                        // return. Presume it does not give up reading until then
-                                        dev.ReadTimeout = TimeSpan.FromMilliseconds(5);
-                                        dev.WriteTimeout = TimeSpan.FromMilliseconds(5);
-                                    }
-
-
-
                                     SerialDeviceInfo device = new SerialDeviceInfo() {
                                     Id = info.Id,
                                     IsDefault = info.IsDefault,

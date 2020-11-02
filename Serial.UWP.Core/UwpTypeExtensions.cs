@@ -19,6 +19,16 @@ namespace Serial.UWP.Core {
         }
 
 
+        public static SerialStopBitCount Convert(this SerialStopBits sb) {
+            switch (sb) {
+                case SerialStopBits.One: return SerialStopBitCount.One;
+                case SerialStopBits.OnePointFive: return SerialStopBitCount.OnePointFive;
+                case SerialStopBits.Two: return SerialStopBitCount.Two;
+                default: return SerialStopBitCount.One;
+            }
+        }
+
+
         public static SerialParityType Convert(this SerialParity sp) {
             switch (sp) {
                 case SerialParity.None: return SerialParityType.None;
@@ -27,6 +37,18 @@ namespace Serial.UWP.Core {
                 case SerialParity.Mark: return SerialParityType.Mark;
                 case SerialParity.Space: return SerialParityType.Space;
                 default: return SerialParityType.None;
+            }
+        }
+
+
+        public static SerialParity Convert(this SerialParityType sp) {
+            switch (sp) {
+                case SerialParityType.None: return SerialParity.None;
+                case SerialParityType.Odd: return SerialParity.Odd;
+                case SerialParityType.Even: return SerialParity.Even;
+                case SerialParityType.Mark: return SerialParity.Mark;
+                case SerialParityType.Space: return SerialParity.Space;
+                default: return SerialParity.None;
             }
         }
 
@@ -41,6 +63,16 @@ namespace Serial.UWP.Core {
             }
         }
 
+
+        public static SerialHandshake Convert(this SerialFlowControlHandshake h) {
+            switch (h) {
+                case SerialFlowControlHandshake.None: return SerialHandshake.None;
+                case SerialFlowControlHandshake.RequestToSend: return SerialHandshake.RequestToSend;
+                case SerialFlowControlHandshake.XonXoff: return SerialHandshake.XOnXOff;
+                case SerialFlowControlHandshake.RequestToSendXonXoff: return SerialHandshake.RequestToSendXOnXOff;
+                default: return SerialHandshake.None;   
+            }
+        }
 
     }
 }

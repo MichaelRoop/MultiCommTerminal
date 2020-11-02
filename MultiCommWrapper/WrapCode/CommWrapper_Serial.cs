@@ -65,6 +65,56 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
+        public List<StopBitDisplayClass> Serial_GetStopBitsForDisplay() {
+            List<StopBitDisplayClass> stopBits = new List<StopBitDisplayClass>();
+            stopBits.Add(new StopBitDisplayClass(SerialStopBits.One));
+            stopBits.Add(new StopBitDisplayClass(SerialStopBits.OnePointFive));
+            stopBits.Add(new StopBitDisplayClass(SerialStopBits.Two));
+            return stopBits;
+        }
+
+
+        public List<SerialParityDisplayClass> Serial_GetParitysForDisplay() {
+            List<SerialParityDisplayClass> paritys = new List<SerialParityDisplayClass>();
+            paritys.Add(new SerialParityDisplayClass(SerialParityType.None));
+            paritys.Add(new SerialParityDisplayClass(SerialParityType.Even));
+            paritys.Add(new SerialParityDisplayClass(SerialParityType.Odd));
+            paritys.Add(new SerialParityDisplayClass(SerialParityType.Mark));
+            paritys.Add(new SerialParityDisplayClass(SerialParityType.Space));
+            return paritys;
+        }
+
+
+        public List<uint> Serial_GetBaudsForDisplay() {
+            List<uint> bauds = new List<uint>();
+            bauds.Add(300);
+            bauds.Add(600);
+            bauds.Add(1200);
+            bauds.Add(2400);
+            bauds.Add(4800);
+            bauds.Add(9600);
+            bauds.Add(14400);
+            bauds.Add(19200);
+            bauds.Add(28800);
+            bauds.Add(31250);
+            bauds.Add(38400);
+            bauds.Add(57600);
+            bauds.Add(115200);
+            return bauds;
+        }
+
+
+        public List<ushort> Serial_GetDataBits() {
+            List<ushort> dataBits = new List<ushort>();
+            dataBits.Add(5);
+            dataBits.Add(6);
+            dataBits.Add(7);
+            dataBits.Add(8);
+            return dataBits;
+        }
+
+
+
         #endregion
 
         #region Init Teardown
