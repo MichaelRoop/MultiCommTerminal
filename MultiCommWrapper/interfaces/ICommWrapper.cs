@@ -283,10 +283,10 @@ namespace MultiCommWrapper.Net.interfaces {
 
         List<KeyValuePropertyDisplay> Serial_GetDeviceInfoForDisplay(SerialDeviceInfo info);
 
-        List<StopBitDisplayClass> Serial_GetStopBitsForDisplay();
-        List<SerialParityDisplayClass> Serial_GetParitysForDisplay();
-        List<uint> Serial_GetBaudsForDisplay();
-        List<ushort> Serial_GetDataBits();
+        void Serial_GetStopBitsForDisplay(SerialDeviceInfo info, Action<List<StopBitDisplayClass>, int> onSuccess);
+        void Serial_GetParitysForDisplay(SerialDeviceInfo info, Action<List<SerialParityDisplayClass>, int> onSuccess);
+        void Serial_GetBaudsForDisplay(SerialDeviceInfo info, Action<List<uint>, int> onSuccess);
+        void Serial_GetDataBitsForDisplay(SerialDeviceInfo info, Action<List<ushort>,int> onSuccess);
 
 
 

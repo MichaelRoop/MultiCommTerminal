@@ -41,6 +41,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.serialStack.SendToComm(msg);
         }
 
+
         public List<KeyValuePropertyDisplay> Serial_GetDeviceInfoForDisplay(SerialDeviceInfo info) {
             List<KeyValuePropertyDisplay> list = new List<KeyValuePropertyDisplay>();
             list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Name), info.Name));
@@ -65,27 +66,34 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-        public List<StopBitDisplayClass> Serial_GetStopBitsForDisplay() {
+        public void Serial_GetStopBitsForDisplay(SerialDeviceInfo info, Action<List<StopBitDisplayClass>,int> onSuccess) {
             List<StopBitDisplayClass> stopBits = new List<StopBitDisplayClass>();
             stopBits.Add(new StopBitDisplayClass(SerialStopBits.One));
             stopBits.Add(new StopBitDisplayClass(SerialStopBits.OnePointFive));
             stopBits.Add(new StopBitDisplayClass(SerialStopBits.Two));
-            return stopBits;
+            int ndx = stopBits.FindIndex(x => x.StopBits == info.StopBits);
+            onSuccess.Invoke(
+                stopBits,
+                (ndx == -1) ? 0 : ndx);
         }
 
 
-        public List<SerialParityDisplayClass> Serial_GetParitysForDisplay() {
+        public void Serial_GetParitysForDisplay(SerialDeviceInfo info, Action<List<SerialParityDisplayClass>, int> onSuccess) {
             List<SerialParityDisplayClass> paritys = new List<SerialParityDisplayClass>();
             paritys.Add(new SerialParityDisplayClass(SerialParityType.None));
             paritys.Add(new SerialParityDisplayClass(SerialParityType.Even));
             paritys.Add(new SerialParityDisplayClass(SerialParityType.Odd));
             paritys.Add(new SerialParityDisplayClass(SerialParityType.Mark));
             paritys.Add(new SerialParityDisplayClass(SerialParityType.Space));
-            return paritys;
+            int ndx = paritys.FindIndex(x => x.ParityType == info.Parity);
+            onSuccess.Invoke(
+                paritys,
+                (ndx == -1) ? 0 : ndx);
         }
 
 
-        public List<uint> Serial_GetBaudsForDisplay() {
+
+        public void Serial_GetBaudsForDisplay(SerialDeviceInfo info, Action<List<uint>, int> onSuccess) {
             List<uint> bauds = new List<uint>();
             bauds.Add(300);
             bauds.Add(600);
@@ -100,20 +108,24 @@ namespace MultiCommWrapper.Net.WrapCode {
             bauds.Add(38400);
             bauds.Add(57600);
             bauds.Add(115200);
-            return bauds;
+            int ndx = bauds.FindIndex(x => x == info.Baud);
+            onSuccess.Invoke(
+                bauds,
+                (ndx == -1) ? 0 : ndx);
         }
 
 
-        public List<ushort> Serial_GetDataBits() {
+        public void Serial_GetDataBitsForDisplay(SerialDeviceInfo info, Action<List<ushort>, int> onSuccess) {
             List<ushort> dataBits = new List<ushort>();
             dataBits.Add(5);
             dataBits.Add(6);
             dataBits.Add(7);
             dataBits.Add(8);
-            return dataBits;
+            int ndx = dataBits.FindIndex(x => x == info.DataBits);
+            onSuccess.Invoke(
+                dataBits,
+                (ndx == -1) ? 0 : ndx);
         }
-
-
 
         #endregion
 

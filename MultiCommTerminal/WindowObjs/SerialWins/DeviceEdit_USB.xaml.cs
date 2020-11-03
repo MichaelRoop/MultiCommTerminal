@@ -93,35 +93,35 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
 
 
         private void InitBauds() {
-            List<uint> b = DI.Wrapper.Serial_GetBaudsForDisplay();
-            int ndx = b.FindIndex(x => x == this.info.Baud);
-            this.cbBaud.ItemsSource = b;
-            this.cbBaud.SelectedIndex = (ndx == -1) ? 0 : ndx;
+            DI.Wrapper.Serial_GetBaudsForDisplay(this.info, (bauds, ndx) => {
+                this.cbBaud.ItemsSource = bauds;
+                this.cbBaud.SelectedIndex = ndx;
+            });
         }
 
 
         private void InitDataBits() {
             // Must be 5-8
-            List<ushort> db = DI.Wrapper.Serial_GetDataBits();
-            int ndx = db.FindIndex(x => x == this.info.DataBits);
-            this.cbDataBits.ItemsSource = db;
-            this.cbDataBits.SelectedIndex = (ndx == -1) ? 0 : ndx;
+            DI.Wrapper.Serial_GetDataBitsForDisplay(this.info, (source,ndx)=> {
+                this.cbDataBits.ItemsSource = source;
+                this.cbDataBits.SelectedIndex = ndx;
+            });
         }
 
 
         private void InitStopBits() {
-            List<StopBitDisplayClass> db = DI.Wrapper.Serial_GetStopBitsForDisplay();
-            int ndx = db.FindIndex(x => x.StopBits == this.info.StopBits);
-            this.cbStopBits.ItemsSource = db;
-            this.cbStopBits.SelectedIndex = (ndx == -1) ? 0 : ndx;
+            DI.Wrapper.Serial_GetStopBitsForDisplay(this.info, (source, ndx) => {
+                this.cbStopBits.ItemsSource = source;
+                this.cbStopBits.SelectedIndex = ndx;
+            });
         }
 
 
         private void InitSerialParityTypes() {
-            List<SerialParityDisplayClass> sp = DI.Wrapper.Serial_GetParitysForDisplay();
-            int ndx = sp.FindIndex(x => x.ParityType == this.info.Parity);
-            this.cbParity.ItemsSource = sp;
-            this.cbParity.SelectedIndex = (ndx == -1) ? 0 : ndx;
+            DI.Wrapper.Serial_GetParitysForDisplay(this.info, (source, ndx) => {
+                this.cbParity.ItemsSource = source;
+                this.cbParity.SelectedIndex = ndx;
+            });
         }
     }
 }
