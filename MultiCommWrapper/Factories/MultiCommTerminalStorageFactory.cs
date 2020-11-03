@@ -1,6 +1,8 @@
 ﻿using ChkUtils.Net;
 using CommunicationStack.Net.Stacks;
 using MultiCommData.Net.StorageDataModels;
+using SerialCommon.Net.DataModels;
+using SerialCommon.Net.StorageIndexExtraInfo;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.Serializers;
 using StorageFactory.Net.StorageManagers;
@@ -10,12 +12,12 @@ namespace MultiCommWrapper.Net.Factories {
     public class MultiCommTerminalStorageFactory : IStorageManagerFactory {
 
         /// <summary>Singleton of settings manager</summary>
-        IStorageManager<SettingItems> settingStorage = 
+        private IStorageManager<SettingItems> settingStorage = 
             new SimpleStorageManger<SettingItems>(new JsonReadWriteSerializerIndented<SettingItems>());
 
 
         /// <summary>Singleton terminator indexed storage</summary>
-        IIndexedStorageManager<TerminatorDataModel, DefaultFileExtraInfo> terminatorStorage = 
+        private IIndexedStorageManager<TerminatorDataModel, DefaultFileExtraInfo> terminatorStorage = 
             new IndexedStorageManager<TerminatorDataModel, DefaultFileExtraInfo>(
                 new JsonReadWriteSerializerIndented<TerminatorDataModel>(),
                 new JsonReadWriteSerializerIndented<IIndexGroup<DefaultFileExtraInfo>>());
@@ -30,6 +32,12 @@ namespace MultiCommWrapper.Net.Factories {
             new IndexedStorageManager<WifiCredentialsDataModel, DefaultFileExtraInfo>(
                 new EncryptingReadWriteSerializer<WifiCredentialsDataModel>(),
                 new EncryptingReadWriteSerializer<IIndexGroup<DefaultFileExtraInfo>>());
+
+        private IIndexedStorageManager<SerialDeviceInfo, SerialIndexExtraInfo> serialStorage =
+            new IndexedStorageManager<SerialDeviceInfo, SerialIndexExtraInfo>(
+                new JsonReadWriteSerializerIndented<SerialDeviceInfo>(),
+                new JsonReadWriteSerializerIndented<IIndexGroup<SerialIndexExtraInfo>>());
+
 
         public MultiCommTerminalStorageFactory() { }
 
@@ -79,6 +87,9 @@ namespace MultiCommWrapper.Net.Factories {
             }
             else if (typeof(TData).Name == typeof(WifiCredentialsDataModel).Name) {
                 return this.wifiCredStorage as IIndexedStorageManager<TData, TIndexExtraInfo>;
+            }
+            else if (typeof(TData).Name == typeof(SerialDeviceInfo).Name) {
+                return this.serialStorage as IIndexedStorageManager<TData, TIndexExtraInfo>;
             }
             // Add others
 

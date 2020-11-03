@@ -6,7 +6,9 @@ using LanguageFactory.Net.interfaces;
 using LogUtils.Net;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommWrapper.Net.interfaces;
+using SerialCommon.Net.DataModels;
 using SerialCommon.Net.interfaces;
+using SerialCommon.Net.StorageIndexExtraInfo;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using WifiCommon.Net.interfaces;
@@ -29,6 +31,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         IIndexedStorageManager<TerminatorDataModel, DefaultFileExtraInfo> terminatorStorage = null;
         IIndexedStorageManager<ScriptDataModel, DefaultFileExtraInfo> scriptStorage = null;
         IIndexedStorageManager<WifiCredentialsDataModel, DefaultFileExtraInfo> wifiCredStorage = null;
+        IIndexedStorageManager<SerialDeviceInfo, SerialIndexExtraInfo> serialStorage = null;
         ICommStackLevel0 btClassicStack = null;
         ICommStackLevel0 bleStack = null;
         ICommStackLevel0 wifiStack = null;

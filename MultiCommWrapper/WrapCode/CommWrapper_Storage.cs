@@ -1,6 +1,8 @@
 ﻿using CommunicationStack.Net.Stacks;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommWrapper.Net.interfaces;
+using SerialCommon.Net.DataModels;
+using SerialCommon.Net.StorageIndexExtraInfo;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System;
@@ -25,6 +27,9 @@ namespace MultiCommWrapper.Net.WrapCode {
         private readonly string SCRIPTS_INDEX_FILE = "ScriptsIndex.txt";
         private readonly string WIFI_CRED_DIR = "WifiCredentials";
         private readonly string WIFI_CRED_INDEX_FILE = "WifiCredIndex.txt";
+        private readonly string SERIAL_CFG_DIR = "SerialConfigurations";
+        private readonly string SERIAL_CFG_INDEX_FILE = "SerialCfgIndex.txt";
+
 
         // UWP path and file name for document
         private readonly string UWP_ORIGINE_USER_MANUAL_PATH_AND_FILE = string.Format("{0}{1}",             
@@ -54,6 +59,10 @@ namespace MultiCommWrapper.Net.WrapCode {
 
             this.wifiCredStorage =
                 this.storageFactory.GetIndexedManager<WifiCredentialsDataModel, DefaultFileExtraInfo>(this.Dir(WIFI_CRED_DIR), WIFI_CRED_INDEX_FILE);
+
+            this.serialStorage =
+                this.storageFactory.GetIndexedManager<SerialDeviceInfo, SerialIndexExtraInfo>(
+                    this.Dir(SERIAL_CFG_DIR), SERIAL_CFG_INDEX_FILE);
         }
 
 

@@ -11,6 +11,7 @@ using MultiCommData.Net.UserDisplayData;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommWrapper.Net.DataModels;
 using SerialCommon.Net.DataModels;
+using SerialCommon.Net.StorageIndexExtraInfo;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System;
@@ -292,6 +293,20 @@ namespace MultiCommWrapper.Net.interfaces {
 
         #endregion
 
+        #region Serial USB storage
+
+        void GetSerialCfgList(Action<List<IIndexItem<SerialIndexExtraInfo>>> onSuccess, OnErr onError);
+
+        void CreateNewSerialCfg(string display, SerialDeviceInfo data, Action onSuccess, OnErr onError);
+
+        void RetrieveSerialCfg(IIndexItem<SerialIndexExtraInfo> index, Action<SerialDeviceInfo> onSuccess, OnErr onError);
+
+        void SaveSerialCfg(IIndexItem<SerialIndexExtraInfo> idx, SerialDeviceInfo data, Action onSuccess, OnErr onError);
+
+        void DeleteSerialCfg(IIndexItem<SerialIndexExtraInfo> index, Action<bool> onComplete, OnErr onError);
+
+        #endregion
+
         #region Wifi credentials storage
 
         void GetWifiCredList(Action<List<IIndexItem<DefaultFileExtraInfo>>> onSuccess, OnErr onError);
@@ -299,6 +314,13 @@ namespace MultiCommWrapper.Net.interfaces {
         void CreateNewWifiCred(string display, WifiCredentialsDataModel data, Action onSuccess, OnErr onError);
 
         void RetrieveWifiCredData(IIndexItem<DefaultFileExtraInfo> index, Action<WifiCredentialsDataModel> onSuccess, OnErr onError);
+
+        /// <summary>Query stored objects and return one that fulfills conditions</summary>
+        /// <param name="queryInfo">Object with query conditions</param>
+        /// <param name="found">Invoked with a stored SerialDeviceInfo if found</param>
+        /// <param name="notFound">Invoked if not found</param>
+        /// <param name="onError">Invoked on an error in the process</param>
+        void RetrieveSerialCfg(SerialIndexExtraInfo queryInfo, Action<SerialDeviceInfo> found, Action notFound, OnErr onError);
 
         void SaveWifiCred(IIndexItem<DefaultFileExtraInfo> idx, WifiCredentialsDataModel data, Action onSuccess, OnErr onError);
 

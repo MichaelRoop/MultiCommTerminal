@@ -1,8 +1,13 @@
-﻿using LanguageFactory.Net.data;
+﻿using ChkUtils.Net;
+using ChkUtils.Net.ErrObjects;
+using LanguageFactory.Net.data;
 using MultiCommWrapper.Net.DataModels;
 using MultiCommWrapper.Net.interfaces;
 using SerialCommon.Net.DataModels;
 using SerialCommon.Net.Enumerations;
+using SerialCommon.Net.StorageIndexExtraInfo;
+using StorageFactory.Net.interfaces;
+using StorageFactory.Net.StorageManagers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -41,6 +46,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.serialStack.SendToComm(msg);
         }
 
+        #region Display data retrieval
 
         public List<KeyValuePropertyDisplay> Serial_GetDeviceInfoForDisplay(SerialDeviceInfo info) {
             List<KeyValuePropertyDisplay> list = new List<KeyValuePropertyDisplay>();
@@ -142,6 +148,130 @@ namespace MultiCommWrapper.Net.WrapCode {
                 (ndx == -1) ? 0 : ndx);
         }
 
+        #endregion
+
+        #region Storage
+
+
+        public void GetSerialCfgList(Action<List<IIndexItem<SerialIndexExtraInfo>>> onSuccess, OnErr onError) {
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    onSuccess.Invoke(this.serialStorage.IndexedItems);
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.LoadFailed));
+                }
+            });
+        }
+
+
+        public void CreateNewSerialCfg(string display, SerialDeviceInfo data, Action onSuccess, OnErr onError) {
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    if (display.Length == 0) {
+                        onError.Invoke(this.GetText(MsgCode.EmptyName));
+                    }
+                    else {
+                        IIndexItem<SerialIndexExtraInfo> idx = new IndexItem<SerialIndexExtraInfo>(data.StorageUid) {
+                            Display = display,
+                        };
+                        this.SaveSerialCfg(idx, data, onSuccess, onError);
+                    }
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.SaveFailed));
+                }
+            });
+        }
+        
+        
+        public void RetrieveSerialCfg(IIndexItem<SerialIndexExtraInfo> index, Action<SerialDeviceInfo> onSuccess, OnErr onError) {
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    // TODO - check if exists
+                    onSuccess.Invoke(this.serialStorage.Retrieve(index));
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.LoadFailed));
+                }
+            });
+        }
+
+        
+        public void RetrieveSerialCfg(SerialIndexExtraInfo queryInfo, Action<SerialDeviceInfo> found, Action notFound, OnErr onError) {
+            this.GetSerialCfgList((items) => {
+                // Iterate through index and compare fields
+                foreach(IIndexItem<SerialIndexExtraInfo> item in items) {
+                    if (item.ExtraInfoObj.PortName == queryInfo.PortName &&
+                        item.ExtraInfoObj.USBVendorId == queryInfo.USBVendorId &&
+                        item.ExtraInfoObj.USBProductId == queryInfo.USBProductId) {
+                        this.RetrieveSerialCfg(item, found, onError);
+                        return;
+                    }
+                }
+                notFound.Invoke();
+            }, onError);
+
+        }
+
+
+        public void SaveSerialCfg(IIndexItem<SerialIndexExtraInfo> idx, SerialDeviceInfo data, Action onSuccess, OnErr onError) {
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    if (idx.Display.Length == 0) {
+                        onError.Invoke(this.GetText(MsgCode.EmptyName));
+                    }
+                    else {
+                        this.serialStorage.Store(data, idx);
+                        onSuccess.Invoke();
+                    }
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.SaveFailed));
+                }
+            });
+        }
+
+
+        public void DeleteSerialCfg(IIndexItem<SerialIndexExtraInfo> index, Action<bool> onComplete, OnErr onError) {
+            //WrapErr.ToErrReport(9999, () => {
+            //    ErrReport report;
+            //    WrapErr.ToErrReport(out report, 9999, () => {
+            //        // TODO - check when we delete last one
+            //        bool ok = this.serialStorage.DeleteFile(index);
+            //        onComplete(ok);
+            //    });
+            //    if (report.Code != 0) {
+            //        onError.Invoke(this.GetText(MsgCode.LoadFailed));
+            //    }
+            //});
+            this.DeleteFromStorage(this.serialStorage, index, onComplete, onError);
+        }
+
+
+        // TOD check if generic can be used for all
+        public void DeleteFromStorage<TSToreObject,TExtraInfo>(
+            IIndexedStorageManager<TSToreObject, TExtraInfo> manager, IIndexItem<TExtraInfo> indexItem, Action<bool> onComplete, OnErr onError) 
+            where TSToreObject : class where TExtraInfo : class  {
+            
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    bool ok = manager.DeleteFile(indexItem);
+                    onComplete(ok);
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.LoadFailed));
+                }
+            });
+        }
+
+
+        #endregion
 
         #endregion
 
