@@ -89,6 +89,12 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string DataBits { get { return GetTxt(MsgCode.DataBits); } }
         public static string StopBits { get { return GetTxt(MsgCode.StopBits); } }
         public static string Parity { get { return GetTxt(MsgCode.Parity); } }
+        public static string FlowControl { get { return GetTxt(MsgCode.FlowControl); } }
+        public static string Read { get { return GetTxt(MsgCode.Read); } }
+        public static string Write { get { return GetTxt(MsgCode.Write); } }
+        public static string Timeout { get { return GetTxt(MsgCode.Timeout); } }
+        public static string ReadTimeout { get { return GetTxt(MsgCode.ReadTimeout); } }
+        public static string WriteTimeout { get { return GetTxt(MsgCode.WriteTimeout); } }
 
 
         /// <summary>To access the user manual in the browser</summary>

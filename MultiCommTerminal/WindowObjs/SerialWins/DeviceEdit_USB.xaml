@@ -20,6 +20,12 @@
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -62,8 +68,31 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
 
-                <!--<Label Grid.Row="4" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.NetworkServicePort}}" Style="{StaticResource NameLabelLeft}" />
-                <TextBox Grid.Row="4" Grid.Column="1" x:Name="txtServiceName" Style="{ StaticResource TxtBoxRight}" />-->
+
+                <Label Grid.Row="4" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.FlowControl}}" Style="{StaticResource NameLabelLeft}" />
+                <ComboBox Grid.Row="4" Grid.Column="1" x:Name="cbFlowControl" Margin="0,5">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding Display}" FontSize="16" VerticalAlignment="Center"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+
+
+                <Label Grid.Row="5" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.ReadTimeout}}" Style="{StaticResource NameLabelLeft}" />
+                <TextBox Grid.Row="5" Grid.Column="1" x:Name="txtReadTimeout" Style="{ StaticResource TxtBoxRight}" PreviewTextInput="txtReadTimeout_PreviewTextInput" />
+                
+                <Label Grid.Row="6" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.WriteTimeout}}" Style="{StaticResource NameLabelLeft}" />
+                <TextBox Grid.Row="6" Grid.Column="1" x:Name="txtWriteTimeout" 
+                         Style="{ StaticResource TxtBoxRight}" 
+                         PreviewTextInput="txtWriteTimeout_PreviewTextInput"  />
+
 
             </Grid>
 

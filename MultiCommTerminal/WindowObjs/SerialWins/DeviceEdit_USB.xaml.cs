@@ -5,6 +5,7 @@ using SerialCommon.Net.Enumerations;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -68,12 +69,22 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
             this.info.DataBits = (ushort)this.cbDataBits.SelectedItem;
             this.info.StopBits = (this.cbStopBits.SelectedItem as StopBitDisplayClass).StopBits;
             this.info.Parity = (this.cbParity.SelectedItem as SerialParityDisplayClass).ParityType;
+            this.info.FlowHandshake = (this.cbFlowControl.SelectedItem as FlowControlDisplay).FlowControl;
+            this.info.ReadTimeout = this.GetValue(this.txtReadTimeout);
+            this.info.WriteTimeout = this.GetValue(this.txtWriteTimeout);
+
             // TODO - persistance if the 'Save' is checked
-
-
             this.Changed = true;
             this.Close();
         }
+
+        private TimeSpan GetValue(TextBox txtBox) {
+            if (txtBox.Text.Length == 0) {
+                return TimeSpan.FromMilliseconds(0);
+            }
+            return TimeSpan.FromMilliseconds(int.Parse(txtBox.Text));
+        }
+
 
         private void btnCancel_Click(object sender, RoutedEventArgs e) {
             this.Close();
@@ -83,45 +94,38 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
         // Temp. get the values from wrapper
 
         private void Init() {
-            // Load the drop downs
-            // Select the values from serial device if legit (i.e. not 0?)
-            this.InitBauds();
-            this.InitDataBits();
-            this.InitStopBits();
-            this.InitSerialParityTypes();
-        }
-
-
-        private void InitBauds() {
             DI.Wrapper.Serial_GetBaudsForDisplay(this.info, (bauds, ndx) => {
                 this.cbBaud.ItemsSource = bauds;
                 this.cbBaud.SelectedIndex = ndx;
             });
-        }
-
-
-        private void InitDataBits() {
-            // Must be 5-8
-            DI.Wrapper.Serial_GetDataBitsForDisplay(this.info, (source,ndx)=> {
+            DI.Wrapper.Serial_GetDataBitsForDisplay(this.info, (source, ndx) => {
                 this.cbDataBits.ItemsSource = source;
                 this.cbDataBits.SelectedIndex = ndx;
             });
-        }
-
-
-        private void InitStopBits() {
             DI.Wrapper.Serial_GetStopBitsForDisplay(this.info, (source, ndx) => {
                 this.cbStopBits.ItemsSource = source;
                 this.cbStopBits.SelectedIndex = ndx;
             });
-        }
-
-
-        private void InitSerialParityTypes() {
             DI.Wrapper.Serial_GetParitysForDisplay(this.info, (source, ndx) => {
                 this.cbParity.ItemsSource = source;
                 this.cbParity.SelectedIndex = ndx;
             });
+            DI.Wrapper.Serial_FlowControlForDisplay(this.info, (source, ndx) => {
+                this.cbFlowControl.ItemsSource = source;
+                this.cbFlowControl.SelectedIndex = ndx;
+            });
+            this.txtReadTimeout.Text = this.info.ReadTimeout.TotalMilliseconds.ToString();
+            this.txtWriteTimeout.Text = this.info.WriteTimeout.TotalMilliseconds.ToString();
+        }
+
+
+        private readonly Regex numOnly = new Regex("[^0-9]");
+        private void txtWriteTimeout_PreviewTextInput(object sender, TextCompositionEventArgs e) {
+            e.Handled = numOnly.IsMatch(e.Text);
+        }
+
+        private void txtReadTimeout_PreviewTextInput(object sender, TextCompositionEventArgs e) {
+            e.Handled = numOnly.IsMatch(e.Text);
         }
     }
 }

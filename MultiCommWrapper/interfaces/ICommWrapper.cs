@@ -287,7 +287,7 @@ namespace MultiCommWrapper.Net.interfaces {
         void Serial_GetParitysForDisplay(SerialDeviceInfo info, Action<List<SerialParityDisplayClass>, int> onSuccess);
         void Serial_GetBaudsForDisplay(SerialDeviceInfo info, Action<List<uint>, int> onSuccess);
         void Serial_GetDataBitsForDisplay(SerialDeviceInfo info, Action<List<ushort>,int> onSuccess);
-
+        void Serial_FlowControlForDisplay(SerialDeviceInfo info, Action<List<FlowControlDisplay>, int> onSuccess);
 
 
         #endregion

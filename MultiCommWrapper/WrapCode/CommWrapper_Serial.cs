@@ -51,7 +51,9 @@ namespace MultiCommWrapper.Net.WrapCode {
             list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.DataBits), info.DataBits));
             list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.StopBits), info.StopBits.Display()));
             list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Parity), info.Parity.ToString())); // Converter
-            list.Add(new KeyValuePropertyDisplay("Flow Handshake", info.FlowHandshake.ToString().CamelCaseToSpaces()));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.FlowControl), info.FlowHandshake.ToString().CamelCaseToSpaces()));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.ReadTimeout), info.ReadTimeout.TotalMilliseconds.ToString()));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.WriteTimeout), info.WriteTimeout.TotalMilliseconds.ToString()));
             list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Vendor), info.USB_VendorIdDisplay));
             list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Product), info.USB_ProductIdDisplay));
             list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Default), info.IsDefault));
@@ -126,6 +128,20 @@ namespace MultiCommWrapper.Net.WrapCode {
                 dataBits,
                 (ndx == -1) ? 0 : ndx);
         }
+
+
+        public void Serial_FlowControlForDisplay(SerialDeviceInfo info, Action<List<FlowControlDisplay>,int> onSuccess) {
+            List<FlowControlDisplay> fc = new List<FlowControlDisplay>();
+            fc.Add(new FlowControlDisplay(SerialFlowControlHandshake.None));
+            fc.Add(new FlowControlDisplay(SerialFlowControlHandshake.RequestToSend));
+            fc.Add(new FlowControlDisplay(SerialFlowControlHandshake.XonXoff));
+            fc.Add(new FlowControlDisplay(SerialFlowControlHandshake.RequestToSendXonXoff));
+            int ndx = fc.FindIndex(x => x.FlowControl == info.FlowHandshake);
+            onSuccess.Invoke(
+                fc,
+                (ndx == -1) ? 0 : ndx);
+        }
+
 
         #endregion
 
