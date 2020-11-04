@@ -13,6 +13,8 @@ namespace MultiCommData.Net.StorageDataModels {
         public byte[] TerminatorBlock { get; set; } = new byte[0];
         public List<TerminatorInfo> TerminatorInfos { get; set; } = new List<TerminatorInfo>();
 
+        public string Name { get; set; } = "";
+
         public TerminatorDataModel() {
             this.UId = Guid.NewGuid().ToString();
         }

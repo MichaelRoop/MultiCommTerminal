@@ -1,4 +1,5 @@
 ﻿using CommunicationStack.Net.Stacks;
+using LanguageFactory.Net.data;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommTerminal.DependencyInjection;
 using MultiCommTerminal.WPF_Helpers;
@@ -49,6 +50,7 @@ namespace MultiCommTerminal.UserControls {
 
 
         public void Initialise(TerminatorDataModel data) {
+            this.lblTerminators.Content = (data.Name.Length > 0) ? data.Name : this.wrapper.GetText(MsgCode.Terminators);
             // Blank out any existing info
             for (int i = 0; i < MAX_TERMINATORS; i++) {
                 this.names[i].Content = "";

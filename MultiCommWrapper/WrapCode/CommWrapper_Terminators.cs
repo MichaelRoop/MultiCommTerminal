@@ -19,6 +19,41 @@ namespace MultiCommWrapper.Net.WrapCode {
         public event EventHandler<TerminatorDataModel> CurrentTerminatorChanged;
 
 
+        public void BackCompatibilityInitializeExistingTerminatorNames() {
+            try {
+                this.GetTerminatorList(
+                    (list) => {
+                        foreach (var item in list) {
+                            this.RetrieveTerminatorData(
+                                item,
+                                (tData) => {
+                                    if (tData.Name.Length == 0) {
+                                        tData.Name = item.Display;
+                                        this.SaveTerminator(item, tData, () => { }, (err) => { });
+                                    }
+                                },
+                                (e) => {
+                                });
+                        }
+                    },
+                    (err) => {
+                    });
+
+                // Check if current terminator selected
+                this.GetCurrentTerminator(
+                    (data) => {
+                    // Nothing to do?
+                },
+                    (err) => {
+
+                    });
+            }
+            catch(Exception e) {
+                this.log.Exception(9999, "", e);
+            }
+        }
+
+
         public void GetTerminatorEntitiesList(Action<List<TerminatorInfo>> onSuccess, OnErr onError) {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;

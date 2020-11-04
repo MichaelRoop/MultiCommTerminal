@@ -70,6 +70,7 @@ namespace MultiCommTerminal.WindowObjs {
             }
             else {
                 this.index.Display = this.txtBoxDisplay.Text;
+                data.Name = this.index.Display;
                 this.wrapper.SaveTerminator(this.index, data, this.OnSaveOk, this.OnSaveFailed);
             }
         }
@@ -101,6 +102,7 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void OnInitOk(TerminatorDataModel dataModel) {
             this.txtBoxDisplay.Text = index.Display;
+            dataModel.Name = index.Display;
             this.tEditor.InitialiseEditor(parent, dataModel);
         }
 

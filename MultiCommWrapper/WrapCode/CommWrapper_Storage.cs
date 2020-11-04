@@ -114,10 +114,12 @@ namespace MultiCommWrapper.Net.WrapCode {
                 List<TerminatorInfo> infos = new List<TerminatorInfo>();
                 infos.Add(new TerminatorInfo(Terminator.LF));
                 infos.Add(new TerminatorInfo(Terminator.CR));
-                TerminatorDataModel dm = new TerminatorDataModel(infos);
+                TerminatorDataModel dm = new TerminatorDataModel(infos) {
+                    Name = "Default terminator \\n\\r"
+                };
 
                 IIndexItem<DefaultFileExtraInfo> idx = new IndexItem<DefaultFileExtraInfo>(dm.UId) {
-                    Display = "Default terminator \\n\\r"
+                    Display = dm.Name
                 };
                 this.terminatorStorage.Store(dm, idx);
 
@@ -127,6 +129,10 @@ namespace MultiCommWrapper.Net.WrapCode {
                         this.SaveSettings(settings, () => { }, (err) => { });
                     },
                     (err) => { });
+            }
+            else {
+                // back compatible to add the display name into the data object
+                this.BackCompatibilityInitializeExistingTerminatorNames();
             }
         }
 

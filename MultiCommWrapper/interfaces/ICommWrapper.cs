@@ -284,6 +284,9 @@ namespace MultiCommWrapper.Net.interfaces {
         void SerialUsbDisconnect();
         void SerialUsbSend(string msg);
 
+        /// <summary>Fix for old entries that do not have the name initialized</summary>
+        void BackCompatibilityInitializeExistingTerminatorNames();
+
         List<KeyValuePropertyDisplay> Serial_GetDeviceInfoForDisplay(SerialDeviceInfo info);
 
         void Serial_GetStopBitsForDisplay(SerialDeviceInfo info, Action<List<StopBitDisplayClass>, int> onSuccess);
