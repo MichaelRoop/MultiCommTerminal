@@ -47,6 +47,7 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string Terminator_W { get { return Source(UIIcon.TerminatorWhite); } }
         public static string SpinIcon { get { return Source(UIIcon.SpinIcon); } }
         public static string SerialPort_W { get { return Source(UIIcon.SerialPortWhite); } }
+        public static string USBPort_W { get { return Source(UIIcon.UsbWhite); } }
         public static string BluetoothClassic { get { return Source(UIIcon.BluetoothClassic); } }
         public static string BluetoothClassic_W { get { return Source(UIIcon.BluetoothClassicWhite); } }
         public static string BluetoothLE { get { return Source(UIIcon.BluetoothLE); } }

@@ -7,7 +7,7 @@
         xmlns:controls="clr-namespace:MultiCommTerminal.UserControls"
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.WPF_Helpers"
         Style="{StaticResource MyWindowStyle}"
-        Icon="{Binding Source={x:Static wpfHelper:IconBinder.SerialPort_W}}"
+        Icon="{Binding Source={x:Static wpfHelper:IconBinder.USBPort_W}}"
         WindowStartupLocation="Manual" 
         mc:Ignorable="d"
         MinHeight="150" MinWidth="200"

@@ -7,8 +7,9 @@
         mc:Ignorable="d"
         xmlns:controls="clr-namespace:MultiCommTerminal.UserControls"
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.WPF_Helpers"
+        Icon="{Binding Source={x:Static wpfHelper:IconBinder.USBPort_W}}"
         Style="{StaticResource MyWindowStyle}" Title="" 
-        WindowStartupLocation="CenterScreen" 
+        WindowStartupLocation="Manual" 
         Loaded="Window_Loaded" Closing="Window_Closing"
         MinHeight="100" MinWidth="200" MaxHeight="800" MaxWidth="900">
     <Grid>

@@ -38,6 +38,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
             this.info = info;
             InitializeComponent();
             this.listboxMain.ItemsSource = DI.Wrapper.Serial_GetDeviceInfoForDisplay(info);
+            this.Title = info.PortName;
             this.SizeToContent = SizeToContent.WidthAndHeight;
         }
 

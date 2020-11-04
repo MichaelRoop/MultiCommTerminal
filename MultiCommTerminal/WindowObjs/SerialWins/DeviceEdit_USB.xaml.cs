@@ -40,6 +40,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
             InitializeComponent();
             this.Init();
             this.SizeToContent = SizeToContent.WidthAndHeight;
+            this.Title = info.PortName;
             // Call before rendering which will trigger initial resize events
             this.widthManager = new ButtonGroupSizeSyncManager(this.btnOk, this.btnCancel);
             this.widthManager.PrepForChange();
@@ -49,7 +50,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
         /// <summary>Connect the style mouse grab on title bar</summary>
         public override void OnApplyTemplate() {
             this.BindMouseDownToCustomTitleBar();
-            this.HideTitleBarIcon();
             base.OnApplyTemplate();
         }
 
