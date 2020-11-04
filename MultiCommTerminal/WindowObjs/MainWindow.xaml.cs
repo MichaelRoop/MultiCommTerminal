@@ -580,7 +580,7 @@ namespace MultiCommTerminal.WindowObjs {
             //this.wrapper.SerialUsbConnect();
             this.lbUsb.GetSelected<SerialDeviceInfo>((item) => {
                 //this.gridWait.Show();
-                this.wrapper.SerialUsbConnect(item);
+                this.wrapper.SerialUsbConnect(item, App.ShowMsg);
             });
 
         }
@@ -600,6 +600,13 @@ namespace MultiCommTerminal.WindowObjs {
         private void Wrapper_Serial_BytesReceivedHandler(object sender, string msg) {
             this.Dispatcher.Invoke(() => {
                 this.lbIncoming.AddAndScroll(msg, this.inScroll, 100);
+            });
+        }
+
+
+        private void Wrapper_OnSerialConfigRequestHandler(object sender, SerialDeviceInfo e) {
+            this.Dispatcher.Invoke(() => {
+                DeviceEdit_USB.ShowBox(this, e);
             });
         }
 
@@ -671,6 +678,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper.SerialOnError += this.Wrapper_SerialOnErrorHandler;
             this.wrapper.SerialDiscoveredDevices += this.Wrapper_SerialDiscoveredDevicesHandler;
             this.wrapper.Serial_BytesReceived += this.Wrapper_Serial_BytesReceivedHandler;
+            this.wrapper.OnSerialConfigRequest += this.Wrapper_OnSerialConfigRequestHandler;
 
 
             // Call before rendering which will trigger initial resize events
@@ -731,6 +739,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper.SerialOnError -= this.Wrapper_SerialOnErrorHandler;
             this.wrapper.SerialDiscoveredDevices -= this.Wrapper_SerialDiscoveredDevicesHandler;
             this.wrapper.Serial_BytesReceived -= this.Wrapper_Serial_BytesReceivedHandler;
+            this.wrapper.OnSerialConfigRequest -= this.Wrapper_OnSerialConfigRequestHandler;
 
             if (this.menu != null) {
                 this.menu.Close();

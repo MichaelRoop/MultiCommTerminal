@@ -22,7 +22,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         public event EventHandler<List<SerialDeviceInfo>> SerialDiscoveredDevices;
         public event EventHandler<SerialUsbError> SerialOnError;
         public event EventHandler<string> Serial_BytesReceived;
-        public event EventHandler<SerialDeviceInfo> OnConfigRequest;
+        public event EventHandler<SerialDeviceInfo> OnSerialConfigRequest;
 
         #endregion
 
@@ -38,8 +38,12 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-        public void SerialUsbConnect(SerialDeviceInfo dataModel) {
-            this.serial.ConnectAsync(dataModel);
+        public void SerialUsbConnect(SerialDeviceInfo dataModel, OnErr onError) {
+            this.InitSerialDeviceInfoConfigFields(
+                dataModel,
+                () => {
+                    this.serial.ConnectAsync(dataModel);
+                },onError);
         }
 
 
@@ -175,7 +179,17 @@ namespace MultiCommWrapper.Net.WrapCode {
                         onError.Invoke(this.GetText(MsgCode.EmptyName));
                     }
                     else {
-                        IIndexItem<SerialIndexExtraInfo> idx = new IndexItem<SerialIndexExtraInfo>(data.StorageUid) {
+                        // Initialise extra index fields object
+                        SerialIndexExtraInfo extraInfo = new SerialIndexExtraInfo() {
+                            PortName = data.PortName,
+                            USBVendorId = data.USB_VendorId,
+                            USBVendor = data.USB_VendorIdDisplay,
+                            USBProductId = data.USB_ProductId,
+                            USBProduct = data.USB_ProductIdDisplay
+                        };
+
+                        IIndexItem<SerialIndexExtraInfo> idx = new IndexItem<SerialIndexExtraInfo>(
+                            data.StorageUid, extraInfo) {
                             Display = display,
                         };
                         this.SaveSerialCfg(idx, data, onSuccess, onError);
@@ -186,8 +200,21 @@ namespace MultiCommWrapper.Net.WrapCode {
                 }
             });
         }
+
+
         
-        
+        public void CreateOrSaveSerialCfg(string display, SerialDeviceInfo data, Action onSuccess, OnErr onError) {
+            // Only have access to the object and not its index object
+            this.RetrieveSerialIndexItem(data,
+                (indexItem) => {
+                    this.SaveSerialCfg(indexItem, data, onSuccess, onError);
+                },
+                () => {
+                    this.CreateNewSerialCfg(display, data, onSuccess, onError);
+                }, onError);
+        }
+
+
         public void RetrieveSerialCfg(IIndexItem<SerialIndexExtraInfo> index, Action<SerialDeviceInfo> onSuccess, OnErr onError) {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;
@@ -218,7 +245,7 @@ namespace MultiCommWrapper.Net.WrapCode {
                 },
                 () => {
                     // ** Not found. User opens dialog on event, adds config values and decides on storage
-                    OnConfigRequest?.Invoke(this, info);
+                    OnSerialConfigRequest?.Invoke(this, info);
                     onSuccess();
                 },
                 onError);
@@ -264,6 +291,26 @@ namespace MultiCommWrapper.Net.WrapCode {
                 notFound.Invoke();
             }, onError);
         }
+
+
+        private void RetrieveSerialIndexItem(SerialDeviceInfo inObject, Action<IIndexItem<SerialIndexExtraInfo>> found, Action notFound, OnErr onError) {
+            this.GetSerialCfgList((items) => {
+                // Iterate through index and compare fields
+                foreach (IIndexItem<SerialIndexExtraInfo> item in items) {
+                    if (item.ExtraInfoObj.PortName == inObject.PortName &&
+                        item.ExtraInfoObj.USBVendorId == inObject.USB_VendorId &&
+                        item.ExtraInfoObj.USBProductId == inObject.USB_ProductId) {
+                        found.Invoke(item);
+                        this.log.Info("RetrieveSerialIndexItem", "Found the serial index");
+                        return;
+                    }
+                }
+                notFound.Invoke();
+            }, onError);
+
+
+        }
+
 
         #endregion
 

@@ -277,10 +277,10 @@ namespace MultiCommWrapper.Net.interfaces {
         event EventHandler<string> Serial_BytesReceived;
         // TODO Connection complete event
         /// <summary>Event invoked on connection to retrieve the configurable fields into the info object</summary>
-        event EventHandler<SerialDeviceInfo> OnConfigRequest;
+        event EventHandler<SerialDeviceInfo> OnSerialConfigRequest;
 
         void SerialUsbDiscoverAsync();
-        void SerialUsbConnect(SerialDeviceInfo dataModel);
+        void SerialUsbConnect(SerialDeviceInfo dataModel, OnErr onError);
         void SerialUsbDisconnect();
         void SerialUsbSend(string msg);
 
@@ -297,6 +297,13 @@ namespace MultiCommWrapper.Net.interfaces {
         void GetSerialCfgList(Action<List<IIndexItem<SerialIndexExtraInfo>>> onSuccess, OnErr onError);
 
         void CreateNewSerialCfg(string display, SerialDeviceInfo data, Action onSuccess, OnErr onError);
+
+        /// <summary>Create or save updated configuration data for a serial connection</summary>
+        /// <param name="display">Item to display in index</param>
+        /// <param name="data">The object to store</param>
+        /// <param name="onSuccess">Invoked on success</param>
+        /// <param name="onError">Invoked on error</param>
+        void CreateOrSaveSerialCfg(string display, SerialDeviceInfo data, Action onSuccess, OnErr onError);
 
         void RetrieveSerialCfg(IIndexItem<SerialIndexExtraInfo> index, Action<SerialDeviceInfo> onSuccess, OnErr onError);
 

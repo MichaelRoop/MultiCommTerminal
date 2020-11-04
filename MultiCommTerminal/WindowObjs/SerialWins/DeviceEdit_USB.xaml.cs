@@ -73,8 +73,20 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
             this.info.ReadTimeout = this.GetValue(this.txtReadTimeout);
             this.info.WriteTimeout = this.GetValue(this.txtWriteTimeout);
 
-            // TODO - persistance if the 'Save' is checked
             this.Changed = true;
+
+            if (this.chkSave.IsChecked.GetValueOrDefault(false)) {
+                DI.Wrapper.CreateOrSaveSerialCfg(
+                    this.info.PortName,
+                    this.info,
+                    () => {
+                        this.Close();
+                    },
+                    (err) => {
+                        App.ShowMsg(err);
+                    });
+            }
+
             this.Close();
         }
 
