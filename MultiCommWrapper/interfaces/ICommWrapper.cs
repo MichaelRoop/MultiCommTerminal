@@ -276,6 +276,8 @@ namespace MultiCommWrapper.Net.interfaces {
         event EventHandler<SerialUsbError> SerialOnError;
         event EventHandler<string> Serial_BytesReceived;
         // TODO Connection complete event
+        /// <summary>Event invoked on connection to retrieve the configurable fields into the info object</summary>
+        event EventHandler<SerialDeviceInfo> OnConfigRequest;
 
         void SerialUsbDiscoverAsync();
         void SerialUsbConnect(SerialDeviceInfo dataModel);
@@ -290,9 +292,6 @@ namespace MultiCommWrapper.Net.interfaces {
         void Serial_GetDataBitsForDisplay(SerialDeviceInfo info, Action<List<ushort>,int> onSuccess);
         void Serial_FlowControlForDisplay(SerialDeviceInfo info, Action<List<FlowControlDisplay>, int> onSuccess);
 
-
-        #endregion
-
         #region Serial USB storage
 
         void GetSerialCfgList(Action<List<IIndexItem<SerialIndexExtraInfo>>> onSuccess, OnErr onError);
@@ -305,6 +304,14 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void DeleteSerialCfg(IIndexItem<SerialIndexExtraInfo> index, Action<bool> onComplete, OnErr onError);
 
+        /// <summary>Initialised device info object with configurable fields from storage or user</summary>
+        /// <param name="info">The info object to initialise</param>
+        /// <param name="onSuccess">invoked on successful initialisation</param>
+        /// <param name="onError">Invoked on error condition</param>
+        void InitSerialDeviceInfoConfigFields(SerialDeviceInfo info, Action onSuccess, OnErr onError);
+        
+        #endregion
+
         #endregion
 
         #region Wifi credentials storage
@@ -315,15 +322,7 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void RetrieveWifiCredData(IIndexItem<DefaultFileExtraInfo> index, Action<WifiCredentialsDataModel> onSuccess, OnErr onError);
 
-        /// <summary>Query stored objects and return one that fulfills conditions</summary>
-        /// <param name="queryInfo">Object with query conditions</param>
-        /// <param name="found">Invoked with a stored SerialDeviceInfo if found</param>
-        /// <param name="notFound">Invoked if not found</param>
-        /// <param name="onError">Invoked on an error in the process</param>
-        void RetrieveSerialCfg(SerialIndexExtraInfo queryInfo, Action<SerialDeviceInfo> found, Action notFound, OnErr onError);
-
         void SaveWifiCred(IIndexItem<DefaultFileExtraInfo> idx, WifiCredentialsDataModel data, Action onSuccess, OnErr onError);
-
 
         void DeleteWifiCredData(IIndexItem<DefaultFileExtraInfo> index, Action<bool> onComplete, OnErr onError);
 

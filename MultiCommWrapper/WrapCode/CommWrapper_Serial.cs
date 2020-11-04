@@ -22,6 +22,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         public event EventHandler<List<SerialDeviceInfo>> SerialDiscoveredDevices;
         public event EventHandler<SerialUsbError> SerialOnError;
         public event EventHandler<string> Serial_BytesReceived;
+        public event EventHandler<SerialDeviceInfo> OnConfigRequest;
 
         #endregion
 
@@ -200,21 +201,28 @@ namespace MultiCommWrapper.Net.WrapCode {
             });
         }
 
-        
-        public void RetrieveSerialCfg(SerialIndexExtraInfo queryInfo, Action<SerialDeviceInfo> found, Action notFound, OnErr onError) {
-            this.GetSerialCfgList((items) => {
-                // Iterate through index and compare fields
-                foreach(IIndexItem<SerialIndexExtraInfo> item in items) {
-                    if (item.ExtraInfoObj.PortName == queryInfo.PortName &&
-                        item.ExtraInfoObj.USBVendorId == queryInfo.USBVendorId &&
-                        item.ExtraInfoObj.USBProductId == queryInfo.USBProductId) {
-                        this.RetrieveSerialCfg(item, found, onError);
-                        return;
-                    }
-                }
-                notFound.Invoke();
-            }, onError);
 
+        public void InitSerialDeviceInfoConfigFields(SerialDeviceInfo info, Action onSuccess, OnErr onError) {
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 9999, () => {
+                this.RetrieveSerialCfg(info, (storedInfo) => {
+                    // ** Found in storage. Initialise passed in object with configured fields
+                    info.Baud = storedInfo.Baud;
+                    info.DataBits = storedInfo.DataBits;
+                    info.StopBits = storedInfo.StopBits;
+                    info.Parity = storedInfo.Parity;
+                    info.FlowHandshake = storedInfo.FlowHandshake;
+                    info.ReadTimeout = storedInfo.ReadTimeout;
+                    info.WriteTimeout = storedInfo.WriteTimeout;
+                    onSuccess();
+                },
+                () => {
+                    // ** Not found. User opens dialog on event, adds config values and decides on storage
+                    OnConfigRequest?.Invoke(this, info);
+                    onSuccess();
+                },
+                onError);
+            });
         }
 
 
@@ -242,7 +250,20 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-
+        private void RetrieveSerialCfg(SerialDeviceInfo inObject, Action<SerialDeviceInfo> found, Action notFound, OnErr onError) {
+            this.GetSerialCfgList((items) => {
+                // Iterate through index and compare fields
+                foreach (IIndexItem<SerialIndexExtraInfo> item in items) {
+                    if (item.ExtraInfoObj.PortName == inObject.PortName &&
+                        item.ExtraInfoObj.USBVendorId == inObject.USB_VendorId &&
+                        item.ExtraInfoObj.USBProductId == inObject.USB_ProductId) {
+                        this.RetrieveSerialCfg(item, found, onError);
+                        return;
+                    }
+                }
+                notFound.Invoke();
+            }, onError);
+        }
 
         #endregion
 
