@@ -238,37 +238,10 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void DeleteSerialCfg(IIndexItem<SerialIndexExtraInfo> index, Action<bool> onComplete, OnErr onError) {
-            //WrapErr.ToErrReport(9999, () => {
-            //    ErrReport report;
-            //    WrapErr.ToErrReport(out report, 9999, () => {
-            //        // TODO - check when we delete last one
-            //        bool ok = this.serialStorage.DeleteFile(index);
-            //        onComplete(ok);
-            //    });
-            //    if (report.Code != 0) {
-            //        onError.Invoke(this.GetText(MsgCode.LoadFailed));
-            //    }
-            //});
             this.DeleteFromStorage(this.serialStorage, index, onComplete, onError);
         }
 
 
-        // TOD check if generic can be used for all
-        public void DeleteFromStorage<TSToreObject,TExtraInfo>(
-            IIndexedStorageManager<TSToreObject, TExtraInfo> manager, IIndexItem<TExtraInfo> indexItem, Action<bool> onComplete, OnErr onError) 
-            where TSToreObject : class where TExtraInfo : class  {
-            
-            WrapErr.ToErrReport(9999, () => {
-                ErrReport report;
-                WrapErr.ToErrReport(out report, 9999, () => {
-                    bool ok = manager.DeleteFile(indexItem);
-                    onComplete(ok);
-                });
-                if (report.Code != 0) {
-                    onError.Invoke(this.GetText(MsgCode.LoadFailed));
-                }
-            });
-        }
 
 
         #endregion

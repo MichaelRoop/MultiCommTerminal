@@ -1,4 +1,7 @@
-﻿using CommunicationStack.Net.Stacks;
+﻿using ChkUtils.Net;
+using ChkUtils.Net.ErrObjects;
+using CommunicationStack.Net.Stacks;
+using LanguageFactory.Net.data;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommWrapper.Net.interfaces;
 using SerialCommon.Net.DataModels;
@@ -157,11 +160,29 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         #endregion
 
+        #region Storage generics
 
 
 
+        private void DeleteFromStorage<TSToreObject, TExtraInfo>(
+            IIndexedStorageManager<TSToreObject, TExtraInfo> manager, IIndexItem<TExtraInfo> indexItem, Action<bool> onComplete, OnErr onError)
+            where TSToreObject : class where TExtraInfo : class {
+
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    bool ok = manager.DeleteFile(indexItem);
+                    onComplete(ok);
+                });
+                if (report.Code != 0) {
+                    // TODO - add language - delete failed
+                    onError.Invoke(this.GetText(MsgCode.LoadFailed));
+                }
+            });
+        }
 
 
+        #endregion
 
     }
 }
