@@ -54,14 +54,15 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
         }
 
 
-
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             WPF_ControlHelpers.CenterChild(parent, this);
         }
 
+
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             this.widthManager.Teardown();
         }
+
 
         private void btnOk_Click(object sender, RoutedEventArgs e) {
             // Save the values in the SerialDeviceInfo

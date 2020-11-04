@@ -6,6 +6,7 @@ using LogUtils.Net;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommTerminal.DependencyInjection;
 using MultiCommTerminal.NetCore.WindowObjs;
+using MultiCommTerminal.NetCore.WindowObjs.SerialWins;
 using MultiCommTerminal.WPF_Helpers;
 using MultiCommWrapper.Net.interfaces;
 using System;
@@ -69,6 +70,10 @@ namespace MultiCommTerminal.WindowObjs {
                     case MenuCode.Credentials:
                         WifiCredentialsWin.ShowBox(this.mainWindow);
                         break;
+                    case MenuCode.UsbConfig:
+                        DeviceSelect_USB.ShowBox(this.mainWindow);
+                        break;
+
                     case MenuCode.Settings:
                         // TODO - settings window
                         break;
@@ -104,6 +109,7 @@ namespace MultiCommTerminal.WindowObjs {
                 this.AddItem(MenuCode.Terminators, MsgCode.Terminators, UIIcon.Terminator, "0");
                 this.AddItem(MenuCode.Commands, MsgCode.command, UIIcon.Command, "0"); // TODO Get a new icon
                 this.AddItem(MenuCode.Credentials, MsgCode.Credentials, UIIcon.Credentials, "0");
+                this.AddItem(MenuCode.UsbConfig, string.Format("USB {0}", DI.Wrapper.GetText(MsgCode.Settings)), UIIcon.Usb, "0");  // Need 
                 //this.AddItem(MenuCode.Settings, MsgCode.Settings, UIIcon.Settings, "0");
                 this.AddItem(MenuCode.About, MsgCode.About, UIIcon.About, "1");
 
@@ -114,15 +120,20 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void AddItem(MenuCode menuCode, MsgCode msgCode, UIIcon uIIcon, string padding) {
+            this.AddItem(menuCode, DI.Wrapper.GetText(msgCode), uIIcon, padding);
+        }
+
+
+        private void AddItem(MenuCode menuCode, string display, UIIcon uIIcon, string padding) {
             MenuItemDataModel dataModel = new MenuItemDataModel() {
                 Code = menuCode,
-                Display = DI.Wrapper.GetText(msgCode),
+                Display = display,
                 IconSource = IconBinder.Source(uIIcon),
                 Padding = padding,
             };
             this.items.Add(dataModel);
-
         }
+
 
         #endregion
 
