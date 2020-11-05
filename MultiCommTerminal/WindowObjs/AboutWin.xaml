@@ -29,17 +29,9 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <!-- Radio -->
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
                 </Grid.RowDefinitions>
 
                 <Label Grid.Row="0" Grid.ColumnSpan="3" Content="Multi Comm Serial Terminal" Style="{StaticResource  NameLabelCenter}" FontWeight="Bold" />
-
 
                 <Label Grid.Row="1" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Author}}" Style="{StaticResource NameLabelLeft}" />
                 <Label Grid.Row="1" Grid.Column="1" Content=":" Style="{StaticResource NameLabelCenter}" />
@@ -47,26 +39,22 @@
                     <Hyperlink  NavigateUri="https://linkedin.com/in/michael-roop-21800b19" RequestNavigate="Hyperlink_RequestNavigate" >Michael Roop</Hyperlink>
                 </TextBlock>
 
-
-                <!-- linkedin.com/in/michael-roop-21800b19   -->
-
                 <Label Grid.Row="2" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Icons}}" Style="{StaticResource NameLabelLeft}" />
                 <Label Grid.Row="2" Grid.Column="1" Content=":" Style="{StaticResource NameLabelCenter}" />
                 <TextBlock Grid.Row="2" Grid.Column="2" Style="{StaticResource TxtBlockRight}">
                     <Hyperlink  NavigateUri="https://icons8.com" RequestNavigate="Hyperlink_RequestNavigate">ICONS8</Hyperlink>
                 </TextBlock>
 
-                <Label Grid.Row="3" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.UserManual}}" Style="{StaticResource NameLabelLeft}" />
+                <Label Grid.Row="3" Grid.Column="0" Content="Build" Style="{StaticResource NameLabelLeft}" />
                 <Label Grid.Row="3" Grid.Column="1" Content=":" Style="{StaticResource NameLabelCenter}" />
-                <TextBlock Grid.Row="3" Grid.Column="2" Style="{StaticResource TxtBlockRight}" Margin="5">
-                    <Hyperlink NavigateUri="{Binding Source={x:Static wpfHelper:TxtBinder.UserManualUri }}" RequestNavigate="Hyperlink_RequestNavigate">
-                        <TextBlock Text="{Binding Source={x:Static wpfHelper:TxtBinder.UserManual}}"/>                        
+                <Label Grid.Row="3" Grid.Column="2" Content="2020.10.25.1" x:Name="lblBuild"  Style="{StaticResource NameLabelRight}" FontStyle="Italic" />
+
+                <TextBlock Grid.Row="4" Grid.ColumnSpan="3" Style="{StaticResource TxtBlockLeft}" Margin="5" HorizontalAlignment="Center">
+                    <Hyperlink NavigateUri="{Binding Source={x:Static wpfHelper:TxtBinder.UserManualUri }}" RequestNavigate="Hyperlink_RequestNavigate" >
+                        <TextBlock Text="{Binding Source={x:Static wpfHelper:TxtBinder.UserManual}}" />                        
                     </Hyperlink>
                 </TextBlock>
 
-                <Label Grid.Row="4" Grid.Column="0" Content="Build" Style="{StaticResource NameLabelLeft}" />
-                <Label Grid.Row="4" Grid.Column="1" Content=":" Style="{StaticResource NameLabelCenter}" />
-                <Label Grid.Row="4" Grid.Column="2" Content="2020.10.25.1" x:Name="lblBuild"  Style="{StaticResource NameLabelRight}" FontStyle="Italic" />
 
             </Grid>
             <DockPanel HorizontalAlignment="Center" Margin="10,5,10,15">
