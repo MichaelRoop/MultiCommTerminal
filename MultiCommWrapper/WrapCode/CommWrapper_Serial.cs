@@ -369,9 +369,19 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.Serial_BytesReceived?.Invoke(sender, msg);
         }
 
+
         private string GetSerialErrText(SerialErrorCode code) {
-            // TODO - tmp hack. Do language lookpu
-            return code.ToString().CamelCaseToSpaces();
+            switch (code) {
+                case SerialErrorCode.None: return this.GetText(MsgCode.None);
+                case SerialErrorCode.NotFound: return this.GetText(MsgCode.NotFound);
+                case SerialErrorCode.NotConnected: return this.GetText(MsgCode.NotConnected);
+                case SerialErrorCode.ReadFailure: return this.GetText(MsgCode.ReadFailure);
+                case SerialErrorCode.WriteFailure: return this.GetText(MsgCode.WriteFailue);
+                case SerialErrorCode.Unknown: return this.GetText(MsgCode.UnknownError);
+                //case SerialErrorCode.RetrieveFailed: return this.GetText(MsgCode.);
+                default: 
+                    return code.ToString().CamelCaseToSpaces();
+            }
         }
 
 
