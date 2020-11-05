@@ -752,6 +752,7 @@ namespace MultiCommTerminal.WindowObjs {
         private void PopulateScriptData(ScriptDataModel dataModel) {
             this.outgoing.Clear(this.scriptItems);
             this.outgoing.Add(this.scriptItems, dataModel.Items);
+            this.lbCommandListName.Content = dataModel.Display;
         }
 
 
@@ -869,27 +870,25 @@ namespace MultiCommTerminal.WindowObjs {
         #region Private
 
         private void btnSend_Click(object sender, RoutedEventArgs e) {
-            this.outgoing.GetSelected<ScriptItem>((item) => {
-                this.cbComm.GetSelected<CommMedialDisplay>((media) => {
-                    switch (media.MediumType) {
-                        case CommMediumType.Bluetooth:
-                            this.wrapper.BTClassicSend(item.Command);
-                            break;
-                        case CommMediumType.BluetoothLE:
-                            break;
-                        case CommMediumType.Ethernet:
-                            break;
-                        case CommMediumType.Wifi:
-                            this.wrapper.WifiSend(item.Command);
-                            break;
-                        case CommMediumType.Usb:
-                            // TODO implement
-                            this.wrapper.SerialUsbSend(item.Command);
-                            break;
-                        default:
-                            break;
-                    }
-                });
+            this.cbComm.GetSelected<CommMedialDisplay>((media) => {
+                switch (media.MediumType) {
+                    case CommMediumType.Bluetooth:
+                        this.wrapper.BTClassicSend(this.txtCommmand.Text);
+                        break;
+                    case CommMediumType.BluetoothLE:
+                        // TODO - ignore for now until I get the BLE working again
+                        break;
+                    case CommMediumType.Ethernet:
+                        break;
+                    case CommMediumType.Wifi:
+                        this.wrapper.WifiSend(this.txtCommmand.Text);
+                        break;
+                    case CommMediumType.Usb:
+                        this.wrapper.SerialUsbSend(this.txtCommmand.Text);
+                        break;
+                    default:
+                        break;
+                }
             });
         }
 
@@ -901,7 +900,11 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void outgoing_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            this.btnSend.Show();
+            this.outgoing.GetSelected<ScriptItem>((item) => {
+                this.cbComm.GetSelected<CommMedialDisplay>((media) => {
+                    this.txtCommmand.Text = item.Command;
+                });
+            });
         }
 
 
@@ -985,7 +988,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.lvProductColumn.Header = lang.GetText(MsgCode.Product);
 
             // Labels
-            this.lbCommand.Content = lang.GetText(MsgCode.command);
+            this.lbCommandListName.Content = lang.GetText(MsgCode.command);
             this.lbResponse.Content = lang.GetText(MsgCode.response);
             this.txtPairedDevices.Text = lang.GetText(MsgCode.PairedDevices);
 

@@ -43,14 +43,11 @@
                     <DockPanel  VerticalAlignment="Center">
                         <StackPanel x:Name="spCmds" VerticalAlignment="Center">
                             <DockPanel HorizontalAlignment="Center" Margin="0,2,0,0">
-                                <Label x:Name="lbCommand" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Commands}}" VerticalAlignment="Center"/>
-                                <controls:UC_IconButton x:Name="btnSend" Style="{StaticResource TextIconButton}" Visibility="Collapsed"
-                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Send}}" 
-                                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Send}}"                                                                                            
-                                            Background="Transparent" Click="btnSend_Click" />
+                                <Label x:Name="lbCommandListName" Content="Commands" VerticalAlignment="Center"/>
                             </DockPanel>
                             <Border BorderBrush="Blue" BorderThickness="1" Margin="10">
-                                <ListBox x:Name="outgoing" Width="250" Height="300" FontSize="16" HorizontalAlignment="Stretch"
+                                <StackPanel>
+                                    <ListBox x:Name="outgoing" Height="250" FontSize="16" HorizontalAlignment="Stretch"
                                          ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"
                                          SelectionChanged="outgoing_SelectionChanged">
 
@@ -64,13 +61,23 @@
                                             </Grid>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
-                                </ListBox> 
+                                </ListBox>
+
+                                    <DockPanel Margin="10" >
+                                        <TextBox x:Name="txtCommmand" Text="" Style="{Binding Source={StaticResource TxtBoxRight}}" Margin="0,0,10,0" />
+                                        <controls:UC_IconButton x:Name="btnSend" Style="{StaticResource TextIconButton}" Visibility="Visible"
+                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Send}}" 
+                                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Send}}"                                                                                            
+                                            Background="Transparent" Click="btnSend_Click" />
+
+                                    </DockPanel>
+                                </StackPanel>
                             </Border>
                         </StackPanel>
-                        <StackPanel x:Name="spResps" VerticalAlignment="Center">
+                        <StackPanel x:Name="spResps" >
                             <Label x:Name="lbResponse" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Response}}" HorizontalAlignment="Center" />
-                            <Border BorderBrush="Blue" BorderThickness="1" Margin="10">
-                                <ListBox x:Name="lbIncoming" Width="250" Height="300" FontSize="16" HorizontalAlignment="Stretch"
+                            <Border BorderBrush="Blue" BorderThickness="1" Margin="10" VerticalAlignment="Stretch" >
+                                <ListBox x:Name="lbIncoming" MinWidth="250" Height="303" FontSize="16" HorizontalAlignment="Stretch"  
                                     ScrollViewer.VerticalScrollBarVisibility="Auto" 
                                     ScrollViewer.HorizontalScrollBarVisibility="Auto" />
                             </Border>
