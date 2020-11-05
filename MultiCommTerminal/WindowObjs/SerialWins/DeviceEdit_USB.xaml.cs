@@ -73,22 +73,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
             this.info.FlowHandshake = (this.cbFlowControl.SelectedItem as FlowControlDisplay).FlowControl;
             this.info.ReadTimeout = this.GetValue(this.txtReadTimeout);
             this.info.WriteTimeout = this.GetValue(this.txtWriteTimeout);
-
             this.Changed = true;
-
-            if (this.chkSave.IsChecked.GetValueOrDefault(false)) {
-                DI.Wrapper.CreateOrSaveSerialCfg(
-                    this.info.PortName,
-                    this.info,
-                    () => {
-                        this.Close();
-                    },
-                    (err) => {
-                        App.ShowMsg(err);
-                    });
-            }
-
-            this.Close();
+            DI.Wrapper.CreateOrSaveSerialCfg(this.info.PortName, this.info, this.Close, this.OnSaveError);
         }
 
         private TimeSpan GetValue(TextBox txtBox) {
@@ -140,5 +126,12 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
         private void txtReadTimeout_PreviewTextInput(object sender, TextCompositionEventArgs e) {
             e.Handled = numOnly.IsMatch(e.Text);
         }
+
+
+        private void OnSaveError(string err) {
+            App.ShowMsg(err);
+            this.Close();
+        }
+
     }
 }

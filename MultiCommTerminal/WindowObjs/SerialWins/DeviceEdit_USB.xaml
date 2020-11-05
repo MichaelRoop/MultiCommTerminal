@@ -93,15 +93,8 @@
                 <TextBox Grid.Row="6" Grid.Column="1" x:Name="txtWriteTimeout" 
                          Style="{ StaticResource TxtBoxRight}" 
                          PreviewTextInput="txtWriteTimeout_PreviewTextInput"  />
-
-
             </Grid>
-
             <DockPanel HorizontalAlignment="Center" Margin="10">
-
-                <TextBlock x:Name="txtChkSave" FlowDirection="LeftToRight" VerticalAlignment="Center"  Text="{Binding Source={x:Static wpfHelper:TxtBinder.Save}}" />
-                <CheckBox x:Name="chkSave" VerticalAlignment="Center" FlowDirection="LeftToRight" IsChecked="True" Margin="5,0,10,0" />
-
                 <controls:UC_IconButton x:Name="btnOk" Style="{StaticResource TextIconButton}" Margin="5" 
                     Content="{Binding Source={x:Static wpfHelper:TxtBinder.OK}}"
                     IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Save}}" 
