@@ -1,5 +1,6 @@
 ﻿using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
+using CommunicationStack.Net.DataModels;
 using LanguageFactory.Net.data;
 using MultiCommWrapper.Net.DataModels;
 using MultiCommWrapper.Net.interfaces;
@@ -327,6 +328,9 @@ namespace MultiCommWrapper.Net.WrapCode {
 
             this.serial.DiscoveredDevices += this.Serial_DiscoveredDevicesHandler;
             this.serial.OnError += this.Serial_OnErrorHandler;
+
+            
+
             // TODO connection complete
         }
 
@@ -343,6 +347,12 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         private void Serial_OnErrorHandler(object sender, SerialUsbError err) {
             // TODO - determine if you have to clean up the serial USB
+            if (err.PortName.Length > 0) {
+                err.Message = string.Format("{0}:{1} - {2}", MsgCode.Port, err.PortName, this.GetSerialErrText(err.Code));
+            }
+            else {
+                err.Message = string.Format("{0}", this.GetSerialErrText(err.Code));
+            }
             this.SerialOnError(sender, err);
         }
 
@@ -358,6 +368,12 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.log.Info("SerialStack_MsgReceivedHandler", () => string.Format("Msg In: '{0}'", msg));
             this.Serial_BytesReceived?.Invoke(sender, msg);
         }
+
+        private string GetSerialErrText(SerialErrorCode code) {
+            // TODO - tmp hack. Do language lookpu
+            return code.ToString().CamelCaseToSpaces();
+        }
+
 
         #endregion
 

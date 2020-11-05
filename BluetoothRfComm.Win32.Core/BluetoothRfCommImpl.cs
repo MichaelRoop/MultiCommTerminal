@@ -4,6 +4,7 @@ using BluetoothCommon.Net;
 using BluetoothCommon.Net.interfaces;
 using Communications.UWP.Core.MsgPumps;
 using CommunicationStack.Net.DataModels;
+using CommunicationStack.Net.Enumerations;
 using CommunicationStack.Net.interfaces;
 using LogUtils.Net;
 using System;
@@ -75,7 +76,7 @@ namespace BluetoothRfComm.UWP.Core {
         #region Constructors
 
         public BluetoothRfCommUwpCore() {
-            this.msgPump.ConnectResultEvent += this.MsgPump_ConnectResultEvent;
+            this.msgPump.MsgPumpConnectResultEvent += this.MsgPump_ConnectResultEvent;
             this.msgPump.MsgReceivedEvent += this.MsgPump_MsgReceivedEventHandler;
         }
 
@@ -133,9 +134,10 @@ namespace BluetoothRfComm.UWP.Core {
         #region Private tools
 
         /// <summary>Handle the msg pump connect result</summary>
-        private void MsgPump_ConnectResultEvent(object sender, MsgPumpConnectResults results) {
-            this.Connected = results.IsSuccessful;
-            this.ConnectionCompleted?.Invoke(this, results.IsSuccessful);
+        private void MsgPump_ConnectResultEvent(object sender, MsgPumpResults results) {
+            // TODO - make more generic
+            this.Connected = results.Code == MsgPumpResultCode.Connected;
+            this.ConnectionCompleted?.Invoke(this, this.Connected);
         }
 
 

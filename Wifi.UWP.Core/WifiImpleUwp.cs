@@ -28,7 +28,7 @@ namespace Wifi.UWP.Core {
         #region Constructors
 
         public WifiImpleUwp() {
-            this.msgPump.ConnectResultEvent += MsgPump_ConnectResultEventHandler;
+            this.msgPump.MsgPumpConnectResultEvent += MsgPump_ConnectResultEventHandler;
             this.msgPump.MsgReceivedEvent += MsgPump_MsgReceivedEventHandler;
         }
 
@@ -38,7 +38,7 @@ namespace Wifi.UWP.Core {
             this.MsgReceivedEvent?.Invoke(sender, e);
         }
 
-        private void MsgPump_ConnectResultEventHandler(object sender, MsgPumpConnectResults e) {
+        private void MsgPump_ConnectResultEventHandler(object sender, MsgPumpResults e) {
             //throw new NotImplementedException();
             this.OnWifiConnectionAttemptCompleted?.Invoke(sender, e);
             
@@ -75,7 +75,7 @@ namespace Wifi.UWP.Core {
         public event EventHandler<WifiError> OnError;
 
 
-        public event EventHandler<MsgPumpConnectResults> OnWifiConnectionAttemptCompleted;
+        public event EventHandler<MsgPumpResults> OnWifiConnectionAttemptCompleted;
 
 
         public event EventHandler<WifiCredentials> CredentialsRequestedEvent;

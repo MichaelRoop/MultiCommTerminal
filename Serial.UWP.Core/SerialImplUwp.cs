@@ -1,6 +1,8 @@
 ﻿using CommunicationStack.Net.DataModels;
+using CommunicationStack.Net.Enumerations;
 using LogUtils.Net;
 using SerialCommon.Net.DataModels;
+using SerialCommon.Net.Enumerations;
 using SerialCommon.Net.interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,7 +14,7 @@ namespace Serial.UWP.Core {
 
         public event EventHandler<List<SerialDeviceInfo>> DiscoveredDevices;
         public event EventHandler<SerialUsbError> OnError;
-        public event EventHandler<MsgPumpConnectResults> OnSerialConnectionAttemptCompleted;
+        public event EventHandler<MsgPumpResults> OnSerialConnectionAttemptCompleted;
 
 
         #region ICommStack Implementations
@@ -38,7 +40,7 @@ namespace Serial.UWP.Core {
         public bool Connected { get; private set; } = false;
 
         public SerialImplUwp() {
-            this.msgPump.ConnectResultEvent += this.MsgPump_ConnectResultEventHandler;
+            this.msgPump.MsgPumpConnectResultEvent += this.MsgPump_ConnectResultEventHandler;
             this.msgPump.MsgReceivedEvent += this.MsgPump_MsgReceivedEventHandler;
         }
 
@@ -56,8 +58,25 @@ namespace Serial.UWP.Core {
         }
 
 
-        private void MsgPump_ConnectResultEventHandler(object sender, MsgPumpConnectResults e) {
-            this.OnSerialConnectionAttemptCompleted?.Invoke(this, e);
+        private void MsgPump_ConnectResultEventHandler(object sender, MsgPumpResults e) {
+            switch (e.Code) {
+                case MsgPumpResultCode.Connected:
+                case MsgPumpResultCode.ConnectionFailure:
+                    this.OnSerialConnectionAttemptCompleted?.Invoke(this, e);
+                    break;
+                case MsgPumpResultCode.NotConnected:
+                    this.OnError?.Invoke(this, new SerialUsbError(SerialErrorCode.NotConnected));
+                    break;
+                case MsgPumpResultCode.ReadFailure:
+                    this.OnError?.Invoke(this, new SerialUsbError(SerialErrorCode.ReadFailure));
+                    break;
+                case MsgPumpResultCode.WriteFailure:
+                    this.OnError?.Invoke(this, new SerialUsbError(SerialErrorCode.WriteFailure));
+                    break;
+                default:
+                    this.log.Error(9999, () => string.Format("Unhandled MsgPumpResult:{0}", e.Code));
+                    break;
+            }
         }
 
         #endregion

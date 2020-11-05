@@ -2,6 +2,8 @@
 using BluetoothLE.Net.DataModels;
 using ChkUtils.Net;
 using Common.Net.Network;
+using CommunicationStack.Net.DataModels;
+using CommunicationStack.Net.Enumerations;
 using LanguageFactory.Net.data;
 using LogUtils.Net;
 using MultiCommData.Net.StorageDataModels;
@@ -542,10 +544,13 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
-        private void Wrapper_OnWifiConnectionAttemptCompletedHandler(object sender, CommunicationStack.Net.DataModels.MsgPumpConnectResults e) {
+        private void Wrapper_OnWifiConnectionAttemptCompletedHandler(object sender, MsgPumpResults result) {
             this.Dispatcher.Invoke(() => {
                 this.gridWait.Collapse();
-                if (!e.IsSuccessful) {
+                if (result.Code != MsgPumpResultCode.Connected) {
+
+                    // TODO Put up appropriate error. Better yet have the language based text set in the wrapper
+
                     App.ShowMsg("Failed connection");
                 }
                 else {
@@ -617,12 +622,7 @@ namespace MultiCommTerminal.WindowObjs {
         private void Wrapper_SerialOnErrorHandler(object sender, SerialUsbError e) {
             this.Dispatcher.Invoke(() => {
                 this.gridWait.Collapse();
-
-                string err = string.Format(
-                    "{0} Usb Error:{1}, {2}", 
-                    e.PortName, e.Code, e.Message);
-
-                App.ShowMsg("Usb Error"); // TODO Better errors
+                App.ShowMsg(e.Message);
             });
         }
 

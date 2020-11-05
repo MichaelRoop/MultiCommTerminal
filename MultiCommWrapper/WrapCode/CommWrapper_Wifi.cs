@@ -1,6 +1,7 @@
 ﻿using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
 using CommunicationStack.Net.DataModels;
+using CommunicationStack.Net.Enumerations;
 using LanguageFactory.Net.data;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommWrapper.Net.interfaces;
@@ -24,7 +25,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         public event EventHandler<List<WifiNetworkInfo>> DiscoveredWifiNetworks;
         public event EventHandler<WifiError> OnWifiError;
-        public event EventHandler<MsgPumpConnectResults> OnWifiConnectionAttemptCompleted;
+        public event EventHandler<MsgPumpResults> OnWifiConnectionAttemptCompleted;
         public event EventHandler<string> Wifi_BytesReceived;
         public event EventHandler<WifiCredentials> CredentialsRequestedEvent;
 
@@ -246,14 +247,14 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-        private void Wifi_OnWifiConnectionAttemptCompletedHandler(object sender, MsgPumpConnectResults result) {
+        private void Wifi_OnWifiConnectionAttemptCompletedHandler(object sender, MsgPumpResults result) {
             this.log.Info("Wifi_OnWifiConnectionAttemptCompletedHandler", () => string.Format(
                 "Is OnWifiConnectionAttemptCompleted null={0}",
                 this.OnWifiConnectionAttemptCompleted == null));
 
             // Set when the current connection is using new parameters
             if (this.pendingSaveConnectNetInfo != null) {
-                if (result.IsSuccessful) {
+                if (result.Code == MsgPumpResultCode.Connected) {
                     this.WifiStoreNewCredentials(this.pendingSaveConnectNetInfo);
                 }
                 else {
