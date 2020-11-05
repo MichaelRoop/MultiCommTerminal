@@ -973,6 +973,7 @@ namespace MultiCommTerminal.WindowObjs {
             // Buttons
             this.btnExit.Content = lang.GetText(MsgCode.exit);
             this.btnSend.Content = lang.GetText(MsgCode.send);
+            this.btnLog.Content = lang.GetText(MsgCode.Log);
             
             this.btnBTConnect.Content = lang.GetText(MsgCode.connect);
             this.btnInfoBT.Content = lang.GetText(MsgCode.info);
@@ -999,7 +1000,6 @@ namespace MultiCommTerminal.WindowObjs {
             this.lvProductColumn.Header = lang.GetText(MsgCode.Product);
 
             // Labels
-            this.lbCommandListName.Content = lang.GetText(MsgCode.command);
             this.lbResponse.Content = lang.GetText(MsgCode.response);
             this.txtPairedDevices.Text = lang.GetText(MsgCode.PairedDevices);
 

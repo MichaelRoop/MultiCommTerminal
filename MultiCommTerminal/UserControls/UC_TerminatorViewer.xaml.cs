@@ -17,10 +17,11 @@ namespace MultiCommTerminal.UserControls {
 
         #region Data
 
-        ICommWrapper wrapper = null;
-        List<Label> hex = new List<Label>();
-        List<Label> names = new List<Label>();
+        private ICommWrapper wrapper = null;
+        private List<Label> hex = new List<Label>();
+        private List<Label> names = new List<Label>();
         private const int MAX_TERMINATORS = 5;
+        private bool hasName = false;
 
         #endregion
 
@@ -50,7 +51,14 @@ namespace MultiCommTerminal.UserControls {
 
 
         public void Initialise(TerminatorDataModel data) {
-            this.lblTerminators.Content = (data.Name.Length > 0) ? data.Name : this.wrapper.GetText(MsgCode.Terminators);
+            if (data.Name.Length > 0) {
+                this.hasName = true;
+                this.lblTerminators.Content = data.Name;
+            }
+            else {
+                this.lblTerminators.Content = this.wrapper.GetText(MsgCode.Terminators);
+            }
+
             // Blank out any existing info
             for (int i = 0; i < MAX_TERMINATORS; i++) {
                 this.names[i].Content = "";
@@ -74,7 +82,9 @@ namespace MultiCommTerminal.UserControls {
 
 
         private void Wrapper_LanguageChanged(object sender, LanguageFactory.Net.Messaging.SupportedLanguage e) {
-            this.lblTerminators.Content = TxtBinder.Terminators;
+            if (!this.hasName) {
+                this.lblTerminators.Content = TxtBinder.Terminators;
+            }
         }
 
     }
