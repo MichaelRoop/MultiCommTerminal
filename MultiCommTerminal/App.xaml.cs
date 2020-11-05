@@ -45,7 +45,9 @@ namespace MultiCommTerminal {
         /// </summary>
         public static string Build {
             get {
-                return "2020.10.26.1";
+                // Try to figure out how to increment the last number on build
+                DateTime dt = DateTime.Now;
+                return string.Format("{0}:{1}:{2}:1", dt.Year, dt.Month, dt.Day);
             }
         }
 

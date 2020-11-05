@@ -47,7 +47,7 @@
 
                 <Label Grid.Row="3" Grid.Column="0" Content="Build" Style="{StaticResource NameLabelLeft}" />
                 <Label Grid.Row="3" Grid.Column="1" Content=":" Style="{StaticResource NameLabelCenter}" />
-                <Label Grid.Row="3" Grid.Column="2" Content="2020.10.25.1" x:Name="lblBuild"  Style="{StaticResource NameLabelRight}" FontStyle="Italic" />
+                <Label Grid.Row="3" Grid.Column="2" Content="{Binding Source={x:Static wpfHelper:TxtBinder.BuildNumber}}" x:Name="lblBuild"  Style="{StaticResource NameLabelRight}" FontStyle="Italic" />
 
                 <TextBlock Grid.Row="4" Grid.ColumnSpan="3" Style="{StaticResource TxtBlockLeft}" Margin="5" HorizontalAlignment="Center">
                     <Hyperlink NavigateUri="{Binding Source={x:Static wpfHelper:TxtBinder.UserManualUri }}" RequestNavigate="Hyperlink_RequestNavigate" >
@@ -55,6 +55,11 @@
                     </Hyperlink>
                 </TextBlock>
 
+                <TextBlock Grid.Row="5" Grid.ColumnSpan="3" Style="{StaticResource TxtBlockLeft}" Margin="5" HorizontalAlignment="Center">
+                    <Hyperlink NavigateUri="{Binding Source={x:Static wpfHelper:TxtBinder.SupportlUri }}" RequestNavigate="Hyperlink_RequestNavigate" >
+                        <TextBlock Text="{Binding Source={x:Static wpfHelper:TxtBinder.Support}}" />                        
+                    </Hyperlink>
+                </TextBlock>
 
             </Grid>
             <DockPanel HorizontalAlignment="Center" Margin="10,5,10,15">

@@ -96,6 +96,14 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string ReadTimeout { get { return GetTxt(MsgCode.ReadTimeout); } }
         public static string WriteTimeout { get { return GetTxt(MsgCode.WriteTimeout); } }
         public static string LogText { get { return GetTxt(MsgCode.Log); } }
+        public static string Support { get { return GetTxt(MsgCode.Support); } }
+
+
+        public static string BuildNumber {
+            get {
+                return App.Build;
+            }
+        }
 
 
         /// <summary>To access the user manual in the browser</summary>
@@ -104,6 +112,13 @@ namespace MultiCommTerminal.WPF_Helpers {
                 return string.Format(@"file:///{0}", DI.Wrapper.UserManualFullFileName);
             }
         }
+
+        public static string SupportlUri {
+            get {
+                return string.Format(@"mailto:MultiCommTerminal@gmail.com?subject=Multi Comm Terminal Support Question&body=App Build number:{0}", BuildNumber);
+            }
+        }
+
 
 
         #endregion
