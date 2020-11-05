@@ -36,6 +36,7 @@
     <None Remove="images\icons\icons8-gear-32.png" />
     <None Remove="images\icons\icons8-help-50.png" />
     <None Remove="images\icons\icons8-help-white-50.png" />
+    <None Remove="images\icons\icons8-index-50.png" />
     <None Remove="images\icons\icons8-iphone-spinner-100.png" />
     <None Remove="images\icons\icons8-job-50.png" />
     <None Remove="images\icons\icons8-language-50.png" />
@@ -163,6 +164,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="images\icons\icons8-help-white-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-index-50.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="images\icons\icons8-iphone-spinner-100.png">

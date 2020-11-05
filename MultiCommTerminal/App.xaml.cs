@@ -24,12 +24,21 @@ namespace MultiCommTerminal {
 
         private log4net.ILog loggerImpl = null;
         private ClassLog log = new ClassLog("App");
-        private static App STATIC_APP = null;
         private DateTime currentDate = DateTime.Now;
+        private static App staticApp = null;
 
         #endregion
 
         #region Properties
+
+        public static App STATIC_APP {
+            get {
+                return staticApp;
+            }
+            private set {
+                staticApp = value;
+            }
+        }
 
         /// <summary>Build to display
         /// 
@@ -39,6 +48,12 @@ namespace MultiCommTerminal {
                 return "2020.10.26.1";
             }
         }
+
+        #endregion
+
+        #region Events
+
+        public event EventHandler<string> LogMsgEvent;
 
         #endregion
 
@@ -94,6 +109,8 @@ namespace MultiCommTerminal {
                         this.log.Warning(0, "************************************************");
                         this.currentDate = err.TimeStamp;
                     }
+
+                    STATIC_APP.DispatchProxy(() => this.LogMsgEvent?.Invoke(this, err.Msg));
 
                     string msg = Log.GetMsgFormat1(level, err);
                     switch (level) {

@@ -39,11 +39,13 @@ namespace MultiCommTerminal.WindowObjs {
         private ButtonGroupSizeSyncManager buttonSizer_BT = null;
         private ButtonGroupSizeSyncManager buttonSizer_BLE = null;
         private ButtonGroupSizeSyncManager buttonSizer_WIFI = null;
+        private ButtonGroupSizeSyncManager buttonSizer_MAIN = null;
 
         MenuWin menu = null;
         private ICommWrapper wrapper = null;
         private ClassLog log = new ClassLog("MainWindow");
         private ScrollViewer inScroll = null;
+        private ScrollViewer logScroll = null;
 
         #endregion
 
@@ -61,7 +63,8 @@ namespace MultiCommTerminal.WindowObjs {
             this.menu = new MenuWin(this);
             this.menu.Collapse();
             this.inScroll = this.lbIncoming.GetScrollViewer();
-
+            this.logScroll = this.lbLog.GetScrollViewer();
+            this.lbLog.Collapse();
         }
 
 
@@ -680,6 +683,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper.Serial_BytesReceived += this.Wrapper_Serial_BytesReceivedHandler;
             this.wrapper.OnSerialConfigRequest += this.Wrapper_OnSerialConfigRequestHandler;
 
+            App.STATIC_APP.LogMsgEvent += this.AppLogMsgEventHandler;
 
             // Call before rendering which will trigger initial resize events
             this.buttonSizer_BT = new ButtonGroupSizeSyncManager(this.btnBTConnect, this.btnBTDiscover);
@@ -691,6 +695,9 @@ namespace MultiCommTerminal.WindowObjs {
             this.buttonSizer_WIFI = new ButtonGroupSizeSyncManager(this.btnWifiDiscover, this.btnWifiConnect, this.btnWifiDisconnect);
             this.buttonSizer_WIFI.PrepForChange();
 
+            buttonSizer_MAIN = new ButtonGroupSizeSyncManager(this.btnExit, this.btnLog);
+            buttonSizer_MAIN.PrepForChange();
+
             this.wrapper.GetCurrentScript(this.PopulateScriptData, WindowHelpers.ShowMsg);
         }
 
@@ -699,6 +706,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.buttonSizer_BT.Teardown();
             this.buttonSizer_BLE.Teardown();
             this.buttonSizer_WIFI.Teardown();
+            this.buttonSizer_MAIN.Teardown();
 
             // Languages
             this.wrapper.LanguageChanged -= this.LanguageChangedHandler;
@@ -740,6 +748,8 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper.SerialDiscoveredDevices -= this.Wrapper_SerialDiscoveredDevicesHandler;
             this.wrapper.Serial_BytesReceived -= this.Wrapper_Serial_BytesReceivedHandler;
             this.wrapper.OnSerialConfigRequest -= this.Wrapper_OnSerialConfigRequestHandler;
+
+            App.STATIC_APP.LogMsgEvent -= this.AppLogMsgEventHandler;
 
             if (this.menu != null) {
                 this.menu.Close();
@@ -958,6 +968,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.buttonSizer_BT.PrepForChange();
             this.buttonSizer_BLE.PrepForChange();
             this.buttonSizer_WIFI.PrepForChange();
+            this.buttonSizer_MAIN.PrepForChange();
 
             // Buttons
             this.btnExit.Content = lang.GetText(MsgCode.exit);
@@ -1002,7 +1013,20 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
+        private void AppLogMsgEventHandler(object sender, string msg) {
+            // Race condition with messages coming before window rendered
+            try {
+                if (this.logScroll != null) {
+                    this.lbLog.AddAndScroll(msg, this.logScroll, 400);
+                }
+            }
+            catch (Exception) { }
+        }
+
         #endregion
 
+        private void btnLog_Click(object sender, RoutedEventArgs e) {
+            this.lbLog.ToggleVisibility();
+        }
     }
 }

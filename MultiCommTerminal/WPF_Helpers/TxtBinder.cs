@@ -95,6 +95,7 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string Timeout { get { return GetTxt(MsgCode.Timeout); } }
         public static string ReadTimeout { get { return GetTxt(MsgCode.ReadTimeout); } }
         public static string WriteTimeout { get { return GetTxt(MsgCode.WriteTimeout); } }
+        public static string LogText { get { return GetTxt(MsgCode.Log); } }
 
 
         /// <summary>To access the user manual in the browser</summary>

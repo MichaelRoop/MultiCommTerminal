@@ -43,7 +43,7 @@
                     <DockPanel  VerticalAlignment="Center">
                         <StackPanel x:Name="spCmds" VerticalAlignment="Center">
                             <DockPanel HorizontalAlignment="Center" Margin="0,2,0,0">
-                                <Label x:Name="lbCommandListName" Content="Commands" VerticalAlignment="Center"/>
+                                <Label x:Name="lbCommandListName" Content="Commands" VerticalAlignment="Center" />
                             </DockPanel>
                             <Border BorderBrush="Blue" BorderThickness="1" Margin="10">
                                 <StackPanel>
@@ -51,17 +51,17 @@
                                          ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"
                                          SelectionChanged="outgoing_SelectionChanged">
 
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <Grid Margin="1">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="auto" />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Text="{Binding Display}" />
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                                </ListBox>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="1">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="{Binding Display}" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
 
                                     <DockPanel Margin="10" >
                                         <TextBox x:Name="txtCommmand" Text="" Style="{Binding Source={StaticResource TxtBoxRight}}" Margin="0,0,10,0" />
@@ -132,7 +132,7 @@
                                                     Content="{Binding Source={x:Static wpfHelper:TxtBinder.Discover}}" Margin="0,2.5"
                                                     IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Search}}"                                                                                            
                                                     Background="Transparent" Click="btnBTDiscover_Click" />
-                                            </StackPanel>
+                                        </StackPanel>
                                     </Border>
                                     <controls:UC_IconButton x:Name="btnBTPair" Style="{StaticResource TextIconButton}"
                                             HorizontalContentAlignment="Left" Visibility="Collapsed"
@@ -256,8 +256,8 @@
                                         <TextBlock Grid.Column="2" Text="Product" />
 
                                     </Grid>-->
-                                    
-                                    
+
+
                                     <!--<DockPanel Margin="10,0">
                                         <TextBlock Text="{Binding Source={x:Static wpfHelper:TxtBinder.Port}}" HorizontalAlignment="Left" />
                                         <TextBlock Text="USB Vendor" HorizontalAlignment="Center" />
@@ -282,12 +282,14 @@
                                                     DisplayMemberBinding="{Binding USB_ProductIdDisplay}"/>
                                             </GridView>
                                         </ListView.View>
-                                        
+
                                         <!--<ListView.ItemTemplate>
                                             <DataTemplate>
                                                 <Grid Margin="1">
                                                     <Grid.RowDefinitions>
-                                                        --><!--<RowDefinition/>--><!--
+                                                        -->
+                                        <!--<RowDefinition/>-->
+                                        <!--
                                                         <RowDefinition/>
                                                     </Grid.RowDefinitions>
                                                     <Grid.ColumnDefinitions>
@@ -295,9 +297,11 @@
                                                         <ColumnDefinition Width="auto" />
                                                         <ColumnDefinition Width="auto" />
                                                     </Grid.ColumnDefinitions>
-                                                    --><!--<TextBlock Grid.Column="0" Text="Port" />
+                                                    -->
+                                        <!--<TextBlock Grid.Column="0" Text="Port" />
                                                 <TextBlock Grid.Column="1" Text="USB Vendor" />
-                                                <TextBlock Grid.Column="2" Text="USB Product" />--><!--
+                                                <TextBlock Grid.Column="2" Text="USB Product" />-->
+                                        <!--
 
 
                                                     <TextBlock Grid.Column="0" Text="{Binding PortName}" />
@@ -353,6 +357,11 @@
                 </Border>
                 <Border BorderBrush="AliceBlue" BorderThickness="1" VerticalAlignment="Center">
                     <DockPanel  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                        <controls:UC_IconButton x:Name="btnLog" Click="btnLog_Click" MinWidth="100" Margin="0,0,10,0"
+                            Style="{StaticResource TextIconButton}" 
+                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.LogText}}"
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.LogIcon}}"/>
+
                         <!-- Need to override the Icons margin because the Exit is smaller within PNG file -->
                         <controls:UC_IconButton x:Name="btnExit" Click="btnExit_Click" MinWidth="100" IconMargin="7"
                             Style="{StaticResource TextIconButton}" 
@@ -360,7 +369,10 @@
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Exit}}"/>
                     </DockPanel>
                 </Border>
+                <ListBox x:Name="lbLog" Height="200" Visibility="Visible" 
+                         ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                         ScrollViewer.HorizontalScrollBarVisibility="Auto" MaxWidth="700" />
             </StackPanel>
         </Border>
-     </Grid>
+    </Grid>
 </Window>
