@@ -75,6 +75,7 @@
     <ProjectReference Include="..\..\SharedNetLibs\WifiCommon.Net\WifiCommon.Net.csproj" />
     <ProjectReference Include="..\BluetoothLE.UWP.Core\Bluetooth.UWP.Core.csproj" />
     <ProjectReference Include="..\BluetoothRfComm.Win32.Core\BluetoothRfComm.UWP.Core.csproj" />
+    <ProjectReference Include="..\Ethernet.UWP.Core\Ethernet.UWP.Core.csproj" />
     <ProjectReference Include="..\MultiCommData\MultiCommData.Net.csproj" />
     <ProjectReference Include="..\MultiCommWrapper\MultiCommWrapper.Net.csproj" />
     <ProjectReference Include="..\Serial.UWP.Core\Serial.UWP.Core.csproj" />

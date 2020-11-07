@@ -51,6 +51,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serial.UWP.Core", "Serial.U
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SerialCommon.Net", "..\SharedNetLibs\SerialCommon.Net\SerialCommon.Net.csproj", "{DA822327-351C-4516-BDA3-B0266D57E8EB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ethernet.UWP.Core", "Ethernet.UWP.Core\Ethernet.UWP.Core.csproj", "{18412F94-9FB8-4870-9864-B85313E1E069}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -555,6 +557,26 @@ Global
 		{DA822327-351C-4516-BDA3-B0266D57E8EB}.Release|x64.Build.0 = Release|Any CPU
 		{DA822327-351C-4516-BDA3-B0266D57E8EB}.Release|x86.ActiveCfg = Release|Any CPU
 		{DA822327-351C-4516-BDA3-B0266D57E8EB}.Release|x86.Build.0 = Release|Any CPU
+		{18412F94-9FB8-4870-9864-B85313E1E069}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18412F94-9FB8-4870-9864-B85313E1E069}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18412F94-9FB8-4870-9864-B85313E1E069}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{18412F94-9FB8-4870-9864-B85313E1E069}.Debug|ARM.Build.0 = Debug|Any CPU
+		{18412F94-9FB8-4870-9864-B85313E1E069}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{18412F94-9FB8-4870-9864-B85313E1E069}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{18412F94-9FB8-4870-9864-B85313E1E069}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{18412F94-9FB8-4870-9864-B85313E1E069}.Debug|x64.Build.0 = Debug|Any CPU
+		{18412F94-9FB8-4870-9864-B85313E1E069}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{18412F94-9FB8-4870-9864-B85313E1E069}.Debug|x86.Build.0 = Debug|Any CPU
+		{18412F94-9FB8-4870-9864-B85313E1E069}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18412F94-9FB8-4870-9864-B85313E1E069}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18412F94-9FB8-4870-9864-B85313E1E069}.Release|ARM.ActiveCfg = Release|Any CPU
+		{18412F94-9FB8-4870-9864-B85313E1E069}.Release|ARM.Build.0 = Release|Any CPU
+		{18412F94-9FB8-4870-9864-B85313E1E069}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{18412F94-9FB8-4870-9864-B85313E1E069}.Release|ARM64.Build.0 = Release|Any CPU
+		{18412F94-9FB8-4870-9864-B85313E1E069}.Release|x64.ActiveCfg = Release|Any CPU
+		{18412F94-9FB8-4870-9864-B85313E1E069}.Release|x64.Build.0 = Release|Any CPU
+		{18412F94-9FB8-4870-9864-B85313E1E069}.Release|x86.ActiveCfg = Release|Any CPU
+		{18412F94-9FB8-4870-9864-B85313E1E069}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
