@@ -4,6 +4,7 @@ using CommunicationStack.Net.interfaces;
 using LogUtils.Net;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using VariousUtils.Net;
 using WifiCommon.Net.DataModels;
 using WifiCommon.Net.interfaces;
@@ -15,7 +16,7 @@ namespace Wifi.UWP.Core {
         #region Data
 
         ClassLog log = new ClassLog("WifiImpleUwp");
-        IMsgPump<SocketMsgPumpConnectData> msgPump = new SocketMsgPump();
+        private static IMsgPump<SocketMsgPumpConnectData> msgPump = new SocketMsgPumpWifi();
 
         #endregion
 
@@ -28,8 +29,8 @@ namespace Wifi.UWP.Core {
         #region Constructors
 
         public WifiImpleUwp() {
-            this.msgPump.MsgPumpConnectResultEvent += MsgPump_ConnectResultEventHandler;
-            this.msgPump.MsgReceivedEvent += MsgPump_MsgReceivedEventHandler;
+            msgPump.MsgPumpConnectResultEvent += MsgPump_ConnectResultEventHandler;
+            msgPump.MsgReceivedEvent += MsgPump_MsgReceivedEventHandler;
         }
 
         private void MsgPump_MsgReceivedEventHandler(object sender, byte[] e) {
@@ -58,7 +59,7 @@ namespace Wifi.UWP.Core {
         /// <param name="msg">The message to write out</param>
         /// <returns>always true</returns>
         public bool SendOutMsg(byte[] msg) {
-            this.msgPump.WriteAsync(msg);
+            msgPump.WriteAsync(msg);
             return true;
         }
 
@@ -86,16 +87,32 @@ namespace Wifi.UWP.Core {
         #region IWifiInterface methods
 
         public void Disconnect() {
-            this.log.InfoEntry("Disconnect");
-            this.msgPump.Disconnect();
-
-            if (this.wifiAdapter != null) {
-                this.log.Info("Disconnect", "Disconnecting adapter");
-                // This just kills the Arduino. No possibility of future connections
-                //this.wifiAdapter.Disconnect();
-            }
-
+            this.DisconnectAsync();
         }
+
+
+        private Task DisconnectAsync() {
+            return Task.Run(() => {
+                try {
+                    this.log.InfoEntry("Disconnect");
+                    if (msgPump.Connected) {
+                        msgPump.Disconnect();
+                    }
+
+                    // TODO Arduino has problems if we close the adapter
+                    // Just close and reopen the socket
+                    //if (wifiAdapter != null) {
+                    //    this.log.Info("Disconnect", "Disconnecting adapter");
+                    //    // This just kills the Arduino. No possibility of future connections
+                    //    wifiAdapter.Disconnect();
+                    //}
+                }
+                catch(Exception e) {
+                    this.log.Exception(8888, "", e);
+                }
+            });
+        }
+
 
         #endregion
 

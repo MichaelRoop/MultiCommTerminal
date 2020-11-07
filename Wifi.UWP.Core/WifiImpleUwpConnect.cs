@@ -1,5 +1,4 @@
-﻿using ChkUtils.Net;
-using ChkUtils.Net.ErrObjects;
+﻿using ChkUtils.Net.ErrObjects;
 using Communications.UWP.Core.MsgPumps;
 using System;
 using System.Threading.Tasks;
@@ -22,7 +21,7 @@ namespace Wifi.UWP.Core {
             Task.Run(async () => {
                 try {
                     this.log.InfoEntry("ConnectAsync");
-                    this.Disconnect();
+                    await this.DisconnectAsync();
                     this.log.Info("ConnectAsync", () => string.Format(
                         "Host:{0} Service:{1}", dataModel.RemoteHostName, dataModel.RemoteServiceName));
 
@@ -40,10 +39,10 @@ namespace Wifi.UWP.Core {
                         WiFiConnectionResult result = null;
                         PasswordCredential cred = this.GetCredentials(dataModel);
                         if (cred == null) {
-                            result = await this.wifiAdapter.ConnectAsync(net, WiFiReconnectionKind.Automatic);
+                            result = await wifiAdapter.ConnectAsync(net, WiFiReconnectionKind.Automatic);
                         }
                         else {
-                            result = await this.wifiAdapter.ConnectAsync(net, WiFiReconnectionKind.Automatic, cred);
+                            result = await wifiAdapter.ConnectAsync(net, WiFiReconnectionKind.Automatic, cred);
                         }
 
                         switch (result.ConnectionStatus) {
@@ -52,10 +51,10 @@ namespace Wifi.UWP.Core {
                                 //this.log.Info("ConnectAsync", () => string.Format("Connected to:{0}", profile.ProfileName));
                                 //if (profile.IsWlanConnectionProfile) {
 
-                                await this.DumpWifiAdapterInfo(this.wifiAdapter);
+                                await this.DumpWifiAdapterInfo(wifiAdapter);
                                 this.log.Info("ConnectAsync", () => string.Format("Connecting to {0}:{1}", dataModel.RemoteHostName, dataModel.RemoteServiceName));
                                 // Connect socket
-                                this.msgPump.ConnectAsync(new SocketMsgPumpConnectData() {
+                                msgPump.ConnectAsync(new SocketMsgPumpConnectData() {
                                     MaxReadBufferSize = 255,
                                     RemoteHostName = dataModel.RemoteHostName,
                                     ServiceName = dataModel.RemoteServiceName,
@@ -93,7 +92,7 @@ namespace Wifi.UWP.Core {
 
 
         WiFiAvailableNetwork GetNetwork(string ssid) {
-            foreach (WiFiAvailableNetwork net in this.wifiAdapter.NetworkReport.AvailableNetworks) {
+            foreach (WiFiAvailableNetwork net in wifiAdapter.NetworkReport.AvailableNetworks) {
                 if (net.Ssid == ssid) {
                     return net;
                 }

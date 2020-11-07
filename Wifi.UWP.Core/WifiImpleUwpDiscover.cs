@@ -21,9 +21,9 @@ namespace Wifi.UWP.Core {
 
         #region Data
 
-        private WiFiAdapter wifiAdapter = null;
-        private WifiAdapterInfo adapterInfo = new WifiAdapterInfo();
-        IReadOnlyList<WiFiAvailableNetwork> networks = new List<WiFiAvailableNetwork>();
+        private static WiFiAdapter wifiAdapter = null;
+        private static WifiAdapterInfo adapterInfo = new WifiAdapterInfo();
+        private static IReadOnlyList<WiFiAvailableNetwork> networks = new List<WiFiAvailableNetwork>();
 
         #endregion
 
@@ -48,7 +48,7 @@ namespace Wifi.UWP.Core {
 
 
         private async void DoDiscovery() {
-            if (this.wifiAdapter == null) {
+            if (wifiAdapter == null) {
                 IReadOnlyList<WiFiAdapter> adapters = await WiFiAdapter.FindAllAdaptersAsync();
                 if (adapters.Count == 0) {
                     this.OnError?.Invoke(this, new WifiError(WifiErrorCode.NoAdapters));
@@ -58,14 +58,14 @@ namespace Wifi.UWP.Core {
                 if (adapters.Count > 1) {
                     this.log.Warning(9999, () => string.Format("{0} WIFI adapters. Selecting first", adapters.Count));
                 }
-                this.wifiAdapter = adapters[0];
+                wifiAdapter = adapters[0];
             }
 
-            this.InitAdapterInfo(this.wifiAdapter, this.adapterInfo);
-            await this.ScanForNetworks(this.wifiAdapter, this.adapterInfo);
+            this.InitAdapterInfo(wifiAdapter, adapterInfo);
+            await this.ScanForNetworks(wifiAdapter, adapterInfo);
 
             // TODO - change to send up the whole adapter
-            this.DiscoveredNetworks?.Invoke(this, this.adapterInfo.Networks);
+            this.DiscoveredNetworks?.Invoke(this, adapterInfo.Networks);
 
             // Hack test to connect and send
             //await this.ConnectToNetworkAndSendTest(this.wifiAdapter, "MikieArduinoWifi", "1234567890");
@@ -75,10 +75,10 @@ namespace Wifi.UWP.Core {
         private async Task ScanForNetworks(WiFiAdapter adapter, WifiAdapterInfo info) {
             // TODO - will need a list of available UWP network objects to be able to find fof connection - or use the UWP adapter
             await adapter.ScanAsync();
-            this.networks = this.wifiAdapter.NetworkReport.AvailableNetworks;
+            networks = wifiAdapter.NetworkReport.AvailableNetworks;
             info.Networks = new List<WifiNetworkInfo>();
             // We will not return those with blank SSID
-            foreach (var net in this.networks) {
+            foreach (var net in networks) {
                 if (net.Ssid.Length > 0) {
                     WifiNetworkInfo netInfo = new WifiNetworkInfo() {
                         SSID = net.Ssid,
