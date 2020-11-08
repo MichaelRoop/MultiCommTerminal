@@ -4,6 +4,7 @@ using CommunicationStack.Net.interfaces;
 using LogUtils.Net;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using VariousUtils.Net;
 using WifiCommon.Net.DataModels;
@@ -87,10 +88,12 @@ namespace Wifi.UWP.Core {
         #region IWifiInterface methods
 
         public void Disconnect() {
-            Task t = this.DisconnectAsync();
-            if (!t.Wait(1000)) {
-                this.log.Error(9999, "Disconnect", "Timeout on disconnecting");
-            }
+            this.DisconnectSynchronous(false);
+
+            //Task t = this.DisconnectAsync();
+            //if (!t.Wait(1000)) {
+            //    this.log.Error(9999, "Disconnect", "Timeout on disconnecting");
+            //}
         }
 
 
@@ -118,6 +121,38 @@ namespace Wifi.UWP.Core {
                 }
             });
         }
+
+
+        private void DisconnectSynchronous(bool waitForClose) {
+            try {
+                this.log.InfoEntry("DisconnectAsync");
+                if (msgPump.Connected) {
+                    //AutoResetEvent ev = new AutoResetEvent(false);
+                    this.log.Info("DisconnectAsync", "Disconnecting pump");
+                    msgPump.Disconnect();
+                    this.log.Info("DisconnectAsync", "Finish disconnecting pump");
+                    if (waitForClose) {
+                        Thread.Sleep(500);
+                    }
+
+                }
+
+                // TODO Arduino has problems if we close the adapter
+                // Just close and reopen the socket
+                //if (wifiAdapter != null) {
+                //    this.log.Info("Disconnect", "Disconnecting adapter");
+                //    // This just kills the Arduino. No possibility of future connections
+                //    wifiAdapter.Disconnect();
+                //}
+            }
+            catch (Exception e) {
+                this.log.Exception(8888, "", e);
+            }
+        }
+
+
+
+
 
 
         #endregion

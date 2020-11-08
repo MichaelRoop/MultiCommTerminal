@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using VariousUtils.Net;
 using WifiCommon.Net.DataModels;
 using Windows.Networking.Sockets;
@@ -11,7 +12,8 @@ namespace Ethernet.UWP.Core {
 
         public void ConnectAsync() {
             this.log.InfoEntry("ConnectAsync");
-            //this.Disconnect();
+            this.Disconnect();
+            Thread.Sleep(500);
 
             // TODO - this will be passed in 
             WifiNetworkInfo dataModel = new WifiNetworkInfo() {
