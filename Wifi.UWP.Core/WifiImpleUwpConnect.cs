@@ -20,7 +20,7 @@ namespace Wifi.UWP.Core {
         public void ConnectAsync(WifiNetworkInfo dataModel) {
             Task t =this.DisconnectAsync();
             if (!t.Wait(1000)) {
-                this.log.Error(9999, "ConnectAsync", "Timeout on wait for disconnect Async in user thread")
+                this.log.Error(9999, "ConnectAsync", "Timeout on wait for disconnect Async in user thread");
             }
 
             Task.Run(async () => {
@@ -58,7 +58,7 @@ namespace Wifi.UWP.Core {
                                 await this.DumpWifiAdapterInfo(wifiAdapter);
                                 this.log.Info("ConnectAsync", () => string.Format("Connecting to {0}:{1}", dataModel.RemoteHostName, dataModel.RemoteServiceName));
                                 // Connect socket
-                                msgPump.ConnectAsync(new SocketMsgPumpConnectData() {
+                               await msgPump.ConnectAsync2(new SocketMsgPumpConnectData() {
                                     MaxReadBufferSize = 255,
                                     RemoteHostName = dataModel.RemoteHostName,
                                     ServiceName = dataModel.RemoteServiceName,

@@ -87,16 +87,22 @@ namespace Wifi.UWP.Core {
         #region IWifiInterface methods
 
         public void Disconnect() {
-            this.DisconnectAsync();
+            Task t = this.DisconnectAsync();
+            if (!t.Wait(1000)) {
+                this.log.Error(9999, "Disconnect", "Timeout on disconnecting");
+            }
         }
 
 
         private Task DisconnectAsync() {
             return Task.Run(() => {
                 try {
-                    this.log.InfoEntry("Disconnect");
+                    this.log.InfoEntry("DisconnectAsync");
                     if (msgPump.Connected) {
+
+                        this.log.Info("DisconnectAsync", "Disconnecting pump");
                         msgPump.Disconnect();
+                        this.log.Info("DisconnectAsync", "Finish disconnecting pump");
                     }
 
                     // TODO Arduino has problems if we close the adapter
