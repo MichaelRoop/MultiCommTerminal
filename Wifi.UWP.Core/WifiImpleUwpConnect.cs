@@ -18,10 +18,14 @@ namespace Wifi.UWP.Core {
         /// <summary>Run asynchronous connection where ConnectionCompleted is raised on completion</summary>
         /// <param name="deviceDataModel">The data model with information on the device</param>
         public void ConnectAsync(WifiNetworkInfo dataModel) {
+            Task t =this.DisconnectAsync();
+            if (!t.Wait(1000)) {
+                this.log.Error(9999, "ConnectAsync", "Timeout on wait for disconnect Async in user thread")
+            }
+
             Task.Run(async () => {
                 try {
                     this.log.InfoEntry("ConnectAsync");
-                    await this.DisconnectAsync();
                     this.log.Info("ConnectAsync", () => string.Format(
                         "Host:{0} Service:{1}", dataModel.RemoteHostName, dataModel.RemoteServiceName));
 
