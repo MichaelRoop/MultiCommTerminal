@@ -1,18 +1,16 @@
-﻿using BluetoothCommon.Net.interfaces;
+﻿using Bluetooth.UWP.Core;
+using BluetoothCommon.Net.interfaces;
 using BluetoothLE.Net.interfaces;
-using Bluetooth.UWP.Core;
 using BluetoothRfComm.UWP.Core;
-using Communications.UWP.Core.MsgPumps;
-using CommunicationStack.Net.interfaces;
 using DependencyInjectorFactory.Net;
 using DependencyInjectorFactory.Net.interfaces;
 using IconFactory.Net.interfaces;
+using Serial.UWP.Core;
+using SerialCommon.Net.interfaces;
 using System;
 using System.Collections.Generic;
 using Wifi.UWP.Core;
 using WifiCommon.Net.interfaces;
-using SerialCommon.Net.interfaces;
-using Serial.UWP.Core;
 
 namespace MultiCommTerminal.DependencyInjection {
 
