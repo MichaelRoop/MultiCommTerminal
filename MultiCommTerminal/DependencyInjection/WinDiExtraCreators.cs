@@ -4,6 +4,8 @@ using BluetoothLE.Net.interfaces;
 using BluetoothRfComm.UWP.Core;
 using DependencyInjectorFactory.Net;
 using DependencyInjectorFactory.Net.interfaces;
+using Ethernet.Common.Net.interfaces;
+using Ethernet.UWP.Core;
 using IconFactory.Net.interfaces;
 using Serial.UWP.Core;
 using SerialCommon.Net.interfaces;
@@ -44,6 +46,9 @@ namespace MultiCommTerminal.DependencyInjection {
 
             this.SingletonCreators.Add(
                 typeof(ISerialInterface), new ObjSingletonCreator(() => new SerialImplUwp()));
+
+            this.SingletonCreators.Add(
+                typeof(IEthernetInterface), new ObjSingletonCreator(() => new EthernetImplUwp()));
 
         }
     }

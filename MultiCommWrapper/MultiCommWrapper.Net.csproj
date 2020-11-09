@@ -8,6 +8,7 @@
     <ProjectReference Include="..\..\SharedNetLibs\BluetoothCommon.Net\BluetoothCommon.Net.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\BluetoothLE\BluetoothLE.Net.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\DependencyInjectorFactory\DependencyInjectorFactory.Net.csproj" />
+    <ProjectReference Include="..\..\SharedNetLibs\Ethernet.Common.Net\Ethernet.Common.Net.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\IconFactory\IconFactory.Net.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\LanguageFactory\LanguageFactory.Net.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\SerialCommon.Net\SerialCommon.Net.csproj" />

@@ -4,6 +4,8 @@ using ChkUtils.Net;
 using Common.Net.Network;
 using CommunicationStack.Net.DataModels;
 using CommunicationStack.Net.Enumerations;
+using Ethernet.Common.Net.DataModels;
+using Ethernet.UWP.Core;
 using LanguageFactory.Net.data;
 using LogUtils.Net;
 using MultiCommData.Net.StorageDataModels;
@@ -629,6 +631,71 @@ namespace MultiCommTerminal.WindowObjs {
 
         #endregion
 
+        #region Ethernet
+
+        private void Wrapper_OnEthernetErrorHandler(object sender, MsgPumpResults e) {
+            this.Dispatcher.Invoke(() => {
+                this.gridWait.Collapse();
+                string err = string.Format("{0} ({1})", e.Code.ToString(), e.ErrorString.Length == 0 ? "--" : e.ErrorString);
+                App.ShowMsg(err);
+
+                //if (e.Code != WifiErrorCode.UserCanceled) {
+                //    string err = string.Format("{0} ({1})", e.Code.ToString(), e.ExtraInfo.Length == 0 ? "--" : e.ExtraInfo);
+                //    App.ShowMsg(err);
+                //}
+            });
+        }
+
+        private void Wrapper_OnEthernetConnectionAttemptCompletedHandler(object sender, MsgPumpResults result) {
+            this.Dispatcher.Invoke(() => {
+                this.gridWait.Collapse();
+
+                App.ShowMsg("Connect to ethernet handler ");
+
+                if (result.Code != MsgPumpResultCode.Connected) {
+
+                    string err = string.Format("{0} ({1})", result.Code.ToString(), result.ErrorString.Length == 0 ? "--" : result.ErrorString);
+                    App.ShowMsg(err);
+
+                    // TODO Put up appropriate error. Better yet have the language based text set in the wrapper
+                    //App.ShowMsg("Failed connection");
+                }
+                else {
+                    this.btnEthernetDisconnect.Show();
+                }
+            });
+        }
+
+        private void Wrapper_Ethernet_BytesReceivedHandler(object sender, string msg) {
+            this.Dispatcher.Invoke(() => {
+                this.lbIncoming.AddAndScroll(msg, this.inScroll, 100);
+            });
+        }
+
+        private void Wrapper_EthernetParamsRequestedEventHandler(object sender, EthernetParams e) {
+            //throw new NotImplementedException();
+
+            // TODO Show an ethernet params window
+
+        }
+
+
+        private void btnEthernetConnect_Click(object sender, RoutedEventArgs e) {
+            EthernetParams p = new EthernetParams() {
+                EthernetAddress = "192.168.1.88",
+                EthernetServiceName = "9999"
+            };
+            this.wrapper.EthernetConnect(p);
+        }
+
+        private void btnEthernetDisconnect_Click(object sender, RoutedEventArgs e) {
+            this.wrapper.EthernetDisconnect();
+        }
+
+
+
+        #endregion
+
         #region Private Init and teardown
 
         private void OnStartupSuccess() {
@@ -682,6 +749,13 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper.SerialDiscoveredDevices += this.Wrapper_SerialDiscoveredDevicesHandler;
             this.wrapper.Serial_BytesReceived += this.Wrapper_Serial_BytesReceivedHandler;
             this.wrapper.OnSerialConfigRequest += this.Wrapper_OnSerialConfigRequestHandler;
+
+            // Ethernet
+            this.wrapper.EthernetParamsRequestedEvent += this.Wrapper_EthernetParamsRequestedEventHandler;
+            this.wrapper.Ethernet_BytesReceived += this.Wrapper_Ethernet_BytesReceivedHandler;
+            this.wrapper.OnEthernetConnectionAttemptCompleted += this.Wrapper_OnEthernetConnectionAttemptCompletedHandler;
+            this.wrapper.OnEthernetError += this.Wrapper_OnEthernetErrorHandler;
+
 
             App.STATIC_APP.LogMsgEvent += this.AppLogMsgEventHandler;
 
@@ -749,6 +823,12 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper.Serial_BytesReceived -= this.Wrapper_Serial_BytesReceivedHandler;
             this.wrapper.OnSerialConfigRequest -= this.Wrapper_OnSerialConfigRequestHandler;
 
+            // Ethernet
+            this.wrapper.EthernetParamsRequestedEvent -= this.Wrapper_EthernetParamsRequestedEventHandler;
+            this.wrapper.Ethernet_BytesReceived -= this.Wrapper_Ethernet_BytesReceivedHandler;
+            this.wrapper.OnEthernetConnectionAttemptCompleted -= this.Wrapper_OnEthernetConnectionAttemptCompletedHandler;
+            this.wrapper.OnEthernetError -= this.Wrapper_OnEthernetErrorHandler;
+
             App.STATIC_APP.LogMsgEvent -= this.AppLogMsgEventHandler;
 
             if (this.menu != null) {
@@ -784,6 +864,8 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void SelectEthernet() {
             // TODO USB functionality
+            this.spEthernet.Show();
+            this.btnEthernetConnect.Show();
         }
 
 
@@ -817,7 +899,8 @@ namespace MultiCommTerminal.WindowObjs {
 
 
         private void UnselectEthernet() {
-            // TODO USB functionality
+            this.spEthernet.Collapse();
+            this.btnEthernetDisconnect.Collapse();
         }
 
 
@@ -889,6 +972,7 @@ namespace MultiCommTerminal.WindowObjs {
                         // TODO - ignore for now until I get the BLE working again
                         break;
                     case CommMediumType.Ethernet:
+                        this.wrapper.EthernetSend(this.txtCommmand.Text);
                         break;
                     case CommMediumType.Wifi:
                         this.wrapper.WifiSend(this.txtCommmand.Text);
@@ -1028,5 +1112,6 @@ namespace MultiCommTerminal.WindowObjs {
         private void btnLog_Click(object sender, RoutedEventArgs e) {
             this.lbLog.ToggleVisibility();
         }
+
     }
 }

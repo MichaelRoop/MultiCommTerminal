@@ -3,6 +3,7 @@ using BluetoothLE.Net.DataModels;
 using Common.Net.Network;
 using CommunicationStack.Net.DataModels;
 using CommunicationStack.Net.Stacks;
+using Ethernet.Common.Net.DataModels;
 using IconFactory.Net.data;
 using LanguageFactory.Net.data;
 using LanguageFactory.Net.Messaging;
@@ -335,6 +336,26 @@ namespace MultiCommWrapper.Net.interfaces {
         void SaveWifiCred(IIndexItem<DefaultFileExtraInfo> idx, WifiCredentialsDataModel data, Action onSuccess, OnErr onError);
 
         void DeleteWifiCredData(IIndexItem<DefaultFileExtraInfo> index, Action<bool> onComplete, OnErr onError);
+
+        #endregion
+
+        #region Ethernet
+
+        event EventHandler<string> Ethernet_BytesReceived;
+
+        /// <summary>Raised so that host name and service name can be requested</summary>
+        event EventHandler<EthernetParams> EthernetParamsRequestedEvent;
+
+        /// <summary>Async Connection completed</summary>
+        event EventHandler<MsgPumpResults> OnEthernetConnectionAttemptCompleted;
+
+        /// <summary>For various errors encountered in asynchronous operations</summary>
+        event EventHandler<MsgPumpResults> OnEthernetError;
+
+        void EthernetConnect(EthernetParams dataModel);
+        void EthernetDisconnect();
+        void EthernetSend(string msg);
+
 
         #endregion
 

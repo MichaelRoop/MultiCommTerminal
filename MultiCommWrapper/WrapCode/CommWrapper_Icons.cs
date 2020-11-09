@@ -50,8 +50,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             items.Add(this.CommItem(String.Format("BLE  {0} {1}", '\u2b84', '\u2b86'), 
                 UIIcon.BluetoothLE, CommMediumType.BluetoothLE));
             items.Add(this.CommItem("Wifi", UIIcon.Wifi, CommMediumType.Wifi));
-            // TODO - add in future
-            //items.Add(this.CommItem("Ethernet", UIIcon.Ethernet, CommMediumType.Ethernet));
+            items.Add(this.CommItem("Ethernet", UIIcon.Ethernet, CommMediumType.Ethernet));
             items.Add(this.CommItem("USB", UIIcon.Usb, CommMediumType.Usb));
             mediums.Invoke(items);
         }

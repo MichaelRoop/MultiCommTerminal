@@ -1,35 +1,44 @@
 ﻿using Communications.UWP.Core.MsgPumps;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using CommunicationStack.Net.DataModels;
+using CommunicationStack.Net.Enumerations;
+using Ethernet.Common.Net.DataModels;
+using Ethernet.Common.Net.interfaces;
 using System.Threading;
-using VariousUtils.Net;
-using WifiCommon.Net.DataModels;
 using Windows.Networking.Sockets;
 
 namespace Ethernet.UWP.Core {
-    public partial class EthernetImplUwp {
+    public partial class EthernetImplUwp :IEthernetInterface {
 
-        public void ConnectAsync() {
-            this.log.InfoEntry("ConnectAsync");
-            this.Disconnect();
-            Thread.Sleep(500);
+        public void ConnectAsync(EthernetParams dataModel) {
+            this.log.InfoEntry("ConnectAsync ***************");
 
-            // TODO - this will be passed in 
-            WifiNetworkInfo dataModel = new WifiNetworkInfo() {
-                RemoteHostName = "192.168.1.88",
-                RemoteServiceName = "9999"
-            };
+            if (dataModel.EthernetAddress.Length == 0 || dataModel.EthernetServiceName.Length == 0) {
+                // TODO - request params event
+                this.log.Error(9999, "Params requested");
+                this.ParamsRequestedEvent?.Invoke(this, dataModel);
+            }
 
-            this.msgPump.ConnectAsync(new SocketMsgPumpConnectData() {
-                MaxReadBufferSize = 100,
-                RemoteHostName = dataModel.RemoteHostName,
-                ServiceName = dataModel.RemoteServiceName,
-                // TODO - determine protection level according to connection
-                ProtectionLevel = SocketProtectionLevel.PlainSocket,
-            });
+            // Check for erroron data model
+            if (dataModel.EthernetAddress.Length == 0 || dataModel.EthernetServiceName.Length == 0) {
+                this.log.Error(9999, "ERROR ON Params requested");
+                this.OnError(this, new MsgPumpResults(MsgPumpResultCode.EmptyParams));
+            }
+            else {
+                //this.Disconnect();
+                Thread.Sleep(500);
+
+                this.log.Error(9999, "Doing connect");
 
 
+                // Test Arduino: 192.168.1.88:9999
+                this.msgPump.ConnectAsync(new SocketMsgPumpConnectData() {
+                    MaxReadBufferSize = 100,
+                    RemoteHostName = dataModel.EthernetAddress,
+                    ServiceName = dataModel.EthernetServiceName,
+                    // TODO - determine protection level according to connection
+                    ProtectionLevel = SocketProtectionLevel.PlainSocket,
+                });
+            }
         }
 
 

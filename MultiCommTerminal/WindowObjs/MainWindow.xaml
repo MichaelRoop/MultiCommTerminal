@@ -353,6 +353,38 @@
                                 </ListBox>
                             </DockPanel>
                         </StackPanel>
+                        <StackPanel x:Name="spEthernet" VerticalAlignment="Center" Visibility="Collapsed">
+                            <DockPanel Margin="10">
+                                <StackPanel Margin="5">
+                                    <controls:UC_IconButton x:Name="btnEthernetConnect" Style="{StaticResource TextIconButton}"
+                                            HorizontalContentAlignment="Left"
+                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Connect}}" Margin="0,2.5"
+                                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Connect}}"                                                                                            
+                                            Background="Transparent" Click="btnEthernetConnect_Click" />
+                                    <controls:UC_IconButton x:Name="btnEthernetDisconnect" Style="{StaticResource TextIconButton}"
+                                            HorizontalContentAlignment="Left"
+                                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Disconnect}}" Margin="0,2.5"
+                                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}"                                                                                            
+                                            Background="Transparent" Click="btnEthernetDisconnect_Click" />
+
+                                </StackPanel>
+                            </DockPanel>
+                        </StackPanel>
+                        <ListBox x:Name="lbEthernet" MinHeight="30" MinWidth="200" MaxHeight="115" 
+                                             ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                                             ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="{Binding Address}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
                     </DockPanel>
                 </Border>
                 <Border BorderBrush="AliceBlue" BorderThickness="1" VerticalAlignment="Center">

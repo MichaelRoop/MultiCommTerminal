@@ -3,6 +3,7 @@ using BluetoothLE.Net.interfaces;
 using CommunicationStack.Net.interfaces;
 using CommunicationStack.Net.Stacks;
 using DependencyInjectorFactory.Net;
+using Ethernet.Common.Net.interfaces;
 using IconFactory.Net.interfaces;
 using LanguageFactory.Net.interfaces;
 using LanguageFactory.Net.Messaging;
@@ -47,6 +48,8 @@ namespace MultiCommWrapper.Net.DI {
                             this.GetObjSingleton<IWifiInterface>(),
                             this.GetObjInstance<ICommStackLevel0>(),
                             this.GetObjSingleton<ISerialInterface>(),
+                            this.GetObjInstance<ICommStackLevel0>(),
+                            this.GetObjSingleton<IEthernetInterface>(),
                             this.GetObjInstance<ICommStackLevel0>())));
 
         }
