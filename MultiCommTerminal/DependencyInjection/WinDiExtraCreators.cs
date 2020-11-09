@@ -47,11 +47,6 @@ namespace MultiCommTerminal.DependencyInjection {
             this.SingletonCreators.Add(
                 typeof(ISerialInterface), new ObjSingletonCreator(() => new SerialImplUwp()));
 
-            this.InstanceCreators.Add(
-                typeof(IMsgPump<SocketMsgPumpConnectData>), new ObjInstanceCreator(() => new SocketMsgPump()));
-
-            //BluetoothLEImplWin32Core
-
         }
     }
 

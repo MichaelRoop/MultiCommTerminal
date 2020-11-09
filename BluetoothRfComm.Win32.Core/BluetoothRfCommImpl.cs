@@ -50,7 +50,7 @@ namespace BluetoothRfComm.UWP.Core {
         //private readonly string KEY_CONTAINER_ID = "System.Devices.Aep.ContainerId";
         private readonly string KEY_SIGNAL_STRENGTH = "System.Devices.Aep.SignalStrength";
         private static uint READ_BUFF_MAX_SIZE = 256;
-        IMsgPump<SocketMsgPumpConnectData> msgPump = new SocketMsgPump();
+        IMsgPump<SocketMsgPumpConnectData> msgPump = new SocketMsgPumpBluetooth();
 
         #endregion
 
