@@ -110,7 +110,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         public string GetText(CommHelpType medium) {
             switch (medium) {
-                case CommHelpType.Bluetooth: return "Classic";
+                case CommHelpType.Bluetooth: return "Bluetooth";
                 case CommHelpType.BluetoothLE: return String.Format("BLE  {0} {1}", '\u2b84', '\u2b86');
                 case CommHelpType.Wifi: return "Wifi";
                 case CommHelpType.Ethernet: return "Ethernet";

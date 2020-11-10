@@ -1,6 +1,7 @@
 ﻿using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
 using IconFactory.Net.data;
+using LanguageFactory.Net.data;
 using MultiCommData.Net.UserDisplayData;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommWrapper.Net.interfaces;
@@ -45,7 +46,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         public void CommMediumList(Action<List<CommMedialDisplay>> mediums) {
             List<CommMedialDisplay> items = new List<CommMedialDisplay>();
-            items.Add(this.CommItem("Classic", UIIcon.BluetoothClassic, CommMediumType.Bluetooth));
+            items.Add(this.CommItem("Bluetooth", UIIcon.BluetoothClassic, CommMediumType.Bluetooth));
             // TODO - for now serial, need a full BLE
             items.Add(this.CommItem(String.Format("BLE  {0} {1}", '\u2b84', '\u2b86'), 
                 UIIcon.BluetoothLE, CommMediumType.BluetoothLE));
@@ -69,13 +70,13 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         private void CommHelpList(Action<List<CommHelpDisplay>> helps) {
             List<CommHelpDisplay> items = new List<CommHelpDisplay>();
-            items.Add(this.HelpItem("Classic", UIIcon.BluetoothClassic, CommHelpType.Bluetooth));
+            items.Add(this.HelpItem("Bluetooth", UIIcon.BluetoothClassic, CommHelpType.Bluetooth));
             // TODO - for now serial, need a full BLE
             items.Add(this.HelpItem(String.Format("BLE  {0} {1}", '\u2b84', '\u2b86'),
                 UIIcon.BluetoothLE, CommHelpType.BluetoothLE));
             items.Add(this.HelpItem("Wifi", UIIcon.Wifi, CommHelpType.Wifi));
             items.Add(this.HelpItem("USB", UIIcon.Usb, CommHelpType.Usb));
-            //items.Add(this.HelpItem("Ethernet", UIIcon.Ethernet, CommHelpType.Ethernet));
+            items.Add(this.HelpItem(this.GetText(MsgCode.Ethernet), UIIcon.Ethernet, CommHelpType.Ethernet));
             helps.Invoke(items);
         }
 
