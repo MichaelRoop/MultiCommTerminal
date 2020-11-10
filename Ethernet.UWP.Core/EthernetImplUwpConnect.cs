@@ -31,7 +31,7 @@ namespace Ethernet.UWP.Core {
 
 
                 // Test Arduino: 192.168.1.88:9999
-                this.msgPump.ConnectAsync(new SocketMsgPumpConnectData() {
+                this.msgPump.ConnectAsync2(new SocketMsgPumpConnectData() {
                     MaxReadBufferSize = 100,
                     RemoteHostName = dataModel.EthernetAddress,
                     ServiceName = dataModel.EthernetServiceName,
