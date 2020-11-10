@@ -71,6 +71,7 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string Properties { get { return Source(UIIcon.Properties); } }
         public static string PropertiesWhite { get { return Source(UIIcon.PropertiesWhite); } }
         public static string LogIcon { get { return Source(UIIcon.LogIcon); } }
+        public static string Ethernet { get { return Source(UIIcon.Ethernet); } }
 
         #endregion
 

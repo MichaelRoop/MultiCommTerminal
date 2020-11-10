@@ -18,6 +18,8 @@ using MultiCommWrapper.Net.DataModels;
 using MultiCommWrapper.Net.interfaces;
 using Serial.UWP.Core;
 using SerialCommon.Net.DataModels;
+using StorageFactory.Net.interfaces;
+using StorageFactory.Net.StorageManagers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -649,16 +651,9 @@ namespace MultiCommTerminal.WindowObjs {
         private void Wrapper_OnEthernetConnectionAttemptCompletedHandler(object sender, MsgPumpResults result) {
             this.Dispatcher.Invoke(() => {
                 this.gridWait.Collapse();
-
-                App.ShowMsg("Connect to ethernet handler ");
-
                 if (result.Code != MsgPumpResultCode.Connected) {
-
                     string err = string.Format("{0} ({1})", result.Code.ToString(), result.ErrorString.Length == 0 ? "--" : result.ErrorString);
                     App.ShowMsg(err);
-
-                    // TODO Put up appropriate error. Better yet have the language based text set in the wrapper
-                    //App.ShowMsg("Failed connection");
                 }
                 else {
                     this.btnEthernetDisconnect.Show();
@@ -680,19 +675,28 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
+        private void Wrapper_OnEthernetListChangeHandler(object sender, List<IIndexItem<DefaultFileExtraInfo>> e) {
+            this.lbEthernet.ItemsSource = null;
+            this.lbEthernet.ItemsSource = e;
+        }
+
+
         private void btnEthernetConnect_Click(object sender, RoutedEventArgs e) {
-            EthernetParams p = new EthernetParams() {
-                EthernetAddress = "192.168.1.88",
-                EthernetServiceName = "9999"
-            };
-            this.wrapper.EthernetConnect(p);
+            this.lbEthernet.GetSelected<IIndexItem<DefaultFileExtraInfo>>(
+                (item) => {
+                    this.wrapper.RetrieveEthernetData(
+                        item,
+                        (data) => {
+                            this.gridWait.Show();
+                            this.wrapper.EthernetConnect(data);
+                        }, App.ShowMsg);
+
+                });
         }
 
         private void btnEthernetDisconnect_Click(object sender, RoutedEventArgs e) {
             this.wrapper.EthernetDisconnect();
         }
-
-
 
         #endregion
 
@@ -755,7 +759,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper.Ethernet_BytesReceived += this.Wrapper_Ethernet_BytesReceivedHandler;
             this.wrapper.OnEthernetConnectionAttemptCompleted += this.Wrapper_OnEthernetConnectionAttemptCompletedHandler;
             this.wrapper.OnEthernetError += this.Wrapper_OnEthernetErrorHandler;
-
+            this.wrapper.OnEthernetListChange += this.Wrapper_OnEthernetListChangeHandler;
 
             App.STATIC_APP.LogMsgEvent += this.AppLogMsgEventHandler;
 
@@ -828,6 +832,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.wrapper.Ethernet_BytesReceived -= this.Wrapper_Ethernet_BytesReceivedHandler;
             this.wrapper.OnEthernetConnectionAttemptCompleted -= this.Wrapper_OnEthernetConnectionAttemptCompletedHandler;
             this.wrapper.OnEthernetError -= this.Wrapper_OnEthernetErrorHandler;
+            this.wrapper.OnEthernetListChange -= this.Wrapper_OnEthernetListChangeHandler;
 
             App.STATIC_APP.LogMsgEvent -= this.AppLogMsgEventHandler;
 
@@ -866,6 +871,10 @@ namespace MultiCommTerminal.WindowObjs {
             // TODO USB functionality
             this.spEthernet.Show();
             this.btnEthernetConnect.Show();
+            DI.Wrapper.GetEthernetDataList(
+                (list) => {
+                    this.lbEthernet.ItemsSource = list;
+                }, App.ShowMsg);
         }
 
 
@@ -901,6 +910,7 @@ namespace MultiCommTerminal.WindowObjs {
         private void UnselectEthernet() {
             this.spEthernet.Collapse();
             this.btnEthernetDisconnect.Collapse();
+            this.lbEthernet.ItemsSource = null;
         }
 
 

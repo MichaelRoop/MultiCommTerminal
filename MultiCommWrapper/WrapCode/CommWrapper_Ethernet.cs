@@ -1,6 +1,11 @@
-﻿using CommunicationStack.Net.DataModels;
+﻿using ChkUtils.Net;
+using ChkUtils.Net.ErrObjects;
+using CommunicationStack.Net.DataModels;
 using Ethernet.Common.Net.DataModels;
+using LanguageFactory.Net.data;
 using MultiCommWrapper.Net.interfaces;
+using StorageFactory.Net.interfaces;
+using StorageFactory.Net.StorageManagers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,6 +21,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         public event EventHandler<EthernetParams> EthernetParamsRequestedEvent;
         public event EventHandler<MsgPumpResults> OnEthernetConnectionAttemptCompleted;
         public event EventHandler<MsgPumpResults> OnEthernetError;
+        public event EventHandler<List<IIndexItem<DefaultFileExtraInfo>>> OnEthernetListChange;
 
         #endregion
 
@@ -59,10 +65,112 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.ethernet.OnEthernetConnectionAttemptCompleted += this.Ethernet_OnEthernetConnectionAttemptCompletedHandler;
         }
 
+        #region Storage
+
+        public void GetEthernetDataList(Action<List<IIndexItem<DefaultFileExtraInfo>>> onSuccess, OnErr onError) {
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    onSuccess.Invoke(this.ethernetStorage.IndexedItems);
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.LoadFailed));
+                }
+            });
+        }
+
+
+        public void CreateNewEthernetData(string display, EthernetParams data, Action onSuccess, OnErr onError) {
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    if (display.Length == 0) {
+                        onError.Invoke(this.GetText(MsgCode.EmptyName));
+                    }
+                    else {
+                        IIndexItem<DefaultFileExtraInfo> idx = new IndexItem<DefaultFileExtraInfo>(data.UId) {
+                            Display = display,
+                        };
+                        this.SaveEthernetData(idx, data, onSuccess, onError);
+                    }
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.SaveFailed));
+                }
+            });
+        }
+
+
+        public void CreateNewEthernetData(EthernetParams data, Action onSuccess, OnErr onError) {
+            this.CreateNewEthernetData(data.DisplayString, data, onSuccess, onError);
+        }
+
+
+        public void RetrieveEthernetData(IIndexItem<DefaultFileExtraInfo> index, Action<EthernetParams> onSuccess, OnErr onError) {
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    // TODO - check if exists
+                    onSuccess.Invoke(this.ethernetStorage.Retrieve(index));
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.LoadFailed));
+                }
+            });
+        }
+
+
+        public void SaveEthernetData(IIndexItem<DefaultFileExtraInfo> idx, EthernetParams data, Action onSuccess, OnErr onError) {
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    if (idx.Display.Length == 0) {
+                        onError.Invoke(this.GetText(MsgCode.EmptyName));
+                    }
+                    else {
+                        // This one a bit different since we create the display from the field values
+                        idx.Display = data.DisplayString;
+                        this.ethernetStorage.Store(data, idx);
+                        this.GetEthernetDataList(
+                            (list) => {
+                                this.OnEthernetListChange?.Invoke(this, list);
+                                onSuccess.Invoke();
+                            }, onError);
+                    }
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.SaveFailed));
+                }
+            });
+        }
+
+
+        public void DeleteEthernetData(IIndexItem<DefaultFileExtraInfo> index, Action<bool> onComplete, OnErr onError) {
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    bool ok = this.ethernetStorage.DeleteFile(index);
+                    this.GetEthernetDataList(
+                        (list) => {
+                            this.OnEthernetListChange?.Invoke(this, list);
+                            onComplete(ok);
+                        }, onError);
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.WriteFailue));
+                }
+            });
+        }
+
+        #endregion
+
+        #region Event handlers
+
         private void Ethernet_OnEthernetConnectionAttemptCompletedHandler(object sender, MsgPumpResults e) {
 
             // Can do something here to save any pending IP entered
-            this.log.Error(9999, "Got connect attempt returned");
+            this.log.Info("Ethernet_OnEthernetConnectionAttemptCompletedHandler", 
+                () => string.Format("Connect attempt returned:{0}", e.Code));
 
             this.OnEthernetConnectionAttemptCompleted?.Invoke(sender, e);
         }
@@ -82,7 +190,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.EthernetParamsRequestedEvent?.Invoke(sender, e);
         }
 
-
+        #endregion
 
     }
 

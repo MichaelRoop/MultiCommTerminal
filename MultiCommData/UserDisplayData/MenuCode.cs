@@ -8,6 +8,7 @@ namespace MultiCommData.UserDisplayData.Net {
         Commands,
         UsbConfig,
         Credentials,
+        Ethernet,
         About,
     }
 }

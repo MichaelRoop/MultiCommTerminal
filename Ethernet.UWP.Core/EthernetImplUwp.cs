@@ -68,7 +68,7 @@ namespace Ethernet.UWP.Core {
 
         private void MsgPump_MsgPumpConnectResultEventHandler(object sender, CommunicationStack.Net.DataModels.MsgPumpResults results) {
             this.log.Info("MsgPump_MsgPumpConnectResultEvent", () =>
-                string.Format("Error:{0} - '{1}'", results.Code, results.ErrorString));
+                string.Format("Result:{0} - '{1}'", results.Code, results.ErrorString));
             this.OnEthernetConnectionAttemptCompleted?.Invoke(sender, results);
 
 

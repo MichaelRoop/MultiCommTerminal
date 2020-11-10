@@ -1,6 +1,7 @@
 ﻿using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
 using CommunicationStack.Net.Stacks;
+using Ethernet.Common.Net.DataModels;
 using LanguageFactory.Net.data;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommWrapper.Net.interfaces;
@@ -30,6 +31,8 @@ namespace MultiCommWrapper.Net.WrapCode {
         private readonly string SCRIPTS_INDEX_FILE = "ScriptsIndex.txt";
         private readonly string WIFI_CRED_DIR = "WifiCredentials";
         private readonly string WIFI_CRED_INDEX_FILE = "WifiCredIndex.txt";
+        private readonly string ETHERNET_DATA_DIR = "EthernetData";
+        private readonly string ETHERNET_DATA_INDEX_FILE = "EthernetDataIndex.txt";
         private readonly string SERIAL_CFG_DIR = "SerialConfigurations";
         private readonly string SERIAL_CFG_INDEX_FILE = "SerialCfgIndex.txt";
 
@@ -62,6 +65,9 @@ namespace MultiCommWrapper.Net.WrapCode {
 
             this.wifiCredStorage =
                 this.storageFactory.GetIndexedManager<WifiCredentialsDataModel, DefaultFileExtraInfo>(this.Dir(WIFI_CRED_DIR), WIFI_CRED_INDEX_FILE);
+
+            this.ethernetStorage =
+                this.storageFactory.GetIndexedManager<EthernetParams, DefaultFileExtraInfo>(this.Dir(ETHERNET_DATA_DIR), ETHERNET_DATA_INDEX_FILE);
 
             this.serialStorage =
                 this.storageFactory.GetIndexedManager<SerialDeviceInfo, SerialIndexExtraInfo>(

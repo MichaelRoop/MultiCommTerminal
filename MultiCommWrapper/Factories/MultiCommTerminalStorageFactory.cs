@@ -1,5 +1,6 @@
 ﻿using ChkUtils.Net;
 using CommunicationStack.Net.Stacks;
+using Ethernet.Common.Net.DataModels;
 using MultiCommData.Net.StorageDataModels;
 using SerialCommon.Net.DataModels;
 using SerialCommon.Net.StorageIndexExtraInfo;
@@ -37,6 +38,11 @@ namespace MultiCommWrapper.Net.Factories {
             new IndexedStorageManager<SerialDeviceInfo, SerialIndexExtraInfo>(
                 new JsonReadWriteSerializerIndented<SerialDeviceInfo>(),
                 new JsonReadWriteSerializerIndented<IIndexGroup<SerialIndexExtraInfo>>());
+
+        private IIndexedStorageManager<EthernetParams, DefaultFileExtraInfo> ethernetStorage =
+            new IndexedStorageManager<EthernetParams, DefaultFileExtraInfo>(
+                new JsonReadWriteSerializerIndented<EthernetParams>(),
+                new JsonReadWriteSerializerIndented<IIndexGroup<DefaultFileExtraInfo>>());
 
 
         public MultiCommTerminalStorageFactory() { }
@@ -90,6 +96,9 @@ namespace MultiCommWrapper.Net.Factories {
             }
             else if (typeof(TData).Name == typeof(SerialDeviceInfo).Name) {
                 return this.serialStorage as IIndexedStorageManager<TData, TIndexExtraInfo>;
+            }
+            else if (typeof(TData).Name == typeof(EthernetParams).Name) {
+                return this.ethernetStorage as IIndexedStorageManager<TData, TIndexExtraInfo>;
             }
             // Add others
 

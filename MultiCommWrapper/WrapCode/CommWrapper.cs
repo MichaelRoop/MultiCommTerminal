@@ -1,6 +1,7 @@
 ﻿using BluetoothCommon.Net.interfaces;
 using BluetoothLE.Net.interfaces;
 using CommunicationStack.Net.interfaces;
+using Ethernet.Common.Net.DataModels;
 using Ethernet.Common.Net.interfaces;
 using IconFactory.Net.interfaces;
 using LanguageFactory.Net.interfaces;
@@ -33,6 +34,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         IIndexedStorageManager<TerminatorDataModel, DefaultFileExtraInfo> terminatorStorage = null;
         IIndexedStorageManager<ScriptDataModel, DefaultFileExtraInfo> scriptStorage = null;
         IIndexedStorageManager<WifiCredentialsDataModel, DefaultFileExtraInfo> wifiCredStorage = null;
+        IIndexedStorageManager<EthernetParams, DefaultFileExtraInfo> ethernetStorage = null;
         IIndexedStorageManager<SerialDeviceInfo, SerialIndexExtraInfo> serialStorage = null;
         ICommStackLevel0 btClassicStack = null;
         ICommStackLevel0 bleStack = null;

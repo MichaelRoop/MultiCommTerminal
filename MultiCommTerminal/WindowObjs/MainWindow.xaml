@@ -368,9 +368,7 @@
                                             Background="Transparent" Click="btnEthernetDisconnect_Click" />
 
                                 </StackPanel>
-                            </DockPanel>
-                        </StackPanel>
-                        <ListBox x:Name="lbEthernet" MinHeight="30" MinWidth="200" MaxHeight="115" 
+                                <ListBox x:Name="lbEthernet" MinHeight="30" MinWidth="200" MaxHeight="115" 
                                              ScrollViewer.VerticalScrollBarVisibility="Auto" 
                                              ScrollViewer.HorizontalScrollBarVisibility="Auto">
                             <ListBox.ItemTemplate>
@@ -379,12 +377,13 @@
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="auto" />
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" Text="{Binding Address}" />
+                                        <TextBlock Grid.Column="0" Text="{Binding Display}" />
                                     </Grid>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
-
+                            </DockPanel>
+                        </StackPanel>
                     </DockPanel>
                 </Border>
                 <Border BorderBrush="AliceBlue" BorderThickness="1" VerticalAlignment="Center">

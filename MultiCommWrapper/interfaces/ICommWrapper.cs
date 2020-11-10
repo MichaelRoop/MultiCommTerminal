@@ -352,10 +352,24 @@ namespace MultiCommWrapper.Net.interfaces {
         /// <summary>For various errors encountered in asynchronous operations</summary>
         event EventHandler<MsgPumpResults> OnEthernetError;
 
+        /// <summary>Raised when items added, removed or changed</summary>
+        event EventHandler<List<IIndexItem<DefaultFileExtraInfo>>> OnEthernetListChange;
+
         void EthernetConnect(EthernetParams dataModel);
         void EthernetDisconnect();
         void EthernetSend(string msg);
 
+        void GetEthernetDataList(Action<List<IIndexItem<DefaultFileExtraInfo>>> onSuccess, OnErr onError);
+
+        void CreateNewEthernetData(string display, EthernetParams data, Action onSuccess, OnErr onError);
+
+        void CreateNewEthernetData(EthernetParams data, Action onSuccess, OnErr onError);
+
+        void RetrieveEthernetData(IIndexItem<DefaultFileExtraInfo> index, Action<EthernetParams> onSuccess, OnErr onError);
+
+        void SaveEthernetData(IIndexItem<DefaultFileExtraInfo> idx, EthernetParams data, Action onSuccess, OnErr onError);
+
+        void DeleteEthernetData(IIndexItem<DefaultFileExtraInfo> index, Action<bool> onComplete, OnErr onError);
 
         #endregion
 
