@@ -1093,6 +1093,9 @@ namespace MultiCommTerminal.WindowObjs {
             this.lvVendorColumn.Header = lang.GetText(MsgCode.Vendor);
             this.lvProductColumn.Header = lang.GetText(MsgCode.Product);
 
+            this.btnEthernetConnect.Content = lang.GetText(MsgCode.connect);
+            this.btnEthernetDisconnect.Content = lang.GetText(MsgCode.Disconnect);
+
             // Labels
             this.lbResponse.Content = lang.GetText(MsgCode.response);
             this.txtPairedDevices.Text = lang.GetText(MsgCode.PairedDevices);
