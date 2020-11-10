@@ -113,7 +113,7 @@ namespace MultiCommTerminal.WindowObjs {
                 this.AddItem(MenuCode.Commands, MsgCode.command, UIIcon.Command, "0"); // TODO Get a new icon
                 this.AddItem(MenuCode.Credentials, MsgCode.Credentials, UIIcon.Credentials, "0");
                 this.AddItem(MenuCode.UsbConfig, string.Format("USB {0}", DI.Wrapper.GetText(MsgCode.Settings)), UIIcon.Usb, "0");  // Need 
-                this.AddItem(MenuCode.Ethernet, "Ethernet", UIIcon.Ethernet, "0");
+                this.AddItem(MenuCode.Ethernet, MsgCode.Ethernet, UIIcon.Ethernet, "0");
                 //this.AddItem(MenuCode.Settings, MsgCode.Settings, UIIcon.Settings, "0");
                 this.AddItem(MenuCode.About, MsgCode.About, UIIcon.About, "1");
 

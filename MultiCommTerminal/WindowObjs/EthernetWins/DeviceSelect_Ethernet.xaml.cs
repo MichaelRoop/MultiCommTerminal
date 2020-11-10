@@ -1,5 +1,6 @@
 ﻿using Ethernet.Common.Net.DataModels;
 using MultiCommTerminal.DependencyInjection;
+using MultiCommTerminal.WindowObjs;
 using MultiCommTerminal.WPF_Helpers;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
@@ -39,7 +40,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
             this.parent = parent;
             InitializeComponent();
             this.Init();
-            DI.Wrapper.OnEthernetListChange += this.Wrapper_OnEthernetListChangeHandler;
             this.SizeToContent = SizeToContent.WidthAndHeight;
             // Call before rendering which will trigger initial resize events
             this.widthManager = new ButtonGroupSizeSyncManager(this.btnExit, this.btnSelect);
@@ -60,7 +60,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
-            DI.Wrapper.OnEthernetListChange -= this.Wrapper_OnEthernetListChangeHandler;
             this.widthManager.Teardown();
         }
 
@@ -89,21 +88,20 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
 
 
         private void btnEdit_Click(object sender, RoutedEventArgs e) {
-            this.lbEthernetDevices.GetSelected<IIndexItem<DefaultFileExtraInfo>>(
+            this.lbEthernetDevices.GetSelectedChk<IIndexItem<DefaultFileExtraInfo>>(
                 (info) => {
                     this.ReloadList(DeviceEdit_Ethernet.ShowBoxEdit(this, info));
-                }, () => {
-                    // TODO - either message box or select other method with no NotFound
-                });
+                }, App.ShowMsg);
         }
 
 
         private void btnDelete_Click(object sender, RoutedEventArgs e) {
-            this.lbEthernetDevices.GetSelected<IIndexItem<DefaultFileExtraInfo>>(
+            this.lbEthernetDevices.GetSelectedChk<IIndexItem<DefaultFileExtraInfo>>(
                 (info) => {
-                    DI.Wrapper.DeleteEthernetData(info, this.ReloadList, App.ShowMsg);
-                }, () => {
-                });
+                    if (MsgBoxYesNo.ShowBoxDelete(this, info.Display) == MsgBoxYesNo.MsgBoxResult.Yes) {
+                        DI.Wrapper.DeleteEthernetData(info, this.ReloadList, App.ShowMsg);
+                    }
+                }, App.ShowMsg);
         }
 
 
@@ -121,21 +119,12 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
 
 
         private void ReloadList(bool isChanged) {
-
-            LogUtils.Net.Log.Error(1212, () => string.Format("Status of changed:{0}", isChanged));
-
             if (isChanged) {
                 DI.Wrapper.GetEthernetDataList((newList) => {
                     lbEthernetDevices.SetNewSource(ref this.lstInfo, newList);
                 }, App.ShowMsg);
             }
         }
-
-
-        private void Wrapper_OnEthernetListChangeHandler(object sender, List<IIndexItem<DefaultFileExtraInfo>> e) {
-            
-        }
-
 
         #endregion
 

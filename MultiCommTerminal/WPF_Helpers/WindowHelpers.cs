@@ -3,12 +3,17 @@ using LanguageFactory.Net.data;
 using LogUtils.Net;
 using MultiCommTerminal.DependencyInjection;
 using MultiCommTerminal.WindowObjs;
+using StorageFactory.Net.interfaces;
+using StorageFactory.Net.StorageManagers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using WpfHelperClasses.Core;
 using static MultiCommTerminal.WindowObjs.MsgBoxYesNo;
+//using static System.ComponentModel.Design.ObjectSelectorEditor;
 
 namespace MultiCommTerminal.WPF_Helpers {
 
@@ -90,6 +95,20 @@ namespace MultiCommTerminal.WPF_Helpers {
         /// <param name="msg">The message to display</param>
         public static MsgBoxResult ShowMsgBoxYesNo(this Window win, string title, string msg, bool suppressContinue = false) {
             return MsgBoxYesNo.ShowBox(win, title, msg, suppressContinue);
+        }
+
+
+
+        /// <summary>Gets the selection and validate 
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="selector"></param>
+        /// <param name="onFound"></param>
+        /// <param name="onNone"></param>
+        public static void GetSelectedChk<T>(this Selector selector, Action<T> onFound, Action<string> onNone) where T : class {
+            selector.GetSelected<T>(
+                onFound, () => onNone.Invoke(DI.Wrapper.GetText(MsgCode.NothingSelected)));
         }
 
 

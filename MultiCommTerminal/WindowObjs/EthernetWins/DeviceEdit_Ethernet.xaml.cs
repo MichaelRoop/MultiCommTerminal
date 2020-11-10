@@ -113,8 +113,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
                     DI.Wrapper.RetrieveEthernetData(this.index,
                         (data) => {
                             this.data = data;
-                            // TODO - new language
-                            //this.Title = DI.Wrapper.GetText(MsgCode.Edit);
+                            this.Title = DI.Wrapper.GetText(MsgCode.Edit);
                         },
                         this.OnFailure);
                     break;
@@ -122,7 +121,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
                     this.data.Name = "SampleName";
                     this.data.EthernetAddress = "192.168.1.100";
                     this.data.EthernetServiceName = "9999";
-                    //this.Title = DI.Wrapper.GetText(MsgCode.Create);
+                    this.Title = DI.Wrapper.GetText(MsgCode.Create);
                     break;
             }
 

@@ -72,6 +72,7 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string PropertiesWhite { get { return Source(UIIcon.PropertiesWhite); } }
         public static string LogIcon { get { return Source(UIIcon.LogIcon); } }
         public static string Ethernet { get { return Source(UIIcon.Ethernet); } }
+        public static string EthernetWhite { get { return Source(UIIcon.EthernetWhite); } }
 
         #endregion
 
@@ -98,7 +99,7 @@ namespace MultiCommTerminal.WPF_Helpers {
                     return BluetoothLE_W;
                 case CommHelpType.Ethernet:
                     // TODO need white
-                    return Source(UIIcon.Ethernet);
+                    return Source(UIIcon.EthernetWhite);
                 case CommHelpType.Wifi:
                     return Source(UIIcon.Wifi);
                 default:

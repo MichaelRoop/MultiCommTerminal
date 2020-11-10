@@ -97,6 +97,9 @@ namespace MultiCommTerminal.WPF_Helpers {
         public static string WriteTimeout { get { return GetTxt(MsgCode.WriteTimeout); } }
         public static string LogText { get { return GetTxt(MsgCode.Log); } }
         public static string Support { get { return GetTxt(MsgCode.Support); } }
+        public static string Ethernet { get { return GetTxt(MsgCode.Ethernet); } }
+        public static string Edit { get { return GetTxt(MsgCode.Edit); } }
+        public static string Create { get { return GetTxt(MsgCode.Create); } }
 
 
         public static string BuildNumber {

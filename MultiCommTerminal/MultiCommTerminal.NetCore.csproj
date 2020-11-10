@@ -29,6 +29,7 @@
     <None Remove="images\icons\icons8-cmd-white-50.png" />
     <None Remove="images\icons\icons8-delete-link-52.png" />
     <None Remove="images\icons\icons8-edit-50.png" />
+    <None Remove="images\icons\icons8-ethernet-on-50-white.png" />
     <None Remove="images\icons\icons8-ethernet-on-50.png" />
     <None Remove="images\icons\icons8-exit-50.png" />
     <None Remove="images\icons\icons8-eye-50.png" />
@@ -144,6 +145,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="images\icons\icons8-edit-50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8-ethernet-on-50-white.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="images\icons\icons8-ethernet-on-50.png">

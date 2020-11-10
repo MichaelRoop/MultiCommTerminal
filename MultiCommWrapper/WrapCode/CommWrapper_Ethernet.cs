@@ -162,6 +162,30 @@ namespace MultiCommWrapper.Net.WrapCode {
             });
         }
 
+
+        public void DeleteEthernetData(object index, Action<bool> onComplete, OnErr onError) {
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    IIndexItem<DefaultFileExtraInfo> idx = index as IIndexItem<DefaultFileExtraInfo>;
+                    if (idx == null) {
+                        bool ok = this.ethernetStorage.DeleteFile(idx);
+                        this.GetEthernetDataList(
+                            (list) => {
+                                this.OnEthernetListChange?.Invoke(this, list);
+                                onComplete(ok);
+                            }, onError);
+                    }
+                    else {
+                        onError(this.GetText(MsgCode.NothingSelected));
+                    }
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.WriteFailue));
+                }
+            });
+        }
+
         #endregion
 
         #region Event handlers

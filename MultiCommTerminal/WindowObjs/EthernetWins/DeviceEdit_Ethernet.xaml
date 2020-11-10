@@ -9,7 +9,7 @@
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.WPF_Helpers"
         Style="{StaticResource MyWindowStyle}" Title="" 
         WindowStartupLocation="CenterScreen" 
-        Icon="{Binding Source={x:Static wpfHelper:IconBinder.Ethernet}}"
+        Icon="{Binding Source={x:Static wpfHelper:IconBinder.EthernetWhite}}"
         Loaded="Window_Loaded" Closing="Window_Closing"
         MinHeight="100" MinWidth="200" MaxHeight="800" MaxWidth="900">
     <Grid>

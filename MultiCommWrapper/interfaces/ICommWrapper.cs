@@ -371,6 +371,8 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void DeleteEthernetData(IIndexItem<DefaultFileExtraInfo> index, Action<bool> onComplete, OnErr onError);
 
+        void DeleteEthernetData(object index, Action<bool> onComplete, OnErr onError);
+
         #endregion
 
         void Teardown();
