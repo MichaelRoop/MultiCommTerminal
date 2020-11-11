@@ -74,6 +74,12 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void WifiSend(string msg) {
+            this.GetCurrentTerminator(
+                (data) => {
+                    this.wifiStack.InTerminators = data.TerminatorBlock;
+                    this.wifiStack.OutTerminators = data.TerminatorBlock;
+
+                }, (err) => { });
             this.wifiStack.SendToComm(msg);
         }
 

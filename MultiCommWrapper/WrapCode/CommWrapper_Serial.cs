@@ -49,6 +49,12 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void SerialUsbSend(string msg) {
+            this.GetCurrentTerminator(
+                (data) => {
+                    this.serialStack.InTerminators = data.TerminatorBlock;
+                    this.serialStack.OutTerminators = data.TerminatorBlock;
+
+                }, (err) => { });
             this.serialStack.SendToComm(msg);
         }
 

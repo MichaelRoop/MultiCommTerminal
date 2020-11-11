@@ -40,6 +40,13 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void EthernetSend(string msg) {
+            this.GetCurrentTerminator(
+                (data) => {
+                    this.ethernetStack.InTerminators = data.TerminatorBlock;
+                    this.ethernetStack.OutTerminators = data.TerminatorBlock;
+
+                }, (err) => { });
+
             this.ethernetStack.SendToComm(msg);
         }
 

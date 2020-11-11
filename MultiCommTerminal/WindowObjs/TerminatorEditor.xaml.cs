@@ -65,6 +65,7 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void TEditor_OnSave(object sender, TerminatorDataModel data) {
             if (this.index == null) {
+                data.Name = this.txtBoxDisplay.Text;
                 this.wrapper.CreateNewTerminator(
                     this.txtBoxDisplay.Text, data, this.OnSaveOk, this.OnSaveFailed);
             }

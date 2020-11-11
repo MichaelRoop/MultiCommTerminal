@@ -138,6 +138,12 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void BTClassicSend(string msg) {
+            this.GetCurrentTerminator(
+                (data)=> {
+                    this.btClassicStack.InTerminators = data.TerminatorBlock;
+                    this.btClassicStack.OutTerminators = data.TerminatorBlock;
+
+                }, (err) => { });
             this.btClassicStack.SendToComm(msg);
         }
 
