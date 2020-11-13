@@ -26,3 +26,5 @@
 /MultiCommTerminal.MSIX/AppPackages/*
 /Ethernet.UWP.Core/obj/*
 /Ethernet.UWP.Core/bin/*
+/Communications.Net5.UWP/obj/*
+/Communications.Net5.Win/obj/*

@@ -1,0 +1,7 @@
+﻿
+
+
+
+Nov 13, 2020. The C#/WinRT is still really early with manual steps.  Putting on hold for now
+
+https://docs.microsoft.com/en-us/windows/uwp/csharp-winrt/
