@@ -26,3 +26,4 @@
 /MultiCommTerminal.MSIX/AppPackages/*
 /Ethernet.UWP.Core/obj/*
 /Ethernet.UWP.Core/bin/*
+/Communications.AndroidXamarin/obj/*
