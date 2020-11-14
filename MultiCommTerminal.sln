@@ -55,8 +55,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ethernet.UWP.Core", "Ethern
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ethernet.Common.Net", "..\SharedNetLibs\Ethernet.Common.Net\Ethernet.Common.Net.csproj", "{FB8026AE-BEDC-4D83-BCF2-BC419E1F5825}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Communications.AndroidXamarin", "Communications.AndroidXamarin\Communications.AndroidXamarin.csproj", "{05D18427-C808-4EA4-9779-F58B78B0996B}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -601,26 +599,6 @@ Global
 		{FB8026AE-BEDC-4D83-BCF2-BC419E1F5825}.Release|x64.Build.0 = Release|Any CPU
 		{FB8026AE-BEDC-4D83-BCF2-BC419E1F5825}.Release|x86.ActiveCfg = Release|Any CPU
 		{FB8026AE-BEDC-4D83-BCF2-BC419E1F5825}.Release|x86.Build.0 = Release|Any CPU
-		{05D18427-C808-4EA4-9779-F58B78B0996B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{05D18427-C808-4EA4-9779-F58B78B0996B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{05D18427-C808-4EA4-9779-F58B78B0996B}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{05D18427-C808-4EA4-9779-F58B78B0996B}.Debug|ARM.Build.0 = Debug|Any CPU
-		{05D18427-C808-4EA4-9779-F58B78B0996B}.Debug|ARM64.ActiveCfg = Debug|Any CPU
-		{05D18427-C808-4EA4-9779-F58B78B0996B}.Debug|ARM64.Build.0 = Debug|Any CPU
-		{05D18427-C808-4EA4-9779-F58B78B0996B}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{05D18427-C808-4EA4-9779-F58B78B0996B}.Debug|x64.Build.0 = Debug|Any CPU
-		{05D18427-C808-4EA4-9779-F58B78B0996B}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{05D18427-C808-4EA4-9779-F58B78B0996B}.Debug|x86.Build.0 = Debug|Any CPU
-		{05D18427-C808-4EA4-9779-F58B78B0996B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{05D18427-C808-4EA4-9779-F58B78B0996B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{05D18427-C808-4EA4-9779-F58B78B0996B}.Release|ARM.ActiveCfg = Release|Any CPU
-		{05D18427-C808-4EA4-9779-F58B78B0996B}.Release|ARM.Build.0 = Release|Any CPU
-		{05D18427-C808-4EA4-9779-F58B78B0996B}.Release|ARM64.ActiveCfg = Release|Any CPU
-		{05D18427-C808-4EA4-9779-F58B78B0996B}.Release|ARM64.Build.0 = Release|Any CPU
-		{05D18427-C808-4EA4-9779-F58B78B0996B}.Release|x64.ActiveCfg = Release|Any CPU
-		{05D18427-C808-4EA4-9779-F58B78B0996B}.Release|x64.Build.0 = Release|Any CPU
-		{05D18427-C808-4EA4-9779-F58B78B0996B}.Release|x86.ActiveCfg = Release|Any CPU
-		{05D18427-C808-4EA4-9779-F58B78B0996B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
