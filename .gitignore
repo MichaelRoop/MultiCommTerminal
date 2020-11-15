@@ -27,3 +27,5 @@
 /Ethernet.UWP.Core/obj/*
 /Ethernet.UWP.Core/bin/*
 /Communications.AndroidXamarin/obj/*
+/MultiCommTerminal.AndroidXamarin/bin/*
+/MultiCommTerminal.AndroidXamarin/obj/*
