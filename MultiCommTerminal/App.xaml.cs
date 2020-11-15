@@ -26,6 +26,8 @@ namespace MultiCommTerminal {
         private ClassLog log = new ClassLog("App");
         private DateTime currentDate = DateTime.Now;
         private static App staticApp = null;
+        LogHelper logHelper = new LogHelper();
+
 
         #endregion
 
@@ -73,13 +75,15 @@ namespace MultiCommTerminal {
             this.loggerImpl = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             this.SetupLog4Net();
 
-            Log.SetStackTools(new StackTools());
-            WrapErr.SetStackTools(new StackTools());
-            Log.SetVerbosity(MsgLevel.Info);
-            Log.SetMsgNumberThreshold(5);
-            Log.OnLogMsgEvent += new LogingMsgEventDelegate(this.Log_OnLogMsgEvent);
-            DumpLogHeader();
+            this.logHelper.InfoMsgEvent += this.LogHelper_InfoMsgEvent;
+            this.logHelper.DebugMsgEvent += this.LogHelper_DebugMsgEvent;
+            this.logHelper.WarningMsgEvent += this.LogHelper_WarningMsgEvent;
+            this.logHelper.ErrorMsgEvent += this.LogHelper_ErrorMsgEvent;
+            this.logHelper.ExceptionMsgEvent += this.LogHelper_ExceptionMsgEvent;
+            this.logHelper.EveryMsgEvent += this.LogHelper_EveryMsgEvent;
+            this.logHelper.Setup(App.Build, MsgLevel.Info, true, 5);
         }
+
 
         private void SetupDI() {
             // Start it here for first load and retrieve stored language
@@ -97,64 +101,33 @@ namespace MultiCommTerminal {
 
         #region Log Event Handlers
 
-        /// <summary>Safely pass Log message to the logger implementation</summary>
-        /// <param name="level">The loging level of the message</param>
-        /// <param name="err">The error report object with the information</param>
-        void Log_OnLogMsgEvent(MsgLevel level, ErrReport err) {
-            if (this.loggerImpl != null) {
-                try {
-                    if (err.TimeStamp.Day != this.currentDate.Day) {
-                        this.log.Warning(0, "******************* New Day *******************");
-                        this.log.Warning(0, "*");
-                        this.log.Warning(0, string.Format("*  Day {0}", DateTime.Now.ToString("dddd, dd MMMM yyyy HH:mm:ss")));
-                        this.log.Warning(0, "*");
-                        this.log.Warning(0, "************************************************");
-                        this.currentDate = err.TimeStamp;
-                    }
-
-                    STATIC_APP.DispatchProxy(() => this.LogMsgEvent?.Invoke(this, err.Msg));
-
-                    string msg = Log.GetMsgFormat1(level, err);
-                    switch (level) {
-                        case MsgLevel.Info:
-                            loggerImpl.Info(msg);
-                            break;
-                        case MsgLevel.Debug:
-                            loggerImpl.Debug(msg);
-                            break;
-                        case MsgLevel.Warning:
-                            loggerImpl.Warn(msg);
-                            break;
-                        case MsgLevel.Error:
-                        case MsgLevel.Exception:
-                            loggerImpl.Error(msg);
-                            break;
-                    }
-
-                    #if SEND_LOG_TO_DEBUG
-                        Debug.WriteLine(msg);
-                    #endif
-                }
-                catch (Exception e) {
-                    WrapErr.SafeAction(() => Debug.WriteLine(String.Format("Exception on logging out message:{0}", e.Message)));
-                }
-            }
+        private void LogHelper_EveryMsgEvent(object sender, string msg) {
+            STATIC_APP.DispatchProxy(() => this.LogMsgEvent?.Invoke(this, msg));
         }
 
 
-        /// <summary>Create a new header entry everytime the app starts up</summary>
-        private void DumpLogHeader() {
-            this.log.Warning(0, "");
-            this.log.Warning(0, "************** New Session ****************");
-            this.log.Warning(0, "*");
-            this.log.Warning(0, string.Format("* {0}", System.Reflection.Assembly.GetExecutingAssembly().GetName().Name));
-            this.log.Warning(0, string.Format("* Version: {0}", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString()));
-            this.log.Warning(0, "*");
-            this.log.Warning(0, "*");
-            this.log.Warning(0, string.Format("*  Day {0}", DateTime.Now.ToString("dddd, dd MMMM yyyy HH:mm:ss")));
-            this.log.Warning(0, "*");
-            //this.log.Warning(0, string.Format("*  {0}", ""));
-            this.log.Warning(0, "*******************************************");
+        private void LogHelper_InfoMsgEvent(object sender, string msg) {
+            this.loggerImpl.Info(msg);
+        }
+
+
+        private void LogHelper_DebugMsgEvent(object sender, string msg) {
+            this.loggerImpl.Debug(msg);
+        }
+
+
+        private void LogHelper_WarningMsgEvent(object sender, string msg) {
+            this.loggerImpl.Warn(msg);
+        }
+
+
+        private void LogHelper_ErrorMsgEvent(object sender, string msg) {
+            this.loggerImpl.Error(msg);
+        }
+
+
+        private void LogHelper_ExceptionMsgEvent(object sender, string msg) {
+            this.loggerImpl.Error(msg);
         }
 
         #endregion
