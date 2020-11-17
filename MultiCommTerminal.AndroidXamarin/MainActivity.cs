@@ -1,4 +1,6 @@
-﻿using System;
+﻿#define USEWIFI
+//#define USESOCKET
+using System;
 using Android;
 using Android.App;
 using Android.OS;
@@ -9,10 +11,15 @@ using Android.Support.V4.Widget;
 using Android.Support.V7.App;
 using Android.Views;
 using ChkUtils.Net.ErrObjects;
+using CommunicationStack.Net.DataModels;
 using CommunicationStack.Net.MsgPumps;
 using LogUtils.Net;
 using LogUtils.Net.Interfaces;
 using VariousUtils.Net;
+using Wifi.AndroidXamarin;
+using WifiCommon.Net.DataModels;
+using WifiCommon.Net.interfaces;
+
 
 namespace MultiCommTerminal.AndroidXamarin
 {
@@ -22,8 +29,13 @@ namespace MultiCommTerminal.AndroidXamarin
 
         LogHelper logHelper = new LogHelper();
         ClassLog log = new ClassLog("MainActivity");
+
+
+#if USEWIFI
+        IWifiInterface wifi = new WifiImplAndroidXamarin();
+#elif USESOCKET
         NetSocketMsgPump socketPump = new NetSocketMsgPump();
-        I_OS_ConsoleWriter writer = new OsConsoleWriter();
+#endif
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -49,16 +61,38 @@ namespace MultiCommTerminal.AndroidXamarin
 
             this.log.Error(1234, "Test error message");
 
+
+#if USEWIFI
+            this.wifi.MsgReceivedEvent += Wifi_MsgReceivedEvent;
+            this.wifi.OnWifiConnectionAttemptCompleted += Wifi_OnWifiConnectionAttemptCompleted;
+            this.wifi.DiscoveredNetworks += Wifi_DiscoveredNetworks;
+#elif USESOCKET
             this.socketPump.MsgReceivedEvent += this.SocketPump_MsgReceivedEvent;
             this.socketPump.MsgPumpConnectResultEvent += this.SocketPump_MsgPumpConnectResultEvent;
+#endif
+
 
         }
 
-        //private void OnLogMsgRaised(MsgLevel level, ErrReport report) {
-        //    this.writer.WriteToConsole(level, report);
-        //}
 
 
+
+#if USEWIFI
+        private void Wifi_OnWifiConnectionAttemptCompleted(object sender, MsgPumpResults e) {
+            this.log.Info("Wifi_MsgReceivedEvent", () => string.Format(
+                "***** Connect attempt complete : {0} - {1} - {2} *****", 
+                e.Code, e.SocketErr, e.ErrorString));
+        }
+
+        private void Wifi_MsgReceivedEvent(object sender, byte[] e) {
+            this.log.Info("Wifi_MsgReceivedEvent", () => string.Format("***** RECEIVED MSG : {0} *****", e.ToAsciiString()));
+        }
+
+        private void Wifi_DiscoveredNetworks(object sender, System.Collections.Generic.List<WifiNetworkInfo> e) {
+            this.log.Info("Wifi_DiscoveredNetworks", () => string.Format("***** Discovered : {0} networks *****", e.Count));
+        }
+
+#elif USESOCKET
         private void SocketPump_MsgPumpConnectResultEvent(object sender, CommunicationStack.Net.DataModels.MsgPumpResults e) {
             this.log.Info("SocketPump_MsgPumpConnectResultEvent", "***** WE ARE CONNECTED  *****");
         }
@@ -66,6 +100,8 @@ namespace MultiCommTerminal.AndroidXamarin
         private void SocketPump_MsgReceivedEvent(object sender, byte[] e) {
             this.log.Info("SocketPump_MsgReceivedEvent", () => string.Format("***** RECEIVED MSG : {0} *****", e.ToAsciiString()));
         }
+#endif
+
 
         public override void OnBackPressed()
         {
@@ -113,23 +149,50 @@ namespace MultiCommTerminal.AndroidXamarin
                 // Handle the camera action
                 // Connect
                 this.log.Info("OnNavigationItemSelected", "Camera - Connect");
+
+#if USEWIFI
+                var info = new WifiNetworkInfo() {
+                    SSID = "MikieArduinoWifiXXX",
+                    Password = "1234567890",
+                    RemoteHostName = "192.168.4.1",
+                    RemoteServiceName = "80",
+                };
+                this.wifi.ConnectAsync(info);
+#elif USESOCKET
                 this.socketPump.ConnectAsync(new NetSocketConnectData("192.168.1.88", 9999));
+#endif
             }
             else if (id == Resource.Id.nav_gallery)
             {
                 // Disconnect
                 this.log.Info("OnNavigationItemSelected", "Gallery - Disconnect");
+
+#if USEWIFI
+                this.wifi.Disconnect();
+#elif USESOCKET
                 this.socketPump.Disconnect();
+#endif
+
+
 
             }
             else if (id == Resource.Id.nav_slideshow)
             {
                 // Send
                 this.log.Info("OnNavigationItemSelected", "Slideshow - send msg");
+#if USEWIFI
+                this.wifi.SendOutMsg("OpenDoor\r\n".ToAsciiByteArray());
+#elif USESOCKET
                 this.socketPump.WriteAsync("OpenDoor\r\n".ToAsciiByteArray());
+#endif
+
             }
             else if (id == Resource.Id.nav_manage)
             {
+#if USEWIFI
+                this.wifi.DiscoverWifiAdaptersAsync();
+#elif USESOCKET
+#endif
 
             }
             else if (id == Resource.Id.nav_share)

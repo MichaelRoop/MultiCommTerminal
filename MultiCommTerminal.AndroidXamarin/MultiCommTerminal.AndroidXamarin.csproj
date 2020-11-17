@@ -132,6 +132,10 @@
       <Project>{a71559fd-9a21-4f27-92ec-c89fbef25718}</Project>
       <Name>ChkUtils.Net</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\SharedNetLibs\Common.Net\Common.Net.csproj">
+      <Project>{85dc0bcd-7fdc-4164-a6de-d020188b5248}</Project>
+      <Name>Common.Net</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\SharedNetLibs\CommunicationStack.Net\CommunicationStack.Net.csproj">
       <Project>{34eb157e-2489-4b3e-9e6a-be92d5ed4711}</Project>
       <Name>CommunicationStack.Net</Name>
@@ -143,6 +147,14 @@
     <ProjectReference Include="..\..\SharedNetLibs\VariousUtils\VariousUtils.Net.csproj">
       <Project>{8702af2d-436d-485d-b6a7-f2854e56b9c4}</Project>
       <Name>VariousUtils.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SharedNetLibs\WifiCommon.Net\WifiCommon.Net.csproj">
+      <Project>{640c4743-4899-4cc0-8b1f-ac6b7a9ca08f}</Project>
+      <Name>WifiCommon.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wifi.AndroidXamarin\Wifi.AndroidXamarin.csproj">
+      <Project>{54d6678e-55c1-46df-856f-fc9630026cfa}</Project>
+      <Name>Wifi.AndroidXamarin</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
