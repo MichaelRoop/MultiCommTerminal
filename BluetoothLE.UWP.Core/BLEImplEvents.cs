@@ -31,6 +31,12 @@ namespace Bluetooth.UWP.Core {
 
 
 
+        private void ToStatisfyCompilerWarnings() {
+            // TODO use this later
+            this.MsgReceivedEvent?.Invoke(this, null);
+        }
+
+
     }
 
 }

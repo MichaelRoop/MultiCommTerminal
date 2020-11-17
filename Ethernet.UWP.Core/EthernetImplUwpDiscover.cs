@@ -27,14 +27,10 @@ namespace Ethernet.UWP.Core {
                     //this.log.Info("Discover", () => string.Format("Name:{0}", info.Name));
                     //c.ProfileName,
                     //    c.NetworkAdapter.NetworkItem.NetworkId
-                    int i = 11;
-
                     this.log.Info("Discover", () => string.Format("Wwan Name:{0}", c.ProfileName));
                 }
                 else if (c.IsWlanConnectionProfile) {
                     this.log.Info("Discover", () => string.Format("WLAN Name:{0}", c.ProfileName));
-
-                    int ii = 22;
                 }
 
 

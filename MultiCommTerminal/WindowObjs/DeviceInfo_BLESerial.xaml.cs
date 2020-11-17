@@ -1,6 +1,5 @@
 ﻿using BluetoothLE.Net.DataModels;
 using MultiCommTerminal.WPF_Helpers;
-using MultiCommWrapper.Net.interfaces;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,7 +12,7 @@ namespace MultiCommTerminal.WindowObjs {
     public partial class DeviceInfo_BLESerial : Window {
 
         Window parent = null;
-        private ICommWrapper wrapper = null;
+        //private ICommWrapper wrapper = null;
         private ButtonGroupSizeSyncManager widthManager = null;
 
         public DeviceInfo_BLESerial(Window parent) {

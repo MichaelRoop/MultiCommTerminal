@@ -152,7 +152,10 @@ namespace Wifi.UWP.Core {
 
 
 
-
+        private void ToSatisfyCompilerWarnings() {
+            this.DiscoveredAdapters?.Invoke(this, new List<WifiAdapterInfo>());
+            this.CredentialsRequestedEvent?.Invoke(this, new WifiCredentials());
+        }
 
 
         #endregion
