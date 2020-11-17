@@ -10,11 +10,14 @@ using Android.Support.V4.View;
 using Android.Support.V4.Widget;
 using Android.Support.V7.App;
 using Android.Views;
+using Android.Widget;
+using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
 using CommunicationStack.Net.DataModels;
 using CommunicationStack.Net.MsgPumps;
 using LogUtils.Net;
 using LogUtils.Net.Interfaces;
+using MultiCommTerminal.AndroidXamarin.DependencyInjection;
 using VariousUtils.Net;
 using Wifi.AndroidXamarin;
 using WifiCommon.Net.DataModels;
@@ -32,7 +35,7 @@ namespace MultiCommTerminal.AndroidXamarin
 
 
 #if USEWIFI
-        IWifiInterface wifi = new WifiImplAndroidXamarin();
+        //IWifiInterface wifi = new WifiImplAndroidXamarin();
 #elif USESOCKET
         NetSocketMsgPump socketPump = new NetSocketMsgPump();
 #endif
@@ -58,39 +61,39 @@ namespace MultiCommTerminal.AndroidXamarin
 
             //this.logHelper.RawCurrentVerbotsityMsgInfoEvent += this.OnLogMsgRaised;
             this.logHelper.Setup("1.0.0.0", MsgLevel.Info, true, 5);
+            this.SetupDependencyInjection();
 
             this.log.Error(1234, "Test error message");
 
 
 #if USEWIFI
-            this.wifi.MsgReceivedEvent += Wifi_MsgReceivedEvent;
-            this.wifi.OnWifiConnectionAttemptCompleted += Wifi_OnWifiConnectionAttemptCompleted;
-            this.wifi.DiscoveredNetworks += Wifi_DiscoveredNetworks;
+            //this.wifi.MsgReceivedEvent += Wifi_MsgReceivedEvent;
+            //this.wifi.OnWifiConnectionAttemptCompleted += Wifi_OnWifiConnectionAttemptCompleted;
+            //this.wifi.DiscoveredNetworks += Wifi_DiscoveredNetworks;
 #elif USESOCKET
             this.socketPump.MsgReceivedEvent += this.SocketPump_MsgReceivedEvent;
             this.socketPump.MsgPumpConnectResultEvent += this.SocketPump_MsgPumpConnectResultEvent;
 #endif
-
-
+            this.OnStartupOk();
         }
 
 
 
 
 #if USEWIFI
-        private void Wifi_OnWifiConnectionAttemptCompleted(object sender, MsgPumpResults e) {
-            this.log.Info("Wifi_MsgReceivedEvent", () => string.Format(
-                "***** Connect attempt complete : {0} - {1} - {2} *****", 
-                e.Code, e.SocketErr, e.ErrorString));
-        }
+        //private void Wifi_OnWifiConnectionAttemptCompleted(object sender, MsgPumpResults e) {
+        //    this.log.Info("Wifi_MsgReceivedEvent", () => string.Format(
+        //        "***** Connect attempt complete : {0} - {1} - {2} *****", 
+        //        e.Code, e.SocketErr, e.ErrorString));
+        //}
 
-        private void Wifi_MsgReceivedEvent(object sender, byte[] e) {
-            this.log.Info("Wifi_MsgReceivedEvent", () => string.Format("***** RECEIVED MSG : {0} *****", e.ToAsciiString()));
-        }
+        //private void Wifi_MsgReceivedEvent(object sender, byte[] e) {
+        //    this.log.Info("Wifi_MsgReceivedEvent", () => string.Format("***** RECEIVED MSG : {0} *****", e.ToAsciiString()));
+        //}
 
-        private void Wifi_DiscoveredNetworks(object sender, System.Collections.Generic.List<WifiNetworkInfo> e) {
-            this.log.Info("Wifi_DiscoveredNetworks", () => string.Format("***** Discovered : {0} networks *****", e.Count));
-        }
+        //private void Wifi_DiscoveredNetworks(object sender, System.Collections.Generic.List<WifiNetworkInfo> e) {
+        //    this.log.Info("Wifi_DiscoveredNetworks", () => string.Format("***** Discovered : {0} networks *****", e.Count));
+        //}
 
 #elif USESOCKET
         private void SocketPump_MsgPumpConnectResultEvent(object sender, CommunicationStack.Net.DataModels.MsgPumpResults e) {
@@ -157,7 +160,8 @@ namespace MultiCommTerminal.AndroidXamarin
                     RemoteHostName = "192.168.4.1",
                     RemoteServiceName = "80",
                 };
-                this.wifi.ConnectAsync(info);
+                //this.wifi.ConnectAsync(info);
+                DI.Wrapper.WifiConnectAsync(info);
 #elif USESOCKET
                 this.socketPump.ConnectAsync(new NetSocketConnectData("192.168.1.88", 9999));
 #endif
@@ -168,7 +172,8 @@ namespace MultiCommTerminal.AndroidXamarin
                 this.log.Info("OnNavigationItemSelected", "Gallery - Disconnect");
 
 #if USEWIFI
-                this.wifi.Disconnect();
+                //this.wifi.Disconnect();
+                DI.Wrapper.WifiDisconect();
 #elif USESOCKET
                 this.socketPump.Disconnect();
 #endif
@@ -181,7 +186,8 @@ namespace MultiCommTerminal.AndroidXamarin
                 // Send
                 this.log.Info("OnNavigationItemSelected", "Slideshow - send msg");
 #if USEWIFI
-                this.wifi.SendOutMsg("OpenDoor\r\n".ToAsciiByteArray());
+                //this.wifi.SendOutMsg("OpenDoor\r\n".ToAsciiByteArray());
+                DI.Wrapper.WifiSend("OpenDoor\r\n");
 #elif USESOCKET
                 this.socketPump.WriteAsync("OpenDoor\r\n".ToAsciiByteArray());
 #endif
@@ -190,7 +196,8 @@ namespace MultiCommTerminal.AndroidXamarin
             else if (id == Resource.Id.nav_manage)
             {
 #if USEWIFI
-                this.wifi.DiscoverWifiAdaptersAsync();
+                //this.wifi.DiscoverWifiAdaptersAsync();
+                DI.Wrapper.WifiDiscoverAsync();
 #elif USESOCKET
 #endif
 
@@ -214,6 +221,55 @@ namespace MultiCommTerminal.AndroidXamarin
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+
+
+        private void SetupDependencyInjection() {
+            // Start it here for first load and retrieve stored language
+            ErrReport err;
+            WrapErr.ToErrReport(out err, 9999, () => {
+                DI.Wrapper.CurrentStoredLanguage();
+            });
+            if (err.Code != 0) {
+                Toast.MakeText(ApplicationContext, err.Msg, ToastLength.Long);
+
+                //MessageBox.Show(err.Msg, "Critical Error loading DI container");
+                //Application.Current.Shutdown();
+            }
+        }
+
+
+
+        private void OnStartupOk() {
+            DI.Wrapper.DiscoveredWifiNetworks += DiscoveredWifiNetworksHandler;
+            DI.Wrapper.OnWifiError += OnWifiErrorHandler;
+            DI.Wrapper.OnWifiConnectionAttemptCompleted += OnWifiConnectionAttemptCompletedHandler;
+            DI.Wrapper.CredentialsRequestedEvent += WifiCredentialsRequestedEventHandler;
+            DI.Wrapper.Wifi_BytesReceived += Wifi_BytesReceivedHandler;
+        }
+
+        private void Wifi_BytesReceivedHandler(object sender, string msg) {
+            this.log.Info("Wifi_MsgReceivedEvent", () => string.Format("***** RECEIVED MSG : {0} *****", msg));
+        }
+
+        private void WifiCredentialsRequestedEventHandler(object sender, WifiCredentials e) {
+            this.log.Info("OnWifiErrorHandler", () => string.Format("***** WIFI CREDENTIALS REQUESTED *****"));
+        }
+
+        private void OnWifiConnectionAttemptCompletedHandler(object sender, MsgPumpResults e) {
+            this.log.Info("OnWifiConnectionAttemptCompletedHandler", () => string.Format(
+                "***** Connect attempt complete : {0} - {1} - {2} *****",
+                e.Code, e.SocketErr, e.ErrorString));
+        }
+
+        private void OnWifiErrorHandler(object sender, WifiError e) {
+            this.log.Info("OnWifiErrorHandler", () => string.Format("***** WIFI ERROR:{0} - {1} *****", e.Code, e.ExtraInfo));
+        }
+
+        private void DiscoveredWifiNetworksHandler(object sender, System.Collections.Generic.List<WifiNetworkInfo> e) {
+            this.log.Info("DiscoveredWifiNetworksHandler", () => string.Format("***** Discovered : {0} networks *****", e.Count));
+        }
+
+
     }
 }
 
