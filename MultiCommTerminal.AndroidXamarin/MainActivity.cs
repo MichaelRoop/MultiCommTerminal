@@ -15,6 +15,7 @@ using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
 using CommunicationStack.Net.DataModels;
 using CommunicationStack.Net.MsgPumps;
+using LanguageFactory.Net.data;
 using LogUtils.Net;
 using LogUtils.Net.Interfaces;
 using MultiCommTerminal.AndroidXamarin.DependencyInjection;
@@ -75,6 +76,12 @@ namespace MultiCommTerminal.AndroidXamarin
             this.socketPump.MsgPumpConnectResultEvent += this.SocketPump_MsgPumpConnectResultEvent;
 #endif
             this.OnStartupOk();
+
+            //DI.Wrapper.SetLanguage(LangCode.French);
+            DI.Wrapper.CurrentLanguage((code) => {
+                this.log.Info("On Start", () => string.Format("Current language is:{0}", code));
+            });
+
         }
 
 

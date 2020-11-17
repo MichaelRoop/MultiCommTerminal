@@ -162,6 +162,10 @@
       <Project>{8ca4272f-afd9-4737-a941-ab24ed051d40}</Project>
       <Name>IconFactory.Net</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\SharedNetLibs\LanguageFactory\LanguageFactory.Net.csproj">
+      <Project>{4f6445cd-1589-465a-864d-dc597b44745c}</Project>
+      <Name>LanguageFactory.Net</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\SharedNetLibs\LogUtils.Net\LogUtils.Net.csproj">
       <Project>{db9aa64b-945b-41d5-a0da-83407d2bfcc8}</Project>
       <Name>LogUtils.Net</Name>
