@@ -1,7 +1,5 @@
 ﻿#define USEWIFI
 //#define USESOCKET
-using System;
-using Android;
 using Android.App;
 using Android.OS;
 using Android.Runtime;
@@ -14,19 +12,13 @@ using Android.Widget;
 using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
 using CommunicationStack.Net.DataModels;
-using CommunicationStack.Net.MsgPumps;
-using LanguageFactory.Net.data;
 using LogUtils.Net;
-using LogUtils.Net.Interfaces;
 using MultiCommTerminal.AndroidXamarin.DependencyInjection;
-using VariousUtils.Net;
-using Wifi.AndroidXamarin;
+using System;
 using WifiCommon.Net.DataModels;
-using WifiCommon.Net.interfaces;
 
 
-namespace MultiCommTerminal.AndroidXamarin
-{
+namespace MultiCommTerminal.AndroidXamarin {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
     public class MainActivity : AppCompatActivity, NavigationView.IOnNavigationItemSelectedListener
     {
@@ -81,6 +73,8 @@ namespace MultiCommTerminal.AndroidXamarin
             DI.Wrapper.CurrentLanguage((code) => {
                 this.log.Info("On Start", () => string.Format("Current language is:{0}", code));
             });
+
+            this.CheckRunTimePermissions();
 
         }
 
@@ -274,6 +268,34 @@ namespace MultiCommTerminal.AndroidXamarin
 
         private void DiscoveredWifiNetworksHandler(object sender, System.Collections.Generic.List<WifiNetworkInfo> e) {
             this.log.Info("DiscoveredWifiNetworksHandler", () => string.Format("***** Discovered : {0} networks *****", e.Count));
+        }
+
+
+        private void CheckRunTimePermissions() {
+            //// TODO - follow up on runtime permissions
+            ////https://stackoverflow.com/questions/54186699/discovering-nearby-bluetooth-devices-showing-nothing
+
+            //const int locationPermissionsRequestCode = 1000;
+
+            //var locationPermissions = new[]
+            //{
+            //    Manifest.Permission.AccessCoarseLocation,
+            //    Manifest.Permission.AccessFineLocation
+            //};
+
+            //// check if the app has permission to access coarse location
+            //var coarseLocationPermissionGranted =
+            //    ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessCoarseLocation);
+
+            //// check if the app has permission to access fine location
+            //var fineLocationPermissionGranted =
+            //    ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessFineLocation);
+
+            //// if either is denied permission, request permission from the user
+            //if (coarseLocationPermissionGranted == Permission.Denied ||
+            //    fineLocationPermissionGranted == Permission.Denied) {
+            //    ActivityCompat.RequestPermissions(this, locationPermissions, locationPermissionsRequestCode);
+            //}
         }
 
 
