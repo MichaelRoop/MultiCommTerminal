@@ -184,6 +184,10 @@
       <Project>{640c4743-4899-4cc0-8b1f-ac6b7a9ca08f}</Project>
       <Name>WifiCommon.Net</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BluetoothRfComm.AndroidXamarin\BluetoothRfComm.AndroidXamarin.csproj">
+      <Project>{069f8d1a-9678-459e-8984-2eb5383a3eb4}</Project>
+      <Name>BluetoothRfComm.AndroidXamarin</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MultiCommData\MultiCommData.Net.csproj">
       <Project>{e6ecdc5e-f10c-4730-bdd1-b45936bfe05e}</Project>
       <Name>MultiCommData.Net</Name>

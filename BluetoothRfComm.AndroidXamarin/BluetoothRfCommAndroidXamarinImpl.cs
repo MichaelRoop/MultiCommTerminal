@@ -1,4 +1,5 @@
 ﻿using Android.App;
+using Android.Bluetooth;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
@@ -9,6 +10,7 @@ using BluetoothCommon.Net.interfaces;
 using CommunicationStack.Net.Enumerations;
 using CommunicationStack.Net.interfaces;
 using CommunicationStack.Net.MsgPumps;
+using Java.Util;
 using LogUtils.Net;
 using System;
 using System.Collections.Generic;
@@ -26,6 +28,8 @@ namespace BluetoothRfComm.AndroidXamarin {
         private ClassLog log = new ClassLog("BluetoothRfCommAndroidXamarinImpl");
         private IMsgPump<NetSocketConnectData> msgPump = new NetSocketMsgPump();
         private bool connected = false;
+        private BluetoothDevice device = null;
+
 
         #endregion
 
@@ -59,12 +63,69 @@ namespace BluetoothRfComm.AndroidXamarin {
         #region IBTInterface methods
 
         public void ConnectAsync(BTDeviceInfo device) {
-            throw new NotImplementedException();
+            try {
+                Task.Run(() => {
+                    try {
+                        this.Disconnect();
+
+                        this.device = BluetoothAdapter.DefaultAdapter.BondedDevices.FirstOrDefault(d => d.Name == device.Name);
+
+                        //this.log.Info("", () => string.Format("Name:{0} Address:{1}:{2}", 
+                        //    device.Name, device.RemoteHostName, device.RemoteServiceName));
+
+                        //int port = int.Parse(device.RemoteServiceName);
+
+                        //this.msgPump.ConnectAsync(new NetSocketConnectData() {
+                        //    RemoteHostName = device.RemoteHostName,
+                        //    RemotePort = port,
+                        //    //RemotePort 
+                        //    //MaxReadBufferSize = READ_BUFF_MAX_SIZE,
+                        //    //ProtectionLevel = SocketProtectionLevel.BluetoothEncryptionAllowNullAuthentication,
+                        //    //RemoteHostName = deviceDataModel.RemoteHostName,
+                        //    //ServiceName = deviceDataModel.RemoteServiceName,
+                        //});
+
+                        if (this.socket != null) {
+                            this.socket.Dispose();
+                            this.socket = null;
+                        }
+
+                        this.socket = this.device.CreateRfcommSocketToServiceRecord(UUID.FromString(BT_Ids.SerialServiceGuid));
+
+                        //this.log.Info("RaiseDeviceDiscovered", () => string.Format(
+                        //    "{0} - {1} - {2}", socket.RemoteDevice.Name, info.DeviceClassName, device.Address));
+
+
+
+                        this.socket.Connect();
+                        byte[] d = "OpenDoor\r\n".ToAsciiByteArray();
+                        socket.OutputStream.Write(d, 0, d.Length);
+
+
+
+
+
+
+                    }
+                    catch (Exception e) {
+                        this.log.Exception(9999, "", e);
+                    }
+                });
+            }
+            catch (Exception e) {
+                this.log.Exception(9999, "", e);
+            }
         }
 
         public void Disconnect() {
-            this.msgPump.Disconnect();
-            this.connected = false;
+            if (this.connected) {
+                this.msgPump.Disconnect();
+                if (this.device != null) {
+                    this.device.Dispose();
+                    this.device = null;
+                }
+                this.connected = false;
+            }
         }
 
 
@@ -119,6 +180,10 @@ namespace BluetoothRfComm.AndroidXamarin {
 
         private void MsgPumpConnectResultEventHandler(object sender, CommunicationStack.Net.DataModels.MsgPumpResults results) {
             this.connected = results.Code == MsgPumpResultCode.Connected;
+
+            this.log.Info("", () => string.Format(
+                "Connect result:{0}  Socket:{1} Msg:{2}",
+                results.Code, results.SocketErr, results.ErrorString));
             this.ConnectionCompleted?.Invoke(this, this.connected);
         }
 

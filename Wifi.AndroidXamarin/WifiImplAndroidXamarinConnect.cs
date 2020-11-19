@@ -24,7 +24,20 @@ namespace Wifi.AndroidXamarin {
 
         private void DoConnection(WifiNetworkInfo dataModel) {
 
-            this.log.Info("DoConnection", () => string.Format("NetworkAccess:{0}", Connectivity.NetworkAccess));
+            this.log.Info("DoConnection", () => string.Format("    NetworkAccess:{0}", Connectivity.NetworkAccess));
+            this.log.Info("DoConnection", () => string.Format("     Wifi Enabled:{0}", this.manager.IsWifiEnabled));
+            this.log.Info("DoConnection", () => string.Format(" Has Wifi Profile:{0}", Connectivity.ConnectionProfiles.Contains(ConnectionProfile.WiFi)));
+
+            if (Connectivity.ConnectionProfiles.Contains(ConnectionProfile.WiFi)) {
+                var profile = Connectivity.ConnectionProfiles.FirstOrDefault(p => p == ConnectionProfile.WiFi);
+
+               // int x = 5;
+            }
+
+
+
+            //return;
+
 
             //https://stackoverflow.com/questions/35729617/is-possible-to-programmatically-connect-to-wi-fi-network-using-xamarin
             if (!this.manager.IsWifiEnabled) {

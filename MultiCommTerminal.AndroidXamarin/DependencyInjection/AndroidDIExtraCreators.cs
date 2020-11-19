@@ -8,6 +8,7 @@ using BluetoothCommon.Net;
 using BluetoothCommon.Net.interfaces;
 using BluetoothLE.Net;
 using BluetoothLE.Net.interfaces;
+using BluetoothRfComm.AndroidXamarin;
 using DependencyInjectorFactory.Net;
 using DependencyInjectorFactory.Net.interfaces;
 using Ethernet.Common.Net;
@@ -50,11 +51,11 @@ namespace MultiCommTerminal.AndroidXamarin.DependencyInjection {
             this.SingletonCreators.Add(
                 typeof(IIconFactory), new ObjSingletonCreator(() => new IconFactoryDoNothingImplementation()));
             this.SingletonCreators.Add(
-                typeof(IBTInterface), new ObjSingletonCreator(() => new BT_DoNothingImplementation()));
-            this.SingletonCreators.Add(
                 typeof(IBLETInterface), new ObjSingletonCreator(() => new BLE_DoNothingImplementation()));
 
             // In progress
+            this.SingletonCreators.Add(
+                typeof(IBTInterface), new ObjSingletonCreator(() => new BluetoothRfCommAndroidXamarinImpl()));
             this.SingletonCreators.Add(
                 typeof(IWifiInterface), new ObjSingletonCreator(() => new WifiImplAndroidXamarin()));
 

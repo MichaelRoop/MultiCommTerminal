@@ -9,6 +9,7 @@ using Android.Support.V4.Widget;
 using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
+using BluetoothCommon.Net;
 using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
 using CommunicationStack.Net.DataModels;
@@ -74,7 +75,8 @@ namespace MultiCommTerminal.AndroidXamarin {
                 Toast.MakeText(ApplicationContext, msg, ToastLength.Long).Show();
             });
 
-            this.CheckRunTimePermissions();
+            //this.CheckRunTimePermissions();
+            this.ChkPermissions2();
         }
 
 
@@ -140,14 +142,26 @@ namespace MultiCommTerminal.AndroidXamarin {
                 this.log.Info("OnNavigationItemSelected", "Camera - Connect");
 
 #if USEWIFI
-                var info = new WifiNetworkInfo() {
-                    SSID = "MikieArduinoWifi",
-                    Password = "1234567890",
-                    RemoteHostName = "192.168.4.1",
-                    RemoteServiceName = "80",
+
+
+                //var info = new WifiNetworkInfo() {
+                //    SSID = "MikieArduinoWifi",
+                //    Password = "1234567890",
+                //    RemoteHostName = "192.168.4.1",
+                //    RemoteServiceName = "80",
+                //};
+                ////this.wifi.ConnectAsync(info);
+                //DI.Wrapper.WifiConnectAsync(info);
+
+                BTDeviceInfo info = new BTDeviceInfo() {
+                    Name = "MikieBtRfCom",
+                    RemoteHostName = "20:16:04:07:61:01",
+                    RemoteServiceName = "1101",
                 };
-                //this.wifi.ConnectAsync(info);
-                DI.Wrapper.WifiConnectAsync(info);
+
+                DI.Wrapper.BTClassicConnectAsync(info);
+
+
 #elif USESOCKET
                 this.socketPump.ConnectAsync(new NetSocketConnectData("192.168.1.88", 9999));
 #endif
@@ -168,7 +182,8 @@ namespace MultiCommTerminal.AndroidXamarin {
                 // Send
                 this.log.Info("OnNavigationItemSelected", "Slideshow - send msg");
 #if USEWIFI
-                DI.Wrapper.WifiSend("OpenDoor\r\n");
+                //DI.Wrapper.WifiSend("OpenDoor\r\n");
+                DI.Wrapper.BTClassicSend("OpenDoor\r\n");
 #elif USESOCKET
                 this.socketPump.WriteAsync("OpenDoor\r\n".ToAsciiByteArray());
 #endif
@@ -176,7 +191,8 @@ namespace MultiCommTerminal.AndroidXamarin {
             else if (id == Resource.Id.nav_manage)
             {
 #if USEWIFI
-                DI.Wrapper.WifiDiscoverAsync();
+                //DI.Wrapper.WifiDiscoverAsync();
+                DI.Wrapper.BTClassicDiscoverAsync(true);
 #elif USESOCKET
 #endif
 
@@ -225,7 +241,29 @@ namespace MultiCommTerminal.AndroidXamarin {
             DI.Wrapper.OnWifiConnectionAttemptCompleted += OnWifiConnectionAttemptCompletedHandler;
             DI.Wrapper.CredentialsRequestedEvent += WifiCredentialsRequestedEventHandler;
             DI.Wrapper.Wifi_BytesReceived += Wifi_BytesReceivedHandler;
+
+            DI.Wrapper.BT_DeviceDiscovered += BT_DeviceDiscoveredHandler;
+            DI.Wrapper.BT_ConnectionCompleted += BT_ConnectionCompletedHandler;
+            DI.Wrapper.BT_BytesReceived += BT_BytesReceivedHandler;
         }
+
+        #region Bluetooth event handlers
+
+        private void BT_BytesReceivedHandler(object sender, string e) {
+            this.log.Info("BT_BytesReceivedHandler", () => string.Format("Received Msg:{0}", e));
+        }
+
+        private void BT_ConnectionCompletedHandler(object sender, bool e) {
+            this.log.Info("BT_ConnectionCompletedHandler", () => string.Format("Connection Completed. Success:{0}", e));
+        }
+
+        private void BT_DeviceDiscoveredHandler(object sender, BluetoothCommon.Net.BTDeviceInfo e) {
+            this.log.Info("BT_DeviceDiscoveredHandler", () => string.Format("Discovered BT:{0} - {1}", e.Name, e.Address));
+        }
+
+        #endregion
+
+        #region WIFI event handlers
 
         private void Wifi_BytesReceivedHandler(object sender, string msg) {
             this.log.Info("Wifi_MsgReceivedEvent", () => string.Format("***** RECEIVED MSG : {0} *****", msg));
@@ -251,71 +289,66 @@ namespace MultiCommTerminal.AndroidXamarin {
 
         }
 
-
-        private void CheckRunTimePermissions() {
-
-
-            //// TODO - follow up on runtime permissions
-            ////https://stackoverflow.com/questions/54186699/discovering-nearby-bluetooth-devices-showing-nothing
-
-            //const int locationPermissionsRequestCode = 1000;
-
-            //var locationPermissions = new[]
-            //{
-            //    Manifest.Permission.AccessCoarseLocation,
-            //    Manifest.Permission.AccessFineLocation
-            //};
-
-            //// check if the app has permission to access coarse location
-            //var coarseLocationPermissionGranted =
-            //    ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessCoarseLocation);
-
-            //// check if the app has permission to access fine location
-            //var fineLocationPermissionGranted =
-            //    ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessFineLocation);
-
-            //// if either is denied permission, request permission from the user
-            //if (coarseLocationPermissionGranted == Permission.Denied ||
-            //    fineLocationPermissionGranted == Permission.Denied) {
-            //    ActivityCompat.RequestPermissions(this, locationPermissions, locationPermissionsRequestCode);
-            //}
+        #endregion
 
 
-            //var status = Permissions.RequestAsync<ReadWriteStoragePermission>();
-
-            //var status = Permissions.CheckStatusAsync<Permissions.StorageRead>();
-
-            //status = Permissions.RequestAsync<Permissions.StorageWrite>();
-            //status = Permissions.RequestAsync<Permissions.StorageRead>();
+        //private void CheckRunTimePermissions() {
 
 
-            //await ChkPermissions();
+        //    //// TODO - follow up on runtime permissions
+        //    ////https://stackoverflow.com/questions/54186699/discovering-nearby-bluetooth-devices-showing-nothing
+
+        //    //const int locationPermissionsRequestCode = 1000;
+
+        //    //var locationPermissions = new[]
+        //    //{
+        //    //    Manifest.Permission.AccessCoarseLocation,
+        //    //    Manifest.Permission.AccessFineLocation
+        //    //};
+
+        //    //// check if the app has permission to access coarse location
+        //    //var coarseLocationPermissionGranted =
+        //    //    ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessCoarseLocation);
+
+        //    //// check if the app has permission to access fine location
+        //    //var fineLocationPermissionGranted =
+        //    //    ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessFineLocation);
+
+        //    //// if either is denied permission, request permission from the user
+        //    //if (coarseLocationPermissionGranted == Permission.Denied ||
+        //    //    fineLocationPermissionGranted == Permission.Denied) {
+        //    //    ActivityCompat.RequestPermissions(this, locationPermissions, locationPermissionsRequestCode);
+        //    //}
 
 
-        }
+        //    //var status = Permissions.RequestAsync<ReadWriteStoragePermission>();
+
+        //    //var status = Permissions.CheckStatusAsync<Permissions.StorageRead>();
+
+        //    //status = Permissions.RequestAsync<Permissions.StorageWrite>();
+        //    //status = Permissions.RequestAsync<Permissions.StorageRead>();
 
 
-
-        protected async Task ChkPermissions()  {
-            PermissionStatus status = await Permissions.CheckStatusAsync<Permissions.StorageRead>();
-            if (status != PermissionStatus.Granted) {
-                status = await Permissions.RequestAsync<Permissions.StorageRead>();
-            }
-
-            status = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
-            if (status != PermissionStatus.Granted) {
-                status = await Permissions.RequestAsync<Permissions.StorageWrite>();
-            }
+        //    //await ChkPermissions();
 
 
-            //status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-            //if (status != PermissionStatus.Granted) {
-            //    status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-            //}
+        //}
 
 
 
-        }
+        //protected async Task ChkPermissions()  {
+        //    PermissionStatus status = await Permissions.CheckStatusAsync<Permissions.StorageRead>();
+        //    if (status != PermissionStatus.Granted) {
+        //        status = await Permissions.RequestAsync<Permissions.StorageRead>();
+        //    }
+
+        //    status = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
+        //    if (status != PermissionStatus.Granted) {
+        //        status = await Permissions.RequestAsync<Permissions.StorageWrite>();
+        //    }
+
+
+        //}
 
         protected void ChkPermissions2() {
             var status = Permissions.CheckStatusAsync<Permissions.StorageRead>();
@@ -327,6 +360,17 @@ namespace MultiCommTerminal.AndroidXamarin {
             if (status.Result != PermissionStatus.Granted) {
                 status = Permissions.RequestAsync<Permissions.StorageWrite>();
             }
+
+            status = Permissions.CheckStatusAsync<Permissions.NetworkState>();
+            if (status.Result != PermissionStatus.Granted) {
+                status = Permissions.RequestAsync<Permissions.NetworkState>();
+            }
+
+            status = Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+            if (status.Result != PermissionStatus.Granted) {
+                status = Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+            }
+
 
 
             //status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();

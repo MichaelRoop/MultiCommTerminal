@@ -4,12 +4,13 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using BluetoothCommon.Net.interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace BluetoothRfComm.AndroidXamarin {
-    class BluetoothRfCommAndroidXamarinImpl_Connect {
+    public partial class BluetoothRfCommAndroidXamarinImpl : IBTInterface {
     }
 }
