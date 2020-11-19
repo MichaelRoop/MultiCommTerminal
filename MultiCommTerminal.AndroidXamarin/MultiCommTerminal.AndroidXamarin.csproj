@@ -68,6 +68,7 @@
     <Compile Include="DependencyInjection\AndroidDIExtraCreators.cs" />
     <Compile Include="DependencyInjection\DI.cs" />
     <Compile Include="MainActivity.cs" />
+    <Compile Include="PermissionObjects\ReadWriteStoragePermission.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -181,6 +182,10 @@
     <ProjectReference Include="..\..\SharedNetLibs\WifiCommon.Net\WifiCommon.Net.csproj">
       <Project>{640c4743-4899-4cc0-8b1f-ac6b7a9ca08f}</Project>
       <Name>WifiCommon.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MultiCommData\MultiCommData.Net.csproj">
+      <Project>{e6ecdc5e-f10c-4730-bdd1-b45936bfe05e}</Project>
+      <Name>MultiCommData.Net</Name>
     </ProjectReference>
     <ProjectReference Include="..\MultiCommWrapper\MultiCommWrapper.Net.csproj">
       <Project>{f86e019f-f046-4dc2-a949-d0ea0f0d0964}</Project>
