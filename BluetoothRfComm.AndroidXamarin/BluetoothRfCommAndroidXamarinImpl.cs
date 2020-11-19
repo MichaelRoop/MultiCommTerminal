@@ -1,21 +1,12 @@
-﻿using Android.App;
-using Android.Bluetooth;
+﻿using Android.Bluetooth;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using BluetoothCommon.Net;
 using BluetoothCommon.Net.interfaces;
 using CommunicationStack.Net.Enumerations;
 using CommunicationStack.Net.interfaces;
-using CommunicationStack.Net.MsgPumps;
-using Java.Util;
 using LogUtils.Net;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using VariousUtils.Net;
 
@@ -30,11 +21,11 @@ namespace BluetoothRfComm.AndroidXamarin {
         private bool connected = false;
         private BluetoothDevice device = null;
 
-
         #endregion
 
         #region IBTInterface events
 
+        // TODO Implement other events
         public event EventHandler<BTDeviceInfo> DiscoveredBTDevice;
         public event EventHandler<BTDeviceInfo> BT_DeviceInfoGathered;
         public event EventHandler<bool> DiscoveryComplete;
@@ -66,43 +57,8 @@ namespace BluetoothRfComm.AndroidXamarin {
             Task.Run(() => {
                 try {
                     this.Disconnect();
-
-
                     this.device = BluetoothAdapter.DefaultAdapter.BondedDevices.FirstOrDefault(d => d.Name == device.Name);
                     this.msgPump.ConnectAsync2(new BTAndroidMsgPumpConnectData(this.device));
-
-                    //this.log.Info("", () => string.Format("Name:{0} Address:{1}:{2}", 
-                    //    device.Name, device.RemoteHostName, device.RemoteServiceName));
-
-                    //int port = int.Parse(device.RemoteServiceName);
-
-                    //this.msgPump.ConnectAsync(new NetSocketConnectData() {
-                    //    RemoteHostName = device.RemoteHostName,
-                    //    RemotePort = port,
-                    //    //RemotePort 
-                    //    //MaxReadBufferSize = READ_BUFF_MAX_SIZE,
-                    //    //ProtectionLevel = SocketProtectionLevel.BluetoothEncryptionAllowNullAuthentication,
-                    //    //RemoteHostName = deviceDataModel.RemoteHostName,
-                    //    //ServiceName = deviceDataModel.RemoteServiceName,
-                    //});
-
-
-                    //this.socket = this.device.CreateRfcommSocketToServiceRecord(UUID.FromString(BT_Ids.SerialServiceGuid));
-
-                    ////this.log.Info("RaiseDeviceDiscovered", () => string.Format(
-                    ////    "{0} - {1} - {2}", socket.RemoteDevice.Name, info.DeviceClassName, device.Address));
-
-
-
-                    //this.socket.Connect();
-                    //byte[] d = "OpenDoor\r\n".ToAsciiByteArray();
-                    //socket.OutputStream.Write(d, 0, d.Length);
-                    //this.connected = true;
-
-
-
-
-
                 }
                 catch (Exception e) {
                     this.log.Exception(9999, "ConnectAsync", "", e);
@@ -110,20 +66,12 @@ namespace BluetoothRfComm.AndroidXamarin {
             });
         }
 
+
         public void Disconnect() {
             try {
                 if (this.connected) {
                     this.msgPump.Disconnect();
-
-                    ////this.msgPump.Disconnect();
-                    //if (this.socket != null) {
-                    //    this.socket.Close();
-                    //    this.socket.Dispose();
-                    //    this.socket = null;
-                    //}
-
                     if (this.device != null) {
-                        //this.device.Dispose();
                         this.device = null;
                     }
                     this.connected = false;
@@ -157,9 +105,11 @@ namespace BluetoothRfComm.AndroidXamarin {
             throw new NotImplementedException();
         }
 
+
         public void PairgAsync(BTDeviceInfo info) {
             throw new NotImplementedException();
         }
+
 
         public void UnPairAsync(BTDeviceInfo info) {
             throw new NotImplementedException();
@@ -194,14 +144,15 @@ namespace BluetoothRfComm.AndroidXamarin {
             this.ConnectionCompleted?.Invoke(this, this.connected);
         }
 
-
         #endregion
 
+        #region Private
 
         private Context GetContext() {
             return Android.App.Application.Context;
         }
 
+        #endregion
 
     }
 
