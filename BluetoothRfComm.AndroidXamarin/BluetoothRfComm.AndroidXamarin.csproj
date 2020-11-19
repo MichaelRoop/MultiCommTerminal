@@ -47,6 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BTAndroidMsgPump.cs" />
+    <Compile Include="BTAndroidMsgPumpConnectData.cs" />
     <Compile Include="BluetoothRfCommAndroidXamarinImpl.cs" />
     <Compile Include="BluetoothRfCommAndroidXamarinImpl_Connect.cs" />
     <Compile Include="BluetoothRfCommAndroidXamarinImpl_Discovery.cs" />

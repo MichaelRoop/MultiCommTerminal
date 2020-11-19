@@ -26,7 +26,7 @@ namespace BluetoothRfComm.AndroidXamarin {
         #region Data
 
         private ClassLog log = new ClassLog("BluetoothRfCommAndroidXamarinImpl");
-        private IMsgPump<NetSocketConnectData> msgPump = new NetSocketMsgPump();
+        private IMsgPump<BTAndroidMsgPumpConnectData> msgPump = new BTAndroidMsgPump();
         private bool connected = false;
         private BluetoothDevice device = null;
 
@@ -63,69 +63,76 @@ namespace BluetoothRfComm.AndroidXamarin {
         #region IBTInterface methods
 
         public void ConnectAsync(BTDeviceInfo device) {
-            try {
-                Task.Run(() => {
-                    try {
-                        this.Disconnect();
+            Task.Run(() => {
+                try {
+                    this.Disconnect();
 
-                        this.device = BluetoothAdapter.DefaultAdapter.BondedDevices.FirstOrDefault(d => d.Name == device.Name);
 
-                        //this.log.Info("", () => string.Format("Name:{0} Address:{1}:{2}", 
-                        //    device.Name, device.RemoteHostName, device.RemoteServiceName));
+                    this.device = BluetoothAdapter.DefaultAdapter.BondedDevices.FirstOrDefault(d => d.Name == device.Name);
+                    this.msgPump.ConnectAsync2(new BTAndroidMsgPumpConnectData(this.device));
 
-                        //int port = int.Parse(device.RemoteServiceName);
+                    //this.log.Info("", () => string.Format("Name:{0} Address:{1}:{2}", 
+                    //    device.Name, device.RemoteHostName, device.RemoteServiceName));
 
-                        //this.msgPump.ConnectAsync(new NetSocketConnectData() {
-                        //    RemoteHostName = device.RemoteHostName,
-                        //    RemotePort = port,
-                        //    //RemotePort 
-                        //    //MaxReadBufferSize = READ_BUFF_MAX_SIZE,
-                        //    //ProtectionLevel = SocketProtectionLevel.BluetoothEncryptionAllowNullAuthentication,
-                        //    //RemoteHostName = deviceDataModel.RemoteHostName,
-                        //    //ServiceName = deviceDataModel.RemoteServiceName,
-                        //});
+                    //int port = int.Parse(device.RemoteServiceName);
 
-                        if (this.socket != null) {
-                            this.socket.Dispose();
-                            this.socket = null;
-                        }
+                    //this.msgPump.ConnectAsync(new NetSocketConnectData() {
+                    //    RemoteHostName = device.RemoteHostName,
+                    //    RemotePort = port,
+                    //    //RemotePort 
+                    //    //MaxReadBufferSize = READ_BUFF_MAX_SIZE,
+                    //    //ProtectionLevel = SocketProtectionLevel.BluetoothEncryptionAllowNullAuthentication,
+                    //    //RemoteHostName = deviceDataModel.RemoteHostName,
+                    //    //ServiceName = deviceDataModel.RemoteServiceName,
+                    //});
 
-                        this.socket = this.device.CreateRfcommSocketToServiceRecord(UUID.FromString(BT_Ids.SerialServiceGuid));
 
-                        //this.log.Info("RaiseDeviceDiscovered", () => string.Format(
-                        //    "{0} - {1} - {2}", socket.RemoteDevice.Name, info.DeviceClassName, device.Address));
+                    //this.socket = this.device.CreateRfcommSocketToServiceRecord(UUID.FromString(BT_Ids.SerialServiceGuid));
+
+                    ////this.log.Info("RaiseDeviceDiscovered", () => string.Format(
+                    ////    "{0} - {1} - {2}", socket.RemoteDevice.Name, info.DeviceClassName, device.Address));
 
 
 
-                        this.socket.Connect();
-                        byte[] d = "OpenDoor\r\n".ToAsciiByteArray();
-                        socket.OutputStream.Write(d, 0, d.Length);
+                    //this.socket.Connect();
+                    //byte[] d = "OpenDoor\r\n".ToAsciiByteArray();
+                    //socket.OutputStream.Write(d, 0, d.Length);
+                    //this.connected = true;
 
 
 
 
 
-
-                    }
-                    catch (Exception e) {
-                        this.log.Exception(9999, "", e);
-                    }
-                });
-            }
-            catch (Exception e) {
-                this.log.Exception(9999, "", e);
-            }
+                }
+                catch (Exception e) {
+                    this.log.Exception(9999, "ConnectAsync", "", e);
+                }
+            });
         }
 
         public void Disconnect() {
-            if (this.connected) {
-                this.msgPump.Disconnect();
-                if (this.device != null) {
-                    this.device.Dispose();
-                    this.device = null;
+            try {
+                if (this.connected) {
+                    this.msgPump.Disconnect();
+
+                    ////this.msgPump.Disconnect();
+                    //if (this.socket != null) {
+                    //    this.socket.Close();
+                    //    this.socket.Dispose();
+                    //    this.socket = null;
+                    //}
+
+                    if (this.device != null) {
+                        //this.device.Dispose();
+                        this.device = null;
+                    }
+                    this.connected = false;
                 }
-                this.connected = false;
             }
+            catch (Exception e) {
+                this.log.Exception(9898, "Disconnect", "", e);
+            }
+            this.connected = false;
         }
 
 

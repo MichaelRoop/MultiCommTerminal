@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 
 namespace BluetoothRfComm.AndroidXamarin {
+
     public partial class BluetoothRfCommAndroidXamarinImpl : IBTInterface {
     }
 }

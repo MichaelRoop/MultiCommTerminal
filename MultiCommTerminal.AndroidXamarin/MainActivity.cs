@@ -13,9 +13,12 @@ using BluetoothCommon.Net;
 using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
 using CommunicationStack.Net.DataModels;
+using CommunicationStack.Net.Stacks;
 using LogUtils.Net;
+using MultiCommData.Net.StorageDataModels;
 using MultiCommTerminal.AndroidXamarin.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using WifiCommon.Net.DataModels;
 using Xamarin.Essentials;
@@ -172,7 +175,8 @@ namespace MultiCommTerminal.AndroidXamarin {
                 this.log.Info("OnNavigationItemSelected", "Gallery - Disconnect");
 
 #if USEWIFI
-                DI.Wrapper.WifiDisconect();
+                //DI.Wrapper.WifiDisconect();
+                DI.Wrapper.BTClassicDisconnect();
 #elif USESOCKET
                 this.socketPump.Disconnect();
 #endif
@@ -183,7 +187,14 @@ namespace MultiCommTerminal.AndroidXamarin {
                 this.log.Info("OnNavigationItemSelected", "Slideshow - send msg");
 #if USEWIFI
                 //DI.Wrapper.WifiSend("OpenDoor\r\n");
-                DI.Wrapper.BTClassicSend("OpenDoor\r\n");
+                //DI.Wrapper.BTClassicSend("OpenDoor\r\n");
+                List<TerminatorInfo> terminators = new List<TerminatorInfo>();
+                terminators.Add(new TerminatorInfo(Terminator.CR));
+                terminators.Add(new TerminatorInfo(Terminator.LF));
+
+                TerminatorDataModel t = new TerminatorDataModel(terminators);
+                DI.Wrapper.SetCurrentTerminators(t, (err) => { });
+                DI.Wrapper.BTClassicSend("OpenDoor");
 #elif USESOCKET
                 this.socketPump.WriteAsync("OpenDoor\r\n".ToAsciiByteArray());
 #endif

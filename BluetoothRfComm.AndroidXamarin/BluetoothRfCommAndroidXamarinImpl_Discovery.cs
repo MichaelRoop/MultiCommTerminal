@@ -83,8 +83,8 @@ namespace BluetoothRfComm.AndroidXamarin {
 
 
 
-        BluetoothSocket socket = null;
-        BluetoothDevice dev = null;
+        //BluetoothSocket socket = null;
+        //BluetoothDevice dev = null;
 
         private void RaiseDeviceDiscovered(BluetoothDevice device) {
             BTDeviceInfo info = new BTDeviceInfo() {
