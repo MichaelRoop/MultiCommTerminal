@@ -130,6 +130,10 @@ namespace MultiCommWrapper.Net.WrapCode {
                     //}
                 }
             }
+            else {
+                this.log.Info("WifiGetConnectCredentials", 
+                    () => string.Format("Has data:{0}:{1}", dataModel.RemoteHostName, dataModel.RemoteServiceName));
+            }
             return result;
         }
 

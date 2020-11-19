@@ -16,6 +16,7 @@ using VariousUtils.Net;
 using WifiCommon.Net.DataModels;
 using WifiCommon.Net.interfaces;
 using Common.Net;
+using System.Threading.Tasks;
 
 namespace Wifi.AndroidXamarin {
 
@@ -64,7 +65,9 @@ namespace Wifi.AndroidXamarin {
         #region IWifiInterface Methods
 
         public void ConnectAsync(WifiNetworkInfo dataModel) {
-            this.DoConnection(dataModel);
+            Task.Run(() => {
+                this.DoConnection(dataModel);
+            });
         }
 
         public void Disconnect() {
@@ -127,7 +130,12 @@ namespace Wifi.AndroidXamarin {
         /// <param name="arg">The arg to format</param>
         /// <returns>Formatted arg</returns>
         private string GetJavaArg(string arg) {
-            return string.Format("\"{{{0}}}\"", arg);
+            //return string.Format("""{{{0}}}""", arg);
+            //return "\"{" + arg + "}\"";
+            //return "{" + arg + "}";
+
+            return '"' + arg + '"';
+
         }
 
         #endregion

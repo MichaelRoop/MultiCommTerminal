@@ -141,7 +141,7 @@ namespace MultiCommTerminal.AndroidXamarin {
 
 #if USEWIFI
                 var info = new WifiNetworkInfo() {
-                    SSID = "MikieArduinoWifiXXX",
+                    SSID = "MikieArduinoWifi",
                     Password = "1234567890",
                     RemoteHostName = "192.168.4.1",
                     RemoteServiceName = "80",
@@ -247,6 +247,8 @@ namespace MultiCommTerminal.AndroidXamarin {
 
         private void DiscoveredWifiNetworksHandler(object sender, System.Collections.Generic.List<WifiNetworkInfo> e) {
             this.log.Info("DiscoveredWifiNetworksHandler", () => string.Format("***** Discovered : {0} networks *****", e.Count));
+            Toast.MakeText(ApplicationContext, string.Format("***** Discovered : {0} networks *****", e.Count), ToastLength.Long).Show();
+
         }
 
 
