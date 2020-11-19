@@ -15,8 +15,10 @@ using CommunicationStack.Net.DataModels;
 using LogUtils.Net;
 using MultiCommTerminal.AndroidXamarin.DependencyInjection;
 using System;
+using System.Threading.Tasks;
 using WifiCommon.Net.DataModels;
-
+using Xamarin.Essentials;
+using static Xamarin.Essentials.Permissions;
 
 namespace MultiCommTerminal.AndroidXamarin {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
@@ -28,7 +30,6 @@ namespace MultiCommTerminal.AndroidXamarin {
 
 
 #if USEWIFI
-        //IWifiInterface wifi = new WifiImplAndroidXamarin();
 #elif USESOCKET
         NetSocketMsgPump socketPump = new NetSocketMsgPump();
 #endif
@@ -60,42 +61,26 @@ namespace MultiCommTerminal.AndroidXamarin {
 
 
 #if USEWIFI
-            //this.wifi.MsgReceivedEvent += Wifi_MsgReceivedEvent;
-            //this.wifi.OnWifiConnectionAttemptCompleted += Wifi_OnWifiConnectionAttemptCompleted;
-            //this.wifi.DiscoveredNetworks += Wifi_DiscoveredNetworks;
 #elif USESOCKET
             this.socketPump.MsgReceivedEvent += this.SocketPump_MsgReceivedEvent;
             this.socketPump.MsgPumpConnectResultEvent += this.SocketPump_MsgPumpConnectResultEvent;
 #endif
             this.OnStartupOk();
 
-            //DI.Wrapper.SetLanguage(LangCode.French);
+            // Impossible to actually see the files in the directories but they are there
             DI.Wrapper.CurrentLanguage((code) => {
-                this.log.Info("On Start", () => string.Format("Current language is:{0}", code));
+                string msg = string.Format("Current language is:{0}", code);
+                this.log.Info("On Start", msg);
+                Toast.MakeText(ApplicationContext, msg, ToastLength.Long).Show();
             });
 
             this.CheckRunTimePermissions();
-
         }
 
 
 
 
 #if USEWIFI
-        //private void Wifi_OnWifiConnectionAttemptCompleted(object sender, MsgPumpResults e) {
-        //    this.log.Info("Wifi_MsgReceivedEvent", () => string.Format(
-        //        "***** Connect attempt complete : {0} - {1} - {2} *****", 
-        //        e.Code, e.SocketErr, e.ErrorString));
-        //}
-
-        //private void Wifi_MsgReceivedEvent(object sender, byte[] e) {
-        //    this.log.Info("Wifi_MsgReceivedEvent", () => string.Format("***** RECEIVED MSG : {0} *****", e.ToAsciiString()));
-        //}
-
-        //private void Wifi_DiscoveredNetworks(object sender, System.Collections.Generic.List<WifiNetworkInfo> e) {
-        //    this.log.Info("Wifi_DiscoveredNetworks", () => string.Format("***** Discovered : {0} networks *****", e.Count));
-        //}
-
 #elif USESOCKET
         private void SocketPump_MsgPumpConnectResultEvent(object sender, CommunicationStack.Net.DataModels.MsgPumpResults e) {
             this.log.Info("SocketPump_MsgPumpConnectResultEvent", "***** WE ARE CONNECTED  *****");
@@ -173,31 +158,24 @@ namespace MultiCommTerminal.AndroidXamarin {
                 this.log.Info("OnNavigationItemSelected", "Gallery - Disconnect");
 
 #if USEWIFI
-                //this.wifi.Disconnect();
                 DI.Wrapper.WifiDisconect();
 #elif USESOCKET
                 this.socketPump.Disconnect();
 #endif
-
-
-
             }
             else if (id == Resource.Id.nav_slideshow)
             {
                 // Send
                 this.log.Info("OnNavigationItemSelected", "Slideshow - send msg");
 #if USEWIFI
-                //this.wifi.SendOutMsg("OpenDoor\r\n".ToAsciiByteArray());
                 DI.Wrapper.WifiSend("OpenDoor\r\n");
 #elif USESOCKET
                 this.socketPump.WriteAsync("OpenDoor\r\n".ToAsciiByteArray());
 #endif
-
             }
             else if (id == Resource.Id.nav_manage)
             {
 #if USEWIFI
-                //this.wifi.DiscoverWifiAdaptersAsync();
                 DI.Wrapper.WifiDiscoverAsync();
 #elif USESOCKET
 #endif
@@ -229,6 +207,7 @@ namespace MultiCommTerminal.AndroidXamarin {
             ErrReport err;
             WrapErr.ToErrReport(out err, 9999, () => {
                 DI.Wrapper.CurrentStoredLanguage();
+                Toast.MakeText(ApplicationContext, "DI Initialized", ToastLength.Long);
             });
             if (err.Code != 0) {
                 Toast.MakeText(ApplicationContext, err.Msg, ToastLength.Long);
@@ -272,6 +251,8 @@ namespace MultiCommTerminal.AndroidXamarin {
 
 
         private void CheckRunTimePermissions() {
+
+
             //// TODO - follow up on runtime permissions
             ////https://stackoverflow.com/questions/54186699/discovering-nearby-bluetooth-devices-showing-nothing
 
@@ -296,7 +277,100 @@ namespace MultiCommTerminal.AndroidXamarin {
             //    fineLocationPermissionGranted == Permission.Denied) {
             //    ActivityCompat.RequestPermissions(this, locationPermissions, locationPermissionsRequestCode);
             //}
+
+
+            //var status = Permissions.RequestAsync<ReadWriteStoragePermission>();
+
+            //var status = Permissions.CheckStatusAsync<Permissions.StorageRead>();
+
+            //status = Permissions.RequestAsync<Permissions.StorageWrite>();
+            //status = Permissions.RequestAsync<Permissions.StorageRead>();
+
+
+            //await ChkPermissions();
+
+
         }
+
+
+
+        protected async Task ChkPermissions()  {
+            PermissionStatus status = await Permissions.CheckStatusAsync<Permissions.StorageRead>();
+            if (status != PermissionStatus.Granted) {
+                status = await Permissions.RequestAsync<Permissions.StorageRead>();
+            }
+
+            status = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
+            if (status != PermissionStatus.Granted) {
+                status = await Permissions.RequestAsync<Permissions.StorageWrite>();
+            }
+
+
+            //status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+            //if (status != PermissionStatus.Granted) {
+            //    status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+            //}
+
+
+
+        }
+
+        protected void ChkPermissions2() {
+            var status = Permissions.CheckStatusAsync<Permissions.StorageRead>();
+            if (status.Result != PermissionStatus.Granted) {
+                status = Permissions.RequestAsync<Permissions.StorageRead>();
+            }
+
+            status = Permissions.CheckStatusAsync<Permissions.StorageWrite>();
+            if (status.Result != PermissionStatus.Granted) {
+                status = Permissions.RequestAsync<Permissions.StorageWrite>();
+            }
+
+
+            //status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+            //if (status != PermissionStatus.Granted) {
+            //    status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+            //}
+
+
+
+        }
+
+
+        //public async Task<PermissionStatus> CheckAndRequestLocationPermission() {
+        //    var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+
+        //    if (status == PermissionStatus.Granted)
+        //        return status;
+
+
+        //    //if (status == PermissionStatus.Denied && DeviceInfo.Platform == DevicePlatform.iOS) {
+        //    //    // Prompt the user to turn on in settings
+        //    //    // On iOS once a permission has been denied it may not be requested again from the application
+        //    //    return status;
+        //    //}
+
+        //    if (Permissions.ShouldShowRationale<Permissions.LocationWhenInUse>()) {
+        //        // Prompt the user with additional information as to why the permission is needed
+        //    }
+
+        //    status = Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+
+        //    return status;
+        //}
+
+
+        public async Task<PermissionStatus> CheckAndRequestPermissionAsync<T>(T permission)
+            where T : BasePermission {
+            var status = await permission.CheckStatusAsync();
+            if (status != PermissionStatus.Granted) {
+                status = await permission.RequestAsync();
+            }
+
+            return status;
+        }
+
+
 
 
     }
