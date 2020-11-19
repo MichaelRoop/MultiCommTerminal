@@ -14,6 +14,7 @@ using Java.Util;
 using LogUtils.Net;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -39,6 +40,8 @@ namespace BluetoothRfComm.AndroidXamarin {
         private ClassLog log = new ClassLog("BluetoothAndroidMsgPump");
         private BluetoothSocket socket = null;
         private CancellationTokenSource readCancelSource = null;
+
+
         private CancellationTokenSource writeCancelSource = null;
         private bool continueReading = false;
         private AutoResetEvent readFinishedEvent = new AutoResetEvent(false);
@@ -63,7 +66,8 @@ namespace BluetoothRfComm.AndroidXamarin {
         public Task ConnectAsync2(BTAndroidMsgPumpConnectData paramsObj) {
             return Task.Run(async () => {
                 try {
-                    this.Disconnect();
+                    //this.Disconnect();
+                    await this.DisconnectAsync();
                     this.InitForConnection();
                     this.socket = paramsObj.Device.CreateRfcommSocketToServiceRecord(
                         UUID.FromString(BT_Ids.SerialServiceGuid));
@@ -82,33 +86,77 @@ namespace BluetoothRfComm.AndroidXamarin {
 
 
         public void Disconnect() {
-            try {
-                //if (this.Connected) {
-                this.continueReading = false;
-                if (this.readCancelSource != null) {
-                    this.readCancelSource.Cancel();
-                    this.readCancelSource.Dispose();
-                    this.readCancelSource = null;
-                    if (!this.readFinishedEvent.WaitOne(2000)) {
-                        this.log.Error(9999, "Timed out waiting for read cancelation");
-                    }
-                }
-                if (this.writeCancelSource != null) {
-                    this.writeCancelSource.Cancel();
-                    this.writeCancelSource.Dispose();
-                    this.writeCancelSource = null;
-                }
-                if (this.socket != null) {
-                    this.socket.Close();
-                    this.socket.Dispose();
-                    this.socket = null;
-                }
-                //}
-            }
-            catch (Exception e) {
-                this.log.Exception(9898, "Disconnect", "", e);
-            }
+            this.DisconnectAsync();
+            //try {
+            //    //if (this.Connected) {
+            //    this.continueReading = false;
+            //    if (this.readCancelSource != null) {
+            //        this.readCancelSource.Cancel();
+            //        this.readCancelSource.Dispose();
+            //        this.readCancelSource = null;
+            //        if (!this.readFinishedEvent.WaitOne(2000)) {
+            //            this.log.Error(9999, "Timed out waiting for read cancelation");
+            //        }
+            //    }
+            //    if (this.writeCancelSource != null) {
+            //        this.writeCancelSource.Cancel();
+            //        this.writeCancelSource.Dispose();
+            //        this.writeCancelSource = null;
+            //    }
+            //    if (this.socket != null) {
+            //        this.socket.Close();
+            //        this.socket.Dispose();
+            //        this.socket = null;
+            //    }
+            //    //}
+            //}
+            //catch (Exception e) {
+            //    this.log.Exception(9898, "Disconnect", "", e);
+            //}
         }
+
+
+        private Task DisconnectAsync() {
+            return Task.Run(() => {
+                try {
+                    //if (this.Connected) {
+                    this.continueReading = false;
+
+                    // The readCancelSource does not throw. So if we close the socket it aborts immediately
+                    if (this.socket != null) {
+                        this.socket.Close();
+                    }
+
+                    if (this.readCancelSource != null) {
+                        this.log.Info("DisconnectAsync", "Before read cancel");
+                        this.readCancelSource.Cancel();
+                        this.log.Info("DisconnectAsync", "After read cancel");
+                        if (!this.readFinishedEvent.WaitOne(2000)) {
+                            this.log.Error(1111, "DisconnectAsync", "Timed out waiting for read cancelation");
+                        }
+                        this.log.Info("DisconnectAsync", "After wait on readFinishedEvent");
+                        this.readCancelSource.Dispose();
+                        this.readCancelSource = null;
+                    }
+                    if (this.writeCancelSource != null) {
+                        this.writeCancelSource.Cancel();
+                        this.writeCancelSource.Dispose();
+                        this.writeCancelSource = null;
+                    }
+                    if (this.socket != null) {
+                        //this.socket.Close();
+                        this.socket.Dispose();
+                        this.socket = null;
+                    }
+                    //}
+                }
+                catch (Exception e) {
+                    this.log.Exception(9898, "Disconnect", "", e);
+                }
+            });
+
+        }
+
 
 
         public void WriteAsync(byte[] msg) {
@@ -164,12 +212,25 @@ namespace BluetoothRfComm.AndroidXamarin {
                         }
                     }
                     catch (TaskCanceledException) {
-                        this.log.Info("DoReadTask", "Cancelation");
+                        if (this.continueReading) {
+                            // Does not fire when canceling the token
+                            this.log.Info("DoReadTask", "Cancelation");
+                        }
+                        break;
+                    }
+                    catch (IOException ioe) {
+                        if (this.continueReading) {
+                            this.log.Exception(9999, "ReadThread", "", ioe);
+                            this.MsgPumpConnectResultEvent?.Invoke(this, new MsgPumpResults(MsgPumpResultCode.ReadFailure));
+                            //ioe.HResult
+                        }
                         break;
                     }
                     catch (Exception e) {
-                        this.log.Exception(9999, "", e);
-                        this.MsgPumpConnectResultEvent?.Invoke(this, new MsgPumpResults(MsgPumpResultCode.ReadFailure));
+                        if (this.continueReading) {
+                            this.log.Exception(9999, "ReadThread", "", e);
+                            this.MsgPumpConnectResultEvent?.Invoke(this, new MsgPumpResults(MsgPumpResultCode.ReadFailure));
+                        }
                         break;
                     }
                 }
