@@ -38,15 +38,17 @@ namespace MultiCommTerminal.XamarinForms.Droid.DependencyInjection {
                 typeof(IEthernetInterface), 
                 new ObjSingletonCreator(() => new EthernetDoNothingImplementation()));
 
+
             // TODO These will need implementations
-            this.SingletonCreators.Add(
-                typeof(IIconFactory), 
-                new ObjSingletonCreator(() => new IconFactoryDoNothingImplementation()));
             this.SingletonCreators.Add(
                 typeof(IBLETInterface), 
                 new ObjSingletonCreator(() => new BLE_DoNothingImplementation()));
 
+
             // In progress
+            this.SingletonCreators.Add(
+                typeof(IIconFactory), 
+                new ObjSingletonCreator(() => new NoDirIconFactory()));
             this.SingletonCreators.Add(
                 typeof(IBTInterface), 
                 new ObjSingletonCreator(() => new BluetoothRfCommAndroidXamarinImpl()));
