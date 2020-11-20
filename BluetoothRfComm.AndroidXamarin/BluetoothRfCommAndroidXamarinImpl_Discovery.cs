@@ -39,20 +39,28 @@ namespace BluetoothRfComm.AndroidXamarin {
         private void DoDiscoveryPaired() {
             try {
                 this.log.InfoEntry("DoDiscoveryPaired");
-                if (BluetoothAdapter.DefaultAdapter != null &&
-                    BluetoothAdapter.DefaultAdapter.IsEnabled) {
-                    this.log.Info("DoDiscoveryPaired", () => string.Format("Number of paired devices"));
-                    foreach (BluetoothDevice device in BluetoothAdapter.DefaultAdapter.BondedDevices) {
-                        if (device.Type == BluetoothDeviceType.Classic) {
-                            this.log.Info("DoDiscoveryPaired", () => string.Format("Found paired device:{0}", device.Name));
-                            this.RaiseDeviceDiscovered(device);
-                        }
+                if (BluetoothAdapter.DefaultAdapter != null) {
+                    if (!BluetoothAdapter.DefaultAdapter.IsEnabled) {
+                        BluetoothAdapter.DefaultAdapter.Enable();
                     }
-                    this.DiscoveryComplete?.Invoke(this, true);
+
+                    if (BluetoothAdapter.DefaultAdapter.IsEnabled) {
+                        this.log.Info("DoDiscoveryPaired", () => string.Format("Number of paired devices"));
+                        foreach (BluetoothDevice device in BluetoothAdapter.DefaultAdapter.BondedDevices) {
+                            if (device.Type == BluetoothDeviceType.Classic) {
+                                this.log.Info("DoDiscoveryPaired", () => string.Format("Found paired device:{0}", device.Name));
+                                this.RaiseDeviceDiscovered(device);
+                            }
+                        }
+                        this.DiscoveryComplete?.Invoke(this, true);
+                    }
+                    else {
+                        this.log.Error(9, "Default adapter failed to enabled");
+                        this.DiscoveryComplete?.Invoke(this, false);
+                    }
                 }
                 else {
-                    this.log.Error(9, "Default adapter null or not enabled");
-
+                    this.log.Error(9, "Default adapter null");
                     // TODO - need error event
                     this.DiscoveryComplete?.Invoke(this, false);
                 }

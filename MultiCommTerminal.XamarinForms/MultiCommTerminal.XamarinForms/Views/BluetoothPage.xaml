@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MultiCommTerminal.XamarinForms.Views.BluetoothPage"
+             Title="{Binding Title}"
+             >
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="tbTxtRun" Text="Run" Command="{Binding RunCommand}" />
+        <ToolbarItem x:Name="tbTxtPair" Text="Pair" Command="{Binding PairCommand}" />
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
+        <StackLayout>
+            <!--<Label Text="Bluetooth Central"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />-->
+
+            <Label x:Name="txtTitle" Text="Paired" Margin="0,30,0,10" HorizontalOptions="Center" />
+            <ListView x:Name="lstDevices" VerticalOptions="Center" 
+                      ItemSelected="lstDevices_ItemSelected"
+                      MinimumHeightRequest="20" MinimumWidthRequest="20">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Button x:Name="btnRefresh" Margin="0,10,0,0" Text="Refresh"
+                    Clicked="btnRefresh_Clicked"
+                    />
+
+            <!--   
+                    BackgroundColor="{StaticResource Primary}"
+                    TextColor="White"
+            -->
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

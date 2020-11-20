@@ -94,6 +94,9 @@
     <FlyoutItem Title="Languages" x:Name="flyLanguage" Icon="icons8_language_50.png">
         <ShellContent Route="LanguagePage" ContentTemplate="{DataTemplate local:LanguagePage}" />
     </FlyoutItem>
+    <FlyoutItem Title="Bluetooth" x:Name="flyBluetooth" Icon="icons8_bluetooth_50.png">
+        <ShellContent Route="LanguagePage" ContentTemplate="{DataTemplate local:BluetoothPage}" />
+    </FlyoutItem>
 
 
     <!-- When the Flyout is visible this will be a menu item you can tie a click behavior to  -->

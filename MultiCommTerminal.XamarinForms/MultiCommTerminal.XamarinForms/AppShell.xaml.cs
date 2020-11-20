@@ -15,16 +15,20 @@ namespace MultiCommTerminal.XamarinForms {
             Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
             Routing.RegisterRoute(nameof(LanguagePage), typeof(LanguagePage));
 
+            Routing.RegisterRoute(nameof(BluetoothPage), typeof(BluetoothPage));
+            Routing.RegisterRoute(nameof(BluetoothPairPage), typeof(BluetoothPairPage));
+            Routing.RegisterRoute(nameof(BluetoothRunPage), typeof(BluetoothRunPage));
+
             App.Wrapper.LanguageChanged += this.LanguageChangedHandler;
 
-            this.flyLanguage.Title = App.Wrapper.GetText(LanguageFactory.Net.data.MsgCode.language);
-            //this.flyLanguage.Icon = App.GetImageSource(UIIcon.Language);
+            this.flyLanguage.Title = App.Wrapper.GetText(MsgCode.language);
+            //this.flyBluetooth.Title = App.Wrapper.GetText(MsgCode.blue)
+
 
             // DOES NOT WORK
+            //this.flyLanguage.Icon = App.GetImageSource(UIIcon.Language);
             //this.flyLanguage.Icon = ImageSource.FromResource("icons8_close_window_50_noborder.png");
-
             //ImageSource.FromResource("icons8_language_50.png");
-
         }
 
         private void LanguageChangedHandler(object sender, LanguageFactory.Net.Messaging.SupportedLanguage e) {
