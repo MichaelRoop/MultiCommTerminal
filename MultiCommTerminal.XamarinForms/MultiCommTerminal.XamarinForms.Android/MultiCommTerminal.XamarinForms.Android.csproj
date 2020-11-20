@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1EBFFF32-6D49-4642-8019-71807CC2000E}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TemplateGuid>{6968b3a4-1835-46a3-ac5c-1ae33b475983}</TemplateGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>MultiCommTerminal.XamarinForms.Droid</RootNamespace>
+    <AssemblyName>MultiCommTerminal.XamarinForms.Android</AssemblyName>
+    <Deterministic>True</Deterministic>
+    <AndroidApplication>True</AndroidApplication>
+    <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
+    <AndroidResgenClass>Resource</AndroidResgenClass>
+    <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
+    <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
+    <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
+    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
+    <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
+    <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
+    <AndroidUseAapt2>true</AndroidUseAapt2>
+    <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidLinkMode>None</AndroidLinkMode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidManagedSymbols>true</AndroidManagedSymbols>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Android" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1451" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DependencyInjection\AndroidDIExtraCreators.cs" />
+    <Compile Include="DependencyInjection\DI.cs" />
+    <Compile Include="MainActivity.cs" />
+    <Compile Include="Resources\Resource.designer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AboutResources.txt" />
+    <None Include="Assets\AboutAssets.txt" />
+    <None Include="Properties\AndroidManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\Tabbar.xml" />
+    <AndroidResource Include="Resources\layout\Toolbar.xml" />
+    <AndroidResource Include="Resources\values\styles.xml" />
+    <AndroidResource Include="Resources\values\colors.xml" />
+    <AndroidResource Include="Resources\mipmap-anydpi-v26\icon.xml" />
+    <AndroidResource Include="Resources\mipmap-anydpi-v26\icon_round.xml" />
+    <AndroidResource Include="Resources\mipmap-hdpi\icon.png" />
+    <AndroidResource Include="Resources\mipmap-hdpi\launcher_foreground.png" />
+    <AndroidResource Include="Resources\mipmap-mdpi\icon.png" />
+    <AndroidResource Include="Resources\mipmap-mdpi\launcher_foreground.png" />
+    <AndroidResource Include="Resources\mipmap-xhdpi\icon.png" />
+    <AndroidResource Include="Resources\mipmap-xhdpi\launcher_foreground.png" />
+    <AndroidResource Include="Resources\mipmap-xxhdpi\icon.png" />
+    <AndroidResource Include="Resources\mipmap-xxhdpi\launcher_foreground.png" />
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
+    <AndroidResource Include="Resources\drawable\xamarin_logo.png" />
+    <AndroidResource Include="Resources\drawable\icon_about.png" />
+    <AndroidResource Include="Resources\drawable\icon_feed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\SharedNetLibs\BluetoothCommon.Net\BluetoothCommon.Net.csproj">
+      <Project>{0747d6bb-52d0-4082-82f0-b3a3f3d8f02d}</Project>
+      <Name>BluetoothCommon.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\SharedNetLibs\BluetoothLE\BluetoothLE.Net.csproj">
+      <Project>{bf0c5eb0-aef3-444f-b486-4c1d3271ffff}</Project>
+      <Name>BluetoothLE.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\SharedNetLibs\ChkUtils.Net\ChkUtils.Net.csproj">
+      <Project>{a71559fd-9a21-4f27-92ec-c89fbef25718}</Project>
+      <Name>ChkUtils.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\SharedNetLibs\DependencyInjectorFactory\DependencyInjectorFactory.Net.csproj">
+      <Project>{6d911cdf-3f4f-45f8-a698-bcb47ff53e08}</Project>
+      <Name>DependencyInjectorFactory.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\SharedNetLibs\Ethernet.Common.Net\Ethernet.Common.Net.csproj">
+      <Project>{fb8026ae-bedc-4d83-bcf2-bc419e1f5825}</Project>
+      <Name>Ethernet.Common.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\SharedNetLibs\IconFactory\IconFactory.Net.csproj">
+      <Project>{8ca4272f-afd9-4737-a941-ab24ed051d40}</Project>
+      <Name>IconFactory.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\SharedNetLibs\LogUtils.Net\LogUtils.Net.csproj">
+      <Project>{db9aa64b-945b-41d5-a0da-83407d2bfcc8}</Project>
+      <Name>LogUtils.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\SharedNetLibs\SerialCommon.Net\SerialCommon.Net.csproj">
+      <Project>{da822327-351c-4516-bda3-b0266d57e8eb}</Project>
+      <Name>SerialCommon.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\SharedNetLibs\WifiCommon.Net\WifiCommon.Net.csproj">
+      <Project>{640c4743-4899-4cc0-8b1f-ac6b7a9ca08f}</Project>
+      <Name>WifiCommon.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BluetoothRfComm.AndroidXamarin\BluetoothRfComm.AndroidXamarin.csproj">
+      <Project>{069f8d1a-9678-459e-8984-2eb5383a3eb4}</Project>
+      <Name>BluetoothRfComm.AndroidXamarin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MultiCommWrapper\MultiCommWrapper.Net.csproj">
+      <Project>{f86e019f-f046-4dc2-a949-d0ea0f0d0964}</Project>
+      <Name>MultiCommWrapper.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Wifi.AndroidXamarin\Wifi.AndroidXamarin.csproj">
+      <Project>{54d6678e-55c1-46df-856f-fc9630026cfa}</Project>
+      <Name>Wifi.AndroidXamarin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MultiCommTerminal.XamarinForms\MultiCommTerminal.XamarinForms.csproj">
+      <Project>{e036b65b-b93c-4c80-ac96-5968a7acead1}</Project>
+      <Name>MultiCommTerminal.XamarinForms</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="environment.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties TriggeredFromHotReload="False" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

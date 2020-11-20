@@ -1,0 +1,3 @@
+﻿
+MONO_LOG_LEVEL="error""
+MONO_TRACE_FILTERS="cfg""
