@@ -86,6 +86,12 @@
         <ShellContent Route="ItemsPage" ContentTemplate="{DataTemplate local:ItemsPage}" />
     </FlyoutItem>
 
+
+    <FlyoutItem Title="Languages" x:Name="flyLanguage" Icon="icon_feed.png">
+        <ShellContent Route="LanguagePage" ContentTemplate="{DataTemplate local:LanguagePage}" />
+    </FlyoutItem>
+
+
     <!-- When the Flyout is visible this will be a menu item you can tie a click behavior to  -->
     <MenuItem Text="Logout" StyleClass="MenuItemLayoutStyle" Clicked="OnMenuItemClicked">
     </MenuItem>

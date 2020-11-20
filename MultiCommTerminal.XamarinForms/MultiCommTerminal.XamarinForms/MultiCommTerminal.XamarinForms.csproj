@@ -14,4 +14,16 @@
   <ItemGroup>
     <ProjectReference Include="..\..\MultiCommWrapper\MultiCommWrapper.Net.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\LanguagePage.xaml.cs">
+      <DependentUpon>LanguagePage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Views\LanguagePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>

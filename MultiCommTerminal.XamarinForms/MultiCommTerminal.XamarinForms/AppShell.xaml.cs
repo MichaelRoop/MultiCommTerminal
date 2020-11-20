@@ -10,6 +10,16 @@ namespace MultiCommTerminal.XamarinForms {
             InitializeComponent();
             Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
             Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
+            Routing.RegisterRoute(nameof(LanguagePage), typeof(LanguagePage));
+
+            App.Wrapper.LanguageChanged += this.LanguageChangedHandler;
+
+            this.flyLanguage.Title = App.Wrapper.GetText(LanguageFactory.Net.data.MsgCode.language);
+
+        }
+
+        private void LanguageChangedHandler(object sender, LanguageFactory.Net.Messaging.SupportedLanguage e) {
+            this.flyLanguage.Title = App.Wrapper.GetText(LanguageFactory.Net.data.MsgCode.language);
         }
 
         private async void OnMenuItemClicked(object sender, EventArgs e) {
