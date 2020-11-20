@@ -10,7 +10,10 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         public LanguagePage() {
             InitializeComponent();
-            Title = App.Wrapper.GetText(MsgCode.language);
+            this.Title = App.Wrapper.GetText(MsgCode.language);
+
+            // Cannot make this work
+            //this.IconImageSource = ImageSource.FromResource("icons8_language_50.png");
             App.Wrapper.LanguageList((items) => {
                 this.lstLanguages.ItemsSource = items;
             });

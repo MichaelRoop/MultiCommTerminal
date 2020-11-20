@@ -6,6 +6,7 @@ using Xamarin.Forms.Xaml;
 using MultiCommWrapper.Net.interfaces;
 using System.Threading.Tasks;
 using LanguageFactory.Net.data;
+using IconFactory.Net.data;
 
 namespace MultiCommTerminal.XamarinForms {
     public partial class App : Application {
@@ -33,6 +34,20 @@ namespace MultiCommTerminal.XamarinForms {
         public static string GetText(MsgCode code) {
             return App.Wrapper.GetText(code);
         }
+
+        public static ImageSource GetImageSource(UIIcon code) {
+            Image i = new Image() {
+                Source = App.Wrapper.IconSource(code) 
+            };
+            return i.Source;
+
+            //ImageSource.FromResource(App.Wrapper.IconSource(code));
+
+            
+
+        }
+
+
 
 
         protected override void OnStart() {

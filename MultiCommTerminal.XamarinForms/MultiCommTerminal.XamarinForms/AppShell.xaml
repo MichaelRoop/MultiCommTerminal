@@ -2,6 +2,7 @@
 <Shell xmlns="http://xamarin.com/schemas/2014/forms" 
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:local="clr-namespace:MultiCommTerminal.XamarinForms.Views"
+       xmlns:xamlhelpers="clr-namespace:MultiCommTerminal.XamarinForms.UIHelpers;assembly=MultiCommTerminal.XamarinForms"
        Title="MultiCommTerminal.XamarinForms"
        x:Class="MultiCommTerminal.XamarinForms.AppShell">
 
@@ -87,7 +88,10 @@
     </FlyoutItem>
 
 
-    <FlyoutItem Title="Languages" x:Name="flyLanguage" Icon="icon_feed.png">
+    <!--  {Binding Source={x:Static xamlhelpers.IconBinder.Language}}  -->
+    <!--Icon="icons8_language_50.png" -->
+
+    <FlyoutItem Title="Languages" x:Name="flyLanguage" Icon="icons8_language_50.png">
         <ShellContent Route="LanguagePage" ContentTemplate="{DataTemplate local:LanguagePage}" />
     </FlyoutItem>
 
