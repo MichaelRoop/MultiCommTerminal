@@ -1,10 +1,13 @@
 ﻿using BluetoothCommon.Net;
+using CommunicationStack.Net.Stacks;
 using LanguageFactory.Net.data;
 using LanguageFactory.Net.Messaging;
 using LogUtils.Net;
+using MultiCommData.Net.StorageDataModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,24 +23,17 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         private BTDeviceInfo device;
         private ClassLog log = new ClassLog("BluetoothRunPage");
+        private ObservableCollection<ScriptItem> cmds = new ObservableCollection<ScriptItem>();
+        private ObservableCollection<string> responses = new ObservableCollection<string>();
 
         private int okCount = 0;
         private int failCount = 0;
         private int connectTry = 0;
 
         public string BTDevice {
-            get {
-                return "";//
-
-                
-
-                //this.device;
-            }
             set {
-                // Set on page opening
-                //this.device = value;
-                this.device = JsonConvert.DeserializeObject< BTDeviceInfo>(Uri.UnescapeDataString(value ?? string.Empty));
-                //this.DoConnection(this.device);
+                // Set on page opening with routing. Can only pass strings as parameters
+                this.device = JsonConvert.DeserializeObject<BTDeviceInfo>(Uri.UnescapeDataString(value ?? string.Empty));
             }
         }
 
@@ -47,11 +43,13 @@ namespace MultiCommTerminal.XamarinForms.Views {
             InitializeComponent();
             this.UpdateLanguage();
 
-            App.Wrapper.LanguageChanged += OnLanguageChanged;
-            App.Wrapper.BT_ConnectionCompleted += OnBT_ConnectionCompletedHandler;
-
-
+            App.Wrapper.LanguageChanged += this.OnLanguageChanged;
+            App.Wrapper.BT_ConnectionCompleted += this.OnBT_ConnectionCompletedHandler;
+            App.Wrapper.BT_BytesReceived += this.OnBT_BytesReceivedHandler;
+            this.lstCmds.ItemsSource = this.cmds;
+            this.lstResponses.ItemsSource = this.responses;
         }
+
 
         protected override void OnAppearing() {
             // TODO move this to a view model to do a busy and finish?
@@ -59,9 +57,27 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.okCount = 0;
             this.failCount = 0;
             this.connectTry = 0;
+            this.cmds.Clear();
+            this.responses.Clear();
+
+            App.Wrapper.GetCurrentScript(
+                this.PopulateScriptList, 
+                (err) => App.ShowError(this, err));
+
             this.DoConnection(this.device);
             base.OnAppearing();
         }
+
+
+        private void PopulateScriptList(ScriptDataModel scripts) {
+            this.lstCmds.ItemsSource = null;
+            this.cmds.Clear();
+            foreach (var script in scripts.Items) {
+                this.cmds.Add(script);
+            }
+            this.lstCmds.ItemsSource = this.cmds;
+        }
+
 
 
         protected override void OnDisappearing() {
@@ -75,24 +91,24 @@ namespace MultiCommTerminal.XamarinForms.Views {
         #region Wrapper event handlers
 
         private void OnBT_ConnectionCompletedHandler(object sender, bool ok) {
-            this.IsBusy = false;
-            if (ok) {
-                this.okCount++;
-                this.txtOk.Text = string.Format("Ok:{0}", okCount);
-
-                // TODO - what to do
-                //App.ShowError(this, "YAY CONNECTED");
-            }
-            else {
-                //App.ShowError(this, App.GetText(MsgCode.ConnectionFailure));
-                this.failCount++;
-                this.txtFail.Text = string.Format("Failed:{0}", failCount);
-            }
+            Device.BeginInvokeOnMainThread(() => {
+                this.IsBusy = false;
+                if (ok) {
+                    this.okCount++;
+                    //this.txtOk.Text = string.Format("Ok:{0}", okCount);
+                }
+                else {
+                    this.failCount++;
+                    //this.txtFail.Text = string.Format("Failed:{0}", failCount);
+                }
+            });
         }
 
 
         private void OnLanguageChanged(object sender, SupportedLanguage e) {
-            this.UpdateLanguage();
+            Device.BeginInvokeOnMainThread(() => {
+                this.UpdateLanguage();
+            });
         }
 
         #endregion
@@ -103,12 +119,12 @@ namespace MultiCommTerminal.XamarinForms.Views {
         private void DoConnection(BTDeviceInfo info) {
             if (info != null) {
                 this.connectTry++;
-                this.txtConnectTry.Text = this.connectTry.ToString();
+                //this.txtConnectTry.Text = this.connectTry.ToString();
                 this.IsBusy = true;
                 App.Wrapper.BTClassicConnectAsync(info);
             }
             else {
-                //
+                // TODO - backwards
             }
         }
 
@@ -117,8 +133,47 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.Title = App.GetText(LanguageFactory.Net.data.MsgCode.connect);
         }
 
+
         private void Refresh_Clicked(object sender, EventArgs e) {
             this.DoConnection(this.device);
         }
+
+        private void lstCmds_ItemSelected(object sender, SelectedItemChangedEventArgs e) {
+            ScriptItem item = e.SelectedItem as ScriptItem;
+            if (item != null) {
+                this.entryCmd.Text = item.Command;
+            }
+        }
+
+
+
+        private void btnSend_Clicked(object sender, EventArgs e) {
+            // ----------------------------------------------------------------------
+            // TODO REMOVE HACK
+            // TO TEST NEED CR LN terminators
+            List<TerminatorInfo> infos = new List<TerminatorInfo>();
+            infos.Add(new TerminatorInfo(Terminator.CR));
+            infos.Add(new TerminatorInfo(Terminator.LF));
+            TerminatorDataModel dm = new TerminatorDataModel(infos);
+            App.Wrapper.SetCurrentTerminators(dm, (err)=> App.ShowError(this, err));
+            // ----------------------------------------------------------------------
+
+            App.Wrapper.BTClassicSend(this.entryCmd.Text);
+        }
+
+
+        private void OnBT_BytesReceivedHandler(object sender, string e) {
+            Device.BeginInvokeOnMainThread(() => {
+                this.lstResponses.ItemsSource = null;
+                this.responses.Add(e);
+                if (this.responses.Count > 10) {
+                    this.responses.RemoveAt(0);
+                }
+                this.lstResponses.ItemsSource = this.responses;
+            });
+        }
+
+
+
     }
 }
