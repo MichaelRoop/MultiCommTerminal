@@ -6,46 +6,42 @@
         <StackLayout>
 
             <StackLayout Orientation="Horizontal">
-
                 <StackLayout Orientation="Vertical">
-                    <ListView x:Name="lstCmds" VerticalOptions="Center" 
-                      ItemSelected="lstCmds_ItemSelected"
-                      MinimumHeightRequest="20" MinimumWidthRequest="20">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <TextCell Text="{Binding Display}"/>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                    <StackLayout Orientation="Horizontal" Margin="0,30" >
-                        <Button x:Name="btnSend" Text="Send" Clicked="btnSend_Clicked" >
-                        </Button>
-                        <Entry x:Name="entryCmd" WidthRequest="130"  >
-                        </Entry>
-                    </StackLayout>
+                    <Frame BorderColor="LightBlue">
+                        <StackLayout Orientation="Vertical">
+                            <Label x:Name="lblCmds" Text="Commands" HorizontalOptions="Center" />
+                            <ListView x:Name="lstCmds" VerticalOptions="Center" 
+                          ItemSelected="lstCmds_ItemSelected"
+                          MinimumHeightRequest="20" MinimumWidthRequest="20">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextCell Text="{Binding Display}"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        </StackLayout>
+                    </Frame>
                 </StackLayout>
-                <ListView x:Name="lstResponses" VerticalOptions="Center" 
+                <Frame BorderColor="LightBlue">
+                    <StackLayout>
+                        <Label x:Name="lblResponses" Text="Responses" HorizontalOptions="Center" />
+                        <ListView x:Name="lstResponses" VerticalOptions="Center" 
                       MinimumHeightRequest="20" MinimumWidthRequest="20">
-                    <!--<ListView.ItemTemplate>
-                            <DataTemplate>
-                                <TextCell Text="{Binding Name}"/>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>-->
-                </ListView>
+                        </ListView>
+                    </StackLayout>
+                </Frame>
             </StackLayout>
-
-            <!--<Label x:Name="txtConnectTry" Text="Try:0"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-            <Label x:Name="txtOk" Text="OK:0"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-            <Label x:Name="txtFail" Text="Fail:0"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />-->
-            <Button Text="Refresh" Clicked="Refresh_Clicked" >
-                
-            </Button>
+            <StackLayout Margin="0,20,0,10">
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" x:Name="btnSend" Text="Send" Clicked="btnSend_Clicked" />
+                    <Entry Grid.Column="1" Text="OpenDoor" x:Name="entryCmd" HeightRequest="60" Margin="0, 0,0,0" />
+                </Grid>
+            </StackLayout>
+            <Button x:Name="btnRefresh" Text="Refresh" Clicked="Refresh_Clicked" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

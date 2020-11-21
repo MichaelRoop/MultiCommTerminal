@@ -130,7 +130,11 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
 
         private void UpdateLanguage() {
-            this.Title = App.GetText(LanguageFactory.Net.data.MsgCode.connect);
+            this.Title = App.GetText(MsgCode.connect);
+            this.lblCmds.Text = App.GetText(MsgCode.command);
+            this.lblResponses.Text = App.GetText(MsgCode.response);
+            this.btnSend.Text = App.GetText(MsgCode.send);
+            this.btnRefresh.Text = App.GetText(MsgCode.connect);
         }
 
 
@@ -166,7 +170,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
             Device.BeginInvokeOnMainThread(() => {
                 this.lstResponses.ItemsSource = null;
                 this.responses.Add(e);
-                if (this.responses.Count > 10) {
+                if (this.responses.Count > 100) {
                     this.responses.RemoveAt(0);
                 }
                 this.lstResponses.ItemsSource = this.responses;
