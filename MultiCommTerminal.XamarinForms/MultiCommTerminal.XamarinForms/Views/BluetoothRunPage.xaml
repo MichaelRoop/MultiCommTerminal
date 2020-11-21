@@ -4,9 +4,18 @@
              x:Class="MultiCommTerminal.XamarinForms.Views.BluetoothRunPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
+            <Label x:Name="txtConnectTry" Text="Try:0"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
+            <Label x:Name="txtOk" Text="OK:0"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <Label x:Name="txtFail" Text="Fail:0"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <Button Text="Refresh" Clicked="Refresh_Clicked">
+                
+            </Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

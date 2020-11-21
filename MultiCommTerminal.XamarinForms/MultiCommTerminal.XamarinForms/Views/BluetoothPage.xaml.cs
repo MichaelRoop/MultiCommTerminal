@@ -55,6 +55,8 @@ namespace MultiCommTerminal.XamarinForms.Views {
         private void OnBT_DiscoveryCompleteHandler(object sender, bool e) {
             this.IsBusy = false;
             //App.ShowError(this, string.Format("Discovery complete:{0}", e));
+
+            
         }
 
 
@@ -76,7 +78,8 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
         private void lstDevices_ItemSelected(object sender, SelectedItemChangedEventArgs e) {
-            // Not sure what to do here
+            // so the view model can use it
+            this.viewModel.SelectedInfo = (e.SelectedItem as BTDeviceInfo);
         }
 
 
