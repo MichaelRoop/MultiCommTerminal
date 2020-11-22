@@ -1,6 +1,7 @@
 ﻿using BluetoothCommon.Net;
 using LanguageFactory.Net.data;
 using LanguageFactory.Net.Messaging;
+using LogUtils.Net;
 using MultiCommTerminal.XamarinForms.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
         /// <summary>The view model that handles commands and events</summary>
         BluetoothViewModel viewModel;
         List<BTDeviceInfo> devices = new List<BTDeviceInfo>();
-
+        ClassLog log = new ClassLog("BluetoothPage");
 
         public BluetoothPage() {
             InitializeComponent();
@@ -34,7 +35,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
             // TODO - move away from view model. Buttons below
             this.viewModel.OnAppearing();
-            this.DoDiscovery();
+            //this.DoDiscovery();
             base.OnAppearing();
         }
 
@@ -48,35 +49,26 @@ namespace MultiCommTerminal.XamarinForms.Views {
         #region Wrapper event handlers
 
         private void DeviceDiscoveredHandler(object sender, BTDeviceInfo e) {
-            this.lstDevices.ItemsSource = null;
-            this.devices.Add(e);
-            this.lstDevices.ItemsSource = this.devices;
+            Device.BeginInvokeOnMainThread(() => {
+                this.lstDevices.ItemsSource = null;
+                this.devices.Add(e);
+                this.lstDevices.ItemsSource = this.devices;
+            });
         }
 
 
         private void DiscoveryCompleteHandler(object sender, bool e) {
-            this.IsBusy = false;
-            //App.ShowError(this, string.Format("Discovery complete:{0}", e));
-           
+            Device.BeginInvokeOnMainThread(() => {
+                this.IsBusy = false;
+                //App.ShowError(this, string.Format("Discovery complete:{0}", e));
+            });
         }
 
         #endregion
 
-        private void btnRefresh_Clicked(object sender, EventArgs e) {
-            this.DoDiscovery();
-
-        }
-
-        private void lstDevices_ItemSelected(object sender, SelectedItemChangedEventArgs e) {
-            // so the view model can use it
-            this.viewModel.SelectedInfo = (e.SelectedItem as BTDeviceInfo);
-        }
-
-
-        private void DoDiscovery() {
+        private void btnDiscover_Clicked(object sender, EventArgs args) {
             try {
-                //App.ShowError(this, string.Format("Do Discovery"));
-
+                this.log.InfoEntry("btnDiscover_Clicked");
                 this.IsBusy = true;
                 this.lstDevices.ItemsSource = null;
                 this.devices.Clear();
@@ -86,8 +78,14 @@ namespace MultiCommTerminal.XamarinForms.Views {
             catch (Exception e) {
                 App.ShowError(this, e.Message);
             }
-         }
 
+
+        }
+
+        private void lstDevices_ItemSelected(object sender, SelectedItemChangedEventArgs e) {
+            // so the view model can use it
+            this.viewModel.SelectedInfo = (e.SelectedItem as BTDeviceInfo);
+        }
 
         #region Private
 
@@ -96,6 +94,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.tbTxtPair.Text = language.GetText(MsgCode.Pair);
             this.tbTxtRun.Text = language.GetText(MsgCode.connect);
             this.txtTitle.Text = language.GetText(MsgCode.PairedDevices);
+            this.btnDiscover.Text = language.GetText(MsgCode.discover);
         }
 
         #endregion
