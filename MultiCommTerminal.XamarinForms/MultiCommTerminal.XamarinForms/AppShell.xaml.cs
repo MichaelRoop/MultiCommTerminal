@@ -11,13 +11,17 @@ namespace MultiCommTerminal.XamarinForms {
         public AppShell() {
 
             InitializeComponent();
-            Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
-            Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
-            Routing.RegisterRoute(nameof(LanguagePage), typeof(LanguagePage));
+            //Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
+            //Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
 
+            // My pages
+            Routing.RegisterRoute(nameof(AboutAppPage), typeof(AboutAppPage));
             Routing.RegisterRoute(nameof(BluetoothPage), typeof(BluetoothPage));
             Routing.RegisterRoute(nameof(BluetoothPairPage), typeof(BluetoothPairPage));
             Routing.RegisterRoute(nameof(BluetoothRunPage), typeof(BluetoothRunPage));
+            Routing.RegisterRoute(nameof(LanguagePage), typeof(LanguagePage));
+            Routing.RegisterRoute(nameof(TerminatorsPage), typeof(TerminatorsPage));
+
 
             App.Wrapper.LanguageChanged += this.LanguageChangedHandler;
 
@@ -32,7 +36,13 @@ namespace MultiCommTerminal.XamarinForms {
         }
 
         private void LanguageChangedHandler(object sender, LanguageFactory.Net.Messaging.SupportedLanguage e) {
-            this.flyLanguage.Title = App.Wrapper.GetText(MsgCode.language);
+            this.flyLanguage.Title = App.GetText(MsgCode.language);
+            this.flyBluetooth.Title = "Bluetooth"; // Seems same in all languages
+            this.flyAbout.Title = App.GetText(MsgCode.About);
+            this.flyTerminators.Title = App.GetText(MsgCode.Terminators);
+            this.flyLanguage.Title = App.GetText(MsgCode.language);
+
+
         }
 
         private async void OnMenuItemClicked(object sender, EventArgs e) {

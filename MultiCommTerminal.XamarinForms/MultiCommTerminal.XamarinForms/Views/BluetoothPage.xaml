@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:helpers="clr-namespace:MultiCommTerminal.XamarinForms.UIHelpers"
              x:Class="MultiCommTerminal.XamarinForms.Views.BluetoothPage"
              Title="{Binding Title}"
              >
@@ -8,6 +9,11 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem x:Name="tbTxtRun" Text="Run" Command="{Binding RunCommand}" />
         <ToolbarItem x:Name="tbTxtPair" Text="Pair" Command="{Binding PairCommand}" />
+        <!--
+            If we add icons then text does not show
+            IconImageSource="{Binding Source={x:Static helpers:IconBinder.Connect}}" 
+            IconImageSource="{Binding Source={x:Static helpers:IconBinder.Pair}}" 
+        -->
     </ContentPage.ToolbarItems>
     
     <ContentPage.Content>
