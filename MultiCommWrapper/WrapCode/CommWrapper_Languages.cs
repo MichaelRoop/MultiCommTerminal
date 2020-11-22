@@ -52,6 +52,21 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
+        public void CurrentSupportedLanguage(Action<SupportedLanguage> onDone) {
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    onDone(this.languages.CurrentLanguage);
+                });
+                if (report.Code != 0) {
+                    WrapErr.SafeAction(() => {
+                        onDone(this.languages.CurrentLanguage);
+                    });
+                }
+            });
+        }
+
+
         public void LanguageList(Action<List<LanguageDataModel>> onDone) {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;

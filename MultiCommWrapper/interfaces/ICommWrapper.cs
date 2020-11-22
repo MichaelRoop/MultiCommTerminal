@@ -56,6 +56,7 @@ namespace MultiCommWrapper.Net.interfaces {
         void CurrentStoredLanguage();
 
         void CurrentLanguage(Action<LangCode> onDone);
+        void CurrentSupportedLanguage(Action<SupportedLanguage> onDone);
         void SetLanguage(LangCode code);
         void LanguageList(Action<List<LanguageDataModel>> onDone);
 
