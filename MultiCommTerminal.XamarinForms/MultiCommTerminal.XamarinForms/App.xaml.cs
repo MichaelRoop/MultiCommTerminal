@@ -7,6 +7,8 @@ using MultiCommWrapper.Net.interfaces;
 using System.Threading.Tasks;
 using LanguageFactory.Net.data;
 using IconFactory.Net.data;
+using LanguageFactory.Net.Messaging;
+using MultiCommData.Net.StorageDataModels;
 
 namespace MultiCommTerminal.XamarinForms {
     public partial class App : Application {
@@ -14,21 +16,34 @@ namespace MultiCommTerminal.XamarinForms {
 
         public static ICommWrapper Wrapper = null;
 
+        public static EventHandler<SupportedLanguage> LanguageUpdated;
+        public static EventHandler<TerminatorDataModel> TerminatorsUpdated;
 
         public App(ICommWrapper wrapper) {
             InitializeComponent();
 
             Wrapper = wrapper;
+            Wrapper.LanguageChanged += OnLanguageChanged;
+            Wrapper.CurrentTerminatorChanged += this.OnCurrentTerminatorChanged;
 
             DependencyService.Register<MockDataStore>();
             MainPage = new AppShell();
+
+
         }
 
+
         public static void ShowError(Page page, string msg) {
-            Task.Run(async () => {
+            Device.BeginInvokeOnMainThread(async () => {
                 await page.DisplayAlert(
                     App.GetText(MsgCode.Error), msg, App.GetText(MsgCode.Ok));
+
             });
+
+            //Task.Run(async () => {
+            //    await page.DisplayAlert(
+            //        App.GetText(MsgCode.Error), msg, App.GetText(MsgCode.Ok));
+            //});
         }
 
         public static string GetText(MsgCode code) {
@@ -58,5 +73,24 @@ namespace MultiCommTerminal.XamarinForms {
 
         protected override void OnResume() {
         }
+
+
+        #region Wrapper event handlers
+
+        private void OnCurrentTerminatorChanged(object sender, TerminatorDataModel e) {
+            Device.BeginInvokeOnMainThread(() => {
+                TerminatorsUpdated?.Invoke(this, e);
+            });
+        }
+
+        private void OnLanguageChanged(object sender, SupportedLanguage language) {
+            Device.BeginInvokeOnMainThread(() => {
+                LanguageUpdated?.Invoke(this, language);
+            });
+        }
+
+
+        #endregion
+
     }
 }

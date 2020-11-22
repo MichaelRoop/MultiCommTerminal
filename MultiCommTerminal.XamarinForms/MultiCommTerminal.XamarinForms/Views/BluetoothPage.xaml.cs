@@ -1,5 +1,6 @@
 ﻿using BluetoothCommon.Net;
 using LanguageFactory.Net.data;
+using LanguageFactory.Net.Messaging;
 using MultiCommTerminal.XamarinForms.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -23,15 +24,15 @@ namespace MultiCommTerminal.XamarinForms.Views {
         public BluetoothPage() {
             InitializeComponent();
             BindingContext = this.viewModel = new BluetoothViewModel();
-
-            this.UpdateLanguage();
-            App.Wrapper.LanguageChanged += this.OnLanguageChangedHandler;
-            App.Wrapper.BT_DeviceDiscovered += OnBT_DeviceDiscoveredHandler;
-            App.Wrapper.BT_DiscoveryComplete += OnBT_DiscoveryCompleteHandler;
+            App.Wrapper.BT_DeviceDiscovered += this.DeviceDiscoveredHandler;
+            App.Wrapper.BT_DiscoveryComplete += this.DiscoveryCompleteHandler;
         }
 
 
         protected override void OnAppearing() {
+            App.Wrapper.CurrentSupportedLanguage(this.UpdateLanguage);
+
+            // TODO - move away from view model. Buttons below
             this.viewModel.OnAppearing();
             this.DoDiscovery();
             base.OnAppearing();
@@ -44,33 +45,22 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
 
-        private void OnBT_DeviceDiscoveredHandler(object sender, BTDeviceInfo e) {
-            //App.ShowError(this, string.Format("Adding device:{0}", e.Name));
+        #region Wrapper event handlers
+
+        private void DeviceDiscoveredHandler(object sender, BTDeviceInfo e) {
             this.lstDevices.ItemsSource = null;
             this.devices.Add(e);
             this.lstDevices.ItemsSource = this.devices;
         }
 
 
-        private void OnBT_DiscoveryCompleteHandler(object sender, bool e) {
+        private void DiscoveryCompleteHandler(object sender, bool e) {
             this.IsBusy = false;
             //App.ShowError(this, string.Format("Discovery complete:{0}", e));
-
-            
+           
         }
 
-
-        private void OnLanguageChangedHandler(object sender, LanguageFactory.Net.Messaging.SupportedLanguage e) {
-            this.UpdateLanguage();
-        }
-
-
-        private void UpdateLanguage() {
-            this.tbTxtPair.Text = App.GetText(MsgCode.Pair);
-            this.tbTxtRun.Text = App.GetText(MsgCode.connect);
-            this.txtTitle.Text = App.GetText(MsgCode.PairedDevices);
-        }
-
+        #endregion
 
         private void btnRefresh_Clicked(object sender, EventArgs e) {
             this.DoDiscovery();
@@ -97,6 +87,19 @@ namespace MultiCommTerminal.XamarinForms.Views {
                 App.ShowError(this, e.Message);
             }
          }
+
+
+        #region Private
+
+        private void UpdateLanguage(SupportedLanguage language) {
+            //this.Title = // Always Bluetooth
+            this.tbTxtPair.Text = language.GetText(MsgCode.Pair);
+            this.tbTxtRun.Text = language.GetText(MsgCode.connect);
+            this.txtTitle.Text = language.GetText(MsgCode.PairedDevices);
+        }
+
+        #endregion
+
 
 
     }

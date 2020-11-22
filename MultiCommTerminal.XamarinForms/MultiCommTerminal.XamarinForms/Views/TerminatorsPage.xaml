@@ -6,7 +6,6 @@
     <ContentPage.Content>
         <StackLayout>
             <ListView x:Name="lstTerminators" 
-                      ItemSelected="lstTerminators_ItemSelected"
                       MinimumHeightRequest="20" MinimumWidthRequest="20">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -17,16 +16,16 @@
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
                 <Button x:Name="btnAdd" Text="" Clicked="btnAdd_Clicked"
-                        BackgroundColor="Transparent" IsEnabled="False"
+                        BackgroundColor="Transparent"
                         ImageSource="{Binding Source={x:Static helpers:IconBinder.Add}}"  />
                 <Button x:Name="btnDelete" Text="" Clicked="btnDelete_Clicked"
-                        BackgroundColor="Transparent" IsEnabled="False"
+                        BackgroundColor="Transparent"
                         ImageSource="{Binding Source={x:Static helpers:IconBinder.Delete}}"  />
                 <Button x:Name="btnEdit" Text="" Clicked="btnEdit_Clicked"
-                        BackgroundColor="Transparent" IsEnabled="False"
+                        BackgroundColor="Transparent"
                         ImageSource="{Binding Source={x:Static helpers:IconBinder.Edit}}"  />
                 <Button x:Name="btnSelect" Text="" Clicked="btnSelect_Clicked"
-                        BackgroundColor="Transparent" IsEnabled="False"
+                        BackgroundColor="Transparent"
                         ImageSource="{Binding Source={x:Static helpers:IconBinder.Wifi}}"  />
             </StackLayout>
 
