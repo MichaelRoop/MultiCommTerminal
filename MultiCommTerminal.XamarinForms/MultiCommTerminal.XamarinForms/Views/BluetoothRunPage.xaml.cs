@@ -41,9 +41,6 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         public BluetoothRunPage() {
             InitializeComponent();
-            this.UpdateLanguage();
-
-            App.Wrapper.LanguageChanged += this.OnLanguageChanged;
             App.Wrapper.BT_ConnectionCompleted += this.OnBT_ConnectionCompletedHandler;
             App.Wrapper.BT_BytesReceived += this.OnBT_BytesReceivedHandler;
             this.lstCmds.ItemsSource = this.cmds;
@@ -53,18 +50,18 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         protected override void OnAppearing() {
             // TODO move this to a view model to do a busy and finish?
-            this.UpdateLanguage();
             this.okCount = 0;
             this.failCount = 0;
             this.connectTry = 0;
             this.cmds.Clear();
             this.responses.Clear();
 
+            App.Wrapper.CurrentSupportedLanguage(this.UpdateLanguage);
             App.Wrapper.GetCurrentScript(
                 this.PopulateScriptList, 
                 (err) => App.ShowError(this, err));
 
-            this.DoConnection(this.device);
+            //this.DoConnection(this.device);
             base.OnAppearing();
         }
 
@@ -104,29 +101,9 @@ namespace MultiCommTerminal.XamarinForms.Views {
             });
         }
 
-
-        private void OnLanguageChanged(object sender, SupportedLanguage e) {
-            Device.BeginInvokeOnMainThread(() => {
-                this.UpdateLanguage();
-            });
-        }
-
         #endregion
 
 
-        /// <summary>Do the connection</summary>
-        /// <param name="info">the device info for connection</param>
-        private void DoConnection(BTDeviceInfo info) {
-            if (info != null) {
-                this.connectTry++;
-                //this.txtConnectTry.Text = this.connectTry.ToString();
-                this.IsBusy = true;
-                App.Wrapper.BTClassicConnectAsync(info);
-            }
-            else {
-                // TODO - backwards
-            }
-        }
 
 
         private void UpdateLanguage() {
@@ -134,13 +111,24 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.lblCmds.Text = App.GetText(MsgCode.command);
             this.lblResponses.Text = App.GetText(MsgCode.response);
             this.btnSend.Text = App.GetText(MsgCode.send);
-            this.btnRefresh.Text = App.GetText(MsgCode.connect);
+            this.btnConnect.Text = App.GetText(MsgCode.connect);
         }
 
 
-        private void Refresh_Clicked(object sender, EventArgs e) {
-            this.DoConnection(this.device);
+        private void btnConnect_Clicked(object sender, EventArgs e) {
+            if (this.device != null) {
+                this.IsBusy = true;
+                App.Wrapper.BTClassicConnectAsync(this.device);
+            }
         }
+
+
+        private void btnDisconnect_Clicked(object sender, EventArgs e) {
+            if (this.device != null) {
+                App.Wrapper.BTClassicDisconnect();
+            }
+        }
+
 
         private void lstCmds_ItemSelected(object sender, SelectedItemChangedEventArgs e) {
             ScriptItem item = e.SelectedItem as ScriptItem;
@@ -178,6 +166,19 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
 
+
+        #region Private
+
+        private void UpdateLanguage(SupportedLanguage language) {
+            this.Title = language.GetText(MsgCode.connect);
+            this.lblCmds.Text = language.GetText(MsgCode.command);
+            this.lblResponses.Text = language.GetText(MsgCode.response);
+            this.btnSend.Text = language.GetText(MsgCode.send);
+            this.btnConnect.Text = language.GetText(MsgCode.connect);
+            this.btnDisconnect.Text = language.GetText(MsgCode.Disconnect);
+        }
+
+        #endregion
 
     }
 }

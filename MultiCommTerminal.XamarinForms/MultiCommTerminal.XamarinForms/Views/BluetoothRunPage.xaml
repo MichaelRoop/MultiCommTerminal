@@ -41,7 +41,10 @@
                     <Entry Grid.Column="1" Text="OpenDoor" x:Name="entryCmd" HeightRequest="60" Margin="0, 0,0,0" />
                 </Grid>
             </StackLayout>
-            <Button x:Name="btnRefresh" Text="Refresh" Clicked="Refresh_Clicked" />
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Button x:Name="btnConnect" Text="Connect" Clicked="btnConnect_Clicked" />
+                <Button x:Name="btnDisconnect" Text="Connect" Clicked="btnDisconnect_Clicked" />
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
