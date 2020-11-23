@@ -21,14 +21,14 @@ namespace MultiCommTerminal.XamarinForms.Views {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CommandSetPage : ContentPage {
 
-        
+        #region Data
+
         private IIndexItem<DefaultFileExtraInfo> index = null;
         private CommandSetViewModel viewModel;
-
-        //private bool isChanged = true;
-        private NavigateBackInterceptor exitQuestion;
+        private NavigateBackInterceptor interceptor;
         private NavigateBackInterceptor.ChangedIndicator changed = new NavigateBackInterceptor.ChangedIndicator();
 
+        #endregion
 
         #region Properties
 
@@ -42,6 +42,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
                     }
                     catch(Exception e) {
                         Log.Exception(9999, "IndexAsString", "", e);
+                        // TODO - error message and pop back?
                     }
                 }
                 else {
@@ -57,32 +58,14 @@ namespace MultiCommTerminal.XamarinForms.Views {
         public CommandSetPage() {
             InitializeComponent();
             this.BindingContext = this.viewModel = new CommandSetViewModel();
-            this.exitQuestion = new NavigateBackInterceptor(this, this.changed);
-
-
-            //// This handles the navigation bar back button
-            //Shell.SetBackButtonBehavior(this, new BackButtonBehavior {
-            //    Command = new Command(async () => {
-            //        if (!this.isChanged) {
-            //            await Shell.Current.Navigation.PopAsync();
-            //        }
-            //    })
-            //});
+            this.interceptor = new NavigateBackInterceptor(this, this.changed);
         }
+
 
         // Hardware back button
         protected override bool OnBackButtonPressed() {
-            return this.exitQuestion.HardwareOnBackButtonQuestion(base.OnBackButtonPressed);
-
-            //Device.BeginInvokeOnMainThread(async () => {
-            //    if (await DisplayAlert("Exit?", "Are you sure you want to exit from this page?", "Yes", "No")) {
-            //        base.OnBackButtonPressed();
-            //        await Shell.Current.Navigation.PopAsync();
-            //    }
-            //});
-            //return true;
+            return this.interceptor.HardwareOnBackButtonQuestion(base.OnBackButtonPressed);
         }
-
 
 
         protected override void OnAppearing() {
@@ -93,9 +76,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
             if (index != null) {
                 App.Wrapper.RetrieveScriptData(
-                    index,
-                    this.LoadExistingHandler,
-                    (err) => App.ShowError(this, err));
+                    index, this.LoadExistingHandler, this.OnErr);
             }
             else {
                 List<ScriptItem> items = new List<ScriptItem>();
@@ -136,19 +117,18 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
         private void btnCancel_Clicked(object sender, EventArgs e) {
-            //Navigation.PopAsync(true);
-            //this.isChanged = false;
+            //this.changed.IsChanged = false;
 
-            this.changed.IsChanged = false;
-
+            // Here you would need to ask the question
+            this.interceptor.MethodExitQuestion();
         }
 
         private void btnSave_Clicked(object sender, EventArgs e) {
             // TODO save
 
-            this.changed.IsChanged = false;
 
-            //Navigation.PopAsync(true);
+            this.changed.IsChanged = false;
+            
 
         }
     }

@@ -48,6 +48,16 @@ namespace MultiCommTerminal.XamarinForms.UIHelpers {
             return true;
         }
 
+
+        public void MethodExitQuestion() {
+            Device.BeginInvokeOnMainThread(async () => {
+                if (await AskExitQuestion()) {
+                    await Shell.Current.Navigation.PopAsync();
+                }
+            });
+        }
+
+
         private async void OnNavBarBack() {
             if (await AskExitQuestion()) {
                 await Shell.Current.Navigation.PopAsync();
@@ -66,7 +76,6 @@ namespace MultiCommTerminal.XamarinForms.UIHelpers {
             //    }
             //}
         }
-
 
 
         private async Task<bool> AskExitQuestion() {

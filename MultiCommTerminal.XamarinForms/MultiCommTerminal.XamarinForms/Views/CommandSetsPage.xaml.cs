@@ -1,5 +1,6 @@
 ﻿using LanguageFactory.Net.data;
 using LanguageFactory.Net.Messaging;
+using MultiCommTerminal.XamarinForms.UIHelpers;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System;
@@ -42,8 +43,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         private void btnDelete_Clicked(object sender, EventArgs e) {
             IIndexItem<DefaultFileExtraInfo> item = this.lstCmdSets.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
-            App.Wrapper.DeleteScriptData( 
-                item, this.OnDelete, (err) => App.ShowError(this, err));
+            App.Wrapper.DeleteScriptData(item, this.OnDelete, this.OnErr);
         }
 
 
@@ -54,7 +54,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
                 this.viewModel.EditCommandSet.Execute(item);
             }
             else {
-                App.ShowError(this, App.GetText(MsgCode.NothingSelected));
+                this.OnErr(App.GetText(MsgCode.NothingSelected));
             }
         }
 
@@ -83,8 +83,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
 
         private void UpdateList() {
-            App.Wrapper.GetScriptList(
-                this.Load, (err) => App.ShowError(this, err));
+            App.Wrapper.GetScriptList(this.Load, this.OnErr);
         }
 
     }
