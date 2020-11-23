@@ -6,38 +6,37 @@
              >
     <ContentPage.Content>
         <StackLayout>
-            <!--<Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />-->
-
-            <ListView x:Name="lstCmds" 
+                
+            <StackLayout Orientation="Horizontal">
+                <Frame BorderColor="LightBlue" Margin="0">
+                    <ListView x:Name="lstCmds" 
                       MinimumHeightRequest="20" MinimumWidthRequest="20">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextCell Text="{Binding Display}"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
-                <Button x:Name="btnAdd" Text="" Clicked="btnAdd_Clicked"
-                        BackgroundColor="Transparent"
-                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Add}}"  />
-                <Button x:Name="btnDelete" Text="" Clicked="btnDelete_Clicked"
-                        BackgroundColor="Transparent"
-                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Delete}}"  />
-                <Button x:Name="btnEdit" Text="" Clicked="btnEdit_Clicked"
-                        BackgroundColor="Transparent"
-                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Edit}}"  />
-                
-                <Button x:Name="btnCancel" Text="" Clicked="btnCancel_Clicked"
-                        BackgroundColor="Transparent"
-                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Cancel}}"  />
-                
-                <Button x:Name="btnSelect" Text="" Clicked="btnSave_Clicked"
-                        BackgroundColor="Transparent"
-                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}"  />
-            </StackLayout>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextCell Text="{Binding Display}"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Frame>
+                <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand">
+                    <Button x:Name="btnAdd" Text="" Clicked="btnAdd_Clicked"
+                            BorderWidth="0"
+                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Add}}"  />
+                    <Button x:Name="btnDelete" Text="" Clicked="btnDelete_Clicked"
+                            BorderWidth="0"
+                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Delete}}"  />
+                    <Button x:Name="btnEdit" Text="" Clicked="btnEdit_Clicked"
+                            BorderWidth="0"
+                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Edit}}"  />
+                    <Button x:Name="btnCancel" Text="" Clicked="btnCancel_Clicked"
+                            BorderWidth="0"
+                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Cancel}}"  />
+                    <Button x:Name="btnSelect" Text="" Clicked="btnSave_Clicked"
+                            BorderWidth="0"
+                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}"  />
+                </StackLayout>
 
+            </StackLayout>
         </StackLayout>
 
 
