@@ -107,6 +107,9 @@
     <FlyoutItem Title="Terminators" x:Name="flyTerminators" Icon="{Binding Source={x:Static helpers:IconBinder.Terminator}}">
         <ShellContent Route="TerminatorsPage" ContentTemplate="{DataTemplate local:TerminatorsPage}" />
     </FlyoutItem>
+    <FlyoutItem Title="Commands" x:Name="flyCommands" Icon="{Binding Source={x:Static helpers:IconBinder.Terminator}}">
+        <ShellContent Route="CommandSetsPage" ContentTemplate="{DataTemplate local:CommandSetsPage}" />
+    </FlyoutItem>
 
 
     <!-- When the Flyout is visible this will be a menu item you can tie a click behavior to  -->

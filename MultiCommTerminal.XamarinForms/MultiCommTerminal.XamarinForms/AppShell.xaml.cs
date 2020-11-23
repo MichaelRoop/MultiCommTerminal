@@ -22,6 +22,9 @@ namespace MultiCommTerminal.XamarinForms {
             Routing.RegisterRoute(nameof(LanguagePage), typeof(LanguagePage));
             Routing.RegisterRoute(nameof(TerminatorsPage), typeof(TerminatorsPage));
 
+            Routing.RegisterRoute(nameof(CommandSetsViewModel), typeof(CommandSetsViewModel));
+
+
 
             App.Wrapper.LanguageChanged += this.LanguageChangedHandler;
 
@@ -41,7 +44,7 @@ namespace MultiCommTerminal.XamarinForms {
             this.flyAbout.Title = App.GetText(MsgCode.About);
             this.flyTerminators.Title = App.GetText(MsgCode.Terminators);
             this.flyLanguage.Title = App.GetText(MsgCode.language);
-
+            this.flyCommands.Title = App.GetText(MsgCode.command);
 
         }
 

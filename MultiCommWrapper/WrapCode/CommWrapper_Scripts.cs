@@ -125,7 +125,10 @@ namespace MultiCommWrapper.Net.WrapCode {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;
                 WrapErr.ToErrReport(out report, 9999, () => {
-                    if (this.scriptStorage.IndexedItems.Count < 2) {
+                    if (index == null) {
+                        onError(this.GetText(MsgCode.NothingSelected));
+                    }
+                    else if (this.scriptStorage.IndexedItems.Count < 2) {
                         onError(this.GetText(MsgCode.CannotDeleteLast));
                     }
                     else {

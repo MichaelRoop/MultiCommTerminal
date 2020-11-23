@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:helpers="clr-namespace:MultiCommTerminal.XamarinForms.UIHelpers"
+             x:Class="MultiCommTerminal.XamarinForms.Views.CommandSetsPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView x:Name="lstCmdSets" 
+                      MinimumHeightRequest="20" MinimumWidthRequest="20">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Display}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                <Button x:Name="btnAdd" Text="" Clicked="btnAdd_Clicked"
+                        BackgroundColor="Transparent"
+                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Add}}"  />
+                <Button x:Name="btnDelete" Text="" Clicked="btnDelete_Clicked"
+                        BackgroundColor="Transparent"
+                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Delete}}"  />
+                <Button x:Name="btnEdit" Text="" Clicked="btnEdit_Clicked"
+                        BackgroundColor="Transparent"
+                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Edit}}"  />
+                <Button x:Name="btnSelect" Text="" Clicked="btnSelect_Clicked"
+                        BackgroundColor="Transparent"
+                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Wifi}}"  />
+            </StackLayout>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
