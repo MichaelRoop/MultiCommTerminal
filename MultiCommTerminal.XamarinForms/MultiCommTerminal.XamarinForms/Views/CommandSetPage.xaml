@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:helpers="clr-namespace:MultiCommTerminal.XamarinForms.UIHelpers"
-             x:Class="MultiCommTerminal.XamarinForms.Views.CommandSetPage">
+             x:Class="MultiCommTerminal.XamarinForms.Views.CommandSetPage"
+             >
     <ContentPage.Content>
         <StackLayout>
             <!--<Label Text="Welcome to Xamarin.Forms!"
@@ -32,7 +33,7 @@
                         ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}"  />
                 <Button x:Name="btnSelect" Text="" Clicked="btnSave_Clicked"
                         BackgroundColor="Transparent"
-                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Wifi}}"  />
+                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}"  />
             </StackLayout>
 
         </StackLayout>

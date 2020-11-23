@@ -1,5 +1,6 @@
 ﻿using LogUtils.Net;
 using MultiCommData.Net.StorageDataModels;
+using MultiCommTerminal.XamarinForms.UIHelpers;
 using MultiCommTerminal.XamarinForms.ViewModels;
 using Newtonsoft.Json;
 using StorageFactory.Net.interfaces;
@@ -23,6 +24,10 @@ namespace MultiCommTerminal.XamarinForms.Views {
         
         private IIndexItem<DefaultFileExtraInfo> index = null;
         private CommandSetViewModel viewModel;
+
+        //private bool isChanged = true;
+        private NavigateBackInterceptor exitQuestion;
+        private NavigateBackInterceptor.ChangedIndicator changed = new NavigateBackInterceptor.ChangedIndicator();
 
 
         #region Properties
@@ -52,12 +57,39 @@ namespace MultiCommTerminal.XamarinForms.Views {
         public CommandSetPage() {
             InitializeComponent();
             this.BindingContext = this.viewModel = new CommandSetViewModel();
+            this.exitQuestion = new NavigateBackInterceptor(this, this.changed);
+
+
+            //// This handles the navigation bar back button
+            //Shell.SetBackButtonBehavior(this, new BackButtonBehavior {
+            //    Command = new Command(async () => {
+            //        if (!this.isChanged) {
+            //            await Shell.Current.Navigation.PopAsync();
+            //        }
+            //    })
+            //});
         }
+
+        // Hardware back button
+        protected override bool OnBackButtonPressed() {
+            return this.exitQuestion.HardwareOnBackButtonQuestion(base.OnBackButtonPressed);
+
+            //Device.BeginInvokeOnMainThread(async () => {
+            //    if (await DisplayAlert("Exit?", "Are you sure you want to exit from this page?", "Yes", "No")) {
+            //        base.OnBackButtonPressed();
+            //        await Shell.Current.Navigation.PopAsync();
+            //    }
+            //});
+            //return true;
+        }
+
+
 
         protected override void OnAppearing() {
             this.scriptDataModel = null;
             this.lstCmds.ItemsSource = null;
             this.lstCmds.SelectedItem = null;
+            this.changed.IsChanged = false;
 
             if (index != null) {
                 App.Wrapper.RetrieveScriptData(
@@ -72,6 +104,10 @@ namespace MultiCommTerminal.XamarinForms.Views {
                 this.scriptDataModel = new ScriptDataModel(items);
                 this.lstCmds.ItemsSource = this.scriptDataModel.Items;
             }
+
+            // TEMP TEST HACK - only set if data changes
+            this.changed.IsChanged = true;
+
             base.OnAppearing();
         }
 
@@ -100,13 +136,20 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
         private void btnCancel_Clicked(object sender, EventArgs e) {
-            this.viewModel.GoBackCommand.Execute(null);
+            //Navigation.PopAsync(true);
+            //this.isChanged = false;
+
+            this.changed.IsChanged = false;
+
         }
 
         private void btnSave_Clicked(object sender, EventArgs e) {
             // TODO save
 
-            this.viewModel.GoBackCommand.Execute(null);
+            this.changed.IsChanged = false;
+
+            //Navigation.PopAsync(true);
+
         }
     }
 }
