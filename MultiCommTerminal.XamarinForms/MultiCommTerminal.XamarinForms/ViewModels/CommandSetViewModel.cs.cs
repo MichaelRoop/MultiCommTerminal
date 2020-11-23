@@ -1,4 +1,5 @@
 ﻿using MultiCommData.Net.StorageDataModels;
+using MultiCommTerminal.XamarinForms.Views;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System;
@@ -13,10 +14,9 @@ namespace MultiCommTerminal.XamarinForms.ViewModels {
     // index to load
     public class CommandSetViewModel {
 
-        private IIndexItem<DefaultFileExtraInfo> itemIndex = null;
-
-
-        public string IndexItemAsString { get; set; } = string.Empty;
+        // Already in Page
+        //private IIndexItem<DefaultFileExtraInfo> itemIndex = null;
+        //public string IndexItemAsString { get; set; } = string.Empty;
 
 
         #region Commands
@@ -27,11 +27,23 @@ namespace MultiCommTerminal.XamarinForms.ViewModels {
         public Command<IIndexItem<DefaultFileExtraInfo>> EditCommand { get; }
 
         /// <summary>Command to add a new command to the command set</summary>
-        public Command<ScriptDataModel> AddCommand;
+        public Command<ScriptDataModel> AddCommand { get; }
+
+        public Command GoBackCommand { get; }
+
 
         #endregion
 
 
+        public CommandSetViewModel() {
+            this.GoBackCommand = new Command(this.OnGoBack);
+        }
+
+
+
+        private async void OnGoBack() {
+            await Shell.Current.GoToAsync(nameof(CommandSetsPage));
+        }
 
 
     }

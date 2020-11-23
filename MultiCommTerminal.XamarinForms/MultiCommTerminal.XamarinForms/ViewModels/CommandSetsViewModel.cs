@@ -16,10 +16,10 @@ namespace MultiCommTerminal.XamarinForms.Views {
         //Edit of create new command set
 
         /// <summary>Command to edit an existing command by index</summary>
-        public Command<IIndexItem<DefaultFileExtraInfo>> EditCommandSet{get;}
+        public Command<IIndexItem<DefaultFileExtraInfo>> EditCommandSet { get; }
 
         /// <summary>Command to add a new command to the command set</summary>
-        public Command AddCommandSet;
+        public Command AddCommandSet { get; }
 
         #endregion
 
@@ -35,13 +35,13 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         private async void OnAdd() {
             //await Shell.Current.GoToAsync(nameof(CommandSetPage));
-            await Shell.Current.GoToAsync($"{nameof(CommandSetPage)}?IndexItemAsString={""}");
+            await Shell.Current.GoToAsync($"{nameof(CommandSetPage)}?IndexAsString={""}");
         }
 
 
         private async void OnEdit(IIndexItem<DefaultFileExtraInfo> data) {
             if (data != null) {
-                await Shell.Current.GoToAsync($"{nameof(CommandSetPage)}?IndexItemAsString={JsonConvert.SerializeObject(data)}");
+                await Shell.Current.GoToAsync($"{nameof(CommandSetPage)}?IndexAsString={JsonConvert.SerializeObject(data)}");
             }
         }
 

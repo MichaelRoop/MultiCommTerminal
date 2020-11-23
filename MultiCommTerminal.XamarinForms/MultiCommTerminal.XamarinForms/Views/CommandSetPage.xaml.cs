@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using LogUtils.Net;
+using MultiCommData.Net.StorageDataModels;
+using MultiCommTerminal.XamarinForms.ViewModels;
+using Newtonsoft.Json;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System;
@@ -19,14 +22,22 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         
         private IIndexItem<DefaultFileExtraInfo> index = null;
+        private CommandSetViewModel viewModel;
+
 
         #region Properties
 
         /// <summary>To receive the index of the set if editing. Otherise empty</summary>
         public string IndexAsString { set {
                 if (!string.IsNullOrWhiteSpace(value)) {
-                    this.index = JsonConvert.DeserializeObject<IIndexItem<DefaultFileExtraInfo>>(
-                        Uri.UnescapeDataString(value));
+                    try {
+                        // Must not be interface for deserialize to work
+                        this.index = JsonConvert.DeserializeObject<IndexItem<DefaultFileExtraInfo>>(
+                            Uri.UnescapeDataString(value));
+                    }
+                    catch(Exception e) {
+                        Log.Exception(9999, "IndexAsString", "", e);
+                    }
                 }
                 else {
                     index = null;
@@ -40,24 +51,62 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         public CommandSetPage() {
             InitializeComponent();
+            this.BindingContext = this.viewModel = new CommandSetViewModel();
         }
 
         protected override void OnAppearing() {
+            this.scriptDataModel = null;
+            this.lstCmds.ItemsSource = null;
+            this.lstCmds.SelectedItem = null;
+
             if (index != null) {
-                // Load the command set into list view from wrapper
+                App.Wrapper.RetrieveScriptData(
+                    index,
+                    this.LoadExistingHandler,
+                    (err) => App.ShowError(this, err));
             }
             else {
-                // Create new command set and post empty list to list view
+                List<ScriptItem> items = new List<ScriptItem>();
+                items.Add(new ScriptItem("CmdName1", "Cmd1"));
+                items.Add(new ScriptItem("CmdName2", "Cmd2"));
+                this.scriptDataModel = new ScriptDataModel(items);
+                this.lstCmds.ItemsSource = this.scriptDataModel.Items;
             }
             base.OnAppearing();
         }
 
+        private ScriptDataModel scriptDataModel = null;
+
+
+        private void LoadExistingHandler(ScriptDataModel dataModel) {
+            this.scriptDataModel = dataModel;
+            this.lstCmds.ItemsSource = this.scriptDataModel.Items;
+        }
+
+
+
         #endregion
 
+        private void btnAdd_Clicked(object sender, EventArgs e) {
 
+        }
 
+        private void btnDelete_Clicked(object sender, EventArgs e) {
 
+        }
 
+        private void btnEdit_Clicked(object sender, EventArgs e) {
 
+        }
+
+        private void btnCancel_Clicked(object sender, EventArgs e) {
+            this.viewModel.GoBackCommand.Execute(null);
+        }
+
+        private void btnSave_Clicked(object sender, EventArgs e) {
+            // TODO save
+
+            this.viewModel.GoBackCommand.Execute(null);
+        }
     }
 }
