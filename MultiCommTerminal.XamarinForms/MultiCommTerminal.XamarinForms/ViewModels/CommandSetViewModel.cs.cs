@@ -8,7 +8,16 @@ using Xamarin.Forms;
 
 namespace MultiCommTerminal.XamarinForms.ViewModels {
 
+
+    // TODO - property to accept the index item of the set to accept the 
+    // index to load
     public class CommandSetViewModel {
+
+        private IIndexItem<DefaultFileExtraInfo> itemIndex = null;
+
+
+        public string IndexItemAsString { get; set; } = string.Empty;
+
 
         #region Commands
 

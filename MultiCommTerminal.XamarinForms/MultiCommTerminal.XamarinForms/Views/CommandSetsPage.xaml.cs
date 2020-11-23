@@ -1,4 +1,5 @@
-﻿using LanguageFactory.Net.Messaging;
+﻿using LanguageFactory.Net.data;
+using LanguageFactory.Net.Messaging;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System;
@@ -17,11 +18,13 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
 
         private List<IIndexItem<DefaultFileExtraInfo>> scriptSets = new List<IIndexItem<DefaultFileExtraInfo>>();
+        private CommandSetsViewModel viewModel;
 
         #region Constructors and page events
 
         public CommandSetsPage() {
             InitializeComponent();
+            BindingContext = this.viewModel = new CommandSetsViewModel();
         }
 
 
@@ -34,7 +37,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
         #endregion
 
         private void btnAdd_Clicked(object sender, EventArgs e) {
-            // TODO
+            this.viewModel.AddCommandSet.Execute(null);
         }
 
         private void btnDelete_Clicked(object sender, EventArgs e) {
@@ -43,9 +46,18 @@ namespace MultiCommTerminal.XamarinForms.Views {
                 item, this.OnDelete, (err) => App.ShowError(this, err));
         }
 
+
         private void btnEdit_Clicked(object sender, EventArgs e) {
-            // TODO
+            // TODO - transition to CommandSetPage
+            IIndexItem<DefaultFileExtraInfo> item = (this.lstCmdSets.SelectedItem as IIndexItem<DefaultFileExtraInfo>);
+            if (item != null) {
+                this.viewModel.EditCommandSet.Execute(item);
+            }
+            else {
+                App.ShowError(this, App.GetText(MsgCode.NothingSelected));
+            }
         }
+
 
         private void btnSelect_Clicked(object sender, EventArgs e) {
             // TODO

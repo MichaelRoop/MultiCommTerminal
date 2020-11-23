@@ -21,9 +21,9 @@ namespace MultiCommTerminal.XamarinForms {
             Routing.RegisterRoute(nameof(BluetoothRunPage), typeof(BluetoothRunPage));
             Routing.RegisterRoute(nameof(LanguagePage), typeof(LanguagePage));
             Routing.RegisterRoute(nameof(TerminatorsPage), typeof(TerminatorsPage));
-
-            Routing.RegisterRoute(nameof(CommandSetsViewModel), typeof(CommandSetsViewModel));
-
+            // Commands
+            Routing.RegisterRoute(nameof(CommandSetsPage), typeof(CommandSetsPage));
+            Routing.RegisterRoute(nameof(CommandSetPage), typeof(CommandSetPage));
 
 
             App.Wrapper.LanguageChanged += this.LanguageChangedHandler;

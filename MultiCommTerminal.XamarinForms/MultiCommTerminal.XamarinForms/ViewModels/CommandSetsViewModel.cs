@@ -1,4 +1,5 @@
 ﻿using MultiCommData.Net.StorageDataModels;
+using Newtonsoft.Json;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System;
@@ -14,22 +15,37 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         //Edit of create new command set
 
-        ///// <summary>Command to edit an existing command by index</summary>
-        //public Command<IIndexItem<DefaultFileExtraInfo>> EditCommand{get;}
+        /// <summary>Command to edit an existing command by index</summary>
+        public Command<IIndexItem<DefaultFileExtraInfo>> EditCommandSet{get;}
 
-        ///// <summary>Command to add a new command to the command set</summary>
-        //public Command<ScriptDataModel> AddCommand;
+        /// <summary>Command to add a new command to the command set</summary>
+        public Command AddCommandSet;
 
         #endregion
 
 
         public CommandSetsViewModel() {
-            //ScriptDataModel dm;
+            this.AddCommandSet = new Command(this.OnAdd);
+            this.EditCommandSet = new Command<IIndexItem<DefaultFileExtraInfo>>(this.OnEdit);
         }
 
 
-//        private OnAddCommand
 
+        #region Commands
+
+        private async void OnAdd() {
+            //await Shell.Current.GoToAsync(nameof(CommandSetPage));
+            await Shell.Current.GoToAsync($"{nameof(CommandSetPage)}?IndexItemAsString={""}");
+        }
+
+
+        private async void OnEdit(IIndexItem<DefaultFileExtraInfo> data) {
+            if (data != null) {
+                await Shell.Current.GoToAsync($"{nameof(CommandSetPage)}?IndexItemAsString={JsonConvert.SerializeObject(data)}");
+            }
+        }
+
+        #endregion
 
 
     }
