@@ -11,6 +11,7 @@ using MultiCommData.Net.StorageDataModels;
 using MultiCommData.Net.UserDisplayData;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommWrapper.Net.DataModels;
+using MultiCommWrapper.Net.Helpers;
 using SerialCommon.Net.DataModels;
 using SerialCommon.Net.StorageIndexExtraInfo;
 using StorageFactory.Net.interfaces;
@@ -375,6 +376,8 @@ namespace MultiCommWrapper.Net.interfaces {
         void DeleteEthernetData(object index, Action<bool> onComplete, OnErr onError);
 
         #endregion
+
+        ScratchSet GetScratch();
 
         void Teardown();
 

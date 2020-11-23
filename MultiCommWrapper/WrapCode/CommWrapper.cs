@@ -7,6 +7,7 @@ using IconFactory.Net.interfaces;
 using LanguageFactory.Net.interfaces;
 using LogUtils.Net;
 using MultiCommData.Net.StorageDataModels;
+using MultiCommWrapper.Net.Helpers;
 using MultiCommWrapper.Net.interfaces;
 using SerialCommon.Net.DataModels;
 using SerialCommon.Net.interfaces;
@@ -41,6 +42,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         ICommStackLevel0 wifiStack = null;
         ICommStackLevel0 serialStack = null;
         ICommStackLevel0 ethernetStack = null;
+        private ScratchSet scratch = new ScratchSet();
         private ClassLog log = new ClassLog("CommWrapper");
 
         #endregion
@@ -121,6 +123,11 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
         #endregion
+
+
+        public ScratchSet GetScratch() {
+            return this.scratch;
+        }
 
     }
 }
