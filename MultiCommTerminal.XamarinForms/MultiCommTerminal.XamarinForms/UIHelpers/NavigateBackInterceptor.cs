@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -10,29 +8,14 @@ namespace MultiCommTerminal.XamarinForms.UIHelpers {
 
     public class NavigateBackInterceptor {
 
-        public class ChangedIndicator {
-            public bool IsChanged { get; set; } = false;
-        }
-
-        private ChangedIndicator indicator = new ChangedIndicator();
         private ContentPage page;
 
+        public bool Changed { get; set; } = false;
 
-        BackButtonBehavior bbBehavior;
-
-        //public 
-
-        public NavigateBackInterceptor(ContentPage page, ChangedIndicator indicator) {
+        public NavigateBackInterceptor(ContentPage page) {
             this.page = page;
-            this.indicator = indicator;
-
             Shell.SetBackButtonBehavior(page, new BackButtonBehavior {
                 Command = new Command(this.OnNavBarBack),
-                //Command = new Command(async () => {
-                //    if (!this.indicator.IsOk) {
-                //        await Shell.Current.Navigation.PopAsync();
-                //    }
-                //})
             });
         }
 
@@ -62,25 +45,12 @@ namespace MultiCommTerminal.XamarinForms.UIHelpers {
             if (await AskExitQuestion()) {
                 await Shell.Current.Navigation.PopAsync();
             }
-
-
-            //if (!this.indicator.IsOk) {
-            //    if (await this.page.DisplayAlert(
-            //        "title", 
-            //        "Abandon changes?", 
-            //        App.GetText(LanguageFactory.Net.data.MsgCode.yes), 
-            //        App.GetText(LanguageFactory.Net.data.MsgCode.no))) {
-
-            //        // Abandon
-            //        await Shell.Current.Navigation.PopAsync();
-            //    }
-            //}
         }
 
 
         private async Task<bool> AskExitQuestion() {
             // TODO language
-            if (this.indicator.IsChanged) {
+            if (this.Changed) {
                 if (await this.page.DisplayAlert(
                     "title",
                     "Abandon changes?",
@@ -99,10 +69,6 @@ namespace MultiCommTerminal.XamarinForms.UIHelpers {
                 return true;
             }
         }
-
-
-
-
 
     }
 }

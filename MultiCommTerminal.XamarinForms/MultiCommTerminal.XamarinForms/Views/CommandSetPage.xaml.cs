@@ -26,7 +26,6 @@ namespace MultiCommTerminal.XamarinForms.Views {
         private IIndexItem<DefaultFileExtraInfo> index = null;
         private CommandSetViewModel viewModel;
         private NavigateBackInterceptor interceptor;
-        private NavigateBackInterceptor.ChangedIndicator changed = new NavigateBackInterceptor.ChangedIndicator();
 
         #endregion
 
@@ -58,7 +57,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
         public CommandSetPage() {
             InitializeComponent();
             this.BindingContext = this.viewModel = new CommandSetViewModel();
-            this.interceptor = new NavigateBackInterceptor(this, this.changed);
+            this.interceptor = new NavigateBackInterceptor(this);
         }
 
 
@@ -72,7 +71,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.scriptDataModel = null;
             this.lstCmds.ItemsSource = null;
             this.lstCmds.SelectedItem = null;
-            this.changed.IsChanged = false;
+            this.interceptor.Changed = false;
 
             if (index != null) {
                 App.Wrapper.RetrieveScriptData(
@@ -87,7 +86,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
             }
 
             // TEMP TEST HACK - only set if data changes
-            this.changed.IsChanged = true;
+            this.interceptor.Changed = true;
 
             base.OnAppearing();
         }
@@ -126,8 +125,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
         private void btnSave_Clicked(object sender, EventArgs e) {
             // TODO save
 
-
-            this.changed.IsChanged = false;
+            this.interceptor.Changed = false;
             
 
         }
