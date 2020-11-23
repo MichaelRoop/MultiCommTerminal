@@ -3,28 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:helpers="clr-namespace:MultiCommTerminal.XamarinForms.UIHelpers"
              x:Class="MultiCommTerminal.XamarinForms.Views.BluetoothPage"
-             Title="{Binding Title}"
-             >
-    
-    <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="tbTxtRun" Text="Run" Command="{Binding RunCommand}" />
-        <ToolbarItem x:Name="tbTxtPair" Text="Pair" Command="{Binding PairCommand}" />
-        <!--
-            If we add icons then text does not show
-            IconImageSource="{Binding Source={x:Static helpers:IconBinder.Connect}}" 
-            IconImageSource="{Binding Source={x:Static helpers:IconBinder.Pair}}" 
-        -->
-    </ContentPage.ToolbarItems>
-    
+             Title="{Binding Title}" >
     <ContentPage.Content>
         <StackLayout>
-            <!--<Label Text="Bluetooth Central"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />-->
-
             <Label x:Name="txtTitle" Text="Paired" Margin="0,30,0,10" HorizontalOptions="Center" />
             <ListView x:Name="lstDevices" VerticalOptions="Center" 
-                      ItemSelected="lstDevices_ItemSelected"
                       MinimumHeightRequest="20" MinimumWidthRequest="20">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -32,16 +15,14 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-
-            <Button x:Name="btnDiscover" Margin="0,10,0,0" Text="Refresh"
-                    Clicked="btnDiscover_Clicked"
-                    />
-
-            <!--   
-                    BackgroundColor="{StaticResource Primary}"
-                    TextColor="White"
-            -->
-            
+            <StackLayout Orientation="Horizontal" Margin="0,10,0,0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                <Button x:Name="btnDiscover" Clicked="btnDiscover_Clicked" BorderWidth="0"
+                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Discover}}"  />
+                <Button x:Name="btnPair" Clicked="btnPair_Clicked" BorderWidth="0"
+                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Pair}}" />
+                <Button x:Name="btnRun" Clicked="btnRun_Clicked" BorderWidth="0"
+                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Connect}}" />
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

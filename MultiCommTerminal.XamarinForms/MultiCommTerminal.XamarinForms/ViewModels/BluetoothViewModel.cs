@@ -1,41 +1,38 @@
 ﻿using BluetoothCommon.Net;
 using MultiCommTerminal.XamarinForms.Views;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xamarin.Forms;
 
 namespace MultiCommTerminal.XamarinForms.ViewModels {
+
+    /// <summary>Handle navigation for the BluetoothPage view</summary>
     public class BluetoothViewModel : BaseViewModel {
 
+        #region Commands
 
+        /// <summary>Command to navigate to the BluetoothPairPage</summary>
         public Command PairCommand { get; }
-        public Command RunCommand { get; }
 
-        public BTDeviceInfo SelectedInfo { get; set; } = null;
+        /// <summary>Command to navigate to the BluetoothRunPage</summary>
+        public Command<BTDeviceInfo> RunCommand { get; }
 
+        #endregion
+
+        #region Constructors
 
         public BluetoothViewModel() {
             this.PairCommand = new Command(this.OnPair);
-            this.RunCommand = new Command(this.OnRun);
+            this.RunCommand = new Command<BTDeviceInfo>((info) => this.OnRun(info));
         }
 
+        #endregion
 
-        public void OnAppearing() {
-            this.SelectedInfo = null;
-        }
+        #region Private Command delegates
 
-        public void OnDisappearing() {
-            // Put in code here to fire on disappearing
-        }
-
-
-
-        private async void OnRun() {
-            if (this.SelectedInfo != null) {
+        private async void OnRun(BTDeviceInfo info) {
+            if (info != null) {
                 // Seem to only be able to pass strings as params
-                await Shell.Current.GoToAsync($"{nameof(BluetoothRunPage)}?BTDevice={JsonConvert.SerializeObject(SelectedInfo)}");
+                await Shell.Current.GoToAsync($"{nameof(BluetoothRunPage)}?BTDevice={JsonConvert.SerializeObject(info)}");
             }
         }
 
@@ -44,11 +41,7 @@ namespace MultiCommTerminal.XamarinForms.ViewModels {
             await Shell.Current.GoToAsync(nameof(BluetoothPairPage));
         }
 
-
-
-
-
-
+        #endregion
 
     }
 }

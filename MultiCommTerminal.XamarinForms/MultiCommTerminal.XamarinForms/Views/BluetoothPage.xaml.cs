@@ -5,9 +5,6 @@ using LogUtils.Net;
 using MultiCommTerminal.XamarinForms.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -17,10 +14,16 @@ namespace MultiCommTerminal.XamarinForms.Views {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class BluetoothPage : ContentPage {
 
-        /// <summary>The view model that handles commands and events</summary>
-        BluetoothViewModel viewModel;
-        List<BTDeviceInfo> devices = new List<BTDeviceInfo>();
-        ClassLog log = new ClassLog("BluetoothPage");
+        #region Data
+
+        /// <summary>The view model that handles page navigation</summary>
+        private BluetoothViewModel viewModel;
+        private List<BTDeviceInfo> devices = new List<BTDeviceInfo>();
+        private ClassLog log = new ClassLog("BluetoothPage");
+
+        #endregion
+
+        #region Constructors and page overrides
 
         public BluetoothPage() {
             InitializeComponent();
@@ -32,19 +35,10 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         protected override void OnAppearing() {
             App.Wrapper.CurrentSupportedLanguage(this.UpdateLanguage);
-
-            // TODO - move away from view model. Buttons below
-            this.viewModel.OnAppearing();
-            //this.DoDiscovery();
             base.OnAppearing();
         }
 
-
-        protected override void OnDisappearing() {
-            this.viewModel.OnDisappearing();
-            base.OnDisappearing();
-        }
-
+        #endregion
 
         #region Wrapper event handlers
 
@@ -58,13 +52,12 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
 
         private void DiscoveryCompleteHandler(object sender, bool e) {
-            Device.BeginInvokeOnMainThread(() => {
-                this.IsBusy = false;
-                //App.ShowError(this, string.Format("Discovery complete:{0}", e));
-            });
+            Device.BeginInvokeOnMainThread(() => { this.IsBusy = false; });
         }
 
         #endregion
+
+        #region Button events
 
         private void btnDiscover_Clicked(object sender, EventArgs args) {
             try {
@@ -78,28 +71,38 @@ namespace MultiCommTerminal.XamarinForms.Views {
             catch (Exception e) {
                 App.ShowError(this, e.Message);
             }
-
-
         }
 
-        private void lstDevices_ItemSelected(object sender, SelectedItemChangedEventArgs e) {
-            // so the view model can use it
-            this.viewModel.SelectedInfo = (e.SelectedItem as BTDeviceInfo);
+
+        private void btnPair_Clicked(object sender, EventArgs e) {
+            this.viewModel.PairCommand.Execute(null);
         }
 
-        #region Private
 
-        private void UpdateLanguage(SupportedLanguage language) {
-            //this.Title = // Always Bluetooth
-            this.tbTxtPair.Text = language.GetText(MsgCode.Pair);
-            this.tbTxtRun.Text = language.GetText(MsgCode.connect);
-            this.txtTitle.Text = language.GetText(MsgCode.PairedDevices);
-            this.btnDiscover.Text = language.GetText(MsgCode.discover);
+        private void btnRun_Clicked(object sender, EventArgs e) {
+            BTDeviceInfo info = (this.lstDevices.SelectedItem as BTDeviceInfo);
+            if (info != null) {
+                this.viewModel.RunCommand.Execute(this.lstDevices.SelectedItem as BTDeviceInfo);
+            }
+            else {
+                App.ShowError(this, App.GetText(MsgCode.NothingSelected));
+            }
         }
 
         #endregion
 
+        #region Private
 
+        private void UpdateLanguage(SupportedLanguage language) {
+            this.txtTitle.Text = language.GetText(MsgCode.PairedDevices);
+            
+            //// buttons below. need to determine if we use icons or text
+            //this.btnDiscover.Text = language.GetText(MsgCode.discover);
+            //this.btnPair.Text = language.GetText(MsgCode.Pair);
+            //this.btnRun.Text = language.GetText(MsgCode.connect);
+        }
+
+        #endregion
 
     }
 }
