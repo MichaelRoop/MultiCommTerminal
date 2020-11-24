@@ -5,8 +5,8 @@
              x:Class="MultiCommTerminal.XamarinForms.Views.CommandEditPage">
     <ContentPage.Content>
         <StackLayout>
-            <StackLayout HorizontalOptions="CenterAndExpand">
-                <Grid>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                <Grid Margin="0,20">
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>

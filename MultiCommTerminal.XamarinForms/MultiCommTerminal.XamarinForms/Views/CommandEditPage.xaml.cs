@@ -63,8 +63,14 @@ namespace MultiCommTerminal.XamarinForms.Views {
         protected override void OnAppearing() {
             App.Wrapper.CurrentSupportedLanguage(this.UpdateLanguage);
             if (this.index != null) {
-                App.Wrapper.RetrieveScriptData(
-                    this.index, this.OnCommandLoaded, this.OnErr);
+                // Need to load from memory. Only way to know which item of list to modify
+                this.scriptDataModel = App.Wrapper.GetScratch().ScriptCommandSet.ScriptSet;
+                this.scriptItem = App.Wrapper.GetScratch().ScriptCommand.Item;
+                this.edName.Text = this.scriptItem.Display;
+                this.edCmd.Text = this.scriptItem.Command;
+                this.interceptor.Changed = false;
+                //App.Wrapper.RetrieveScriptData(
+                //    this.index, this.OnCommandLoaded, this.OnErr);
             }
             base.OnAppearing();
         }
@@ -93,9 +99,18 @@ namespace MultiCommTerminal.XamarinForms.Views {
                 this.scriptItem.Display = this.edName.Text;
                 this.scriptItem.Command = this.edCmd.Text;
                 // do save
-                App.Wrapper.SaveScript(this.index, this.scriptDataModel, () => {
 
-                }, this.OnErr);
+                foreach(var i in this.scriptDataModel.Items) {
+                }
+
+
+                App.Wrapper.SaveScript(
+                    this.index, 
+                    this.scriptDataModel, () => {
+                        this.interceptor.Changed = false;
+                        this.interceptor.MethodExitQuestion();
+                    }, 
+                    this.OnErr);
             }
         }
 
@@ -114,15 +129,15 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
 
-        private void OnCommandLoaded(ScriptDataModel dm) {
-            this.scriptDataModel = dm;
-            // This is the one created in CommandSetPage.
-            // It is already in the script data model.Items
-            this.scriptItem = App.Wrapper.GetScratch().ScriptCommand.Item;
-            this.edName.Text = this.scriptItem.Display;
-            this.edCmd.Text = this.scriptItem.Command;
-            this.interceptor.Changed = false;
-        }
+        //private void OnCommandLoaded(ScriptDataModel dm) {
+        //    this.scriptDataModel = dm;
+        //    // This is the one created in CommandSetPage.
+        //    // It is already in the script data model.Items
+        //    this.scriptItem = App.Wrapper.GetScratch().ScriptCommand.Item;
+        //    this.edName.Text = this.scriptItem.Display;
+        //    this.edCmd.Text = this.scriptItem.Command;
+        //    this.interceptor.Changed = false;
+        //}
 
 
         private void OnSaveOk() {

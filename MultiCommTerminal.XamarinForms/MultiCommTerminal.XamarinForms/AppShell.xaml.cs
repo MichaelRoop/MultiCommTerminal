@@ -24,7 +24,7 @@ namespace MultiCommTerminal.XamarinForms {
             // Commands
             Routing.RegisterRoute(nameof(CommandSetsPage), typeof(CommandSetsPage));
             Routing.RegisterRoute(nameof(CommandSetPage), typeof(CommandSetPage));
-
+            Routing.RegisterRoute(nameof(CommandEditPage), typeof(CommandEditPage));
 
             App.Wrapper.LanguageChanged += this.LanguageChangedHandler;
 

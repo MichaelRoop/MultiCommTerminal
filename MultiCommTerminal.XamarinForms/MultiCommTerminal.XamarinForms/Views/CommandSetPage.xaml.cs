@@ -117,6 +117,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
             ScratchSet scratch = App.Wrapper.GetScratch();
             scratch.ScriptCommand.Mode = ScratchMode.Edit;
             scratch.ScriptCommand.Item = item;
+            scratch.ScriptCommandSet.ScriptSet = this.scriptDataModel;
         }
 
         // TODO Where to save the name?
