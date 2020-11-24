@@ -1,5 +1,6 @@
 ﻿using MultiCommData.Net.StorageDataModels;
 using MultiCommTerminal.XamarinForms.Views;
+using Newtonsoft.Json;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System;
@@ -14,36 +15,34 @@ namespace MultiCommTerminal.XamarinForms.ViewModels {
     // index to load
     public class CommandSetViewModel {
 
-        // Already in Page
-        //private IIndexItem<DefaultFileExtraInfo> itemIndex = null;
-        //public string IndexItemAsString { get; set; } = string.Empty;
-
-
-        #region Commands
-
-        //Edit of create new command set
-
         /// <summary>Command to edit an existing command by index</summary>
         public Command<IIndexItem<DefaultFileExtraInfo>> EditCommand { get; }
 
         /// <summary>Command to add a new command to the command set</summary>
-        public Command<ScriptDataModel> AddCommand { get; }
-
-        public Command GoBackCommand { get; }
-
-
-        #endregion
+        //public Command AddCommand { get; }
 
 
         public CommandSetViewModel() {
-            this.GoBackCommand = new Command(this.OnGoBack);
+            //this.AddCommand = new Command(this.OnAdd);
+            this.EditCommand = new Command<IIndexItem<DefaultFileExtraInfo>>(this.OnEdit);
         }
 
 
 
-        private async void OnGoBack() {
-            await Shell.Current.GoToAsync(nameof(CommandSetsPage));
+        private async void OnEdit(IIndexItem<DefaultFileExtraInfo> data) {
+            // Set a property to indicate Add
+            //await Shell.Current.GoToAsync(nameof(CommandEditPage));
+            if (data != null) {
+                await Shell.Current.GoToAsync(
+                    $"{nameof(CommandEditPage)}?CommandEditPage.IndexAsString={JsonConvert.SerializeObject(data)}");
+            }
         }
+
+
+        //private async void OnAdd() {
+        //    // Set a property to indicate Add
+        //    await Shell.Current.GoToAsync(nameof(CommandEditPage));
+        //}
 
 
     }

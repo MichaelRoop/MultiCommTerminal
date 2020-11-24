@@ -6,7 +6,17 @@
              >
     <ContentPage.Content>
         <StackLayout>
-                
+            <StackLayout>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" x:Name="lbName"  VerticalTextAlignment="Center" />
+                    <Editor Grid.Column="1" x:Name="edName" FontSize="14" TextChanged="edName_TextChanged" VerticalOptions="CenterAndExpand"
+                            MinimumWidthRequest="500" MinimumHeightRequest="100" HorizontalOptions="CenterAndExpand" />
+                </Grid>
+            </StackLayout>
             <StackLayout Orientation="Horizontal">
                 <Frame BorderColor="LightBlue" Margin="0">
                     <ListView x:Name="lstCmds" 

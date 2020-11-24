@@ -154,7 +154,7 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void CreateNewScript(string display, ScriptDataModel data, Action onSuccess, OnErr onError);
 
-
+        void CreateNewScript(string display, ScriptDataModel data, Action<IIndexItem<DefaultFileExtraInfo>> onSuccess, OnErr onError);
         void RetrieveScriptData(IIndexItem<DefaultFileExtraInfo> index, Action<ScriptDataModel> onSuccess, OnErr onError);
 
         void SaveScript(IIndexItem<DefaultFileExtraInfo> idx, ScriptDataModel data, Action onSuccess, OnErr onError);

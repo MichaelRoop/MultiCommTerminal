@@ -1,5 +1,6 @@
 ﻿using LanguageFactory.Net.data;
 using LanguageFactory.Net.Messaging;
+using MultiCommData.Net.StorageDataModels;
 using MultiCommTerminal.XamarinForms.UIHelpers;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
@@ -38,7 +39,15 @@ namespace MultiCommTerminal.XamarinForms.Views {
         #endregion
 
         private void btnAdd_Clicked(object sender, EventArgs e) {
-            this.viewModel.AddCommandSet.Execute(null);
+            ScriptDataModel dm = new ScriptDataModel();
+            App.Wrapper.CreateNewScript(
+                dm.Display, 
+                dm, (ndx) => {
+                    this.viewModel.EditCommandSet.Execute(ndx);
+                }, 
+                this.OnErr);
+
+            //this.viewModel.AddCommandSet.Execute(null);
         }
 
         private void btnDelete_Clicked(object sender, EventArgs e) {

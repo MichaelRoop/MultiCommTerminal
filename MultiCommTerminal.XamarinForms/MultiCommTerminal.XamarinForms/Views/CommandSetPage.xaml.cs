@@ -1,7 +1,10 @@
-﻿using LogUtils.Net;
+﻿using LanguageFactory.Net.data;
+using LanguageFactory.Net.Messaging;
+using LogUtils.Net;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommTerminal.XamarinForms.UIHelpers;
 using MultiCommTerminal.XamarinForms.ViewModels;
+using MultiCommWrapper.Net.Helpers;
 using Newtonsoft.Json;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
@@ -16,7 +19,8 @@ using Xamarin.Forms.Xaml;
 
 namespace MultiCommTerminal.XamarinForms.Views {
 
-    [QueryProperty(nameof(IndexAsString), nameof(IndexAsString))]
+    //[QueryProperty(nameof(CommandSetPage.IndexAsString), nameof(CommandSetPage.IndexAsString))]
+    [QueryProperty(nameof(IndexAsString), "CommandSetPage.IndexAsString")]
 
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CommandSetPage : ContentPage {
@@ -26,6 +30,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
         private IIndexItem<DefaultFileExtraInfo> index = null;
         private CommandSetViewModel viewModel;
         private NavigateBackInterceptor interceptor;
+        private ClassLog log = new ClassLog("CommandSetPage");
 
         #endregion
 
@@ -45,7 +50,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
                     }
                 }
                 else {
-                    index = null;
+                    this.index = null;
                 }
             }
         }
@@ -68,25 +73,29 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
 
         protected override void OnAppearing() {
+            App.Wrapper.CurrentSupportedLanguage(this.UpdateLanguage);
             this.scriptDataModel = null;
             this.lstCmds.ItemsSource = null;
             this.lstCmds.SelectedItem = null;
             this.interceptor.Changed = false;
 
-            if (index != null) {
-                App.Wrapper.RetrieveScriptData(
-                    index, this.LoadExistingHandler, this.OnErr);
+            if (this.index != null) {
+                this.log.Info("OnAppearing", "********* ON APPEARING(index exists - load) *********");
+                App.Wrapper.RetrieveScriptData(index, this.LoadExistingHandler, this.OnErr);
             }
-            else {
-                List<ScriptItem> items = new List<ScriptItem>();
-                items.Add(new ScriptItem("CmdName1", "Cmd1"));
-                items.Add(new ScriptItem("CmdName2", "Cmd2"));
-                this.scriptDataModel = new ScriptDataModel(items);
-                this.lstCmds.ItemsSource = this.scriptDataModel.Items;
-            }
+            //else {
+            //    this.log.Info("OnAppearing", "********* ON APPEARING(No index-create) *********");
+            //    this.setMode = ScratchMode.New;
+            //    List<ScriptItem> items = new List<ScriptItem>();
+            //    items.Add(new ScriptItem("CmdName1", "Cmd1"));
+            //    items.Add(new ScriptItem("CmdName2", "Cmd2"));
+            //    this.scriptDataModel = new ScriptDataModel(items);
+            //    //this.scriptDataModel = new ScriptDataModel();
+            //    this.lstCmds.ItemsSource = this.scriptDataModel.Items;
+            //}
 
             // TEMP TEST HACK - only set if data changes
-            this.interceptor.Changed = true;
+            //this.interceptor.Changed = true;
 
             base.OnAppearing();
         }
@@ -95,28 +104,70 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
 
         private void LoadExistingHandler(ScriptDataModel dataModel) {
+            this.edName.Text = dataModel.Display;
+            //this.setMode = ScratchMode.Edit;
             this.scriptDataModel = dataModel;
             this.lstCmds.ItemsSource = this.scriptDataModel.Items;
         }
 
-
-
         #endregion
 
-        private void btnAdd_Clicked(object sender, EventArgs e) {
 
+        private void SetCommandItemScratch(ScriptItem item) {
+            ScratchSet scratch = App.Wrapper.GetScratch();
+            scratch.ScriptCommand.Mode = ScratchMode.Edit;
+            scratch.ScriptCommand.Item = item;
         }
+
+        // TODO Where to save the name?
+
+        private void btnAdd_Clicked(object sender, EventArgs e) {
+            ScriptItem si = new ScriptItem();
+            this.SetCommandItemScratch(si);
+            this.scriptDataModel.Items.Add(si);
+            // TODO - check the length
+            this.scriptDataModel.Display = this.edName.Text;
+            App.Wrapper.SaveScript(
+                this.index, this.scriptDataModel, 
+                () => {
+                    this.viewModel.EditCommand.Execute(this.index);
+                }, 
+                this.OnErr);
+        }
+
 
         private void btnDelete_Clicked(object sender, EventArgs e) {
-
+            ScriptItem item = this.lstCmds.SelectedItem as ScriptItem;
+            if (item != null) {
+                bool success = this.scriptDataModel.Items.Remove(item);
+                App.Wrapper.SaveScript(
+                    this.index, 
+                    this.scriptDataModel, () => {
+                        App.Wrapper.RetrieveScriptData(index, this.LoadExistingHandler, this.OnErr);
+                    }, 
+                    this.OnErr);
+            }
+            else {
+                this.OnErr(App.GetText(MsgCode.NothingSelected));
+            }
         }
+
 
         private void btnEdit_Clicked(object sender, EventArgs e) {
-
+            ScriptItem item = this.lstCmds.SelectedItem as ScriptItem;
+            if (item != null) {
+                // TODO - check the length
+                this.scriptDataModel.Display = this.edName.Text;
+                this.SetCommandItemScratch(item);
+                this.viewModel.EditCommand.Execute(this.index);
+            }
+            else {
+                this.OnErr(App.GetText(MsgCode.NothingSelected));
+            }
         }
 
+
         private void btnCancel_Clicked(object sender, EventArgs e) {
-            //this.changed.IsChanged = false;
 
             // Here you would need to ask the question
             this.interceptor.MethodExitQuestion();
@@ -124,10 +175,28 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         private void btnSave_Clicked(object sender, EventArgs e) {
             // TODO save
+            // TODO - check text length
+            this.scriptDataModel.Display = this.edName.Text;
+            App.Wrapper.SaveScript(
+                this.index, 
+                this.scriptDataModel, () => { 
+                    this.interceptor.Changed = false;
+                    this.interceptor.MethodExitQuestion();
+                }, 
+                this.OnErr);
 
-            this.interceptor.Changed = false;
-            
 
         }
+
+        private void edName_TextChanged(object sender, TextChangedEventArgs e) {
+            this.interceptor.Changed = true;
+        }
+
+
+        private void UpdateLanguage(SupportedLanguage language) {
+            this.lbName.Text = language.GetText(MsgCode.Name);
+        }
+
+
     }
 }

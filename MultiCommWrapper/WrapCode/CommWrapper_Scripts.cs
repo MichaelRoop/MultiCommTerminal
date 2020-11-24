@@ -86,6 +86,28 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
+        public void CreateNewScript(string display, ScriptDataModel data, Action<IIndexItem<DefaultFileExtraInfo>> onSuccess, OnErr onError) {
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    if (display.Length == 0) {
+                        onError.Invoke(this.GetText(MsgCode.EmptyName));
+                    }
+                    else {
+                        IIndexItem<DefaultFileExtraInfo> idx = new IndexItem<DefaultFileExtraInfo>(data.UId) {
+                            Display = display,
+                        };
+                        this.SaveScript(idx, data, () => onSuccess.Invoke(idx), onError);
+                    }
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.SaveFailed));
+                }
+            });
+        }
+
+
+
         public void GetScriptList(Action<List<IIndexItem<DefaultFileExtraInfo>>> onSuccess, OnErr onError) {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;
@@ -107,6 +129,8 @@ namespace MultiCommWrapper.Net.WrapCode {
                         onError.Invoke(this.GetText(MsgCode.EmptyName));
                     }
                     else {
+                        // Transfer display name
+                        idx.Display = data.Display;
                         this.scriptStorage.Store(data, idx);
                         this.CurrentScriptChanged?.Invoke(this, data);
                         onSuccess.Invoke();
@@ -116,7 +140,6 @@ namespace MultiCommWrapper.Net.WrapCode {
                     onError.Invoke(this.GetText(MsgCode.SaveFailed));
                 }
             });
-
         }
 
 
