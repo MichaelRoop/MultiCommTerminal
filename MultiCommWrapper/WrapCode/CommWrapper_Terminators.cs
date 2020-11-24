@@ -122,8 +122,13 @@ namespace MultiCommWrapper.Net.WrapCode {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;
                 WrapErr.ToErrReport(out report, 9999, () => {
-                    // TODO - check if exists
-                    onSuccess.Invoke(this.terminatorStorage.Retrieve(index));
+                    if (index == null) {
+                        onError.Invoke(this.GetText(MsgCode.NothingSelected));
+                    }
+                    else {
+                        // TODO - check if exists
+                        onSuccess.Invoke(this.terminatorStorage.Retrieve(index));
+                    }
                 });
                 if (report.Code != 0) {
                     onError.Invoke(this.GetText(MsgCode.LoadFailed));
@@ -144,6 +149,28 @@ namespace MultiCommWrapper.Net.WrapCode {
                             Display = display,
                         };
                         this.SaveTerminator(idx, data, onSuccess, onError);
+                    }
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.SaveFailed));
+                }
+            });
+        }
+
+
+        public void CreateNewTerminator(string display, TerminatorDataModel data, Action<IIndexItem<DefaultFileExtraInfo>> onSuccess, OnErr onError) {
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    if (display.Length == 0) {
+                        onError.Invoke(this.GetText(MsgCode.EmptyName));
+                    }
+                    else {
+                        IIndexItem<DefaultFileExtraInfo> idx = new IndexItem<DefaultFileExtraInfo>(data.UId) {
+                            Display = display,
+                        };
+                        data.Name = display;
+                        this.SaveTerminator(idx, data, () => onSuccess.Invoke(idx), onError);
                     }
                 });
                 if (report.Code != 0) {

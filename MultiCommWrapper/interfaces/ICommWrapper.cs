@@ -129,6 +129,8 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void CreateNewTerminator(string display, TerminatorDataModel data, Action onSuccess, OnErr onError);
 
+        void CreateNewTerminator(string display, TerminatorDataModel data, Action<IIndexItem<DefaultFileExtraInfo>> onSuccess, OnErr onError);
+
         void RetrieveTerminatorData(IIndexItem<DefaultFileExtraInfo> index, Action<TerminatorDataModel> onSuccess, OnErr onError);
 
         void SaveTerminator(IIndexItem<DefaultFileExtraInfo> idx, TerminatorDataModel data, Action onSuccess, OnErr onError);

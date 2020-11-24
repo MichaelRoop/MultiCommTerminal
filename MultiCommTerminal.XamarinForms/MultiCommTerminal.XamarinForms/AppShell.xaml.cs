@@ -1,10 +1,6 @@
-﻿using IconFactory.Net.data;
-using LanguageFactory.Net.data;
+﻿using LanguageFactory.Net.data;
 using LanguageFactory.Net.Messaging;
-using MultiCommTerminal.XamarinForms.ViewModels;
 using MultiCommTerminal.XamarinForms.Views;
-using System;
-using System.Collections.Generic;
 using Xamarin.Forms;
 
 namespace MultiCommTerminal.XamarinForms {
@@ -15,16 +11,19 @@ namespace MultiCommTerminal.XamarinForms {
 
             // My pages
             Routing.RegisterRoute(nameof(AboutAppPage), typeof(AboutAppPage));
+            
             Routing.RegisterRoute(nameof(BluetoothPage), typeof(BluetoothPage));
             Routing.RegisterRoute(nameof(BluetoothPairPage), typeof(BluetoothPairPage));
             Routing.RegisterRoute(nameof(BluetoothRunPage), typeof(BluetoothRunPage));
+            
             Routing.RegisterRoute(nameof(LanguagePage), typeof(LanguagePage));
+
             Routing.RegisterRoute(nameof(TerminatorsPage), typeof(TerminatorsPage));
-            // Commands
+            Routing.RegisterRoute(nameof(TerminatorSetPage), typeof(TerminatorSetPage));
+
             Routing.RegisterRoute(nameof(CommandSetsPage), typeof(CommandSetsPage));
             Routing.RegisterRoute(nameof(CommandSetPage), typeof(CommandSetPage));
             Routing.RegisterRoute(nameof(CommandEditPage), typeof(CommandEditPage));
-
 
             App.Wrapper.CurrentSupportedLanguage(this.UpdateLanguage);
             App.Wrapper.LanguageChanged += this.LanguageChangedHandler;
