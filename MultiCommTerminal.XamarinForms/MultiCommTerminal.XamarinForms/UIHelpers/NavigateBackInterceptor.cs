@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LanguageFactory.Net.data;
+using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -52,10 +53,10 @@ namespace MultiCommTerminal.XamarinForms.UIHelpers {
             // TODO language
             if (this.Changed) {
                 if (await this.page.DisplayAlert(
-                    "title",
-                    "Abandon changes?",
-                    App.GetText(LanguageFactory.Net.data.MsgCode.yes),
-                    App.GetText(LanguageFactory.Net.data.MsgCode.no))) {
+                    App.GetText(MsgCode.Warning),
+                    App.GetText(MsgCode.AbandonChanges),
+                    App.GetText(MsgCode.yes),
+                    App.GetText(MsgCode.no))) {
                     // Question yes answer
                     return true;
                 }
