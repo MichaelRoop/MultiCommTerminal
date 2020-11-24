@@ -6,7 +6,7 @@
              >
     <ContentPage.Content>
         <StackLayout>
-            <StackLayout>
+            <StackLayout HorizontalOptions="CenterAndExpand">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50"/>
@@ -15,9 +15,10 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" x:Name="lbName"  VerticalTextAlignment="Center" />
-                    <Editor Grid.Column="1" x:Name="edName" FontSize="14" TextChanged="edName_TextChanged" VerticalOptions="CenterAndExpand"
-                            MinimumWidthRequest="500" MinimumHeightRequest="100" HorizontalOptions="CenterAndExpand" />
+                    <Label Grid.Column="0" x:Name="lbName"  VerticalTextAlignment="Center" HorizontalTextAlignment="End" />
+                    <Editor Grid.Column="1" x:Name="edName" FontSize="14" TextChanged="edName_TextChanged" 
+                            VerticalOptions="CenterAndExpand" AutoSize="TextChanges"
+                            HorizontalOptions="Start"  />
                 </Grid>
             </StackLayout>
             <StackLayout Orientation="Horizontal">
@@ -48,10 +49,7 @@
                             BorderWidth="0"
                             ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}"  />
                 </StackLayout>
-
             </StackLayout>
         </StackLayout>
-
-
     </ContentPage.Content>
 </ContentPage>
