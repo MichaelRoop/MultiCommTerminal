@@ -6,9 +6,6 @@ using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -40,15 +37,9 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         private void btnAdd_Clicked(object sender, EventArgs e) {
             ScriptDataModel dm = new ScriptDataModel();
-            App.Wrapper.CreateNewScript(
-                dm.Display, 
-                dm, (ndx) => {
-                    this.viewModel.EditCommandSet.Execute(ndx);
-                }, 
-                this.OnErr);
-
-            //this.viewModel.AddCommandSet.Execute(null);
+            App.Wrapper.CreateNewScript(dm.Display, dm, this.OnAddSuccess, this.OnErr);
         }
+
 
         private void btnDelete_Clicked(object sender, EventArgs e) {
             IIndexItem<DefaultFileExtraInfo> item = this.lstCmdSets.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
@@ -68,13 +59,9 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
 
-        private void btnSelect_Clicked(object sender, EventArgs e) {
-            // TODO
-        }
-
-
         private void LanguageUpdate(SupportedLanguage language) {
             // TODO
+            this.Title = language.GetText(MsgCode.command);
         }
 
 
@@ -94,6 +81,12 @@ namespace MultiCommTerminal.XamarinForms.Views {
         private void UpdateList() {
             App.Wrapper.GetScriptList(this.Load, this.OnErr);
         }
+
+
+        private void OnAddSuccess(IIndexItem<DefaultFileExtraInfo> ndx) {
+            this.viewModel.EditCommandSet.Execute(ndx);
+        }
+
 
     }
 }

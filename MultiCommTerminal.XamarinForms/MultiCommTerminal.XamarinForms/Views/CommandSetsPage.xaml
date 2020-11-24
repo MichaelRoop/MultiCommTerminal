@@ -26,9 +26,6 @@
                     <Button x:Name="btnEdit" Text="" Clicked="btnEdit_Clicked"
                         BorderWidth="0"
                         ImageSource="{Binding Source={x:Static helpers:IconBinder.Edit}}"  />
-                    <Button x:Name="btnSelect" Text="" Clicked="btnSelect_Clicked"
-                        BorderWidth="0"
-                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}"  />
                 </StackLayout>
             </StackLayout>
         </StackLayout>

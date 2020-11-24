@@ -1,5 +1,6 @@
 ﻿using IconFactory.Net.data;
 using LanguageFactory.Net.data;
+using LanguageFactory.Net.Messaging;
 using MultiCommTerminal.XamarinForms.ViewModels;
 using MultiCommTerminal.XamarinForms.Views;
 using System;
@@ -24,29 +25,27 @@ namespace MultiCommTerminal.XamarinForms {
             Routing.RegisterRoute(nameof(CommandSetPage), typeof(CommandSetPage));
             Routing.RegisterRoute(nameof(CommandEditPage), typeof(CommandEditPage));
 
+
+            App.Wrapper.CurrentSupportedLanguage(this.UpdateLanguage);
             App.Wrapper.LanguageChanged += this.LanguageChangedHandler;
-
-            this.flyLanguage.Title = App.Wrapper.GetText(MsgCode.language);
-            //this.flyBluetooth.Title = App.Wrapper.GetText(MsgCode.blue)
-
-            // DOES NOT WORK
-            //this.flyLanguage.Icon = App.GetImageSource(UIIcon.Language);
-            //this.flyLanguage.Icon = ImageSource.FromResource("icons8_close_window_50_noborder.png");
-            //ImageSource.FromResource("icons8_language_50.png");
         }
 
-        private void LanguageChangedHandler(object sender, LanguageFactory.Net.Messaging.SupportedLanguage e) {
-            this.flyLanguage.Title = App.GetText(MsgCode.language);
+
+        private void LanguageChangedHandler(object sender, SupportedLanguage language) {
+            this.UpdateLanguage(language);
+        }
+
+
+        private void UpdateLanguage(SupportedLanguage language) {
+            this.flyAbout.Title = language.GetText(MsgCode.About);
+            this.flyLanguage.Title = language.GetText(MsgCode.language);
             this.flyBluetooth.Title = "Bluetooth"; // Seems same in all languages
-            this.flyAbout.Title = App.GetText(MsgCode.About);
-            this.flyTerminators.Title = App.GetText(MsgCode.Terminators);
-            this.flyLanguage.Title = App.GetText(MsgCode.language);
-            this.flyCommands.Title = App.GetText(MsgCode.command);
-
+            this.flyAbout.Title = language.GetText(MsgCode.About);
+            this.flyTerminators.Title = language.GetText(MsgCode.Terminators);
+            this.flyLanguage.Title = language.GetText(MsgCode.language);
+            this.flyCommands.Title = language.GetText(MsgCode.commands);
         }
 
-        private async void OnMenuItemClicked(object sender, EventArgs e) {
-            await Shell.Current.GoToAsync("//LoginPage");
-        }
+
     }
 }

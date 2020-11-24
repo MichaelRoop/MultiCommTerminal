@@ -63,6 +63,8 @@ namespace MultiCommTerminal.XamarinForms.Views {
             InitializeComponent();
             this.BindingContext = this.viewModel = new CommandSetViewModel();
             this.interceptor = new NavigateBackInterceptor(this);
+            this.btnSave.IsVisible = false;
+            this.edName.TextChanged += this.edName_TextChanged;
         }
 
 
@@ -80,23 +82,8 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.interceptor.Changed = false;
 
             if (this.index != null) {
-                this.log.Info("OnAppearing", "********* ON APPEARING(index exists - load) *********");
                 App.Wrapper.RetrieveScriptData(index, this.LoadExistingHandler, this.OnErr);
             }
-            //else {
-            //    this.log.Info("OnAppearing", "********* ON APPEARING(No index-create) *********");
-            //    this.setMode = ScratchMode.New;
-            //    List<ScriptItem> items = new List<ScriptItem>();
-            //    items.Add(new ScriptItem("CmdName1", "Cmd1"));
-            //    items.Add(new ScriptItem("CmdName2", "Cmd2"));
-            //    this.scriptDataModel = new ScriptDataModel(items);
-            //    //this.scriptDataModel = new ScriptDataModel();
-            //    this.lstCmds.ItemsSource = this.scriptDataModel.Items;
-            //}
-
-            // TEMP TEST HACK - only set if data changes
-            //this.interceptor.Changed = true;
-
             base.OnAppearing();
         }
 
@@ -104,7 +91,10 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
 
         private void LoadExistingHandler(ScriptDataModel dataModel) {
+            this.edName.TextChanged -= this.edName_TextChanged;
             this.edName.Text = dataModel.Display;
+            this.edName.TextChanged += this.edName_TextChanged;
+
             //this.setMode = ScratchMode.Edit;
             this.scriptDataModel = dataModel;
             this.lstCmds.ItemsSource = this.scriptDataModel.Items;
@@ -191,6 +181,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         private void edName_TextChanged(object sender, TextChangedEventArgs e) {
             this.interceptor.Changed = true;
+            this.btnSave.IsVisible = true;
         }
 
 

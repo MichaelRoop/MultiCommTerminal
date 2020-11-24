@@ -21,7 +21,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Label Grid.Column="0" x:Name="lbName"  VerticalTextAlignment="Center" HorizontalTextAlignment="Start" />
                                 <Label Grid.Column="1" Text=":" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" />
-                                <Editor Grid.Column="2" x:Name="edName" FontSize="14" TextChanged="edName_TextChanged"
+                                <Editor Grid.Column="2" x:Name="edName" FontSize="14" 
                                          VerticalOptions="CenterAndExpand" AutoSize="TextChanges" HorizontalOptions="Start"  />
                             </Grid>
                         </StackLayout>
@@ -48,7 +48,7 @@
                     <Button x:Name="btnCancel" Text="" Clicked="btnCancel_Clicked"
                             BorderWidth="0"
                             ImageSource="{Binding Source={x:Static helpers:IconBinder.Cancel}}"  />
-                    <Button x:Name="btnSelect" Text="" Clicked="btnSave_Clicked"
+                    <Button x:Name="btnSave" Text="" Clicked="btnSave_Clicked" IsVisible="false"
                             BorderWidth="0"
                             ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}"  />
                 </StackLayout>
