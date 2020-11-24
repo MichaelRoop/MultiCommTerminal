@@ -86,7 +86,7 @@
     <FlyoutItem Title="Terminators" x:Name="flyTerminators" Icon="{Binding Source={x:Static helpers:IconBinder.Terminator}}">
         <ShellContent Route="TerminatorsPage" ContentTemplate="{DataTemplate local:TerminatorsPage}" />
     </FlyoutItem>
-    <FlyoutItem Title="Commands" x:Name="flyCommands" Icon="{Binding Source={x:Static helpers:IconBinder.Terminator}}">
+    <FlyoutItem Title="Commands" x:Name="flyCommands" Icon="{Binding Source={x:Static helpers:IconBinder.Command}}">
         <ShellContent Route="CommandSetsPage" ContentTemplate="{DataTemplate local:CommandSetsPage}" />
     </FlyoutItem>
 

@@ -25,6 +25,7 @@ namespace MultiCommTerminal.XamarinForms.UIHelpers {
         public static string Wifi { get { return Source(UIIcon.Wifi); } }
         public static string Run { get { return Source(UIIcon.Run); } }
         public static string Discover { get { return Source(UIIcon.Search); } }
+        public static string Command { get { return Source(UIIcon.Command); } }
 
 
 

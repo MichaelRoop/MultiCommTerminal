@@ -54,6 +54,8 @@ namespace MultiCommTerminal.XamarinForms.Droid.DependencyInjection {
                     return new IconDataModel(UIIcon.Search, this.AddDir("icons8_search_50.png"), "6");
                 case UIIcon.Run:
                     return new IconDataModel(UIIcon.Connect, this.AddDir("icons8_running_24.png"), "6");
+                case UIIcon.Command:
+                    return new IconDataModel(UIIcon.Connect, this.AddDir("icons8_cmd.png"), "6");
 
 
                 default:

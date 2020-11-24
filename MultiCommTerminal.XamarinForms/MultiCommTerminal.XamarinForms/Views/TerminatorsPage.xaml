@@ -26,7 +26,7 @@
                         ImageSource="{Binding Source={x:Static helpers:IconBinder.Edit}}"  />
                 <Button x:Name="btnSelect" Text="" Clicked="btnSelect_Clicked"
                         BackgroundColor="Transparent"
-                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Wifi}}"  />
+                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}"  />
             </StackLayout>
 
         </StackLayout>
