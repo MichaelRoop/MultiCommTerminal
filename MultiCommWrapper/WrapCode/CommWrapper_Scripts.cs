@@ -128,6 +128,9 @@ namespace MultiCommWrapper.Net.WrapCode {
                     if (idx.Display.Length == 0) {
                         onError.Invoke(this.GetText(MsgCode.EmptyName));
                     }
+                    else if (string.IsNullOrWhiteSpace(data.Display)) {
+                        onError.Invoke(this.GetText(MsgCode.EmptyName));
+                    }
                     else {
                         // Transfer display name
                         idx.Display = data.Display;
@@ -178,6 +181,32 @@ namespace MultiCommWrapper.Net.WrapCode {
             });
 
         }
+
+
+        public void ValidateScriptItem(ScriptItem item, Action onSuccess, OnErr onError) {
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    if (string.IsNullOrWhiteSpace(item.Display)) {
+                        onError.Invoke(this.GetText(MsgCode.EmptyName));
+                    }
+                    else if (string.IsNullOrWhiteSpace(item.Command)) {
+                        onError.Invoke(
+                            string.Format("{0} ({1})", 
+                                this.GetText(MsgCode.EmptyParameter),
+                                this.GetText(MsgCode.command)));
+                    }
+                    else {
+                        onSuccess.Invoke();
+                    }
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.UnknownError));
+                }
+            });
+        }
+
+
 
     }
 }

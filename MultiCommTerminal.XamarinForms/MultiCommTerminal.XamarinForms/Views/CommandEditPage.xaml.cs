@@ -3,7 +3,6 @@ using LanguageFactory.Net.Messaging;
 using LogUtils.Net;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommTerminal.XamarinForms.UIHelpers;
-//using MultiCommTerminal.XamarinForms.ViewModels;
 using Newtonsoft.Json;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
@@ -14,7 +13,6 @@ using Xamarin.Forms.Xaml;
 namespace MultiCommTerminal.XamarinForms.Views {
 
     [QueryProperty(nameof(IndexAsString), "CommandEditPage.IndexAsString")]
-
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CommandEditPage : ContentPage {
 
@@ -25,7 +23,6 @@ namespace MultiCommTerminal.XamarinForms.Views {
         private ScriptDataModel scriptDataModel;
         private IIndexItem<DefaultFileExtraInfo> index = null;
         private NavigateBackInterceptor interceptor;
-//        private CommandEditViewModel viewModel;
 
         #endregion
 
@@ -42,6 +39,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
                     catch (Exception e) {
                         Log.Exception(9999, "IndexAsString", "", e);
                         // TODO - error message and pop back?
+                        this.OnErr(e.Message);
                     }
                 }
                 else {
@@ -56,7 +54,6 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         public CommandEditPage() {
             InitializeComponent();
-//            this.BindingContext = this.viewModel = new CommandEditViewModel();
             this.interceptor = new NavigateBackInterceptor(this);
         }
 
@@ -69,14 +66,11 @@ namespace MultiCommTerminal.XamarinForms.Views {
                 this.edName.Text = this.scriptItem.Display;
                 this.edCmd.Text = this.scriptItem.Command;
                 this.interceptor.Changed = false;
-                //App.Wrapper.RetrieveScriptData(
-                //    this.index, this.OnCommandLoaded, this.OnErr);
             }
             base.OnAppearing();
         }
 
 
-        // Hardware back button
         protected override bool OnBackButtonPressed() {
             return this.interceptor.HardwareOnBackButtonQuestion(base.OnBackButtonPressed);
         }
@@ -91,27 +85,16 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
 
         private void btnSave_Clicked(object sender, EventArgs e) {
-            if (string.IsNullOrWhiteSpace(this.edName.Text) ||
-                string.IsNullOrWhiteSpace(this.edCmd.Text)) {
-                this.OnErr(App.GetText(MsgCode.EmptyName));
-            }
-            else {
-                this.scriptItem.Display = this.edName.Text;
-                this.scriptItem.Command = this.edCmd.Text;
-                // do save
-
-                foreach(var i in this.scriptDataModel.Items) {
-                }
-
-
-                App.Wrapper.SaveScript(
-                    this.index, 
-                    this.scriptDataModel, () => {
-                        this.interceptor.Changed = false;
-                        this.interceptor.MethodExitQuestion();
-                    }, 
-                    this.OnErr);
-            }
+            ScriptItem tmp = new ScriptItem(this.edName.Text, this.edCmd.Text);
+            App.Wrapper.ValidateScriptItem(
+                tmp,
+                () => {
+                    // Iinitialise this object since it is in data model's item list 
+                    this.scriptItem.Display = tmp.Display;
+                    this.scriptItem.Command = tmp.Command;
+                    App.Wrapper.SaveScript(
+                        this.index, this.scriptDataModel, this.OnSaveOk, this.OnErr);
+                }, this.OnErr);
         }
 
 
@@ -121,25 +104,17 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         #endregion
 
-        #region Private
+        #region Private 
 
+        /// <summary>Delegate to handle updated language selection</summary>
+        /// <param name="language">The current language</param>
         private void UpdateLanguage(SupportedLanguage language) {
             this.lblCmd.Text = language.GetText(MsgCode.command);
             this.lblName.Text = language.GetText(MsgCode.Name);
         }
 
 
-        //private void OnCommandLoaded(ScriptDataModel dm) {
-        //    this.scriptDataModel = dm;
-        //    // This is the one created in CommandSetPage.
-        //    // It is already in the script data model.Items
-        //    this.scriptItem = App.Wrapper.GetScratch().ScriptCommand.Item;
-        //    this.edName.Text = this.scriptItem.Display;
-        //    this.edCmd.Text = this.scriptItem.Command;
-        //    this.interceptor.Changed = false;
-        //}
-
-
+        /// <summary>Delegate to fire on save OK to close the page</summary>
         private void OnSaveOk() {
             this.interceptor.Changed = false;
             this.interceptor.MethodExitQuestion();

@@ -162,6 +162,8 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void DeleteScriptData(IIndexItem<DefaultFileExtraInfo> index, Action<bool> onComplete, OnErr onError);
 
+        void ValidateScriptItem(ScriptItem item, Action onSuccess, OnErr onError);
+
         #endregion
 
         #region Bluetooth Classic
