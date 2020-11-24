@@ -56,10 +56,6 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.log.InfoEntry("btnEdit_Clicked");
         }
 
-        private void btnSelect_Clicked(object sender, EventArgs e) {
-            this.log.InfoEntry("btnSelect_Clicked");
-        }
-
         #endregion
 
         #region Private

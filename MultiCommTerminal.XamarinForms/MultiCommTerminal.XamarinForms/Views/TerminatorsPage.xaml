@@ -5,30 +5,29 @@
              x:Class="MultiCommTerminal.XamarinForms.Views.TerminatorsPage">
     <ContentPage.Content>
         <StackLayout>
-            <ListView x:Name="lstTerminators" 
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                <Frame BorderColor="LightBlue">
+                    <ListView x:Name="lstTerminators" 
                       MinimumHeightRequest="20" MinimumWidthRequest="20">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextCell Text="{Binding Display}"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-
-            <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
-                <Button x:Name="btnAdd" Text="" Clicked="btnAdd_Clicked"
-                        BackgroundColor="Transparent"
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextCell Text="{Binding Display}"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Frame>
+                <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand">
+                    <Button x:Name="btnAdd" Text="" Clicked="btnAdd_Clicked"
+                        BorderWidth="0"
                         ImageSource="{Binding Source={x:Static helpers:IconBinder.Add}}"  />
-                <Button x:Name="btnDelete" Text="" Clicked="btnDelete_Clicked"
-                        BackgroundColor="Transparent"
+                    <Button x:Name="btnDelete" Text="" Clicked="btnDelete_Clicked"
+                        BorderWidth="0"
                         ImageSource="{Binding Source={x:Static helpers:IconBinder.Delete}}"  />
-                <Button x:Name="btnEdit" Text="" Clicked="btnEdit_Clicked"
-                        BackgroundColor="Transparent"
+                    <Button x:Name="btnEdit" Text="" Clicked="btnEdit_Clicked"
+                        BorderWidth="0"
                         ImageSource="{Binding Source={x:Static helpers:IconBinder.Edit}}"  />
-                <Button x:Name="btnSelect" Text="" Clicked="btnSelect_Clicked"
-                        BackgroundColor="Transparent"
-                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}"  />
+                </StackLayout>
             </StackLayout>
-
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
