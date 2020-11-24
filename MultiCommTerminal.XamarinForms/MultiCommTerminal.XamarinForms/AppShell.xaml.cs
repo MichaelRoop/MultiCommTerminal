@@ -11,8 +11,6 @@ namespace MultiCommTerminal.XamarinForms {
         public AppShell() {
 
             InitializeComponent();
-            //Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
-            //Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
 
             // My pages
             Routing.RegisterRoute(nameof(AboutAppPage), typeof(AboutAppPage));
@@ -30,7 +28,6 @@ namespace MultiCommTerminal.XamarinForms {
 
             this.flyLanguage.Title = App.Wrapper.GetText(MsgCode.language);
             //this.flyBluetooth.Title = App.Wrapper.GetText(MsgCode.blue)
-
 
             // DOES NOT WORK
             //this.flyLanguage.Icon = App.GetImageSource(UIIcon.Language);

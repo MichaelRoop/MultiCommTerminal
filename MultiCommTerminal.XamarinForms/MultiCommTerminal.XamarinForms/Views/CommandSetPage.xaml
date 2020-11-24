@@ -6,31 +6,34 @@
              >
     <ContentPage.Content>
         <StackLayout>
-            <StackLayout HorizontalOptions="CenterAndExpand">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="50"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" x:Name="lbName"  VerticalTextAlignment="Center" HorizontalTextAlignment="End" />
-                    <Editor Grid.Column="1" x:Name="edName" FontSize="14" TextChanged="edName_TextChanged" 
-                            VerticalOptions="CenterAndExpand" AutoSize="TextChanges"
-                            HorizontalOptions="Start"  />
-                </Grid>
-            </StackLayout>
             <StackLayout Orientation="Horizontal">
                 <Frame BorderColor="LightBlue" Margin="0">
-                    <ListView x:Name="lstCmds" 
+                    <StackLayout>
+                        <StackLayout HorizontalOptions="CenterAndExpand">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="3"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" x:Name="lbName"  VerticalTextAlignment="Center" HorizontalTextAlignment="Start" />
+                                <Label Grid.Column="1" Text=":" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" />
+                                <Editor Grid.Column="2" x:Name="edName" FontSize="14" TextChanged="edName_TextChanged"
+                                         VerticalOptions="CenterAndExpand" AutoSize="TextChanges" HorizontalOptions="Start"  />
+                            </Grid>
+                        </StackLayout>
+                        <ListView x:Name="lstCmds" 
                       MinimumHeightRequest="20" MinimumWidthRequest="20">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <TextCell Text="{Binding Display}"/>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextCell Text="{Binding Display}"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackLayout>
                 </Frame>
                 <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand">
                     <Button x:Name="btnAdd" Text="" Clicked="btnAdd_Clicked"

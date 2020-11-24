@@ -11,15 +11,19 @@
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Label Grid.Row="0" Grid.Column="0" x:Name="lblName" VerticalTextAlignment="Center" HorizontalTextAlignment="End" />
-                        <Editor Grid.Row="0" Grid.Column="1" x:Name="edName" VerticalOptions="Center" HorizontalOptions="StartAndExpand" AutoSize="TextChanges" TextChanged="edTextChanged" />
-                        <Label Grid.Row="1" Grid.Column="0" x:Name="lblCmd" VerticalTextAlignment="Center" HorizontalTextAlignment="End" />
-                        <Editor Grid.Row="1" Grid.Column="1" x:Name="edCmd" VerticalOptions="Center" HorizontalOptions="StartAndExpand" AutoSize="TextChanges" TextChanged="edTextChanged"/>
+                        <Label Grid.Row="0" Grid.Column="0" x:Name="lblName" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" />
+                        <Editor Grid.Row="1" Grid.Column="0" x:Name="edName" MinimumWidthRequest="200" Margin="10,-10,0,0"
+                                VerticalOptions="Start" HorizontalOptions="StartAndExpand" AutoSize="TextChanges" TextChanged="edTextChanged" />
+
+                        <Label Grid.Row="2" Grid.Column="0" x:Name="lblCmd" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" />
+                        <Editor Grid.Row="3" Grid.Column="0" x:Name="edCmd" MinimumWidthRequest="200" Margin="10,-10,0,0"
+                                VerticalOptions="Start" HorizontalOptions="StartAndExpand" AutoSize="TextChanges" TextChanged="edTextChanged"/>
                     </Grid>
                 </Frame>
             </StackLayout>
