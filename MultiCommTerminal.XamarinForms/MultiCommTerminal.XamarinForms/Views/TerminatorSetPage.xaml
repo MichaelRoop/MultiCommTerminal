@@ -1,12 +1,81 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:helpers="clr-namespace:MultiCommTerminal.XamarinForms.UIHelpers"
              x:Class="MultiCommTerminal.XamarinForms.Views.TerminatorSetPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <StackLayout Orientation="Horizontal" >
+                <Frame BorderColor="LightBlue" Margin="0" Padding="0">
+                    <StackLayout>
+                        <StackLayout Padding="15">
+                            <ListView x:Name="lstStoredTerminators" ItemSelected="lstStoredTerminators_ItemSelected"
+                            MinimumHeightRequest="20" MinimumWidthRequest="20">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Grid Margin="1" >
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="35" />
+                                                    <ColumnDefinition Width="75"/>
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Label Grid.Column="0" Margin="0,0" Padding="0" Text="{Binding Display}"  />
+                                                <Label Grid.Column="1" Margin="8,0" Padding="0" Text="{Binding HexDisplay}" />
+                                                <Label Grid.Column="2" Margin="0,0"  Padding="0" Text="{Binding Description}" />
+                                            </Grid>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackLayout>
+                        <Frame BorderColor="LightBlue" HorizontalOptions="FillAndExpand" Padding="0" Margin="0">
+                            <Grid HorizontalOptions="FillAndExpand" Padding="0" Margin="15">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="20"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label x:Name="lbName" Grid.Row="0" Grid.ColumnSpan="3" HorizontalOptions="Center"/>
+                                <!-- Hex values -->
+                                <Label x:Name="hex1" Grid.Row="1" Grid.Column="0" />
+                                <Label x:Name="hex2" Grid.Row="1" Grid.Column="1"/>
+                                <Label x:Name="hex3" Grid.Row="1" Grid.Column="2"/>
+                                <Label x:Name="hex4" Grid.Row="1" Grid.Column="3"/>
+                                <Label x:Name="hex5" Grid.Row="1" Grid.Column="4"/>
+                                <!-- Friendly names -->
+                                <Label x:Name="name1" Grid.Row="2" Grid.Column="0"/>
+                                <Label x:Name="name2" Grid.Row="2" Grid.Column="1"/>
+                                <Label x:Name="name3" Grid.Row="2" Grid.Column="2"/>
+                                <Label x:Name="name4" Grid.Row="2" Grid.Column="3"/>
+                                <Label x:Name="name5" Grid.Row="2" Grid.Column="4"/>
+                            </Grid>
+                        </Frame>
+                    </StackLayout>
+                </Frame>
+                <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand">
+                    <Button x:Name="btnAdd" Text="" Clicked="btnAdd_Clicked"
+                            BorderWidth="0"
+                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Add}}"  />
+                    <Button x:Name="btnDelete" Text="" Clicked="btnDelete_Clicked"
+                            BorderWidth="0"
+                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Delete}}"  />
+                    <Button x:Name="btnCancel" Text="" Clicked="btnCancel_Clicked"
+                            BorderWidth="0"
+                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Cancel}}"  />
+                    <Button x:Name="btnSave" Text="" Clicked="btnSave_Clicked" IsVisible="false"
+                            BorderWidth="0"
+                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}"  />
+                </StackLayout>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
