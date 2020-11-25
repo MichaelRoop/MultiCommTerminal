@@ -33,7 +33,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.GetSettings((settings) => {
                 settings.CurrentScript = data;
                 this.SaveSettings(settings, () => {
-                    if (this.CurrentTerminatorChanged != null) {
+                    if (this.CurrentScriptChanged != null) {
                         this.CurrentScriptChanged(this, data);
                     }
                 }, onError);
