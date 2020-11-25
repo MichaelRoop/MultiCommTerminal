@@ -20,14 +20,18 @@ namespace MultiCommData.Net.StorageDataModels {
         }
 
         public TerminatorDataModel(List<TerminatorInfo> infos) : this() {
+            this.Init(infos);
+        }
+
+        /// <summary>Reset internal values without affecting the UUID for storage</summary>
+        /// <param name="infos">The Info list</param>
+        public void Init(List<TerminatorInfo> infos) {
             this.TerminatorInfos = infos;
             this.TerminatorBlock = new byte[this.TerminatorInfos.Count];
             for (int i = 0; i < this.TerminatorBlock.Length; i++) {
                 this.TerminatorBlock[i] = this.TerminatorInfos[i].Value;
             }
         }
-
-
 
     }
 }

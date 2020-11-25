@@ -78,6 +78,11 @@ namespace MultiCommTerminal.XamarinForms.Views {
             base.OnAppearing();
         }
 
+        protected override bool OnBackButtonPressed() {
+            this.DetermineIfChanged();
+            return this.interceptor.HardwareOnBackButtonQuestion(base.OnBackButtonPressed);
+        }
+
         #endregion
 
         #region Controls events
@@ -88,6 +93,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
             if (item != null) {
                 this.btnSave.IsVisible = true;
                 this.terminatorDisplay.AddEntry(item);
+                this.DetermineIfChanged();
                 this.lstStoredTerminators.SelectedItem = null;
             }
             this.lstStoredTerminators.ItemSelected += this.lstStoredTerminators_ItemSelected;
@@ -95,16 +101,19 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
 
         private void btnCancel_Clicked(object sender, EventArgs e) {
-            // exit - check for changes
+            this.interceptor.MethodExitQuestion();    
         }
 
-        private void btnSave_Clicked(object sender, EventArgs e) {
 
+        private void btnSave_Clicked(object sender, EventArgs e) {
+            this.dataModel.Init(this.terminatorDisplay.InfoList);
+            App.Wrapper.SaveTerminator(this.index, this.dataModel, this.OnSaveOk, this.OnErr);
         }
 
         private void btnDelete_Clicked(object sender, EventArgs e) {
             this.btnSave.IsVisible = true;
             this.terminatorDisplay.RemoveEntry();
+            this.DetermineIfChanged();
         }
 
         #endregion
@@ -126,6 +135,19 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.lbName.Text = this.dataModel.Name;
             this.terminatorDisplay.Reset();
             data.TerminatorInfos.ForEach(this.terminatorDisplay.AddEntry);
+        }
+
+
+        private void OnSaveOk() {
+            this.interceptor.Changed = false;
+            this.interceptor.MethodExitQuestion();
+        }
+
+
+        private void DetermineIfChanged() {
+            if (!this.interceptor.Changed) {
+                this.interceptor.Changed = this.terminatorDisplay.IsChanged;
+            }
         }
 
         #endregion

@@ -21,7 +21,7 @@ namespace MultiCommTerminal.XamarinForms.UIHelpers {
         public bool IsChanged { get; set; } = false;
 
 
-        public List<TerminatorInfo> GetInfoList { get { return this.infos; } }
+        public List<TerminatorInfo> InfoList { get { return this.infos; } }
 
         #endregion
 
