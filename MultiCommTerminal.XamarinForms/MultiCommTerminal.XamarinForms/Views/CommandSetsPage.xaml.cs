@@ -24,6 +24,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
         public CommandSetsPage() {
             InitializeComponent();
             BindingContext = this.viewModel = new CommandSetsViewModel();
+            this.lstCmdSets.ItemSelected += this.LstCmdSets_ItemSelected;
         }
 
 
@@ -59,6 +60,14 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
 
+        private void LstCmdSets_ItemSelected(object sender, SelectedItemChangedEventArgs e) {
+            IIndexItem<DefaultFileExtraInfo> ndx = e.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
+            if (ndx != null) {
+                App.Wrapper.SetCurrentScript(ndx, () => { }, this.OnErr);
+            }
+        }
+
+
         private void LanguageUpdate(SupportedLanguage language) {
             this.Title = language.GetText(MsgCode.commands);
         }
@@ -70,10 +79,12 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
 
         private void Load(List<IIndexItem<DefaultFileExtraInfo>> data) {
+            this.lstCmdSets.ItemSelected -= this.LstCmdSets_ItemSelected;
             this.lstCmdSets.ItemsSource = null;
             this.lstCmdSets.SelectedItem = null;
             this.scriptSets = data;
             this.lstCmdSets.ItemsSource = this.scriptSets;
+            this.lstCmdSets.ItemSelected += this.LstCmdSets_ItemSelected;
         }
 
 

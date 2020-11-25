@@ -24,6 +24,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
         public TerminatorsPage() {
             InitializeComponent();
             this.BindingContext = this.viewer = new TerminatorsViewModel();
+            this.lstTerminators.ItemSelected += this.LstTerminators_ItemSelected;
         }
 
 
@@ -78,15 +79,25 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
 
+        private void LstTerminators_ItemSelected(object sender, SelectedItemChangedEventArgs e) {
+            IIndexItem<DefaultFileExtraInfo> item = e.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
+            if (item != null) {
+                App.Wrapper.SetCurrentTerminators(item, () => {}, this.OnErr);
+            }
+        }
+
+
         private void ReloadList(bool success) {
             // The bool just tells you if the delete from file was successful
             App.Wrapper.GetTerminatorList(
                 (list) => {
+                    this.lstTerminators.ItemSelected -= this.LstTerminators_ItemSelected;
                     this.lstTerminators.SelectedItem = null;
                     this.lstTerminators.ItemsSource = null;
                     //this.items.Clear();
                     this.items = list;
-                this.lstTerminators.ItemsSource = this.items;
+                    this.lstTerminators.ItemsSource = this.items;
+                    this.lstTerminators.ItemSelected += this.LstTerminators_ItemSelected;
                 }, 
                 this.OnErr);
         }
