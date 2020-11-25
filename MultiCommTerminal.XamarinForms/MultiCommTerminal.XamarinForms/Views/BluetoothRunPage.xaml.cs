@@ -140,16 +140,6 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
 
         private void btnSend_Clicked(object sender, EventArgs e) {
-            // ----------------------------------------------------------------------
-            // TODO REMOVE HACK
-            // TO TEST NEED CR LN terminators
-            List<TerminatorInfo> infos = new List<TerminatorInfo>();
-            infos.Add(new TerminatorInfo(Terminator.CR));
-            infos.Add(new TerminatorInfo(Terminator.LF));
-            TerminatorDataModel dm = new TerminatorDataModel(infos);
-            App.Wrapper.SetCurrentTerminators(dm, (err)=> App.ShowError(this, err));
-            // ----------------------------------------------------------------------
-
             App.Wrapper.BTClassicSend(this.entryCmd.Text);
         }
 
