@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:helpers="clr-namespace:MultiCommTerminal.XamarinForms.UIHelpers"
+             x:Class="MultiCommTerminal.XamarinForms.Views.WifiPage"
+             Title="WIFI">
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                <Frame BorderColor="LightBlue">
+                    <ListView x:Name="lstWifi" 
+                      MinimumHeightRequest="20" MinimumWidthRequest="20">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextCell Text="{Binding SSID}"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Frame>
+                <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand">
+                    <Button x:Name="btnDiscover" Text="" Clicked="btnDiscover_Clicked"
+                        BorderWidth="0"
+                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Discover}}"  />
+                    <Button x:Name="btnSelect" Text="" Clicked="btnSelect_Clicked"
+                        BorderWidth="0"
+                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}"  />
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

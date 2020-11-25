@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MultiCommTerminal.XamarinForms.Views.WifiRunPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <StackLayout Orientation="Vertical">
+                    <Frame BorderColor="LightBlue">
+                        <StackLayout Orientation="Vertical">
+                            <Label x:Name="lblCmds" Text="Commands" HorizontalOptions="Center" />
+                            <ListView x:Name="lstCmds" VerticalOptions="Center" 
+                                  ItemSelected="lstCmds_ItemSelected"
+                                  MinimumHeightRequest="20" MinimumWidthRequest="20">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextCell Text="{Binding Display}"/>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+                <Frame BorderColor="LightBlue">
+                    <StackLayout>
+                        <Label x:Name="lblResponses" Text="Responses" HorizontalOptions="Center" />
+                        <ListView x:Name="lstResponses" VerticalOptions="Center" 
+                      MinimumHeightRequest="20" MinimumWidthRequest="20">
+                        </ListView>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+            <StackLayout Margin="0,20,0,10">
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" x:Name="btnSend" Text="Send" Clicked="btnSend_Clicked" />
+                    <Entry Grid.Column="1" Text="OpenDoor" x:Name="entryCmd" HeightRequest="60" Margin="0, 0,0,0" />
+                </Grid>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Button x:Name="btnConnect" Text="Connect" Clicked="btnConnect_Clicked" />
+                <Button x:Name="btnDisconnect" Text="Connect" Clicked="btnDisconnect_Clicked" />
+            </StackLayout>
+        </StackLayout>
+
+    </ContentPage.Content>
+</ContentPage>

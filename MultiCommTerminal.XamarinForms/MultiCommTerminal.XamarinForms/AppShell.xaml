@@ -78,7 +78,10 @@
         <ShellContent Route="AboutAppPage" ContentTemplate="{DataTemplate local:AboutAppPage}" />
     </FlyoutItem>
     <FlyoutItem Title="Bluetooth" x:Name="flyBluetooth" Icon="{Binding Source={x:Static helpers:IconBinder.Bluetooth}}">
-        <ShellContent Route="LanguagePage" ContentTemplate="{DataTemplate local:BluetoothPage}" />
+        <ShellContent Route="BluetoothPage" ContentTemplate="{DataTemplate local:BluetoothPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="Wifi" x:Name="flyWifi" Icon="{Binding Source={x:Static helpers:IconBinder.Wifi}}">
+        <ShellContent Route="WifiPage" ContentTemplate="{DataTemplate local:WifiPage}" />
     </FlyoutItem>
     <FlyoutItem Title="Languages" x:Name="flyLanguage" Icon="{Binding Source={x:Static helpers:IconBinder.Language}}">
         <ShellContent Route="LanguagePage" ContentTemplate="{DataTemplate local:LanguagePage}" />

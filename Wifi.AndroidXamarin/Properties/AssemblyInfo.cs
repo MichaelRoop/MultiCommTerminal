@@ -15,6 +15,7 @@ using Android.App;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
+[assembly: UsesPermission(Android.Manifest.Permission.AccessNetworkState)]
 
 // Version information for an assembly consists of the following four values:
 //

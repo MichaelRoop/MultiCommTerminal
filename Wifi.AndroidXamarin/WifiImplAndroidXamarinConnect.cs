@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using WifiCommon.Net.DataModels;
+using WifiCommon.Net.Enumerations;
 using WifiCommon.Net.interfaces;
 using Xamarin.Essentials;
 using static Android.Net.Wifi.WifiConfiguration;
@@ -59,10 +60,13 @@ namespace Wifi.AndroidXamarin {
             //string ssid = $"\"{{dataModel.SSID}}\"";
             //string pwd = $"\"{{dataModel.Password}}\"";
 
-            string ssid = "\"{" + dataModel.SSID + "}\"";
-            string pwd = "\"{" + dataModel.Password + "}\"";
+            //string ssid = "\"{" + dataModel.SSID + "}\"";
+            //string pwd = "\"{" + dataModel.Password + "}\"";
 
+            string ssid = "\"" + dataModel.SSID + "\"";
+            string pwd = "\"" + dataModel.Password + "\"";
 
+            int netId = 0;
 
 
             //https://spin.atomicobject.com/2018/02/15/connecting-wifi-xamarin-forms/
@@ -75,8 +79,11 @@ namespace Wifi.AndroidXamarin {
                     Ssid = ssid,
                     PreSharedKey = pwd,
                     //Priority = 40, // Deprecated
-                    NetworkId = NETID,
+                    //NetworkId = NETID,
+                    Priority = 0,
                 };
+
+                /*
                 // WPA or WPA2
                 config.AllowedProtocols.Set((int)ProtocolType.Rsn);
                 config.AllowedProtocols.Set((int)ProtocolType.Wpa);
@@ -89,14 +96,14 @@ namespace Wifi.AndroidXamarin {
                 config.AllowedGroupCiphers.Set((int)GroupCipherType.Tkip);
                 config.AllowedAuthAlgorithms.Set((int)AuthAlgorithmType.Open);
                 config.HiddenSSID = false;
+                */
 
-
-                int result = this.manager.AddNetwork(config);
+                netId = this.manager.AddNetwork(config);
                 //this.manager.SaveConfiguration();
 
                 this.log.Info("DoConnection",
                     () => string.Format("Added network:{0} - Pwd:{1} Id:{2} RESULT:{3}", 
-                        config.Ssid, config.PreSharedKey, config.NetworkId, result));
+                        config.Ssid, config.PreSharedKey, config.NetworkId, netId));
 
 
             }
@@ -108,37 +115,47 @@ namespace Wifi.AndroidXamarin {
                     () => string.Format("Networks:{0} - {1}", x.Ssid, x.NetworkId));
             }
 
-
+            this.log.Info("DoConnection", "Recheck if in configured networks");
             net = this.manager.ConfiguredNetworks.FirstOrDefault(n => n.Ssid == ssid);
-            //if (net == null) {
-            //    this.log.Error(9999, "Failed to add to ConfiguredNetworks");
-            //    return;
-            //}
-            //else {
-            //    this.log.Info("DoConnection", "In Configured networks");
-            //}
+            if (net == null) {
+                this.log.Error(9999, "Failed to add to ConfiguredNetworks");
+                //return;
+            }
+            else {
+                this.log.Info("DoConnection", "In Configured networks");
+            }
 
+
+            this.log.Info("DoConnection", "Doing wifi disconnect");
             // Disconnect from any existing network
             this.manager.Disconnect();
+            this.log.Info("DoConnection", "Check enabled");
             bool enabled = this.manager.EnableNetwork(net.NetworkId, true);
+
+
             this.log.Info("DoConnection", () => string.Format("ENABLED_CONNECTED:{0}", enabled));
             if (enabled) {
                 if (manager.Reconnect()) {
                     this.log.Info("DoConnection", "Able to reconnect");
 
-                    // Until I can debug the WIFI - In emulator cannot find network. Says it connects
-                    // to WIFI but does not
-                    //return;
+                    //// Until I can debug the WIFI - In emulator cannot find network. Says it connects
+                    //// to WIFI but does not
+                    ////return;
 
                     var cData = new NetSocketConnectData() {
                         RemoteHostName = dataModel.RemoteHostName,
                         RemotePort = int.Parse(dataModel.RemoteServiceName),
                     };
+
                     this.msgPump.ConnectAsync(cData);
                 }
                 else {
                     this.log.Info("DoConnection", "UNABLE to reconnect");
+                    this.OnError(this, new WifiError(WifiErrorCode.Unknown) { ExtraInfo = string.Format("Could not reconnect:{0}", ssid) });
                 }
+            }
+            else {
+                this.OnError(this, new WifiError(WifiErrorCode.NetworkNotAvailable) { ExtraInfo = string.Format("Could not enable:{0}", ssid) });
             }
 
 

@@ -15,7 +15,10 @@ namespace MultiCommTerminal.XamarinForms {
             Routing.RegisterRoute(nameof(BluetoothPage), typeof(BluetoothPage));
             Routing.RegisterRoute(nameof(BluetoothPairPage), typeof(BluetoothPairPage));
             Routing.RegisterRoute(nameof(BluetoothRunPage), typeof(BluetoothRunPage));
-            
+
+            Routing.RegisterRoute(nameof(WifiPage), typeof(WifiPage));
+            Routing.RegisterRoute(nameof(WifiRunPage), typeof(WifiRunPage));
+
             Routing.RegisterRoute(nameof(LanguagePage), typeof(LanguagePage));
 
             Routing.RegisterRoute(nameof(TerminatorsPage), typeof(TerminatorsPage));
@@ -24,6 +27,8 @@ namespace MultiCommTerminal.XamarinForms {
             Routing.RegisterRoute(nameof(CommandSetsPage), typeof(CommandSetsPage));
             Routing.RegisterRoute(nameof(CommandSetPage), typeof(CommandSetPage));
             Routing.RegisterRoute(nameof(CommandEditPage), typeof(CommandEditPage));
+
+
 
             App.Wrapper.CurrentSupportedLanguage(this.UpdateLanguage);
             App.Wrapper.LanguageChanged += this.LanguageChangedHandler;
@@ -39,6 +44,7 @@ namespace MultiCommTerminal.XamarinForms {
             this.flyAbout.Title = language.GetText(MsgCode.About);
             this.flyLanguage.Title = language.GetText(MsgCode.language);
             this.flyBluetooth.Title = "Bluetooth"; // Seems same in all languages
+            this.flyWifi.Title = "WIFI"; // Same in all languages
             this.flyAbout.Title = language.GetText(MsgCode.About);
             this.flyTerminators.Title = language.GetText(MsgCode.Terminators);
             this.flyLanguage.Title = language.GetText(MsgCode.language);
