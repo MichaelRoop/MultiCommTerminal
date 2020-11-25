@@ -9,10 +9,6 @@ using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -27,7 +23,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
         private IIndexItem<DefaultFileExtraInfo> index = null;
         private NavigateBackInterceptor interceptor;
         private TerminatorDataModel dataModel;
-        private const int TERMINATOR_MAX = 5;
+        private TerminatorSetDisplay terminatorDisplay = new TerminatorSetDisplay();
         private ClassLog log = new ClassLog("TerminatorSetPage");
 
         #endregion
@@ -60,15 +56,19 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         #region Constructor and overrides
 
-
-
-
         public TerminatorSetPage() {
             InitializeComponent();
             this.interceptor = new NavigateBackInterceptor(this);
 
             // Only have to load the terminator list once
             App.Wrapper.GetTerminatorEntitiesList(this.OnTerminatorLoadOk, this.OnErr);
+
+            this.terminatorDisplay.CreateLabelSet(this.name1, this.hex1);
+            this.terminatorDisplay.CreateLabelSet(this.name2, this.hex2);
+            this.terminatorDisplay.CreateLabelSet(this.name3, this.hex3);
+            this.terminatorDisplay.CreateLabelSet(this.name4, this.hex4);
+            this.terminatorDisplay.CreateLabelSet(this.name5, this.hex5);
+            this.lstStoredTerminators.ItemSelected += this.lstStoredTerminators_ItemSelected;
         }
 
 
@@ -78,28 +78,36 @@ namespace MultiCommTerminal.XamarinForms.Views {
             base.OnAppearing();
         }
 
-
         #endregion
 
+        #region Controls events
+
         private void lstStoredTerminators_ItemSelected(object sender, SelectedItemChangedEventArgs e) {
-
+            this.lstStoredTerminators.ItemSelected -= this.lstStoredTerminators_ItemSelected;
+            TerminatorInfo item = this.lstStoredTerminators.SelectedItem as TerminatorInfo;
+            if (item != null) {
+                this.btnSave.IsVisible = true;
+                this.terminatorDisplay.AddEntry(item);
+                this.lstStoredTerminators.SelectedItem = null;
+            }
+            this.lstStoredTerminators.ItemSelected += this.lstStoredTerminators_ItemSelected;
         }
 
-        private void btnAdd_Clicked(object sender, EventArgs e) {
-
-        }
 
         private void btnCancel_Clicked(object sender, EventArgs e) {
-
+            // exit - check for changes
         }
 
         private void btnSave_Clicked(object sender, EventArgs e) {
 
         }
-        private void btnDelete_Clicked(object sender, EventArgs e) {
 
+        private void btnDelete_Clicked(object sender, EventArgs e) {
+            this.btnSave.IsVisible = true;
+            this.terminatorDisplay.RemoveEntry();
         }
 
+        #endregion
 
         #region Delegates
 
@@ -109,54 +117,16 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
 
         private void UpdateLanguage(SupportedLanguage language) {
-            //this.lbTitle.Text = language.GetText(MsgCode.Terminators);
             this.Title = language.GetText(MsgCode.Terminators);
         }
-
-        private int currentPos = 0;
 
 
         private void OnTerminatorInfoLoad(TerminatorDataModel data) {
             this.dataModel = data;
             this.lbName.Text = this.dataModel.Name;
-
-            this.log.Error(8888, () => string.Format("COUNT:{0}", this.dataModel.TerminatorInfos.Count));
-
-            for (int i = 0; i< this.dataModel.TerminatorInfos.Count; i++) {
-                if (i >= TERMINATOR_MAX) {
-                    // Out of bounds
-                    break;
-                }
-                this.currentPos = i;
-                TerminatorInfo info = this.dataModel.TerminatorInfos[this.currentPos];
-
-                this.log.Error(8888, () => string.Format("{0} : {1}", info.HexDisplay, info.Display));
-
-                switch (i) {
-                    case 0:
-                        this.hex1.Text = info.HexDisplay;
-                        this.name1.Text = info.Display;
-                        break;
-                    case 1:
-                        this.hex2.Text = info.HexDisplay;
-                        this.name2.Text = info.Display;
-                        break;
-                    case 2:
-                        this.hex3.Text = info.HexDisplay;
-                        this.name3.Text = info.Display;
-                        break;
-                    case 3:
-                        this.hex4.Text = info.HexDisplay;
-                        this.name4.Text = info.Display;
-                        break;
-                    case 4:
-                        this.hex5.Text = info.HexDisplay;
-                        this.name5.Text = info.Display;
-                        break;
-                }
-            }
+            this.terminatorDisplay.Reset();
+            data.TerminatorInfos.ForEach(this.terminatorDisplay.AddEntry);
         }
-
 
         #endregion
 

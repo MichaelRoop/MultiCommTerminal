@@ -9,7 +9,7 @@
                 <Frame BorderColor="LightBlue" Margin="0" Padding="0">
                     <StackLayout>
                         <StackLayout Padding="15">
-                            <ListView x:Name="lstStoredTerminators" ItemSelected="lstStoredTerminators_ItemSelected"
+                            <ListView x:Name="lstStoredTerminators" 
                             MinimumHeightRequest="20" MinimumWidthRequest="20">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
@@ -62,9 +62,9 @@
                     </StackLayout>
                 </Frame>
                 <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand">
-                    <Button x:Name="btnAdd" Text="" Clicked="btnAdd_Clicked"
+                    <!--<Button x:Name="btnAdd" Text="" Clicked="btnAdd_Clicked"
                             BorderWidth="0"
-                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Add}}"  />
+                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Add}}"  />-->
                     <Button x:Name="btnDelete" Text="" Clicked="btnDelete_Clicked"
                             BorderWidth="0"
                             ImageSource="{Binding Source={x:Static helpers:IconBinder.Delete}}"  />
