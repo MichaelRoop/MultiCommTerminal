@@ -17,6 +17,7 @@ using WifiCommon.Net.DataModels;
 using WifiCommon.Net.interfaces;
 using Common.Net;
 using System.Threading.Tasks;
+using Android.Net;
 
 namespace Wifi.AndroidXamarin {
 
@@ -27,6 +28,7 @@ namespace Wifi.AndroidXamarin {
         ClassLog log = new ClassLog("WifiImplAndroidXamarin");
         NetSocketMsgPump msgPump = new NetSocketMsgPump();
         WifiManager manager = null;
+        ConnectivityManager connectivityManager;
 
         #endregion
 
@@ -58,6 +60,7 @@ namespace Wifi.AndroidXamarin {
             this.msgPump.MsgPumpConnectResultEvent += this.MsgPumpConnectResultEventHandler;
             this.msgPump.MsgReceivedEvent += this.MsgPumpMsgReceivedEventHandler;
             this.manager = this.GetWifiManager();
+            this.connectivityManager = this.GetConnectivityManager();
         }
 
         #endregion
@@ -71,8 +74,19 @@ namespace Wifi.AndroidXamarin {
         }
 
         public void Disconnect() {
-            this.msgPump.Disconnect();
-            this.manager.Disconnect();
+
+            if (this.connectCallback != null) {
+                this.connectivityManager.UnregisterNetworkCallback(this.connectCallback);
+                this.connectCallback.Dispose();
+                this.connectCallback = null;
+            }
+
+
+            //this.connectivityManager.UnregisterNetworkCallback()
+            //ConnectivityManager.UnregisterNetworkCallback(); //on the callback.
+
+            //this.msgPump.Disconnect();
+            //this.manager.Disconnect();
         }
 
         public void DiscoverWifiAdaptersAsync() {
@@ -102,6 +116,8 @@ namespace Wifi.AndroidXamarin {
             this.MsgReceivedEvent?.Invoke(sender, e);
         }
 
+
+        // TODO - from the message pump but need a new pump with the socket from the wifi
         private void MsgPumpConnectResultEventHandler(object sender, MsgPumpResults e) {
 
             this.log.Info("MsgPumpConnectResultEventHandler", () => string.Format(
@@ -118,6 +134,11 @@ namespace Wifi.AndroidXamarin {
 
         private WifiManager GetWifiManager() {
             return (WifiManager)Android.App.Application.Context.GetSystemService(Context.WifiService);
+        }
+
+
+        private ConnectivityManager GetConnectivityManager() {
+            return (ConnectivityManager)Application.Context.GetSystemService(Context.ConnectivityService);
         }
 
 

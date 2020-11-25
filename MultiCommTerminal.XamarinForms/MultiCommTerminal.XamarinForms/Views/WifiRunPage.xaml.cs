@@ -35,12 +35,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
         public string WifiInfoAsString {
             set {
                 string s = value;
-
                 this.networkInfo = JsonConvert.DeserializeObject<WifiNetworkInfo>(Uri.UnescapeDataString(value ?? string.Empty));
-
-                // TODO - null check
-
-                int x = 22;
                 if (this.networkInfo == null) {
                     this.OnErr("FAILED THE PROPERTY INITIALISED");
 
@@ -48,7 +43,6 @@ namespace MultiCommTerminal.XamarinForms.Views {
                 else {
                     //this.OnErr("OK GOT THE PROPERTY INITIALISED");
                 }
-
             }
         }
 
@@ -59,9 +53,13 @@ namespace MultiCommTerminal.XamarinForms.Views {
         public WifiRunPage() {
             InitializeComponent();
             App.Wrapper.Wifi_BytesReceived += Wifi_BytesReceivedHandler;
-            //App.Wrapper.
+            App.Wrapper.OnWifiConnectionAttemptCompleted += this.OnWifiConnectionAttemptCompletedHandler;
             this.lstCmds.ItemsSource = this.cmds;
             this.lstResponses.ItemsSource = this.responses;
+        }
+
+        private void OnWifiConnectionAttemptCompletedHandler(object sender, CommunicationStack.Net.DataModels.MsgPumpResults e) {
+            this.OnErr(string.Format("Connect Attempt Result:{0} - {1}", e.Code, e.ErrorString));
         }
 
         protected override void OnAppearing() {

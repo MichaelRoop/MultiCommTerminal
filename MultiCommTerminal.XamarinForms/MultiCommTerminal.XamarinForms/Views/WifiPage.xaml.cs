@@ -47,6 +47,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.btnSelect.IsVisible = false;
             this.ResetWifiList(new List<WifiNetworkInfo>());
             this.IsBusy = true;
+            this.viewModel.IsBusy = true;
             this.activity.IsRunning = true;
             App.Wrapper.WifiDiscoverAsync();
         }
@@ -70,12 +71,14 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         private void OnWifiErrorHandler(object sender, WifiCommon.Net.DataModels.WifiError e) {
             this.IsBusy = false;
+            this.viewModel.IsBusy = false;
             this.activity.IsRunning = false;
             this.OnErr(e.ExtraInfo.Length > 0 ? e.ExtraInfo : e.Code.ToString());
         }
 
         private void DiscoveredWifiNetworksHandler(object sender, List<WifiNetworkInfo> e) {
             this.IsBusy = false;
+            this.viewModel.IsBusy = false;
             this.activity.IsRunning = false;
             if (e.Count > 0) {
                 this.btnSelect.IsVisible = true;

@@ -15,6 +15,9 @@ namespace MultiCommTerminal.XamarinForms.Droid.PermissionsObjects {
     public class WifiStateChangePermission : BasePlatformPermission {
         public override (string androidPermission, bool isRuntime)[] RequiredPermissions => new List<(string androidPermission, bool isRuntime)> {
         //        (Android.Manifest.Permission.ReadExternalStorage, true),
+                    (Android.Manifest.Permission.AccessCoarseLocation, true),
+                    (Android.Manifest.Permission.AccessFineLocation, true),
+                    (Android.Manifest.Permission.AccessWifiState, true),
                     (Android.Manifest.Permission.ChangeWifiState, true)
                 }.ToArray();
 

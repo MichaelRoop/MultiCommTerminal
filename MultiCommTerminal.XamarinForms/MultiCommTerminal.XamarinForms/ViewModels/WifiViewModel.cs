@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace MultiCommTerminal.XamarinForms.ViewModels {
 
-    public class WifiViewModel {
+    public class WifiViewModel : BaseViewModel {
 
         public Command<WifiNetworkInfo> GoToRun;
 
