@@ -69,6 +69,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.terminatorDisplay.CreateLabelSet(this.name4, this.hex4);
             this.terminatorDisplay.CreateLabelSet(this.name5, this.hex5);
             this.lstStoredTerminators.ItemSelected += this.lstStoredTerminators_ItemSelected;
+            this.edName.TextChanged += this.edName_TextChanged;
         }
 
 
@@ -107,6 +108,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         private void btnSave_Clicked(object sender, EventArgs e) {
             this.dataModel.Init(this.terminatorDisplay.InfoList);
+            this.dataModel.Name = this.edName.Text;
             App.Wrapper.SaveTerminator(this.index, this.dataModel, this.OnSaveOk, this.OnErr);
         }
 
@@ -131,10 +133,13 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
 
         private void OnTerminatorInfoLoad(TerminatorDataModel data) {
+            this.edName.TextChanged -= this.edName_TextChanged;
             this.dataModel = data;
-            this.lbName.Text = this.dataModel.Name;
+            this.edName.Text = this.dataModel.Name;
             this.terminatorDisplay.Reset();
             data.TerminatorInfos.ForEach(this.terminatorDisplay.AddEntry);
+            this.edName.TextChanged += this.edName_TextChanged;
+            this.interceptor.Changed = false;
         }
 
 
@@ -152,5 +157,9 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         #endregion
 
+        private void edName_TextChanged(object sender, TextChangedEventArgs e) {
+            this.interceptor.Changed = true;
+            this.btnSave.IsVisible = true;
+        }
     }
 }

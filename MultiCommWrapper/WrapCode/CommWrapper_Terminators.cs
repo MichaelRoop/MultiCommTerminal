@@ -184,10 +184,15 @@ namespace MultiCommWrapper.Net.WrapCode {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;
                 WrapErr.ToErrReport(out report, 9999, () => {
-                    if (idx.Display.Length == 0) {
+                    if (data.Name.Length == 0) {
+                        onError.Invoke(this.GetText(MsgCode.EmptyName));
+                    }
+                    else if (idx.Display.Length == 0) {
                         onError.Invoke(this.GetText(MsgCode.EmptyName));
                     }
                     else {
+                        // Update the index display
+                        idx.Display = data.Name;
                         this.terminatorStorage.Store(data, idx);
                         onSuccess.Invoke();
                     }

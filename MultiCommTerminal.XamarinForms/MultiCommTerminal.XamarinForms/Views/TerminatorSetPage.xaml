@@ -32,7 +32,7 @@
                         <Frame BorderColor="LightBlue" HorizontalOptions="FillAndExpand" Padding="0" Margin="0">
                             <Grid HorizontalOptions="FillAndExpand" Padding="0" Margin="15">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="40"/>
                                     <RowDefinition Height="20"/>
                                     <RowDefinition Height="20"/>
                                 </Grid.RowDefinitions>
@@ -44,7 +44,9 @@
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
 
-                                <Label x:Name="lbName" Grid.Row="0" Grid.ColumnSpan="3" HorizontalOptions="Center"/>
+                                <Editor x:Name="edName" Grid.Row="0" Grid.ColumnSpan="3" 
+                                        AutoSize="TextChanges" FontSize="Body"
+                                        VerticalOptions="Start" HorizontalOptions="FillAndExpand" />
                                 <!-- Hex values -->
                                 <Label x:Name="hex1" Grid.Row="1" Grid.Column="0" />
                                 <Label x:Name="hex2" Grid.Row="1" Grid.Column="1"/>

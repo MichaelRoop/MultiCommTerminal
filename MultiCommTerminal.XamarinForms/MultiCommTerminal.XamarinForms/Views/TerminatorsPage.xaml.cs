@@ -21,7 +21,6 @@ namespace MultiCommTerminal.XamarinForms.Views {
         private TerminatorsViewModel viewer;
         private ClassLog log = new ClassLog("TerminatorsPage");
 
-
         public TerminatorsPage() {
             InitializeComponent();
             this.BindingContext = this.viewer = new TerminatorsViewModel();
@@ -81,13 +80,15 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         private void ReloadList(bool success) {
             // The bool just tells you if the delete from file was successful
-            App.Wrapper.GetTerminatorList((list) => {
-                this.lstTerminators.SelectedItem = null;
-                this.lstTerminators.ItemsSource = null;
-                //this.items.Clear();
-                this.items = list;
+            App.Wrapper.GetTerminatorList(
+                (list) => {
+                    this.lstTerminators.SelectedItem = null;
+                    this.lstTerminators.ItemsSource = null;
+                    //this.items.Clear();
+                    this.items = list;
                 this.lstTerminators.ItemsSource = this.items;
-            }, (err) => App.ShowError(this, err));
+                }, 
+                this.OnErr);
         }
 
         #endregion
