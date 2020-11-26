@@ -3,6 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:helpers="clr-namespace:MultiCommTerminal.XamarinForms.UIHelpers"
              x:Class="MultiCommTerminal.XamarinForms.Views.CommandSetsPage">
+    <Shell.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Image Source="{Binding Source={x:Static helpers:IconBinder.Command_W}}" 
+                   WidthRequest="25" HeightRequest="25" />
+            <Label x:Name="lbTitle" VerticalTextAlignment="Center" 
+                   Margin="5,0" TextColor="White" FontSize="20" FontAttributes="Bold"/>
+        </StackLayout>
+    </Shell.TitleView>
     <ContentPage.Content>
         <StackLayout>
             <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">

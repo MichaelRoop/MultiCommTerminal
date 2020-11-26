@@ -32,7 +32,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
         #region Event handlers
 
         private void LanguageUpdate(SupportedLanguage language) {
-            this.Title = language.GetText(MsgCode.Credentials);
+            this.lbTitle.Text = language.GetText(MsgCode.Credentials);
 
             //this.btnDiscover.Text = language.GetText(MsgCode.discover);
             //this.btnSelect.Text = language.GetText(MsgCode.select);

@@ -94,8 +94,9 @@ namespace MultiCommTerminal.XamarinForms.Views {
         #region Private
 
         private void UpdateLanguage(SupportedLanguage language) {
-            this.txtTitle.Text = language.GetText(MsgCode.PairedDevices);
-            
+            //this.txtTitle.Text = language.GetText(MsgCode.PairedDevices);
+            this.lbTitle.Text = "Bluetooth";
+
             //// buttons below. need to determine if we use icons or text
             //this.btnDiscover.Text = language.GetText(MsgCode.discover);
             //this.btnPair.Text = language.GetText(MsgCode.Pair);

@@ -186,6 +186,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
 
         private void UpdateLanguage(SupportedLanguage language) {
+            this.lbTitle.Text = language.GetText(MsgCode.commands);
             this.lbName.Text = language.GetText(MsgCode.Name);
         }
 

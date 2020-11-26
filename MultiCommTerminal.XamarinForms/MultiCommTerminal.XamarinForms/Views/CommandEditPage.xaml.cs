@@ -109,6 +109,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
         /// <summary>Delegate to handle updated language selection</summary>
         /// <param name="language">The current language</param>
         private void UpdateLanguage(SupportedLanguage language) {
+            this.lbTitle.Text = language.GetText(MsgCode.Edit);
             this.lblCmd.Text = language.GetText(MsgCode.command);
             this.lblName.Text = language.GetText(MsgCode.Name);
         }

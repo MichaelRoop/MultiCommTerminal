@@ -107,7 +107,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
 
         private void UpdateLanguage() {
-            this.Title = App.GetText(MsgCode.connect);
+            this.lbTitle.Text = "Bluetooth";
             this.lblCmds.Text = App.GetText(MsgCode.command);
             this.lblResponses.Text = App.GetText(MsgCode.response);
             this.btnSend.Text = App.GetText(MsgCode.send);

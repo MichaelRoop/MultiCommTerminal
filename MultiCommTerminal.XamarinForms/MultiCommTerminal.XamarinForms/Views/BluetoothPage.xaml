@@ -4,6 +4,14 @@
              xmlns:helpers="clr-namespace:MultiCommTerminal.XamarinForms.UIHelpers"
              x:Class="MultiCommTerminal.XamarinForms.Views.BluetoothPage"
              Title="{Binding Title}" >
+    <Shell.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Image Source="{Binding Source={x:Static helpers:IconBinder.Bluetooth_W}}" 
+                   WidthRequest="25" HeightRequest="25" />
+            <Label x:Name="lbTitle" VerticalTextAlignment="Center" 
+                   Margin="5,0" TextColor="White" FontSize="20" FontAttributes="Bold"/>
+        </StackLayout>
+    </Shell.TitleView>
     <ContentPage.Content>
         <StackLayout>
             <Label x:Name="txtTitle" Text="Paired" Margin="0,30,0,10" HorizontalOptions="Center" />

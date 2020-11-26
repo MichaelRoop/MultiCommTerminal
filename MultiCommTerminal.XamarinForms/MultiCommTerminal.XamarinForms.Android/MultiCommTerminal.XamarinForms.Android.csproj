@@ -152,53 +152,53 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="environment.txt" />
-    <AndroidResource Include="Resources\drawable\icons8_language_50.png">
+    <AndroidResource Include="Resources\drawable\icons8_language.png">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\icons8_close_window_50_noborder.png">
+    <AndroidResource Include="Resources\drawable\icons8_close_window_noborder.png">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\icons8_bluetooth_50.png">
+    <AndroidResource Include="Resources\drawable\icons8_bluetooth.png">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\icons8_about_50.png">
+    <AndroidResource Include="Resources\drawable\icons8_about.png">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\icons8_access_50_W.png">
+    <AndroidResource Include="Resources\drawable\icons8_access_W.png">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\icons8_add_50_noborder.png">
+    <AndroidResource Include="Resources\drawable\icons8_add_noborder.png">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\icons8_checkmark_50.png">
+    <AndroidResource Include="Resources\drawable\icons8_checkmark.png">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\icons8_delete_link_52.png">
+    <AndroidResource Include="Resources\drawable\icons8_delete_link.png">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\icons8_edit_50.png">
+    <AndroidResource Include="Resources\drawable\icons8_edit.png">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\icons8_link_100.png">
+    <AndroidResource Include="Resources\drawable\icons8_link.png">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\icons8_null_symbol_30.png">
+    <AndroidResource Include="Resources\drawable\icons8_null_symbol.png">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\icons8_quick_mode_on_100.png">
+    <AndroidResource Include="Resources\drawable\icons8_quick_mode_on.png">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\icons8_trash_can_50.png">
+    <AndroidResource Include="Resources\drawable\icons8_trash_can.png">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\icons8_wi_fi_32.png">
+    <AndroidResource Include="Resources\drawable\icons8_wifi.png">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\icons8_language_white_50.png" />
-    <AndroidResource Include="Resources\drawable\icons8_running_24.png">
+    <AndroidResource Include="Resources\drawable\icons8_language_white.png" />
+    <AndroidResource Include="Resources\drawable\icons8_running.png">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\icons8_search_50.png">
+    <AndroidResource Include="Resources\drawable\icons8_search.png">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
     <AndroidResource Include="Resources\drawable\icons8_cmd.png">
@@ -208,6 +208,18 @@
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
     <AndroidResource Include="Resources\drawable\icons8_wifi_white.png">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\icons8_null_symbol_white.png">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\icons8_about_white.png">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\icons8_bluetooth_white.png">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\icons8_cmd_white.png">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
   </ItemGroup>

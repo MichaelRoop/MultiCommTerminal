@@ -69,7 +69,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
 
         private void LanguageUpdate(SupportedLanguage language) {
-            this.Title = language.GetText(MsgCode.commands);
+            this.lbTitle.Text = language.GetText(MsgCode.commands);
         }
 
 
