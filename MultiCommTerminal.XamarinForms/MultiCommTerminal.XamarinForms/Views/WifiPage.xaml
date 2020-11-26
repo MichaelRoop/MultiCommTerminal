@@ -18,11 +18,11 @@
                     </ListView>
                 </Frame>
                 <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand">
-                    <Button x:Name="btnDiscover" Text="" Clicked="btnDiscover_Clicked"
-                        BorderWidth="0"
+                    <Button x:Name="btnCredentials" Clicked="btnCredentials_Clicked" BorderWidth="0"
+                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Credentials}}"  />
+                    <Button x:Name="btnDiscover" Clicked="btnDiscover_Clicked" BorderWidth="0"
                         ImageSource="{Binding Source={x:Static helpers:IconBinder.Discover}}"  />
-                    <Button x:Name="btnSelect" Text="" Clicked="btnSelect_Clicked"
-                        BorderWidth="0"
+                    <Button x:Name="btnSelect" Clicked="btnSelect_Clicked" BorderWidth="0"
                         ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}"  />
                 </StackLayout>
             </StackLayout>

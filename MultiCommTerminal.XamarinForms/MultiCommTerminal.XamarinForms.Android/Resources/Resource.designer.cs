@@ -11896,11 +11896,11 @@ namespace MultiCommTerminal.XamarinForms.Droid
 			// aapt resource value: 0x7F070071
 			public const int icons8_about_50 = 2131165297;
 			
+			// aapt resource value: 0x7F070072
+			public const int icons8_access = 2131165298;
+			
 			// aapt resource value: 0x7F070073
 			public const int icons8_access_50_W = 2131165299;
-			
-			// aapt resource value: 0x7F070072
-			public const int icons8_acces_50 = 2131165298;
 			
 			// aapt resource value: 0x7F070074
 			public const int icons8_add_50_noborder = 2131165300;

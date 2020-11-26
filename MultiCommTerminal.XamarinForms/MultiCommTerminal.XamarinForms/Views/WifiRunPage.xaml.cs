@@ -88,20 +88,13 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
 
         private void lstCmds_ItemSelected(object sender, SelectedItemChangedEventArgs e) {
-            string cmd = e.SelectedItem as string;
+            ScriptItem cmd = e.SelectedItem as ScriptItem;
             if (cmd != null) {
-                this.entryCmd.Text = cmd;
+                this.entryCmd.Text = cmd.Command;
             }
         }
 
         private void btnSend_Clicked(object sender, EventArgs e) {
-            // TODO - remove hack
-            List<TerminatorInfo> infos = new List<TerminatorInfo>();
-            infos.Add(new TerminatorInfo(Terminator.CR));
-            infos.Add(new TerminatorInfo(Terminator.LF));
-            TerminatorDataModel dm = new TerminatorDataModel(infos);
-
-            App.Wrapper.SetCurrentTerminators(dm, this.OnErr);
             App.Wrapper.WifiSend(this.entryCmd.Text);
         }
 

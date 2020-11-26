@@ -118,10 +118,10 @@ namespace MultiCommWrapper.Net.WrapCode {
             if (index.Count == 0) {
                 // For a new one. Different when updating. Do not need to create new index
                 List<TerminatorInfo> infos = new List<TerminatorInfo>();
-                infos.Add(new TerminatorInfo(Terminator.LF));
                 infos.Add(new TerminatorInfo(Terminator.CR));
+                infos.Add(new TerminatorInfo(Terminator.LF));
                 TerminatorDataModel dm = new TerminatorDataModel(infos) {
-                    Name = "Default terminator \\n\\r"
+                    Name = "Default terminator \\r\\n"
                 };
 
                 IIndexItem<DefaultFileExtraInfo> idx = new IndexItem<DefaultFileExtraInfo>(dm.UId) {

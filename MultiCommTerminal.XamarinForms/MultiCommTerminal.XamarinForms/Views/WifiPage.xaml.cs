@@ -39,9 +39,11 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         protected override void OnAppearing() {
             App.Wrapper.CurrentSupportedLanguage(this.LanguageUpdate);
+            this.lstWifi.SelectedItem = null;
             base.OnAppearing();
         }
 
+        #region Controls events
 
         private void btnDiscover_Clicked(object sender, EventArgs e) {
             this.btnSelect.IsVisible = false;
@@ -64,8 +66,17 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
                 this.viewModel.GoToRun.Execute(info);
             }
+            else {
+                this.OnErr(App.Wrapper.GetText(MsgCode.NothingSelected));
+            }
         }
 
+
+        private void btnCredentials_Clicked(object sender, EventArgs e) {
+            this.viewModel.GoToCredentials.Execute(null);
+        }
+
+        #endregion
 
         #region Private event handlers
 
@@ -89,8 +100,10 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
 
         private void LanguageUpdate(SupportedLanguage language) {
-            this.btnDiscover.Text = language.GetText(MsgCode.discover);
-            this.btnSelect.Text = language.GetText(MsgCode.select);
+            // Prefere icon buttons to save on screen 
+            //this.btnDiscover.Text = language.GetText(MsgCode.discover);
+            //this.btnSelect.Text = language.GetText(MsgCode.select);
+            //this.btnCredentials.Text = language.GetText(MsgCode.Credentials);
         }
 
 
