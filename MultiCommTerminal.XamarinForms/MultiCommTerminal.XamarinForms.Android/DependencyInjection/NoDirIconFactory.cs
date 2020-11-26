@@ -41,21 +41,23 @@ namespace MultiCommTerminal.XamarinForms.Droid.DependencyInjection {
                 case UIIcon.Pair:
                     return new IconDataModel(UIIcon.Configure, this.AddDir("icons8_link_100.png"), "1");
                 case UIIcon.Unpair:
-                    return new IconDataModel(UIIcon.Configure, this.AddDir("icons8_delete_link_52.png"), "1");
+                    return new IconDataModel(UIIcon.Delete, this.AddDir("icons8_delete_link_52.png"), "1");
                 case UIIcon.Credentials:
-                    return new IconDataModel(UIIcon.Configure, this.AddDir("icons8_access.png"), "1");
+                    return new IconDataModel(UIIcon.Credentials, this.AddDir("icons8_access.png"), "1");
                 case UIIcon.CredentialsWhite:
-                    return new IconDataModel(UIIcon.Configure, this.AddDir("icons8_access_50_W.png"), "1");
+                    return new IconDataModel(UIIcon.CredentialsWhite, this.AddDir("icons8_access_50_W.png"), "1");
                 case UIIcon.About:
-                    return new IconDataModel(UIIcon.Configure, this.AddDir("icons8_about_50.png"), "1");
+                    return new IconDataModel(UIIcon.About, this.AddDir("icons8_about_50.png"), "1");
                 case UIIcon.Wifi:
-                    return new IconDataModel(UIIcon.Search, this.AddDir("icons8_wi_fi_32.png"), "6");
+                    return new IconDataModel(UIIcon.Wifi, this.AddDir("icons8_wi_fi_32.png"), "6");
+                case UIIcon.WifiWhite:
+                    return new IconDataModel(UIIcon.WifiWhite, this.AddDir("icons8_wifi_white.png"), "6");
                 case UIIcon.Search:
                     return new IconDataModel(UIIcon.Search, this.AddDir("icons8_search_50.png"), "6");
                 case UIIcon.Run:
-                    return new IconDataModel(UIIcon.Connect, this.AddDir("icons8_running_24.png"), "6");
+                    return new IconDataModel(UIIcon.Run, this.AddDir("icons8_running_24.png"), "6");
                 case UIIcon.Command:
-                    return new IconDataModel(UIIcon.Connect, this.AddDir("icons8_cmd.png"), "6");
+                    return new IconDataModel(UIIcon.Command, this.AddDir("icons8_cmd.png"), "6");
 
 
                 default:

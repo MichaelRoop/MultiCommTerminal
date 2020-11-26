@@ -11947,6 +11947,9 @@ namespace MultiCommTerminal.XamarinForms.Droid
 			// aapt resource value: 0x7F070082
 			public const int icons8_trash_can_50 = 2131165314;
 			
+			// aapt resource value: 0x7F070084
+			public const int icons8_wifi_white = 2131165316;
+			
 			// aapt resource value: 0x7F070083
 			public const int icons8_wi_fi_32 = 2131165315;
 			
@@ -11965,59 +11968,59 @@ namespace MultiCommTerminal.XamarinForms.Droid
 			// aapt resource value: 0x7F07006E
 			public const int ic_mtrl_chip_close_circle = 2131165294;
 			
-			// aapt resource value: 0x7F070084
-			public const int mtrl_snackbar_background = 2131165316;
-			
 			// aapt resource value: 0x7F070085
-			public const int mtrl_tabs_default_indicator = 2131165317;
+			public const int mtrl_snackbar_background = 2131165317;
 			
 			// aapt resource value: 0x7F070086
-			public const int navigation_empty_icon = 2131165318;
+			public const int mtrl_tabs_default_indicator = 2131165318;
 			
 			// aapt resource value: 0x7F070087
-			public const int notification_action_background = 2131165319;
+			public const int navigation_empty_icon = 2131165319;
 			
 			// aapt resource value: 0x7F070088
-			public const int notification_bg = 2131165320;
+			public const int notification_action_background = 2131165320;
 			
 			// aapt resource value: 0x7F070089
-			public const int notification_bg_low = 2131165321;
+			public const int notification_bg = 2131165321;
 			
 			// aapt resource value: 0x7F07008A
-			public const int notification_bg_low_normal = 2131165322;
+			public const int notification_bg_low = 2131165322;
 			
 			// aapt resource value: 0x7F07008B
-			public const int notification_bg_low_pressed = 2131165323;
+			public const int notification_bg_low_normal = 2131165323;
 			
 			// aapt resource value: 0x7F07008C
-			public const int notification_bg_normal = 2131165324;
+			public const int notification_bg_low_pressed = 2131165324;
 			
 			// aapt resource value: 0x7F07008D
-			public const int notification_bg_normal_pressed = 2131165325;
+			public const int notification_bg_normal = 2131165325;
 			
 			// aapt resource value: 0x7F07008E
-			public const int notification_icon_background = 2131165326;
+			public const int notification_bg_normal_pressed = 2131165326;
 			
 			// aapt resource value: 0x7F07008F
-			public const int notification_template_icon_bg = 2131165327;
+			public const int notification_icon_background = 2131165327;
 			
 			// aapt resource value: 0x7F070090
-			public const int notification_template_icon_low_bg = 2131165328;
+			public const int notification_template_icon_bg = 2131165328;
 			
 			// aapt resource value: 0x7F070091
-			public const int notification_tile_bg = 2131165329;
+			public const int notification_template_icon_low_bg = 2131165329;
 			
 			// aapt resource value: 0x7F070092
-			public const int notify_panel_notification_icon_bg = 2131165330;
+			public const int notification_tile_bg = 2131165330;
 			
 			// aapt resource value: 0x7F070093
-			public const int tooltip_frame_dark = 2131165331;
+			public const int notify_panel_notification_icon_bg = 2131165331;
 			
 			// aapt resource value: 0x7F070094
-			public const int tooltip_frame_light = 2131165332;
+			public const int tooltip_frame_dark = 2131165332;
 			
 			// aapt resource value: 0x7F070095
-			public const int xamarin_logo = 2131165333;
+			public const int tooltip_frame_light = 2131165333;
+			
+			// aapt resource value: 0x7F070096
+			public const int xamarin_logo = 2131165334;
 			
 			static Drawable()
 			{

@@ -23,6 +23,7 @@ namespace MultiCommTerminal.XamarinForms.UIHelpers {
         public static string Credentials_W { get { return Source(UIIcon.CredentialsWhite); } }
         public static string About { get { return Source(UIIcon.About); } }
         public static string Wifi { get { return Source(UIIcon.Wifi); } }
+        public static string WifiWhite { get { return Source(UIIcon.WifiWhite); } }
         public static string Run { get { return Source(UIIcon.Run); } }
         public static string Discover { get { return Source(UIIcon.Search); } }
         public static string Command { get { return Source(UIIcon.Command); } }

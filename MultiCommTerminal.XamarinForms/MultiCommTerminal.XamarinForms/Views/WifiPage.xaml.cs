@@ -100,10 +100,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
 
         private void LanguageUpdate(SupportedLanguage language) {
-            // Prefere icon buttons to save on screen 
-            //this.btnDiscover.Text = language.GetText(MsgCode.discover);
-            //this.btnSelect.Text = language.GetText(MsgCode.select);
-            //this.btnCredentials.Text = language.GetText(MsgCode.Credentials);
+            this.lbTitle.Text = "WIFI";
         }
 
 
