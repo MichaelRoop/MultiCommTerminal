@@ -1,4 +1,5 @@
-﻿using CommunicationStack.Net.Stacks;
+﻿using CommunicationStack.Net.Enumerations;
+using CommunicationStack.Net.Stacks;
 using LanguageFactory.Net.data;
 using LanguageFactory.Net.Messaging;
 using LogUtils.Net;
@@ -58,15 +59,17 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.lstResponses.ItemsSource = this.responses;
         }
 
+
         private void OnWifiConnectionAttemptCompletedHandler(object sender, CommunicationStack.Net.DataModels.MsgPumpResults e) {
-            this.OnErr(string.Format("Connect Attempt Result:{0} - {1}", e.Code, e.ErrorString));
+            if (e.Code != MsgPumpResultCode.Connected) {
+                this.OnErr(string.Format("Connect Attempt Result:{0} - {1}", e.Code, e.ErrorString));
+            }
         }
+
 
         protected override void OnAppearing() {
             App.Wrapper.CurrentSupportedLanguage(this.OnLanguageUpdate);
-            App.Wrapper.GetCurrentScript(
-                this.PopulateScriptList,
-                (err) => App.ShowError(this, err));
+            App.Wrapper.GetCurrentScript(this.PopulateScriptList, this.OnErr);
             base.OnAppearing();
         }
 
@@ -99,7 +102,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
             TerminatorDataModel dm = new TerminatorDataModel(infos);
 
             App.Wrapper.SetCurrentTerminators(dm, this.OnErr);
-
+            App.Wrapper.WifiSend(this.entryCmd.Text);
         }
 
         private void btnConnect_Clicked(object sender, EventArgs e) {

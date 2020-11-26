@@ -6,7 +6,6 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using CommunicationStack.Net.DataModels;
-using CommunicationStack.Net.MsgPumps;
 using LogUtils.Net;
 using System;
 using System.Collections.Generic;
@@ -26,7 +25,10 @@ namespace Wifi.AndroidXamarin {
         #region Data
 
         ClassLog log = new ClassLog("WifiImplAndroidXamarin");
-        NetSocketMsgPump msgPump = new NetSocketMsgPump();
+        //NetSocketMsgPump msgPump = new NetSocketMsgPump();
+
+        WifiAndroidMsgPump msgPump = new WifiAndroidMsgPump();
+
         WifiManager manager = null;
         ConnectivityManager connectivityManager;
 
@@ -74,7 +76,7 @@ namespace Wifi.AndroidXamarin {
         }
 
         public void Disconnect() {
-
+            this.msgPump.Disconnect();
             if (this.connectCallback != null) {
                 this.connectivityManager.UnregisterNetworkCallback(this.connectCallback);
                 this.connectCallback.Dispose();
@@ -119,12 +121,9 @@ namespace Wifi.AndroidXamarin {
 
         // TODO - from the message pump but need a new pump with the socket from the wifi
         private void MsgPumpConnectResultEventHandler(object sender, MsgPumpResults e) {
-
             this.log.Info("MsgPumpConnectResultEventHandler", () => string.Format(
                 "Code:{0} SocketErr:{1} Msg:{2}", 
                 e.Code, e.SocketErr, e.ErrorString));
-
-
             this.OnWifiConnectionAttemptCompleted?.Invoke(sender, e);
         }
 
