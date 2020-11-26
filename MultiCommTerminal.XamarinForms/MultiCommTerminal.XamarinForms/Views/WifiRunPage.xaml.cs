@@ -110,7 +110,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
         #region Delegates
 
         private void OnLanguageUpdate(SupportedLanguage language) {
-            this.lbTitle.Text = "Bluetooth";
+            this.lbTitle.Text = App.GetText(MsgCode.Run);
             this.btnConnect.Text = language.GetText(MsgCode.connect);
             this.btnDisconnect.Text = language.GetText(MsgCode.Disconnect);
             this.btnSend.Text = language.GetText(MsgCode.send);

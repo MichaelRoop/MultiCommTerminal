@@ -106,8 +106,8 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
 
 
-        private void UpdateLanguage() {
-            this.lbTitle.Text = "Bluetooth";
+        private void UpdateLanguage(SupportedLanguage language) {
+            this.lbTitle.Text = App.GetText(MsgCode.Run);
             this.lblCmds.Text = App.GetText(MsgCode.command);
             this.lblResponses.Text = App.GetText(MsgCode.response);
             this.btnSend.Text = App.GetText(MsgCode.send);
@@ -158,15 +158,6 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
 
         #region Private
-
-        private void UpdateLanguage(SupportedLanguage language) {
-            this.Title = language.GetText(MsgCode.connect);
-            this.lblCmds.Text = language.GetText(MsgCode.command);
-            this.lblResponses.Text = language.GetText(MsgCode.response);
-            this.btnSend.Text = language.GetText(MsgCode.send);
-            this.btnConnect.Text = language.GetText(MsgCode.connect);
-            this.btnDisconnect.Text = language.GetText(MsgCode.Disconnect);
-        }
 
         #endregion
 
