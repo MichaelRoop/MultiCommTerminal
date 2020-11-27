@@ -49,18 +49,19 @@ namespace MultiCommTerminal.XamarinForms.Views {
         #region Controls events
 
         private void btnDiscover_Clicked(object sender, EventArgs e) {
-            //this.viewModel.GetWifiPermissions.Execute(null);
-            //if (this.viewModel.WifiPermissionsGranted) {
-                this.btnSelect.IsVisible = false;
-                this.ResetWifiList(new List<WifiNetworkInfo>());
-                this.IsBusy = true;
-                this.viewModel.IsBusy = true;
-                this.activity.IsRunning = true;
-                App.Wrapper.WifiDiscoverAsync();
-            //}
-            //else {
-            //    this.OnErr("Insufficient permissions to continue");
-            //}
+            Device.BeginInvokeOnMainThread(async () => {
+                if (await this.viewModel.ChkWifiPermissions2()) {
+                    this.btnSelect.IsVisible = false;
+                    this.ResetWifiList(new List<WifiNetworkInfo>());
+                    this.IsBusy = true;
+                    this.viewModel.IsBusy = true;
+                    this.activity.IsRunning = true;
+                    App.Wrapper.WifiDiscoverAsync();
+                }
+                else {
+                    this.OnErr("Insufficient permissions to continue");
+                }
+            });
         }
 
 

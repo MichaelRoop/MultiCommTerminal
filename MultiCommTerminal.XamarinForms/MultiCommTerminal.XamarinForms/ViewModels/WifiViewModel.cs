@@ -17,7 +17,20 @@ namespace MultiCommTerminal.XamarinForms.ViewModels {
         private bool isGranted = false;
 
 
-        public bool WifiPermissionsGranted { get; private set; }
+        //private bool WifiPermissionsGranted { get; private set; }
+
+        private async Task SetIsGranted(bool isGranted) {
+            await Task.Run(() => {
+                this.isGranted = isGranted;
+            });
+        }
+
+        public async Task<bool> GetIsGranted() {
+            return await Task<bool>.Run(() => {
+                return this.isGranted;
+            });
+        }
+
 
         public WifiViewModel() {
             this.GoToRun = new Command<WifiNetworkInfo>(this.OnGoToRun);
@@ -38,7 +51,8 @@ namespace MultiCommTerminal.XamarinForms.ViewModels {
 
         private async void ChkWifiPermissions() {
             try {
-                this.WifiPermissionsGranted = false;
+                //this.WifiPermissionsGranted = false;
+                await this.SetIsGranted(false);
                 var wifiPermissions = DependencyService.Get<ILocationWhileInUsePermission>();
                 PermissionStatus status;
                 status = await wifiPermissions.CheckStatusAsync();
@@ -46,17 +60,48 @@ namespace MultiCommTerminal.XamarinForms.ViewModels {
                 if (status != PermissionStatus.Granted) {
                     status = await wifiPermissions.RequestAsync();
                     if (status != PermissionStatus.Granted) {
-                        this.WifiPermissionsGranted = false;
+                        //this.WifiPermissionsGranted = false;
+                        await this.SetIsGranted(false);
                         return;
                     }
                 }
-                this.WifiPermissionsGranted = true;
+                await this.SetIsGranted(true);
             }
             catch (Exception) {
-                this.WifiPermissionsGranted = false;
+                await this.SetIsGranted(false);
                 return;
             }
         }
+
+
+        public async Task<bool> ChkWifiPermissions2() {
+            try {
+                //this.WifiPermissionsGranted = false;
+                await this.SetIsGranted(false);
+                var wifiPermissions = DependencyService.Get<ILocationWhileInUsePermission>();
+                PermissionStatus status;
+                status = await wifiPermissions.CheckStatusAsync();
+                LogUtils.Net.Log.Error(77777, () => string.Format("********************************Current wifi status:{0}", status));
+                if (status != PermissionStatus.Granted) {
+                    status = await wifiPermissions.RequestAsync();
+                    if (status != PermissionStatus.Granted) {
+                        //this.WifiPermissionsGranted = false;
+                        await this.SetIsGranted(false);
+                        return await this.GetIsGranted();
+                    }
+                }
+                await this.SetIsGranted(true);
+                return await this.GetIsGranted();
+            }
+            catch (Exception) {
+                await this.SetIsGranted(false);
+                return await this.GetIsGranted();
+            }
+        }
+
+
+
+
 
     }
 

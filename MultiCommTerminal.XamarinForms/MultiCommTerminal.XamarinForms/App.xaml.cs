@@ -67,16 +67,17 @@ namespace MultiCommTerminal.XamarinForms {
 
 
         protected override void OnStart() {
-            Device.BeginInvokeOnMainThread(async () => {
-                if (!await this.CheckPermissions()) {
-                    ICloseApplication closeApp = DependencyService.Get<ICloseApplication>();
-                    await Application.Current.MainPage.DisplayAlert(
-                        App.GetText(MsgCode.Error),
-                        "Insufficient permissions",
-                        App.GetText(MsgCode.Ok));
-                    closeApp.CloseApp();
-                }
-            });
+
+            //Device.BeginInvokeOnMainThread(async () => {
+            //    if (!await this.CheckPermissions()) {
+            //        ICloseApplication closeApp = DependencyService.Get<ICloseApplication>();
+            //        await Application.Current.MainPage.DisplayAlert(
+            //            App.GetText(MsgCode.Error),
+            //            "Insufficient permissions",
+            //            App.GetText(MsgCode.Ok));
+            //        closeApp.CloseApp();
+            //    }
+            //});
         }
 
 
