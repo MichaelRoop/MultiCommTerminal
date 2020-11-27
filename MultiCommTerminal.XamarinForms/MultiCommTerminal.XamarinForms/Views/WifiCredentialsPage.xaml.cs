@@ -1,5 +1,8 @@
 ﻿using LanguageFactory.Net.data;
 using LanguageFactory.Net.Messaging;
+using MultiCommTerminal.XamarinForms.UIHelpers;
+using StorageFactory.Net.interfaces;
+using StorageFactory.Net.StorageManagers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,9 +26,26 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         protected override void OnAppearing() {
             App.Wrapper.CurrentSupportedLanguage(this.LanguageUpdate);
+            App.Wrapper.GetWifiCredList(this.ReloadList, this.OnErr);
             base.OnAppearing();
         }
 
+        #endregion
+
+
+        #region Button event handlers
+
+        private void btnAdd_Clicked(object sender, EventArgs e) {
+
+        }
+
+        private void btnEdit_Clicked(object sender, EventArgs e) {
+
+        }
+
+        private void btnDelete_Clicked(object sender, EventArgs e) {
+
+        }
 
         #endregion
 
@@ -33,13 +53,16 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         private void LanguageUpdate(SupportedLanguage language) {
             this.lbTitle.Text = language.GetText(MsgCode.Credentials);
-
-            //this.btnDiscover.Text = language.GetText(MsgCode.discover);
-            //this.btnSelect.Text = language.GetText(MsgCode.select);
         }
 
-
         #endregion
+
+
+        private void ReloadList(List<IIndexItem<DefaultFileExtraInfo>> items) {
+            this.lstCreds.ItemsSource = null;
+            this.lstCreds.SelectedItem = null;
+            this.lstCreds.ItemsSource = items;
+        }
 
     }
 }

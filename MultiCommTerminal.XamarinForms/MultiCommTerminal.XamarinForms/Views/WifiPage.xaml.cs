@@ -58,7 +58,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
                     App.Wrapper.WifiDiscoverAsync();
                 }
                 else {
-                    this.OnErr("Insufficient permissions to continue");
+                    this.OnErr(MsgCode.InsufficienPermissions);
                 }
             });
         }
