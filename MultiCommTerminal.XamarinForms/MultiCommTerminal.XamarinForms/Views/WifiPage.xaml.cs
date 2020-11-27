@@ -6,8 +6,6 @@ using MultiCommTerminal.XamarinForms.UIHelpers;
 using MultiCommTerminal.XamarinForms.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using WifiCommon.Net.DataModels;
 using Xamarin.Essentials;
@@ -24,8 +22,11 @@ namespace MultiCommTerminal.XamarinForms.Views {
         private ClassLog log = new ClassLog("WifiPage");
         private List<WifiNetworkInfo> networks = new List<WifiNetworkInfo>();
         private WifiViewModel viewModel;
+        private bool permissionsGranted = false;
 
         #endregion
+
+        #region Constructor and overrides
 
         public WifiPage() {
             InitializeComponent();
@@ -41,10 +42,10 @@ namespace MultiCommTerminal.XamarinForms.Views {
         protected override void OnAppearing() {
             App.Wrapper.CurrentSupportedLanguage(this.LanguageUpdate);
             this.lstWifi.SelectedItem = null;
-            // loops on Deny and hanges on dont ask again
-            //this.viewModel.GetWifiPermissions.Execute(null);
             base.OnAppearing();
         }
+
+        #endregion
 
         #region Controls events
 
@@ -124,12 +125,10 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.lstWifi.ItemsSource = this.networks;
         }
 
-
         #endregion
 
         #region WifiPermission checks
 
-        private bool permissionsGranted = false;
 
         private async Task SetAreGranted(bool granted) {
             await Task.Run(() => this.permissionsGranted = granted);
@@ -140,12 +139,14 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
 
+        /// <summary>Checks and asks user for sufficient permissions for WIFI</summary>
+        /// <returns>true if ok to continue, otherwise false</returns>
         public async Task<bool> ChkWifiPermissions() {
             try {
                 await this.SetAreGranted(false);
-                var wifiPermissions = 
+                ILocationWhileInUsePermission wifiPermissions = 
                     DependencyService.Get<ILocationWhileInUsePermission>();
-                var status = await wifiPermissions.CheckStatusAsync();
+                PermissionStatus status = await wifiPermissions.CheckStatusAsync();
                 if (status != PermissionStatus.Granted) {
                     status = await wifiPermissions.RequestAsync();
                     if (status != PermissionStatus.Granted) {
@@ -154,14 +155,14 @@ namespace MultiCommTerminal.XamarinForms.Views {
                 }
                 await this.SetAreGranted(true);
             }
-            catch (Exception) {
-                return await this.GetIsGranted();
+            catch (Exception e) {
+                this.log.Exception(9999, "", e);
+                await this.SetAreGranted(false);
             }
             return await this.GetIsGranted();
         }
 
         #endregion
-
 
     }
 }
