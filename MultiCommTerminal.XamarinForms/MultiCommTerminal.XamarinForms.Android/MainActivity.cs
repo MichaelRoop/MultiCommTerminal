@@ -14,6 +14,12 @@ using ChkUtils.Net.ErrObjects;
 using Xamarin.Essentials;
 using System.Threading.Tasks;
 using MultiCommTerminal.XamarinForms.Droid.PermissionsObjects;
+using AndroidX.Core.App;
+using Java.Interop;
+using Android;
+using Plugin.Permissions;
+using Xamarin.Forms;
+using MultiCommTerminal.XamarinForms.interfaces;
 
 namespace MultiCommTerminal.XamarinForms.Droid {
     [Activity(Label = "MultiCommTerminal.XamarinForms", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize)]
@@ -47,9 +53,141 @@ namespace MultiCommTerminal.XamarinForms.Droid {
             //    await this.CheckAndRequestLocationStatePermission();
             //});
 
-            this.ChkPermissions2();
+
+
+            //if (!(CheckPermissionGranted(Android.Manifest.Permission.AccessCoarseLocation) &&
+            //           CheckPermissionGranted(Android.Manifest.Permission.AccessFineLocation))) {
+            //    RequestLocationPermission();
+            //}
+            //else {
+            //    InitializeLocationManager();
+            //}
+
+
+            //this.ChkPermissions2();
+
+
+            DependencyService.Register<ILocationWhileInUsePermission, LocationWhileInUsePermission>();
+
             LoadApplication(new App(DI.Wrapper));
+
+
+            //this.ChkPermissions2();
+            //Task.Run(async () => await this.ChkPermissions3());
+
+
         }
+
+
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults) {
+            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+
+            this.log.Error(88888, "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", requestCode.ToString());
+
+            //PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+
+            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+
+
+
+        //private void RequestLocationPermission() {
+        //    if (ActivityCompat.ShouldShowRequestPermissionRationale(this, Manifest.Permission.AccessFineLocation)) {
+        //        // Provide an additional rationale to the user if the permission was not granted
+        //        // and the user would benefit from additional context for the use of the permission.
+        //        // For example if the user has previously denied the permission.
+        //        ActivityCompat.RequestPermissions(this, PermissionsLocation, REQUEST_LOCATION);
+
+        //    }
+        //    else {
+        //        // Camera permission has not been granted yet. Request it directly.
+        //        ActivityCompat.RequestPermissions(this, PermissionsLocation, REQUEST_LOCATION);
+        //    }
+        //}
+
+
+        //[Export]
+        //public bool CheckPermissionGranted(string Permissions) {
+        //    // Check if the permission is already available.
+        //    if (ActivityCompat.CheckSelfPermission(this, Permissions) != Permission.Granted) {
+        //        return false;
+        //    }
+        //    else {
+        //        return true;
+        //    }
+        //}
+
+
+
+
+        protected async Task ChkPermissions3() {
+            try {
+                //Task<PermissionStatus> status;
+                //var status = Permissions.CheckStatusAsync<Permissions.StorageRead>();
+                //if (status.Result != PermissionStatus.Granted) {
+                //    status = Permissions.RequestAsync<Permissions.StorageRead>();
+                //}
+
+                //status = Permissions.CheckStatusAsync<Permissions.StorageWrite>();
+                //if (status.Result != PermissionStatus.Granted) {
+                //    status = Permissions.RequestAsync<Permissions.StorageWrite>();
+                //}
+
+                var status = await Permissions.CheckStatusAsync<Permissions.NetworkState>();
+                if (status != PermissionStatus.Granted) {
+                    status = await Permissions.RequestAsync<Permissions.NetworkState>();
+                }
+
+                status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+                if (status != PermissionStatus.Granted) {
+                    status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+                    if (status != PermissionStatus.Granted) {
+                        // Need message to tell them to turn it on to allow WIFI to scan
+                    }
+                }
+
+                status = await Permissions.RequestAsync<WifiStateChangePermission>();
+                if (status != PermissionStatus.Granted) {
+                    status = await Permissions.RequestAsync<WifiStateChangePermission>();
+                    if (status != PermissionStatus.Granted) {
+                        // Need message to tell them to turn it on to allow WIFI to scan
+                    }
+                }
+
+
+                //status = Permissions.CheckStatusAsync<Permissions.StorageWrite>();
+                //if (status.Result != PermissionStatus.Granted) {
+                //    status = Permissions.RequestAsync<Permissions.StorageWrite>();
+                //}
+
+
+                //WifiStateChangePermission
+
+
+
+                //status = Permissions.CheckStatusAsync<Permissions..NetworkState>();
+                //if (status.Result != PermissionStatus.Granted) {
+                //    status = Permissions.RequestAsync<Permissions.NetworkState>();
+                //}
+
+
+
+                //status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+                //if (status != PermissionStatus.Granted) {
+                //    status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+                //}
+            }
+            catch (Exception e) {
+                this.log.Exception(55555, "", e);
+            }
+
+
+        }
+
+
+
+
 
 
         //https://docs.microsoft.com/en-us/xamarin/essentials/permissions?tabs=android
@@ -79,10 +217,7 @@ namespace MultiCommTerminal.XamarinForms.Droid {
                     }
                 }
 
-
-                this.log.Info("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||", () => string.Format("Status of Location when in use Permission:{0}", status.Result));
                 status = Permissions.RequestAsync<WifiStateChangePermission>();
-                this.log.Info("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||", () => string.Format("Status of Wifi State Change Permission:{0}", status.Result));
                 if (status.Result != PermissionStatus.Granted) {
                     status = Permissions.RequestAsync<WifiStateChangePermission>();
                     if (status.Result != PermissionStatus.Granted) {
@@ -122,18 +257,6 @@ namespace MultiCommTerminal.XamarinForms.Droid {
 
 
 
-        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults) {
-            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-
-            //if (requestCode == REQUEST_LOCATION) {
-
-            //}
-
-
-
-
-            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
 
         #endregion
 
