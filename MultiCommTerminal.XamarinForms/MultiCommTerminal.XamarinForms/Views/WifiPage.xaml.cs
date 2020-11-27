@@ -21,7 +21,6 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         private ClassLog log = new ClassLog("WifiPage");
         private List<WifiNetworkInfo> networks = new List<WifiNetworkInfo>();
-        private ActivityIndicator activity = new ActivityIndicator();
         private WifiViewModel viewModel;
 
         #endregion
@@ -81,20 +80,24 @@ namespace MultiCommTerminal.XamarinForms.Views {
         #region Private event handlers
 
         private void OnWifiErrorHandler(object sender, WifiCommon.Net.DataModels.WifiError e) {
-            this.IsBusy = false;
-            this.viewModel.IsBusy = false;
-            this.activity.IsRunning = false;
-            this.OnErr(e.ExtraInfo.Length > 0 ? e.ExtraInfo : e.Code.ToString());
+            Device.BeginInvokeOnMainThread(() => {
+                this.IsBusy = false;
+                this.viewModel.IsBusy = false;
+                this.activity.IsRunning = false;
+                this.OnErr(e.ExtraInfo.Length > 0 ? e.ExtraInfo : e.Code.ToString());
+            });
         }
 
         private void DiscoveredWifiNetworksHandler(object sender, List<WifiNetworkInfo> e) {
-            this.IsBusy = false;
-            this.viewModel.IsBusy = false;
-            this.activity.IsRunning = false;
-            if (e.Count > 0) {
-                this.btnSelect.IsVisible = true;
-            }
-            this.ResetWifiList(e);
+            Device.BeginInvokeOnMainThread(() => {
+                this.IsBusy = false;
+                this.viewModel.IsBusy = false;
+                this.activity.IsRunning = false;
+                if (e.Count > 0) {
+                    this.btnSelect.IsVisible = true;
+                }
+                this.ResetWifiList(e);
+            });
         }
 
 

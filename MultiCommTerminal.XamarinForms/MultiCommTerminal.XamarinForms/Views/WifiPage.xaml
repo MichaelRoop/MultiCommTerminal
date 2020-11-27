@@ -13,27 +13,33 @@
         </StackLayout>
     </Shell.TitleView>
     <ContentPage.Content>
-        <StackLayout>
-            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                <Frame BorderColor="LightBlue">
-                    <ListView x:Name="lstWifi" 
+        <Grid>
+            <StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                    <Frame BorderColor="LightBlue">
+                        <StackLayout>
+                            <ListView x:Name="lstWifi" 
                       MinimumHeightRequest="20" MinimumWidthRequest="20">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <TextCell Text="{Binding SSID}"/>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Frame>
-                <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand">
-                    <Button x:Name="btnCredentials" Clicked="btnCredentials_Clicked" BorderWidth="0"
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextCell Text="{Binding SSID}"/>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackLayout>
+                    </Frame>
+                    <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand">
+                        <Button x:Name="btnCredentials" Clicked="btnCredentials_Clicked" BorderWidth="0"
                         ImageSource="{Binding Source={x:Static helpers:IconBinder.Credentials}}"  />
-                    <Button x:Name="btnDiscover" Clicked="btnDiscover_Clicked" BorderWidth="0"
+                        <Button x:Name="btnDiscover" Clicked="btnDiscover_Clicked" BorderWidth="0"
                         ImageSource="{Binding Source={x:Static helpers:IconBinder.Discover}}"  />
-                    <Button x:Name="btnSelect" Clicked="btnSelect_Clicked" BorderWidth="0"
+                        <Button x:Name="btnSelect" Clicked="btnSelect_Clicked" BorderWidth="0"
                         ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}"  />
+                    </StackLayout>
                 </StackLayout>
             </StackLayout>
-        </StackLayout>
+            <ActivityIndicator x:Name="activity" Color="CornflowerBlue"
+                HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

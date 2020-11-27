@@ -5,6 +5,7 @@ using LanguageFactory.Net.Messaging;
 using LogUtils.Net;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommTerminal.XamarinForms.UIHelpers;
+using MultiCommTerminal.XamarinForms.ViewModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         private List<ScriptItem> cmds = new List<ScriptItem>();
         private List<string> responses = new List<string>();
-
+        private WifiRunViewModel viewModel;
         WifiNetworkInfo networkInfo;
         ClassLog log = new ClassLog("WifiRunPage");
 
@@ -53,25 +54,46 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         public WifiRunPage() {
             InitializeComponent();
+            this.BindingContext = this.viewModel = new WifiRunViewModel();
             App.Wrapper.Wifi_BytesReceived += Wifi_BytesReceivedHandler;
             App.Wrapper.OnWifiConnectionAttemptCompleted += this.OnWifiConnectionAttemptCompletedHandler;
+            App.Wrapper.OnWifiError += this.OnWifiErrorHandler;
             this.lstCmds.ItemsSource = this.cmds;
             this.lstResponses.ItemsSource = this.responses;
         }
 
+        private void OnWifiErrorHandler(object sender, WifiError e) {
+            this.viewModel.IsBusy = false;
+            this.OnErr(e.ExtraInfo.Length > 0 ? e.ExtraInfo : e.Code.ToString());
+        }
+
 
         private void OnWifiConnectionAttemptCompletedHandler(object sender, CommunicationStack.Net.DataModels.MsgPumpResults e) {
-            if (e.Code != MsgPumpResultCode.Connected) {
-                this.OnErr(string.Format("Connect Attempt Result:{0} - {1}", e.Code, e.ErrorString));
-            }
+            Device.BeginInvokeOnMainThread(() => {
+                this.viewModel.IsBusy = false;
+                if (e.Code == MsgPumpResultCode.Connected) {
+                    this.SetConnectedLight(true);
+                }
+                else {
+                    this.OnErr(string.Format("Connect Attempt Result:{0} - {1}", e.Code, e.ErrorString));
+                }
+            });
         }
 
 
         protected override void OnAppearing() {
             App.Wrapper.CurrentSupportedLanguage(this.OnLanguageUpdate);
             App.Wrapper.GetCurrentScript(this.PopulateScriptList, this.OnErr);
+            this.SetConnectedLight(false);
             base.OnAppearing();
         }
+
+        protected override void OnDisappearing() {
+            App.Wrapper.WifiDisconect();
+            this.SetConnectedLight(false);
+            base.OnDisappearing();
+        }
+
 
         private void Wifi_BytesReceivedHandler(object sender, string e) {
             Device.BeginInvokeOnMainThread(() => {
@@ -99,10 +121,13 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
         private void btnConnect_Clicked(object sender, EventArgs e) {
+            this.SetConnectedLight(false);
+            this.viewModel.IsBusy = true;
             App.Wrapper.WifiConnectAsync(this.networkInfo);
         }
 
         private void btnDisconnect_Clicked(object sender, EventArgs e) {
+            this.SetConnectedLight(false);
             App.Wrapper.WifiDisconect();
         }
 
@@ -114,6 +139,8 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.btnConnect.Text = language.GetText(MsgCode.connect);
             this.btnDisconnect.Text = language.GetText(MsgCode.Disconnect);
             this.btnSend.Text = language.GetText(MsgCode.send);
+            this.lblCmds.Text = language.GetText(MsgCode.commands);
+            this.lblResponses.Text = language.GetText(MsgCode.response);
         }
 
 
@@ -125,6 +152,13 @@ namespace MultiCommTerminal.XamarinForms.Views {
             }
             this.lstCmds.ItemsSource = this.cmds;
         }
+
+
+        private void SetConnectedLight(bool isOn) {
+            this.onLight.IsVisible = isOn;
+            this.offLight.IsVisible = !isOn;
+        }
+
 
         #endregion
 

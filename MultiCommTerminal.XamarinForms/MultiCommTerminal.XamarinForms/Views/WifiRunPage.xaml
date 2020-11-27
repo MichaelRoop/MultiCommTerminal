@@ -39,20 +39,43 @@
                     </StackLayout>
                 </Frame>
             </StackLayout>
-            <StackLayout Margin="0,20,0,10">
-                <Grid >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" x:Name="btnSend" Text="Send" Clicked="btnSend_Clicked" />
-                    <Entry Grid.Column="1" Text="OpenDoor" x:Name="entryCmd" HeightRequest="60" Margin="0, 0,0,0" />
-                </Grid>
+
+            <!-- Bottom control section -->
+            <StackLayout Margin="10" Padding="0">
+                <StackLayout Margin="0,0,0,10" Padding="0">
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" x:Name="btnSend" Text="Send" Clicked="btnSend_Clicked"
+                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Run}}"/>
+                        <Entry Grid.Column="1" Text="OpenDoor" x:Name="entryCmd" 
+                               VerticalOptions="StartAndExpand" Margin="0,0,0,0" />
+                    </Grid>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Grid VerticalOptions="Center" Margin="0,0,15,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="16" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="16"/>
+                        </Grid.ColumnDefinitions>
+                        <Frame x:Name="onLight"  BackgroundColor="GreenYellow" BorderColor="DarkGray" CornerRadius="8" IsVisible="false"/>
+                        <Frame x:Name="offLight"  BackgroundColor="LightGray" BorderColor="DarkGray" CornerRadius="8" IsVisible="true" />
+                    </Grid>
+
+                    <Button x:Name="btnConnect" Text="Connect" ImageSource="{Binding Source={x:Static helpers:IconBinder.Connect}}"
+                        Clicked="btnConnect_Clicked" />
+                    <Button x:Name="btnDisconnect" Text="Disconnect" ImageSource="{Binding Source={x:Static helpers:IconBinder.Disconnect}}"
+                        Clicked="btnDisconnect_Clicked" />
+                </StackLayout>
             </StackLayout>
-            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                <Button x:Name="btnConnect" Text="Connect" Clicked="btnConnect_Clicked" />
-                <Button x:Name="btnDisconnect" Text="Connect" Clicked="btnDisconnect_Clicked" />
-            </StackLayout>
+
         </StackLayout>
 
     </ContentPage.Content>

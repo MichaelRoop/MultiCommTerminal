@@ -19,6 +19,7 @@ namespace MultiCommTerminal.XamarinForms.UIHelpers {
         public static string Terminator { get { return Source(UIIcon.Terminator); } }
         public static string Terminator_W { get { return Source(UIIcon.TerminatorWhite); } }
         public static string Connect { get { return Source(UIIcon.Connect); } }
+        public static string Disconnect { get { return Source(UIIcon.Disconnect); } }
         public static string Pair { get { return Source(UIIcon.Pair); } }
         public static string Unpair { get { return Source(UIIcon.Unpair); } }
         public static string Credentials { get { return Source(UIIcon.Credentials); } }
@@ -31,7 +32,7 @@ namespace MultiCommTerminal.XamarinForms.UIHelpers {
         public static string Discover { get { return Source(UIIcon.Search); } }
         public static string Command { get { return Source(UIIcon.Command); } }
         public static string Command_W { get { return Source(UIIcon.CommandWhite); } }
-
+        public static string Send { get { return Source(UIIcon.Run); } }
 
 
         private static string Source(UIIcon code) {
