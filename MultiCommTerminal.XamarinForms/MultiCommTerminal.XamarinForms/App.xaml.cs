@@ -79,6 +79,11 @@ namespace MultiCommTerminal.XamarinForms {
         }
 
 
+        public static void ShowError(Page page, MsgCode code) {
+            ShowError(page, App.GetText(code));
+        }
+
+
         private void OnCurrentTerminatorChanged(object sender, TerminatorDataModel e) {
             Device.BeginInvokeOnMainThread(() => {
                 TerminatorsUpdated?.Invoke(this, e);
