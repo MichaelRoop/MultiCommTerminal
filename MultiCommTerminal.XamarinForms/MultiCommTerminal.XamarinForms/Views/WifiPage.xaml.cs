@@ -50,11 +50,9 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         private void btnDiscover_Clicked(object sender, EventArgs e) {
             Device.BeginInvokeOnMainThread(async () => {
-                if (await this.viewModel.ChkWifiPermissions2()) {
+                if (await this.ChkWifiPermissions()) {
                     this.btnSelect.IsVisible = false;
                     this.ResetWifiList(new List<WifiNetworkInfo>());
-                    this.IsBusy = true;
-                    this.viewModel.IsBusy = true;
                     this.activity.IsRunning = true;
                     App.Wrapper.WifiDiscoverAsync();
                 }
@@ -131,131 +129,36 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         #region WifiPermission checks
 
-        protected async Task<bool> ChkWifiPermissions() {
-            try {
-                var wifiPermissions = DependencyService.Get<ILocationWhileInUsePermission>();
-                PermissionStatus status;
-                status = await wifiPermissions.CheckStatusAsync();
-                if (status != PermissionStatus.Granted) {
-                    status = await wifiPermissions.RequestAsync();
-                    if (status != PermissionStatus.Granted) {
-                        this.OnErr("Network State permission required");
-                        return false;
-                    }
-                }
-                return true;
-            }
-            catch (Exception e) {
-                this.log.Exception(55555, "", e);
-                this.OnErr(string.Format("Permissions error:{0}", e.Message));
-                return false;
-            }
+        private bool permissionsGranted = false;
+
+        private async Task SetAreGranted(bool granted) {
+            await Task.Run(() => this.permissionsGranted = granted);
+        }
+
+        public async Task<bool> GetIsGranted() {
+            return await Task<bool>.Run(() => { return this.permissionsGranted; });
         }
 
 
-
-        //protected bool ChkWifiPermissions() {
-        //    try {
-        //        var wifiPermissions = DependencyService.Get<ILocationWhileInUsePermission>();
-        //        Task<PermissionStatus> status;
-        //        status = wifiPermissions.CheckStatusAsync();
-        //        if (status.Result != PermissionStatus.Granted) {
-        //            status = wifiPermissions.RequestAsync();
-        //            if (status.Result != PermissionStatus.Granted) {
-        //                this.OnErr("Network State permission required");
-        //                return false;
-        //            }
-        //        }
-        //        return true;
-
-
-
-        //        //Task<PermissionStatus> status;
-        //        //status = Permissions.CheckStatusAsync<Permissions.NetworkState>();
-        //        //if (status.Result != PermissionStatus.Granted) {
-        //        //    status = Permissions.RequestAsync<Permissions.NetworkState>();
-        //        //    if (status.Result != PermissionStatus.Granted) {
-        //        //        this.OnErr("Network State permission required");
-        //        //        return false;
-        //        //    }
-        //        //}
-
-        //        //status = Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-        //        //if (status.Result != PermissionStatus.Granted) {
-        //        //    status = Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-        //        //    if (status.Result != PermissionStatus.Granted) {
-        //        //        this.OnErr("Location permission required");
-        //        //        return false;
-        //        //    }
-        //        //}
-
-
-        //        //status = Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-        //        //if (status.Result != PermissionStatus.Granted) {
-        //        //    status = Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-        //        //    if (status.Result != PermissionStatus.Granted) {
-        //        //        this.OnErr("Location permission required");
-        //        //        return false;
-        //        //    }
-        //        //}
-
-        //        // Need access wifi state and change wifi state. Might be ok just declared in manifest
-
-
-        //        return true;
-        //    }
-        //    catch (Exception e) {
-        //        this.log.Exception(55555, "", e);
-        //        this.OnErr(string.Format("Permissions error:{0}", e.Message));
-        //        return false;
-        //    }
-        //}
-
-
-
-
-        //protected async Task<bool> ChkWifiPermissions() {
-        //    try {
-        //        PermissionStatus status;
-        //        status = await Permissions.CheckStatusAsync<Permissions.NetworkState>();
-        //        if (status != PermissionStatus.Granted) {
-        //            status = await Permissions.RequestAsync<Permissions.NetworkState>();
-        //            if (status != PermissionStatus.Granted) {
-        //                this.OnErr("Network State permission required");
-        //                return false;
-        //            }
-        //        }
-
-        //        status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-        //        if (status != PermissionStatus.Granted) {
-        //            status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-        //            if (status != PermissionStatus.Granted) {
-        //                this.OnErr("Location permission required");
-        //                return false;
-        //            }
-        //        }
-
-
-        //        //status = Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-        //        //if (status.Result != PermissionStatus.Granted) {
-        //        //    status = Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-        //        //    if (status.Result != PermissionStatus.Granted) {
-        //        //        this.OnErr("Location permission required");
-        //        //        return false;
-        //        //    }
-        //        //}
-
-        //        // Need access wifi state and change wifi state. Might be ok just declared in manifest
-
-
-        //        return true;
-        //    }
-        //    catch (Exception e) {
-        //        this.log.Exception(55555, "", e);
-        //        this.OnErr(string.Format("Permissions error:{0}", e.Message));
-        //        return false;
-        //    }
-        //}
+        public async Task<bool> ChkWifiPermissions() {
+            try {
+                await this.SetAreGranted(false);
+                var wifiPermissions = 
+                    DependencyService.Get<ILocationWhileInUsePermission>();
+                var status = await wifiPermissions.CheckStatusAsync();
+                if (status != PermissionStatus.Granted) {
+                    status = await wifiPermissions.RequestAsync();
+                    if (status != PermissionStatus.Granted) {
+                        return await this.GetIsGranted();
+                    }
+                }
+                await this.SetAreGranted(true);
+            }
+            catch (Exception) {
+                return await this.GetIsGranted();
+            }
+            return await this.GetIsGranted();
+        }
 
         #endregion
 
