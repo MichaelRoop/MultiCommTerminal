@@ -61,10 +61,11 @@
     <PackageReference Include="Plugin.Permissions">
       <Version>6.0.1</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1451" />
+    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1687" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DependencyInjection\AndroidCloseApp.cs" />
     <Compile Include="DependencyInjection\AndroidDIExtraCreators.cs" />
     <Compile Include="DependencyInjection\DI.cs" />
     <Compile Include="MainActivity.cs" />

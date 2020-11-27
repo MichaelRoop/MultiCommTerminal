@@ -68,6 +68,7 @@ namespace MultiCommTerminal.XamarinForms.Droid {
 
 
             DependencyService.Register<ILocationWhileInUsePermission, LocationWhileInUsePermission>();
+            DependencyService.Register<ICloseApplication, AndroidCloseApp>();
 
             LoadApplication(new App(DI.Wrapper));
 

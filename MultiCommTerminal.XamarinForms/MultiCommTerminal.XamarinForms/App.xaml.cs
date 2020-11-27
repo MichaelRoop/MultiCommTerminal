@@ -9,6 +9,8 @@ using LanguageFactory.Net.data;
 using IconFactory.Net.data;
 using LanguageFactory.Net.Messaging;
 using MultiCommData.Net.StorageDataModels;
+using Xamarin.Essentials;
+using MultiCommTerminal.XamarinForms.interfaces;
 
 namespace MultiCommTerminal.XamarinForms {
     public partial class App : Application {
@@ -64,9 +66,30 @@ namespace MultiCommTerminal.XamarinForms {
 
 
 
-
         protected override void OnStart() {
+            Device.BeginInvokeOnMainThread(async () => {
+                if (!await this.CheckPermissions()) {
+                    ICloseApplication closeApp = DependencyService.Get<ICloseApplication>();
+                    await Application.Current.MainPage.DisplayAlert(
+                        App.GetText(MsgCode.Error),
+                        "Insufficient permissions",
+                        App.GetText(MsgCode.Ok));
+                    closeApp.CloseApp();
+                }
+            });
         }
+
+
+        private async Task<bool> CheckPermissions() {
+            ILocationWhileInUsePermission wifiPermissions = 
+                DependencyService.Get<ILocationWhileInUsePermission>();
+            PermissionStatus status = await wifiPermissions.CheckStatusAsync();
+            if (status != PermissionStatus.Granted) {
+                status = await wifiPermissions.RequestAsync();
+            }
+            return status == PermissionStatus.Granted;
+        }
+
 
         protected override void OnSleep() {
         }

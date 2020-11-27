@@ -14,6 +14,8 @@ namespace MultiCommTerminal.XamarinForms.ViewModels {
         public Command<WifiNetworkInfo> GoToRun;
         public Command GoToCredentials;
         public Command GetWifiPermissions;
+        private bool isGranted = false;
+
 
         public bool WifiPermissionsGranted { get; private set; }
 
@@ -34,13 +36,13 @@ namespace MultiCommTerminal.XamarinForms.ViewModels {
         }
 
 
-
         private async void ChkWifiPermissions() {
             try {
                 this.WifiPermissionsGranted = false;
                 var wifiPermissions = DependencyService.Get<ILocationWhileInUsePermission>();
                 PermissionStatus status;
                 status = await wifiPermissions.CheckStatusAsync();
+                LogUtils.Net.Log.Error(77777, () => string.Format("********************************Current wifi status:{0}", status));
                 if (status != PermissionStatus.Granted) {
                     status = await wifiPermissions.RequestAsync();
                     if (status != PermissionStatus.Granted) {
@@ -55,9 +57,6 @@ namespace MultiCommTerminal.XamarinForms.ViewModels {
                 return;
             }
         }
-
-
-
 
     }
 
