@@ -19,7 +19,16 @@ namespace MultiCommTerminal.XamarinForms {
             Routing.RegisterRoute(nameof(WifiPage), typeof(WifiPage));
             Routing.RegisterRoute(nameof(WifiRunPage), typeof(WifiRunPage));
             Routing.RegisterRoute(nameof(WifiCredentialsPage), typeof(WifiCredentialsPage));
-            Routing.RegisterRoute(nameof(WifiCredentialsModalEditPage), typeof(WifiCredentialsModalEditPage));
+
+            // Define multiple routes for return of Wifi Credentials
+            // This one is for pop up on connection when no creds identified
+            Routing.RegisterRoute(
+                string.Format("{0}/{1}", nameof(WifiRunPage), nameof(WifiCredentialsModalEditPage)), 
+                typeof(WifiCredentialsModalEditPage));
+            // This one when opening from Credential list page
+            Routing.RegisterRoute(
+                string.Format("{0}/{1}", nameof(WifiCredentialsPage), nameof(WifiCredentialsModalEditPage)),
+                typeof(WifiCredentialsModalEditPage));
 
             Routing.RegisterRoute(nameof(LanguagePage), typeof(LanguagePage));
 

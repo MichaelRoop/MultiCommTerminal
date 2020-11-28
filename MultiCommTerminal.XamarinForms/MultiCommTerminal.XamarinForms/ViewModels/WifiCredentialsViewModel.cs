@@ -19,8 +19,9 @@ namespace MultiCommTerminal.XamarinForms.ViewModels {
 
         private async void OnCredEdit(IIndexItem<DefaultFileExtraInfo> index) {
             // Temp for test
-            await Shell.Current.GoToAsync(nameof(WifiCredentialsModalEditPage));
-
+            //await Shell.Current.GoToAsync(nameof(WifiCredentialsModalEditPage));
+            await Shell.Current.GoToAsync(
+                string.Format("{0}/{1}", nameof(WifiCredentialsPage), nameof(WifiCredentialsModalEditPage)));
 
 
             if (index != null) {
