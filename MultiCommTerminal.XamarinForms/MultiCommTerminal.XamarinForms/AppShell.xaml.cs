@@ -19,6 +19,7 @@ namespace MultiCommTerminal.XamarinForms {
             Routing.RegisterRoute(nameof(WifiPage), typeof(WifiPage));
             Routing.RegisterRoute(nameof(WifiRunPage), typeof(WifiRunPage));
             Routing.RegisterRoute(nameof(WifiCredentialsPage), typeof(WifiCredentialsPage));
+            Routing.RegisterRoute(nameof(WifiCredentialsModalEditPage), typeof(WifiCredentialsModalEditPage));
 
             Routing.RegisterRoute(nameof(LanguagePage), typeof(LanguagePage));
 

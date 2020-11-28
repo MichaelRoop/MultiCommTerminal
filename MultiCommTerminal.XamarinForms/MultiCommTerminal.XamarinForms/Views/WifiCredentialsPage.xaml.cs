@@ -1,6 +1,7 @@
 ﻿using LanguageFactory.Net.data;
 using LanguageFactory.Net.Messaging;
 using MultiCommTerminal.XamarinForms.UIHelpers;
+using MultiCommTerminal.XamarinForms.ViewModels;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System;
@@ -17,10 +18,17 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
     public partial class WifiCredentialsPage : ContentPage {
 
+        #region Data
+
+        WifiCredentialsViewModel viewModel;
+
+        #endregion
+
         #region Constructors and overrides
 
         public WifiCredentialsPage() {
             InitializeComponent();
+            this.BindingContext = this.viewModel = new WifiCredentialsViewModel();
         }
 
 
@@ -36,11 +44,11 @@ namespace MultiCommTerminal.XamarinForms.Views {
         #region Button event handlers
 
         private void btnAdd_Clicked(object sender, EventArgs e) {
-
+            this.viewModel.GoToCredEdit.Execute(null);
         }
 
         private void btnEdit_Clicked(object sender, EventArgs e) {
-
+            this.viewModel.GoToCredEdit.Execute(null);
         }
 
         private void btnDelete_Clicked(object sender, EventArgs e) {
