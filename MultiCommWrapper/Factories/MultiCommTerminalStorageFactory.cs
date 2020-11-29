@@ -1,56 +1,26 @@
 ﻿using ChkUtils.Net;
-using CommunicationStack.Net.Stacks;
 using Ethernet.Common.Net.DataModels;
 using MultiCommData.Net.StorageDataModels;
+using MultiCommWrapper.Net.interfaces;
 using SerialCommon.Net.DataModels;
-using SerialCommon.Net.StorageIndexExtraInfo;
 using StorageFactory.Net.interfaces;
-using StorageFactory.Net.Serializers;
-using StorageFactory.Net.StorageManagers;
 
 namespace MultiCommWrapper.Net.Factories {
 
+    /// <summary>Store data in files</summary>
     public class MultiCommTerminalStorageFactory : IStorageManagerFactory {
 
-        /// <summary>Singleton of settings manager</summary>
-        private IStorageManager<SettingItems> settingStorage = 
-            new SimpleStorageManger<SettingItems>(new JsonReadWriteSerializerIndented<SettingItems>());
+        private IStorageManagerSet set = null;
 
 
-        /// <summary>Singleton terminator indexed storage</summary>
-        private IIndexedStorageManager<TerminatorDataModel, DefaultFileExtraInfo> terminatorStorage = 
-            new IndexedStorageManager<TerminatorDataModel, DefaultFileExtraInfo>(
-                new JsonReadWriteSerializerIndented<TerminatorDataModel>(),
-                new JsonReadWriteSerializerIndented<IIndexGroup<DefaultFileExtraInfo>>());
-
-        private IIndexedStorageManager<ScriptDataModel, DefaultFileExtraInfo> scriptStorage =
-            new IndexedStorageManager<ScriptDataModel, DefaultFileExtraInfo>(
-                new JsonReadWriteSerializerIndented<ScriptDataModel>(),
-                new JsonReadWriteSerializerIndented<IIndexGroup<DefaultFileExtraInfo>>());
-
-        /// <summary>Encrypted storage for the WIFI credentials</summary>
-        private IIndexedStorageManager<WifiCredentialsDataModel, DefaultFileExtraInfo> wifiCredStorage =
-            new IndexedStorageManager<WifiCredentialsDataModel, DefaultFileExtraInfo>(
-                new EncryptingReadWriteSerializer<WifiCredentialsDataModel>(),
-                new EncryptingReadWriteSerializer<IIndexGroup<DefaultFileExtraInfo>>());
-
-        private IIndexedStorageManager<SerialDeviceInfo, SerialIndexExtraInfo> serialStorage =
-            new IndexedStorageManager<SerialDeviceInfo, SerialIndexExtraInfo>(
-                new JsonReadWriteSerializerIndented<SerialDeviceInfo>(),
-                new JsonReadWriteSerializerIndented<IIndexGroup<SerialIndexExtraInfo>>());
-
-        private IIndexedStorageManager<EthernetParams, DefaultFileExtraInfo> ethernetStorage =
-            new IndexedStorageManager<EthernetParams, DefaultFileExtraInfo>(
-                new JsonReadWriteSerializerIndented<EthernetParams>(),
-                new JsonReadWriteSerializerIndented<IIndexGroup<DefaultFileExtraInfo>>());
-
-
-        public MultiCommTerminalStorageFactory() { }
+        public MultiCommTerminalStorageFactory(IStorageManagerSet managers) {
+            this.set = managers;
+        }
 
 
         public IStorageManager<T> GetManager<T>() where T : class {
             if (typeof(T).Name == typeof(SettingItems).Name) {
-                return this.settingStorage as IStorageManager<T>;
+                return this.set.Settings as IStorageManager<T>;
             }
             //else if(typeof(T).Name == typeof(TerminatorData).Name) {
             //}
@@ -86,19 +56,19 @@ namespace MultiCommWrapper.Net.Factories {
             where TData : class where TIndexExtraInfo : class {
 
             if (typeof(TData).Name == typeof(TerminatorDataModel).Name) {
-                return this.terminatorStorage as IIndexedStorageManager<TData,TIndexExtraInfo>;
+                return this.set.Terminators as IIndexedStorageManager<TData,TIndexExtraInfo>;
             }
             else if (typeof(TData).Name == typeof(ScriptDataModel).Name) {
-                return this.scriptStorage as IIndexedStorageManager<TData, TIndexExtraInfo>;
+                return this.set.Scripts as IIndexedStorageManager<TData, TIndexExtraInfo>;
             }
             else if (typeof(TData).Name == typeof(WifiCredentialsDataModel).Name) {
-                return this.wifiCredStorage as IIndexedStorageManager<TData, TIndexExtraInfo>;
+                return this.set.WifiCred as IIndexedStorageManager<TData, TIndexExtraInfo>;
             }
             else if (typeof(TData).Name == typeof(SerialDeviceInfo).Name) {
-                return this.serialStorage as IIndexedStorageManager<TData, TIndexExtraInfo>;
+                return this.set.Serial as IIndexedStorageManager<TData, TIndexExtraInfo>;
             }
             else if (typeof(TData).Name == typeof(EthernetParams).Name) {
-                return this.ethernetStorage as IIndexedStorageManager<TData, TIndexExtraInfo>;
+                return this.set.Ethernet as IIndexedStorageManager<TData, TIndexExtraInfo>;
             }
             // Add others
 

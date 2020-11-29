@@ -32,7 +32,10 @@ namespace MultiCommWrapper.Net.DI {
                 new ObjInstanceCreator(()=> new CommStackLevel0()));
 
             singletonCreators.Add(typeof(ILangFactory), new ObjSingletonCreator(() => new SupportedLanguageFactory()));
-            singletonCreators.Add(typeof(IStorageManagerFactory), new ObjSingletonCreator(() => new MultiCommTerminalStorageFactory()));
+            singletonCreators.Add(
+                typeof(IStorageManagerFactory), 
+                new ObjSingletonCreator(() => 
+                new MultiCommTerminalStorageFactory(this.GetObjSingleton<IStorageManagerSet>())));
 
             singletonCreators.Add(
                 typeof(ICommWrapper),

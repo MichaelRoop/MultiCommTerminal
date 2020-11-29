@@ -6,8 +6,8 @@ using DependencyInjectorFactory.Net;
 using DependencyInjectorFactory.Net.interfaces;
 using Ethernet.Common.Net;
 using Ethernet.Common.Net.interfaces;
-using IconFactory.Net;
 using IconFactory.Net.interfaces;
+using MultiCommWrapper.Net.interfaces;
 using SerialCommon.Net;
 using SerialCommon.Net.interfaces;
 using System;
@@ -49,15 +49,20 @@ namespace MultiCommTerminal.XamarinForms.Droid.DependencyInjection {
             this.SingletonCreators.Add(
                 typeof(IIconFactory), 
                 new ObjSingletonCreator(() => new NoDirIconFactory()));
+
             this.SingletonCreators.Add(
                 typeof(IBTInterface), 
                 new ObjSingletonCreator(() => new BluetoothRfCommAndroidXamarinImpl()));
+
             this.SingletonCreators.Add(
                 typeof(IWifiInterface), 
                 new ObjSingletonCreator(() => new WifiImplAndroidXamarin()));
 
-        }
+            this.SingletonCreators.Add(
+                typeof(IStorageManagerSet),
+                new ObjSingletonCreator(() => new StorageMangerSetAndroid()));
 
+        }
 
     }
 }

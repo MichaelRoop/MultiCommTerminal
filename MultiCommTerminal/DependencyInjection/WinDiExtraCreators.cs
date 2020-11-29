@@ -7,6 +7,8 @@ using DependencyInjectorFactory.Net.interfaces;
 using Ethernet.Common.Net.interfaces;
 using Ethernet.UWP.Core;
 using IconFactory.Net.interfaces;
+using MultiCommTerminal.NetCore.DependencyInjection;
+using MultiCommWrapper.Net.interfaces;
 using Serial.UWP.Core;
 using SerialCommon.Net.interfaces;
 using System;
@@ -26,18 +28,9 @@ namespace MultiCommTerminal.DependencyInjection {
             this.SingletonCreators.Add(
                 typeof(IIconFactory), new ObjSingletonCreator(() => new MultiCommTerminal.WPF_Helpers.IconFactory()));
 
-            //this.SingletonCreators.Add(
-            //    typeof(IBTInterface), new ObjSingletonCreator(() => new BluetoothClassic.Net.BluetoothClassicImpl()));
-
-
-            //this.SingletonCreators.Add(
-            //    typeof(IBTInterface), new ObjSingletonCreator(() => new BluetoothRfComm.Win32.BluetoothRfCommImpl()));
             this.SingletonCreators.Add(
                 typeof(IBTInterface), new ObjSingletonCreator(() => new BluetoothRfCommUwpCore()));
 
-
-            //this.SingletonCreators.Add(
-            //    typeof(IBLETInterface), new ObjSingletonCreator(() => new BluetoothLE.Win32.BluetoothLEImplWin32()));
             this.SingletonCreators.Add(
                 typeof(IBLETInterface), new ObjSingletonCreator(() => new BluetoothLEImplWin32Core()));
 
@@ -49,6 +42,9 @@ namespace MultiCommTerminal.DependencyInjection {
 
             this.SingletonCreators.Add(
                 typeof(IEthernetInterface), new ObjSingletonCreator(() => new EthernetImplUwp()));
+
+            this.SingletonCreators.Add(
+                typeof(IStorageManagerSet), new ObjSingletonCreator(() => new StorageManagerSetWin()));
 
         }
     }
