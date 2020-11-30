@@ -1,16 +1,12 @@
 ﻿using BluetoothCommon.Net;
-using CommunicationStack.Net.Stacks;
 using LanguageFactory.Net.data;
 using LanguageFactory.Net.Messaging;
 using LogUtils.Net;
 using MultiCommData.Net.StorageDataModels;
+using MultiCommTerminal.XamarinForms.UIHelpers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -21,14 +17,16 @@ namespace MultiCommTerminal.XamarinForms.Views {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class BluetoothRunPage : ContentPage {
 
+        #region Data
+
         private BTDeviceInfo device;
         private ClassLog log = new ClassLog("BluetoothRunPage");
-        private ObservableCollection<ScriptItem> cmds = new ObservableCollection<ScriptItem>();
-        private ObservableCollection<string> responses = new ObservableCollection<string>();
+        private List<ScriptItem> cmds = new List<ScriptItem>();
+        private List<string> responses = new List<string>();
 
-        private int okCount = 0;
-        private int failCount = 0;
-        private int connectTry = 0;
+        #endregion
+
+        #region Properties
 
         public string BTDevice {
             set {
@@ -36,6 +34,8 @@ namespace MultiCommTerminal.XamarinForms.Views {
                 this.device = JsonConvert.DeserializeObject<BTDeviceInfo>(Uri.UnescapeDataString(value ?? string.Empty));
             }
         }
+
+        #endregion
 
         #region Constructor and page overrides
 
@@ -49,32 +49,12 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
 
         protected override void OnAppearing() {
-            // TODO move this to a view model to do a busy and finish?
-            this.okCount = 0;
-            this.failCount = 0;
-            this.connectTry = 0;
             this.cmds.Clear();
             this.responses.Clear();
-
             App.Wrapper.CurrentSupportedLanguage(this.UpdateLanguage);
-            App.Wrapper.GetCurrentScript(
-                this.PopulateScriptList, 
-                (err) => App.ShowError(this, err));
-
-            //this.DoConnection(this.device);
+            App.Wrapper.GetCurrentScript(this.PopulateScriptList, this.OnErr);
             base.OnAppearing();
         }
-
-
-        private void PopulateScriptList(ScriptDataModel scripts) {
-            this.lstCmds.ItemsSource = null;
-            this.cmds.Clear();
-            foreach (var script in scripts.Items) {
-                this.cmds.Add(script);
-            }
-            this.lstCmds.ItemsSource = this.cmds;
-        }
-
 
 
         protected override void OnDisappearing() {
@@ -84,40 +64,11 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         #endregion
 
-
-        #region Wrapper event handlers
-
-        private void OnBT_ConnectionCompletedHandler(object sender, bool ok) {
-            Device.BeginInvokeOnMainThread(() => {
-                this.IsBusy = false;
-                if (ok) {
-                    this.okCount++;
-                    //this.txtOk.Text = string.Format("Ok:{0}", okCount);
-                }
-                else {
-                    this.failCount++;
-                    //this.txtFail.Text = string.Format("Failed:{0}", failCount);
-                }
-            });
-        }
-
-        #endregion
-
-
-
-
-        private void UpdateLanguage(SupportedLanguage language) {
-            this.lbTitle.Text = App.GetText(MsgCode.Run);
-            this.lblCmds.Text = App.GetText(MsgCode.command);
-            this.lblResponses.Text = App.GetText(MsgCode.response);
-            this.btnSend.Text = App.GetText(MsgCode.send);
-            this.btnConnect.Text = App.GetText(MsgCode.connect);
-        }
-
+        #region Controls event handlers
 
         private void btnConnect_Clicked(object sender, EventArgs e) {
             if (this.device != null) {
-                this.IsBusy = true;
+                this.activity.IsRunning = true;
                 App.Wrapper.BTClassicConnectAsync(this.device);
             }
         }
@@ -138,11 +89,13 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
 
-
         private void btnSend_Clicked(object sender, EventArgs e) {
             App.Wrapper.BTClassicSend(this.entryCmd.Text);
         }
 
+        #endregion
+
+        #region Wrapper event handlers
 
         private void OnBT_BytesReceivedHandler(object sender, string e) {
             Device.BeginInvokeOnMainThread(() => {
@@ -156,8 +109,36 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
 
+        private void OnBT_ConnectionCompletedHandler(object sender, bool ok) {
+            Device.BeginInvokeOnMainThread(() => {
+                activity.IsRunning = false;
+                if (!ok) {
+                    //this.txtFail.Text = string.Format("Failed:{0}", failCount);
+                }
+            });
+        }
 
-        #region Private
+        #endregion
+
+        #region Delegates
+
+        private void PopulateScriptList(ScriptDataModel scripts) {
+            this.lstCmds.ItemsSource = null;
+            this.cmds.Clear();
+            foreach (var script in scripts.Items) {
+                this.cmds.Add(script);
+            }
+            this.lstCmds.ItemsSource = this.cmds;
+        }
+
+
+        private void UpdateLanguage(SupportedLanguage language) {
+            this.lbTitle.Text = App.GetText(MsgCode.Run);
+            this.lblCmds.Text = App.GetText(MsgCode.command);
+            this.lblResponses.Text = App.GetText(MsgCode.response);
+            this.btnSend.Text = App.GetText(MsgCode.send);
+            this.btnConnect.Text = App.GetText(MsgCode.connect);
+        }
 
         #endregion
 
