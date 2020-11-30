@@ -52,9 +52,9 @@
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
 
-                                <Editor x:Name="edName" Grid.Row="0" Grid.ColumnSpan="3" 
-                                        AutoSize="TextChanges" FontSize="Body"
-                                        VerticalOptions="Start" HorizontalOptions="FillAndExpand" />
+                                <Entry x:Name="edName" Grid.Row="0" Grid.ColumnSpan="5" 
+                                        FontSize="Body" WidthRequest="400"
+                                        VerticalOptions="Start" HorizontalOptions="CenterAndExpand" />
                                 <!-- Hex values -->
                                 <Label x:Name="hex1" Grid.Row="1" Grid.Column="0" />
                                 <Label x:Name="hex2" Grid.Row="1" Grid.Column="1"/>

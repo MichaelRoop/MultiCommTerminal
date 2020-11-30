@@ -128,7 +128,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
         #region Private
 
         private void LanguageUpdate(SupportedLanguage l) {
-            this.Title = l.GetText(MsgCode.Edit);
+            this.lbTitle.Text = l.GetText(MsgCode.Edit);
             this.lbSsid.Text = l.GetText(MsgCode.Name);
             this.lbPwd.Text = l.GetText(MsgCode.NetworkSecurityKey);
             this.lbHost.Text = l.GetText(MsgCode.HostName);
