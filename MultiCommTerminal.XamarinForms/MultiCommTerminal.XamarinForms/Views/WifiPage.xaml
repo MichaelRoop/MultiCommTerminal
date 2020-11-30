@@ -28,13 +28,13 @@
                             </ListView>
                         </StackLayout>
                     </Frame>
-                    <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand">
+                    <StackLayout Orientation="Vertical" Margin="0,10,0,0" HorizontalOptions="CenterAndExpand">
                         <Button x:Name="btnCredentials" Clicked="btnCredentials_Clicked" BorderWidth="0"
-                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Credentials}}"  />
+                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Credentials}}"  />
                         <Button x:Name="btnDiscover" Clicked="btnDiscover_Clicked" BorderWidth="0"
-                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Discover}}"  />
+                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Discover}}"  />
                         <Button x:Name="btnSelect" Clicked="btnSelect_Clicked" BorderWidth="0"
-                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}"  />
+                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}"  />
                     </StackLayout>
                 </StackLayout>
             </StackLayout>

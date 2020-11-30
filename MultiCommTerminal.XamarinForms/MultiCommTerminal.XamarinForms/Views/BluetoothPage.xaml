@@ -13,24 +13,31 @@
         </StackLayout>
     </Shell.TitleView>
     <ContentPage.Content>
-        <StackLayout>
-            <Label x:Name="txtTitle" Text="Paired" Margin="0,30,0,10" HorizontalOptions="Center" />
-            <ListView x:Name="lstDevices" VerticalOptions="Center" 
+        <Grid>
+            <StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                    <Frame BorderColor="LightBlue">
+                        <ListView x:Name="lstDevices" VerticalOptions="Center" 
                       MinimumHeightRequest="20" MinimumWidthRequest="20">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextCell Text="{Binding Name}"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <StackLayout Orientation="Horizontal" Margin="0,10,0,0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-                <Button x:Name="btnDiscover" Clicked="btnDiscover_Clicked" BorderWidth="0"
-                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Discover}}"  />
-                <Button x:Name="btnPair" Clicked="btnPair_Clicked" BorderWidth="0"
-                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Pair}}" />
-                <Button x:Name="btnRun" Clicked="btnRun_Clicked" BorderWidth="0"
-                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Connect}}" />
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextCell Text="{Binding Name}"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Frame>
+                    <StackLayout Orientation="Vertical" Margin="0,10,0,0" HorizontalOptions="CenterAndExpand">
+                        <Button x:Name="btnDiscover" Clicked="btnDiscover_Clicked" BorderWidth="0"
+                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Discover}}"  />
+                        <Button x:Name="btnPair" Clicked="btnPair_Clicked" BorderWidth="0"
+                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Pair}}" />
+                        <Button x:Name="btnSelect" Clicked="btnSelect_Clicked" BorderWidth="0"
+                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}" />
+                    </StackLayout>
+                </StackLayout>
             </StackLayout>
-        </StackLayout>
+            <ActivityIndicator x:Name="activity" Color="CornflowerBlue"
+                HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

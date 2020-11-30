@@ -44,6 +44,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         private void DeviceDiscoveredHandler(object sender, BTDeviceInfo e) {
             Device.BeginInvokeOnMainThread(() => {
+                this.activity.IsRunning = false;
                 this.lstDevices.ItemsSource = null;
                 this.devices.Add(e);
                 this.lstDevices.ItemsSource = this.devices;
@@ -52,7 +53,9 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
 
         private void DiscoveryCompleteHandler(object sender, bool e) {
-            Device.BeginInvokeOnMainThread(() => { this.IsBusy = false; });
+            Device.BeginInvokeOnMainThread(() => {
+                this.activity.IsRunning = false;
+            });
         }
 
         #endregion
@@ -62,7 +65,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
         private void btnDiscover_Clicked(object sender, EventArgs args) {
             try {
                 this.log.InfoEntry("btnDiscover_Clicked");
-                this.IsBusy = true;
+                this.activity.IsRunning = true;
                 this.lstDevices.ItemsSource = null;
                 this.devices.Clear();
                 this.lstDevices.ItemsSource = this.devices;
@@ -79,7 +82,8 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
 
-        private void btnRun_Clicked(object sender, EventArgs e) {
+
+        private void btnSelect_Clicked(object sender, EventArgs e) {
             BTDeviceInfo info = (this.lstDevices.SelectedItem as BTDeviceInfo);
             if (info != null) {
                 this.viewModel.RunCommand.Execute(this.lstDevices.SelectedItem as BTDeviceInfo);
@@ -89,13 +93,18 @@ namespace MultiCommTerminal.XamarinForms.Views {
             }
         }
 
+
+
+
         #endregion
 
         #region Private
 
         private void UpdateLanguage(SupportedLanguage language) {
             //this.txtTitle.Text = language.GetText(MsgCode.PairedDevices);
-            this.lbTitle.Text = "Bluetooth";
+            //this.lbTitle.Text = "Bluetooth";
+            this.lbTitle.Text = language.GetText(MsgCode.PairedDevices);
+
 
             //// buttons below. need to determine if we use icons or text
             //this.btnDiscover.Text = language.GetText(MsgCode.discover);
