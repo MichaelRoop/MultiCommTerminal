@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:helpers="clr-namespace:MultiCommTerminal.XamarinForms.UIHelpers"
+             x:Class="MultiCommTerminal.XamarinForms.Views.SamplesPage">
+    <Shell.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Image Source="{Binding Source={x:Static helpers:IconBinder.Code_W}}" 
+                   WidthRequest="25" HeightRequest="25" />
+            <Label x:Name="lbTitle" VerticalTextAlignment="Center" 
+                   Margin="5,0" TextColor="White" FontSize="20" FontAttributes="Bold"/>
+        </StackLayout>
+    </Shell.TitleView>
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical">
+            <Grid VerticalOptions="EndAndExpand">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <ScrollView x:Name="scrlText" Orientation="Both">
+                    <Editor x:Name="edSample" IsReadOnly="True"  AutoSize="TextChanges" 
+                        MinimumHeightRequest="500" MinimumWidthRequest="500"/>
+                </ScrollView>
+            </Grid>
+            <StackLayout Orientation="Horizontal">
+                <Button x:Name="btnBluetooth" Text="" Clicked="btnBluetooth_Clicked"
+                            BorderWidth="0" ImageSource="{Binding Source={x:Static helpers:IconBinder.Bluetooth}}"  />
+                <Button x:Name="btnWifi" Text="" Clicked="btnWifi_Clicked" BorderWidth="0"
+                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Wifi}}"  />
+                <Button x:Name="btnCopy" Text="" Clicked="btnCopy_Clicked"
+                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}"  />
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

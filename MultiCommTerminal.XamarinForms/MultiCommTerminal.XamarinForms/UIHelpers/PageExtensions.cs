@@ -8,6 +8,10 @@ namespace MultiCommTerminal.XamarinForms.UIHelpers {
     
     public static class PageExtensions {
 
+        public static void OnErr(this ContentPage page, string title, string err) {
+            App.ShowError(page, title, err);
+        }
+
 
         public static void OnErr(this ContentPage page, string err) {
             App.ShowError(page, err);

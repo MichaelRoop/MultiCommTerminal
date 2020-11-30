@@ -63,6 +63,7 @@ namespace MultiCommTerminal.XamarinForms {
             this.flyTerminators.Title = language.GetText(MsgCode.Terminators);
             this.flyLanguage.Title = language.GetText(MsgCode.language);
             this.flyCommands.Title = language.GetText(MsgCode.commands);
+            this.flySamples.Title = language.GetText(MsgCode.CodeSamples);
         }
 
 

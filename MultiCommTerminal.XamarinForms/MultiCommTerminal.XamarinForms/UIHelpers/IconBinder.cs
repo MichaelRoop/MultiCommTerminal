@@ -33,7 +33,8 @@ namespace MultiCommTerminal.XamarinForms.UIHelpers {
         public static string Command { get { return Source(UIIcon.Command); } }
         public static string Command_W { get { return Source(UIIcon.CommandWhite); } }
         public static string Send { get { return Source(UIIcon.Run); } }
-
+        public static string Code { get { return Source(UIIcon.Code); } }
+        public static string Code_W { get { return Source(UIIcon.CodeWhite); } }
 
         private static string Source(UIIcon code) {
             return App.Wrapper.IconSource(code); 

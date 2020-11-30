@@ -71,10 +71,13 @@ namespace MultiCommTerminal.XamarinForms {
 
 
         public static void ShowError(Page page, string msg) {
-            Device.BeginInvokeOnMainThread(async () => {
-                await page.DisplayAlert(
-                    App.GetText(MsgCode.Error), msg, App.GetText(MsgCode.Ok));
+            ShowError(page, App.GetText(MsgCode.Error), msg);
+        }
 
+
+        public static void ShowError(Page page, string title, string msg) {
+            Device.BeginInvokeOnMainThread(async () => {
+                await page.DisplayAlert(title, msg, App.GetText(MsgCode.Ok));
             });
         }
 

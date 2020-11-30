@@ -65,6 +65,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
             this.wifiCredStorage =
                 this.storageFactory.GetIndexedManager<WifiCredentialsDataModel, DefaultFileExtraInfo>(this.Dir(WIFI_CRED_DIR), WIFI_CRED_INDEX_FILE);
+            this.AssureWifiCredDefault();
 
             this.ethernetStorage =
                 this.storageFactory.GetIndexedManager<EthernetParams, DefaultFileExtraInfo>(this.Dir(ETHERNET_DATA_DIR), ETHERNET_DATA_INDEX_FILE);
@@ -90,6 +91,8 @@ namespace MultiCommWrapper.Net.WrapCode {
                 if (File.Exists(this.WIN_ORIGINE_USER_MANUAL_PATH_AND_FILE)) {
                     this.log.Info("UserManualFullFileName", () => string.Format("Using WIN Path:{0}",
                         this.WIN_ORIGINE_USER_MANUAL_PATH_AND_FILE));
+        
+
                     return this.WIN_ORIGINE_USER_MANUAL_PATH_AND_FILE;
                 }
                 // UWP path
@@ -118,10 +121,10 @@ namespace MultiCommWrapper.Net.WrapCode {
             if (index.Count == 0) {
                 // For a new one. Different when updating. Do not need to create new index
                 List<TerminatorInfo> infos = new List<TerminatorInfo>();
-                infos.Add(new TerminatorInfo(Terminator.CR));
                 infos.Add(new TerminatorInfo(Terminator.LF));
+                infos.Add(new TerminatorInfo(Terminator.CR));
                 TerminatorDataModel dm = new TerminatorDataModel(infos) {
-                    Name = "Default terminator \\r\\n"
+                    Name = "Demo terminator set \\n\\r"
                 };
 
                 IIndexItem<DefaultFileExtraInfo> idx = new IndexItem<DefaultFileExtraInfo>(dm.UId) {
@@ -147,15 +150,13 @@ namespace MultiCommWrapper.Net.WrapCode {
             List<IIndexItem<DefaultFileExtraInfo>> index = this.scriptStorage.IndexedItems;
             if (index.Count == 0) {
                 List<ScriptItem> items = new List<ScriptItem>();
-                items.Add(new ScriptItem() { Display = "Command 1", Command = "This is first command" });
-                items.Add(new ScriptItem() { Display = "Command 2", Command = "This is second command" });
-                items.Add(new ScriptItem() { Display = "Command 3", Command = "This is third command" });
-                items.Add(new ScriptItem() { Display = "Command 4", Command = "This is fourth command" });
+                items.Add(new ScriptItem() { Display = "Open door cmd", Command = "OpenDoor" });
+                items.Add(new ScriptItem() { Display = "Close door cmd", Command = "CloseDoor" });
                 ScriptDataModel dm = new ScriptDataModel(items) { 
                     Display = "Default script"
                 };
                 IIndexItem<DefaultFileExtraInfo> idx = new IndexItem<DefaultFileExtraInfo>(dm.UId) {
-                    Display = "Default script",
+                    Display = "Demo script",
                 };
                 this.scriptStorage.Store(dm, idx);
 
@@ -165,6 +166,19 @@ namespace MultiCommWrapper.Net.WrapCode {
                         this.SaveSettings(settings, () => { }, (err) => { });
                     },
                     (err) => { });
+            }
+        }
+
+
+        private void AssureWifiCredDefault() {
+            List<IIndexItem<DefaultFileExtraInfo>> index = this.wifiCredStorage.IndexedItems;
+            if (index.Count == 0) {
+                WifiCredentialsDataModel dm = new WifiCredentialsDataModel() {
+                    SSID = "MikieArduinoWifi",
+                    RemoteHostName = "192.168.4.1",
+                    RemoteServiceName = "80",
+                };
+                this.CreateNewWifiCred(dm.SSID, dm, () => { }, (err) => { });
             }
         }
 
