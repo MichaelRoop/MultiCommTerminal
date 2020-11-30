@@ -1,5 +1,6 @@
 ﻿using LanguageFactory.Net.data;
 using LanguageFactory.Net.Messaging;
+using MultiCommData.Net.StorageDataModels;
 using MultiCommTerminal.XamarinForms.UIHelpers;
 using MultiCommTerminal.XamarinForms.ViewModels;
 using StorageFactory.Net.interfaces;
@@ -44,15 +45,25 @@ namespace MultiCommTerminal.XamarinForms.Views {
         #region Button event handlers
 
         private void btnAdd_Clicked(object sender, EventArgs e) {
-            this.viewModel.GoToCredEdit.Execute(null);
+            this.viewModel.CredAddCmd.Execute(null);
         }
 
         private void btnEdit_Clicked(object sender, EventArgs e) {
-            this.viewModel.GoToCredEdit.Execute(null);
+            IIndexItem<DefaultFileExtraInfo> data = 
+                this.lstCreds.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
+            if (data != null) {
+                this.viewModel.CredEditCmd.Execute(data);
+            }
+            else {
+                this.OnErr(App.GetText(MsgCode.NothingSelected));
+            }
         }
 
         private void btnDelete_Clicked(object sender, EventArgs e) {
-
+            App.Wrapper.DeleteWifiCredData(
+                this.lstCreds.SelectedItem as IIndexItem<DefaultFileExtraInfo>, 
+                (ok) => App.Wrapper.GetWifiCredList(this.ReloadList, this.OnErr), 
+                this.OnErr);
         }
 
         #endregion
@@ -63,14 +74,14 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.lbTitle.Text = language.GetText(MsgCode.Credentials);
         }
 
-        #endregion
-
 
         private void ReloadList(List<IIndexItem<DefaultFileExtraInfo>> items) {
             this.lstCreds.ItemsSource = null;
             this.lstCreds.SelectedItem = null;
             this.lstCreds.ItemsSource = items;
         }
+
+        #endregion
 
     }
 }

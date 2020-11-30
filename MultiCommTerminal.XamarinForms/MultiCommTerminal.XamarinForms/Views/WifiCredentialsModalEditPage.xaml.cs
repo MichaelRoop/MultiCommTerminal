@@ -7,17 +7,13 @@ using Newtonsoft.Json;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace MultiCommTerminal.XamarinForms.Views {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
 
+    [QueryProperty(nameof(IndexAsString), "WifiCredentialsModalEditPage.IndexAsString")]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class WifiCredentialsModalEditPage : ContentPage {
 
         #region Data
@@ -26,8 +22,6 @@ namespace MultiCommTerminal.XamarinForms.Views {
         private WifiCredentialsDataModel dataModel;
         private IIndexItem<DefaultFileExtraInfo> index = null;
         private NavigateBackInterceptor interceptor;
-        private Command PopBack;
-
 
         #endregion
 
@@ -59,7 +53,6 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         public WifiCredentialsModalEditPage() {
             InitializeComponent();
-            this.PopBack = new Command(this.PopBackRoute);
             this.interceptor = new NavigateBackInterceptor(this);
         }
 
@@ -68,52 +61,74 @@ namespace MultiCommTerminal.XamarinForms.Views {
             App.Wrapper.CurrentSupportedLanguage(this.LanguageUpdate);
             this.interceptor.Changed = false;
             if (this.index != null) {
-                // Need to load from memory. Only way to know which item of list to modify
-                this.dataModel = App.Wrapper.GetScratch().WifiCred.WifiCredentials;
+                // Can load this one from storage since not yet loaded
+                App.Wrapper.RetrieveWifiCredData(
+                    this.index, this.OnLoadSuccess, this.ErrAndCLose);
+
+                if (this.dataModel == null) {
+                    this.OnErr(string.Format("Data model for '{0}' is NULL", this.index.Display));
+                }
             }
             else {
                 //create a new Data model for create
-                this.dataModel = new WifiCredentialsDataModel() {
-                    // Differentiate between networks with same SSID
-                    // TODO - check if only for UWP
-                    Id = Guid.NewGuid(),
-                };
+                this.dataModel = new WifiCredentialsDataModel();
             }
 
-            this.edSsid.Text = this.dataModel.SSID;
-            this.edHost.Text = this.dataModel.RemoteHostName;
-            this.edPort.Text = this.dataModel.RemoteServiceName;
-            this.edPwd.Text = this.dataModel.WifiPassword;
+            if (this.dataModel != null) {
+                this.edSsid.Text = this.dataModel.SSID;
+                this.edHost.Text = this.dataModel.RemoteHostName;
+                this.edPort.Text = this.dataModel.RemoteServiceName;
+                this.edPwd.Text = this.dataModel.WifiPassword;
+            }
             base.OnAppearing();
         }
+
 
         /// <summary>Disable back button</summary>
         /// <returns>false always to prevent movement</returns>
         protected override bool OnBackButtonPressed() {
-            return true;
+            return this.interceptor.HardwareOnBackButtonQuestion(base.OnBackButtonPressed);
         }
-
 
         #endregion
 
+        #region Button handlers
+
         private void btnSave_Clicked(object sender, EventArgs e) {
-            this.PopBack.Execute(null);
+            if (this.dataModel != null) {
+                // Think validation done in wrapper
+                this.dataModel.SSID = this.edSsid.Text;
+                this.dataModel.WifiPassword = this.edPwd.Text;
+                this.dataModel.RemoteHostName = this.edHost.Text;
+                this.dataModel.RemoteServiceName = this.edPort.Text;
 
+                if (this.index == null) {
+                    App.Wrapper.CreateNewWifiCred(
+                        this.dataModel.SSID, this.dataModel, this.OnCredSaveOk, this.OnErr); ;
+                }
+                else {
+                    this.index.Display = this.dataModel.SSID;
+                    App.Wrapper.SaveWifiCred(
+                        this.index, this.dataModel, this.OnCredSaveOk, this.OnErr);
+                }
+            }
+            else {
+                this.log.Error(1111, () => string.Format("Data model is NULL"));
+                this.ErrAndCLose("NULL DATA MODEL");
+            }
         }
 
-        private void btnDelete_Clicked(object sender, EventArgs e) {
-            this.PopBack.Execute(null);
-
-        }
 
         private void btnCancel_Clicked(object sender, EventArgs e) {
-            this.PopBack.Execute(null);
+            this.interceptor.MethodExitQuestion();
         }
 
+        #endregion
+
+        #region Private
 
         private void LanguageUpdate(SupportedLanguage l) {
-            // TODO - any title
-
+            this.Title = l.GetText(MsgCode.Edit);
             this.lbSsid.Text = l.GetText(MsgCode.Name);
             this.lbPwd.Text = l.GetText(MsgCode.NetworkSecurityKey);
             this.lbHost.Text = l.GetText(MsgCode.HostName);
@@ -121,10 +136,30 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
 
-        private async void PopBackRoute() {
-            await Shell.Current.GoToAsync("..");
+        // TODO - remove this.Sample of how to navigate back with multiple routes
+        //private async void PopBackRoute() {
+        //    //await Shell.Current.GoToAsync(string.Format("../{0}", nameof(WifiCredentialsPage)));
+        //    //await Shell.Current.GoToAsync("..");
+        //}
+
+        private void OnLoadSuccess(WifiCredentialsDataModel dataModel) {
+            this.dataModel = dataModel;
         }
 
+
+        private void ErrAndCLose(string err) {
+            this.OnErr(err);
+            this.interceptor.Changed = false;
+            this.interceptor.MethodExitQuestion();
+        }
+
+
+        private void OnCredSaveOk() {
+            this.interceptor.Changed = false;
+            this.interceptor.MethodExitQuestion();
+        }
+
+        #endregion
 
     }
 }

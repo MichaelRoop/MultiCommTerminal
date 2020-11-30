@@ -356,7 +356,11 @@ namespace MultiCommWrapper.Net.WrapCode {
                     if (idx.Display.Length == 0) {
                         onError.Invoke(this.GetText(MsgCode.EmptyName));
                     }
+                    else if (string.IsNullOrWhiteSpace(data.SSID)) {
+                        onError.Invoke(this.GetText(MsgCode.EmptyName));
+                    }
                     else {
+                        idx.Display = data.SSID;
                         this.wifiCredStorage.Store(data, idx);
                         onSuccess.Invoke();
                     }
@@ -373,9 +377,13 @@ namespace MultiCommWrapper.Net.WrapCode {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;
                 WrapErr.ToErrReport(out report, 9999, () => {
-                    // TODO - check when we delete last one
-                    bool ok = this.wifiCredStorage.DeleteFile(index);
-                    onComplete(ok);
+                    if (index == null) {
+                        onError.Invoke(this.GetText(MsgCode.NothingSelected));
+                    }
+                    else {
+                        bool ok = this.wifiCredStorage.DeleteFile(index);
+                        onComplete(ok);
+                    }
                 });
                 if (report.Code != 0) {
                     onError.Invoke(this.GetText(MsgCode.LoadFailed));

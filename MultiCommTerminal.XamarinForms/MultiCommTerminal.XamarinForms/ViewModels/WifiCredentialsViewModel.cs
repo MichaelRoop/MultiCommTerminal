@@ -1,35 +1,34 @@
 ﻿using MultiCommTerminal.XamarinForms.Views;
+using Newtonsoft.Json;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xamarin.Forms;
 
 namespace MultiCommTerminal.XamarinForms.ViewModels {
-    
+
     public class WifiCredentialsViewModel : BaseViewModel {
 
-        public Command<IIndexItem<DefaultFileExtraInfo>> GoToCredEdit;
+        public Command<IIndexItem<DefaultFileExtraInfo>> CredEditCmd;
+        public Command CredAddCmd;
+        
 
         public WifiCredentialsViewModel() {
-            this.GoToCredEdit = new Command<IIndexItem<DefaultFileExtraInfo>>(this.OnCredEdit);
+            this.CredEditCmd = new Command<IIndexItem<DefaultFileExtraInfo>>(this.OnCredEdit);
+            this.CredAddCmd = new Command(this.OnCredAdd);
+        }
+
+        // Seems a bug with routing so we will just go absolute
+        private string ROUTE_NAME = nameof(WifiCredentialsModalEditPage);
+            //string.Format("{0}/{1}", nameof(WifiCredentialsPage), nameof(WifiCredentialsModalEditPage));
+
+        private async void OnCredAdd() {
+            await Shell.Current.GoToAsync($"{ROUTE_NAME}?WifiCredentialsModalEditPage.IndexAsString={""}");
         }
 
 
         private async void OnCredEdit(IIndexItem<DefaultFileExtraInfo> index) {
-            // Temp for test
-            //await Shell.Current.GoToAsync(nameof(WifiCredentialsModalEditPage));
-            await Shell.Current.GoToAsync(
-                string.Format("{0}/{1}", nameof(WifiCredentialsPage), nameof(WifiCredentialsModalEditPage)));
-
-
             if (index != null) {
-                // temp for compiler - until index param
-                //await Shell.Current.GoToAsync(nameof(WifiCredentialsModalEditPage));
-
-                //await Shell.Current.GoToAsync(
-                //    $"{nameof(CommandEditPage)}?CommandEditPage.IndexAsString={JsonConvert.SerializeObject(data)}");
+                await Shell.Current.GoToAsync($"{ROUTE_NAME}?WifiCredentialsModalEditPage.IndexAsString={JsonConvert.SerializeObject(index)}");
             }
         }
 

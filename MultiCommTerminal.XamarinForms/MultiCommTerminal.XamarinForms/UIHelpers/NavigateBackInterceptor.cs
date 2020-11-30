@@ -42,6 +42,15 @@ namespace MultiCommTerminal.XamarinForms.UIHelpers {
         }
 
 
+        public void MethodExitQuestion(Action onExit) {
+            Device.BeginInvokeOnMainThread(async () => {
+                if (await AskExitQuestion()) {
+                    onExit.Invoke();
+                }
+            });
+        }
+
+
         private async void OnNavBarBack() {
             if (await AskExitQuestion()) {
                 await Shell.Current.Navigation.PopAsync();
