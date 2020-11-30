@@ -19,7 +19,7 @@
                 </Grid.RowDefinitions>
                 <ScrollView x:Name="scrlText" Orientation="Both">
                     <Editor x:Name="edSample" IsReadOnly="True"  AutoSize="TextChanges" 
-                        MinimumHeightRequest="500" MinimumWidthRequest="500"/>
+                        FontSize="Small" FontFamily="monospace" MinimumHeightRequest="500" MinimumWidthRequest="500"/>
                 </ScrollView>
             </Grid>
             <StackLayout Orientation="Horizontal">
