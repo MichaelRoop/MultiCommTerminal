@@ -1,12 +1,15 @@
 ﻿using Android.Bluetooth;
 using Android.Content;
 using BluetoothCommon.Net;
+using BluetoothCommon.Net.Enumerations;
 using BluetoothCommon.Net.interfaces;
 using CommunicationStack.Net.Enumerations;
 using CommunicationStack.Net.interfaces;
 using LogUtils.Net;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using VariousUtils.Net;
 
@@ -20,6 +23,7 @@ namespace BluetoothRfComm.AndroidXamarin {
         private IMsgPump<BTAndroidMsgPumpConnectData> msgPump = new BTAndroidMsgPump();
         private bool connected = false;
         private BluetoothDevice device = null;
+        private List<BluetoothDevice> unBondedDevices = new List<BluetoothDevice>();
 
         #endregion
 
@@ -107,12 +111,67 @@ namespace BluetoothRfComm.AndroidXamarin {
 
 
         public void PairgAsync(BTDeviceInfo info) {
-            throw new NotImplementedException();
+            BluetoothDevice unbonded = this.unBondedDevices.FirstOrDefault(device => device.Name == info.Name);
+            // Status is failed by default
+            BTPairOperationStatus status = new BTPairOperationStatus() {
+                Name = info.Name,
+            };
+            try {
+                if (unbonded != null) {
+                    if (unbonded.CreateBond()) {
+                        status.IsSuccessful = true;
+                        status.PairStatus = BT_PairingStatus.Paired;
+                    }
+                    else {
+                        status.PairStatus = BT_PairingStatus.AuthenticationFailure;
+                    }
+                }
+                else {
+                    status.PairStatus = BT_PairingStatus.NoParingObject;
+                }
+            }
+            catch(Exception e) {
+                this.log.Exception(9999, "PairgAsync", "", e);
+                status.PairStatus = BT_PairingStatus.Failed;
+            }
+
+            this.BT_PairStatus?.Invoke(this, status);
         }
 
 
         public void UnPairAsync(BTDeviceInfo info) {
-            throw new NotImplementedException();
+            // Also need to check if current device.
+            // Status is failed by default
+            BTUnPairOperationStatus status = new BTUnPairOperationStatus() {
+                Name = info.Name,
+            };
+            Task.Run(() => {
+                try {
+                    var d = BluetoothAdapter.DefaultAdapter.BondedDevices.FirstOrDefault(dev => dev != null && dev.Name == info.Name);
+                    if (d != null) {
+                        var mi = d.Class.GetMethod("removeBond", null);
+                        var sdfd = mi.Invoke(d, null);
+                        // Need to sleep a bit for the method invocation to complete
+                        Thread.Sleep(50);
+                        var dd = BluetoothAdapter.DefaultAdapter.BondedDevices.FirstOrDefault(d => d.Name == info.Name);
+                        if (dd == null) {
+                            status.IsSuccessful = true;
+                            status.UnpairStatus = BT_UnpairingStatus.Success;
+                        }
+                        else {
+                            status.UnpairStatus = BT_UnpairingStatus.Failed;
+                        }
+                    }
+                    else {
+                        status.UnpairStatus = BT_UnpairingStatus.AlreadyUnPaired;
+                    }
+                }
+                catch (Exception e) {
+                    this.log.Exception(9999, "UnPairAsync", "", e);
+                    status.UnpairStatus = BT_UnpairingStatus.Failed;
+                }
+                this.BT_UnPairStatus?.Invoke(this, status);
+            });
         }
 
         #endregion

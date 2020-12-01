@@ -74,8 +74,10 @@ namespace BluetoothRfComm.AndroidXamarin {
         private void DoDiscoveryUnpaired() {
             try {
                 this.KillDiscoverReceiver();
-                this.discoverReceiver = new BT_DeviceUnpairedDiscoveryReceiver(
-                    this.RaiseDeviceDiscovered);
+                this.discoverReceiver = new 
+                    BT_DeviceUnpairedDiscoveryReceiver(
+                        this.RaiseDeviceDiscovered,
+                        this.unBondedDevices);
                 this.GetContext().RegisterReceiver(
                     this.discoverReceiver, new IntentFilter(BluetoothDevice.ActionFound));
                 BluetoothAdapter.DefaultAdapter.StartDiscovery();
@@ -88,7 +90,7 @@ namespace BluetoothRfComm.AndroidXamarin {
 
         private void RaiseDeviceDiscovered(BluetoothDevice device) {
             BTDeviceInfo info = new BTDeviceInfo() {
-                IsPaired = true,
+                IsPaired = device.BondState == Bond.Bonded,
                 Name = device.Name,
                 DeviceClassName = device.Class.Name,
                 Address = device.Address,

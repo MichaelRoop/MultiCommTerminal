@@ -29,6 +29,8 @@
                     <StackLayout Orientation="Vertical" Margin="0,10,0,0" HorizontalOptions="CenterAndExpand">
                         <Button x:Name="btnDiscover" Clicked="btnDiscover_Clicked" BorderWidth="0"
                             ImageSource="{Binding Source={x:Static helpers:IconBinder.Discover}}"  />
+                        <Button x:Name="btnUnPair" Clicked="btnUnPair_Clicked" BorderWidth="0"
+                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Unpair}}" />
                         <Button x:Name="btnPair" Clicked="btnPair_Clicked" BorderWidth="0"
                             ImageSource="{Binding Source={x:Static helpers:IconBinder.Pair}}" />
                         <Button x:Name="btnSelect" Clicked="btnSelect_Clicked" BorderWidth="0"

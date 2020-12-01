@@ -2,6 +2,7 @@
 using LanguageFactory.Net.data;
 using LanguageFactory.Net.Messaging;
 using LogUtils.Net;
+using MultiCommTerminal.XamarinForms.UIHelpers;
 using MultiCommTerminal.XamarinForms.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
             BindingContext = this.viewModel = new BluetoothViewModel();
             App.Wrapper.BT_DeviceDiscovered += this.DeviceDiscoveredHandler;
             App.Wrapper.BT_DiscoveryComplete += this.DiscoveryCompleteHandler;
+            App.Wrapper.BT_UnPairStatus += this.BT_UnPairStatusHandler;
         }
 
 
@@ -58,6 +60,18 @@ namespace MultiCommTerminal.XamarinForms.Views {
             });
         }
 
+
+        private void BT_UnPairStatusHandler(object sender, BTUnPairOperationStatus e) {
+            Device.BeginInvokeOnMainThread(() => {
+                if (e.IsSuccessful) {
+                    this.btnDiscover_Clicked(null, null);
+                }
+                else {
+                    this.OnErr(e.UnpairStatus.ToString());
+                }
+            });
+        }
+
         #endregion
 
         #region Button events
@@ -81,6 +95,16 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.viewModel.PairCommand.Execute(null);
         }
 
+
+        private void btnUnPair_Clicked(object sender, EventArgs e) {
+            BTDeviceInfo device = this.lstDevices.SelectedItem as BTDeviceInfo;
+            if (device != null) {
+                App.Wrapper.BTClassicUnPairAsync(device);
+            }
+            else {
+                this.OnErr(MsgCode.NothingSelected);
+            }
+        }
 
 
         private void btnSelect_Clicked(object sender, EventArgs e) {

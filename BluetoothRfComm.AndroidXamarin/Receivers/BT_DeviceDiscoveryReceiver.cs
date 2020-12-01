@@ -19,11 +19,14 @@ namespace BluetoothRfComm.AndroidXamarin.Receivers {
     public class BT_DeviceUnpairedDiscoveryReceiver : BroadcastReceiver {
 
         Action<BluetoothDevice> raiseAction = null;
+        List<BluetoothDevice> unBondedDevices = new List<BluetoothDevice>();
         ClassLog log = new ClassLog("BT_DeviceDiscoveryReceiver");
 
 
-        public BT_DeviceUnpairedDiscoveryReceiver(Action<BluetoothDevice> raiseAction) {
+        public BT_DeviceUnpairedDiscoveryReceiver(Action<BluetoothDevice> raiseAction, List<BluetoothDevice> unBondedDevices) {
             this.raiseAction = raiseAction;
+            this.unBondedDevices = unBondedDevices;
+            this.unBondedDevices.Clear();
         }
 
 
