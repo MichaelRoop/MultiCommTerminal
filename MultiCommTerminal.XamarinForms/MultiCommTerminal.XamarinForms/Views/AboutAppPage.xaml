@@ -86,9 +86,8 @@
                     </Label.FormattedText>
                 </Label>
 
-
-                <Button Grid.Row="5" Grid.ColumnSpan="3" x:Name="btnUserManual" Text="" Clicked="btnUserManual_Clicked"
-                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Command}}" 
+                <Button Grid.Row="5" Grid.ColumnSpan="3" x:Name="btnUserManual" Clicked="btnUserManual_Clicked"
+                        ImageSource="{Binding Source={x:Static helpers:IconBinder.OpenBook}}"
                         HorizontalOptions="Center"/>
             </Grid>
 

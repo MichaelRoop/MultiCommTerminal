@@ -70,6 +70,8 @@ namespace MultiCommTerminal.XamarinForms.Droid.DependencyInjection {
                     return new IconDataModel(UIIcon.CommandWhite, this.AddDir("icons8_code.png"), "6");
                 case UIIcon.CodeWhite:
                     return new IconDataModel(UIIcon.CommandWhite, this.AddDir("icons8_code_white.png"), "6");
+                case UIIcon.OpenBook:
+                    return new IconDataModel(UIIcon.OpenBook, this.AddDir("icons8_openbook.png"), "6");
 
                 default:
                     return new IconDataModel(UIIcon.Cancel, this.AddDir("icons8_close_window_noborder.png"), "6");
