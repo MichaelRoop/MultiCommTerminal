@@ -70,6 +70,7 @@
     <Compile Include="DependencyInjection\DI.cs" />
     <Compile Include="DependencyInjection\StorageMangerSetAndroid.cs" />
     <Compile Include="MainActivity.cs" />
+    <Compile Include="PermissionsObjects\DroidBluetoothPermissions.cs" />
     <Compile Include="PermissionsObjects\LocationWhileInUsePermission.cs" />
     <Compile Include="PermissionsObjects\WifiStateChangePermission.cs" />
     <Compile Include="Resources\Resource.designer.cs" />

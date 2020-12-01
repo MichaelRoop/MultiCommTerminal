@@ -37,6 +37,7 @@ namespace MultiCommTerminal.XamarinForms.Droid {
             this.SetupDependencyInjection();
 
             DependencyService.Register<ILocationWhileInUsePermission, LocationWhileInUsePermission>();
+            DependencyService.Register<IBluetoothPermissions, DroidBluetoothPermissions>();
             DependencyService.Register<ICloseApplication, AndroidCloseApp>();
             LoadApplication(new App(DI.Wrapper));
         }

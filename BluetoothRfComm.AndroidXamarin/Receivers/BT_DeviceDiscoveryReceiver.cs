@@ -35,6 +35,7 @@ namespace BluetoothRfComm.AndroidXamarin.Receivers {
                 BluetoothDevice device = (BluetoothDevice)intent.GetParcelableExtra(BluetoothDevice.ExtraDevice);
                 if (device.Type == BluetoothDeviceType.Classic) {
                     if (device.BondState != Bond.Bonded) {
+                        this.unBondedDevices.Add(device);
                         this.log.Info("", () => string.Format(
                             "Found device:{0} MAC address:{1}", device.Name, device.Address));
                         this.raiseAction(device);
