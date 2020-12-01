@@ -1,11 +1,7 @@
 ﻿using LanguageFactory.Net.data;
 using LanguageFactory.Net.Messaging;
+using MultiCommTerminal.XamarinForms.UIHelpers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -31,6 +27,11 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         #region Wrapper event handlers
 
+        private void btnUserManual_Clicked(object sender, EventArgs e) {
+            SampleLoader.LoadUserManual(this.OnErr);
+        }
+
+
         private void OnLanguageChanged(object sender, SupportedLanguage e) {
             this.UpdateLanguage(e);
         }
@@ -38,11 +39,11 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         private void UpdateLanguage(SupportedLanguage language) {
             this.lbTitle.Text = language.GetText(MsgCode.About);
+            this.btnUserManual.Text = App.GetText(MsgCode.UserManual);
         }
 
+
+
         #endregion
-
-
-
     }
 }

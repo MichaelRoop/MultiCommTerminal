@@ -18,6 +18,12 @@ using VariousUtils.Net;
 namespace MultiCommWrapper.Net.WrapCode {
     public partial class CommWrapper : ICommWrapper {
 
+
+        public string GetDataFilesPath() {
+            return Path.Combine(this.settings.StorageRootDir, APP_DIR);
+        }
+
+
         #region Data
 
         private static string PDF_USER_MANUAL_DIR_AND_FILE = "Documents/MultiCommTerminalUserDocRelease.pdf";
@@ -35,6 +41,8 @@ namespace MultiCommWrapper.Net.WrapCode {
         private readonly string ETHERNET_DATA_INDEX_FILE = "EthernetDataIndex.txt";
         private readonly string SERIAL_CFG_DIR = "SerialConfigurations";
         private readonly string SERIAL_CFG_INDEX_FILE = "SerialCfgIndex.txt";
+
+        private readonly string USER_MANUAL_DIR = "Documents";
 
 
         // UWP path and file name for document

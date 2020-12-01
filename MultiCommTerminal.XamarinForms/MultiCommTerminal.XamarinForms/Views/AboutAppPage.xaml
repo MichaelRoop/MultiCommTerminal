@@ -12,8 +12,10 @@
         </StackLayout>
     </Shell.TitleView>
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand">
             <Label Text="Multi Comm Terminal" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+            <Button x:Name="btnUserManual" Text="" Clicked="btnUserManual_Clicked"
+                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Command}}"  />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
