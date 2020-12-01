@@ -12,10 +12,90 @@
         </StackLayout>
     </Shell.TitleView>
     <ContentPage.Content>
-        <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand">
-            <Label Text="Multi Comm Terminal" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
-            <Button x:Name="btnUserManual" Text="" Clicked="btnUserManual_Clicked"
-                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Command}}"  />
+        <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+
+            <Grid Margin="10" HorizontalOptions="CenterAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition Height="55"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.ColumnSpan="3" Text="Multi Comm Terminal" FontSize="20" FontAttributes="Bold" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+
+                <Label Grid.Row="1" Grid.Column="0" x:Name="lbAuthor" Text="Author" HorizontalTextAlignment="End"  />
+                <Label Grid.Row="1" Grid.Column="1" Text=":" />
+                <Label Grid.Row="1" Grid.Column="2" HorizontalTextAlignment="Start">
+                    <Label.FormattedText >
+                        <FormattedString>
+                            <Span Text="Michael Roop"
+                                TextColor="Blue"
+                                TextDecorations="Underline">
+                                <Span.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding TapLinkCmd}"
+                                          CommandParameter="{Binding Source={x:Static helpers:TextBinder.AuthorUri}}" />
+                                </Span.GestureRecognizers>
+                            </Span>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Label Grid.Row="2" Grid.Column="0" x:Name="lbIcons" Text="Icons" HorizontalTextAlignment="End" />
+                <Label Grid.Row="2" Grid.Column="1" Text=":"  />
+                <Label Grid.Row="2" Grid.Column="2" HorizontalTextAlignment="Start">
+                    <Label.FormattedText >
+                        <FormattedString>
+                            <Span Text="ICONS8"
+                                TextColor="Blue"
+                                TextDecorations="Underline">
+                                <Span.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding TapLinkCmd}"
+                                    CommandParameter="{Binding Source={x:Static helpers:TextBinder.IconsUri}}"/>
+                                </Span.GestureRecognizers>
+                            </Span>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                
+                <Label Grid.Row="3" Grid.Column="0" Text="Build" HorizontalTextAlignment="End" />
+                <Label Grid.Row="3" Grid.Column="1" Text=":" />
+                <Label Grid.Row="3" Grid.Column="2" x:Name="lbBuild" 
+                       Text="{Binding Source={x:Static helpers:TextBinder.BuildNumber}}" FontAttributes="Italic" />
+
+                
+                <Label Grid.Row="4" Grid.ColumnSpan="3" HorizontalOptions="Center">
+                    <Label.FormattedText >
+                        <FormattedString>
+                            <Span x:Name="txtSupport" Text="Support"
+                                TextColor="Blue"
+                                TextDecorations="Underline">
+                                <Span.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding TapLinkCmd}"
+                                          CommandParameter="{Binding Source={x:Static helpers:TextBinder.SupportlUri}}" />
+                                </Span.GestureRecognizers>
+                            </Span>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+
+                <Button Grid.Row="5" Grid.ColumnSpan="3" x:Name="btnUserManual" Text="" Clicked="btnUserManual_Clicked"
+                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Command}}" 
+                        HorizontalOptions="Center"/>
+            </Grid>
+
+
+
+
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -2,6 +2,8 @@
 using LanguageFactory.Net.Messaging;
 using MultiCommTerminal.XamarinForms.UIHelpers;
 using System;
+using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,11 +12,14 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
     public partial class AboutAppPage : ContentPage {
 
+        public ICommand TapLinkCmd => new Command<string>(async (url) => await Launcher.OpenAsync(url));
+
         #region Constructor and page envents
 
         public AboutAppPage() {
             InitializeComponent();
-            App.LanguageUpdated += this.OnLanguageChanged;             
+            BindingContext = this;
+            App.Wrapper.LanguageChanged += this.OnLanguageChanged;
         }
 
         protected override void OnAppearing() {
@@ -37,9 +42,13 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
 
-        private void UpdateLanguage(SupportedLanguage language) {
-            this.lbTitle.Text = language.GetText(MsgCode.About);
-            this.btnUserManual.Text = App.GetText(MsgCode.UserManual);
+        private void UpdateLanguage(SupportedLanguage l) {
+
+            this.lbTitle.Text = l.GetText(MsgCode.About);
+            this.btnUserManual.Text = l.GetText(MsgCode.UserManual);
+            this.lbAuthor.Text = l.GetText(MsgCode.Author);
+            this.lbIcons.Text = l.GetText(MsgCode.Icons);
+            this.txtSupport.Text = l.GetText(MsgCode.Support);
         }
 
 
