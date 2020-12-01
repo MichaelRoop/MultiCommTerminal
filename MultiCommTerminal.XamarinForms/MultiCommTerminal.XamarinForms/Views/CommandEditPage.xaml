@@ -18,20 +18,18 @@
                     <Grid Margin="0,20" HorizontalOptions="StartAndExpand" >
                         <Grid.RowDefinitions>
                             <RowDefinition/>
+                            <RowDefinition Height="50"/>
                             <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
+                            <RowDefinition Height="50"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Label Grid.Row="0" Grid.Column="0" x:Name="lblName" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" />
-                        <Entry Grid.Row="1" Grid.Column="0" x:Name="edName" MinimumWidthRequest="400" Margin="10,-10,0,0"
-                                VerticalOptions="Start" HorizontalOptions="StartAndExpand" TextChanged="edTextChanged" />
+                        <Entry Grid.Row="1" Grid.Column="0" x:Name="edName" WidthRequest="500" Margin="10,-10,0,0"/>
 
                         <Label Grid.Row="2" Grid.Column="0" x:Name="lblCmd" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" />
-                        <Editor Grid.Row="3" Grid.Column="0" x:Name="edCmd" MinimumWidthRequest="200" Margin="10,-10,0,0"
-                                VerticalOptions="Start" HorizontalOptions="StartAndExpand" AutoSize="TextChanges" TextChanged="edTextChanged"/>
+                        <Entry Grid.Row="3" Grid.Column="0" x:Name="edCmd" WidthRequest="500" Margin="10,-10,0,0"/>
                     </Grid>
                 </Frame>
             </StackLayout>

@@ -12,11 +12,13 @@
 
   <ItemGroup>
     <None Remove="Samples\BTSample.txt" />
+    <None Remove="Samples\UserManual.pdf" />
     <None Remove="Samples\WifiSample.txt" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Samples\BTSample.txt" />
+    <EmbeddedResource Include="Samples\UserManual.pdf" />
     <EmbeddedResource Include="Samples\WifiSample.txt" />
   </ItemGroup>
 
