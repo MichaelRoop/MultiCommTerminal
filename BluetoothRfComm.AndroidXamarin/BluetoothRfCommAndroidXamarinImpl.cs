@@ -55,6 +55,7 @@ namespace BluetoothRfComm.AndroidXamarin {
 
         #endregion
 
+
         #region IBTInterface methods
 
         public void ConnectAsync(BTDeviceInfo device) {
@@ -75,6 +76,7 @@ namespace BluetoothRfComm.AndroidXamarin {
             try {
                 if (this.connected) {
                     this.msgPump.Disconnect();
+                    // Never dispose the device since it came from the Adaptor Bonded list
                     if (this.device != null) {
                         this.device = null;
                     }
@@ -201,6 +203,17 @@ namespace BluetoothRfComm.AndroidXamarin {
                 "Connect result:{0}  Socket:{1} Msg:{2}",
                 results.Code, results.SocketErr, results.ErrorString));
             this.ConnectionCompleted?.Invoke(this, this.connected);
+        }
+
+
+        private void ToEliminateCompilerWarnings() {
+            // Potential future implementation
+            this.BT_DeviceInfoGathered?.Invoke(this, new BTDeviceInfo());
+
+            // Android raises its own PIN dialog
+            this.BT_PairInfoRequested?.Invoke(this, new BT_PairInfoRequest() {
+                DeviceName = "NOT IMPLEMENTED"
+            });
         }
 
         #endregion

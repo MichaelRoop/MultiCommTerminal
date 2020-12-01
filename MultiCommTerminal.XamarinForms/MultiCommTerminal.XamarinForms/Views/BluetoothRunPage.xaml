@@ -52,10 +52,20 @@
                     </Grid>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Grid VerticalOptions="Center" Margin="0,0,15,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="16" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="16"/>
+                        </Grid.ColumnDefinitions>
+                        <Frame x:Name="onLight"  BackgroundColor="GreenYellow" BorderColor="DarkGray" CornerRadius="8" IsVisible="false"/>
+                        <Frame x:Name="offLight"  BackgroundColor="LightGray" BorderColor="DarkGray" CornerRadius="8" IsVisible="true" />
+                    </Grid>
                     <Button x:Name="btnConnect" ImageSource="{Binding Source={x:Static helpers:IconBinder.Connect}}"
                             Text="Connect" Clicked="btnConnect_Clicked" />
                     <Button x:Name="btnDisconnect" ImageSource="{Binding Source={x:Static helpers:IconBinder.Disconnect}}"
-                            Text="Connect" Clicked="btnDisconnect_Clicked" />
+                            Text="Disconnect" Clicked="btnDisconnect_Clicked" />
                 </StackLayout>
             </StackLayout>
             <ActivityIndicator x:Name="activity" Color="CornflowerBlue"

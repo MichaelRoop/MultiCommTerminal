@@ -53,12 +53,14 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.responses.Clear();
             App.Wrapper.CurrentSupportedLanguage(this.UpdateLanguage);
             App.Wrapper.GetCurrentScript(this.PopulateScriptList, this.OnErr);
+            this.SetConnectedLight(false);
             base.OnAppearing();
         }
 
 
         protected override void OnDisappearing() {
             App.Wrapper.BTClassicDisconnect();
+            this.SetConnectedLight(false);
             base.OnDisappearing();
         }
 
@@ -68,6 +70,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         private void btnConnect_Clicked(object sender, EventArgs e) {
             if (this.device != null) {
+                this.SetConnectedLight(false);
                 this.activity.IsRunning = true;
                 App.Wrapper.BTClassicConnectAsync(this.device);
             }
@@ -76,6 +79,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         private void btnDisconnect_Clicked(object sender, EventArgs e) {
             if (this.device != null) {
+                this.SetConnectedLight(false);
                 App.Wrapper.BTClassicDisconnect();
             }
         }
@@ -112,8 +116,8 @@ namespace MultiCommTerminal.XamarinForms.Views {
         private void OnBT_ConnectionCompletedHandler(object sender, bool ok) {
             Device.BeginInvokeOnMainThread(() => {
                 activity.IsRunning = false;
-                if (!ok) {
-                    //this.txtFail.Text = string.Format("Failed:{0}", failCount);
+                if (ok) {
+                    this.SetConnectedLight(true);
                 }
             });
         }
@@ -132,12 +136,19 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
 
-        private void UpdateLanguage(SupportedLanguage language) {
+        private void UpdateLanguage(SupportedLanguage l) {
             this.lbTitle.Text = App.GetText(MsgCode.Run);
             this.lblCmds.Text = App.GetText(MsgCode.command);
             this.lblResponses.Text = App.GetText(MsgCode.response);
             this.btnSend.Text = App.GetText(MsgCode.send);
             this.btnConnect.Text = App.GetText(MsgCode.connect);
+            this.btnDisconnect.Text = l.GetText(MsgCode.Disconnect);
+        }
+
+
+        private void SetConnectedLight(bool isOn) {
+            this.onLight.IsVisible = isOn;
+            this.offLight.IsVisible = !isOn;
         }
 
         #endregion

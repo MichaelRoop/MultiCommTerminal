@@ -64,6 +64,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         private void OnWifiErrorHandler(object sender, WifiError e) {
             this.viewModel.IsBusy = false;
+            this.activity.IsRunning = false;
             this.OnErr(e.ExtraInfo.Length > 0 ? e.ExtraInfo : e.Code.ToString());
         }
 
@@ -71,6 +72,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
         private void OnWifiConnectionAttemptCompletedHandler(object sender, CommunicationStack.Net.DataModels.MsgPumpResults e) {
             Device.BeginInvokeOnMainThread(() => {
                 this.viewModel.IsBusy = false;
+                this.activity.IsRunning = false;
                 if (e.Code == MsgPumpResultCode.Connected) {
                     this.SetConnectedLight(true);
                 }
@@ -122,6 +124,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         private void btnConnect_Clicked(object sender, EventArgs e) {
             this.SetConnectedLight(false);
+            this.activity.IsRunning = true;
             this.viewModel.IsBusy = true;
             App.Wrapper.WifiConnectAsync(this.networkInfo);
         }
