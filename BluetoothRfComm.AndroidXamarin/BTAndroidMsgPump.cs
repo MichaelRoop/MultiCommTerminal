@@ -155,63 +155,7 @@ namespace BluetoothRfComm.AndroidXamarin {
                 catch (Exception e) {
                     this.log.Exception(9898, "Disconnect", "", e);
                 }
-
-                // This had appeared to work but ended up killing all connections
-            //try {
-            //    if (this.connected) {
-            //        this.continueReading = false;
-            //        // Cancelling readCancelSource does not throw. So we close socket to abort immediately
-            //        if (this.socket != null) {
-            //            this.socket.Close();
-            //        }
-
-            //        // The close will cause all the resources to be released
-            //        try {
-            //            if (this.readCancelSource != null) {
-            //                this.log.Info("DisconnectAsync", "Before read cancel");
-            //                this.readCancelSource.Cancel();
-            //                this.log.Info("DisconnectAsync", "After read cancel");
-            //                if (!this.readFinishedEvent.WaitOne(1000)) {
-            //                    this.log.Error(1111, "DisconnectAsync", "Timed out waiting for read cancelation");
-            //                }
-            //                this.log.Info("DisconnectAsync", "After wait on readFinishedEvent");
-            //                this.readCancelSource.Dispose();
-            //                this.readCancelSource = null;
-            //            }
-            //        }
-            //        catch (Exception) {
-            //            this.log.Info("", "Exception on the read cancel");
-            //        }
-
-            //        try {
-            //            if (this.writeCancelSource != null) {
-            //                this.writeCancelSource.Cancel();
-            //                this.writeCancelSource.Dispose();
-            //                this.writeCancelSource = null;
-            //            }
-            //        }
-            //        catch (Exception) {
-            //            this.log.Info("", "Exception on the write cancel");
-            //        }
-
-            //        try {
-            //            if (this.socket != null) {
-            //                //this.socket.Close();
-            //                this.socket.Dispose();
-            //                this.socket = null;
-            //            }
-            //        }
-            //        catch (Exception) {
-            //            this.log.Info("", "Exception on the socket close");
-            //        }
-            //    }
-            //    this.connected = false;
-            //}
-            //catch (Exception e) {
-            //    this.connected = false;
-            //    this.log.Exception(9898, "Disconnect", "", e);
-            //}
-        });
+            });
         }
 
 
