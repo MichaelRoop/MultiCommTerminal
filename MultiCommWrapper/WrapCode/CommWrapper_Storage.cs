@@ -161,7 +161,7 @@ namespace MultiCommWrapper.Net.WrapCode {
                 items.Add(new ScriptItem() { Display = "Open door cmd", Command = "OpenDoor" });
                 items.Add(new ScriptItem() { Display = "Close door cmd", Command = "CloseDoor" });
                 ScriptDataModel dm = new ScriptDataModel(items) { 
-                    Display = "Default script"
+                    Display = "Demo open close commands"
                 };
                 IIndexItem<DefaultFileExtraInfo> idx = new IndexItem<DefaultFileExtraInfo>(dm.UId) {
                     Display = "Demo script",
