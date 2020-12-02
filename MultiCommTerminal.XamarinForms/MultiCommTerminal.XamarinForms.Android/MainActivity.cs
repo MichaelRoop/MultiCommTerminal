@@ -30,6 +30,7 @@ namespace MultiCommTerminal.XamarinForms.Droid {
 
             base.OnCreate(savedInstanceState);
 
+            Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
@@ -48,6 +49,19 @@ namespace MultiCommTerminal.XamarinForms.Droid {
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+
+
+        public override void OnBackPressed() {
+            if (Rg.Plugins.Popup.Popup.SendBackPressed(base.OnBackPressed)) {
+
+            }
+            else {
+                // TODO - figure this one out
+                // https://github.com/rotorgames/Rg.Plugins.Popup/wiki/Getting-started#android-back-button
+                base.OnBackPressed();
+            }
+        }
+
 
         #endregion
 
