@@ -58,9 +58,11 @@ namespace MultiCommTerminal.XamarinForms.Views {
             App.Wrapper.Wifi_BytesReceived += Wifi_BytesReceivedHandler;
             App.Wrapper.OnWifiConnectionAttemptCompleted += this.OnWifiConnectionAttemptCompletedHandler;
             App.Wrapper.OnWifiError += this.OnWifiErrorHandler;
+            App.Wrapper.CredentialsRequestedEvent += this.CredentialsRequestedEventHandler;
             this.lstCmds.ItemsSource = this.cmds;
             this.lstResponses.ItemsSource = this.responses;
         }
+
 
         private void OnWifiErrorHandler(object sender, WifiError e) {
             this.viewModel.IsBusy = false;
@@ -160,6 +162,20 @@ namespace MultiCommTerminal.XamarinForms.Views {
         private void SetConnectedLight(bool isOn) {
             this.onLight.IsVisible = isOn;
             this.offLight.IsVisible = !isOn;
+        }
+
+
+        private void CredentialsRequestedEventHandler(object sender, WifiCredentials cred) {
+
+            // TODO - this does not work - may have to set it here before call down to wrapper
+
+            //cred.CompletedEvent.Reset();
+            //this.viewModel.PopUpCred.Execute(cred);
+
+            //if (!cred.CompletedEvent.WaitOne(60000)) {
+            //    App.ShowError(this, MsgCode.Timeout);
+            //}
+
         }
 
 

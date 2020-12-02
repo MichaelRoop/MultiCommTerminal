@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"             
+             xmlns:helpers="clr-namespace:MultiCommTerminal.XamarinForms.UIHelpers"
+             x:Class="MultiCommTerminal.XamarinForms.Views.WifiCredRequestPopUpPage" 
+             Padding="50,120,50,120"  WidthRequest="200" HeightRequest="150">
+
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation 
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8"
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"/>
+    </pages:PopupPage.Animation>
+
+    <StackLayout Padding="40,100,40,100"  BackgroundColor="White">
+        <Grid HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand">
+            <StackLayout Margin="10">
+                <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
+                    <Grid HorizontalOptions="FillAndExpand">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition  />
+                            <RowDefinition Height="45" />
+                            <RowDefinition />
+                            <RowDefinition Height="45"/>
+                            <RowDefinition  />
+                            <RowDefinition Height="45" />
+                            <RowDefinition  />
+                            <RowDefinition Height="45" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0" x:Name="lbTitle" FontSize="Large" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+
+                        <Label Grid.Row="1" x:Name="lbSsid" HorizontalOptions="StartAndExpand" 
+                                   Text=" Ssid" Margin="0,0,0,-1" Padding="0" FontSize="Medium" />
+                        <Entry Grid.Row="2" x:Name="edSsid" HorizontalOptions="StartAndExpand" 
+                                    Placeholder="SSID" Margin="0,0,0,0" WidthRequest="400"/>
+
+                        <Label Grid.Row="3" x:Name="lbPwd" HorizontalOptions="StartAndExpand" 
+                                   Text="Password"  Margin="0,5,0,-1" Padding="0" FontSize="Medium"/>
+                        <Entry Grid.Row="4" x:Name="edPwd" HorizontalOptions="StartAndExpand" 
+                                   IsPassword="True" Text="XXXXX" WidthRequest="400" />
+
+                        <Label Grid.Row="5" x:Name="lbHost" HorizontalOptions="StartAndExpand" 
+                                   Text="Host"  Margin="0,5,0,-1" Padding="0" FontSize="Medium" />
+                        <Entry Grid.Row="6" x:Name="edHost" HorizontalOptions="StartAndExpand" 
+                                    Placeholder="192.168.4.1" WidthRequest="400"/>
+
+                        <Label Grid.Row="7" x:Name="lbPort" HorizontalOptions="StartAndExpand" 
+                                   Text="Port" Margin="0,5,0,-1" Padding="0" FontSize="Medium"  />
+                        <Entry Grid.Row="8" x:Name="edPort" HorizontalOptions="StartAndExpand" 
+                                    Placeholder="80" WidthRequest="400" />
+
+                    </Grid>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                        <Button x:Name="btnSave" Clicked="btnSave_Clicked" BorderWidth="0"
+                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}"  />
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+        </Grid>
+    </StackLayout>
+</pages:PopupPage>
