@@ -32,11 +32,21 @@ namespace MultiCommTerminal.XamarinForms.Views {
             App.Wrapper.BT_DeviceDiscovered += this.DeviceDiscoveredHandler;
             App.Wrapper.BT_DiscoveryComplete += this.DiscoveryCompleteHandler;
             App.Wrapper.BT_UnPairStatus += this.BT_UnPairStatusHandler;
+            this.lstDevices.ItemSelected += LstDevices_ItemSelectedHandler;
         }
 
 
         protected override void OnAppearing() {
             App.Wrapper.CurrentSupportedLanguage(this.UpdateLanguage);
+            this.lstDevices.ItemSelected -= LstDevices_ItemSelectedHandler;
+            // void the list, quick to reload
+            this.lstDevices.SelectedItem = null;
+            this.lstDevices.ItemsSource = null;
+            this.devices.Clear();
+            this.lstDevices.ItemsSource = this.devices;
+            this.btnUnPair.IsVisible = false;
+            this.btnSelect.IsVisible = false;
+            this.lstDevices.ItemSelected += LstDevices_ItemSelectedHandler;
             base.OnAppearing();
         }
 
@@ -44,12 +54,20 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         #region Wrapper event handlers
 
+        private void LstDevices_ItemSelectedHandler(object sender, SelectedItemChangedEventArgs e) {
+            this.btnSelect.IsVisible = true;
+            this.btnUnPair.IsVisible = true;
+        }
+
+
         private void DeviceDiscoveredHandler(object sender, BTDeviceInfo e) {
             Device.BeginInvokeOnMainThread(() => {
+                this.lstDevices.ItemSelected -= LstDevices_ItemSelectedHandler;
                 this.activity.IsRunning = false;
                 this.lstDevices.ItemsSource = null;
                 this.devices.Add(e);
                 this.lstDevices.ItemsSource = this.devices;
+                this.lstDevices.ItemSelected += LstDevices_ItemSelectedHandler;
             });
         }
 
@@ -79,10 +97,12 @@ namespace MultiCommTerminal.XamarinForms.Views {
         private void btnDiscover_Clicked(object sender, EventArgs args) {
             try {
                 this.log.InfoEntry("btnDiscover_Clicked");
+                this.lstDevices.ItemSelected -= this.LstDevices_ItemSelectedHandler;
                 this.activity.IsRunning = true;
                 this.lstDevices.ItemsSource = null;
                 this.devices.Clear();
                 this.lstDevices.ItemsSource = this.devices;
+                this.lstDevices.ItemSelected += this.LstDevices_ItemSelectedHandler;
                 App.Wrapper.BTClassicDiscoverAsync(true);
             }
             catch (Exception e) {
@@ -99,7 +119,9 @@ namespace MultiCommTerminal.XamarinForms.Views {
         private void btnUnPair_Clicked(object sender, EventArgs e) {
             BTDeviceInfo device = this.lstDevices.SelectedItem as BTDeviceInfo;
             if (device != null) {
-                App.Wrapper.BTClassicUnPairAsync(device);
+                App.ShowYesNo(this, device.Name, MsgCode.Unpair, () => {
+                    App.Wrapper.BTClassicUnPairAsync(device);
+                });
             }
             else {
                 this.OnErr(MsgCode.NothingSelected);
@@ -125,15 +147,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
         #region Private
 
         private void UpdateLanguage(SupportedLanguage language) {
-            //this.txtTitle.Text = language.GetText(MsgCode.PairedDevices);
-            //this.lbTitle.Text = "Bluetooth";
             this.lbTitle.Text = language.GetText(MsgCode.PairedDevices);
-
-
-            //// buttons below. need to determine if we use icons or text
-            //this.btnDiscover.Text = language.GetText(MsgCode.discover);
-            //this.btnPair.Text = language.GetText(MsgCode.Pair);
-            //this.btnRun.Text = language.GetText(MsgCode.connect);
         }
 
         #endregion

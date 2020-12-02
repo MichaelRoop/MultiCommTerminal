@@ -87,6 +87,33 @@ namespace MultiCommTerminal.XamarinForms {
         }
 
 
+        public static void ShowYesNo(Page page, string title, string msg, Action onYes, Action onNo) {
+            Device.BeginInvokeOnMainThread(async () => {
+                bool ok = await page.DisplayAlert(title, msg, GetText(MsgCode.yes), GetText(MsgCode.no));
+                if (ok) {
+                    onYes?.Invoke();
+                }
+                else {
+                    onNo?.Invoke();
+                }
+            });
+        }
+
+        public static void ShowYesNo(Page page, string title, string msg, Action onYes) {
+            ShowYesNo(page, title, msg, onYes, () => { });
+        }
+
+
+        public static void ShowYesNo(Page page, string title, MsgCode code, Action onYes) {
+            ShowYesNo(page, title, GetText(code), onYes, () => { });
+        }
+
+
+        public static void ShowYesNo(Page page, string msg, Action onYes) {
+            ShowYesNo(page, "", msg, onYes, () => { });
+        }
+
+
         private void OnCurrentTerminatorChanged(object sender, TerminatorDataModel e) {
             Device.BeginInvokeOnMainThread(() => {
                 TerminatorsUpdated?.Invoke(this, e);
