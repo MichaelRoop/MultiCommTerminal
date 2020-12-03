@@ -1,5 +1,4 @@
 ﻿using CommunicationStack.Net.Enumerations;
-using CommunicationStack.Net.Stacks;
 using LanguageFactory.Net.data;
 using LanguageFactory.Net.Messaging;
 using LogUtils.Net;
@@ -11,9 +10,6 @@ using Newtonsoft.Json;
 using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using WifiCommon.Net.DataModels;
 using Xamarin.Forms;
@@ -63,6 +59,70 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
 
+        protected override void OnAppearing() {
+            App.Wrapper.CurrentSupportedLanguage(this.OnLanguageUpdate);
+            App.Wrapper.GetCurrentScript(this.PopulateScriptList, this.OnErr);
+            this.SetConnectedLight(false);
+            this.SubscribeToEvents();
+            base.OnAppearing();
+        }
+
+        protected override void OnDisappearing() {
+            this.UnsubscribeFromEvents();
+            App.Wrapper.WifiDisconect();
+            this.SetConnectedLight(false);
+            base.OnDisappearing();
+        }
+
+        #endregion
+
+        #region Event handlers
+
+        private void lstCmds_ItemSelected(object sender, SelectedItemChangedEventArgs e) {
+            ScriptItem cmd = e.SelectedItem as ScriptItem;
+            if (cmd != null) {
+                this.entryCmd.Text = cmd.Command;
+            }
+        }
+
+        private void btnSend_Clicked(object sender, EventArgs e) {
+            App.Wrapper.WifiSend(this.entryCmd.Text);
+        }
+
+
+        private void btnConnect_Clicked(object sender, EventArgs e) {
+            Device.BeginInvokeOnMainThread(async () => {
+                this.SetConnectedLight(false);
+                WifiCredAndIndex cred = App.Wrapper.ValidateCredentials(this.networkInfo, this.OnErr);
+                if (cred.RequiresUserData) {
+                    await PopupNavigation.Instance.PushAsync(
+                        new WifiCredRequestPopUpPage(cred, this.networkInfo, this.DelegateRunConnection));
+                }
+                else {
+                    this.DelegateRunConnection(this.networkInfo);
+                }
+            });
+        }
+
+
+        private void btnDisconnect_Clicked(object sender, EventArgs e) {
+            this.SetConnectedLight(false);
+            App.Wrapper.WifiDisconect();
+        }
+
+
+        private void Wifi_BytesReceivedHandler(object sender, string e) {
+            Device.BeginInvokeOnMainThread(() => {
+                this.lstResponses.ItemsSource = null;
+                this.responses.Add(e);
+                if (this.responses.Count > 100) {
+                    this.responses.RemoveAt(0);
+                }
+                this.lstResponses.ItemsSource = this.responses;
+            });
+        }
+
+
         private void OnWifiErrorHandler(object sender, WifiError e) {
             this.viewModel.IsBusy = false;
             this.activity.IsRunning = false;
@@ -83,94 +143,25 @@ namespace MultiCommTerminal.XamarinForms.Views {
             });
         }
 
-
-        protected override void OnAppearing() {
-            App.Wrapper.CurrentSupportedLanguage(this.OnLanguageUpdate);
-            App.Wrapper.GetCurrentScript(this.PopulateScriptList, this.OnErr);
-            this.SetConnectedLight(false);
-            this.SubscribeToEvents();
-            base.OnAppearing();
-        }
-
-        protected override void OnDisappearing() {
-            this.UnsubscribeToEvents();
-            App.Wrapper.WifiDisconect();
-            this.SetConnectedLight(false);
-            base.OnDisappearing();
-        }
-
-
-        private void Wifi_BytesReceivedHandler(object sender, string e) {
-            Device.BeginInvokeOnMainThread(() => {
-                this.lstResponses.ItemsSource = null;
-                this.responses.Add(e);
-                if (this.responses.Count > 100) {
-                    this.responses.RemoveAt(0);
-                }
-                this.lstResponses.ItemsSource = this.responses;
-            });
-        }
-
         #endregion
 
-
-        private void lstCmds_ItemSelected(object sender, SelectedItemChangedEventArgs e) {
-            ScriptItem cmd = e.SelectedItem as ScriptItem;
-            if (cmd != null) {
-                this.entryCmd.Text = cmd.Command;
-            }
-        }
-
-        private void btnSend_Clicked(object sender, EventArgs e) {
-            App.Wrapper.WifiSend(this.entryCmd.Text);
-        }
-
-        private void btnConnect_Clicked(object sender, EventArgs e) {
-            Device.BeginInvokeOnMainThread(async () => {
-                this.SetConnectedLight(false);
-                this.log.Info("********************************", "WifiRunPage - Connect - before validate");
-                WifiCredAndIndex cred = App.Wrapper.ValidateCredentials(this.networkInfo, this.OnErr);
-                this.log.Info("********************************", "WifiRunPage - Connect - after validate");
-                if (cred.RequiresUserData) {
-                    this.log.Info("********************************", "WifiRunPage - Connect - before popup");
-                    await PopupNavigation.Instance.PushAsync(
-                        new WifiCredRequestPopUpPage(cred, this.networkInfo, this.DelegateRunConnection));
-                    this.log.Info("********************************", "WifiRunPage - Connect - after popup");
-                    //App.Wrapper.WifiConnectAsync(this.networkInfo);
-                }
-                else {
-                    this.log.Info("********************************", "WifiRunPage - Connect - no popup");
-                    this.DelegateRunConnection(this.networkInfo);
-                }
-            });
-        }
-
+        #region Delegates
 
         private void DelegateRunConnection(WifiNetworkInfo info) {
             Task.Run(() => {
-                this.log.Info("********************************", "DelegateRunConnection - Connect - no popup");
                 Device.BeginInvokeOnMainThread(() => { this.activity.IsRunning = true; });
                 App.Wrapper.WifiConnectAsync(this.networkInfo);
             });
         }
 
 
-
-        private void btnDisconnect_Clicked(object sender, EventArgs e) {
-            this.SetConnectedLight(false);
-            App.Wrapper.WifiDisconect();
-        }
-
-
-        #region Delegates
-
-        private void OnLanguageUpdate(SupportedLanguage language) {
-            this.lbTitle.Text = App.GetText(MsgCode.Run);
-            this.btnConnect.Text = language.GetText(MsgCode.connect);
-            this.btnDisconnect.Text = language.GetText(MsgCode.Disconnect);
-            this.btnSend.Text = language.GetText(MsgCode.send);
-            this.lblCmds.Text = language.GetText(MsgCode.commands);
-            this.lblResponses.Text = language.GetText(MsgCode.response);
+        private void OnLanguageUpdate(SupportedLanguage l) {
+            this.lbTitle.Text = l.GetText(MsgCode.Run);
+            this.btnConnect.Text = l.GetText(MsgCode.connect);
+            this.btnDisconnect.Text = l.GetText(MsgCode.Disconnect);
+            this.btnSend.Text = l.GetText(MsgCode.send);
+            this.lblCmds.Text = l.GetText(MsgCode.commands);
+            this.lblResponses.Text = l.GetText(MsgCode.response);
         }
 
 
@@ -190,50 +181,17 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
 
-        private void CredentialsRequestedEventHandler(object sender, WifiCredentials cred) {
-
-            this.log.Info("********************************", "WifiRunPage - Credentials request");
-
-            // TODO - this does not work - may have to set it here before call down to wrapper
-
-            //cred.CompletedEvent.Reset();
-            //this.viewModel.PopUpCred.Execute(cred);
-
-            //if (!cred.CompletedEvent.WaitOne(60000)) {
-            //    App.ShowError(this, MsgCode.Timeout);
-            //}
-
-
-            // THis just holds up the main UI thread so that the popup does not display until after timeout
-            // Hack
-            //AutoResetEvent done = new AutoResetEvent(false);
-            //Device.BeginInvokeOnMainThread(async () => {
-            //    await PopupNavigation.Instance.PushAsync(new WifiCredRequestPopUpPage(cred));
-            //    done.Set();
-            //});
-            //if (!done.WaitOne(60000)) {
-            //    this.OnErr(MsgCode.Timeout);
-            //}
-
-
-
-
-        }
-
-
         private void SubscribeToEvents() {
             App.Wrapper.Wifi_BytesReceived += this.Wifi_BytesReceivedHandler;
             App.Wrapper.OnWifiConnectionAttemptCompleted += this.OnWifiConnectionAttemptCompletedHandler;
             App.Wrapper.OnWifiError += this.OnWifiErrorHandler;
-            App.Wrapper.CredentialsRequestedEvent += this.CredentialsRequestedEventHandler;
         }
 
 
-        private void UnsubscribeToEvents() {
+        private void UnsubscribeFromEvents() {
             App.Wrapper.Wifi_BytesReceived -= this.Wifi_BytesReceivedHandler;
             App.Wrapper.OnWifiConnectionAttemptCompleted -= this.OnWifiConnectionAttemptCompletedHandler;
             App.Wrapper.OnWifiError -= this.OnWifiErrorHandler;
-            App.Wrapper.CredentialsRequestedEvent -= this.CredentialsRequestedEventHandler;
         }
 
         #endregion

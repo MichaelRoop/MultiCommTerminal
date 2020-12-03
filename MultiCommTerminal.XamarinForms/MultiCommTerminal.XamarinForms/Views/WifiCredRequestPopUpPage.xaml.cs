@@ -5,23 +5,22 @@ using MultiCommTerminal.XamarinForms.UIHelpers;
 using MultiCommWrapper.Net.Helpers;
 using Rg.Plugins.Popup.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WifiCommon.Net.DataModels;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace MultiCommTerminal.XamarinForms.Views {
 
+    /// <summary>Popup to get user input for Wifi credentials</summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class WifiCredRequestPopUpPage : Rg.Plugins.Popup.Pages.PopupPage {
 
+        #region Data
 
         WifiCredAndIndex cred;
         WifiNetworkInfo discoverData;
         Action<WifiNetworkInfo> connectAction;
+
+        #endregion
 
         public WifiCredRequestPopUpPage(
             WifiCredAndIndex cred, 
@@ -36,9 +35,9 @@ namespace MultiCommTerminal.XamarinForms.Views {
             App.Wrapper.CurrentSupportedLanguage(this.UpdateLanguage);
         }
 
+        #region Button handlers
 
         private void btnSave_Clicked(object sender, EventArgs e) {
-            // TODO - validate data
             this.cred.Data.SSID = this.edSsid.Text;
             this.cred.Data.WifiPassword = this.edPwd.Text;
             this.cred.Data.RemoteHostName = this.edHost.Text;
@@ -63,6 +62,9 @@ namespace MultiCommTerminal.XamarinForms.Views {
             PopupNavigation.Instance.PopAsync(true);
         }
 
+        #endregion
+
+        #region Private
 
         private void UpdateLanguage(SupportedLanguage l) {
             this.lbTitle.Text = l.GetText(MsgCode.Credentials);
@@ -81,6 +83,8 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.edPwd.Text = cred.WifiPassword;
             this.edSsid.Text = cred.SSID;
         }
+
+        #endregion
 
     }
 
