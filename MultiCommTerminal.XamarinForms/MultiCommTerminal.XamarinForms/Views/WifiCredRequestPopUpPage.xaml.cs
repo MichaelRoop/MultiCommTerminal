@@ -21,11 +21,16 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         WifiCredAndIndex cred;
         WifiNetworkInfo discoverData;
+        Action<WifiNetworkInfo> connectAction;
 
+        public WifiCredRequestPopUpPage(
+            WifiCredAndIndex cred, 
+            WifiNetworkInfo discoverData,
+            Action<WifiNetworkInfo> connectAction) {
 
-        public WifiCredRequestPopUpPage(WifiCredAndIndex cred, WifiNetworkInfo discoverData) {
             this.cred = cred;
             this.discoverData = discoverData;
+            this.connectAction = connectAction;
             InitializeComponent();
             this.InitiEditBoxes(this.cred.Data);
             App.Wrapper.CurrentSupportedLanguage(this.UpdateLanguage);
@@ -39,27 +44,23 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.cred.Data.RemoteHostName = this.edHost.Text;
             this.cred.Data.RemoteServiceName = this.edPort.Text;
 
-            // Then close the edit box
-            // May be a problem with the call being async. Might have to make it sync to hold
-            // up wrapper until complete
-            // Now close the popup
-            // await PopupNavigation.Instance.PushAsync(new WifiCredRequestPopUpPage(cred));
             App.Wrapper.SaveWifiCred(
                 this.cred.Index, 
                 this.cred.Data, 
                 () => {
-                    // Initialise the discovery data passed in. It will be passed in for connection
+                    // Initialise the discovery data passed in. Used for actual connection
                     this.discoverData.RemoteHostName = cred.Data.RemoteHostName;
                     this.discoverData.RemoteServiceName = cred.Data.RemoteServiceName;
                     this.discoverData.Password = cred.Data.WifiPassword;
+                    this.connectAction(this.discoverData);
                     PopupNavigation.Instance.PopAsync(true);
                 }, 
                 this.OnErr);
+        }
 
 
-
-
-
+        private void btnCancel_Clicked(object sender, EventArgs e) {
+            PopupNavigation.Instance.PopAsync(true);
         }
 
 
@@ -70,6 +71,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.lbHost.Text = l.GetText(MsgCode.HostName);
             this.lbPort.Text = l.GetText(MsgCode.Port);
             this.btnSave.Text = l.GetText(MsgCode.save);
+            this.btnCancel.Text = l.GetText(MsgCode.cancel);
         }
 
 
@@ -79,7 +81,6 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.edPwd.Text = cred.WifiPassword;
             this.edSsid.Text = cred.SSID;
         }
-
 
     }
 

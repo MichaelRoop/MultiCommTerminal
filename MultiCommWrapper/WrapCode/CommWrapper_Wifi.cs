@@ -103,25 +103,22 @@ namespace MultiCommWrapper.Net.WrapCode {
         /// </summary>
         /// <param name="discoverData">The WifiNetworkInfo with info from discovered devices</param>
         /// <returns></returns>
-        public async Task<WifiCredAndIndex> ValidateCredentialsAsync(WifiNetworkInfo discoverData, OnErr onError) {
-            return await Task<WifiCredAndIndex>.Run(() => {
-                this.log.Info("WifiGetConnectCredentials", () => string.Format(""));
-                if (discoverData.SSID.Trim().Length == 0) {
-                    this.log.Error(9999, "ValidateCredentialsAsync", () => string.Format("No SSID in data retrieved from Discover"));
-                    return (WifiCredAndIndex)null;
+        public WifiCredAndIndex ValidateCredentials(WifiNetworkInfo discoverData, OnErr onError) {
+            this.log.Info("WifiGetConnectCredentials", () => string.Format(""));
+            if (discoverData.SSID.Trim().Length == 0) {
+                this.log.Error(9999, "ValidateCredentialsAsync", () => string.Format("No SSID in data retrieved from Discover"));
+                return null;
+            }
 
-                }
-                this.log.Info("ValidateCredentialsAsync", () => string.Format("SSID:{0}", discoverData.SSID));
-
-                WifiCredAndIndex result = this.WifiGetStoredCredentials(discoverData.SSID, onError);
-                if (result != null && !result.RequiresUserData) {
-                    // initialize the fields in the data model sent to connect to WIFI
-                    discoverData.RemoteHostName = result.Data.RemoteHostName;
-                    discoverData.RemoteServiceName = result.Data.RemoteServiceName;
-                    discoverData.Password = result.Data.WifiPassword;
-                }
-                return result;
-            });
+            this.log.Info("ValidateCredentialsAsync", () => string.Format("SSID:{0}", discoverData.SSID));
+            WifiCredAndIndex result = this.WifiGetStoredCredentials(discoverData.SSID, onError);
+            if (result != null && !result.RequiresUserData) {
+                // initialize the fields in the data model sent to connect to WIFI
+                discoverData.RemoteHostName = result.Data.RemoteHostName;
+                discoverData.RemoteServiceName = result.Data.RemoteServiceName;
+                discoverData.Password = result.Data.WifiPassword;
+            }
+            return result;
         }
 
 

@@ -271,7 +271,7 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void WifiDiscoverAsync();
 
-        Task<WifiCredAndIndex> ValidateCredentialsAsync(WifiNetworkInfo discoverData, OnErr onError);
+        WifiCredAndIndex ValidateCredentials(WifiNetworkInfo discoverData, OnErr onError);
 
         void WifiConnectAsync(WifiNetworkInfo dataModel);
         void WifiDisconect();

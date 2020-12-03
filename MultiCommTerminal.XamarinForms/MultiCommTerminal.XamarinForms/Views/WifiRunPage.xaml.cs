@@ -126,34 +126,35 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
         private void btnConnect_Clicked(object sender, EventArgs e) {
-            //this.SetConnectedLight(false);
-            //this.activity.IsRunning = true;
-            //this.viewModel.IsBusy = true;
-            //this.log.Info("********************************", "WifiRunPage - Connect");
-            //App.Wrapper.WifiConnectAsync(this.networkInfo);
-
-
             Device.BeginInvokeOnMainThread(async () => {
                 this.SetConnectedLight(false);
-                this.activity.IsRunning = true;
-                this.viewModel.IsBusy = true;
                 this.log.Info("********************************", "WifiRunPage - Connect - before validate");
-                WifiCredAndIndex cred = await App.Wrapper.ValidateCredentialsAsync(this.networkInfo, this.OnErr);
+                WifiCredAndIndex cred = App.Wrapper.ValidateCredentials(this.networkInfo, this.OnErr);
                 this.log.Info("********************************", "WifiRunPage - Connect - after validate");
                 if (cred.RequiresUserData) {
                     this.log.Info("********************************", "WifiRunPage - Connect - before popup");
-                    await PopupNavigation.Instance.PushAsync(new WifiCredRequestPopUpPage(cred, this.networkInfo));
+                    await PopupNavigation.Instance.PushAsync(
+                        new WifiCredRequestPopUpPage(cred, this.networkInfo, this.DelegateRunConnection));
                     this.log.Info("********************************", "WifiRunPage - Connect - after popup");
-                    App.Wrapper.WifiConnectAsync(this.networkInfo);
+                    //App.Wrapper.WifiConnectAsync(this.networkInfo);
                 }
                 else {
                     this.log.Info("********************************", "WifiRunPage - Connect - no popup");
-                    App.Wrapper.WifiConnectAsync(this.networkInfo);
+                    this.DelegateRunConnection(this.networkInfo);
                 }
             });
-
-
         }
+
+
+        private void DelegateRunConnection(WifiNetworkInfo info) {
+            Task.Run(() => {
+                this.log.Info("********************************", "DelegateRunConnection - Connect - no popup");
+                Device.BeginInvokeOnMainThread(() => { this.activity.IsRunning = true; });
+                App.Wrapper.WifiConnectAsync(this.networkInfo);
+            });
+        }
+
+
 
         private void btnDisconnect_Clicked(object sender, EventArgs e) {
             this.SetConnectedLight(false);
