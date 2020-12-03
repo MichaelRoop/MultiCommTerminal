@@ -18,6 +18,7 @@ using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using WifiCommon.Net.DataModels;
 
 namespace MultiCommWrapper.Net.interfaces {
@@ -270,6 +271,8 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void WifiDiscoverAsync();
 
+        Task<WifiCredAndIndex> ValidateCredentialsAsync(WifiNetworkInfo discoverData, OnErr onError);
+
         void WifiConnectAsync(WifiNetworkInfo dataModel);
         void WifiDisconect();
 
@@ -336,6 +339,8 @@ namespace MultiCommWrapper.Net.interfaces {
         void GetWifiCredList(Action<List<IIndexItem<DefaultFileExtraInfo>>> onSuccess, OnErr onError);
 
         void CreateNewWifiCred(string display, WifiCredentialsDataModel data, Action onSuccess, OnErr onError);
+
+        void CreateNewWifiCred(string display, WifiCredentialsDataModel data, Action<IIndexItem<DefaultFileExtraInfo>> onSuccess, OnErr onError);
 
         void RetrieveWifiCredData(IIndexItem<DefaultFileExtraInfo> index, Action<WifiCredentialsDataModel> onSuccess, OnErr onError);
 

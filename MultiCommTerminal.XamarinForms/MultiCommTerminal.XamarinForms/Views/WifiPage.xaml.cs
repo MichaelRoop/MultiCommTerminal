@@ -68,10 +68,10 @@ namespace MultiCommTerminal.XamarinForms.Views {
             // Get selected and call view model command to move to run page
             WifiNetworkInfo info = this.lstWifi.SelectedItem as WifiNetworkInfo;
             if (info != null) {
-                // TODO - remove hack
-                info.RemoteHostName = "192.168.4.1";
-                info.RemoteServiceName = "80";
-                info.Password = "1234567890";
+                //// TODO - remove hack
+                //info.RemoteHostName = "192.168.4.1";
+                //info.RemoteServiceName = "80";
+                //info.Password = "1234567890";
 
                 this.viewModel.GoToRun.Execute(info);
             }

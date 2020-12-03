@@ -19,7 +19,7 @@ namespace MultiCommTerminal.XamarinForms.ViewModels {
         private async void OnPopUpCred(WifiCredentials cred) {
             // New instance on each call
             //https://stackoverflow.com/questions/58749785/xamarin-form-how-to-use-rg-plugins-popup-pages-in-mvvmcross
-            await PopupNavigation.Instance.PushAsync(new WifiCredRequestPopUpPage(cred));
+            //await PopupNavigation.Instance.PushAsync(new WifiCredRequestPopUpPage(cred));
         }
 
     }

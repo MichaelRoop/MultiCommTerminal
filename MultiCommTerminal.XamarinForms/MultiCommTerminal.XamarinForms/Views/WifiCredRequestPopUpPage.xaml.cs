@@ -1,5 +1,8 @@
 ﻿using LanguageFactory.Net.data;
 using LanguageFactory.Net.Messaging;
+using MultiCommData.Net.StorageDataModels;
+using MultiCommTerminal.XamarinForms.UIHelpers;
+using MultiCommWrapper.Net.Helpers;
 using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
@@ -16,30 +19,46 @@ namespace MultiCommTerminal.XamarinForms.Views {
     public partial class WifiCredRequestPopUpPage : Rg.Plugins.Popup.Pages.PopupPage {
 
 
-        WifiCredentials cred;
+        WifiCredAndIndex cred;
+        WifiNetworkInfo discoverData;
 
-        public WifiCredRequestPopUpPage(WifiCredentials cred) {
+
+        public WifiCredRequestPopUpPage(WifiCredAndIndex cred, WifiNetworkInfo discoverData) {
             this.cred = cred;
+            this.discoverData = discoverData;
             InitializeComponent();
-            this.InitiEditBoxes(this.cred);
+            this.InitiEditBoxes(this.cred.Data);
             App.Wrapper.CurrentSupportedLanguage(this.UpdateLanguage);
         }
 
 
         private void btnSave_Clicked(object sender, EventArgs e) {
             // TODO - validate data
-            this.cred.SSID = this.edSsid.Text;
-            this.cred.WifiPassword = this.edPwd.Text;
-            this.cred.RemoteHostName = this.edHost.Text;
-            this.cred.RemoteServiceName = this.edPort.Text;
+            this.cred.Data.SSID = this.edSsid.Text;
+            this.cred.Data.WifiPassword = this.edPwd.Text;
+            this.cred.Data.RemoteHostName = this.edHost.Text;
+            this.cred.Data.RemoteServiceName = this.edPort.Text;
 
             // Then close the edit box
             // May be a problem with the call being async. Might have to make it sync to hold
             // up wrapper until complete
             // Now close the popup
             // await PopupNavigation.Instance.PushAsync(new WifiCredRequestPopUpPage(cred));
-            this.cred.CompletedEvent.Set();
-            PopupNavigation.Instance.PopAsync(true);
+            App.Wrapper.SaveWifiCred(
+                this.cred.Index, 
+                this.cred.Data, 
+                () => {
+                    // Initialise the discovery data passed in. It will be passed in for connection
+                    this.discoverData.RemoteHostName = cred.Data.RemoteHostName;
+                    this.discoverData.RemoteServiceName = cred.Data.RemoteServiceName;
+                    this.discoverData.Password = cred.Data.WifiPassword;
+                    PopupNavigation.Instance.PopAsync(true);
+                }, 
+                this.OnErr);
+
+
+
+
 
         }
 
@@ -54,7 +73,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
 
-        private void InitiEditBoxes(WifiCredentials cred) {
+        private void InitiEditBoxes(WifiCredentialsDataModel cred) {
             this.edHost.Text = cred.RemoteHostName;
             this.edPort.Text = cred.RemoteServiceName;
             this.edPwd.Text = cred.WifiPassword;

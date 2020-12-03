@@ -4,12 +4,14 @@ using CommunicationStack.Net.DataModels;
 using CommunicationStack.Net.Enumerations;
 using LanguageFactory.Net.data;
 using MultiCommData.Net.StorageDataModels;
+using MultiCommWrapper.Net.Helpers;
 using MultiCommWrapper.Net.interfaces;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using VariousUtils.Net;
 using WifiCommon.Net.DataModels;
 using WifiCommon.Net.Enumerations;
@@ -45,6 +47,8 @@ namespace MultiCommWrapper.Net.WrapCode {
             try {
                 bool save = false;
                 WifiErrorCode result = this.WifiGetConnectCredentials(dataModel, ref save);
+                this.log.Info("********************************", "Comm Wrapper - WifiConnectAsync after get credentials");
+
                 if (result != WifiErrorCode.Success) {
                     this.OnWifiError?.Invoke(this, new WifiError(result));
                 }
@@ -85,6 +89,93 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         #endregion
 
+        #region New mobile async
+
+        //public void WifiConnectAsync2(WifiNetworkInfo dataModel) {
+
+        //}
+
+
+
+
+        /// <summary>Get discovered info to look up the stored WifiCredentials object to check for credentials
+        /// 
+        /// </summary>
+        /// <param name="discoverData">The WifiNetworkInfo with info from discovered devices</param>
+        /// <returns></returns>
+        public async Task<WifiCredAndIndex> ValidateCredentialsAsync(WifiNetworkInfo discoverData, OnErr onError) {
+            return await Task<WifiCredAndIndex>.Run(() => {
+                this.log.Info("WifiGetConnectCredentials", () => string.Format(""));
+                if (discoverData.SSID.Trim().Length == 0) {
+                    this.log.Error(9999, "ValidateCredentialsAsync", () => string.Format("No SSID in data retrieved from Discover"));
+                    return (WifiCredAndIndex)null;
+
+                }
+                this.log.Info("ValidateCredentialsAsync", () => string.Format("SSID:{0}", discoverData.SSID));
+
+                WifiCredAndIndex result = this.WifiGetStoredCredentials(discoverData.SSID, onError);
+                if (result != null && !result.RequiresUserData) {
+                    // initialize the fields in the data model sent to connect to WIFI
+                    discoverData.RemoteHostName = result.Data.RemoteHostName;
+                    discoverData.RemoteServiceName = result.Data.RemoteServiceName;
+                    discoverData.Password = result.Data.WifiPassword;
+                }
+                return result;
+            });
+        }
+
+
+        //private async Task<WifiCredAndIndex> WifiGetStoredCredentials(string ssid, OnErr onError) {
+        private WifiCredAndIndex WifiGetStoredCredentials(string ssid, OnErr onError) {
+            //return await Task.Run<WifiCredAndIndex>(() => {
+                WifiCredAndIndex result = null;
+            this.GetWifiCredList(
+                (list) => {
+                    foreach (var item in list) {
+                        this.log.Info("WifiGetStoredCredentials", () => string.Format("SSID '{0}' List itm display '{1}", ssid, item.Display));
+                        if (item.Display == ssid) {
+                                this.RetrieveWifiCredData(
+                                    item,
+                                    (data) => {
+                                        this.log.Info("WifiGetStoredCredentials", () => string.Format("FOUND SSID '{0}'", item.Display));
+                                        result = new WifiCredAndIndex() {
+                                            Index = item,
+                                            Data = data,
+                                            RequiresUserData =
+                                                (data.RemoteHostName.Trim().Length == 0 ||
+                                                 data.RemoteServiceName.Trim().Length == 0 ||
+                                                 data.WifiPassword.Trim().Length == 0),
+                                        };
+                                    },onError);
+                            break;
+                        }
+                    }
+                    if (result == null) {
+                            // Create new one
+                            WifiCredentialsDataModel dm = new WifiCredentialsDataModel() {
+                            SSID = ssid,
+                        };
+                        this.CreateNewWifiCred(
+                            ssid,
+                            dm,
+                            (ndx) => {
+                                result = new WifiCredAndIndex() {
+                                    Data = dm,
+                                    Index = ndx,
+                                    RequiresUserData = true,
+                                };
+                            }, onError);
+                    }
+                }, onError);
+
+                return result;
+            //});
+        }
+
+
+
+
+        #endregion
 
         private void WifiInit() {
             this.wifiStack.SetCommChannel(this.wifi);
@@ -117,6 +208,9 @@ namespace MultiCommWrapper.Net.WrapCode {
             if (dataModel.RemoteHostName.Trim().Length == 0 ||
                 dataModel.RemoteServiceName.Trim().Length == 0 ||
                 dataModel.Password.Trim().Length == 0) {
+
+                this.log.Info("********************************", "Comm Wrapper - GetConnectionCredentials");
+
 
                 this.log.Info("WifiGetConnectCredentials", () => string.Format("No data in data model"));
                 if (!this.WifiGetStoredCredentials(dataModel)) {
@@ -215,6 +309,8 @@ namespace MultiCommWrapper.Net.WrapCode {
         private WifiErrorCode GetUserCredentials(WifiNetworkInfo dataModel, ref bool save) {
             save = false;
 
+            this.log.Info("********************************", "Comm Wrapper - GetUserCredentials");
+
             // TODO - implement. Could also use the wifi GUID
             WifiCredentials cred = new WifiCredentials() {
                 SSID = dataModel.SSID,
@@ -225,16 +321,26 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.CredentialsRequestedEvent?.Invoke(this, cred);
 
             if (cred.IsUserCanceled) {
+                this.log.Info("********************************", "Comm Wrapper - GetUserCredentials Canceled");
+
                 return WifiErrorCode.UserCanceled;
             }
 
-            if (cred.RemoteHostName.Trim().Length == 0) {
+            if (cred.SSID.Trim().Length == 0) {
+                this.log.Info("********************************", "Comm Wrapper - GetUserCrendentials Empty SSID");
+                return WifiErrorCode.EmptySsid;
+            }
+            else if (cred.RemoteHostName.Trim().Length == 0) {
+                this.log.Info("********************************", "Comm Wrapper - GetUserCrendentials Empty host name");
                 return WifiErrorCode.EmptyHostName;
             }
             else if (cred.RemoteServiceName.Trim().Length == 0) {
+                this.log.Info("********************************", "Comm Wrapper - GetUserCrendentials Empty port name");
                 return WifiErrorCode.EmptyServiceName;
             }
             else if (cred.WifiPassword.Trim().Length == 0) {
+                this.log.Info("********************************", "Comm Wrapper - GetUserCrendentials Empty password");
+
                 return WifiErrorCode.EmptyPassword;
             }
 
@@ -332,6 +438,28 @@ namespace MultiCommWrapper.Net.WrapCode {
                     onError.Invoke(this.GetText(MsgCode.SaveFailed));
                 }
             });
+        }
+
+
+        public void CreateNewWifiCred(string display, WifiCredentialsDataModel data, Action<IIndexItem<DefaultFileExtraInfo>> onSuccess, OnErr onError) {
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    if (display.Length == 0) {
+                        onError.Invoke(this.GetText(MsgCode.EmptyName));
+                    }
+                    else {
+                        IIndexItem<DefaultFileExtraInfo> idx = new IndexItem<DefaultFileExtraInfo>(data.UId) {
+                            Display = display,
+                        };
+                        this.SaveWifiCred(idx, data, () => { onSuccess(idx); }, onError);
+                    }
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.SaveFailed));
+                }
+            });
+
         }
 
 
