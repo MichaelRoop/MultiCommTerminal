@@ -1,63 +1,16 @@
-﻿using Android.App;
-using Android.Content;
-using Android.Net;
+﻿using Android.Net;
 using Android.Net.Wifi;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using CommunicationStack.Net.DataModels;
 using CommunicationStack.Net.Enumerations;
-using CommunicationStack.Net.MsgPumps;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using WifiCommon.Net.DataModels;
 using WifiCommon.Net.Enumerations;
 using WifiCommon.Net.interfaces;
-using Xamarin.Essentials;
 using static Android.Net.ConnectivityManager;
-//using static Android.Net.Wifi.WifiConfiguration;
 
 namespace Wifi.AndroidXamarin {
 
-    //// https://stackoverflow.com/questions/59992041/connect-to-wifi-programmatically-in-xamarin-forms-android-10
-    //public class WifiConnectCallback : ConnectivityManager.NetworkCallback {
-        
-    //    ConnectivityManager connectivityManager;
-    //    private string host = string.Empty;
-    //    private int port = 0;
-
-    //    public Action<WifiAndroidMsgPumpConnectData> NetworkAvailable { get; set; }
-    //    public Action NetworkUnavailable { get; set; }
-
-    //    public WifiConnectCallback(ConnectivityManager manager, string host, int port) {
-    //        this.connectivityManager = manager;
-    //        this.host = host;
-    //        this.port = port;
-    //    }
-
-    //    public override void OnAvailable(Network network) {
-    //        base.OnAvailable(network);
-    //        this.NetworkAvailable?.Invoke(
-    //            new WifiAndroidMsgPumpConnectData(network, this.host, this.port));
-    //        this.connectivityManager.BindProcessToNetwork(network);
-    //    }
-
-    //    public override void OnUnavailable() {
-    //        this.NetworkUnavailable?.Invoke();
-    //        base.OnUnavailable();
-    //    }
-
-    //}
-
-
-
     public partial class WifiImplAndroidXamarin : IWifiInterface {
 
-
-        const int NETID = 1223344;
 
         private NetworkCallback connectCallback = null;
 

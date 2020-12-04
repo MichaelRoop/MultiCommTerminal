@@ -1,14 +1,6 @@
-﻿using Android.App;
-using Android.Content;
+﻿using Android.Content;
 using Android.Net.Wifi;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using WifiCommon.Net.DataModels;
 using WifiCommon.Net.interfaces;
 
@@ -16,79 +8,22 @@ namespace Wifi.AndroidXamarin {
 
     public partial class WifiImplAndroidXamarin : IWifiInterface {
 
-        protected class WifiListReceiver : BroadcastReceiver {
-
-            Action<IList<ScanResult>> onSuccess = null;
-
-            public WifiListReceiver(Action<IList<ScanResult>> onSuccess) {
-                this.onSuccess = onSuccess;
-            }
-
-            public override void OnReceive(Context context, Intent intent) {
-
-                LogUtils.Net.Log.Info("WifiListReceiver",  "OnReceive", "*******************");
-
-
-                IList<ScanResult> scanResults = new List<ScanResult>();
-                WifiManager manager = (WifiManager)context.GetSystemService(Context.WifiService);
-                foreach (var result in  manager.ScanResults) {
-
-                    LogUtils.Net.Log.Info("WifiListReceiver", "OnReceive", "********* GOT ONE  **********");
-
-
-                    scanResults.Add(result);
-                }
-                this.onSuccess.Invoke(scanResults);                
-            }
-        }
-
-        WifiListReceiver listReceiver = null;
-
-
-
+        /// <summary>Register the receiver and start scan for WIFI networks</summary>
         private void DoDiscovery() {
             this.log.Info("DoDiscovery", "Starting");
-            /*
-            List<WifiNetworkInfo> networks = new List<WifiNetworkInfo>();
-            foreach ( WifiConfiguration net in this.manager.ConfiguredNetworks) {
-                WifiNetworkInfo info = new WifiNetworkInfo() {
-                    SSID = net.Ssid,
-                    MacAddress_BSSID = net.Bssid,
-                    RemoteHostName = net.ProviderFriendlyName, // bogus
-                    //RemoteServiceName = net.ser
-                };
-
-                this.log.Info("ListDiscoveryCallback", () => string.Format("                SSID:{0}", net.Ssid));
-                this.log.Info("ListDiscoveryCallback", () => string.Format("               BSSID:{0}", net.Bssid));
-                this.log.Info("ListDiscoveryCallback", () => string.Format("       Friendly name:{0}", net.ProviderFriendlyName));
-                this.log.Info("ListDiscoveryCallback", () => string.Format("               Class:{0}", net.Class.ToString()));
-
-                //this.log.Info("ListDiscoveryCallback", () => string.Format("        Capabilities:{0}", net.Capabilities));
-                //this.log.Info("ListDiscoveryCallback", () => string.Format("   Center Frequency0:{0}", net.CenterFreq0));
-                //this.log.Info("ListDiscoveryCallback", () => string.Format("   Center Frequency1:{0}", net.CenterFreq1));
-                //this.log.Info("ListDiscoveryCallback", () => string.Format("       Channel Width:{0}", net.ChannelWidth));
-                //this.log.Info("ListDiscoveryCallback", () => string.Format("           Frequency:{0}", renetsult.Frequency));
-                //this.log.Info("ListDiscoveryCallback", () => string.Format("  Is 80211 responder:{0}", net.Is80211mcResponder()));
-                //this.log.Info("ListDiscoveryCallback", () => string.Format("Is Passpoint Network:{0}", net.IsPasspointNetwork));
-                //this.log.Info("ListDiscoveryCallback", () => string.Format("               Level:{0}", net.Level));
-                //this.log.Info("ListDiscoveryCallback", () => string.Format("       Friendly name:{0}", net.OperatorFriendlyName.ToString()));
-                //this.log.Info("ListDiscoveryCallback", () => string.Format("           Timestamp:{0}", net.Timestamp.ToString()));
-                //this.log.Info("ListDiscoveryCallback", () => string.Format("          Venue name:{0}", net.VenueName.ToString()));
-                networks.Add(info);
+            if (!this.isListReceiverRunning) {
+                this.isListReceiverRunning = true;
+                this.GetContext().RegisterReceiver(
+                    this.listReceiver,
+                    new IntentFilter(WifiManager.ScanResultsAvailableAction));
+                // Marked obsolete but will continue to use until something new offered
+                this.manager.StartScan();
             }
-            this.DiscoveredNetworks?.Invoke(this, networks);
-            */
-
-            // Previous receiver
-            this.listReceiver = new WifiListReceiver(this.ListDiscoveryCallback);
-            this.GetContext().RegisterReceiver(
-                this.listReceiver, new IntentFilter(WifiManager.ScanResultsAvailableAction));
-            this.manager.StartScan();
-
-
         }
 
 
+        /// <summary>List receiver callback</summary>
+        /// <param name="results">The results of the scan</param>
         private void ListDiscoveryCallback(IList<ScanResult> results) {
             this.log.Info("ListDiscoveryCallback", "Starting");
 
@@ -118,14 +53,11 @@ namespace Wifi.AndroidXamarin {
                     networks.Add(info);
                 }
             }
+            // unregister the receiver on completion
+            this.GetContext().UnregisterReceiver(this.listReceiver);
+            this.isListReceiverRunning = false;
             this.DiscoveredNetworks?.Invoke(this, networks);
-            //this.GetContext().UnregisterReceiver(this.listReceiver);
-            //this.listReceiver.Dispose();
-            //this.listReceiver = null;
         }
-
-        //.GetValueOrDefault()
-
 
     }
 

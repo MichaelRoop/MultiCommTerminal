@@ -25,12 +25,11 @@ namespace Wifi.AndroidXamarin {
         #region Data
 
         ClassLog log = new ClassLog("WifiImplAndroidXamarin");
-        //NetSocketMsgPump msgPump = new NetSocketMsgPump();
-
         WifiAndroidMsgPump msgPump = new WifiAndroidMsgPump();
-
         WifiManager manager = null;
         ConnectivityManager connectivityManager;
+        WifiAndroidListReceiver listReceiver = null;
+        private bool isListReceiverRunning = false;
 
         #endregion
 
@@ -59,10 +58,12 @@ namespace Wifi.AndroidXamarin {
         #region Constructors
 
         public WifiImplAndroidXamarin() {
+            this.isListReceiverRunning = false;
             this.msgPump.MsgPumpConnectResultEvent += this.MsgPumpConnectResultEventHandler;
             this.msgPump.MsgReceivedEvent += this.MsgPumpMsgReceivedEventHandler;
             this.manager = this.GetWifiManager();
             this.connectivityManager = this.GetConnectivityManager();
+            this.listReceiver = new WifiAndroidListReceiver(this.ListDiscoveryCallback);
         }
 
         #endregion
@@ -157,6 +158,13 @@ namespace Wifi.AndroidXamarin {
             return '"' + arg + '"';
 
         }
+
+
+        private void ToEliminateCompilerWarnings() {
+            this.DiscoveredAdapters?.Invoke(this, null);
+            this.CredentialsRequestedEvent?.Invoke(this, null);
+        }
+
 
         #endregion
 
