@@ -274,6 +274,9 @@ namespace MultiCommWrapper.Net.interfaces {
         WifiCredAndIndex ValidateCredentials(WifiNetworkInfo discoverData, OnErr onError);
 
         void WifiConnectAsync(WifiNetworkInfo dataModel);
+        
+        void WifiConnectPreValidatedAsync(WifiNetworkInfo dataModel);
+
         void WifiDisconect();
 
         void WifiSend(string msg);

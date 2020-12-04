@@ -150,7 +150,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
         private void DelegateRunConnection(WifiNetworkInfo info) {
             Task.Run(() => {
                 Device.BeginInvokeOnMainThread(() => { this.activity.IsRunning = true; });
-                App.Wrapper.WifiConnectAsync(this.networkInfo);
+                App.Wrapper.WifiConnectPreValidatedAsync(this.networkInfo);
             });
         }
 

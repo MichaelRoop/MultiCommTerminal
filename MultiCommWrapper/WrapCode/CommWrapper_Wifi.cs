@@ -91,9 +91,19 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         #region New mobile async
 
-        //public void WifiConnectAsync2(WifiNetworkInfo dataModel) {
-
-        //}
+        public void WifiConnectPreValidatedAsync(WifiNetworkInfo dataModel) {
+            this.log.InfoEntry("WifiConnectPreValidatedAsync");
+            try {
+                this.wifi.ConnectAsync(dataModel);
+            }
+            catch (ErrReportException erE) {
+                this.OnWifiError?.Invoke(this, new WifiError(WifiErrorCode.Unknown) { ExtraInfo = erE.Report.Msg });
+            }
+            catch (Exception e) {
+                this.log.Exception(9999, "", e);
+                this.OnWifiError?.Invoke(this, new WifiError(WifiErrorCode.Unknown) { ExtraInfo = e.Message });
+            }
+        }
 
 
 
