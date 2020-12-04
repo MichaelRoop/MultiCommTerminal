@@ -14,11 +14,13 @@
     <ContentPage.Content>
         <Grid>
             <StackLayout>
+                
                 <StackLayout Orientation="Horizontal">
                     <StackLayout Orientation="Vertical">
                         <Frame BorderColor="LightBlue">
                             <StackLayout Orientation="Vertical">
-                                <Label x:Name="lblCmds" Text="Commands" HorizontalOptions="Center" />
+                                <Label x:Name="lblCmds" Text="Commands" HorizontalOptions="Center" 
+                                       FontSize="Large" Margin="0,10"/>
                                 <ListView x:Name="lstCmds" VerticalOptions="Center" 
                           ItemSelected="lstCmds_ItemSelected"
                           MinimumHeightRequest="20" MinimumWidthRequest="20">
@@ -33,8 +35,18 @@
                     </StackLayout>
                     <Frame BorderColor="LightBlue">
                         <StackLayout>
-                            <Label x:Name="lblResponses" Text="Responses" HorizontalOptions="Center" />
-                            <ListView x:Name="lstResponses" VerticalOptions="Center" 
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,10" >
+                                <Label x:Name="lblResponses" Text="Responses" HorizontalOptions="Center" 
+                                       VerticalTextAlignment="Center" FontSize="Large" />
+                                <Image Source="{Binding Source={x:Static helpers:IconBinder.BackDelete}}" 
+                                       HeightRequest="20" WidthRequest="20" VerticalOptions="Center">
+                                </Image>
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="ClearTapGestureRecognizer_Tapped" 
+                                                NumberOfTapsRequired="1" />
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                            <ListView x:Name="lstResponses" VerticalOptions="Center" IsEnabled="False"
                       MinimumHeightRequest="20" MinimumWidthRequest="20">
                             </ListView>
                         </StackLayout>

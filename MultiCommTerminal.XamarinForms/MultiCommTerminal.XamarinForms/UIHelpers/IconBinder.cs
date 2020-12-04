@@ -37,6 +37,7 @@ namespace MultiCommTerminal.XamarinForms.UIHelpers {
         public static string Code { get { return Source(UIIcon.Code); } }
         public static string Code_W { get { return Source(UIIcon.CodeWhite); } }
         public static string OpenBook { get { return Source(UIIcon.OpenBook); } }
+        public static string BackDelete { get { return Source(UIIcon.BackDelete); } }
 
 
         private static string Source(UIIcon code) {

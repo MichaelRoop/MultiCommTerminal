@@ -85,6 +85,13 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
 
+        private void ClearTapGestureRecognizer_Tapped(object sender, EventArgs e) {
+            this.lstResponses.ItemsSource = null;
+            this.responses.Clear();
+            this.lstResponses.ItemsSource = this.responses;
+        }
+
+
         private void lstCmds_ItemSelected(object sender, SelectedItemChangedEventArgs e) {
             ScriptItem item = e.SelectedItem as ScriptItem;
             if (item != null) {

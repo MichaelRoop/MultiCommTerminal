@@ -45,9 +45,9 @@ namespace MultiCommTerminal.XamarinForms.Droid.DependencyInjection {
                 case UIIcon.Pair:
                     return new IconDataModel(UIIcon.Configure, this.AddDir("icons8_link.png"), "1");
                 case UIIcon.PairWhite:
-                    return new IconDataModel(UIIcon.Configure, this.AddDir("icons8_link_white.png"), "1");
+                    return new IconDataModel(UIIcon.PairWhite, this.AddDir("icons8_link_white.png"), "1");
                 case UIIcon.Unpair:
-                    return new IconDataModel(UIIcon.Delete, this.AddDir("icons8_delete_link.png"), "1");
+                    return new IconDataModel(UIIcon.Unpair, this.AddDir("icons8_delete_link.png"), "1");
                 case UIIcon.Credentials:
                     return new IconDataModel(UIIcon.Credentials, this.AddDir("icons8_access.png"), "1");
                 case UIIcon.CredentialsWhite:
@@ -74,6 +74,8 @@ namespace MultiCommTerminal.XamarinForms.Droid.DependencyInjection {
                     return new IconDataModel(UIIcon.CommandWhite, this.AddDir("icons8_code_white.png"), "6");
                 case UIIcon.OpenBook:
                     return new IconDataModel(UIIcon.OpenBook, this.AddDir("icons8_openbook.png"), "6");
+                case UIIcon.BackDelete:
+                    return new IconDataModel(UIIcon.BackDelete, this.AddDir("icons8_clear_symbol.png"), "6");
 
                 default:
                     return new IconDataModel(UIIcon.Cancel, this.AddDir("icons8_close_window_noborder.png"), "6");
