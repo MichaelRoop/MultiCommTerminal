@@ -128,13 +128,16 @@ namespace BluetoothRfComm.AndroidXamarin {
                     // Cancelling readCancelSource does not throw. So we close socket to abort immediately
                     if (this.socket != null) {
                         this.socket.Close();
+                        // Seems like Android sockets require time to close but 
+                        // Have no synchronization methods
+                        Thread.Sleep(200);
                     }
 
                     if (this.readCancelSource != null) {
                         this.log.Info("DisconnectAsync", "Before read cancel");
                         this.readCancelSource.Cancel();
                         this.log.Info("DisconnectAsync", "After read cancel");
-                        if (!this.readFinishedEvent.WaitOne(2000)) {
+                        if (!this.readFinishedEvent.WaitOne(200)) {
                             this.log.Error(1111, "DisconnectAsync", "Timed out waiting for read cancelation");
                         }
                         this.log.Info("DisconnectAsync", "After wait on readFinishedEvent");
