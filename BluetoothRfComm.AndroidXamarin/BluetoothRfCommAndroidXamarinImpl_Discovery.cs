@@ -1,20 +1,11 @@
-﻿using Android.App;
-using Android.Bluetooth;
+﻿using Android.Bluetooth;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using BluetoothCommon.Net.interfaces;
 using BluetoothCommon.Net;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using LogUtils.Net;
+using BluetoothCommon.Net.interfaces;
 using BluetoothRfComm.AndroidXamarin.Receivers;
-using Java.Util;
-using VariousUtils.Net;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BluetoothRfComm.AndroidXamarin {
 
@@ -81,6 +72,7 @@ namespace BluetoothRfComm.AndroidXamarin {
                 this.GetContext().RegisterReceiver(
                     this.discoverReceiver, new IntentFilter(BluetoothDevice.ActionFound));
                 BluetoothAdapter.DefaultAdapter.StartDiscovery();
+                this.StartAutoEnd();
             }
             catch (Exception e) {
                 this.log.Exception(9999, "", e);
@@ -111,6 +103,17 @@ namespace BluetoothRfComm.AndroidXamarin {
                 this.discoverReceiver = null;
             }
         }
+
+
+        private void StartAutoEnd() {
+            Task.Run(() => {
+                AutoResetEvent timeout = new AutoResetEvent(false);
+                timeout.WaitOne(15000);
+                this.KillDiscoverReceiver();
+                this.DiscoveryComplete?.Invoke(this, false);
+            });
+        }
+
 
 
     }

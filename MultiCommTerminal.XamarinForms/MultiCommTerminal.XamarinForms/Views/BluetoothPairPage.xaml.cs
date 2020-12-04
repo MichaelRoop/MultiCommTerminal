@@ -33,19 +33,21 @@ namespace MultiCommTerminal.XamarinForms.Views {
         protected override void OnAppearing() {
             this.SubscribeToEvents();
             App.Wrapper.CurrentSupportedLanguage(this.UpdateLanguage);
+            this.btnPair.IsVisible = false;
             base.OnAppearing();
         }
 
 
         protected override void OnDisappearing() {
             this.UnsubscribeFromEvents();
+            this.btnPair.IsVisible = false;
             base.OnDisappearing();
         }
 
 
         private void btnDiscover_Clicked(object sender, EventArgs args) {
             Device.BeginInvokeOnMainThread(async () => {
-                if (await this.ChkWifiPermissions()) {
+                if (await this.ChkBTPermissions()) {
                     this.log.InfoEntry("btnDiscover_Clicked");
                     this.activity.IsRunning = true;
                     this.lstDevices.ItemsSource = null;
@@ -57,20 +59,6 @@ namespace MultiCommTerminal.XamarinForms.Views {
                     this.OnErr(MsgCode.InsufficienPermissions);
                 }
             });
-
-
-
-            //try {
-            //    this.log.InfoEntry("btnDiscover_Clicked");
-            //    this.activity.IsRunning = true;
-            //    this.lstDevices.ItemsSource = null;
-            //    this.devices.Clear();
-            //    this.lstDevices.ItemsSource = this.devices;
-            //    App.Wrapper.BTClassicDiscoverAsync(false);
-            //}
-            //catch (Exception e) {
-            //    App.ShowError(this, e.Message);
-            //}
         }
 
 
@@ -99,6 +87,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         private void BT_DeviceDiscoveredHandler(object sender, BluetoothCommon.Net.BTDeviceInfo e) {
             Device.BeginInvokeOnMainThread(() => {
+                this.btnPair.IsVisible = true;
                 this.activity.IsRunning = false;
                 this.lstDevices.ItemsSource = null;
                 this.devices.Add(e);
@@ -136,7 +125,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         /// <summary>Checks and asks user for sufficient permissions for WIFI</summary>
         /// <returns>true if ok to continue, otherwise false</returns>
-        public async Task<bool> ChkWifiPermissions() {
+        public async Task<bool> ChkBTPermissions() {
             try {
                 await this.SetAreGranted(false);
                 IBluetoothPermissions btPermissions =
