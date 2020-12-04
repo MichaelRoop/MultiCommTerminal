@@ -39,10 +39,10 @@ namespace Wifi.AndroidXamarin {
         /// <summary>Called when the connection is successful</summary>
         /// <param name="network">The connected network object</param>
         public override void OnAvailable(Network network) {
+            this.connectivityManager.BindProcessToNetwork(network);
             base.OnAvailable(network);
             this.NetworkAvailable?.Invoke(
                 new WifiAndroidMsgPumpConnectData(network, this.host, this.port));
-            this.connectivityManager.BindProcessToNetwork(network);
         }
 
 

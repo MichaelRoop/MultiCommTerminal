@@ -42,7 +42,11 @@ namespace Wifi.AndroidXamarin {
                .Build();
 
 
-            this.connectCallback = new WifiAndroidConnectCallback(this.connectivityManager, dataModel.RemoteHostName, port) {
+            this.connectCallback = new WifiAndroidConnectCallback(
+                this.connectivityManager, 
+                dataModel.RemoteHostName, 
+                port) {
+
                 NetworkAvailable = this.OnNetworkAvailable,
                 NetworkUnavailable = this.OnNetworkUnavailable
             };
@@ -71,6 +75,7 @@ namespace Wifi.AndroidXamarin {
             this.log.Info("OnNetworkAvailable", () => string.Format(
                 "YAY - I AM CONNECTED"));
 
+            this.network = data.DiscoveredNetwork;
 
             this.msgPump.ConnectAsync(data);
 

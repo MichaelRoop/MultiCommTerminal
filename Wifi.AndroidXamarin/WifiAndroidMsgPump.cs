@@ -67,11 +67,14 @@ namespace Wifi.AndroidXamarin {
         public Task ConnectAsync2(WifiAndroidMsgPumpConnectData paramsObj) {
             return Task.Run(async () => {
                 try {
-                    await this.DisconnectAsync();
+                    this.DisconnectAsync();
                     this.InitForConnection();
                     this.log.Info("ConnectAsync2", "Before connect");
+
+
                     this.socket = paramsObj.DiscoveredNetwork.SocketFactory.CreateSocket();
-                    await this.socket.ConnectAsync(new InetSocketAddress(paramsObj.HostName, paramsObj.Port), 10000);
+                    await this.socket.ConnectAsync(new InetSocketAddress(paramsObj.HostName, paramsObj.Port), 30000);
+
                     this.log.Info("ConnectAsync2", "After msg pump connect");
                     this.LaunchReadThread();
                     this.log.Info("ConnectAsync2", "After read thread launch");
@@ -127,41 +130,39 @@ namespace Wifi.AndroidXamarin {
 
         /// <summary>Awaitable disconnect</summary>
         /// <returns>The task to wait upon</returns>
-        private Task DisconnectAsync() {
-            return Task.Run(() => {
-                try {
-                    this.continueReading = false;
-                    // Cancelling readCancelSource does not throw. So we close socket to abort immediately
-                    if (this.socket != null) {
-                        this.socket.Close();
-                    }
+        private void DisconnectAsync() {
+            try {
+                this.continueReading = false;
+                // Cancelling readCancelSource does not throw. So we close socket to abort immediately
+                if (this.socket != null) {
+                    this.socket.Close();
+                }
 
-                    if (this.readCancelSource != null) {
-                        this.log.Info("DisconnectAsync", "Before read cancel");
-                        this.readCancelSource.Cancel();
-                        this.log.Info("DisconnectAsync", "After read cancel");
-                        if (!this.readFinishedEvent.WaitOne(2000)) {
-                            this.log.Error(1111, "DisconnectAsync", "Timed out waiting for read cancelation");
-                        }
-                        this.log.Info("DisconnectAsync", "After wait on readFinishedEvent");
-                        this.readCancelSource.Dispose();
-                        this.readCancelSource = null;
+                if (this.readCancelSource != null) {
+                    this.log.Info("DisconnectAsync", "Before read cancel");
+                    this.readCancelSource.Cancel();
+                    this.log.Info("DisconnectAsync", "After read cancel");
+                    if (!this.readFinishedEvent.WaitOne(100)) {
+                        this.log.Error(1111, "DisconnectAsync", "Timed out waiting for read cancelation");
                     }
-                    if (this.writeCancelSource != null) {
-                        this.writeCancelSource.Cancel();
-                        this.writeCancelSource.Dispose();
-                        this.writeCancelSource = null;
-                    }
-                    if (this.socket != null) {
-                        //this.socket.Close();
-                        this.socket.Dispose();
-                        this.socket = null;
-                    }
+                    this.log.Info("DisconnectAsync", "After wait on readFinishedEvent");
+                    this.readCancelSource.Dispose();
+                    this.readCancelSource = null;
                 }
-                catch (Exception e) {
-                    this.log.Exception(9898, "Disconnect", "", e);
+                if (this.writeCancelSource != null) {
+                    this.writeCancelSource.Cancel();
+                    this.writeCancelSource.Dispose();
+                    this.writeCancelSource = null;
                 }
-            });
+                if (this.socket != null) {
+                    //this.socket.Close();
+                    this.socket.Dispose();
+                    this.socket = null;
+                }
+            }
+            catch (Exception e) {
+                this.log.Exception(9898, "Disconnect", "", e);
+            }
         }
 
 

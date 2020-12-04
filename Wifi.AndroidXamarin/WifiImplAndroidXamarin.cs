@@ -31,6 +31,9 @@ namespace Wifi.AndroidXamarin {
         WifiAndroidListReceiver listReceiver = null;
         private bool isListReceiverRunning = false;
 
+        private Network network = null;
+
+
         #endregion
 
         #region IWifiInterface Properties
@@ -82,6 +85,11 @@ namespace Wifi.AndroidXamarin {
                 this.connectivityManager.UnregisterNetworkCallback(this.connectCallback);
                 this.connectCallback.Dispose();
                 this.connectCallback = null;
+            }
+
+            if (this.network != null) {
+                this.network.Dispose();
+                this.network = null;
             }
 
 
