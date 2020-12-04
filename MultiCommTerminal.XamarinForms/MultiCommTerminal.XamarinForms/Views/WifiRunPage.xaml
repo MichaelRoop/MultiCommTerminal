@@ -46,16 +46,17 @@
                     <StackLayout Margin="0,0,0,10" Padding="0">
                         <Grid >
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="50"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Button Grid.Column="0" x:Name="btnSend" Text="Send" Clicked="btnSend_Clicked"
-                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Run}}"/>
+                            <Button Grid.Column="0" x:Name="btnSend" Text="Send" Clicked="btnSend_Clicked" 
+                                    HorizontalOptions="Center" WidthRequest="150"
+                                    ImageSource="{Binding Source={x:Static helpers:IconBinder.Run}}"/>
                             <Entry Grid.Column="1" Text="OpenDoor" x:Name="entryCmd" 
-                               VerticalOptions="StartAndExpand" Margin="0,0,0,0" />
+                                    VerticalOptions="StartAndExpand" Margin="0,0,0,0" />
                         </Grid>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center">

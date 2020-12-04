@@ -28,14 +28,14 @@
                     </Frame>
                     <StackLayout Orientation="Horizontal" Margin="0,10,0,0" HorizontalOptions="CenterAndExpand">
                         <StackLayout Orientation="Vertical">
-                            <Button x:Name="btnDiscover" Clicked="btnDiscover_Clicked" Margin="1"
-                                BorderWidth="0" ImageSource="{Binding Source={x:Static helpers:IconBinder.Discover}}"  />
                             <Button x:Name="btnPair" Clicked="btnPair_Clicked" BorderWidth="0"  Margin="0"
                                 ImageSource="{Binding Source={x:Static helpers:IconBinder.Pair}}" />
-                            <Button x:Name="btnSelect" Clicked="btnSelect_Clicked" BorderWidth="0"  Margin="0"
-                                ImageSource="{Binding Source={x:Static helpers:IconBinder.Connect}}" />
+                            <Button x:Name="btnDiscover" Clicked="btnDiscover_Clicked" Margin="1"
+                                BorderWidth="0" ImageSource="{Binding Source={x:Static helpers:IconBinder.Discover}}"  />
                             <Button x:Name="btnUnPair" Clicked="btnUnPair_Clicked" BorderWidth="0"  Margin="0"
                                 ImageSource="{Binding Source={x:Static helpers:IconBinder.Unpair}}" />
+                            <Button x:Name="btnSelect" Clicked="btnSelect_Clicked" BorderWidth="0"  Margin="0"
+                                ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}" />
                         </StackLayout>
                     </StackLayout>
                 </StackLayout>

@@ -21,6 +21,7 @@ namespace MultiCommTerminal.XamarinForms.UIHelpers {
         public static string Connect { get { return Source(UIIcon.Connect); } }
         public static string Disconnect { get { return Source(UIIcon.Disconnect); } }
         public static string Pair { get { return Source(UIIcon.Pair); } }
+        public static string Pair_W { get { return Source(UIIcon.PairWhite); } }
         public static string Unpair { get { return Source(UIIcon.Unpair); } }
         public static string Credentials { get { return Source(UIIcon.Credentials); } }
         public static string Credentials_W { get { return Source(UIIcon.CredentialsWhite); } }

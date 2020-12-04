@@ -40,18 +40,18 @@
                         </StackLayout>
                     </Frame>
                 </StackLayout>
-                <StackLayout Margin="0,20,0,10">
+                <StackLayout Margin="10,20,0,10">
                     <Grid >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Button Grid.Column="0" x:Name="btnSend" ImageSource="{Binding Source={x:Static helpers:IconBinder.Run}}"
-                                Text="Send" Clicked="btnSend_Clicked" />
+                                Text="Send" WidthRequest="150" HorizontalOptions="Center" Clicked="btnSend_Clicked" />
                         <Entry Grid.Column="1" Text="OpenDoor" x:Name="entryCmd" WidthRequest="400" HeightRequest="60" Margin="0, 0,0,0" />
                     </Grid>
                 </StackLayout>
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="15">
                     <Grid VerticalOptions="Center" Margin="0,0,15,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="16" />

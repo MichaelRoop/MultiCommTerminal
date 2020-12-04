@@ -5,7 +5,7 @@
              x:Class="MultiCommTerminal.XamarinForms.Views.BluetoothPairPage">
     <Shell.TitleView>
         <StackLayout Orientation="Horizontal">
-            <Image Source="{Binding Source={x:Static helpers:IconBinder.Pair}}" 
+            <Image Source="{Binding Source={x:Static helpers:IconBinder.Pair_W}}" 
                    WidthRequest="25" HeightRequest="25" />
             <Label x:Name="lbTitle" VerticalTextAlignment="Center" 
                    Margin="5,0" TextColor="White" FontSize="20" FontAttributes="Bold"/>

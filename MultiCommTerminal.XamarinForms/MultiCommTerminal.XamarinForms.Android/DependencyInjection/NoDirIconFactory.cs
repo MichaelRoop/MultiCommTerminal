@@ -44,6 +44,8 @@ namespace MultiCommTerminal.XamarinForms.Droid.DependencyInjection {
                     return new IconDataModel(UIIcon.Disconnect, this.AddDir("icons8_disconnected.png"), "6");
                 case UIIcon.Pair:
                     return new IconDataModel(UIIcon.Configure, this.AddDir("icons8_link.png"), "1");
+                case UIIcon.PairWhite:
+                    return new IconDataModel(UIIcon.Configure, this.AddDir("icons8_link_white.png"), "1");
                 case UIIcon.Unpair:
                     return new IconDataModel(UIIcon.Delete, this.AddDir("icons8_delete_link.png"), "1");
                 case UIIcon.Credentials:
