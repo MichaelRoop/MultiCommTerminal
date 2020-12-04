@@ -17,6 +17,7 @@ using WifiCommon.Net.interfaces;
 using Common.Net;
 using System.Threading.Tasks;
 using Android.Net;
+using System.Threading;
 
 namespace Wifi.AndroidXamarin {
 
@@ -82,6 +83,8 @@ namespace Wifi.AndroidXamarin {
         public void Disconnect() {
             this.msgPump.Disconnect();
             if (this.connectCallback != null) {
+                // Some note that sometimes you need to force un-bind
+                this.connectivityManager.BindProcessToNetwork(null);
                 this.connectivityManager.UnregisterNetworkCallback(this.connectCallback);
                 this.connectCallback.Dispose();
                 this.connectCallback = null;
@@ -90,14 +93,11 @@ namespace Wifi.AndroidXamarin {
             if (this.network != null) {
                 this.network.Dispose();
                 this.network = null;
+                // Bug in the connect callback returns immediately if socket
+                // is still detected. Then a second time. Looks like time is
+                // required to shut down but no synchronisation is provided
+                Thread.Sleep(500);
             }
-
-
-            //this.connectivityManager.UnregisterNetworkCallback()
-            //ConnectivityManager.UnregisterNetworkCallback(); //on the callback.
-
-            //this.msgPump.Disconnect();
-            //this.manager.Disconnect();
         }
 
         public void DiscoverWifiAdaptersAsync() {
@@ -152,19 +152,6 @@ namespace Wifi.AndroidXamarin {
 
         private Context GetContext() {
             return Android.App.Application.Context;
-        }
-
-
-        /// <summary>Returns formated string "{arg}"</summary>
-        /// <param name="arg">The arg to format</param>
-        /// <returns>Formatted arg</returns>
-        private string GetJavaArg(string arg) {
-            //return string.Format("""{{{0}}}""", arg);
-            //return "\"{" + arg + "}\"";
-            //return "{" + arg + "}";
-
-            return '"' + arg + '"';
-
         }
 
 

@@ -56,26 +56,11 @@ namespace Wifi.AndroidXamarin {
 
         private void OnNetworkAvailable(WifiAndroidMsgPumpConnectData data) {
 
-            //Java.Net.Socket s = network.SocketFactory.CreateSocket("", 88);
-            //s.ConnectAsync()
-
-            //TODO will need to dispose network when done
-
-            //var cData = new NetSocketConnectData() {
-            //    RemoteHostName = dataModel.RemoteHostName,
-            //    RemotePort = int.Parse(dataModel.RemoteServiceName),
-            //};
-            //this.msgPump.ConnectAsync(cData);
-
-
-            //network.SocketFactory.
-            // TODO - get the socket and make a pump for it
-
-
             this.log.Info("OnNetworkAvailable", () => string.Format(
                 "YAY - I AM CONNECTED"));
 
             this.network = data.DiscoveredNetwork;
+
 
             this.msgPump.ConnectAsync(data);
 
@@ -84,6 +69,7 @@ namespace Wifi.AndroidXamarin {
             //this.OnWifiConnectionAttemptCompleted?.Invoke(this,
             //    new MsgPumpResults(MsgPumpResultCode.Connected));
         }
+
 
         private void OnNetworkUnavailable() {
             this.log.Info("OnNetworkUnavailable", () => string.Format("BOOOOO - FAILED CONNECTION"));

@@ -67,10 +67,11 @@ namespace Wifi.AndroidXamarin {
         public Task ConnectAsync2(WifiAndroidMsgPumpConnectData paramsObj) {
             return Task.Run(async () => {
                 try {
-                    this.DisconnectAsync();
+                    if (this.socket != null && this.socket.IsConnected) {
+                        this.DisconnectAsync();
+                    }
                     this.InitForConnection();
                     this.log.Info("ConnectAsync2", "Before connect");
-
 
                     this.socket = paramsObj.DiscoveredNetwork.SocketFactory.CreateSocket();
                     await this.socket.ConnectAsync(new InetSocketAddress(paramsObj.HostName, paramsObj.Port), 30000);
@@ -136,29 +137,94 @@ namespace Wifi.AndroidXamarin {
                 // Cancelling readCancelSource does not throw. So we close socket to abort immediately
                 if (this.socket != null) {
                     this.socket.Close();
+                    if (!this.readFinishedEvent.WaitOne(500)) {
+                        this.log.Error(1111, "DisconnectAsync", "Timed out waiting for read cancelation FIRST CLOSE");
+                    }
+                    else {
+                        this.log.Info("DisconnectAsync", "READ THREAD SUCCESSFULY ENDED");
+                    }
                 }
 
-                if (this.readCancelSource != null) {
-                    this.log.Info("DisconnectAsync", "Before read cancel");
-                    this.readCancelSource.Cancel();
-                    this.log.Info("DisconnectAsync", "After read cancel");
-                    if (!this.readFinishedEvent.WaitOne(100)) {
-                        this.log.Error(1111, "DisconnectAsync", "Timed out waiting for read cancelation");
+
+                //try {
+                //    if (this.socket != null && this.socket.InputStream != null) {
+                //        this.log.Info("DisconnectAsync", "Close input stream");
+                //        this.socket.InputStream.Close();
+                //    }
+                //}
+                //catch (Exception e) {
+                //    this.log.Exception(1, "On input stream close", e);
+                //}
+
+                //try {
+                //    if (this.socket != null && this.socket.OutputStream != null) {
+                //        this.log.Info("DisconnectAsync", "Output stream close");
+                //        this.socket.OutputStream.Close();
+                //    }
+                //}
+                //catch (Exception e) {
+                //    this.log.Exception(1, "On output stream close", e);
+                //}
+
+
+
+                try {
+                    if (this.readCancelSource != null) {
+                        this.log.Info("DisconnectAsync", "Before read cancel");
+                        this.readCancelSource.Cancel();
+                        if (!this.readFinishedEvent.WaitOne(100)) {
+                            this.log.Error(1111, "DisconnectAsync", "Timed out waiting for read cancelation");
+                        }
+                        this.log.Info("DisconnectAsync", "After wait on readFinishedEvent");
+                        this.readCancelSource.Dispose();
+                        this.readCancelSource = null;
                     }
-                    this.log.Info("DisconnectAsync", "After wait on readFinishedEvent");
-                    this.readCancelSource.Dispose();
-                    this.readCancelSource = null;
                 }
-                if (this.writeCancelSource != null) {
-                    this.writeCancelSource.Cancel();
-                    this.writeCancelSource.Dispose();
-                    this.writeCancelSource = null;
+                catch (Exception e) {
+                    this.log.Exception(1, "On read cancel token", e);
                 }
-                if (this.socket != null) {
-                    //this.socket.Close();
-                    this.socket.Dispose();
-                    this.socket = null;
+
+
+                try {
+                    if (this.writeCancelSource != null) {
+                        this.log.Info("DisconnectAsync", "Write cancel");
+                        this.writeCancelSource.Cancel();
+                        this.writeCancelSource.Dispose();
+                        this.writeCancelSource = null;
+                    }
                 }
+                catch (Exception e) {
+                    this.log.Exception(1, "On write cancel token", e);
+                }
+
+                try {
+                    if (this.socket != null) {
+
+                        //if (this.socket.InputStream != null) {
+                        //    this.log.Info("DisconnectAsync", "Dispose input stream");
+                        //    this.socket.InputStream.Dispose();
+                        //}
+                        //if (this.socket.OutputStream != null) {
+                        //    this.log.Info("DisconnectAsync", "Dispose output stream");
+                        //    this.socket.OutputStream.Dispose();
+                        //}
+                        //if (this.socket.IsConnected) {
+                        //    this.log.Info("DisconnectAsync", "Closing socket");
+                        //    this.socket.Close();
+                        //    this.socket.Dispose();
+                        //    this.socket = null;
+                        //}
+
+
+                        this.socket.Close();
+                        this.socket.Dispose();
+                        this.socket = null;
+                    }
+                }
+                catch (Exception e) {
+                    this.log.Exception(1, "On socket close", e);
+                }
+
             }
             catch (Exception e) {
                 this.log.Exception(9898, "Disconnect", "", e);
@@ -184,11 +250,13 @@ namespace Wifi.AndroidXamarin {
                 while (this.continueReading) {
                     try {
                         int count = await this.socket.InputStream.ReadAsync(
-                            this.readBuff, 0, READ_BUFF_SIZE, this.readCancelSource.Token);
-                        if (count > 0) {
-                            byte[] tmpBuff = new byte[count];
-                            Array.Copy(this.readBuff, tmpBuff, count);
-                            this.MsgReceivedHandler(this, tmpBuff);
+                            this.readBuff, 0, READ_BUFF_SIZE,  this.readCancelSource.Token);
+                        if (continueReading) {
+                            if (count > 0) {
+                                byte[] tmpBuff = new byte[count];
+                                Array.Copy(this.readBuff, tmpBuff, count);
+                                this.MsgReceivedHandler(this, tmpBuff);
+                            }
                         }
                     }
                     catch (TaskCanceledException) {
