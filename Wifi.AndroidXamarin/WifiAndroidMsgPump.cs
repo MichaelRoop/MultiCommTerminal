@@ -1,19 +1,10 @@
-﻿using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using CommunicationStack.Net.DataModels;
+﻿using CommunicationStack.Net.DataModels;
 using CommunicationStack.Net.Enumerations;
 using CommunicationStack.Net.interfaces;
 using Java.Net;
 using LogUtils.Net;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using VariousUtils.Net;
@@ -154,29 +145,6 @@ namespace Wifi.AndroidXamarin {
                     }
                 }
 
-
-                //try {
-                //    if (this.socket != null && this.socket.InputStream != null) {
-                //        this.log.Info("DisconnectAsync", "Close input stream");
-                //        this.socket.InputStream.Close();
-                //    }
-                //}
-                //catch (Exception e) {
-                //    this.log.Exception(1, "On input stream close", e);
-                //}
-
-                //try {
-                //    if (this.socket != null && this.socket.OutputStream != null) {
-                //        this.log.Info("DisconnectAsync", "Output stream close");
-                //        this.socket.OutputStream.Close();
-                //    }
-                //}
-                //catch (Exception e) {
-                //    this.log.Exception(1, "On output stream close", e);
-                //}
-
-
-
                 try {
                     if (this.readCancelSource != null) {
                         this.log.Info("DisconnectAsync", "Before read cancel");
@@ -193,7 +161,6 @@ namespace Wifi.AndroidXamarin {
                     this.log.Exception(1, "On read cancel token", e);
                 }
 
-
                 try {
                     if (this.writeCancelSource != null) {
                         this.log.Info("DisconnectAsync", "Write cancel");
@@ -208,24 +175,7 @@ namespace Wifi.AndroidXamarin {
 
                 try {
                     if (this.socket != null) {
-
-                        //if (this.socket.InputStream != null) {
-                        //    this.log.Info("DisconnectAsync", "Dispose input stream");
-                        //    this.socket.InputStream.Dispose();
-                        //}
-                        //if (this.socket.OutputStream != null) {
-                        //    this.log.Info("DisconnectAsync", "Dispose output stream");
-                        //    this.socket.OutputStream.Dispose();
-                        //}
-                        //if (this.socket.IsConnected) {
-                        //    this.log.Info("DisconnectAsync", "Closing socket");
-                        //    this.socket.Close();
-                        //    this.socket.Dispose();
-                        //    this.socket = null;
-                        //}
-
-
-                        this.socket.Close();
+                        try { this.socket.Close(); } catch { }
                         this.socket.Dispose();
                         this.socket = null;
                     }

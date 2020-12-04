@@ -55,28 +55,19 @@ namespace Wifi.AndroidXamarin {
 
 
         private void OnNetworkAvailable(WifiAndroidMsgPumpConnectData data) {
-
-            this.log.Info("OnNetworkAvailable", () => string.Format(
-                "YAY - I AM CONNECTED"));
-
+            this.log.InfoEntry("OnNetworkAvailable");
             this.network = data.DiscoveredNetwork;
-
-
-            this.msgPump.ConnectAsync(data);
-
-
             // wait till the msg pump connects to raise the event
-            //this.OnWifiConnectionAttemptCompleted?.Invoke(this,
-            //    new MsgPumpResults(MsgPumpResultCode.Connected));
+            this.msgPump.ConnectAsync(data);
         }
 
 
         private void OnNetworkUnavailable() {
-            this.log.Info("OnNetworkUnavailable", () => string.Format("BOOOOO - FAILED CONNECTION"));
-
+            this.log.InfoEntry("OnNetworkUnavailable");
             this.OnWifiConnectionAttemptCompleted?.Invoke(this,
                 new MsgPumpResults(MsgPumpResultCode.NotConnected));
         }
+
 
         private void RaiseError(WifiErrorCode code, string details = "") {
             WifiError err = new WifiError(code);
@@ -86,8 +77,6 @@ namespace Wifi.AndroidXamarin {
             this.OnError?.Invoke(this, err);
         }
 
-
-
-
     }
+
 }

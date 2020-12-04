@@ -1,23 +1,16 @@
 ﻿using Android.App;
 using Android.Content;
+using Android.Net;
 using Android.Net.Wifi;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using CommunicationStack.Net.DataModels;
 using LogUtils.Net;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using VariousUtils.Net;
 using WifiCommon.Net.DataModels;
 using WifiCommon.Net.interfaces;
-using Common.Net;
-using System.Threading.Tasks;
-using Android.Net;
-using System.Threading;
 
 namespace Wifi.AndroidXamarin {
 
@@ -100,10 +93,10 @@ namespace Wifi.AndroidXamarin {
             }
         }
 
+
         public void DiscoverWifiAdaptersAsync() {
             this.DoDiscovery();
         }
-
 
         #endregion
 
@@ -128,7 +121,6 @@ namespace Wifi.AndroidXamarin {
         }
 
 
-        // TODO - from the message pump but need a new pump with the socket from the wifi
         private void MsgPumpConnectResultEventHandler(object sender, MsgPumpResults e) {
             this.log.Info("MsgPumpConnectResultEventHandler", () => string.Format(
                 "Code:{0} SocketErr:{1} Msg:{2}", 
