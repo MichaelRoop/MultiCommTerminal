@@ -81,6 +81,15 @@ namespace Wifi.AndroidXamarin {
                     this.log.Info("ConnectAsync2", "After read thread launch");
                     this.MsgPumpConnectResultEvent?.Invoke(this, new MsgPumpResults(MsgPumpResultCode.Connected));
                 }
+                catch (ConnectException ce) {
+                    this.log.Exception(9999, "ConnectAsync2", "Connect Exception", ce);
+                    // Bug with multiple firing of OnAvailable with ConnectionCallback where
+                    // sockets not finished closing. Ignore 'E'rror 'CONN'ection 'A'borted
+                    if (!ce.Message.Contains("ECONNABORTED")) {
+                        this.MsgPumpConnectResultEvent?.Invoke(this,
+                            new MsgPumpResults(MsgPumpResultCode.ConnectionFailure, ce.Message));
+                    }
+                }
                 catch (Exception e) {
                     this.log.Exception(9999, "ConnectAsync2", "", e);
                     this.MsgPumpConnectResultEvent?.Invoke(this,

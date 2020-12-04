@@ -96,7 +96,7 @@ namespace Wifi.AndroidXamarin {
                 // Bug in the connect callback returns immediately if socket
                 // is still detected. Then a second time. Looks like time is
                 // required to shut down but no synchronisation is provided
-                Thread.Sleep(500);
+                Thread.Sleep(100);
             }
         }
 
