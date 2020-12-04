@@ -41,14 +41,13 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         public BluetoothRunPage() {
             InitializeComponent();
-            App.Wrapper.BT_ConnectionCompleted += this.OnBT_ConnectionCompletedHandler;
-            App.Wrapper.BT_BytesReceived += this.OnBT_BytesReceivedHandler;
             this.lstCmds.ItemsSource = this.cmds;
             this.lstResponses.ItemsSource = this.responses;
         }
 
 
         protected override void OnAppearing() {
+            this.SubscribeToEvents();
             this.cmds.Clear();
             this.responses.Clear();
             App.Wrapper.CurrentSupportedLanguage(this.UpdateLanguage);
@@ -59,6 +58,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
 
         protected override void OnDisappearing() {
+            this.UnsubscribeFromEvents();
             App.Wrapper.BTClassicDisconnect();
             this.SetConnectedLight(false);
             base.OnDisappearing();
@@ -150,6 +150,18 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.onLight.IsVisible = isOn;
             this.offLight.IsVisible = !isOn;
         }
+
+
+        private void SubscribeToEvents() {
+            App.Wrapper.BT_ConnectionCompleted += this.OnBT_ConnectionCompletedHandler;
+            App.Wrapper.BT_BytesReceived += this.OnBT_BytesReceivedHandler;
+        }
+
+        private void UnsubscribeFromEvents() {
+            App.Wrapper.BT_ConnectionCompleted -= this.OnBT_ConnectionCompletedHandler;
+            App.Wrapper.BT_BytesReceived -= this.OnBT_BytesReceivedHandler;
+        }
+
 
         #endregion
 

@@ -68,15 +68,20 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.terminatorDisplay.CreateLabelSet(this.name3, this.hex3);
             this.terminatorDisplay.CreateLabelSet(this.name4, this.hex4);
             this.terminatorDisplay.CreateLabelSet(this.name5, this.hex5);
-            this.lstStoredTerminators.ItemSelected += this.lstStoredTerminators_ItemSelected;
-            this.edName.TextChanged += this.edName_TextChanged;
         }
 
 
         protected override void OnAppearing() {
+            this.SubscribeToEvents();
             App.Wrapper.CurrentSupportedLanguage(this.UpdateLanguage);
             App.Wrapper.RetrieveTerminatorData(this.index, this.OnTerminatorInfoLoad, this.OnErr);
             base.OnAppearing();
+        }
+
+
+        protected override void OnDisappearing() {
+            this.UnsubscribeFromEvents();
+            base.OnDisappearing();
         }
 
         protected override bool OnBackButtonPressed() {
@@ -161,5 +166,18 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.interceptor.Changed = true;
             this.btnSave.IsVisible = true;
         }
+
+
+
+        private void SubscribeToEvents() {
+            this.lstStoredTerminators.ItemSelected += this.lstStoredTerminators_ItemSelected;
+            this.edName.TextChanged += this.edName_TextChanged;
+        }
+        private void UnsubscribeFromEvents() {
+            this.lstStoredTerminators.ItemSelected -= this.lstStoredTerminators_ItemSelected;
+            this.edName.TextChanged -= this.edName_TextChanged;
+        }
+
+
     }
 }

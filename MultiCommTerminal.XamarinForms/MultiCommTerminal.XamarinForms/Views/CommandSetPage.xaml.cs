@@ -64,7 +64,6 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.BindingContext = this.viewModel = new CommandSetViewModel();
             this.interceptor = new NavigateBackInterceptor(this);
             this.btnSave.IsVisible = false;
-            this.edName.TextChanged += this.edName_TextChanged;
         }
 
 
@@ -75,6 +74,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
 
         protected override void OnAppearing() {
+            this.SubscribeToEvents();
             App.Wrapper.CurrentSupportedLanguage(this.UpdateLanguage);
             this.scriptDataModel = null;
             this.lstCmds.ItemsSource = null;
@@ -86,6 +86,13 @@ namespace MultiCommTerminal.XamarinForms.Views {
             }
             base.OnAppearing();
         }
+
+
+        protected override void OnDisappearing() {
+            this.UnsubscribeFromEvents();
+            base.OnDisappearing();
+        }
+
 
         private ScriptDataModel scriptDataModel = null;
 
@@ -190,6 +197,14 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.lbName.Text = language.GetText(MsgCode.Name);
         }
 
+        private void SubscribeToEvents() {
+            this.edName.TextChanged += this.edName_TextChanged;
+        }
+
+
+        private void UnsubscribeFromEvents() {
+            this.edName.TextChanged -= this.edName_TextChanged;
+        }
 
     }
 }

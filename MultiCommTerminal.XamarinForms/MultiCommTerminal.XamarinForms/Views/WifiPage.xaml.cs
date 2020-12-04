@@ -31,8 +31,6 @@ namespace MultiCommTerminal.XamarinForms.Views {
         public WifiPage() {
             InitializeComponent();
             this.BindingContext = this.viewModel = new WifiViewModel();
-            App.Wrapper.DiscoveredWifiNetworks += this.DiscoveredWifiNetworksHandler;
-            App.Wrapper.OnWifiError += OnWifiErrorHandler;
             App.Wrapper.CurrentSupportedLanguage(this.LanguageUpdate);
             this.lstWifi.ItemsSource = this.networks;
             this.btnSelect.IsVisible = false;
@@ -40,11 +38,18 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
 
         protected override void OnAppearing() {
+            this.SubscribeToEvents();
             App.Wrapper.CurrentSupportedLanguage(this.LanguageUpdate);
             this.lstWifi.SelectedItem = null;
             base.OnAppearing();
         }
 
+
+        protected override void OnDisappearing() {
+            this.UnsubscribeFromEvents();
+            base.OnDisappearing();
+
+        }
         #endregion
 
         #region Controls events
@@ -160,6 +165,17 @@ namespace MultiCommTerminal.XamarinForms.Views {
                 await this.SetAreGranted(false);
             }
             return await this.GetIsGranted();
+        }
+
+
+        private void SubscribeToEvents() {
+            App.Wrapper.DiscoveredWifiNetworks += this.DiscoveredWifiNetworksHandler;
+            App.Wrapper.OnWifiError += OnWifiErrorHandler;
+        }
+
+        private void UnsubscribeFromEvents() {
+            App.Wrapper.DiscoveredWifiNetworks -= this.DiscoveredWifiNetworksHandler;
+            App.Wrapper.OnWifiError -= OnWifiErrorHandler;
         }
 
         #endregion

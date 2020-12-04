@@ -13,20 +13,23 @@ namespace MultiCommTerminal.XamarinForms.Views {
         public LanguagePage() {
             InitializeComponent();
 
-            // Cannot make this work - because it doesnt
-            //this.IconImageSource = ImageSource.FromResource("icons8_language_50.png");
-
             // Can do this in constructor since the list never changes
             App.Wrapper.LanguageList((items) => {
                 this.lstLanguages.ItemsSource = items;
             });
-            App.LanguageUpdated += this.OnLanguageChangedHandler;
         }
 
 
         protected override void OnAppearing() {
+            App.LanguageUpdated += this.OnLanguageChangedHandler;
             App.Wrapper.CurrentSupportedLanguage(this.UpdateLanguage);
             base.OnAppearing();
+        }
+
+
+        protected override void OnDisappearing() {
+            App.LanguageUpdated -= this.OnLanguageChangedHandler;
+            base.OnDisappearing();
         }
 
         #endregion

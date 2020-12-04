@@ -19,12 +19,18 @@ namespace MultiCommTerminal.XamarinForms.Views {
         public AboutAppPage() {
             InitializeComponent();
             BindingContext = this;
-            App.Wrapper.LanguageChanged += this.OnLanguageChanged;
         }
 
         protected override void OnAppearing() {
+            App.Wrapper.LanguageChanged += this.OnLanguageChanged;
             App.Wrapper.CurrentSupportedLanguage(this.UpdateLanguage);
             base.OnAppearing();
+        }
+
+
+        protected override void OnDisappearing() {
+            App.Wrapper.LanguageChanged -= this.OnLanguageChanged;
+            base.OnDisappearing();
         }
 
         #endregion

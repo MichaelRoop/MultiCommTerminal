@@ -29,15 +29,12 @@ namespace MultiCommTerminal.XamarinForms.Views {
         public BluetoothPage() {
             InitializeComponent();
             BindingContext = this.viewModel = new BluetoothViewModel();
-            App.Wrapper.BT_DeviceDiscovered += this.DeviceDiscoveredHandler;
-            App.Wrapper.BT_DiscoveryComplete += this.DiscoveryCompleteHandler;
-            App.Wrapper.BT_UnPairStatus += this.BT_UnPairStatusHandler;
-            this.lstDevices.ItemSelected += LstDevices_ItemSelectedHandler;
         }
 
 
         protected override void OnAppearing() {
             App.Wrapper.CurrentSupportedLanguage(this.UpdateLanguage);
+            this.SubscribeToEvents();
             this.lstDevices.ItemSelected -= LstDevices_ItemSelectedHandler;
             // void the list, quick to reload
             this.lstDevices.SelectedItem = null;
@@ -48,6 +45,12 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.btnSelect.IsVisible = false;
             this.lstDevices.ItemSelected += LstDevices_ItemSelectedHandler;
             base.OnAppearing();
+        }
+
+
+        protected override void OnDisappearing() {
+            this.UnsubscribeFromEvents();
+            base.OnDisappearing();
         }
 
         #endregion
@@ -149,6 +152,23 @@ namespace MultiCommTerminal.XamarinForms.Views {
         private void UpdateLanguage(SupportedLanguage language) {
             this.lbTitle.Text = language.GetText(MsgCode.PairedDevices);
         }
+
+
+        private void SubscribeToEvents() {
+            App.Wrapper.BT_DeviceDiscovered += this.DeviceDiscoveredHandler;
+            App.Wrapper.BT_DiscoveryComplete += this.DiscoveryCompleteHandler;
+            App.Wrapper.BT_UnPairStatus += this.BT_UnPairStatusHandler;
+            this.lstDevices.ItemSelected += LstDevices_ItemSelectedHandler;
+        }
+
+
+        private void UnsubscribeFromEvents() {
+            App.Wrapper.BT_DeviceDiscovered -= this.DeviceDiscoveredHandler;
+            App.Wrapper.BT_DiscoveryComplete -= this.DiscoveryCompleteHandler;
+            App.Wrapper.BT_UnPairStatus -= this.BT_UnPairStatusHandler;
+            this.lstDevices.ItemSelected -= LstDevices_ItemSelectedHandler;
+        }
+
 
         #endregion
 

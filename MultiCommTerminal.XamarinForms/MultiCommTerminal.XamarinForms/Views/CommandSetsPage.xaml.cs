@@ -24,14 +24,20 @@ namespace MultiCommTerminal.XamarinForms.Views {
         public CommandSetsPage() {
             InitializeComponent();
             BindingContext = this.viewModel = new CommandSetsViewModel();
-            this.lstCmdSets.ItemSelected += this.LstCmdSets_ItemSelected;
         }
 
 
         protected override void OnAppearing() {
+            this.SubscribeToEvents();
             App.Wrapper.CurrentSupportedLanguage(this.LanguageUpdate);
             this.UpdateList();
             base.OnAppearing();
+        }
+
+
+        protected override void OnDisappearing() {
+            this.UnsubscribeFromEvents();
+            base.OnDisappearing();
         }
 
         #endregion
@@ -97,6 +103,13 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.viewModel.EditCommandSet.Execute(ndx);
         }
 
+
+        private void SubscribeToEvents() {
+            this.lstCmdSets.ItemSelected += this.LstCmdSets_ItemSelected;
+        }
+        private void UnsubscribeFromEvents() {
+            this.lstCmdSets.ItemSelected -= this.LstCmdSets_ItemSelected;
+        }
 
     }
 }

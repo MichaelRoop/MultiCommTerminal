@@ -27,16 +27,21 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         public BluetoothPairPage() {
             InitializeComponent();
-            App.Wrapper.BT_DeviceDiscovered += this.BT_DeviceDiscoveredHandler;
-            App.Wrapper.BT_DiscoveryComplete += BT_DiscoveryCompleteHandler;
-            App.Wrapper.BT_PairStatus += this.BT_PairStatusHandler;
         }
 
 
         protected override void OnAppearing() {
+            this.SubscribeToEvents();
             App.Wrapper.CurrentSupportedLanguage(this.UpdateLanguage);
             base.OnAppearing();
         }
+
+
+        protected override void OnDisappearing() {
+            this.UnsubscribeFromEvents();
+            base.OnDisappearing();
+        }
+
 
         private void btnDiscover_Clicked(object sender, EventArgs args) {
             Device.BeginInvokeOnMainThread(async () => {
@@ -153,7 +158,17 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
 
+        private void SubscribeToEvents() {
+            App.Wrapper.BT_DeviceDiscovered += this.BT_DeviceDiscoveredHandler;
+            App.Wrapper.BT_DiscoveryComplete += BT_DiscoveryCompleteHandler;
+            App.Wrapper.BT_PairStatus += this.BT_PairStatusHandler;
+        }
 
+        private void UnsubscribeFromEvents() {
+            App.Wrapper.BT_DeviceDiscovered -= this.BT_DeviceDiscoveredHandler;
+            App.Wrapper.BT_DiscoveryComplete -= BT_DiscoveryCompleteHandler;
+            App.Wrapper.BT_PairStatus -= this.BT_PairStatusHandler;
+        }
 
     }
 }

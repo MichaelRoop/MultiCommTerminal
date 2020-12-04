@@ -24,17 +24,18 @@ namespace MultiCommTerminal.XamarinForms.Views {
         public TerminatorsPage() {
             InitializeComponent();
             this.BindingContext = this.viewer = new TerminatorsViewModel();
-            this.lstTerminators.ItemSelected += this.LstTerminators_ItemSelected;
         }
 
 
         protected override void OnAppearing() {
+            this.lstTerminators.ItemSelected += this.LstTerminators_ItemSelected;
             App.Wrapper.CurrentSupportedLanguage(this.UpdateLanguage);
             this.ReloadList(true);
         }
 
 
         protected override void OnDisappearing() {
+            this.lstTerminators.ItemSelected -= this.LstTerminators_ItemSelected;
             base.OnDisappearing();
         }
 
