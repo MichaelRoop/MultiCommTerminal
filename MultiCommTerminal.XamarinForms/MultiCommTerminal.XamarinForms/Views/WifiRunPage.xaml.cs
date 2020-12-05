@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using WifiCommon.Net.DataModels;
 using Xamarin.Forms;
@@ -62,6 +63,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
         protected override void OnAppearing() {
             App.Wrapper.CurrentSupportedLanguage(this.OnLanguageUpdate);
             App.Wrapper.GetCurrentScript(this.PopulateScriptList, this.OnErr);
+            App.Wrapper.GetCurrentTerminator(this.PopulateTerminators, this.OnErr);
             this.SetConnectedLight(false);
             this.SubscribeToEvents();
             base.OnAppearing();
@@ -198,6 +200,20 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
 
+        private void PopulateTerminators(TerminatorDataModel data) {
+            this.lbTerminatorsName.Text = data.Name;
+            this.lbTerminatorsText.Text = "";
+            StringBuilder tmp = new StringBuilder();
+            for(int i = 0; i < data.TerminatorInfos.Count; i++) {
+                if (i > 0) {
+                    tmp.Append(",");
+                }
+                tmp.Append(data.TerminatorInfos[i].Display);
+            }
+            this.lbTerminatorsText.Text = tmp.ToString();
+        }
+
+
         private void SetConnectedLight(bool isOn) {
             this.onLight.IsVisible = isOn;
             this.offLight.IsVisible = !isOn;
@@ -209,6 +225,12 @@ namespace MultiCommTerminal.XamarinForms.Views {
             App.Wrapper.OnWifiConnectionAttemptCompleted += this.OnWifiConnectionAttemptCompletedHandler;
             App.Wrapper.OnWifiError += this.OnWifiErrorHandler;
             App.Wrapper.CurrentScriptChanged += this.CurrentScriptChangedHandler;
+            App.Wrapper.CurrentTerminatorChanged += this.CurrentTerminatorChangedHandler;
+        }
+
+
+        private void CurrentTerminatorChangedHandler(object sender, TerminatorDataModel e) {
+            this.PopulateTerminators(e);
         }
 
 
@@ -222,6 +244,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
             App.Wrapper.OnWifiConnectionAttemptCompleted -= this.OnWifiConnectionAttemptCompletedHandler;
             App.Wrapper.OnWifiError -= this.OnWifiErrorHandler;
             App.Wrapper.CurrentScriptChanged -= this.CurrentScriptChangedHandler;
+            App.Wrapper.CurrentTerminatorChanged -= this.CurrentTerminatorChangedHandler;
         }
 
         #endregion

@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
-
+using System.Text;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -53,6 +53,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.responses.Clear();
             App.Wrapper.CurrentSupportedLanguage(this.UpdateLanguage);
             App.Wrapper.GetCurrentScript(this.PopulateScriptList, this.OnErr);
+            App.Wrapper.GetCurrentTerminator(this.PopulateTerminators, this.OnErr);
             this.SetConnectedLight(false);
             base.OnAppearing();
         }
@@ -160,6 +161,20 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
 
+        private void PopulateTerminators(TerminatorDataModel data) {
+            this.lbTerminatorsName.Text = data.Name;
+            this.lbTerminatorsText.Text = "";
+            StringBuilder tmp = new StringBuilder();
+            for (int i = 0; i < data.TerminatorInfos.Count; i++) {
+                if (i > 0) {
+                    tmp.Append(",");
+                }
+                tmp.Append(data.TerminatorInfos[i].Display);
+            }
+            this.lbTerminatorsText.Text = tmp.ToString();
+        }
+
+
         private void UpdateLanguage(SupportedLanguage l) {
             this.lbTitle.Text = App.GetText(MsgCode.Run);
             //this.lblCmds.Text = App.GetText(MsgCode.command);
@@ -180,6 +195,12 @@ namespace MultiCommTerminal.XamarinForms.Views {
             App.Wrapper.BT_ConnectionCompleted += this.OnBT_ConnectionCompletedHandler;
             App.Wrapper.BT_BytesReceived += this.OnBT_BytesReceivedHandler;
             App.Wrapper.CurrentScriptChanged += CurrentScriptChangedHandler;
+            App.Wrapper.CurrentTerminatorChanged += this.CurrentTerminatorChangedHandler;
+        }
+
+
+        private void CurrentTerminatorChangedHandler(object sender, TerminatorDataModel e) {
+            this.PopulateTerminators(e);
         }
 
 
@@ -191,6 +212,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
         private void UnsubscribeFromEvents() {
             App.Wrapper.BT_ConnectionCompleted -= this.OnBT_ConnectionCompletedHandler;
             App.Wrapper.BT_BytesReceived -= this.OnBT_BytesReceivedHandler;
+            App.Wrapper.CurrentTerminatorChanged -= this.CurrentTerminatorChangedHandler;
         }
 
 
