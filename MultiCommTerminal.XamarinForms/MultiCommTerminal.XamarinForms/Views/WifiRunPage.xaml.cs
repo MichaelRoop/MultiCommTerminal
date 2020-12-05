@@ -125,6 +125,14 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
 
+        private void TerminatorsTapGestureRecognizer_Tapped(object sender, EventArgs e) {
+            Device.BeginInvokeOnMainThread(async () => {
+                // Temp.  add terminators popup
+                await PopupNavigation.Instance.PushAsync(new CommandSetSelectPopupPage());
+            });
+        }
+
+
         private void Wifi_BytesReceivedHandler(object sender, string e) {
             Device.BeginInvokeOnMainThread(() => {
                 this.lstResponses.ItemsSource = null;

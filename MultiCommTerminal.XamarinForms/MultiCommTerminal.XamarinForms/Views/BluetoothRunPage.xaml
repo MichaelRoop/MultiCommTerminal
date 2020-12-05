@@ -66,19 +66,23 @@
                         </StackLayout>
                     </Frame>
                 </StackLayout>
-                <StackLayout Margin="10,20,0,10">
-                    <Grid >
+                
+                <StackLayout Margin="10,0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Button Grid.Column="0" x:Name="btnSend" ImageSource="{Binding Source={x:Static helpers:IconBinder.Run}}"
-                                Text="Send" WidthRequest="150" HorizontalOptions="Center" Clicked="btnSend_Clicked" />
-                        <Entry Grid.Column="1" Text="OpenDoor" x:Name="entryCmd" WidthRequest="400" HeightRequest="60" Margin="0, 0,0,0" />
+                                Text="Send" WidthRequest="150" HorizontalOptions="End" Clicked="btnSend_Clicked" />
+                        <Entry Grid.Column="1" Text="OpenDoor" x:Name="entryCmd" WidthRequest="400" HeightRequest="60" VerticalTextAlignment="Start" />
                     </Grid>
                 </StackLayout>
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="15">
-                    <Grid VerticalOptions="Center" Margin="0,0,15,0">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="10,15">
+                    <Grid VerticalOptions="Center" Margin="0,0,5,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="16" />
                         </Grid.RowDefinitions>
@@ -92,7 +96,23 @@
                             Text="Connect" Clicked="btnConnect_Clicked" />
                     <Button x:Name="btnDisconnect" ImageSource="{Binding Source={x:Static helpers:IconBinder.Disconnect}}"
                             Text="Disconnect" Clicked="btnDisconnect_Clicked" />
+
+                    <StackLayout Orientation="Vertical" VerticalOptions="Center" Margin="20,0,0,0">
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                            <Image Source="{Binding Source={x:Static helpers:IconBinder.Terminator}}" 
+                                    WidthRequest="20" HeightRequest="20" />
+                            <Label x:Name="lbTerminatorsName" VerticalTextAlignment="Center" 
+                                    Text="Terminators" Margin="0" />
+                        </StackLayout>
+                        <Label x:Name="lbTerminatorsText" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"
+                                Text="\n,\r,NULL,\r,SOH"  />
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TerminatorsTapGestureRecognizer_Tapped" NumberOfTapsRequired="1" />
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
                 </StackLayout>
+                
+                
             </StackLayout>
             <ActivityIndicator x:Name="activity" Color="CornflowerBlue"
                 HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>

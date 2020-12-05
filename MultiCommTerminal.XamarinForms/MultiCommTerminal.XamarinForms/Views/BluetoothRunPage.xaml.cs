@@ -100,6 +100,14 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
 
+        private void TerminatorsTapGestureRecognizer_Tapped(object sender, EventArgs e) {
+            Device.BeginInvokeOnMainThread(async () => {
+                // Temp.  add terminators popup
+                await PopupNavigation.Instance.PushAsync(new CommandSetSelectPopupPage());
+            });
+        }
+
+
         private void lstCmds_ItemSelected(object sender, SelectedItemChangedEventArgs e) {
             ScriptItem item = e.SelectedItem as ScriptItem;
             if (item != null) {
