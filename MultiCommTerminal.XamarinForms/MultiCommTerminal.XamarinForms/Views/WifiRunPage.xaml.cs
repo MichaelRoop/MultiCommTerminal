@@ -167,7 +167,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.btnConnect.Text = l.GetText(MsgCode.connect);
             this.btnDisconnect.Text = l.GetText(MsgCode.Disconnect);
             this.btnSend.Text = l.GetText(MsgCode.send);
-            this.lblCmds.Text = l.GetText(MsgCode.commands);
+            //this.lblCmds.Text = l.GetText(MsgCode.commands);
             this.lblResponses.Text = l.GetText(MsgCode.response);
         }
 
@@ -179,6 +179,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
                 this.cmds.Add(script);
             }
             this.lstCmds.ItemsSource = this.cmds;
+            this.lblCmds.Text = scripts.Display;
         }
 
 

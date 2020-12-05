@@ -140,12 +140,13 @@ namespace MultiCommTerminal.XamarinForms.Views {
                 this.cmds.Add(script);
             }
             this.lstCmds.ItemsSource = this.cmds;
+            this.lblCmds.Text = scripts.Display;
         }
 
 
         private void UpdateLanguage(SupportedLanguage l) {
             this.lbTitle.Text = App.GetText(MsgCode.Run);
-            this.lblCmds.Text = App.GetText(MsgCode.command);
+            //this.lblCmds.Text = App.GetText(MsgCode.command);
             this.lblResponses.Text = App.GetText(MsgCode.response);
             this.btnSend.Text = App.GetText(MsgCode.send);
             this.btnConnect.Text = App.GetText(MsgCode.connect);
