@@ -118,6 +118,13 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
 
+        private void CommandsTapGestureRecognizer_Tapped(object sender, EventArgs e) {
+            Device.BeginInvokeOnMainThread(async () => {
+                await PopupNavigation.Instance.PushAsync(new CommandSetSelectPopupPage());
+            });
+        }
+
+
         private void Wifi_BytesReceivedHandler(object sender, string e) {
             Device.BeginInvokeOnMainThread(() => {
                 this.lstResponses.ItemsSource = null;
@@ -193,6 +200,12 @@ namespace MultiCommTerminal.XamarinForms.Views {
             App.Wrapper.Wifi_BytesReceived += this.Wifi_BytesReceivedHandler;
             App.Wrapper.OnWifiConnectionAttemptCompleted += this.OnWifiConnectionAttemptCompletedHandler;
             App.Wrapper.OnWifiError += this.OnWifiErrorHandler;
+            App.Wrapper.CurrentScriptChanged += this.CurrentScriptChangedHandler;
+        }
+
+
+        private void CurrentScriptChangedHandler(object sender, ScriptDataModel dataModel) {
+            this.PopulateScriptList(dataModel);
         }
 
 
@@ -200,6 +213,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
             App.Wrapper.Wifi_BytesReceived -= this.Wifi_BytesReceivedHandler;
             App.Wrapper.OnWifiConnectionAttemptCompleted -= this.OnWifiConnectionAttemptCompletedHandler;
             App.Wrapper.OnWifiError -= this.OnWifiErrorHandler;
+            App.Wrapper.CurrentScriptChanged -= this.CurrentScriptChangedHandler;
         }
 
         #endregion

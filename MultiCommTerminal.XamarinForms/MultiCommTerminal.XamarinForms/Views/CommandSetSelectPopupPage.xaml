@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"             
+             xmlns:helpers="clr-namespace:MultiCommTerminal.XamarinForms.UIHelpers"
+             x:Class="MultiCommTerminal.XamarinForms.Views.CommandSetSelectPopupPage"
+            Padding="80,220,80,220"  WidthRequest="200" HeightRequest="150"             
+             >
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation 
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8"
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"/>
+    </pages:PopupPage.Animation>
+    <StackLayout Padding="10"  BackgroundColor="White">
+        <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="10">
+                <Image Source="{Binding Source={x:Static helpers:IconBinder.Command}}" HeightRequest="30" WidthRequest="30" VerticalOptions="Center" />
+                <Label x:Name="lbTitle" Text="Comm" FontSize="Large" FontAttributes="Bold" VerticalOptions="Center"/>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal">
+            <Frame BorderColor="LightBlue">
+                <ListView x:Name="lstCmdSets" 
+                      MinimumHeightRequest="20" MinimumWidthRequest="20">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell  Text="{Binding Display}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Frame>
+            <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand">
+                <Button x:Name="btnCancel" Clicked="btnCancel_Clicked" WidthRequest="40" Margin="5,0"
+                        BorderWidth="0"
+                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Cancel}}"  />
+                    <Button x:Name="btnSelect" Clicked="btnSelect_Clicked" WidthRequest="40"  Margin="5,0"
+                        BorderWidth="0"
+                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}"  />
+            </StackLayout>
+            </StackLayout>
+            
+        </StackLayout>
+    </StackLayout>
+</pages:PopupPage>

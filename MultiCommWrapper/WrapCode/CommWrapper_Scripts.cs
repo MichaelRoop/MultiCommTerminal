@@ -55,8 +55,13 @@ namespace MultiCommWrapper.Net.WrapCode {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;
                 WrapErr.ToErrReport(out report, 9999, () => {
-                    // TODO - check if exists
-                    onSuccess.Invoke(this.scriptStorage.Retrieve(index));
+                    if (index == null) {
+                        onError(this.GetText(MsgCode.NothingSelected));
+                    }
+                    else { 
+                        // TODO - check if exists
+                        onSuccess.Invoke(this.scriptStorage.Retrieve(index));
+                    }
                 });
                 if (report.Code != 0) {
                     onError.Invoke(this.GetText(MsgCode.LoadFailed));

@@ -5,6 +5,7 @@ using LogUtils.Net;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommTerminal.XamarinForms.UIHelpers;
 using Newtonsoft.Json;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 
@@ -92,6 +93,13 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
 
+        private void CommandsTapGestureRecognizer_Tapped(object sender, EventArgs e) {
+            Device.BeginInvokeOnMainThread(async () => {
+                await PopupNavigation.Instance.PushAsync(new CommandSetSelectPopupPage());
+            });
+        }
+
+
         private void lstCmds_ItemSelected(object sender, SelectedItemChangedEventArgs e) {
             ScriptItem item = e.SelectedItem as ScriptItem;
             if (item != null) {
@@ -163,7 +171,14 @@ namespace MultiCommTerminal.XamarinForms.Views {
         private void SubscribeToEvents() {
             App.Wrapper.BT_ConnectionCompleted += this.OnBT_ConnectionCompletedHandler;
             App.Wrapper.BT_BytesReceived += this.OnBT_BytesReceivedHandler;
+            App.Wrapper.CurrentScriptChanged += CurrentScriptChangedHandler;
         }
+
+
+        private void CurrentScriptChangedHandler(object sender, ScriptDataModel dataModel) {
+            this.PopulateScriptList(dataModel);
+        }
+
 
         private void UnsubscribeFromEvents() {
             App.Wrapper.BT_ConnectionCompleted -= this.OnBT_ConnectionCompletedHandler;

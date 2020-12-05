@@ -90,7 +90,7 @@
 
                 <Button Grid.Row="5" Grid.ColumnSpan="3" x:Name="btnUserManual" Clicked="btnUserManual_Clicked" Margin="0,8"
                         ImageSource="{Binding Source={x:Static helpers:IconBinder.OpenBook}}"
-                        HorizontalOptions="Center"/>
+                        HorizontalOptions="Center" BorderWidth="0"/>
             </Grid>
 
 
