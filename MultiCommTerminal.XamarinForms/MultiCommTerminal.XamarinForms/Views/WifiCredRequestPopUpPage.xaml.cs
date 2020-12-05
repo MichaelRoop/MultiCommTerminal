@@ -31,9 +31,17 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.discoverData = discoverData;
             this.connectAction = connectAction;
             InitializeComponent();
+            this.CloseWhenBackgroundIsClicked = false;
             this.InitiEditBoxes(this.cred.Data);
             App.Wrapper.CurrentSupportedLanguage(this.UpdateLanguage);
         }
+
+
+        protected override bool OnBackButtonPressed() {
+            return true;
+            //return base.OnBackButtonPressed();
+        }
+
 
         #region Button handlers
 
