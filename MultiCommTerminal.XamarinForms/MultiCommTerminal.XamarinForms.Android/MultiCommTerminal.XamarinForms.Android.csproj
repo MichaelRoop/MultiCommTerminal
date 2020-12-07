@@ -57,6 +57,7 @@
     <AndroidKeyStore>false</AndroidKeyStore>
     <AndroidSigningKeyStore>C:\Users\Michael\AppData\Local\Xamarin\Mono for Android\debug.keystore</AndroidSigningKeyStore>
     <MandroidI18n />
+    <AndroidEnableMultiDex>false</AndroidEnableMultiDex>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
