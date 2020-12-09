@@ -154,17 +154,13 @@ namespace BluetoothRfComm.AndroidXamarin {
                         var mi = d.Class.GetMethod("removeBond", null);
                         var sdfd = mi.Invoke(d, null);
                         // Need to sleep a bit for the method invocation to complete
-                        Thread.Sleep(50);
-                        var dd = BluetoothAdapter.DefaultAdapter.BondedDevices.FirstOrDefault(d => d.Name == info.Name);
-                        if (dd == null) {
-                            status.IsSuccessful = true;
-                            status.UnpairStatus = BT_UnpairingStatus.Success;
-                        }
-                        else {
-                            status.UnpairStatus = BT_UnpairingStatus.Failed;
-                        }
+                        Thread.Sleep(200);
+                        // Suppose it to be successful if exception not thrown. Reload list to see if it is still there
+                        status.IsSuccessful = true;
+                        status.UnpairStatus = BT_UnpairingStatus.Success;
                     }
                     else {
+                        this.log.Error(9999, "UnPairAsync", "Already unpaired - null device or not of name");
                         status.UnpairStatus = BT_UnpairingStatus.AlreadyUnPaired;
                     }
                 }
