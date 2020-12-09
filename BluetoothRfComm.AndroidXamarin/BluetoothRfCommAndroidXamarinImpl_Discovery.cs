@@ -2,7 +2,7 @@
 using Android.Content;
 using BluetoothCommon.Net;
 using BluetoothCommon.Net.interfaces;
-using BluetoothRfComm.AndroidXamarin.Receivers;
+using BluetoothCommonAndroidXamarin.Receivers;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,7 +13,7 @@ namespace BluetoothRfComm.AndroidXamarin {
 
         #region Data
 
-        BT_DeviceUnpairedDiscoveryReceiver discoverReceiver = null;
+        UnboundDeviceDiscoveryReceiver discoverReceiver = null;
 
         #endregion
 
@@ -65,8 +65,9 @@ namespace BluetoothRfComm.AndroidXamarin {
         private void DoDiscoveryUnpaired() {
             try {
                 this.KillDiscoverReceiver();
-                this.discoverReceiver = new 
-                    BT_DeviceUnpairedDiscoveryReceiver(
+                this.discoverReceiver = new
+                    UnboundDeviceDiscoveryReceiver(
+                        BluetoothDeviceType.Classic,
                         this.RaiseDeviceDiscovered,
                         this.unBondedDevices);
                 this.GetContext().RegisterReceiver(

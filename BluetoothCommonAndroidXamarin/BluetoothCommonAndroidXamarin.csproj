@@ -5,19 +5,19 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{069F8D1A-9678-459E-8984-2EB5383A3EB4}</ProjectGuid>
+    <ProjectGuid>{7728F061-B0FF-43BE-A039-F0000E1F43EC}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TemplateGuid>{9ef11e43-1701-4396-8835-8392d57abb70}</TemplateGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BluetoothRfComm.AndroidXamarin</RootNamespace>
-    <AssemblyName>BluetoothRfComm.AndroidXamarin</AssemblyName>
+    <RootNamespace>BluetoothCommonAndroidXamarin</RootNamespace>
+    <AssemblyName>BluetoothCommonAndroidXamarin</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <Deterministic>True</Deterministic>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v10.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
     <AndroidUseAapt2>true</AndroidUseAapt2>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -47,11 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BTAndroidMsgPump.cs" />
-    <Compile Include="BTAndroidMsgPumpConnectData.cs" />
-    <Compile Include="BluetoothRfCommAndroidXamarinImpl.cs" />
-    <Compile Include="BluetoothRfCommAndroidXamarinImpl_Discovery.cs" />
-    <Compile Include="Receivers\BT_DeviceDiscoveryReceiver.cs" />
+    <Compile Include="Receivers\UnboundDeviceDiscoveryReceiver.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -68,33 +64,13 @@
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SharedNetLibs\BluetoothCommon.Net\BluetoothCommon.Net.csproj">
-      <Project>{0747d6bb-52d0-4082-82f0-b3a3f3d8f02d}</Project>
-      <Name>BluetoothCommon.Net</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\SharedNetLibs\ChkUtils.Net\ChkUtils.Net.csproj">
       <Project>{a71559fd-9a21-4f27-92ec-c89fbef25718}</Project>
       <Name>ChkUtils.Net</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\SharedNetLibs\Common.Net\Common.Net.csproj">
-      <Project>{85dc0bcd-7fdc-4164-a6de-d020188b5248}</Project>
-      <Name>Common.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SharedNetLibs\CommunicationStack.Net\CommunicationStack.Net.csproj">
-      <Project>{34eb157e-2489-4b3e-9e6a-be92d5ed4711}</Project>
-      <Name>CommunicationStack.Net</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\SharedNetLibs\LogUtils.Net\LogUtils.Net.csproj">
       <Project>{db9aa64b-945b-41d5-a0da-83407d2bfcc8}</Project>
       <Name>LogUtils.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SharedNetLibs\VariousUtils\VariousUtils.Net.csproj">
-      <Project>{8702af2d-436d-485d-b6a7-f2854e56b9c4}</Project>
-      <Name>VariousUtils.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BluetoothCommonAndroidXamarin\BluetoothCommonAndroidXamarin.csproj">
-      <Project>{7728f061-b0ff-43be-a039-f0000e1f43ec}</Project>
-      <Name>BluetoothCommonAndroidXamarin</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
