@@ -17,7 +17,7 @@
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v10.0</TargetFrameworkVersion>
     <AndroidUseAapt2>true</AndroidUseAapt2>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -47,6 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BluetoothCommonDiscovery.cs" />
+    <Compile Include="BluetoothCommonFunctionality.cs" />
     <Compile Include="Receivers\UnboundDeviceDiscoveryReceiver.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -64,6 +66,14 @@
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\SharedNetLibs\BluetoothCommon.Net\BluetoothCommon.Net.csproj">
+      <Project>{0747d6bb-52d0-4082-82f0-b3a3f3d8f02d}</Project>
+      <Name>BluetoothCommon.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SharedNetLibs\BluetoothLE\BluetoothLE.Net.csproj">
+      <Project>{bf0c5eb0-aef3-444f-b486-4c1d3271ffff}</Project>
+      <Name>BluetoothLE.Net</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\SharedNetLibs\ChkUtils.Net\ChkUtils.Net.csproj">
       <Project>{a71559fd-9a21-4f27-92ec-c89fbef25718}</Project>
       <Name>ChkUtils.Net</Name>

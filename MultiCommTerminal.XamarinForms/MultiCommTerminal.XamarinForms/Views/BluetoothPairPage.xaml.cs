@@ -78,10 +78,10 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
 
-        private void BT_DiscoveryCompleteHandler(object sender, bool e) {
+        private void BT_DiscoveryCompleteHandler(object sender, bool isOk) {
             Device.BeginInvokeOnMainThread(() => {
                 this.activity.IsRunning = false;
-                if (devices.Count == 0) {
+                if (!isOk) {
                     this.OnErr("", App.GetText(MsgCode.NotFound));
                 }
          });

@@ -3,11 +3,11 @@ using Android.Content;
 using BluetoothCommon.Net;
 using BluetoothCommon.Net.Enumerations;
 using BluetoothCommon.Net.interfaces;
+using BluetoothCommonAndroidXamarin;
 using CommunicationStack.Net.Enumerations;
 using CommunicationStack.Net.interfaces;
 using LogUtils.Net;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +23,8 @@ namespace BluetoothRfComm.AndroidXamarin {
         private IMsgPump<BTAndroidMsgPumpConnectData> msgPump = new BTAndroidMsgPump();
         private bool connected = false;
         private BluetoothDevice device = null;
-        private List<BluetoothDevice> unBondedDevices = new List<BluetoothDevice>();
+
+        private BluetoothCommonFunctionality common = new BluetoothCommonFunctionality(BluetoothDeviceType.Classic);
 
         #endregion
 
@@ -51,6 +52,8 @@ namespace BluetoothRfComm.AndroidXamarin {
         public BluetoothRfCommAndroidXamarinImpl() {
             this.msgPump.MsgPumpConnectResultEvent += this.MsgPumpConnectResultEventHandler;
             this.msgPump.MsgReceivedEvent += this.MsgReceivedEventHandler;
+            this.common.DiscoveredBTDevice += Common_DiscoveredBTDevice;
+            this.common.DiscoveryComplete += Common_DiscoveryComplete;
         }
 
         #endregion
@@ -91,19 +94,7 @@ namespace BluetoothRfComm.AndroidXamarin {
 
 
         public void DiscoverDevicesAsync(bool paired) {
-            try {
-                Task.Run(() => {
-                    try {
-                        this.DoDiscovery(paired);
-                    }
-                    catch (Exception e) {
-                        this.log.Exception(9999, "", e);
-                    }
-                });
-            }
-            catch (Exception e) {
-                this.log.Exception(9999, "", e);
-            }
+            this.common.DiscoverDevicesAsync(paired);
         }
 
 
@@ -113,7 +104,7 @@ namespace BluetoothRfComm.AndroidXamarin {
 
 
         public void PairgAsync(BTDeviceInfo info) {
-            BluetoothDevice unbonded = this.unBondedDevices.FirstOrDefault(device => device.Name == info.Name);
+            BluetoothDevice unbonded = this.common.UnBondedDevices.FirstOrDefault(device => device.Name == info.Name);
             // Status is failed by default
             BTPairOperationStatus status = new BTPairOperationStatus() {
                 Name = info.Name,
@@ -199,6 +190,15 @@ namespace BluetoothRfComm.AndroidXamarin {
                 "Connect result:{0}  Socket:{1} Msg:{2}",
                 results.Code, results.SocketErr, results.ErrorString));
             this.ConnectionCompleted?.Invoke(this, this.connected);
+        }
+
+
+        private void Common_DiscoveryComplete(object sender, bool e) {
+            this.DiscoveryComplete?.Invoke(sender, e);
+        }
+
+        private void Common_DiscoveredBTDevice(object sender, BTDeviceInfo e) {
+            this.DiscoveredBTDevice?.Invoke(sender, e);
         }
 
 
