@@ -36,7 +36,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
         private void btnCopy_Clicked(object sender, EventArgs e) {
-            if (this.edSample.Text.Length > 0) {
+            if (!string.IsNullOrWhiteSpace(this.edSample.Text)) {
                 Device.BeginInvokeOnMainThread(async () => {
                     await Clipboard.SetTextAsync(this.edSample.Text);
                     // TODO - need msg box?
