@@ -32,7 +32,11 @@ namespace BluetoothCommonAndroidXamarin {
 
         public event EventHandler<bool> DiscoveryComplete;
         public event EventHandler<BTDeviceInfo> DiscoveredBTDevice;
+        public event EventHandler<BTPairOperationStatus> BT_PairStatus;
+        public event EventHandler<BTUnPairOperationStatus> BT_UnPairStatus;
+
         public event EventHandler<BluetoothLEDeviceInfo> DiscoveredBLEDevice;
+        // TODO - determine if there is paring in BLE
 
         #endregion
 

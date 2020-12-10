@@ -49,6 +49,9 @@
   <ItemGroup>
     <Compile Include="BluetoothCommonDiscovery.cs" />
     <Compile Include="BluetoothCommonFunctionality.cs" />
+    <Compile Include="BluetoothCommonPairing.cs" />
+    <Compile Include="Data models\BTAndroidMsgPumpConnectData.cs" />
+    <Compile Include="Messaging\BTAndroidMsgPump.cs" />
     <Compile Include="Receivers\UnboundDeviceDiscoveryReceiver.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -78,9 +81,21 @@
       <Project>{a71559fd-9a21-4f27-92ec-c89fbef25718}</Project>
       <Name>ChkUtils.Net</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\SharedNetLibs\Common.Net\Common.Net.csproj">
+      <Project>{85DC0BCD-7FDC-4164-A6DE-D020188B5248}</Project>
+      <Name>Common.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SharedNetLibs\CommunicationStack.Net\CommunicationStack.Net.csproj">
+      <Project>{34eb157e-2489-4b3e-9e6a-be92d5ed4711}</Project>
+      <Name>CommunicationStack.Net</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\SharedNetLibs\LogUtils.Net\LogUtils.Net.csproj">
       <Project>{db9aa64b-945b-41d5-a0da-83407d2bfcc8}</Project>
       <Name>LogUtils.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SharedNetLibs\VariousUtils\VariousUtils.Net.csproj">
+      <Project>{8702af2d-436d-485d-b6a7-f2854e56b9c4}</Project>
+      <Name>VariousUtils.Net</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
