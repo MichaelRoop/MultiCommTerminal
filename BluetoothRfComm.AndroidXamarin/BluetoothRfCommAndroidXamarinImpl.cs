@@ -1,17 +1,9 @@
 ﻿using Android.Bluetooth;
-using Android.Content;
 using BluetoothCommon.Net;
 using BluetoothCommon.Net.interfaces;
 using BluetoothCommonAndroidXamarin;
-using BluetoothCommonAndroidXamarin.Data_models;
-using BluetoothCommonAndroidXamarin.Messaging;
-using CommunicationStack.Net.Enumerations;
-using CommunicationStack.Net.interfaces;
 using LogUtils.Net;
 using System;
-using System.Linq;
-using System.Threading.Tasks;
-using VariousUtils.Net;
 
 namespace BluetoothRfComm.AndroidXamarin {
 
@@ -20,10 +12,6 @@ namespace BluetoothRfComm.AndroidXamarin {
         #region Data
 
         private ClassLog log = new ClassLog("BluetoothRfCommAndroidXamarinImpl");
-        private IMsgPump<BTAndroidMsgPumpConnectData> msgPump = new BTAndroidMsgPump();
-        private bool connected = false;
-        private BluetoothDevice device = null;
-
         private BluetoothCommonFunctionality common = new BluetoothCommonFunctionality(BluetoothDeviceType.Classic);
 
         #endregion
@@ -50,12 +38,12 @@ namespace BluetoothRfComm.AndroidXamarin {
         #region Constructors
 
         public BluetoothRfCommAndroidXamarinImpl() {
-            this.msgPump.MsgPumpConnectResultEvent += this.MsgPumpConnectResultEventHandler;
-            this.msgPump.MsgReceivedEvent += this.MsgReceivedEventHandler;
             this.common.DiscoveredBTDevice += this.Common_DiscoveredBTDevice;
             this.common.DiscoveryComplete += this.Common_DiscoveryComplete;
             this.common.BT_PairStatus += this.Common_BT_PairStatus;
             this.common.BT_UnPairStatus += this.Common_BT_UnPairStatus;
+            this.common.MsgReceivedEvent += this.Common_MsgReceivedEvent;
+            this.common.ConnectionCompleted += this.Common_ConnectionCompleted;
         }
 
         #endregion
@@ -64,34 +52,12 @@ namespace BluetoothRfComm.AndroidXamarin {
         #region IBTInterface methods
 
         public void ConnectAsync(BTDeviceInfo device) {
-            Task.Run(() => {
-                try {
-                    this.Disconnect();
-                    this.device = BluetoothAdapter.DefaultAdapter.BondedDevices.FirstOrDefault(d => d.Name == device.Name);
-                    this.msgPump.ConnectAsync2(new BTAndroidMsgPumpConnectData(this.device));
-                }
-                catch (Exception e) {
-                    this.log.Exception(9999, "ConnectAsync", "", e);
-                }
-            });
+            this.common.ConnectAsync(device.Name);
         }
 
 
         public void Disconnect() {
-            try {
-                if (this.connected) {
-                    this.msgPump.Disconnect();
-                    // Never dispose the device since it came from the Adaptor Bonded list
-                    if (this.device != null) {
-                        this.device = null;
-                    }
-                    this.connected = false;
-                }
-            }
-            catch (Exception e) {
-                this.log.Exception(9898, "Disconnect", "", e);
-            }
-            this.connected = false;
+            this.common.Disconnect();
         }
 
 
@@ -119,7 +85,7 @@ namespace BluetoothRfComm.AndroidXamarin {
         #region ICommStackChannel methods
 
         public bool SendOutMsg(byte[] msg) {
-            this.msgPump.WriteAsync(msg);
+            this.common.SendOutMsg(msg);
             return true;
         }
 
@@ -127,20 +93,13 @@ namespace BluetoothRfComm.AndroidXamarin {
 
         #region Event handlers
 
-        private void MsgReceivedEventHandler(object sender, byte[] e) {
-            this.log.Info("MsgReceivedEventHandler", () =>
-                string.Format("Received:{0}", e.ToFormatedByteString()));
-            this.MsgReceivedEvent?.Invoke(sender, e);
+        private void Common_ConnectionCompleted(object sender, bool e) {
+            this.ConnectionCompleted?.Invoke(this, e);
         }
 
 
-        private void MsgPumpConnectResultEventHandler(object sender, CommunicationStack.Net.DataModels.MsgPumpResults results) {
-            this.connected = results.Code == MsgPumpResultCode.Connected;
-
-            this.log.Info("", () => string.Format(
-                "Connect result:{0}  Socket:{1} Msg:{2}",
-                results.Code, results.SocketErr, results.ErrorString));
-            this.ConnectionCompleted?.Invoke(this, this.connected);
+        private void Common_MsgReceivedEvent(object sender, byte[] e) {
+            this.MsgReceivedEvent?.Invoke(sender, e);
         }
 
 
@@ -172,14 +131,6 @@ namespace BluetoothRfComm.AndroidXamarin {
             this.BT_PairInfoRequested?.Invoke(this, new BT_PairInfoRequest() {
                 DeviceName = "NOT IMPLEMENTED"
             });
-        }
-
-        #endregion
-
-        #region Private
-
-        private Context GetContext() {
-            return Android.App.Application.Context;
         }
 
         #endregion

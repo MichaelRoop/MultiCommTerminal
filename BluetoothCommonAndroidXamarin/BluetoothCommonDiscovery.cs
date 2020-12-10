@@ -100,7 +100,6 @@ namespace BluetoothCommonAndroidXamarin {
         }
 
 
-
         private void KillDiscoverReceiver() {
             if (this.discoverReceiver != null) {
                 this.GetContext().UnregisterReceiver(this.discoverReceiver);
@@ -143,6 +142,11 @@ namespace BluetoothCommonAndroidXamarin {
             else {
                 this.log.Error(9999, "", () => string.Format("Unhandled device type:{0}", this.deviceType));
             }
+        }
+
+
+        private Context GetContext() {
+            return Android.App.Application.Context;
         }
 
         #endregion

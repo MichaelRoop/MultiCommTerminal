@@ -47,8 +47,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BluetoothCommonConnection.cs" />
     <Compile Include="BluetoothCommonDiscovery.cs" />
     <Compile Include="BluetoothCommonFunctionality.cs" />
+    <Compile Include="BluetoothCommonMessaging.cs" />
     <Compile Include="BluetoothCommonPairing.cs" />
     <Compile Include="Data models\BTAndroidMsgPumpConnectData.cs" />
     <Compile Include="Messaging\BTAndroidMsgPump.cs" />

@@ -1,20 +1,12 @@
-﻿using Android.App;
-using Android.Bluetooth;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
+﻿using Android.Bluetooth;
 using BluetoothCommon.Net;
-using BluetoothCommonAndroidXamarin.Receivers;
+using BluetoothCommonAndroidXamarin.Data_models;
+using BluetoothCommonAndroidXamarin.Messaging;
 using BluetoothLE.Net.DataModels;
+using CommunicationStack.Net.interfaces;
 using LogUtils.Net;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace BluetoothCommonAndroidXamarin {
 
@@ -22,9 +14,12 @@ namespace BluetoothCommonAndroidXamarin {
 
         #region Data
 
-        private BluetoothDeviceType deviceType = BluetoothDeviceType.Classic;
         private ClassLog log = new ClassLog("BluetoothCommonFunctionality");
+        private BluetoothDeviceType deviceType = BluetoothDeviceType.Classic;
         private List<BluetoothDevice> unBondedDevices = new List<BluetoothDevice>();
+        private IMsgPump<BTAndroidMsgPumpConnectData> msgPump = new BTAndroidMsgPump();
+        private bool connected = false;
+        private BluetoothDevice device = null;
 
         #endregion
 
@@ -38,30 +33,25 @@ namespace BluetoothCommonAndroidXamarin {
         public event EventHandler<BluetoothLEDeviceInfo> DiscoveredBLEDevice;
         // TODO - determine if there is paring in BLE
 
+        public event EventHandler<bool> ConnectionCompleted;
+        public event EventHandler<byte[]> MsgReceivedEvent;
+
         #endregion
 
         #region Properties
 
         public List<BluetoothDevice> UnBondedDevices { get { return this.unBondedDevices; } }
+        public bool Connected { get { return this.connected; }  }
 
         #endregion
 
 
         public BluetoothCommonFunctionality(BluetoothDeviceType deviceType) {
             this.deviceType = deviceType;
+            this.msgPump.MsgPumpConnectResultEvent += this.ConnectResultHandler;
+            this.msgPump.MsgReceivedEvent += this.MsgReceivedHandler;
         }
 
-
-
-
-        #region Private
-
-
-        private Context GetContext() {
-            return Android.App.Application.Context;
-        }
-
-        #endregion
 
     }
 }
