@@ -59,9 +59,15 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         #region Private
 
-        private void InitStorage() {
+        private void InitSettings() {
             this.settings = this.storageFactory.GetManager<SettingItems>(this.Dir(this.SETTINGS_DIR), this.SETTINGS_FILE);
             this.AssureSettingsDefault();
+        }
+
+
+
+        private void InitStorage() {
+            // Settings moved up so this can be run as task
 
             this.terminatorStorage = 
                 this.storageFactory.GetIndexedManager<TerminatorDataModel, DefaultFileExtraInfo>(this.Dir(TERMINATOR_DIR), TERMINATOR_INDEX_FILE);

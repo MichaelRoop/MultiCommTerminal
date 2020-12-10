@@ -16,7 +16,7 @@ namespace Wifi.AndroidXamarin {
 
         private void DoConnection(WifiNetworkInfo dataModel) {
 
-            if (!this.manager.IsWifiEnabled) {
+            if (!this.GetWifiManager().IsWifiEnabled) {
                 this.RaiseError(WifiErrorCode.NoAdapters);
                 return;
             }
@@ -42,15 +42,12 @@ namespace Wifi.AndroidXamarin {
                .Build();
 
 
-            this.connectCallback = new WifiAndroidConnectCallback(
-                this.connectivityManager, 
-                dataModel.RemoteHostName, 
-                port) {
-
+            ConnectivityManager cm = this.GetConnectivityManager();
+            this.connectCallback = new WifiAndroidConnectCallback(cm, dataModel.RemoteHostName, port) {
                 NetworkAvailable = this.OnNetworkAvailable,
                 NetworkUnavailable = this.OnNetworkUnavailable
             };
-            this.connectivityManager.RequestNetwork(request, this.connectCallback);
+            cm.RequestNetwork(request, this.connectCallback);
         }
 
 

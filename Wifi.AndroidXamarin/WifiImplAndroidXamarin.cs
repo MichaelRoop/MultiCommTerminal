@@ -20,8 +20,6 @@ namespace Wifi.AndroidXamarin {
 
         ClassLog log = new ClassLog("WifiImplAndroidXamarin");
         WifiAndroidMsgPump msgPump = new WifiAndroidMsgPump();
-        WifiManager manager = null;
-        ConnectivityManager connectivityManager;
         WifiAndroidListReceiver listReceiver = null;
         private bool isListReceiverRunning = false;
 
@@ -58,8 +56,6 @@ namespace Wifi.AndroidXamarin {
             this.isListReceiverRunning = false;
             this.msgPump.MsgPumpConnectResultEvent += this.MsgPumpConnectResultEventHandler;
             this.msgPump.MsgReceivedEvent += this.MsgPumpMsgReceivedEventHandler;
-            this.manager = this.GetWifiManager();
-            this.connectivityManager = this.GetConnectivityManager();
             this.listReceiver = new WifiAndroidListReceiver(this.ListDiscoveryCallback);
         }
 
@@ -77,8 +73,9 @@ namespace Wifi.AndroidXamarin {
             this.msgPump.Disconnect();
             if (this.connectCallback != null) {
                 // Some note that sometimes you need to force un-bind
-                this.connectivityManager.BindProcessToNetwork(null);
-                this.connectivityManager.UnregisterNetworkCallback(this.connectCallback);
+                ConnectivityManager cm = this.GetConnectivityManager();
+                cm.BindProcessToNetwork(null);
+                cm.UnregisterNetworkCallback(this.connectCallback);
                 this.connectCallback.Dispose();
                 this.connectCallback = null;
             }

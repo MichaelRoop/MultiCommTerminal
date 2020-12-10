@@ -14,6 +14,7 @@ using SerialCommon.Net.interfaces;
 using SerialCommon.Net.StorageIndexExtraInfo;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
+using System.Threading.Tasks;
 using WifiCommon.Net.interfaces;
 
 namespace MultiCommWrapper.Net.WrapCode {
@@ -105,12 +106,15 @@ namespace MultiCommWrapper.Net.WrapCode {
         /// <summary>Make sure there are default files for all storage managers</summary>
         private void InitializeAll() {
             this.InitLanguages();
-            this.InitStorage();
-            this.InitBluetoothClassic();
-            this.BLE_Init();
-            this.WifiInit();
-            this.SerialInit();
-            this.EthernetInit();
+            this.InitSettings();
+            Task.Run(() => {
+                this.InitStorage();
+                this.InitBluetoothClassic();
+                this.BLE_Init();
+                this.WifiInit();
+                this.SerialInit();
+                this.EthernetInit();
+            });
         }
 
 
