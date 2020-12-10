@@ -93,6 +93,21 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
 
         private void btnConnect_Clicked(object sender, EventArgs e) {
+            this.SetConnectedLight(false);
+            Task.Run(() => {
+                WifiCredAndIndex cred = App.Wrapper.ValidateCredentials(this.networkInfo, this.OnErr);
+                if (cred.RequiresUserData) {
+                    Device.BeginInvokeOnMainThread(() =>
+                    PopupNavigation.Instance.PushAsync(
+                        new WifiCredRequestPopUpPage(cred, this.networkInfo, this.DelegateRunConnection)));
+                }
+                else {
+                    this.DelegateRunConnection(this.networkInfo);
+                }
+            });
+
+
+            /*
             Device.BeginInvokeOnMainThread(async () => {
                 this.SetConnectedLight(false);
                 WifiCredAndIndex cred = App.Wrapper.ValidateCredentials(this.networkInfo, this.OnErr);
@@ -104,6 +119,9 @@ namespace MultiCommTerminal.XamarinForms.Views {
                     this.DelegateRunConnection(this.networkInfo);
                 }
             });
+            */
+
+
         }
 
 
@@ -172,8 +190,8 @@ namespace MultiCommTerminal.XamarinForms.Views {
         #region Delegates
 
         private void DelegateRunConnection(WifiNetworkInfo info) {
+            Device.BeginInvokeOnMainThread(() => { this.activity.IsRunning = true; });
             Task.Run(() => {
-                Device.BeginInvokeOnMainThread(() => { this.activity.IsRunning = true; });
                 App.Wrapper.WifiConnectPreValidatedAsync(this.networkInfo);
             });
         }
