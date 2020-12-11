@@ -10,6 +10,7 @@ using MultiCommTerminal.XamarinForms.Droid.DependencyInjection;
 using MultiCommTerminal.XamarinForms.Droid.PermissionsObjects;
 using MultiCommTerminal.XamarinForms.interfaces;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace MultiCommTerminal.XamarinForms.Droid {
@@ -26,6 +27,14 @@ namespace MultiCommTerminal.XamarinForms.Droid {
         #region FormsAppCompatActivity overrides
 
         protected override void OnCreate(Bundle savedInstanceState) {
+            // Move the init of the logging and DI init to start so it overlaps with other things being setup here
+            Stopwatch sw = new Stopwatch();
+            long loging = 0;
+            sw.Start();
+            this.SetupLogAndDI();
+            long setupDi = sw.ElapsedMilliseconds;
+            sw.Stop();
+
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
@@ -47,51 +56,51 @@ namespace MultiCommTerminal.XamarinForms.Droid {
 
 
 
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
+            sw.Restart();
             base.OnCreate(savedInstanceState);
             sw.Stop();
             long baseInit = sw.ElapsedMilliseconds;
-            sw.Restart();
 
+            sw.Restart();
             Rg.Plugins.Popup.Popup.Init(this);
             sw.Stop();
             long popuUpInit = sw.ElapsedMilliseconds;
-            sw.Restart();
 
+            sw.Restart();
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             sw.Stop();
             long essInit = sw.ElapsedMilliseconds;
+
             sw.Restart();
-
-
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             sw.Stop();
             long formsInit = sw.ElapsedMilliseconds;
+
+            //sw.Restart();
+            //this.SetupLogging();
+            //sw.Stop();
+            //long loging = sw.ElapsedMilliseconds;
+            //sw.Restart();
+
+
+            //this.SetupDependencyInjection();
+            //sw.Stop();
+            //long setupDi = sw.ElapsedMilliseconds;
+            //sw.Restart();
+
+
+
             sw.Restart();
-
-            this.SetupLogging();
-            sw.Stop();
-            long loging = sw.ElapsedMilliseconds;
-            sw.Restart();
-
-
-            this.SetupDependencyInjection();
-            sw.Stop();
-            long setupDi = sw.ElapsedMilliseconds;
-            sw.Restart();
-
             DependencyService.Register<ILocationWhileInUsePermission, LocationWhileInUsePermission>();
             DependencyService.Register<IBluetoothPermissions, DroidBluetoothPermissions>();
             DependencyService.Register<ICloseApplication, AndroidCloseApp>();
             sw.Stop();
             long reg = sw.ElapsedMilliseconds;
+
             sw.Restart();
             LoadApplication(new App(DI.Wrapper));
             sw.Stop();
             long loadApp = sw.ElapsedMilliseconds;
-            sw.Restart();
-
 
             Log.Info("MainActivity", "OnCreate", () => string.Format("Base Create:{0}", baseInit));
             Log.Info("MainActivity", "OnCreate", () => string.Format("Rg Popup Init:{0}", popuUpInit));
@@ -149,6 +158,13 @@ namespace MultiCommTerminal.XamarinForms.Droid {
 
             this.logHelper.Setup("1.0.0.0", MsgLevel.Info, true, 5);
 #endif
+        }
+
+        private void SetupLogAndDI() {
+            Task.Run(() => {
+                this.SetupLogging();
+                this.SetupDependencyInjection();
+            });
         }
 
         #endregion
