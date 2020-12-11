@@ -29,6 +29,24 @@ namespace MultiCommTerminal.XamarinForms.Droid {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
+            //https://stackoverflow.com/questions/56088208/unsupported-api-warnings-in-google-play-store
+#if DEBUG
+            // To detect where the non conforming calls are being made
+            StrictMode.SetThreadPolicy(
+                new StrictMode.ThreadPolicy.Builder()
+                    .DetectAll()
+                    .PenaltyLog()
+                    .Build());
+
+            StrictMode.SetVmPolicy(
+               new StrictMode.VmPolicy.Builder()
+                    .DetectNonSdkApiUsage()
+                    .PenaltyLog()
+                    .Build());
+#endif // DEBUG
+
+
+
             Stopwatch sw = new Stopwatch();
             sw.Start();
             base.OnCreate(savedInstanceState);
@@ -127,7 +145,10 @@ namespace MultiCommTerminal.XamarinForms.Droid {
         private void SetupLogging() {
             // Will not handle level events, just the debug outputs
             // TODO - need a build number
+#if DEBUG
+
             this.logHelper.Setup("1.0.0.0", MsgLevel.Info, true, 5);
+#endif
         }
 
         #endregion
