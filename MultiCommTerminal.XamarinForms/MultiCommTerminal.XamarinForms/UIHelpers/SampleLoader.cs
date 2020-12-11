@@ -6,7 +6,6 @@ using System.IO;
 using System.Reflection;
 using VariousUtils.Net;
 using Xamarin.Essentials;
-using Xamarin.Forms;
 
 namespace MultiCommTerminal.XamarinForms.UIHelpers {
 
@@ -81,16 +80,15 @@ namespace MultiCommTerminal.XamarinForms.UIHelpers {
                 }
 
                 if (File.Exists(filePath)) {
-                    Device.BeginInvokeOnMainThread(async () => {
                         try {
-                            await Launcher.OpenAsync(new OpenFileRequest() {
+                            Launcher.OpenAsync(new OpenFileRequest() {
                                 File = new ReadOnlyFile(filePath)
                             });
                         }
                         catch(Exception e) {
+                            Log.Exception(8888, "LoadUserManual", "", e);
                             onErr(App.GetText(MsgCode.LoadFailed), filePath);
                         }
-                    });
                 }
                 else {
                     Log.Error(9999, "SampleLoader", "LoadUserManual", () => string.Format("Did not find file"));

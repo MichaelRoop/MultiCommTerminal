@@ -84,6 +84,11 @@ namespace BluetoothCommonAndroidXamarin {
             try {
                 this.KillDiscoverReceiver();
                 this.unBondedDevices.Clear();
+                if (BluetoothAdapter.DefaultAdapter == null) {
+                    this.DiscoveryComplete?.Invoke(this, false);
+                    return;
+                }
+
                 this.discoverReceiver = new
                     UnboundDeviceDiscoveryReceiver(
                         this.deviceType,

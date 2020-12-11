@@ -17,7 +17,7 @@ namespace Wifi.AndroidXamarin {
                     this.listReceiver,
                     new IntentFilter(WifiManager.ScanResultsAvailableAction));
                 // Marked obsolete but will continue to use until something new offered
-                this.manager.StartScan();
+                this.GetWifiManager().StartScan();
             }
         }
 

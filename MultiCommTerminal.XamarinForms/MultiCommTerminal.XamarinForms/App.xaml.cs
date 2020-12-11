@@ -9,6 +9,9 @@ using System;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+//using Microsoft.AppCenter;
+//using Microsoft.AppCenter.Analytics;
+//using Microsoft.AppCenter.Crashes;
 
 namespace MultiCommTerminal.XamarinForms {
     public partial class App : Application {
@@ -43,6 +46,11 @@ namespace MultiCommTerminal.XamarinForms {
         protected override void OnStart() {
             // This will abort the app at the start if the WIFI permissions are not given
             //this.DoPermissionsCheck();
+
+
+            //AppCenter.Start(
+            //    "android=2bcd0252-b20d-4cb2-b47e-dd4d206579ce;",
+            //    typeof(Analytics), typeof(Crashes));
         }
 
 
@@ -76,7 +84,7 @@ namespace MultiCommTerminal.XamarinForms {
 
 
         public static void ShowError(Page page, string title, string msg) {
-            Device.BeginInvokeOnMainThread(async () => {
+            Xamarin.Forms.Device.BeginInvokeOnMainThread(async () => {
                 await page.DisplayAlert(title, msg, App.GetText(MsgCode.Ok));
             });
         }
@@ -88,7 +96,7 @@ namespace MultiCommTerminal.XamarinForms {
 
 
         public static void ShowYesNo(Page page, string title, string msg, Action onYes, Action onNo) {
-            Device.BeginInvokeOnMainThread(async () => {
+            Xamarin.Forms.Device.BeginInvokeOnMainThread(async () => {
                 bool ok = await page.DisplayAlert(title, msg, GetText(MsgCode.yes), GetText(MsgCode.no));
                 if (ok) {
                     onYes?.Invoke();
@@ -115,13 +123,13 @@ namespace MultiCommTerminal.XamarinForms {
 
 
         private void OnCurrentTerminatorChanged(object sender, TerminatorDataModel e) {
-            Device.BeginInvokeOnMainThread(() => {
+            Xamarin.Forms.Device.BeginInvokeOnMainThread(() => {
                 TerminatorsUpdated?.Invoke(this, e);
             });
         }
 
         private void OnLanguageChanged(object sender, SupportedLanguage language) {
-            Device.BeginInvokeOnMainThread(() => {
+            Xamarin.Forms.Device.BeginInvokeOnMainThread(() => {
                 LanguageUpdated?.Invoke(this, language);
             });
         }
@@ -135,7 +143,7 @@ namespace MultiCommTerminal.XamarinForms {
         /// </summary>
         private void DoPermissionsCheck() {
             // This will abort the app at the start if the WIFI permissions are not given
-            Device.BeginInvokeOnMainThread(async () => {
+            Xamarin.Forms.Device.BeginInvokeOnMainThread(async () => {
                 if (!await this.CheckPermissions()) {
                     ICloseApplication closeApp = DependencyService.Get<ICloseApplication>();
                     await Application.Current.MainPage.DisplayAlert(
