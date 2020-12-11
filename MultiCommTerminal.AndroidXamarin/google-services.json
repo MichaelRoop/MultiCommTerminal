@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "445319989422",
+    "project_id": "multicommterminal-77870",
+    "storage_bucket": "multicommterminal-77870.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445319989422:android:22f80609fb77ec79db053f",
+        "android_client_info": {
+          "package_name": "com.companyname.multicommterminal.xamarinforms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "445319989422-rmtbu0v59fkrk7tv1bbb7a3okh5upt2o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATtWonq0dOoJBpVGqf30uYFUldoYrY4vA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "445319989422-rmtbu0v59fkrk7tv1bbb7a3okh5upt2o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
