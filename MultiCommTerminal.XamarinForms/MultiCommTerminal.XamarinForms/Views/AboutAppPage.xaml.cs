@@ -2,6 +2,8 @@
 using LanguageFactory.Net.Messaging;
 using MultiCommTerminal.XamarinForms.UIHelpers;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -12,7 +14,8 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
     public partial class AboutAppPage : ContentPage {
 
-        public ICommand TapLinkCmd => new Command<string>(async (url) => await Launcher.OpenAsync(url));
+        public ICommand TapLinkCmd => new Command<string>(this.LinkOpen);
+            
 
         #region Constructor and page envents
 
@@ -39,7 +42,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
         #region Wrapper event handlers
 
         private void btnUserManual_Clicked(object sender, EventArgs e) {
-            SampleLoader.LoadUserManual(this.OnErr);
+            Task.Run(()=> SampleLoader.LoadUserManual(this.OnErr));
         }
 
 
@@ -55,6 +58,28 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.lbAuthor.Text = l.GetText(MsgCode.Author);
             this.lbIcons.Text = l.GetText(MsgCode.Icons);
             this.txtSupport.Text = l.GetText(MsgCode.Support);
+        }
+
+
+        private void LinkOpen(string url) {
+            Task.Run(() => this.LaunchUrlTask(url));
+
+
+            //Task t = new Task(`)
+
+
+//            Task.Factory.StartNew(()=>Launcher.OpenAsync(url), null, TaskCreationOptions.LongRunning,TaskScheduler. );
+        }
+
+
+        private void LaunchUrlTask(string url) {
+            try {
+                Thread.CurrentThread.Priority = ThreadPriority.Lowest;
+                Launcher.OpenAsync(url);
+            }
+            finally {
+                Thread.CurrentThread.Priority = ThreadPriority.Normal;
+            }
         }
 
 
