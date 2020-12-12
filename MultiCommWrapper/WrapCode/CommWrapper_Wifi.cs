@@ -11,8 +11,6 @@ using StorageFactory.Net.StorageManagers;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
-using VariousUtils.Net;
 using WifiCommon.Net.DataModels;
 using WifiCommon.Net.Enumerations;
 
@@ -183,18 +181,6 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         #endregion
-
-        private void WifiInit() {
-            this.wifiStack.SetCommChannel(this.wifi);
-            this.wifiStack.InTerminators = "\n\r".ToAsciiByteArray();
-            this.wifiStack.OutTerminators = "\n\r".ToAsciiByteArray();
-            this.wifiStack.MsgReceived += this.WifiStack_BytesReceivedHander;
-
-            this.wifi.DiscoveredNetworks += this.Wifi_DiscoveredNetworksHandler;
-            this.wifi.OnError += this.Wifi_OnErrorHandler;
-            this.wifi.OnWifiConnectionAttemptCompleted += this.Wifi_OnWifiConnectionAttemptCompletedHandler;
-        }
-
 
         private void WifiTeardown() {
             this.wifi.DiscoveredNetworks -= this.Wifi_DiscoveredNetworksHandler;

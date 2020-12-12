@@ -9,7 +9,6 @@ using StorageFactory.Net.StorageManagers;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using VariousUtils.Net;
 
 namespace MultiCommWrapper.Net.WrapCode {
 
@@ -58,18 +57,6 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.ethernet.ParamsRequestedEvent -= Ethernet_ParamsRequestedEventHandler;
             this.ethernet.OnError -= this.Ethernet_OnErrorHandler;
             this.ethernet.OnEthernetConnectionAttemptCompleted -= this.Ethernet_OnEthernetConnectionAttemptCompletedHandler;
-        }
-
-
-        private void EthernetInit() {
-            this.ethernetStack.SetCommChannel(this.ethernet);
-            this.ethernetStack.InTerminators = "\r\n".ToAsciiByteArray();
-            this.ethernetStack.OutTerminators = "\r\n".ToAsciiByteArray();
-            this.ethernetStack.MsgReceived += this.EthernetStack_MsgReceivedHandler;  
-
-            this.ethernet.ParamsRequestedEvent += Ethernet_ParamsRequestedEventHandler;
-            this.ethernet.OnError += this.Ethernet_OnErrorHandler;
-            this.ethernet.OnEthernetConnectionAttemptCompleted += this.Ethernet_OnEthernetConnectionAttemptCompletedHandler;
         }
 
         #region Storage

@@ -2,20 +2,15 @@
 using BluetoothLE.Net.interfaces;
 using CommunicationStack.Net.interfaces;
 using DependencyInjectorFactory.Net.interfaces;
-using Ethernet.Common.Net.DataModels;
 using Ethernet.Common.Net.interfaces;
 using IconFactory.Net.interfaces;
 using LanguageFactory.Net.interfaces;
 using LogUtils.Net;
-using MultiCommData.Net.StorageDataModels;
 using MultiCommWrapper.Net.Helpers;
 using MultiCommWrapper.Net.interfaces;
-using SerialCommon.Net.DataModels;
 using SerialCommon.Net.interfaces;
-using SerialCommon.Net.StorageIndexExtraInfo;
-using StorageFactory.Net.interfaces;
-using StorageFactory.Net.StorageManagers;
 using System.Threading.Tasks;
+using VariousUtils.Net;
 using WifiCommon.Net.interfaces;
 
 namespace MultiCommWrapper.Net.WrapCode {
@@ -26,7 +21,6 @@ namespace MultiCommWrapper.Net.WrapCode {
         #region Data
 
         // Container created on demand
-        private IStorageManagerFactory _storageFactory = null;
         private ILangFactory _languages = null;
         private IIconFactory _iconFactory = null;
         private IBTInterface _classicBluetooth = null;
@@ -41,12 +35,6 @@ namespace MultiCommWrapper.Net.WrapCode {
         private ICommStackLevel0 _ethernetStack = null;
         private IObjContainer container = null;
         // Other members
-        private IStorageManager<SettingItems> settings = null;
-        private IIndexedStorageManager<TerminatorDataModel, DefaultFileExtraInfo> terminatorStorage = null;
-        private IIndexedStorageManager<ScriptDataModel, DefaultFileExtraInfo> scriptStorage = null;
-        private IIndexedStorageManager<WifiCredentialsDataModel, DefaultFileExtraInfo> wifiCredStorage = null;
-        private IIndexedStorageManager<EthernetParams, DefaultFileExtraInfo> ethernetStorage = null;
-        private IIndexedStorageManager<SerialDeviceInfo, SerialIndexExtraInfo> serialStorage = null;
         private ScratchSet scratch = new ScratchSet();
         private ClassLog log = new ClassLog("CommWrapper");
 
@@ -54,19 +42,11 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         #region Properties
 
-        private IStorageManagerFactory storageFactory {
-            get {
-                if (this._storageFactory == null) {
-                    this._storageFactory = this.container.GetObjSingleton<IStorageManagerFactory>();
-                }
-                return this._storageFactory;
-            }
-        }
-
         private ILangFactory languages { 
             get {
                 if (this._languages == null) {
                     this._languages = this.container.GetObjSingleton<ILangFactory>();
+                    this._languages.LanguageChanged += Event_LanguageChanged;
                 }
                 return this._languages;
             } 
@@ -85,6 +65,20 @@ namespace MultiCommWrapper.Net.WrapCode {
             get {
                 if (this._classicBluetooth == null) {
                     this._classicBluetooth = this.container.GetObjSingleton<IBTInterface>();
+
+                    // Connect comm channel and its stack - uses Property to ensure statck creation
+                    this.btClassicStack.SetCommChannel(this._classicBluetooth);
+                    this.btClassicStack.InTerminators = "\n\r".ToAsciiByteArray();
+                    this.btClassicStack.OutTerminators = "\n\r".ToAsciiByteArray();
+                    this.btClassicStack.MsgReceived += this.BTClassic_BytesReceivedHandler;
+
+                    this._classicBluetooth.DiscoveredBTDevice += this.BTClassic_DiscoveredDeviceHandler;
+                    this._classicBluetooth.DiscoveryComplete += this.BTClassic_DiscoveryCompleteHandler;
+                    this._classicBluetooth.BT_DeviceInfoGathered += this.BTClassic_DeviceInfoGathered;
+                    this._classicBluetooth.ConnectionCompleted += this.BTClassic_ConnectionCompletedHander;
+                    this._classicBluetooth.BT_PairInfoRequested += BTClassic_PairInfoRequested;
+                    this._classicBluetooth.BT_PairStatus += this.BTClassic_PairStatus;
+                    this._classicBluetooth.BT_UnPairStatus += this.BTClassic_UnPairStatus;
                 }
                 return this._classicBluetooth;
             }
@@ -94,6 +88,18 @@ namespace MultiCommWrapper.Net.WrapCode {
             get {
                 if (this._bleBluetooth == null) {
                     this._bleBluetooth = this.container.GetObjSingleton<IBLETInterface>();
+
+                    // Connect comm channel and its stack - uses Property to ensure statck creation
+                    this.bleStack.SetCommChannel(this._bleBluetooth);
+                    this.bleStack.InTerminators = "\n\r".ToAsciiByteArray();
+                    this.bleStack.OutTerminators = "\n\r".ToAsciiByteArray();
+                    this.bleStack.MsgReceived += this.BleStack_MsgReceived;
+
+                    this._bleBluetooth.DeviceDiscovered += this.BLE_DeviceDiscoveredHandler;
+                    this._bleBluetooth.DeviceRemoved += this.BLE_DeviceRemovedHandler;
+                    this._bleBluetooth.DeviceUpdated += BLE_DeviceUpdatedHandler;
+                    this._bleBluetooth.DeviceDiscoveryCompleted += this.BLE_DeviceDiscoveryCompleted;
+                    this._bleBluetooth.DeviceInfoAssembled += this.BleBluetooth_DeviceInfoAssembled;
                 }
                 return this._bleBluetooth;
             }
@@ -103,6 +109,17 @@ namespace MultiCommWrapper.Net.WrapCode {
             get {
                 if (this._wifi == null) {
                     this._wifi = this.container.GetObjSingleton<IWifiInterface>();
+
+                    // Connect comm channel and its stack - uses Property to ensure statck creation
+                    this.wifiStack.SetCommChannel(this._wifi);
+                    this.wifiStack.InTerminators = "\n\r".ToAsciiByteArray();
+                    this.wifiStack.OutTerminators = "\n\r".ToAsciiByteArray();
+                    this.wifiStack.MsgReceived += this.WifiStack_BytesReceivedHander;
+
+                    this._wifi.DiscoveredNetworks += this.Wifi_DiscoveredNetworksHandler;
+                    this._wifi.OnError += this.Wifi_OnErrorHandler;
+                    this._wifi.OnWifiConnectionAttemptCompleted += this.Wifi_OnWifiConnectionAttemptCompletedHandler;
+
                 }
                 return this._wifi;
             }
@@ -112,6 +129,16 @@ namespace MultiCommWrapper.Net.WrapCode {
             get {
                 if (this._serial == null) {
                     this._serial = this.container.GetObjSingleton<ISerialInterface>();
+
+                    // Connect comm channel and its stack - uses Property to ensure statck creation
+                    this.serialStack.SetCommChannel(this._serial);
+                    this.serialStack.InTerminators = "\r\n".ToAsciiByteArray();
+                    this.serialStack.OutTerminators = "\r\n".ToAsciiByteArray();
+                    this.serialStack.MsgReceived += this.SerialStack_MsgReceivedHandler;
+
+                    this._serial.DiscoveredDevices += this.Serial_DiscoveredDevicesHandler;
+                    this._serial.OnError += this.Serial_OnErrorHandler;
+
                 }
                 return this._serial;
             }
@@ -121,6 +148,16 @@ namespace MultiCommWrapper.Net.WrapCode {
             get {
                 if (this._ethernet == null) {
                     this._ethernet = this.container.GetObjSingleton<IEthernetInterface>();
+
+                    // Connect comm channel and its stack - uses Property to ensure statck creation
+                    this.ethernetStack.SetCommChannel(this._ethernet);
+                    this.ethernetStack.InTerminators = "\r\n".ToAsciiByteArray();
+                    this.ethernetStack.OutTerminators = "\r\n".ToAsciiByteArray();
+                    this.ethernetStack.MsgReceived += this.EthernetStack_MsgReceivedHandler;
+
+                    this._ethernet.ParamsRequestedEvent += Ethernet_ParamsRequestedEventHandler;
+                    this._ethernet.OnError += this.Ethernet_OnErrorHandler;
+                    this._ethernet.OnEthernetConnectionAttemptCompleted += this.Ethernet_OnEthernetConnectionAttemptCompletedHandler;
                 }
                 return this._ethernet;
             }
@@ -180,7 +217,6 @@ namespace MultiCommWrapper.Net.WrapCode {
         /// <param name="container">The Dependency injection container</param>
         public CommWrapper(IObjContainer container) {
             this.container = container;
-            this.InitializeAll();
         }
 
         #endregion
@@ -195,21 +231,6 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.WifiTeardown();
             this.SerialTeardown();
             this.EthernetTeardown();
-        }
-
-
-        /// <summary>Make sure there are default files for all storage managers</summary>
-        private void InitializeAll() {
-            this.InitLanguages();
-            this.InitSettings();
-            Task.Run(() => {
-                this.InitStorage();
-                this.InitBluetoothClassic();
-                this.BLE_Init();
-                this.WifiInit();
-                this.SerialInit();
-                this.EthernetInit();
-            });
         }
 
 

@@ -7,7 +7,6 @@ using MultiCommWrapper.Net.interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading;
 using VariousUtils.Net;
 
 namespace MultiCommWrapper.Net.WrapCode {
@@ -201,19 +200,6 @@ namespace MultiCommWrapper.Net.WrapCode {
         #endregion
 
         #region Init and teardown
-
-        private void BLE_Init() {
-            this.bleStack.SetCommChannel(this.bleBluetooth);
-            this.bleStack.InTerminators = "\n\r".ToAsciiByteArray();
-            this.bleStack.OutTerminators = "\n\r".ToAsciiByteArray();
-            this.bleStack.MsgReceived += this.BleStack_MsgReceived;
-            this.bleBluetooth.DeviceDiscovered += this.BLE_DeviceDiscoveredHandler;
-            this.bleBluetooth.DeviceRemoved += this.BLE_DeviceRemovedHandler;
-            this.bleBluetooth.DeviceUpdated += BLE_DeviceUpdatedHandler;
-            this.bleBluetooth.DeviceDiscoveryCompleted += this.BLE_DeviceDiscoveryCompleted;
-            this.bleBluetooth.DeviceInfoAssembled += this.BleBluetooth_DeviceInfoAssembled;
-        }
-
 
         private void BLE_TearDown() {
             this.bleBluetooth.Disconnect();

@@ -71,6 +71,8 @@ namespace MultiCommWrapper.Net.WrapCode {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;
                 WrapErr.ToErrReport(out report, 9999, () => {
+                    // Force default creation
+                    var x = this.terminatorStorage;
                     SettingItems items = this.settings.ReadObjectFromDefaultFile();
                     onSuccess(items.CurrentTerminator);
                 });

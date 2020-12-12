@@ -18,12 +18,6 @@ using VariousUtils.Net;
 namespace MultiCommWrapper.Net.WrapCode {
     public partial class CommWrapper : ICommWrapper {
 
-
-        public string GetDataFilesPath() {
-            return Path.Combine(this.settings.StorageRootDir, APP_DIR);
-        }
-
-
         #region Data
 
         private static string PDF_USER_MANUAL_DIR_AND_FILE = "Documents/MultiCommTerminalUserDocRelease.pdf";
@@ -55,48 +49,106 @@ namespace MultiCommWrapper.Net.WrapCode {
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), 
                 PDF_USER_MANUAL_DIR_AND_FILE);
 
+        // Container created on demand
+        private IStorageManagerFactory _storageFactory = null;
+
+        // Storage members
+        private IStorageManager<SettingItems> _settings = null;
+        private IIndexedStorageManager<TerminatorDataModel, DefaultFileExtraInfo> _terminatorStorage = null;
+        private IIndexedStorageManager<ScriptDataModel, DefaultFileExtraInfo> _scriptStorage = null;
+        private IIndexedStorageManager<WifiCredentialsDataModel, DefaultFileExtraInfo> _wifiCredStorage = null;
+        private IIndexedStorageManager<EthernetParams, DefaultFileExtraInfo> _ethernetStorage = null;
+        private IIndexedStorageManager<SerialDeviceInfo, SerialIndexExtraInfo> _serialStorage = null;
+
         #endregion
 
-        #region Private
+        #region Just in Time Storage Creation Properties
 
-        private void InitSettings() {
-            this.settings = this.storageFactory.GetManager<SettingItems>(this.Dir(this.SETTINGS_DIR), this.SETTINGS_FILE);
-            this.AssureSettingsDefault();
+        private IStorageManagerFactory storageFactory {
+            get {
+                if (this._storageFactory == null) {
+                    this._storageFactory = this.container.GetObjSingleton<IStorageManagerFactory>();
+                }
+                return this._storageFactory;
+            }
         }
 
 
-
-        private void InitStorage() {
-            // Settings moved up so this can be run as task
-
-            this.terminatorStorage = 
-                this.storageFactory.GetIndexedManager<TerminatorDataModel, DefaultFileExtraInfo>(this.Dir(TERMINATOR_DIR), TERMINATOR_INDEX_FILE);
-            this.AssureTerminatorsDefault();
-
-            this.scriptStorage =
-                this.storageFactory.GetIndexedManager<ScriptDataModel, DefaultFileExtraInfo>(this.Dir(SCRIPTS_DIR), SCRIPTS_INDEX_FILE);
-            this.AssureScriptDefault();
-
-            this.wifiCredStorage =
-                this.storageFactory.GetIndexedManager<WifiCredentialsDataModel, DefaultFileExtraInfo>(this.Dir(WIFI_CRED_DIR), WIFI_CRED_INDEX_FILE);
-            this.AssureWifiCredDefault();
-
-            this.ethernetStorage =
-                this.storageFactory.GetIndexedManager<EthernetParams, DefaultFileExtraInfo>(this.Dir(ETHERNET_DATA_DIR), ETHERNET_DATA_INDEX_FILE);
-
-            this.serialStorage =
-                this.storageFactory.GetIndexedManager<SerialDeviceInfo, SerialIndexExtraInfo>(
-                    this.Dir(SERIAL_CFG_DIR), SERIAL_CFG_INDEX_FILE);
+        private IStorageManager<SettingItems> settings {
+            get {
+                if (this._settings == null) {
+                    this._settings =
+                        this.storageFactory.GetManager<SettingItems>(this.Dir(this.SETTINGS_DIR), this.SETTINGS_FILE);
+                    this.AssureSettingsDefault(this._settings);
+                }
+                return this._settings;
+            }
         }
 
 
-        private string Dir(string subDir) {
-            return Path.Combine(APP_DIR, subDir);
+        private IIndexedStorageManager<TerminatorDataModel, DefaultFileExtraInfo> terminatorStorage {
+            get {
+                if (this._terminatorStorage == null) {
+                    this._terminatorStorage =
+                        this.storageFactory.GetIndexedManager<TerminatorDataModel, DefaultFileExtraInfo>(this.Dir(TERMINATOR_DIR), TERMINATOR_INDEX_FILE);
+                    this.AssureTerminatorsDefault(this._terminatorStorage);
+                }
+                return this._terminatorStorage;
+            }
         }
 
-        private string FullStorageDirectory(string subDir) {
-            // Just use one of the roots
-            return Path.Combine(this.scriptStorage.StorageRootDir, this.Dir(subDir));
+        private IIndexedStorageManager<ScriptDataModel, DefaultFileExtraInfo> scriptStorage {
+            get {
+                if (this._scriptStorage == null) {
+                    this._scriptStorage =
+                        this.storageFactory.GetIndexedManager<ScriptDataModel, DefaultFileExtraInfo>(this.Dir(SCRIPTS_DIR), SCRIPTS_INDEX_FILE);
+                    this.AssureScriptDefault(this._scriptStorage);
+                }
+                return this._scriptStorage;
+            }
+        }
+
+
+        private IIndexedStorageManager<WifiCredentialsDataModel, DefaultFileExtraInfo> wifiCredStorage {
+            get {
+                if (this._wifiCredStorage == null) {
+                    this._wifiCredStorage =
+                        this.storageFactory.GetIndexedManager<WifiCredentialsDataModel, DefaultFileExtraInfo>(this.Dir(WIFI_CRED_DIR), WIFI_CRED_INDEX_FILE);
+                    //this.AssureWifiCredDefault(this._wifiCredStorage);
+                }
+                return this._wifiCredStorage;
+            }
+        }
+
+
+        private IIndexedStorageManager<EthernetParams, DefaultFileExtraInfo> ethernetStorage {
+            get {
+                if (this._ethernetStorage == null) {
+                    this._ethernetStorage =
+                        this.storageFactory.GetIndexedManager<EthernetParams, DefaultFileExtraInfo>(this.Dir(ETHERNET_DATA_DIR), ETHERNET_DATA_INDEX_FILE);
+                }
+                return this._ethernetStorage;
+            }
+        }
+
+
+        private IIndexedStorageManager<SerialDeviceInfo, SerialIndexExtraInfo> serialStorage {
+            get {
+                if (this._serialStorage == null) {
+                    this._serialStorage =
+                        this.storageFactory.GetIndexedManager<SerialDeviceInfo, SerialIndexExtraInfo>(
+                            this.Dir(SERIAL_CFG_DIR), SERIAL_CFG_INDEX_FILE);
+                }
+                return this._serialStorage;
+            }
+        }
+
+        #endregion
+
+        #region Public
+
+        public string GetDataFilesPath() {
+            return Path.Combine(this.settings.StorageRootDir, APP_DIR);
         }
 
 
@@ -116,12 +168,27 @@ namespace MultiCommWrapper.Net.WrapCode {
             }
         }
 
+        #endregion
+
+        #region Private
+
+        private string Dir(string subDir) {
+            return Path.Combine(APP_DIR, subDir);
+        }
+
+        private string FullStorageDirectory(string subDir) {
+            // Just use one of the roots
+            return Path.Combine(this.scriptStorage.StorageRootDir, this.Dir(subDir));
+        }
+
+        #endregion
+
         #region Assure default methods
 
         /// <summary>Create default settings if it does not exist</summary>
-        private void AssureSettingsDefault() {
-            if (!this.settings.DefaultFileExists()) {
-                this.settings.WriteObjectToDefaultFile(new SettingItems());
+        private void AssureSettingsDefault(IStorageManager<SettingItems> data) {
+            if (!data.DefaultFileExists()) {
+                data.WriteObjectToDefaultFile(new SettingItems());
             }
         }
 
@@ -129,9 +196,9 @@ namespace MultiCommWrapper.Net.WrapCode {
         /// <summary>
         /// If no terminators defined, create default, store and set as default in settings
         /// </summary>
-        private void AssureTerminatorsDefault() {
+        private void AssureTerminatorsDefault(IIndexedStorageManager<TerminatorDataModel, DefaultFileExtraInfo> data) {
             // If nothing exists create default
-            List<IIndexItem<DefaultFileExtraInfo>> index = this.terminatorStorage.IndexedItems;
+            List<IIndexItem<DefaultFileExtraInfo>> index = data.IndexedItems;
             if (index.Count == 0) {
                 // For a new one. Different when updating. Do not need to create new index
                 List<TerminatorInfo> infos = new List<TerminatorInfo>();
@@ -144,7 +211,7 @@ namespace MultiCommWrapper.Net.WrapCode {
                 IIndexItem<DefaultFileExtraInfo> idx = new IndexItem<DefaultFileExtraInfo>(dm.UId) {
                     Display = dm.Name
                 };
-                this.terminatorStorage.Store(dm, idx);
+                data.Store(dm, idx);
 
                 this.GetSettings(
                     (settings) => {
@@ -160,7 +227,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-        private void AssureScriptDefault() {
+        private void AssureScriptDefault(IIndexedStorageManager<ScriptDataModel, DefaultFileExtraInfo> data) {
             List<IIndexItem<DefaultFileExtraInfo>> index = this.scriptStorage.IndexedItems;
             if (index.Count == 0) {
                 List<ScriptItem> items = new List<ScriptItem>();
@@ -172,7 +239,7 @@ namespace MultiCommWrapper.Net.WrapCode {
                 IIndexItem<DefaultFileExtraInfo> idx = new IndexItem<DefaultFileExtraInfo>(dm.UId) {
                     Display = "Demo script",
                 };
-                this.scriptStorage.Store(dm, idx);
+                data.Store(dm, idx);
 
                 this.GetSettings(
                     (settings) => {
@@ -183,26 +250,9 @@ namespace MultiCommWrapper.Net.WrapCode {
             }
         }
 
-
-        private void AssureWifiCredDefault() {
-            List<IIndexItem<DefaultFileExtraInfo>> index = this.wifiCredStorage.IndexedItems;
-            if (index.Count == 0) {
-                WifiCredentialsDataModel dm = new WifiCredentialsDataModel() {
-                    SSID = "MikieArduinoWifi",
-                    RemoteHostName = "192.168.4.1",
-                    RemoteServiceName = "80",
-                };
-                this.CreateNewWifiCred(dm.SSID, dm, () => { }, (err) => { });
-            }
-        }
-
-        #endregion
-
         #endregion
 
         #region Storage generics
-
-
 
         private void DeleteFromStorage<TSToreObject, TExtraInfo>(
             IIndexedStorageManager<TSToreObject, TExtraInfo> manager, IIndexItem<TExtraInfo> indexItem, Action<bool> onComplete, OnErr onError)

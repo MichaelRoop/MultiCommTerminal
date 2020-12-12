@@ -8,7 +8,6 @@ using MultiCommWrapper.Net.interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using VariousUtils.Net;
 
 namespace MultiCommWrapper.Net.WrapCode {
 
@@ -183,27 +182,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-
-
-
         #region Init and teardown
-
-        private void InitBluetoothClassic() {
-            // Connect comm channel and its stack
-            this.btClassicStack.SetCommChannel(this.classicBluetooth);
-            this.btClassicStack.InTerminators = "\n\r".ToAsciiByteArray();
-            this.btClassicStack.OutTerminators = "\n\r".ToAsciiByteArray();
-
-            this.classicBluetooth.DiscoveredBTDevice += this.BTClassic_DiscoveredDeviceHandler;
-            this.classicBluetooth.DiscoveryComplete += this.BTClassic_DiscoveryCompleteHandler;
-            this.classicBluetooth.BT_DeviceInfoGathered += this.BTClassic_DeviceInfoGathered;
-            this.classicBluetooth.ConnectionCompleted += this.BTClassic_ConnectionCompletedHander;
-            this.btClassicStack.MsgReceived += this.BTClassic_BytesReceivedHandler;
-            this.classicBluetooth.BT_PairInfoRequested += BTClassic_PairInfoRequested;
-            this.classicBluetooth.BT_PairStatus += this.BTClassic_PairStatus;
-            this.classicBluetooth.BT_UnPairStatus += this.BTClassic_UnPairStatus;
-        }
-
 
         private void TeardownBluetoothClassic() {
             this.classicBluetooth.Disconnect();

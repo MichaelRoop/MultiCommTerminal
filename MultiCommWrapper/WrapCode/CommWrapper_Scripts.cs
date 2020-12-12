@@ -19,6 +19,8 @@ namespace MultiCommWrapper.Net.WrapCode {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;
                 WrapErr.ToErrReport(out report, 9999, () => {
+                    // Force creations if not yet created
+                    var x = this.scriptStorage;
                     SettingItems items = this.settings.ReadObjectFromDefaultFile();
                     onSuccess(items.CurrentScript);
                 });

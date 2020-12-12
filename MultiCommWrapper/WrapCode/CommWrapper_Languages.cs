@@ -174,10 +174,6 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         #region Private
 
-        private void InitLanguages() {
-            this.languages.LanguageChanged += Event_LanguageChanged;
-        }
-
         private void TeardownLanguages() {
             this.languages.LanguageChanged -= this.Event_LanguageChanged;
         }

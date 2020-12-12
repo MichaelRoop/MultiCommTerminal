@@ -1,6 +1,5 @@
 ﻿using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
-using CommunicationStack.Net.DataModels;
 using LanguageFactory.Net.data;
 using MultiCommWrapper.Net.DataModels;
 using MultiCommWrapper.Net.interfaces;
@@ -324,21 +323,6 @@ namespace MultiCommWrapper.Net.WrapCode {
         #endregion
 
         #region Init Teardown
-
-        //SerialImplUwp serial
-        private void SerialInit() {
-            this.serialStack.SetCommChannel(this.serial);
-            this.serialStack.InTerminators = "\r\n".ToAsciiByteArray();
-            this.serialStack.OutTerminators = "\r\n".ToAsciiByteArray();
-            this.serialStack.MsgReceived += this.SerialStack_MsgReceivedHandler;
-
-            this.serial.DiscoveredDevices += this.Serial_DiscoveredDevicesHandler;
-            this.serial.OnError += this.Serial_OnErrorHandler;
-
-            
-
-            // TODO connection complete
-        }
 
         private void SerialTeardown() {
             this.serialStack.MsgReceived -= this.SerialStack_MsgReceivedHandler;
