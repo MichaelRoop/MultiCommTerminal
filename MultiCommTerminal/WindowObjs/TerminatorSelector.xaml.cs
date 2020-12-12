@@ -13,7 +13,6 @@ namespace MultiCommTerminal.WindowObjs {
 
         #region Data
 
-        private ButtonGroupSizeSyncManager widthManager = null;
         private Window parent = null;
 
         #endregion
@@ -31,12 +30,7 @@ namespace MultiCommTerminal.WindowObjs {
             this.parent = parent;
             InitializeComponent();
             this.SizeToContent = SizeToContent.WidthAndHeight;
-
             DI.Wrapper.GetTerminatorEntitiesList(this.OnTerminatorLoadOk, App.ShowMsg);
-
-            // Call before rendering which will trigger initial resize events
-            this.widthManager = new ButtonGroupSizeSyncManager(this.btnCancel, this.btnSelect);
-            this.widthManager.PrepForChange();
         }
 
 
@@ -49,29 +43,30 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             WPF_ControlHelpers.CenterChild(parent, this);
+            this.listBoxTerminators.SelectionChanged += SelectionChangedHandler;
         }
 
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
-            this.widthManager.Teardown();
+            this.listBoxTerminators.SelectionChanged -= SelectionChangedHandler;
         }
 
         #endregion
 
-        #region Private Button event handlers
+        #region Private event handlers
 
-        private void btnSelect_Click(object sender, RoutedEventArgs e) {
+        private void btnCancel_Click(object sender, RoutedEventArgs e) {
+            this.SelectedTerminator = null;
+            this.Close();
+        }
+
+
+        private void SelectionChangedHandler(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {
             TerminatorInfo info = this.listBoxTerminators.SelectedItem as TerminatorInfo;
             if (info != null) {
                 this.SelectedTerminator = info;
                 this.Close();
             }
-        }
-
-
-        private void btnCancel_Click(object sender, RoutedEventArgs e) {
-            this.SelectedTerminator = null;
-            this.Close();
         }
 
         #endregion

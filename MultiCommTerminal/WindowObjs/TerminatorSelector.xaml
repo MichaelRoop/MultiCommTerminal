@@ -36,10 +36,6 @@
                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Cancel}}"
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}"
                             Click="btnCancel_Click" />
-                <controls:UC_IconButton x:Name="btnSelect" Margin="10" Style="{StaticResource TextIconButton}" 
-                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Select}}"
-                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Save}}"
-                            Click="btnSelect_Click" />
             </DockPanel>
         </StackPanel>
     </Grid>
