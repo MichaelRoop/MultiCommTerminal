@@ -15,10 +15,10 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
                     <Grid HorizontalAlignment="Stretch">
-                        <Border x:Name="PART_topBar" BorderBrush="Blue" BorderThickness="1" 
+                        <Border x:Name="PART_topBar" BorderBrush="#0277bd" BorderThickness="1" 
                                 Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                             <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <Border x:Name="brdTitle" Background="DarkBlue" Height="35" >
+                                <Border x:Name="brdTitle" Background="#0277bd" Height="35" >
                                     <DockPanel HorizontalAlignment="Center">
                                         <Border Padding="4" x:Name="PART_IconBorder">
                                             <Image x:Name="titleIcon"  Source="{TemplateBinding Icon}" Width="25" Height="25"
@@ -27,7 +27,7 @@
                                         />
                                         </Border>
                                         <Label x:Name="titleLabel" Margin="2" Content="{TemplateBinding Title}" 
-                                        HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" Background="DarkBlue" FontSize="14" FontWeight="Bold" Padding="2" />
+                                        HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" Background="#0277bd" FontSize="14" FontWeight="Bold" Padding="2" />
                                     </DockPanel>
                                 </Border>
                                 <!--This will represent a header/toolbar-->

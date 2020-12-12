@@ -8,12 +8,12 @@
     <Style x:Key="RoundEdgeButton" TargetType="{x:Type Button}">
         <Setter Property="Width" Value="85"/>
         <Setter Property="Height" Value="35"/>
-        <Setter Property="Foreground" Value="Blue"/>
+        <Setter Property="Foreground" Value="#004c8c"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="buttonBorder" CornerRadius="10" Background="Transparent" 
-                            BorderBrush="Blue"  BorderThickness="1" Padding="10,0" >
+                            BorderBrush="#004c8c"  BorderThickness="1" Padding="10,0" >
                         <TextBlock x:Name="buttonText" Text="{TemplateBinding Content}" 
                             VerticalAlignment="Center" HorizontalAlignment="Center" TextTrimming="CharacterEllipsis" />
                     </Border>
@@ -44,7 +44,7 @@
     <Style x:Key="TextIconButton" TargetType="{x:Type controls:UC_IconButton}">
         <!--<Setter Property="MinWidth" Value="35"/>-->
         <Setter Property="Height" Value="35"/>
-        <Setter Property="Foreground" Value="Blue"/>
+        <Setter Property="Foreground" Value="#004c8c"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Padding" Value="3"/>
         <Setter Property="IconMargin" Value="7"/>
@@ -55,7 +55,7 @@
                 <ControlTemplate TargetType="{x:Type controls:UC_IconButton}">
                     <!-- TODO If the border H Alignment is Center it can resize down but cannot be set on entry as both same size. works with stretch but not downsize -->
                     <!-- Bind the border background to the button background to capture click event -->
-                    <Border x:Name="tiButtonBorder" CornerRadius="3" BorderBrush="Blue" BorderThickness=".25" Background="{TemplateBinding Background}" >
+                    <Border x:Name="tiButtonBorder" CornerRadius="3" BorderBrush="#004c8c" BorderThickness=".25" Background="{TemplateBinding Background}" >
                         <Grid Margin="10,0" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}">
                             <DockPanel HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center">
                                 <!--Pad image seperately since the Content already is padded-->
@@ -95,7 +95,7 @@
     <Style x:Key="RoundIconButton" TargetType="{x:Type controls:UC_RoundIconButton}">
         <Setter Property="Width" Value="45"/>
         <Setter Property="Height" Value="45"/>
-        <Setter Property="Foreground" Value="Blue"/>
+        <Setter Property="Foreground" Value="#004c8c"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Padding" Value="0"/>
         <Setter Property="IconPadding" Value="8"/>
@@ -103,7 +103,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:UC_RoundIconButton}">
-                    <Border x:Name="tiButtonBorder" CornerRadius="{TemplateBinding ButtonCornerRadius}" BorderBrush="Blue" BorderThickness="1" Background="{TemplateBinding Background}" >
+                    <Border x:Name="tiButtonBorder" CornerRadius="{TemplateBinding ButtonCornerRadius}" BorderBrush="#004c8c" BorderThickness="1" Background="{TemplateBinding Background}" >
                         <Grid>
                             <DockPanel HorizontalAlignment="Center" VerticalAlignment="Center" >
                                 <Border x:Name="imageBorder" Margin="{TemplateBinding IconPadding}" >
@@ -141,7 +141,7 @@
     <Style x:Key="IconButton" TargetType="{x:Type controls:UC_RoundIconButton}">
         <Setter Property="Width" Value="15"/>
         <Setter Property="Height" Value="15"/>
-        <Setter Property="Foreground" Value="Blue"/>
+        <Setter Property="Foreground" Value="#004c8c"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Padding" Value="0"/>
         <Setter Property="IconPadding" Value="2"/>
@@ -190,7 +190,7 @@
 
     <!--<ControlTemplate x:Key="CustomToggleButton" TargetType="ToggleButton">
         --><!-- No idea what this is about --><!--
-        <Grid Background="Blue" Margin="50">
+        <Grid Background="#004c8c" Margin="50">
             <Border Name="Border" BorderThickness="10" BorderBrush="Brown" />
             <Border Name="SmallBorder" BorderThickness="10" BorderBrush="Green" />
             --><!--<Path Name="Arrow" Width="40" Data="M0,0 L0,2 L4,6 L8,2 L8,0 L4,4 z"  Fill="Yellow" />--><!--
