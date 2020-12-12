@@ -74,11 +74,6 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
-        private void btnView_Click(object sender, RoutedEventArgs e) {
-            this.OpenViewer(ScriptEdit.UseType.View);
-        }
-
-
         private void btnEdit_Click(object sender, RoutedEventArgs e) {
             this.OpenViewer(ScriptEdit.UseType.Edit);
         }

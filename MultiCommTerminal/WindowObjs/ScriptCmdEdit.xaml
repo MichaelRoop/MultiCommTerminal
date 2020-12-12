@@ -10,11 +10,11 @@
         Style="{StaticResource MyWindowStyle}"
         Title="{Binding Source={x:Static wpfHelper:TxtBinder.Commands}}" 
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.Command_W}}"
-        WindowStartupLocation="Manual" MinHeight="50" MinWidth="150"
+        WindowStartupLocation="Manual" MinHeight="50" MinWidth="150" BorderThickness=".25"
         Loaded="Window_Loaded" Closing="Window_Closing"
         >
     <Grid HorizontalAlignment="Stretch">
-        <Border BorderBrush="Blue" BorderThickness="1">
+        <Border BorderBrush="Blue" BorderThickness=".25">
             <StackPanel>
                 <StackPanel Grid.ColumnSpan="2" HorizontalAlignment="Center">
                     <Grid Margin="10">
@@ -27,7 +27,7 @@
                             <ColumnDefinition Width="auto" MinWidth="200" />
                         </Grid.ColumnDefinitions>
                         <Label Grid.Row="0" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Name}}" HorizontalAlignment="Right" VerticalAlignment="Center" />
-                        <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtName" VerticalContentAlignment="Center" Margin="2" />
+                        <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtName" VerticalContentAlignment="Center" Margin="2"  />
                         <Label Grid.Row="1" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Commands}}" HorizontalAlignment="Right" VerticalAlignment="Center" />
                         <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtCommand" VerticalContentAlignment="Center" Margin="2" />
                     </Grid>

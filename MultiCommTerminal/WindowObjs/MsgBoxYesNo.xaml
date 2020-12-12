@@ -9,7 +9,7 @@
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.WPF_Helpers"
         Style="{StaticResource MyWindowStyle}" Title="" 
         WindowStartupLocation="CenterScreen" ContentRendered="Window_ContentRendered" Closing="Window_Closing"
-        MinHeight="100" MinWidth="200" MaxHeight="500" MaxWidth="400">
+        MinHeight="100" MinWidth="200" MaxHeight="500" MaxWidth="400" BorderThickness=".25">
     <Grid>
         <StackPanel>
             <TextBlock x:Name="txtBlock" HorizontalAlignment="Left" FontSize="16" Text="sldfkjsdklfjsldkf" MaxHeight="450" TextWrapping="WrapWithOverflow" Margin="15,15,15,0" />

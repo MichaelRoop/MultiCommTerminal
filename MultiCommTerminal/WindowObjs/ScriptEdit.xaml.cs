@@ -87,15 +87,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         }
 
 
-        private void btnView_Click(object sender, RoutedEventArgs e) {
-            ScriptItem item = this.lbxCmds.SelectedItem as ScriptItem;
-            if (item != null) {
-                ScriptCmdEdit win = new ScriptCmdEdit(this, item, true);
-                win.ShowDialog();
-            }
-        }
-
-
         private void btnEdit_Click(object sender, RoutedEventArgs e) {
             ScriptItem item = this.lbxCmds.SelectedItem as ScriptItem;
             if (item != null) {

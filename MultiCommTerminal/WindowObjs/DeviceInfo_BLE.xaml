@@ -12,12 +12,12 @@
         WindowStartupLocation="Manual" 
         Title="Bluetooth BLE" 
         Style="{StaticResource MyWindowStyle}"
-        MinHeight="150" MinWidth="250"
+        MinHeight="150" MinWidth="250" BorderThickness=".25"
         mc:Ignorable="d"
         Loaded="Window_Loaded" Closing="Window_Closing" >
     <Grid>
         <StackPanel>
-            <Border x:Name="borderCharacteristicSelect">
+            <Border x:Name="borderCharacteristicSelect" BorderThickness=".25">
                 <StackPanel HorizontalAlignment="Center">
                     <ListBox x:Name="listboxMain" MaxHeight="500" MinWidth="600" MinHeight="50" Margin="5" FontSize="16" Grid.IsSharedSizeScope="True"
                      ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" >

@@ -11,7 +11,7 @@
         WindowStartupLocation="Manual" 
         Title="{Binding Source={x:Static wpfHelper:TxtBinder.Services}}" 
         Style="{StaticResource MyWindowStyle}"
-        MinHeight="150" MinWidth="200"
+        MinHeight="150" MinWidth="200" BorderThickness=".25"
         mc:Ignorable="d"        
         Loaded="Window_Loaded"
         >

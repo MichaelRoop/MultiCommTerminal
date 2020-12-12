@@ -12,7 +12,7 @@
         Title="{Binding Source={x:Static wpfHelper:TxtBinder.Properties}}" 
         WindowStartupLocation="Manual" 
         Style="{StaticResource MyWindowStyle}"
-        MinHeight="150" MinWidth="250"
+        MinHeight="150" MinWidth="250" BorderThickness=".25"
         mc:Ignorable="d"
         Loaded="Window_Loaded">
     <Grid>

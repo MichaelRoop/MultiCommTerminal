@@ -10,7 +10,7 @@
 
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.HelpWhite}}"
         Style="{StaticResource MyWindowStyle}"
-        MinHeight="150" MinWidth="250"
+        MinHeight="150" MinWidth="250" BorderThickness=".25"
         WindowStartupLocation="Manual" 
         Title="{Binding Source={x:Static wpfHelper:TxtBinder.Info}}" 
         mc:Ignorable="d"
@@ -40,8 +40,8 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
                 <StackPanel x:Name="spView" VerticalAlignment="Center">
-                    <controls:UC_RoundIconButton x:Name="btnCode" Margin="5" Width="35" Height="35"
-                            Style="{StaticResource RoundIconButton}" 
+                    <controls:UC_RoundIconButton x:Name="btnCode" Margin="5" Width="40" Height="40"
+                            Style="{StaticResource IconButton}" 
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.View}}"
                             Click="btnCode_Click"/>
                 </StackPanel>

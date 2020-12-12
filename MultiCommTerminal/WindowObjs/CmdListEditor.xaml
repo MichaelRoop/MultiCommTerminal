@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Style="{StaticResource MyWindowStyle}"
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.Language_W}}"
-        Title="{Binding Source={x:Static wpfHelper:TxtBinder.Commands}}" Height="450" Width="800">
+        Title="{Binding Source={x:Static wpfHelper:TxtBinder.Commands}}" Height="450" Width="800" BorderThickness=".25">
     <!-- Template title bar text and icon bound the Window Title and Icon -->
     <Grid>
         <StackPanel Margin="10,0">

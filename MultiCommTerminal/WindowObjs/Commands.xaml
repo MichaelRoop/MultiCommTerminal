@@ -10,14 +10,14 @@
         Style="{StaticResource MyWindowStyle}"
         Title="{Binding Source={x:Static wpfHelper:TxtBinder.Commands}}" 
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.Command_W}}"
-        WindowStartupLocation="Manual" MinHeight="150" MinWidth="150"
+        WindowStartupLocation="Manual" MinHeight="150" MinWidth="150" BorderThickness=".25"
         Loaded="Window_Loaded" Closing="Window_Closing">
     <Grid HorizontalAlignment="Stretch">
-        <Border BorderBrush="Blue" BorderThickness="1">
+        <Border BorderBrush="Blue" BorderThickness=".25">
             <StackPanel>
                 <StackPanel Grid.ColumnSpan="2">
                     <DockPanel>
-                    <ListBox x:Name="lbxCmds" Width="250" Height="200" Margin="10" FontSize="16" 
+                    <ListBox x:Name="lbxCmds" Width="250" Height="200" Margin="10" FontSize="16"
                      ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" >
                         <ListBox.ItemTemplate>
                             <DataTemplate>
@@ -31,25 +31,17 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
                         <StackPanel Margin="0,10,10,0" VerticalAlignment="Top">
-                            <controls:UC_RoundIconButton x:Name="btnAdd"  Style="{StaticResource RoundIconButton}" 
-                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Add}}"  Margin="0,0,0,5" VerticalAlignment="Top"
-                            Click="btnAdd_Click" />
-
+                            <controls:UC_RoundIconButton x:Name="btnAdd"  Style="{StaticResource IconButton}" Width="40" Height="40" 
+                                IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Add}}"  Margin="0,5" VerticalAlignment="Top"
+                                Click="btnAdd_Click" />
                             <StackPanel x:Name="spEditButtons" VerticalAlignment="Top">
-                                <controls:UC_RoundIconButton x:Name="btnView"  Style="{StaticResource RoundIconButton}" 
-                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.View}}"
-                            Click="btnView_Click" />
-
-                                <controls:UC_RoundIconButton x:Name="btnEdit"  Style="{StaticResource RoundIconButton}" 
-                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Edit}}"  Margin="0,5"
-                            Click="btnEdit_Click" />
-
-                                <controls:UC_RoundIconButton x:Name="btnDelete"  Style="{StaticResource RoundIconButton}" 
-                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Delete}}" 
-                            Click="btnDelete_Click" />
+                                <controls:UC_RoundIconButton x:Name="btnEdit" Width="35" Height="35" Style="{StaticResource IconButton}" 
+                                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Edit}}"  Margin="0,5"
+                                    Click="btnEdit_Click" />
+                                <controls:UC_RoundIconButton x:Name="btnDelete" Width="45" Height="45" Style="{StaticResource IconButton}"
+                                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Delete}}" Margin="0,5"
+                                    Click="btnDelete_Click" />
                             </StackPanel>
-
-
                         </StackPanel>
                     </DockPanel>
 

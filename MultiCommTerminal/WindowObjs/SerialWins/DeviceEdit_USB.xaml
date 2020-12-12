@@ -11,7 +11,7 @@
         Style="{StaticResource MyWindowStyle}" Title="" 
         WindowStartupLocation="Manual" 
         Loaded="Window_Loaded" Closing="Window_Closing"
-        MinHeight="100" MinWidth="200" MaxHeight="800" MaxWidth="900">
+        MinHeight="100" MinWidth="200" MaxHeight="800" MaxWidth="900" BorderThickness=".25">
     <Grid>
         <StackPanel>
             <Grid Margin="10">

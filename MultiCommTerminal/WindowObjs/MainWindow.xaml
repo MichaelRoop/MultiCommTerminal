@@ -8,7 +8,7 @@
         xmlns:controls="clr-namespace:MultiCommTerminal.UserControls"
         mc:Ignorable="d"
         Title="Multi Comm Terminal" WindowStyle="None" AllowsTransparency="True"
-         ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+         ResizeMode="NoResize" WindowStartupLocation="CenterScreen" BorderThickness="1"
         ContentRendered="Window_ContentRendered" Closing="Window_Closing"
         MouseDown="Window_MouseDown" >
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="grdMain">
@@ -45,9 +45,9 @@
                             <DockPanel HorizontalAlignment="Center" Margin="0,2,0,0">
                                 <Label x:Name="lbCommandListName" Content="Commands" VerticalAlignment="Center" MouseLeftButtonUp="lbCommandListName_MouseLeftButtonUp" />
                             </DockPanel>
-                            <Border BorderBrush="Blue" BorderThickness="1" Margin="10">
+                            <Border BorderBrush="Blue" BorderThickness=".5" Margin="10">
                                 <StackPanel>
-                                    <ListBox x:Name="outgoing" Height="250" FontSize="16" HorizontalAlignment="Stretch"
+                                    <ListBox x:Name="outgoing" Height="250" FontSize="16" HorizontalAlignment="Stretch" BorderThickness=".5"
                                          ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"
                                          SelectionChanged="outgoing_SelectionChanged">
 
@@ -76,9 +76,9 @@
                         </StackPanel>
                         <StackPanel x:Name="spResps" >
                             <Label x:Name="lbResponse" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Response}}" HorizontalAlignment="Center" />
-                            <Border BorderBrush="Blue" BorderThickness="1" Margin="10" VerticalAlignment="Stretch" >
+                            <Border BorderBrush="Blue" BorderThickness=".5" Margin="10" VerticalAlignment="Stretch" >
                                 <ListBox x:Name="lbIncoming" MinWidth="250" Height="303" FontSize="16" HorizontalAlignment="Stretch"  
-                                    ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                                    ScrollViewer.VerticalScrollBarVisibility="Auto" BorderThickness=".5"
                                     ScrollViewer.HorizontalScrollBarVisibility="Auto" />
                             </Border>
                         </StackPanel>
@@ -92,7 +92,7 @@
                                     <controls:UC_RoundIconButton x:Name="btnCommTypeHelp" Margin="0,0,5,0" Height="25" Width="25"
                                         Style="{StaticResource IconButton}" IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Help}}" 
                                         Click="btnCommTypeHelp_Click" />
-                                    <ComboBox x:Name="cbComm" Height="30" MinWidth="120" MaxHeight="90" VerticalAlignment="Top" Background="Transparent"
+                                    <ComboBox x:Name="cbComm" Height="30" MinWidth="120" MaxHeight="90" VerticalAlignment="Top"  BorderThickness=".5" Background="Transparent"
                                       SelectionChanged="cbComm_SelectionChanged">
                                         <ComboBox.ItemTemplate>
                                             <DataTemplate>
@@ -161,7 +161,7 @@
                                             Background="Transparent" Click="btnBTDisconnect_Click" />
                                 </StackPanel>
                                 <StackPanel Margin="10,0">
-                                    <ListBox x:Name="listBox_BT" MinHeight="60" MinWidth="200" MaxHeight="110" 
+                                    <ListBox x:Name="listBox_BT" MinHeight="60" MinWidth="200" MaxHeight="110" BorderThickness=".5"
                                              ScrollViewer.VerticalScrollBarVisibility="Auto" 
                                              ScrollViewer.HorizontalScrollBarVisibility="Auto">
                                         <ListBox.ItemTemplate>
@@ -228,7 +228,7 @@
                         <StackPanel x:Name="spUsb" VerticalAlignment="Center" Visibility="Visible">
                             <DockPanel>
                                 <StackPanel Margin="5">
-                                    <controls:UC_IconButton x:Name="btnSerialDiscover" Style="{StaticResource TextIconButton}"
+                                    <controls:UC_IconButton x:Name="btnSerialDiscover" Style="{StaticResource TextIconButton}" BorderThickness=".5"
                                                         HorizontalContentAlignment="Left"
                                                         Content="{Binding Source={x:Static wpfHelper:TxtBinder.Discover}}" Margin="0,2.5"
                                                         IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Search}}"                                                                                            
@@ -264,7 +264,7 @@
                                         <TextBlock Text="USB Product" HorizontalAlignment="Right" />
                                     </DockPanel>-->
 
-                                    <ListView x:Name="lbUsb" MinHeight="30" MinWidth="200" MaxHeight="115"  Margin="10,0"
+                                    <ListView x:Name="lbUsb" MinHeight="30" MinWidth="200" MaxHeight="115"  Margin="10,0" BorderThickness=".5"
                                              ScrollViewer.VerticalScrollBarVisibility="Auto" 
                                              ScrollViewer.HorizontalScrollBarVisibility="Auto">
 

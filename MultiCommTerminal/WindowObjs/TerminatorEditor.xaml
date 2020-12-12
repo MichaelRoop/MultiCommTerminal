@@ -10,11 +10,11 @@
         Style="{StaticResource MyWindowStyle}"
         Title="{Binding Source={x:Static wpfHelper:TxtBinder.Terminators}}" 
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.Terminator_W}}"
-        WindowStartupLocation="Manual" MinHeight="150" MinWidth="150" 
+        WindowStartupLocation="Manual" MinHeight="150" MinWidth="150" BorderThickness=".25"
         Loaded="Window_Loaded"
         >
     <Grid>
-        <StackPanel>
+        <StackPanel Margin="5">
             <DockPanel Margin="10">
                 <Label Content="{Binding Source={x:Static wpfHelper:TxtBinder.Name}}" Margin="0,0,0,0" HorizontalContentAlignment="Right" />
                 <Label Content=":" />
@@ -34,7 +34,7 @@
                 </TextBlock>
                 </Grid>
             </DockPanel>
-            <controls:UC_TerminatorEdit x:Name="tEditor"/>
+            <controls:UC_TerminatorEdit x:Name="tEditor" BorderThickness=".25"/>
             <DockPanel HorizontalAlignment="Center" Margin="10,5,10,15">
                 <controls:UC_IconButton x:Name="btnCancel"  Margin="0,0,10,0"
                             Style="{StaticResource TextIconButton}" 

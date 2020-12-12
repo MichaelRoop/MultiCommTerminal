@@ -12,7 +12,7 @@
         mc:Ignorable="d"
         Title="" 
         Style="{StaticResource MyWindowStyle}"
-        MinHeight="150" MinWidth="150"
+        MinHeight="150" MinWidth="150" BorderThickness=".25"
         Loaded="Window_Loaded" Closing="Window_Closing">
     <Grid>
         <StackPanel>

@@ -10,11 +10,11 @@
         Style="{StaticResource MyWindowStyle}"
         Title="{Binding Source={x:Static wpfHelper:TxtBinder.Language}}" 
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.Language_W}}"
-        MinHeight="150" MinWidth="100"
+        MinHeight="150" MinWidth="100" BorderThickness=".25"
         Loaded="Window_Loaded" Closing="Window_Closing"
         >
     <Grid HorizontalAlignment="Stretch">
-        <Border BorderBrush="Blue" BorderThickness="1">
+        <Border BorderBrush="Blue" BorderThickness=".25">
             <StackPanel>
                 <!--<StackPanel Grid.ColumnSpan="2">-->
                     <ListBox x:Name="lbxLanguages" MinWidth="250" MinHeight="200" FontSize="16"

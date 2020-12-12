@@ -11,7 +11,7 @@
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.AboutWhite}}"
         WindowStartupLocation="Manual" 
         mc:Ignorable="d"
-        MinHeight="150" MinWidth="200"
+        MinHeight="150" MinWidth="200" BorderThickness=".25"
         Loaded="Window_Loaded"
         >
     <Grid>

@@ -10,7 +10,7 @@
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.USBPort_W}}"
         WindowStartupLocation="Manual" 
         mc:Ignorable="d"
-        MinHeight="150" MinWidth="200"
+        MinHeight="150" MinWidth="200" BorderThickness=".25"
         Loaded="Window_Loaded" Closing="Window_Closing"
         Title="DeviceInfo_USB">
     <Grid>
@@ -35,8 +35,8 @@
                 </ListBox.ItemTemplate>
             </ListBox>
                 <controls:UC_RoundIconButton x:Name="btnEdit"  
-                            Style="{StaticResource RoundIconButton}" 
-                            Margin="5,0" VerticalAlignment="Center"
+                            Style="{StaticResource IconButton}" 
+                            Margin="5,0" VerticalAlignment="Center"  Width="35" Height="35"
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Edit}}"  
                             Click="btnEdit_Click" />
 

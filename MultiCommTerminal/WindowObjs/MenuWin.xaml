@@ -8,7 +8,7 @@
         mc:Ignorable="d" WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True"
         Title="MenuWin" >
     <Grid>
-        <Border BorderBrush="Blue" BorderThickness="0.5" >
+        <Border BorderBrush="Blue" BorderThickness="0.25" >
             <!-- Hack the upper margin to hide the top most separator -->
             <ListView x:Name="lbxMenuItems" MinHeight="10" MinWidth="10" Margin="0,-4.5,0,0" Padding="0" FontSize="16">
                 <ListView.ItemContainerStyle>

@@ -10,7 +10,7 @@
         Style="{StaticResource MyWindowStyle}"
         Title="{Binding Source={x:Static wpfHelper:TxtBinder.Select}}" 
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.USBPort_W}}"
-        WindowStartupLocation="Manual" MinHeight="150" MinWidth="150" 
+        WindowStartupLocation="Manual" MinHeight="150" MinWidth="150" BorderThickness=".25" 
         Loaded="Window_Loaded" Closing="Window_Closing">
     <Grid>
         <StackPanel>
@@ -48,11 +48,11 @@
                 </ListView>
                 <StackPanel Margin="0,10,10,0" VerticalAlignment="Center">
                     <StackPanel x:Name="spEditButtons" VerticalAlignment="Top">
-                        <controls:UC_RoundIconButton x:Name="btnEdit"  Style="{StaticResource RoundIconButton}" 
-                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Edit}}"  Margin="0,5"
+                        <controls:UC_RoundIconButton x:Name="btnEdit"  Style="{StaticResource IconButton}" 
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Edit}}"  Margin="0,5"  Width="35" Height="35"
                             Click="btnEdit_Click" />
-                        <controls:UC_RoundIconButton x:Name="btnDelete"  Style="{StaticResource RoundIconButton}" 
-                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Delete}}" 
+                        <controls:UC_RoundIconButton x:Name="btnDelete"  Style="{StaticResource IconButton}" 
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Delete}}" Margin="0,5"  Width="45" Height="45"
                             Click="btnDelete_Click" />
                     </StackPanel>
                 </StackPanel>
