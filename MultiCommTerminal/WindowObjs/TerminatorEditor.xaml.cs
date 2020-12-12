@@ -21,6 +21,7 @@ namespace MultiCommTerminal.WindowObjs {
         Window parent = null;
         private ICommWrapper wrapper = null;
         IIndexItem<DefaultFileExtraInfo> index = null;
+        private ButtonGroupSizeSyncManager widthManager = null;
 
         #endregion
 
@@ -37,6 +38,9 @@ namespace MultiCommTerminal.WindowObjs {
             this.parent = parent;
             this.index = index; 
             InitializeComponent();
+            // Call before rendering which will trigger initial resize events
+            this.widthManager = new ButtonGroupSizeSyncManager(this.btnSave, this.btnCancel);
+            this.widthManager.PrepForChange();
             this.SizeToContent = SizeToContent.WidthAndHeight;
         }
 
@@ -68,9 +72,8 @@ namespace MultiCommTerminal.WindowObjs {
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             this.listBoxTerminators.SelectionChanged -= selectionChangedHandler;
-
+            this.widthManager.Teardown();
         }
-
 
 
         private void selectionChangedHandler(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {
