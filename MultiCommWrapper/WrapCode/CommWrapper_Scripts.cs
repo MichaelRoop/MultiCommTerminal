@@ -32,25 +32,35 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void SetCurrentScript(ScriptDataModel data, OnErr onError) {
-            this.GetSettings((settings) => {
-                settings.CurrentScript = data;
-                this.SaveSettings(settings, () => {
-                    if (this.CurrentScriptChanged != null) {
-                        this.CurrentScriptChanged(this, data);
-                    }
+            if (data == null) {
+                onError(this.GetText(MsgCode.SaveFailed));
+            }
+            else {
+                this.GetSettings((settings) => {
+                    settings.CurrentScript = data;
+                    this.SaveSettings(settings, () => {
+                        if (this.CurrentScriptChanged != null) {
+                            this.CurrentScriptChanged(this, data);
+                        }
+                    }, onError);
                 }, onError);
-            }, onError);
+            }
         }
 
 
         public void SetCurrentScript(IIndexItem<DefaultFileExtraInfo> index, Action onSuccess, OnErr onError) {
-            this.RetrieveScriptData(
-                index,
-                (data) => {
-                    this.SetCurrentScript(data, onError);
-                    onSuccess.Invoke();
-                },
-                onError);
+            if (index == null) {
+                onError(this.GetText(MsgCode.NothingSelected));
+            }
+            else {
+                this.RetrieveScriptData(
+                    index,
+                    (data) => {
+                        this.SetCurrentScript(data, onError);
+                        onSuccess.Invoke();
+                    },
+                    onError);
+            }
         }
 
         public void RetrieveScriptData(IIndexItem<DefaultFileExtraInfo> index, Action<ScriptDataModel> onSuccess, OnErr onError) {

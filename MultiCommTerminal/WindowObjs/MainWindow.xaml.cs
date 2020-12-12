@@ -1003,6 +1003,11 @@ namespace MultiCommTerminal.WindowObjs {
         }
 
 
+        private void lbCommandListName_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+            CommandsPopup.ShowBox(this);
+        }
+
+
         private void outgoing_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             this.outgoing.GetSelected<ScriptItem>((item) => {
                 this.cbComm.GetSelected<CommMedialDisplay>((media) => {
