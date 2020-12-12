@@ -1,10 +1,12 @@
-﻿using MultiCommData.Net.StorageDataModels;
+﻿using CommunicationStack.Net.Stacks;
+using MultiCommData.Net.StorageDataModels;
 using MultiCommTerminal.DependencyInjection;
 using MultiCommTerminal.WPF_Helpers;
 using MultiCommWrapper.Net.interfaces;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using WpfHelperClasses.Core;
 
@@ -56,12 +58,44 @@ namespace MultiCommTerminal.WindowObjs {
             }
 
             this.tEditor.OnSave += TEditor_OnSave;
+            DI.Wrapper.GetTerminatorEntitiesList(this.OnTerminatorLoadOk, App.ShowMsg);
+            this.listBoxTerminators.SelectionChanged += selectionChangedHandler;
+
+
             WPF_ControlHelpers.CenterChild(parent, this);
+        }
+
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+            this.listBoxTerminators.SelectionChanged -= selectionChangedHandler;
+
+        }
+
+
+
+        private void selectionChangedHandler(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {
+            this.listBoxTerminators.SelectionChanged -= selectionChangedHandler;
+            TerminatorInfo info = this.listBoxTerminators.SelectedItem as TerminatorInfo;
+            if (info != null) {
+                this.tEditor.AddNewTerminator(info);
+            }
+            this.listBoxTerminators.SelectedItem = null;
+            this.listBoxTerminators.SelectionChanged += selectionChangedHandler;
         }
 
         #endregion
 
         #region Button events
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e) {
+            this.tEditor.RemoveLastTerminator();
+        }
+
+
+        private void btnSave_Click(object sender, RoutedEventArgs e) {
+            this.tEditor.Save();
+        }
+
 
         private void TEditor_OnSave(object sender, TerminatorDataModel data) {
             if (this.index == null) {
@@ -105,6 +139,11 @@ namespace MultiCommTerminal.WindowObjs {
             this.txtBoxDisplay.Text = index.Display;
             dataModel.Name = index.Display;
             this.tEditor.InitialiseEditor(parent, dataModel);
+        }
+
+
+        private void OnTerminatorLoadOk(List<TerminatorInfo> terminatorEntities) {
+            this.listBoxTerminators.ItemsSource = terminatorEntities;
         }
 
         #endregion

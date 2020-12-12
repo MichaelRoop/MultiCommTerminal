@@ -5,11 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
             xmlns:wpfHelper="clr-namespace:MultiCommTerminal.WPF_Helpers"
              xmlns:local="clr-namespace:MultiCommTerminal.UserControls"
-             mc:Ignorable="d" BorderThickness="0"
+             mc:Ignorable="d" BorderThickness="0" MinWidth="200" MinHeight="50"
              >
-    <Grid MinWidth="200" MinHeight="105" Margin="5">
-        <StackPanel>
-            <Border BorderBrush="Blue" BorderThickness=".25" Padding="2">
+    <Grid  Margin="0">
+        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+            <Border BorderBrush="Blue" BorderThickness=".25" Padding="2" MinHeight="50">
                 <DockPanel HorizontalAlignment="Left"  Margin="0">
                     <StackPanel x:Name="sp1" Margin="0,0,2,0">
                         <StackPanel VerticalAlignment="Bottom">
@@ -63,18 +63,6 @@
                     </StackPanel>
                 </DockPanel>
             </Border>
-            <DockPanel HorizontalAlignment="Center">
-                <local:UC_RoundIconButton x:Name="btnAdd"  Style="{StaticResource IconButton}" Width="40" Height="40"
-                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Add}}"  Margin="5"
-                            Click="btnAdd_Click" />
-                <local:UC_RoundIconButton x:Name="btnDelete"  Style="{StaticResource IconButton}" Width="40" Height="40"
-                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Delete}}" Margin="5"
-                            Click="btnDelete_Click" />
-                <local:UC_IconButton x:Name="btnSave" Style="{StaticResource TextIconButton}" Margin="10,0,5,0"
-                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Save}}"
-                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Save}}"
-                            Click="btnSave_Click" />
-            </DockPanel>
         </StackPanel>
     </Grid>
 </UserControl>

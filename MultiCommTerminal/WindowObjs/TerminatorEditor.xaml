@@ -11,10 +11,31 @@
         Title="{Binding Source={x:Static wpfHelper:TxtBinder.Terminators}}" 
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.Terminator_W}}"
         WindowStartupLocation="Manual" MinHeight="150" MinWidth="150" BorderThickness=".25"
-        Loaded="Window_Loaded"
+        Loaded="Window_Loaded" Closing="Window_Closing"
         >
     <Grid>
         <StackPanel Margin="5">
+            <ListBox x:Name="listBoxTerminators" MinWidth="200" Height="250" Margin="10" FontSize="16" HorizontalAlignment="Stretch"
+                     ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="1" HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="35" />
+                                <ColumnDefinition Width="75"/>
+                                <ColumnDefinition Width="*" />
+                                <!-- TODO add columns and bindings -->
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Margin="0,0" Padding="0" HorizontalContentAlignment="Right" Content="{Binding Display}"  />
+                            <Label Grid.Column="1" Margin="15,0" Padding="0" HorizontalContentAlignment="Right" Content="{Binding HexDisplay}" />
+                            <Label Grid.Column="2" Margin="0,0"  Padding="0" HorizontalContentAlignment="Left" Content="{Binding Description}" />
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+
+
             <DockPanel Margin="10">
                 <Label Content="{Binding Source={x:Static wpfHelper:TxtBinder.Name}}" Margin="0,0,0,0" HorizontalContentAlignment="Right" />
                 <Label Content=":" />
@@ -34,13 +55,26 @@
                 </TextBlock>
                 </Grid>
             </DockPanel>
-            <controls:UC_TerminatorEdit x:Name="tEditor" BorderThickness=".25"/>
+            <DockPanel Margin="10">
+                <controls:UC_TerminatorEdit x:Name="tEditor" BorderThickness=".25" HorizontalAlignment="Center" />
+                <Label Content="&#x2b84;" VerticalAlignment="Center" FontSize="20" Margin="5,0,-5,0" HorizontalContentAlignment="Right"/>
+                <controls:UC_RoundIconButton x:Name="btnDelete"  Style="{StaticResource IconButton}" Width="40" Height="40"
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Delete}}" 
+                            Click="btnDelete_Click" HorizontalAlignment="Right" />
+            </DockPanel>
             <DockPanel HorizontalAlignment="Center" Margin="10,5,10,15">
                 <controls:UC_IconButton x:Name="btnCancel"  Margin="0,0,10,0"
                             Style="{StaticResource TextIconButton}" 
                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Cancel}}" 
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}"
                             Click="btnCancel_Click"/>
+                <controls:UC_IconButton x:Name="btnSave"  Margin="0,0,10,0"
+                            Style="{StaticResource TextIconButton}" 
+                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Save}}" 
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Save}}"
+                            Click="btnSave_Click"/>
+
+
             </DockPanel>
         </StackPanel>
     </Grid>
