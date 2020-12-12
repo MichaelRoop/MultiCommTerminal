@@ -9,6 +9,8 @@ using LogUtils.Net;
 using MultiCommTerminal.XamarinForms.Droid.DependencyInjection;
 using MultiCommTerminal.XamarinForms.Droid.PermissionsObjects;
 using MultiCommTerminal.XamarinForms.interfaces;
+using MultiCommWrapper.Net.interfaces;
+using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -98,7 +100,7 @@ namespace MultiCommTerminal.XamarinForms.Droid {
             long reg = sw.ElapsedMilliseconds;
 
             sw.Restart();
-            LoadApplication(new App(DI.Wrapper));
+            LoadApplication(new App(this.DiCreator));
             sw.Stop();
             long loadApp = sw.ElapsedMilliseconds;
 
@@ -166,6 +168,13 @@ namespace MultiCommTerminal.XamarinForms.Droid {
                 this.SetupDependencyInjection();
             });
         }
+
+        /// <summary>Function to pass to the App where it can fire up the DI in a thread</summary>
+        /// <returns>The DI CommWrapper instance</returns>
+        private ICommWrapper DiCreator() {
+            return DI.Wrapper;
+        }
+
 
         #endregion
 

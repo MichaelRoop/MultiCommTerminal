@@ -31,22 +31,21 @@ namespace MultiCommTerminal.XamarinForms {
 
         #region Constructor and overrides
 
-        public App(ICommWrapper wrapper) {
+        public App(Func<ICommWrapper> onGet) {
             InitializeComponent();
-            Wrapper = wrapper;
-            Wrapper.LanguageChanged += OnLanguageChanged;
-            Wrapper.CurrentTerminatorChanged += this.OnCurrentTerminatorChanged;
+            Task.Run(() => {
+                Wrapper = onGet();
+                Wrapper.LanguageChanged += OnLanguageChanged;
+                Wrapper.CurrentTerminatorChanged += this.OnCurrentTerminatorChanged;
+                Device.BeginInvokeOnMainThread(() => MainPage = new AppShell());
+            });
 
-            // TODO - remove this
-            DependencyService.Register<MockDataStore>();
-            MainPage = new AppShell();
         }
 
 
         protected override void OnStart() {
             // This will abort the app at the start if the WIFI permissions are not given
             //this.DoPermissionsCheck();
-
 
             //AppCenter.Start(
             //    "android=2bcd0252-b20d-4cb2-b47e-dd4d206579ce;",
