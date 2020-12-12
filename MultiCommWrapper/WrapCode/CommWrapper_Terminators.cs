@@ -96,13 +96,18 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void SetCurrentTerminators(IIndexItem<DefaultFileExtraInfo> index, Action onSuccess, OnErr onError) {
-            this.RetrieveTerminatorData(
-                index, 
-                (data) => {
-                    this.SetCurrentTerminators(data, onError);
-                    onSuccess.Invoke();
-                }, 
-                onError);
+            if (index == null) {
+                onError(this.GetText(MsgCode.NothingSelected));
+            }
+            else {
+                this.RetrieveTerminatorData(
+                    index,
+                    (data) => {
+                        this.SetCurrentTerminators(data, onError);
+                        onSuccess.Invoke();
+                    },
+                    onError);
+            }
         }
 
 

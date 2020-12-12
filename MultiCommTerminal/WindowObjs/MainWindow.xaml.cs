@@ -965,7 +965,7 @@ namespace MultiCommTerminal.WindowObjs {
 
         #region Private Terminators
         private void terminatorView_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e) {
-            TerminatorDataSelector.ShowBox(this);
+            TerminatorDataSelectorPopup.ShowBox(this);
         }
 
         #endregion
