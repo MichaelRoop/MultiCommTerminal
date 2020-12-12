@@ -1,6 +1,7 @@
 ﻿using DependencyInjectorFactory.Net.interfaces;
 using MultiCommWrapper.Net.DI;
 using MultiCommWrapper.Net.interfaces;
+using MultiCommWrapper.Net.WrapCode;
 
 namespace MultiCommTerminal.DependencyInjection {
 
@@ -10,6 +11,7 @@ namespace MultiCommTerminal.DependencyInjection {
         #region Data
 
         private static IObjContainer container = null;
+        private static ICommWrapper wrapper = null;
 
         #endregion
 
@@ -29,7 +31,10 @@ namespace MultiCommTerminal.DependencyInjection {
         /// <returns>The multi comm code wrapper</returns>
         public static ICommWrapper Wrapper {
             get {
-                return DI.GetContainer().GetObjSingleton<ICommWrapper>();
+                if (DI.wrapper == null) {
+                    DI.wrapper = new CommWrapper(DI.GetContainer());
+                }
+                return DI.wrapper;
             }
         }
 

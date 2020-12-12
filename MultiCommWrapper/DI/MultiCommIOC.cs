@@ -1,20 +1,13 @@
-﻿using BluetoothCommon.Net.interfaces;
-using BluetoothLE.Net.interfaces;
-using CommunicationStack.Net.interfaces;
+﻿using CommunicationStack.Net.interfaces;
 using CommunicationStack.Net.Stacks;
 using DependencyInjectorFactory.Net;
-using Ethernet.Common.Net.interfaces;
-using IconFactory.Net.interfaces;
 using LanguageFactory.Net.interfaces;
 using LanguageFactory.Net.Messaging;
 using MultiCommWrapper.Net.Factories;
 using MultiCommWrapper.Net.interfaces;
-using MultiCommWrapper.Net.WrapCode;
-using SerialCommon.Net.interfaces;
 using StorageFactory.Net.interfaces;
 using System;
 using System.Collections.Generic;
-using WifiCommon.Net.interfaces;
 
 namespace MultiCommWrapper.Net.DI {
 
@@ -36,24 +29,6 @@ namespace MultiCommWrapper.Net.DI {
                 typeof(IStorageManagerFactory), 
                 new ObjSingletonCreator(() => 
                 new MultiCommTerminalStorageFactory(this.GetObjSingleton<IStorageManagerSet>())));
-
-            singletonCreators.Add(
-                typeof(ICommWrapper),
-                    new ObjSingletonCreator(() =>
-                        new CommWrapper(
-                            this.GetObjSingleton<IStorageManagerFactory>(),
-                            this.GetObjSingleton<ILangFactory>(),
-                            this.GetObjSingleton<IIconFactory>(),
-                            this.GetObjSingleton<IBTInterface>(),
-                            this.GetObjInstance<ICommStackLevel0>(),
-                            this.GetObjSingleton<IBLETInterface>(),
-                            this.GetObjInstance<ICommStackLevel0>(),
-                            this.GetObjSingleton<IWifiInterface>(),
-                            this.GetObjInstance<ICommStackLevel0>(),
-                            this.GetObjSingleton<ISerialInterface>(),
-                            this.GetObjInstance<ICommStackLevel0>(),
-                            this.GetObjSingleton<IEthernetInterface>(),
-                            this.GetObjInstance<ICommStackLevel0>())));
 
         }
     }
