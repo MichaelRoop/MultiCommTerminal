@@ -285,8 +285,4 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="WindowObjs\BTWins\" />
-  </ItemGroup>
-
 </Project>
