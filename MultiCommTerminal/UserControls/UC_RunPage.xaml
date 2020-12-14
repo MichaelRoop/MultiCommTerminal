@@ -1,0 +1,135 @@
+﻿<UserControl x:Class="MultiCommTerminal.UserControls.UC_RunPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MultiCommTerminal.UserControls"
+             xmlns:controls="clr-namespace:MultiCommTerminal.UserControls"
+             xmlns:wpfHelper="clr-namespace:MultiCommTerminal.WPF_Helpers"
+             mc:Ignorable="d" Background="#fffffa"
+             >
+    <Grid>
+
+        <Grid x:Name="gridWait" Panel.ZIndex="10000" 
+              HorizontalAlignment="Stretch" 
+              VerticalAlignment="Stretch" Visibility="Collapsed" >
+            <Grid.Background>
+                <!--  Prevent any control from getting input during spinner visibility -->
+                <SolidColorBrush Color="AntiqueWhite" Opacity=".1"/>
+            </Grid.Background>
+            <!--Image spinner no longer showing-->
+            <!--<controls:UC_BusyImageSpinner />-->
+            <controls:UC_BusySpinner />
+        </Grid>
+        <StackPanel>
+            <DockPanel  VerticalAlignment="Center">
+                <StackPanel x:Name="spCmds" >
+                    <Border Style="{StaticResource brd075}" MouseLeftButtonUp="brdCommands_MouseLeftButtonUp"
+                            HorizontalAlignment="Center" CornerRadius="5" Height="40" Padding="5,0,5,0">
+                        <DockPanel HorizontalAlignment="Center" Margin="0,2,0,0">
+                            <Image Source="{Binding Source={x:Static wpfHelper:IconBinder.Command}}" Height="25" Width="25"
+                                   VerticalAlignment="Center"/>
+                            <Label Style="{StaticResource NameLabelCenter}" x:Name="lbCommandListName" Content="Commands" />
+                        </DockPanel>
+                    </Border>
+                    <Border Style="{StaticResource brd075}" Padding="0" >
+                        <StackPanel>
+                            <ListBox x:Name="outgoing" Height="300" Width="250" FontSize="16" HorizontalAlignment="Stretch" BorderThickness=".5"
+                                         ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                         SelectionChanged="outgoing_SelectionChanged">
+
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding Display}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+                <StackPanel x:Name="spResps" >
+                    <Border Style="{StaticResource brd075}" MouseLeftButtonUp="brdResponse_MouseLeftButtonUp"
+                            HorizontalAlignment="Center" CornerRadius="5" Height="40" Padding="5,0,5,0" >
+                        <DockPanel>
+                            <Image Source="{Binding Source={x:Static wpfHelper:IconBinder.Delete}}" Height="25" Width="25"
+                                   VerticalAlignment="Center"/>
+                            <Label x:Name="lbResponse" Style="{StaticResource NameLabelCenter}" 
+                                   Content="{Binding Source={x:Static wpfHelper:TxtBinder.Response}}" />
+                        </DockPanel>
+                    </Border>
+                    <Border Style="{StaticResource brd075}" Padding="0" >
+                        <ListBox x:Name="lbIncoming" Width="250" Height="300" FontSize="16"  
+                                    ScrollViewer.VerticalScrollBarVisibility="Auto" BorderThickness=".75"
+                                    ScrollViewer.HorizontalScrollBarVisibility="Auto" />
+                    </Border>
+                </StackPanel>
+            </DockPanel>
+
+            <Border Style="{StaticResource brd075}">
+                <DockPanel >
+                    <controls:UC_IconButton x:Name="btnSend" Style="{StaticResource TextIconButton}" Visibility="Visible"
+                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Send}}" 
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Send}}"                                                                                            
+                            Background="Transparent" Click="btnSend_Click" />
+                    <TextBox x:Name="txtCommmand" Text="ExampleCmd" Style="{Binding Source={StaticResource TxtBoxRight}}" Margin="10,0" HorizontalAlignment="Stretch" />
+                </DockPanel>
+            </Border>
+
+            <Border Style="{StaticResource brd075}" HorizontalAlignment="Stretch" Padding="0" Margin="0">
+                <DockPanel VerticalAlignment="Center" Margin="0,5">
+                    <Border Style="{StaticResource brd075}" MouseLeftButtonUp="terminatorView_MouseLeftButtonUp">
+                        <controls:UC_TerminatorViewer x:Name="terminatorView" />
+                    </Border>
+                    <StackPanel VerticalAlignment="Center">
+                        <DockPanel Margin="5" VerticalAlignment="Center">
+                            <StackPanel></StackPanel>
+                            <StackPanel>
+                                <controls:UC_IconButton x:Name="btnBTDiscover" Style="{StaticResource TextIconButton}"
+                                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.Discover}}" Margin="0"
+                                        IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Search}}"                                                                                            
+                                        Background="Transparent" Click="btnBTDiscover_Click" HorizontalAlignment="Right" />
+                                <DockPanel>
+                                    <Border x:Name="connectedOn" Style="{StaticResource brd075}" Padding="0" Height="15" Width="15" CornerRadius="7"
+                                            Background="Lime" BorderThickness="2" Margin="5,0" Visibility="Collapsed" />
+                                    <Border x:Name="connectedOff" Style="{StaticResource brd075}" Padding="0" Height="15" Width="15" CornerRadius="7"
+                                            Background="LightGray" BorderThickness="2" Margin="5,0" />
+                                    <controls:UC_IconButton x:Name="btnConnect" Style="{StaticResource TextIconButton}" 
+                                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.Connect}}" Margin="0,5"
+                                        IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Connect}}"                                                                                            
+                                        Background="Transparent" Click="btnConnect_Click" />
+                                </DockPanel>
+                                <controls:UC_IconButton x:Name="btnDisconnect" Style="{StaticResource TextIconButton}"
+                                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Disconnect}}" HorizontalAlignment="Right"
+                                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}"                                                                                            
+                                    Background="Transparent" Click="btnDisconnect_Click" />
+
+                            </StackPanel>
+                            <StackPanel VerticalAlignment="Bottom">
+                                <controls:UC_IconButton x:Name="btnLog" Click="btnLog_Click" MinWidth="100" 
+                                    Style="{StaticResource TextIconButton}" Margin="5"
+                                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.LogText}}"
+                                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.LogIcon}}"/>
+
+                                <!-- Need to override the Icons margin because the Exit is smaller within PNG file -->
+                                <controls:UC_IconButton x:Name="btnExit" Click="btnExit_Click" MinWidth="100" IconMargin="7"
+                                    Style="{StaticResource TextIconButton}"  Margin="5,0"
+                                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Exit}}"
+                                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Exit}}"/>
+
+                            </StackPanel>
+                        </DockPanel>
+                    </StackPanel>
+                </DockPanel>
+            </Border>
+            <ListBox x:Name="lbLog" Height="200" Visibility="Visible" 
+                         ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                         ScrollViewer.HorizontalScrollBarVisibility="Auto" MaxWidth="700" />
+        </StackPanel>   
+    </Grid>
+</UserControl>
