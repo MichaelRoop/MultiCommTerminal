@@ -83,7 +83,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
             this.Dispatcher.Invoke(() => {
                 this.ui.SetBusy(false);
                 if (e.Code == MsgPumpResultCode.Connected) {
-                    this.ui.SetConnectLight(true);
+                    this.ui.SetConnected();
                 }
                 else {
                     App.ShowMsg(string.Format("{0} '{1}", e.Code, e.ErrorString));
@@ -108,7 +108,11 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         }
 
         private void OnUiDiscover(object sender, EventArgs e) {
+            this.Title = "WIFI";
             this.selectedWifi = WifiSelect.ShowBox(this);
+            if (this.selectedWifi != null) {
+                this.Title = this.selectedWifi.SSID;
+            }
         }
 
 

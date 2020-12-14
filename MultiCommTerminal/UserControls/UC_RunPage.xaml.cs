@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using WifiCommon.Net.DataModels;
 using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.NetCore.UserControls {
@@ -104,40 +105,10 @@ namespace MultiCommTerminal.NetCore.UserControls {
         }
 
 
-        public void SetConnectLight(bool isOn) {
-            this.Dispatcher.Invoke(() => {
-                if (isOn) {
-                }
-                else {
-                    this.connectedOn.Collapse();
-                    this.connectedOff.Show();
-                }
-            });
+        public void SetConnected() {
+            this.SetBusy(false);
+            this.SetConnectState(true);
         }
-
-
-
-
-
-
-        //    {
-        //    get {
-        //        this.Dispatcher.Invoke(() => {
-        //            return this.gridWait.Visibility == Visibility.Visible;
-        //        });
-        //    }
-        //    set {
-        //        this.Dispatcher.Invoke(() => {
-        //            if (value) {
-        //                this.gridWait.Show();
-        //            }
-        //            else {
-        //                this.gridWait.Collapse();
-        //            }
-        //        });
-        //    }
-        //}
-
 
 
         #region Button events
@@ -150,18 +121,19 @@ namespace MultiCommTerminal.NetCore.UserControls {
 
 
         private void btnBTDiscover_Click(object sender, RoutedEventArgs e) {
-            this.ClearResponses();
+            this.DisconnectClicked(this, null);
             this.DiscoverClicked?.Invoke(this, new EventArgs());
         }
 
 
         private void btnConnect_Click(object sender, RoutedEventArgs e) {
+            this.SetConnectState(false);
             this.ConnectCicked?.Invoke(this, new EventArgs());
         }
 
 
         private void btnDisconnect_Click(object sender, RoutedEventArgs e) {
-            this.SetConnectLight(false);
+            this.SetConnectState(false);
             this.DisconnectClicked?.Invoke(this, new EventArgs());
         }
 
@@ -255,6 +227,20 @@ namespace MultiCommTerminal.NetCore.UserControls {
 
         #endregion
 
+
+        private void SetConnectState(bool isConnected) {
+            this.Dispatcher.Invoke(() => {
+                if (isConnected) {
+                    this.connectedOff.Collapse();
+                    this.connectedOn.Show();
+                }
+                else {
+                    this.ClearResponses();
+                    this.connectedOn.Collapse();
+                    this.connectedOff.Show();
+                }
+            });
+        }
 
 
         private void ClearResponses() {
