@@ -23,7 +23,7 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
         /// <remarks>Call in the overriden OnApplyTemplate function</remarks>
         /// <param name="win">The window calling this function</param>
         public static void BindMouseDownToCustomTitleBar(this Window win) {
-            Border b = win.Template.FindName("PART_topBar", win) as Border;
+            Border b = win.Template.FindName("brdTitle", win) as Border;
             if (b != null) {
                 b.MouseDown += (sender, args) => {
                     WrapErr.ToErrReport(9999, "Drag when mouse not down", () => {
