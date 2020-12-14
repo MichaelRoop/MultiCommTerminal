@@ -43,7 +43,8 @@
                     <DockPanel  VerticalAlignment="Center">
                         <StackPanel x:Name="spCmds" VerticalAlignment="Center">
                             <DockPanel HorizontalAlignment="Center" Margin="0,2,0,0">
-                                <Label x:Name="lbCommandListName" Content="Commands" VerticalAlignment="Center" MouseLeftButtonUp="lbCommandListName_MouseLeftButtonUp" />
+                                <TextBlock x:Name="lbCommandListName" VerticalAlignment="Center" MaxWidth="200" TextTrimming="CharacterEllipsis"
+                                           Text="Commands" MouseLeftButtonUp="lbCommandListName_MouseLeftButtonUp" />
                             </DockPanel>
                             <Border BorderBrush="Blue" BorderThickness=".5" Margin="10">
                                 <StackPanel>

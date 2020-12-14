@@ -63,6 +63,7 @@
     <None Remove="images\icons\icons8-usb-2-50-white.png" />
     <None Remove="images\icons\icons8-usb-2-50.png" />
     <None Remove="images\icons\icons8-wi-fi-32.png" />
+    <None Remove="images\icons\icons8_wifi_white.png" />
     <None Remove="images\icons\language-white.png" />
     <None Remove="images\icons\language.png" />
     <None Remove="images\icons\view.png" />
@@ -241,6 +242,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="images\icons\icons8-wi-fi-32.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8_wifi_white.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="images\icons\language-white.png">

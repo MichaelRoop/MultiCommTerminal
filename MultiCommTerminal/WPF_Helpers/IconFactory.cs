@@ -35,17 +35,19 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
                 case UIIcon.Search:
                     return new IconDataModel(UIIcon.Search, this.AddDir("icons8-search-50.png"), "6");
                 case UIIcon.Wifi:
-                    return new IconDataModel(UIIcon.Search, this.AddDir("icons8-wi-fi-32.png"), "6");
+                    return new IconDataModel(UIIcon.Wifi, this.AddDir("icons8-wi-fi-32.png"), "6");
+                case UIIcon.WifiWhite:
+                    return new IconDataModel(UIIcon.WifiWhite, this.AddDir("icons8_wifi_white.png"), "6");
                 case UIIcon.BluetoothClassic:
-                    return new IconDataModel(UIIcon.Search, this.AddDir("icons8-bluetooth-50.png"), "6");
+                    return new IconDataModel(UIIcon.BluetoothClassic, this.AddDir("icons8-bluetooth-50.png"), "6");
                 case UIIcon.BluetoothClassicWhite:
-                    return new IconDataModel(UIIcon.Search, this.AddDir("icons8-bluetooth-white-50.png"), "6");
+                    return new IconDataModel(UIIcon.BluetoothClassicWhite, this.AddDir("icons8-bluetooth-white-50.png"), "6");
                 case UIIcon.BluetoothLE:
-                    return new IconDataModel(UIIcon.Search, this.AddDir("icons8-bluetooth-50.png"), "6");
+                    return new IconDataModel(UIIcon.BluetoothLE, this.AddDir("icons8-bluetooth-50.png"), "6");
                 case UIIcon.BluetoothLEWhite:
-                    return new IconDataModel(UIIcon.Search, this.AddDir("icons8-bluetooth-white-50.png"), "6");
+                    return new IconDataModel(UIIcon.BluetoothLEWhite, this.AddDir("icons8-bluetooth-white-50.png"), "6");
                 case UIIcon.Ethernet:
-                    return new IconDataModel(UIIcon.Search, this.AddDir("icons8-ethernet-on-50.png"), "6");
+                    return new IconDataModel(UIIcon.Ethernet, this.AddDir("icons8-ethernet-on-50.png"), "6");
                 case UIIcon.Usb:
                     return new IconDataModel(UIIcon.Usb, this.AddDir("icons8-usb-2-50.png"), "6");
                 case UIIcon.UsbWhite:

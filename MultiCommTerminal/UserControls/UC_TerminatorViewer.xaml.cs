@@ -52,10 +52,10 @@ namespace MultiCommTerminal.NetCore.UserControls {
         public void Initialise(TerminatorDataModel data) {
             if (data.Name.Length > 0) {
                 this.hasName = true;
-                this.lblTerminators.Content = data.Name;
+                this.lblTerminators.Text = data.Name;
             }
             else {
-                this.lblTerminators.Content = this.wrapper.GetText(MsgCode.Terminators);
+                this.lblTerminators.Text = this.wrapper.GetText(MsgCode.Terminators);
             }
 
             // Blank out any existing info
@@ -82,7 +82,7 @@ namespace MultiCommTerminal.NetCore.UserControls {
 
         private void Wrapper_LanguageChanged(object sender, LanguageFactory.Net.Messaging.SupportedLanguage e) {
             if (!this.hasName) {
-                this.lblTerminators.Content = TxtBinder.Terminators;
+                this.lblTerminators.Text = TxtBinder.Terminators;
             }
         }
 

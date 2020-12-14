@@ -201,7 +201,7 @@ namespace MultiCommTerminal.NetCore.UserControls {
         private void PopulateScriptData(ScriptDataModel dataModel) {
             this.outgoing.Clear(this.scriptItems);
             this.outgoing.Add(this.scriptItems, dataModel.Items);
-            this.lbCommandListName.Content = dataModel.Display;
+            this.lbCommandListName.Text = dataModel.Display;
             this.txtCommmand.Text = "";
         }
 

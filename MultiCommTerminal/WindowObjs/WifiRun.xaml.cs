@@ -35,7 +35,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         /// <summary>Connect the style mouse grab on title bar</summary>
         public override void OnApplyTemplate() {
             this.BindMouseDownToCustomTitleBar();
-            this.HideTitleBarIcon();
             base.OnApplyTemplate();
         }
 
