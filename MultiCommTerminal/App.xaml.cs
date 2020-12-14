@@ -7,15 +7,15 @@ using log4net.Core;
 using log4net.Layout;
 using log4net.Repository.Hierarchy;
 using LogUtils.Net;
-using MultiCommTerminal.DependencyInjection;
-using MultiCommTerminal.WPF_Helpers;
+using MultiCommTerminal.NetCore.DependencyInjection;
+using MultiCommTerminal.NetCore.WPF_Helpers;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Windows;
 
-namespace MultiCommTerminal {
+namespace MultiCommTerminal.NetCore {
 
     /// <summary>Interaction logic for App.xaml</summary>
     public partial class App : Application {

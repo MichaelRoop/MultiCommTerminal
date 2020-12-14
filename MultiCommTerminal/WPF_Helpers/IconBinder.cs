@@ -2,11 +2,11 @@
 using IconFactory.Net.interfaces;
 using MultiCommData.Net.UserDisplayData;
 using MultiCommData.UserDisplayData.Net;
-using MultiCommTerminal.DependencyInjection;
+using MultiCommTerminal.NetCore.DependencyInjection;
 using System;
 using System.Windows.Media.Imaging;
 
-namespace MultiCommTerminal.WPF_Helpers {
+namespace MultiCommTerminal.NetCore.WPF_Helpers {
 
     /// <summary>Provide static functions that XAML can use to bind Image source to Image</summary>
     /// <example>

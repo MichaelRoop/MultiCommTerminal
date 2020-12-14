@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace MultiCommTerminal.UserControls {
+namespace MultiCommTerminal.NetCore.UserControls {
 
     /// <summary>Spin a spinner image for wait indicator</summary>
     /// <remarks>

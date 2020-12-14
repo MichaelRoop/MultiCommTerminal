@@ -1,5 +1,5 @@
 ﻿using MultiCommData.Net.StorageDataModels;
-using MultiCommTerminal.WPF_Helpers;
+using MultiCommTerminal.NetCore.WPF_Helpers;
 using System;
 using System.Windows;
 using WpfHelperClasses.Core;

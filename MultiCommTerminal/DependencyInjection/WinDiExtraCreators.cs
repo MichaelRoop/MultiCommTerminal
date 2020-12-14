@@ -7,7 +7,6 @@ using DependencyInjectorFactory.Net.interfaces;
 using Ethernet.Common.Net.interfaces;
 using Ethernet.UWP.Core;
 using IconFactory.Net.interfaces;
-using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommWrapper.Net.interfaces;
 using Serial.UWP.Core;
 using SerialCommon.Net.interfaces;
@@ -16,7 +15,7 @@ using System.Collections.Generic;
 using Wifi.UWP.Core;
 using WifiCommon.Net.interfaces;
 
-namespace MultiCommTerminal.DependencyInjection {
+namespace MultiCommTerminal.NetCore.DependencyInjection {
 
     public class WinDiExtraCreators : IObjExtraCreators {
         public Dictionary<Type, ObjCreator> InstanceCreators { get; } = new Dictionary<Type, ObjCreator>();
@@ -26,7 +25,7 @@ namespace MultiCommTerminal.DependencyInjection {
 
         public WinDiExtraCreators() {
             this.SingletonCreators.Add(
-                typeof(IIconFactory), new ObjSingletonCreator(() => new MultiCommTerminal.WPF_Helpers.IconFactory()));
+                typeof(IIconFactory), new ObjSingletonCreator(() => new MultiCommTerminal.NetCore.WPF_Helpers.IconFactory()));
 
             this.SingletonCreators.Add(
                 typeof(IBTInterface), new ObjSingletonCreator(() => new BluetoothRfCommUwpCore()));

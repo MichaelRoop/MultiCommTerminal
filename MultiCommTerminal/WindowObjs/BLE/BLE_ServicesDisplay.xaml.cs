@@ -1,5 +1,5 @@
 ﻿using BluetoothLE.Net.DataModels;
-using MultiCommTerminal.WPF_Helpers;
+using MultiCommTerminal.NetCore.WPF_Helpers;
 using System.Windows;
 using WpfHelperClasses.Core;
 

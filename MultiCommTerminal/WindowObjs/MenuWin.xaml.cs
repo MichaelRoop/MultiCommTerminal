@@ -4,18 +4,18 @@ using LanguageFactory.Net.interfaces;
 using LanguageFactory.Net.Messaging;
 using LogUtils.Net;
 using MultiCommData.UserDisplayData.Net;
-using MultiCommTerminal.DependencyInjection;
+using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WindowObjs;
 using MultiCommTerminal.NetCore.WindowObjs.EthernetWins;
 using MultiCommTerminal.NetCore.WindowObjs.SerialWins;
-using MultiCommTerminal.WPF_Helpers;
+using MultiCommTerminal.NetCore.WPF_Helpers;
 using MultiCommWrapper.Net.interfaces;
 using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace MultiCommTerminal.WindowObjs {
+namespace MultiCommTerminal.NetCore.WindowObjs {
 
     /// <summary>Interaction logic for MenuWin.xaml</summary>
     public partial class MenuWin : Window {

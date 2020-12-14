@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace MultiCommTerminal.UserControls {
+namespace MultiCommTerminal.NetCore.UserControls {
 
     public class UC_RoundIconButton : Button {
 

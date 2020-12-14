@@ -1,5 +1,5 @@
-﻿using MultiCommTerminal.DependencyInjection;
-using MultiCommTerminal.WPF_Helpers;
+﻿using MultiCommTerminal.NetCore.DependencyInjection;
+using MultiCommTerminal.NetCore.WPF_Helpers;
 using MultiCommWrapper.Net.interfaces;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using WpfHelperClasses.Core;
 
-namespace MultiCommTerminal.WindowObjs {
+namespace MultiCommTerminal.NetCore.WindowObjs {
 
     /// <summary>List, add, modify and delete terminator data items</summary>
     public partial class TerminatorDataSelector : Window {

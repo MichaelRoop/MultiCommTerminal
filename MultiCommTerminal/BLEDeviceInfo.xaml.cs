@@ -10,7 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace MultiCommTerminal {
+namespace MultiCommTerminal.NetCore {
     /// <summary>
     /// Interaction logic for BLEDeviceInfo.xaml
     /// </summary>

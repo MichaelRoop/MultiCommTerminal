@@ -1,7 +1,7 @@
 ﻿using IconFactory.Net.data;
 using IconFactory.Net.interfaces;
 
-namespace MultiCommTerminal.WPF_Helpers {
+namespace MultiCommTerminal.NetCore.WPF_Helpers {
 
     public class IconFactory : IIconFactory {
 

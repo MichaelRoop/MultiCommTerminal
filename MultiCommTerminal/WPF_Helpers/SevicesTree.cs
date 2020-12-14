@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MultiCommTerminal.WPF_Helpers {
+namespace MultiCommTerminal.NetCore.WPF_Helpers {
 
     /// <summary>
     /// Provides a data type to use in XAML. Just pass in the Device Services Dictionary.Values</summary>

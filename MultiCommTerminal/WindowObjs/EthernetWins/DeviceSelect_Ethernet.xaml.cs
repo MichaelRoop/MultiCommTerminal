@@ -1,7 +1,7 @@
 ﻿using Ethernet.Common.Net.DataModels;
-using MultiCommTerminal.DependencyInjection;
-using MultiCommTerminal.WindowObjs;
-using MultiCommTerminal.WPF_Helpers;
+using MultiCommTerminal.NetCore.DependencyInjection;
+using MultiCommTerminal.NetCore.WindowObjs;
+using MultiCommTerminal.NetCore.WPF_Helpers;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System.Collections.Generic;

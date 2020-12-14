@@ -1,13 +1,9 @@
 ﻿using LanguageFactory.Net.data;
 using LanguageFactory.Net.Languages.en;
 using LanguageFactory.Net.Messaging;
-using MultiCommTerminal.DependencyInjection;
-using MultiCommWrapper.Net.interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using MultiCommTerminal.NetCore.DependencyInjection;
 
-namespace MultiCommTerminal.WPF_Helpers {
+namespace MultiCommTerminal.NetCore.WPF_Helpers {
 
     /// <summary>Provide static functions that XAML can use to bind text to controls</summary>
     /// <example>

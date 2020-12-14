@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace MultiCommTerminal.UserControls {
+namespace MultiCommTerminal.NetCore.UserControls {
 
     /// <summary>Buttons with image that can be set in templates</summary>
     public class UC_IconButton : Button {

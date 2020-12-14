@@ -1,8 +1,8 @@
-﻿using MultiCommTerminal.WPF_Helpers;
+﻿using MultiCommTerminal.NetCore.WPF_Helpers;
 using System.Windows;
 using WpfHelperClasses.Core;
 
-namespace MultiCommTerminal.WindowObjs {
+namespace MultiCommTerminal.NetCore.WindowObjs {
 
     /// <summary>Interaction logic for MsgBoxSimple.xaml</summary>
     public partial class MsgBoxSimple : Window {

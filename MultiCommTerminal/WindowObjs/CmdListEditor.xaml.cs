@@ -1,4 +1,4 @@
-﻿using MultiCommTerminal.WPF_Helpers;
+﻿using MultiCommTerminal.NetCore.WPF_Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace MultiCommTerminal.WindowObjs {
+namespace MultiCommTerminal.NetCore.WindowObjs {
 
     /// <summary>Interaction logic for CmdListEditor.xaml</summary>
     public partial class CmdListEditor : Window {

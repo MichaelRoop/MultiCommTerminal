@@ -1,21 +1,17 @@
 ﻿using ChkUtils.Net;
 using LanguageFactory.Net.data;
 using LogUtils.Net;
-using MultiCommTerminal.DependencyInjection;
-using MultiCommTerminal.WindowObjs;
-using StorageFactory.Net.interfaces;
-using StorageFactory.Net.StorageManagers;
+using MultiCommTerminal.NetCore.DependencyInjection;
+using MultiCommTerminal.NetCore.WindowObjs;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using WpfHelperClasses.Core;
-using static MultiCommTerminal.WindowObjs.MsgBoxYesNo;
+using static MultiCommTerminal.NetCore.WindowObjs.MsgBoxYesNo;
 //using static System.ComponentModel.Design.ObjectSelectorEditor;
 
-namespace MultiCommTerminal.WPF_Helpers {
+namespace MultiCommTerminal.NetCore.WPF_Helpers {
 
     public static class WindowHelpers {
 

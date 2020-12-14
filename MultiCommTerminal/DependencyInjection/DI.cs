@@ -3,7 +3,7 @@ using MultiCommWrapper.Net.DI;
 using MultiCommWrapper.Net.interfaces;
 using MultiCommWrapper.Net.WrapCode;
 
-namespace MultiCommTerminal.DependencyInjection {
+namespace MultiCommTerminal.NetCore.DependencyInjection {
 
     /// <summary>Static class to easily access Dependency injected objects</summary>
     public static class DI {

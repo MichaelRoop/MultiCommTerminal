@@ -1,11 +1,11 @@
 ﻿using LanguageFactory.Net.data;
-using MultiCommTerminal.DependencyInjection;
-using MultiCommTerminal.WPF_Helpers;
+using MultiCommTerminal.NetCore.DependencyInjection;
+using MultiCommTerminal.NetCore.WPF_Helpers;
 using MultiCommWrapper.Net.interfaces;
 using System.Windows;
 using WpfHelperClasses.Core;
 
-namespace MultiCommTerminal.WindowObjs {
+namespace MultiCommTerminal.NetCore.WindowObjs {
 
     /// <summary>Interaction logic for MsgBoxYesNo.xaml</summary>
     public partial class MsgBoxYesNo : Window {

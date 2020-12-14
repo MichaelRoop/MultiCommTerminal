@@ -1,14 +1,14 @@
 ﻿using LanguageFactory.Net.data;
 using LogUtils.Net;
-using MultiCommTerminal.DependencyInjection;
-using MultiCommTerminal.WPF_Helpers;
+using MultiCommTerminal.NetCore.DependencyInjection;
+using MultiCommTerminal.NetCore.WPF_Helpers;
 using MultiCommWrapper.Net.interfaces;
 using System;
 using System.Windows;
 using System.Windows.Controls;
 using WpfHelperClasses.Core;
 
-namespace MultiCommTerminal.WindowObjs {
+namespace MultiCommTerminal.NetCore.WindowObjs {
 
     /// <summary>Interaction logic for LanguagaSelector.xamlsummary>
     public partial class LanguageSelector : Window {

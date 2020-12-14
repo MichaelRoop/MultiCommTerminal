@@ -1,12 +1,12 @@
 ﻿using BluetoothLE.Net.DataModels;
-using MultiCommTerminal.WPF_Helpers;
+using MultiCommTerminal.NetCore.WPF_Helpers;
 using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using WpfHelperClasses.Core;
 
-namespace MultiCommTerminal.WindowObjs {
+namespace MultiCommTerminal.NetCore.WindowObjs {
 
     /// <summary>Interaction logic for DeviceInfo_BLESerial.xaml    /// </summary>
     public partial class DeviceInfo_BLESerial : Window {

@@ -1,6 +1,6 @@
 ﻿using MultiCommData.Net.StorageDataModels;
-using MultiCommTerminal.DependencyInjection;
-using MultiCommTerminal.WPF_Helpers;
+using MultiCommTerminal.NetCore.DependencyInjection;
+using MultiCommTerminal.NetCore.WPF_Helpers;
 using MultiCommWrapper.Net.interfaces;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;

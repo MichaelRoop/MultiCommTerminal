@@ -1,15 +1,15 @@
 ﻿using LogUtils.Net;
 using MultiCommData.Net.UserDisplayData;
 using MultiCommData.UserDisplayData.Net;
-using MultiCommTerminal.DependencyInjection;
-using MultiCommTerminal.WPF_Helpers;
+using MultiCommTerminal.NetCore.DependencyInjection;
+using MultiCommTerminal.NetCore.WPF_Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 using WpfHelperClasses.Core;
 
-namespace MultiCommTerminal.WindowObjs {
+namespace MultiCommTerminal.NetCore.WindowObjs {
 
     /// <summary>Interaction logic for Help_CommunicationMediums.xaml</summary>
     public partial class Help_CommunicationMediums : Window {

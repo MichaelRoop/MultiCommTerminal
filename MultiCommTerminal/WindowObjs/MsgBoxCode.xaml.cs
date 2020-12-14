@@ -2,12 +2,12 @@
 using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
 using MultiCommData.Net.UserDisplayData;
-using MultiCommTerminal.DependencyInjection;
-using MultiCommTerminal.WPF_Helpers;
+using MultiCommTerminal.NetCore.DependencyInjection;
+using MultiCommTerminal.NetCore.WPF_Helpers;
 using System.Windows;
 using WpfHelperClasses.Core;
 
-namespace MultiCommTerminal.WindowObjs {
+namespace MultiCommTerminal.NetCore.WindowObjs {
     /// <summary>
     /// Interaction logic for MsgBoxCode.xaml
     /// </summary>

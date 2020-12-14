@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MultiCommTerminal.NetCore.WindowObjs"
         xmlns:dataModels="clr-namespace:BluetoothLE.Net.DataModels;assembly=BluetoothLE.Net"
-        xmlns:controls="clr-namespace:MultiCommTerminal.UserControls"
-        xmlns:wpfHelper="clr-namespace:MultiCommTerminal.WPF_Helpers"
+        xmlns:controls="clr-namespace:MultiCommTerminal.NetCore.UserControls"
+        xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
 
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.BluetoothLE_W}}"
         WindowStartupLocation="Manual" 

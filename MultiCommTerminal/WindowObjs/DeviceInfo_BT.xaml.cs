@@ -1,12 +1,12 @@
 ﻿using BluetoothCommon.Net;
-using MultiCommTerminal.DependencyInjection;
+using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WindowObjs.BLE;
-using MultiCommTerminal.WPF_Helpers;
+using MultiCommTerminal.NetCore.WPF_Helpers;
 using System;
 using System.Windows;
 using WpfHelperClasses.Core;
 
-namespace MultiCommTerminal.WindowObjs {
+namespace MultiCommTerminal.NetCore.WindowObjs {
 
     /// <summary>Interaction logic for DeviceInfo_BT.xaml</summary>
     public partial class DeviceInfo_BT : Window {

@@ -10,10 +10,10 @@ using LanguageFactory.Net.data;
 using LogUtils.Net;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommData.UserDisplayData.Net;
-using MultiCommTerminal.DependencyInjection;
+using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WindowObjs;
 using MultiCommTerminal.NetCore.WindowObjs.SerialWins;
-using MultiCommTerminal.WPF_Helpers;
+using MultiCommTerminal.NetCore.WPF_Helpers;
 using MultiCommWrapper.Net.DataModels;
 using MultiCommWrapper.Net.interfaces;
 using Serial.UWP.Core;
@@ -29,7 +29,7 @@ using WifiCommon.Net.DataModels;
 using WifiCommon.Net.Enumerations;
 using WpfHelperClasses.Core;
 
-namespace MultiCommTerminal.WindowObjs {
+namespace MultiCommTerminal.NetCore.WindowObjs {
 
     /// <summary>Interaction logic for MainWindow.xaml</summary>
     public partial class MainWindow : Window {

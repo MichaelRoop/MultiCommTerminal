@@ -1,7 +1,7 @@
 ﻿using BluetoothLE.Net.DataModels;
-using MultiCommTerminal.DependencyInjection;
+using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WindowObjs.BLE;
-using MultiCommTerminal.WPF_Helpers;
+using MultiCommTerminal.NetCore.WPF_Helpers;
 using System.Windows;
 using WpfHelperClasses.Core;
 

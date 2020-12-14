@@ -1,12 +1,11 @@
-﻿<Window x:Class="MultiCommTerminal.WindowObjs.Help_CommunicationMediums"
+﻿<Window x:Class="MultiCommTerminal.NetCore.WindowObjs.Help_CommunicationMediums"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MultiCommTerminal.WindowObjs"
-        
-        xmlns:controls="clr-namespace:MultiCommTerminal.UserControls"
-        xmlns:wpfHelper="clr-namespace:MultiCommTerminal.WPF_Helpers"
+        xmlns:local="clr-namespace:MultiCommTerminal.NetCore.WindowObjs"
+        xmlns:controls="clr-namespace:MultiCommTerminal.NetCore.UserControls"
+        xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
 
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.HelpWhite}}"
         Style="{StaticResource MyWindowStyle}"

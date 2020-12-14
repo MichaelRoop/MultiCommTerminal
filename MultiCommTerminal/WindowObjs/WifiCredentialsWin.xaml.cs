@@ -1,19 +1,10 @@
-﻿using MultiCommTerminal.DependencyInjection;
-using MultiCommTerminal.WindowObjs;
-using MultiCommTerminal.WPF_Helpers;
+﻿using MultiCommTerminal.NetCore.DependencyInjection;
+using MultiCommTerminal.NetCore.WPF_Helpers;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.NetCore.WindowObjs {

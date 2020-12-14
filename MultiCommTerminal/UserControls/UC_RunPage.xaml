@@ -1,11 +1,11 @@
-﻿<UserControl x:Class="MultiCommTerminal.UserControls.UC_RunPage"
+﻿<UserControl x:Class="MultiCommTerminal.NetCore.UserControls.UC_RunPage"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:MultiCommTerminal.UserControls"
-             xmlns:controls="clr-namespace:MultiCommTerminal.UserControls"
-             xmlns:wpfHelper="clr-namespace:MultiCommTerminal.WPF_Helpers"
+             xmlns:local="clr-namespace:MultiCommTerminal.NetCore.UserControls"
+             xmlns:controls="clr-namespace:MultiCommTerminal.NetCore.UserControls"
+             xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
              mc:Ignorable="d" Background="#fffffa"
              >
     <Grid>

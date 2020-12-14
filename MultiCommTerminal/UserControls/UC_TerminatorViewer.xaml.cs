@@ -1,14 +1,13 @@
 ﻿using CommunicationStack.Net.Stacks;
 using LanguageFactory.Net.data;
 using MultiCommData.Net.StorageDataModels;
-using MultiCommTerminal.DependencyInjection;
-using MultiCommTerminal.WPF_Helpers;
+using MultiCommTerminal.NetCore.DependencyInjection;
+using MultiCommTerminal.NetCore.WPF_Helpers;
 using MultiCommWrapper.Net.interfaces;
 using System.Collections.Generic;
-using System.Windows;
 using System.Windows.Controls;
 
-namespace MultiCommTerminal.UserControls {
+namespace MultiCommTerminal.NetCore.UserControls {
 
     /// <summary>
     /// Interaction logic for UC_TerminatorViewer.xaml

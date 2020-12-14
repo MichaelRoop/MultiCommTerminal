@@ -6,7 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using WpfHelperClasses.Core;
 
-namespace MultiCommTerminal.UserControls {
+namespace MultiCommTerminal.NetCore.UserControls {
 
     /// <summary>Interaction logic for UC_TerminatorView.xaml</summary>
     public partial class UC_TerminatorEdit : UserControl {
