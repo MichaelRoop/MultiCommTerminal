@@ -81,7 +81,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         private void onWifiConnectionAttemptCompleted(object sender, MsgPumpResults e) {
             this.Dispatcher.Invoke(() => {
-                this.ui.SetBusy(false);
+                this.ui.IsBusy = false;
                 if (e.Code == MsgPumpResultCode.Connected) {
                     this.ui.SetConnected();
                 }
@@ -94,7 +94,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         private void onWifiError(object sender, WifiError e) {
             this.Dispatcher.Invoke(() => {
-                this.ui.SetBusy(false);
+                this.ui.IsBusy =false;
                 App.ShowMsg(string.Format("{0} '{1}'", e.Code, e.ExtraInfo));
             });
         }
@@ -121,7 +121,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
                 this.OnUiDiscover(sender, e);
             }
             if (this.selectedWifi != null) {
-                this.ui.SetBusy(true);
+                this.ui.IsBusy = true;
                 DI.Wrapper.WifiConnectAsync(this.selectedWifi);
             }
         }

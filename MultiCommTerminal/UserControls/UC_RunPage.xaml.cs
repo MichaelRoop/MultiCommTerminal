@@ -9,14 +9,11 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using WifiCommon.Net.DataModels;
 using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.NetCore.UserControls {
 
-    /// <summary>
-    /// Interaction logic for UC_RunPage.xaml
-    /// </summary>
+    /// <summary>Interaction logic for common UC_RunPage.xaml user control</summary>
     public partial class UC_RunPage : UserControl {
 
         #region Data
@@ -27,6 +24,7 @@ namespace MultiCommTerminal.NetCore.UserControls {
         private Window parent = null;
         private ButtonGroupSizeSyncManager buttonSizer = null;
         private List<ScriptItem> scriptItems = new List<ScriptItem>();
+        bool isBusy = false;
 
         // TODO size buttons
 
@@ -41,6 +39,29 @@ namespace MultiCommTerminal.NetCore.UserControls {
         public EventHandler<string> SendClicked;
 
         #endregion
+
+        #region Properties
+
+        public bool IsBusy {
+            get { lock (this) { return this.isBusy; } }
+            set {
+                lock (this) {
+                    this.isBusy = value;
+                    this.Dispatcher.Invoke(() => {
+                        if (this.isBusy) {
+                            this.gridWait.Show();
+                        }
+                        else {
+                            this.gridWait.Collapse();
+                        }
+                    });
+                }
+            }
+        }
+
+        #endregion
+
+        #region Constructors and window events
 
         public UC_RunPage() {
             InitializeComponent();
@@ -79,6 +100,9 @@ namespace MultiCommTerminal.NetCore.UserControls {
             this.buttonSizer.Teardown();
         }
 
+        #endregion
+
+        #region Public
 
         public void AddResponse(string response) {
             this.Dispatcher.Invoke(() => {
@@ -88,28 +112,13 @@ namespace MultiCommTerminal.NetCore.UserControls {
             });
         }
 
-        bool isBusy = false;
-
-        public void SetBusy(bool busy) {
-            lock (this) {
-                this.isBusy = busy;
-                this.Dispatcher.Invoke(() => {
-                    if (this.isBusy) {
-                        this.gridWait.Show();
-                    }
-                    else {
-                        this.gridWait.Collapse();
-                    }
-                });
-            }
-        }
-
 
         public void SetConnected() {
-            this.SetBusy(false);
+            this.IsBusy = false;
             this.SetConnectState(true);
         }
 
+        #endregion
 
         #region Button events
 
@@ -149,6 +158,7 @@ namespace MultiCommTerminal.NetCore.UserControls {
 
         #endregion
 
+        #region Other UI controls events
 
         private void brdResponse_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
             this.ClearResponses();
@@ -170,6 +180,8 @@ namespace MultiCommTerminal.NetCore.UserControls {
                 this.txtCommmand.Text = item.Command;
             });
         }
+
+        #endregion
 
         #region Wrapper event handlers
 
@@ -224,9 +236,9 @@ namespace MultiCommTerminal.NetCore.UserControls {
             this.PopulateScriptData(data);
         }
 
-
         #endregion
 
+        #region Private
 
         private void SetConnectState(bool isConnected) {
             this.Dispatcher.Invoke(() => {
@@ -248,6 +260,8 @@ namespace MultiCommTerminal.NetCore.UserControls {
                 this.lbIncoming.Items.Clear();
             }
         }
+
+        #endregion
 
     }
 }
