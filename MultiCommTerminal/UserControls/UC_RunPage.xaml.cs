@@ -17,6 +17,7 @@ namespace MultiCommTerminal.NetCore.UserControls {
     /// Interaction logic for UC_RunPage.xaml
     /// </summary>
     public partial class UC_RunPage : UserControl {
+
         #region Data
 
         private ClassLog log = new ClassLog("UC_RunPage");
@@ -79,23 +80,63 @@ namespace MultiCommTerminal.NetCore.UserControls {
 
 
         public void AddResponse(string response) {
-            lock (this.lbIncoming) {
-                this.lbIncoming.AddAndScroll(response, this.inScroll, 100);
+            this.Dispatcher.Invoke(() => {
+                lock (this.lbIncoming) {
+                    this.lbIncoming.AddAndScroll(response, this.inScroll, 100);
+                }
+            });
+        }
+
+        bool isBusy = false;
+
+        public void SetBusy(bool busy) {
+            lock (this) {
+                this.isBusy = busy;
+                this.Dispatcher.Invoke(() => {
+                    if (this.isBusy) {
+                        this.gridWait.Show();
+                    }
+                    else {
+                        this.gridWait.Collapse();
+                    }
+                });
             }
         }
 
 
-        public bool IsBusy {
-            get { return this.gridWait.Visibility == Visibility.Visible; }
-            set {
-                if (value) {
-                    this.gridWait.Show();
+        public void SetConnectLight(bool isOn) {
+            this.Dispatcher.Invoke(() => {
+                if (isOn) {
                 }
                 else {
-                    this.gridWait.Collapse();
+                    this.connectedOn.Collapse();
+                    this.connectedOff.Show();
                 }
-            }
+            });
         }
+
+
+
+
+
+
+        //    {
+        //    get {
+        //        this.Dispatcher.Invoke(() => {
+        //            return this.gridWait.Visibility == Visibility.Visible;
+        //        });
+        //    }
+        //    set {
+        //        this.Dispatcher.Invoke(() => {
+        //            if (value) {
+        //                this.gridWait.Show();
+        //            }
+        //            else {
+        //                this.gridWait.Collapse();
+        //            }
+        //        });
+        //    }
+        //}
 
 
 
@@ -120,6 +161,7 @@ namespace MultiCommTerminal.NetCore.UserControls {
 
 
         private void btnDisconnect_Click(object sender, RoutedEventArgs e) {
+            this.SetConnectLight(false);
             this.DisconnectClicked?.Invoke(this, new EventArgs());
         }
 
