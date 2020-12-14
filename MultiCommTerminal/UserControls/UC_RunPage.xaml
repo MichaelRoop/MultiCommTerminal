@@ -21,7 +21,11 @@
             <local:UC_BusySpinner />
         </Grid>
         <StackPanel>
-            <DockPanel  VerticalAlignment="Center" HorizontalAlignment="Center">
+
+            <StackPanel HorizontalAlignment="Center">
+
+
+                <DockPanel  VerticalAlignment="Center" HorizontalAlignment="Center">
                 <StackPanel x:Name="spCmds" >
                     <Border Style="{StaticResource brd075}" MouseLeftButtonUp="brdCommands_MouseLeftButtonUp"
                             HorizontalAlignment="Center" CornerRadius="5" Height="40" Padding="5,0,5,0">
@@ -76,15 +80,18 @@
                 </DockPanel>
             </Border>
 
-            <Border Style="{StaticResource brd075}" HorizontalAlignment="Stretch" Padding="0" Margin="0">
+        </StackPanel>
+
+
+        <Border Style="{StaticResource brd075}" HorizontalAlignment="Stretch" Padding="0" Margin="0">
                 <DockPanel VerticalAlignment="Center" Margin="0,5">
                     <Border Style="{StaticResource brd075}">
                         <local:UC_TerminatorViewer x:Name="terminatorView" MouseLeftButtonUp="terminatorView_MouseLeftButtonUp" />
                     </Border>
                     <StackPanel VerticalAlignment="Center">
-                        <DockPanel Margin="5" VerticalAlignment="Center">
+                        <DockPanel Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <StackPanel></StackPanel>
-                            <StackPanel>
+                            <StackPanel HorizontalAlignment="Center">
                                 <local:UC_IconButton x:Name="btnBTDiscover" Style="{StaticResource TextIconButton}"
                                         Content="{Binding Source={x:Static wpfHelper:TxtBinder.Discover}}" Margin="0"
                                         IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Search}}"                                                                                            
@@ -105,14 +112,14 @@
                                     Background="Transparent" Click="btnDisconnect_Click" />
 
                             </StackPanel>
-                            <StackPanel VerticalAlignment="Bottom">
-                                <local:UC_IconButton x:Name="btnLog" Click="btnLog_Click" MinWidth="100" 
+                            <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                                <local:UC_IconButton x:Name="btnLog" Click="btnLog_Click" 
                                     Style="{StaticResource TextIconButton}" Margin="5"
                                     Content="{Binding Source={x:Static wpfHelper:TxtBinder.LogText}}"
                                     IconSource="{Binding Source={x:Static wpfHelper:IconBinder.LogIcon}}"/>
 
                                 <!-- Need to override the Icons margin because the Exit is smaller within PNG file -->
-                                <local:UC_IconButton x:Name="btnExit" Click="btnExit_Click" MinWidth="100" IconMargin="7"
+                                <local:UC_IconButton x:Name="btnExit" Click="btnExit_Click" IconMargin="7"
                                     Style="{StaticResource TextIconButton}"  Margin="5,0"
                                     Content="{Binding Source={x:Static wpfHelper:TxtBinder.Exit}}"
                                     IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Exit}}"/>
