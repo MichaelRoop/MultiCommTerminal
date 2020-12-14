@@ -40,8 +40,7 @@ namespace MultiCommTerminal.NetCore.UserControls {
 
         #endregion
 
-        public UC_RunPage(Window parent) {
-            this.parent = parent;
+        public UC_RunPage() {
             InitializeComponent();
             this.buttonSizer = new ButtonGroupSizeSyncManager(
                 this.btnBTDiscover, this.btnConnect, this.btnDisconnect, this.btnExit, this.btnLog);
@@ -49,8 +48,10 @@ namespace MultiCommTerminal.NetCore.UserControls {
         }
 
 
+
         /// <summary>Do any initialization here. Should be called by window at load</summary>
-        public void OnLoad() {
+        public void OnLoad(Window parent) {
+            this.parent = parent;
             this.inScroll = this.lbIncoming.GetScrollViewer();
             this.logScroll = this.lbLog.GetScrollViewer();
             this.lbLog.Collapse();
@@ -61,6 +62,7 @@ namespace MultiCommTerminal.NetCore.UserControls {
 
             DI.Wrapper.LanguageChanged += this.languageChangedHandler;
             DI.Wrapper.CurrentTerminatorChanged += this.currentTerminatorChangedHandler;
+            DI.Wrapper.CurrentScriptChanged += this.currentScriptChanged;
             App.STATIC_APP.LogMsgEvent += this.AppLogMsgEventHandler;
         }
 
@@ -71,6 +73,7 @@ namespace MultiCommTerminal.NetCore.UserControls {
             DI.Wrapper.LanguageChanged -= this.languageChangedHandler;
             DI.Wrapper.CurrentTerminatorChanged -= this.currentTerminatorChangedHandler;
             App.STATIC_APP.LogMsgEvent -= this.AppLogMsgEventHandler;
+            DI.Wrapper.CurrentScriptChanged -= this.currentScriptChanged;
             this.buttonSizer.Teardown();
         }
 
@@ -139,7 +142,7 @@ namespace MultiCommTerminal.NetCore.UserControls {
 
 
         private void brdCommands_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
-
+            CommandsPopup.ShowBox(this.parent);
         }
 
 
@@ -201,6 +204,12 @@ namespace MultiCommTerminal.NetCore.UserControls {
             this.lbCommandListName.Content = dataModel.Display;
             this.txtCommmand.Text = "";
         }
+
+
+        private void currentScriptChanged(object sender, ScriptDataModel data) {
+            this.PopulateScriptData(data);
+        }
+
 
         #endregion
 
