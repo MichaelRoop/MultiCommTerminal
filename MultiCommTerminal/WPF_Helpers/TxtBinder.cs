@@ -28,6 +28,10 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
 
         #endregion
 
+
+        static TxtBinder() { }
+
+
         #region Text strings
 
         public static string Save { get { return GetTxt(MsgCode.save); } }
