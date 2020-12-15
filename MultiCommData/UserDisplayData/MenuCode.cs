@@ -2,12 +2,17 @@
 namespace MultiCommData.UserDisplayData.Net {
 
     public enum MenuCode {
+        Usb,
+        Wifi,
+        Bluetooth,
+        BLE,
+
         Language,
-        Settings,
+        //Settings,
         Terminators,
         Commands,
-        UsbConfig,
-        Credentials,
+        //UsbConfig,
+        //Credentials,
         Ethernet,
         About,
     }

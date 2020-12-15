@@ -6,6 +6,7 @@ using LogUtils.Net;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WindowObjs;
+using MultiCommTerminal.NetCore.WindowObjs.BTWins;
 using MultiCommTerminal.NetCore.WindowObjs.EthernetWins;
 using MultiCommTerminal.NetCore.WindowObjs.SerialWins;
 using MultiCommTerminal.NetCore.WPF_Helpers;
@@ -68,21 +69,41 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
                         Commands cmds = new Commands(this.mainWindow);
                         cmds.ShowDialog();
                         break;
-                    case MenuCode.Credentials:
-                        WifiCredentialsWin.ShowBox(this.mainWindow);
-                        break;
-                    case MenuCode.UsbConfig:
-                        DeviceSelect_USB.ShowBox(this.mainWindow);
-                        break;
+                    //case MenuCode.Credentials:
+                    //    WifiCredentialsWin.ShowBox(this.mainWindow);
+                    //    break;
+                    //case MenuCode.UsbConfig:
+                    //    DeviceSelect_USB.ShowBox(this.mainWindow);
+                    //    break;
                     case MenuCode.Ethernet:
-                        DeviceSelect_Ethernet.ShowBox(this.mainWindow);
+                        //DeviceSelect_Ethernet.ShowBox(this.mainWindow);
+                        EthernetRun eth = new EthernetRun(this.mainWindow);
+                        eth.ShowDialog();
                         break;
-                    case MenuCode.Settings:
-                        // TODO - settings window
-                        break;
+                    //case MenuCode.Settings:
+                    //    // TODO - settings window
+                    //    break;
                     case MenuCode.About:
                         AboutWin.ShowBox(this.mainWindow);
+
+
                         break;
+                    case MenuCode.Usb:
+                        SerialRun usb = new SerialRun(this.mainWindow);
+                        usb.ShowDialog();
+                        break;
+                    case MenuCode.Wifi:
+                        WifiRun wifi = new WifiRun(this.mainWindow);
+                        wifi.ShowDialog();
+                        break;
+                    case MenuCode.Bluetooth:
+                        BTRun bluetooth = new BTRun(this.mainWindow);
+                        bluetooth.ShowDialog();
+                        break;
+                    case MenuCode.BLE:
+                        App.ShowMsg("TBD");
+                        break;
+
                     default:
                         // Not supported
                         break;
@@ -108,12 +129,16 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
                 lbxMenuItems.SelectionChanged -= this.lbxMenuItems_SelectionChanged;
                 this.lbxMenuItems.ItemsSource = null;
                 this.items.Clear();
-                this.AddItem(MenuCode.Language, MsgCode.language, UIIcon.Language, "0");
+                this.AddItem(MenuCode.Bluetooth, "Bluetooth", UIIcon.BluetoothClassic, "0");
+                this.AddItem(MenuCode.Wifi, "WIFI", UIIcon.Wifi, "0");
+                this.AddItem(MenuCode.Usb, "USB", UIIcon.Usb, "0");
+                this.AddItem(MenuCode.Ethernet, MsgCode.Ethernet, UIIcon.Ethernet, "0");
+                this.AddItem(MenuCode.BLE, "BLE", UIIcon.BluetoothLE, "0");
                 this.AddItem(MenuCode.Terminators, MsgCode.Terminators, UIIcon.Terminator, "0");
                 this.AddItem(MenuCode.Commands, MsgCode.command, UIIcon.Command, "0"); // TODO Get a new icon
-                this.AddItem(MenuCode.Credentials, MsgCode.Credentials, UIIcon.Credentials, "0");
-                this.AddItem(MenuCode.UsbConfig, string.Format("USB {0}", DI.Wrapper.GetText(MsgCode.Settings)), UIIcon.Usb, "0");  // Need 
-                this.AddItem(MenuCode.Ethernet, MsgCode.Ethernet, UIIcon.Ethernet, "0");
+                this.AddItem(MenuCode.Language, MsgCode.language, UIIcon.Language, "0");
+                //this.AddItem(MenuCode.Credentials, MsgCode.Credentials, UIIcon.Credentials, "0");
+                //this.AddItem(MenuCode.UsbConfig, string.Format("USB {0}", DI.Wrapper.GetText(MsgCode.Settings)), UIIcon.Usb, "0");  // Need 
                 //this.AddItem(MenuCode.Settings, MsgCode.Settings, UIIcon.Settings, "0");
                 this.AddItem(MenuCode.About, MsgCode.About, UIIcon.About, "1");
 

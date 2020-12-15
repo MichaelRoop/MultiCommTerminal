@@ -1,5 +1,6 @@
 ﻿using CommunicationStack.Net.DataModels;
 using CommunicationStack.Net.Enumerations;
+using LanguageFactory.Net.data;
 using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WindowObjs.WifiWins;
 using MultiCommTerminal.NetCore.WPF_Helpers;
@@ -30,6 +31,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
             this.ui.DiscoverClicked += this.OnUiDiscover;
             this.ui.DisconnectClicked += this.OnUiDisconnect;
             this.ui.SendClicked += this.OnUiSend;
+            this.ui.InfoClicked += this.OnUiInfo;
+            this.ui.SettingsClicked += this.OnUiSettings;
             DI.Wrapper.OnWifiError += this.onWifiError;
             DI.Wrapper.OnWifiConnectionAttemptCompleted += this.onWifiConnectionAttemptCompleted;
             DI.Wrapper.Wifi_BytesReceived += this.bytesReceived;
@@ -55,6 +58,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
             this.ui.DiscoverClicked -= this.OnUiDiscover;
             this.ui.DisconnectClicked -= this.OnUiDisconnect;
             this.ui.SendClicked -= this.OnUiSend;
+            this.ui.InfoClicked -= this.OnUiInfo;
+            this.ui.SettingsClicked -= this.OnUiSettings;
             DI.Wrapper.OnWifiError -= this.onWifiError;
             DI.Wrapper.OnWifiConnectionAttemptCompleted -= this.onWifiConnectionAttemptCompleted;
             DI.Wrapper.Wifi_BytesReceived -= this.bytesReceived;
@@ -125,6 +130,16 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         private void OnUiSend(object sender, string msg) {
             DI.Wrapper.WifiSend(msg);
+        }
+
+
+        private void OnUiInfo(object sender, EventArgs e) {
+            App.ShowMsgTitle(DI.Wrapper.GetText(MsgCode.Ethernet), "TBD");
+        }
+
+
+        private void OnUiSettings(object sender, EventArgs e) {
+            WifiCredentialsWin.ShowBox(this);
         }
 
         #endregion

@@ -1,5 +1,6 @@
 ﻿using CommunicationStack.Net.DataModels;
 using CommunicationStack.Net.Enumerations;
+using LanguageFactory.Net.data;
 using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using SerialCommon.Net.DataModels;
@@ -38,6 +39,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
             this.ui.DiscoverClicked += this.OnUiDiscover;
             this.ui.DisconnectClicked += this.OnUiDisconnect;
             this.ui.SendClicked += this.OnUiSend;
+            this.ui.InfoClicked += this.OnUiInfo;
+            this.ui.SettingsClicked += this.OnUiSettings;
             DI.Wrapper.OnSerialConfigRequest += this.onSerialConfigRequest;
             DI.Wrapper.SerialOnError += this.onSerialError;
             DI.Wrapper.Serial_BytesReceived += this.bytesReceived;
@@ -57,6 +60,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
             this.ui.DiscoverClicked -= this.OnUiDiscover;
             this.ui.DisconnectClicked -= this.OnUiDisconnect;
             this.ui.SendClicked -= this.OnUiSend;
+            this.ui.InfoClicked -= this.OnUiInfo;
+            this.ui.SettingsClicked -= this.OnUiSettings;
             DI.Wrapper.OnSerialConnectionAttemptCompleted -= this.onSerialConnectionAttemptCompleted;
             DI.Wrapper.OnSerialConfigRequest -= this.onSerialConfigRequest;
             DI.Wrapper.SerialOnError -= this.onSerialError;
@@ -149,6 +154,21 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
 
         private void OnUiSend(object sender, string msg) {
             DI.Wrapper.SerialUsbSend(msg);
+        }
+
+
+        private void OnUiInfo(object sender, EventArgs e) {
+            if (this.selectedSerial != null) {
+                DeviceInfo_USB.ShowBox(this, this.selectedSerial);
+            }
+            else {
+                App.ShowMsg(DI.Wrapper.GetText(MsgCode.NothingSelected));
+            }
+        }
+
+
+        private void OnUiSettings(object sender, EventArgs e) {
+            DeviceSelect_USB.ShowBox(this);
         }
 
         #endregion

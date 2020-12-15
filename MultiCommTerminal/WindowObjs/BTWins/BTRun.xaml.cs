@@ -1,5 +1,6 @@
 ﻿using BluetoothCommon.Net;
 using LanguageFactory.Net.data;
+using LogUtils.Net;
 using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using System;
@@ -26,6 +27,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BTWins {
             this.ui.DiscoverClicked += this.OnUiDiscover;
             this.ui.DisconnectClicked += this.OnUiDisconnect;
             this.ui.SendClicked += this.OnUiSend;
+            this.ui.InfoClicked += this.OnUiInfo;
+            this.ui.SettingsClicked += this.OnUiSettings;
             DI.Wrapper.BT_ConnectionCompleted += this.connectionCompleted;
             DI.Wrapper.BT_BytesReceived += this.bytesReceived;
         }
@@ -50,8 +53,11 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BTWins {
             this.ui.DiscoverClicked -= this.OnUiDiscover;
             this.ui.DisconnectClicked -= this.OnUiDisconnect;
             this.ui.SendClicked -= this.OnUiSend;
+            this.ui.InfoClicked -= this.OnUiInfo;
+            this.ui.SettingsClicked -= this.OnUiSettings;
             DI.Wrapper.BT_ConnectionCompleted -= this.connectionCompleted;
             DI.Wrapper.BT_BytesReceived -= this.bytesReceived;
+            DI.Wrapper.BT_DeviceInfoGathered -= deviceInfoGathered;
             this.ui.OnClosing();
         }
 
@@ -110,6 +116,34 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BTWins {
 
         private void OnUiSend(object sender, string msg) {
             DI.Wrapper.BTClassicSend(msg);
+        }
+
+
+        private void OnUiInfo(object sender, EventArgs e) {
+            if (this.selectedDevice != null) {
+                DI.Wrapper.BT_DeviceInfoGathered += deviceInfoGathered;
+                this.ui.IsBusy = true;
+                DI.Wrapper.BTClassicGetExtraInfoAsync(this.selectedDevice);
+            }
+            else {
+                // TODO - open select and show 
+                App.ShowMsg(DI.Wrapper.GetText(MsgCode.NothingSelected));
+            }
+        }
+
+
+        private void OnUiSettings(object sender, EventArgs e) {
+            App.ShowMsgTitle("Bluetooth", "TBD");
+        }
+
+
+        private void deviceInfoGathered(object sender, BTDeviceInfo e) {
+            this.Dispatcher.Invoke(() => {
+                this.ui.IsBusy = false;
+                DI.Wrapper.BT_DeviceInfoGathered -= deviceInfoGathered;
+                DeviceInfo_BT win = new DeviceInfo_BT(this, e);
+                win.ShowDialog();
+            });
         }
 
         #endregion

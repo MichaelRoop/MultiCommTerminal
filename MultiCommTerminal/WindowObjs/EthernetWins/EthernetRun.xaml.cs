@@ -29,6 +29,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
             this.ui.DiscoverClicked += this.OnUiDiscover;
             this.ui.DisconnectClicked += this.OnUiDisconnect;
             this.ui.SendClicked += this.OnUiSend;
+            this.ui.InfoClicked += this.OnUiInfo;
+            this.ui.SettingsClicked += this.OnUiSettings;
             DI.Wrapper.EthernetParamsRequestedEvent += this.paramsRequestedEventHandler;
             DI.Wrapper.Ethernet_BytesReceived += this.bytesReceivedHandler;
             DI.Wrapper.OnEthernetError += this.onEthernetError;
@@ -56,6 +58,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
             this.ui.DiscoverClicked -= this.OnUiDiscover;
             this.ui.DisconnectClicked -= this.OnUiDisconnect;
             this.ui.SendClicked -= this.OnUiSend;
+            this.ui.InfoClicked -= this.OnUiInfo;
+            this.ui.SettingsClicked -= this.OnUiSettings;
             DI.Wrapper.EthernetParamsRequestedEvent -= this.paramsRequestedEventHandler;
             DI.Wrapper.Ethernet_BytesReceived -= this.bytesReceivedHandler;
             DI.Wrapper.OnEthernetError -= this.onEthernetError;
@@ -143,6 +147,16 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
 
         private void OnUiSend(object sender, string msg) {
             DI.Wrapper.EthernetSend(msg);
+        }
+
+
+        private void OnUiInfo(object sender, EventArgs e) {
+            App.ShowMsgTitle(DI.Wrapper.GetText(MsgCode.Ethernet), "TBD");
+        }
+
+
+        private void OnUiSettings(object sender, EventArgs e) {
+            DeviceSelect_Ethernet.ShowBox(this);
         }
 
         #endregion

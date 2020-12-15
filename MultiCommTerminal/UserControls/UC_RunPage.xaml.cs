@@ -37,6 +37,8 @@ namespace MultiCommTerminal.NetCore.UserControls {
         public EventHandler ConnectCicked;
         public EventHandler DisconnectClicked;
         public EventHandler<string> SendClicked;
+        public EventHandler InfoClicked;
+        public EventHandler SettingsClicked;
 
         #endregion
 
@@ -155,6 +157,16 @@ namespace MultiCommTerminal.NetCore.UserControls {
 
         private void btnExit_Click(object sender, RoutedEventArgs e) {
             this.ExitClicked?.Invoke(this, new EventArgs());
+        }
+
+
+        private void btnSettings_Click(object sender, RoutedEventArgs e) {
+            this.SettingsClicked?.Invoke(this, new EventArgs());
+        }
+
+
+        private void btnInfo_Click(object sender, RoutedEventArgs e) {
+            this.InfoClicked?.Invoke(this, new EventArgs());
         }
 
         #endregion
