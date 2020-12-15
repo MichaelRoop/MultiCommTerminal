@@ -1,5 +1,6 @@
 ﻿using BluetoothCommon.Net;
 using LanguageFactory.Net.data;
+using LogUtils.Net;
 using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using System.Collections.Generic;
@@ -19,14 +20,14 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BTWins {
         public BTDeviceInfo SelectedBT { get; private set; } = null;
 
 
-        public static BTDeviceInfo ShowBox(Window parent, bool pair = false) {
+        public static BTDeviceInfo ShowBox(Window parent, bool pair = true) {
             BTSelect win = new BTSelect(parent, pair);
             win.ShowDialog();
             return win.SelectedBT;
         }
 
 
-        public BTSelect(Window parent, bool pair = false) {
+        public BTSelect(Window parent, bool pair = true) {
             this.parent = parent;
             this.pair = pair;
             InitializeComponent();
@@ -59,6 +60,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BTWins {
 
 
         private void deviceDiscovered(object sender, BTDeviceInfo device) {
+            Log.Info("BTSelect", "deviceDiscovered", () => string.Format("Found {0}", device.Name));
             this.Dispatcher.Invoke(() => this.lbBluetooth.Add(this.items, device));
         }
 
@@ -66,7 +68,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BTWins {
         private void discoveryComplete(object sender, bool e) {
             this.Dispatcher.Invoke(() => {
                 this.gridWait.Collapse();
-                DI.Wrapper.BT_DeviceDiscovered -= this.deviceDiscovered;
                 if (this.items.Count == 0) {
                     App.ShowMsgTitle("", DI.Wrapper.GetText(MsgCode.NotFound));
                     this.Close();

@@ -130,6 +130,7 @@ namespace MultiCommTerminal.NetCore.UserControls {
 
 
         private void btnBTDiscover_Click(object sender, RoutedEventArgs e) {
+            // TODO - do we need not to disconnect?
             this.DisconnectClicked(this, null);
             this.DiscoverClicked?.Invoke(this, new EventArgs());
         }
