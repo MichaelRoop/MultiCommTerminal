@@ -135,14 +135,14 @@ namespace MultiCommWrapper.Net.WrapCode {
                     this.serialStack.InTerminators = "\r\n".ToAsciiByteArray();
                     this.serialStack.OutTerminators = "\r\n".ToAsciiByteArray();
                     this.serialStack.MsgReceived += this.SerialStack_MsgReceivedHandler;
-
+                    this._serial.OnSerialConnectionAttemptCompleted += this.SerialConnectCompleteHandler;
                     this._serial.DiscoveredDevices += this.Serial_DiscoveredDevicesHandler;
                     this._serial.OnError += this.Serial_OnErrorHandler;
-
                 }
                 return this._serial;
             }
         }
+
 
         private IEthernetInterface ethernet {
             get {

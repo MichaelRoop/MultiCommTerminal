@@ -1,5 +1,6 @@
 ﻿using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
+using CommunicationStack.Net.DataModels;
 using LanguageFactory.Net.data;
 using MultiCommWrapper.Net.DataModels;
 using MultiCommWrapper.Net.interfaces;
@@ -23,7 +24,8 @@ namespace MultiCommWrapper.Net.WrapCode {
         public event EventHandler<SerialUsbError> SerialOnError;
         public event EventHandler<string> Serial_BytesReceived;
         public event EventHandler<SerialDeviceInfo> OnSerialConfigRequest;
-
+        public event EventHandler<MsgPumpResults> OnSerialConnectionAttemptCompleted;
+ 
         #endregion
 
         #region ICommWrapper methods
@@ -326,7 +328,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         private void SerialTeardown() {
             this.serialStack.MsgReceived -= this.SerialStack_MsgReceivedHandler;
-
+            this.serial.OnSerialConnectionAttemptCompleted -= this.SerialConnectCompleteHandler;
             this.serial.DiscoveredDevices -= this.Serial_DiscoveredDevicesHandler;
             this.serial.OnError -= this.Serial_OnErrorHandler;
         }
@@ -372,6 +374,11 @@ namespace MultiCommWrapper.Net.WrapCode {
                 default: 
                     return code.ToString().CamelCaseToSpaces();
             }
+        }
+
+
+        private void SerialConnectCompleteHandler(object sender, MsgPumpResults results) {
+            this.OnSerialConnectionAttemptCompleted?.Invoke(sender, results);
         }
 
 

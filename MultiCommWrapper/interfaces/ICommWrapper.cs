@@ -288,7 +288,7 @@ namespace MultiCommWrapper.Net.interfaces {
         event EventHandler<List<SerialDeviceInfo>> SerialDiscoveredDevices;
         event EventHandler<SerialUsbError> SerialOnError;
         event EventHandler<string> Serial_BytesReceived;
-        // TODO Connection complete event
+        event EventHandler<MsgPumpResults> OnSerialConnectionAttemptCompleted;
         /// <summary>Event invoked on connection to retrieve the configurable fields into the info object</summary>
         event EventHandler<SerialDeviceInfo> OnSerialConfigRequest;
 
