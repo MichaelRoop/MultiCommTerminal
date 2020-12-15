@@ -57,6 +57,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
             this.ui.SendClicked -= this.OnUiSend;
             DI.Wrapper.OnWifiError -= this.onWifiError;
             DI.Wrapper.OnWifiConnectionAttemptCompleted -= this.onWifiConnectionAttemptCompleted;
+            DI.Wrapper.Wifi_BytesReceived -= this.bytesReceived;
 
             this.ui.OnClosing();
         }
