@@ -1,0 +1,45 @@
+﻿<Window x:Class="MultiCommTerminal.NetCore.WindowObjs.EthernetWins.EthernetEditRequest"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MultiCommTerminal.NetCore.WindowObjs.EthernetWins"
+        mc:Ignorable="d"
+        xmlns:controls="clr-namespace:MultiCommTerminal.NetCore.UserControls"
+        xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
+        Style="{StaticResource MyWindowStyle}" Title="" 
+        WindowStartupLocation="CenterScreen" 
+        Icon="{Binding Source={x:Static wpfHelper:IconBinder.EthernetWhite}}"
+        Loaded="Window_Loaded" BorderThickness=".25"
+        MinHeight="100" MinWidth="200" MaxHeight="800" MaxWidth="900">    
+    <Grid>
+        <StackPanel>
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Name}}"  Style="{StaticResource NameLabelLeft}" />
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtName"  Style="{ StaticResource TxtBoxRight}" HorizontalAlignment="Center" Margin="0,1,0,0" VerticalAlignment="Top" />
+                <Label Grid.Row="1" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.HostNameIp}}"  Style="{StaticResource NameLabelLeft}" />
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtHostName"  Style="{ StaticResource TxtBoxRight}" HorizontalAlignment="Center" Margin="0,1,0,0" VerticalAlignment="Top" />
+                <Label Grid.Row="2" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.NetworkServicePort}}" Style="{StaticResource NameLabelLeft}" />
+                <TextBox Grid.Row="2" Grid.Column="1" x:Name="txtServiceName" Style="{ StaticResource TxtBoxRight}" />
+
+            </Grid>
+
+            <DockPanel HorizontalAlignment="Center" Margin="10">
+                <controls:UC_IconButton x:Name="btnSave" Style="{StaticResource TextIconButton}" Margin="5" 
+                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Save}}"
+                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Save}}" 
+                    Click="btnSave_Click" />
+            </DockPanel>
+        </StackPanel>
+    </Grid>
+</Window>

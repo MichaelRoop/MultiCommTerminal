@@ -26,7 +26,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         #region ICommWrapper methods
 
-        public void EthernetConnect(EthernetParams dataModel) {
+        public void EthernetConnectAsync(EthernetParams dataModel) {
             // TODO have an OnError and wrap this in try catch
             this.log.Info("EthernetConnect", "Connecting to ethernet");
             this.ethernet.ConnectAsync(dataModel);

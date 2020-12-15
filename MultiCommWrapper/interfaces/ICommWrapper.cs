@@ -369,7 +369,7 @@ namespace MultiCommWrapper.Net.interfaces {
         /// <summary>Raised when items added, removed or changed</summary>
         event EventHandler<List<IIndexItem<DefaultFileExtraInfo>>> OnEthernetListChange;
 
-        void EthernetConnect(EthernetParams dataModel);
+        void EthernetConnectAsync(EthernetParams dataModel);
         void EthernetDisconnect();
         void EthernetSend(string msg);
 

@@ -69,11 +69,11 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
 
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
-            WPF_ControlHelpers.CenterChild(parent, this);
         }
 
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
+            WPF_ControlHelpers.CenterChild(parent, this);
             this.widthManager.Teardown();
         }
 
