@@ -2,6 +2,7 @@
 using LanguageFactory.Net.data;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommTerminal.NetCore.DependencyInjection;
+using MultiCommTerminal.NetCore.WindowObjs.BLE;
 using MultiCommTerminal.NetCore.WindowObjs.BTWins;
 using MultiCommTerminal.NetCore.WindowObjs.EthernetWins;
 using MultiCommTerminal.NetCore.WindowObjs.SerialWins;
@@ -82,7 +83,9 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
                         bluetooth.ShowDialog();
                         break;
                     case MenuCode.BLE:
-                        App.ShowMsg("TBD");
+                        BLERun ble = new BLERun(this.mainWindow);
+                        ble.ShowDialog();
+                        //App.ShowMsg("TBD");
                         break;
                     default:
                         // Not supported

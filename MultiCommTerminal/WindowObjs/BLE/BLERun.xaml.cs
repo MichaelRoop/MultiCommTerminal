@@ -1,0 +1,134 @@
+﻿using BluetoothLE.Net.DataModels;
+using LanguageFactory.Net.data;
+using MultiCommTerminal.NetCore.DependencyInjection;
+using MultiCommTerminal.NetCore.WPF_Helpers;
+using System;
+using System.Windows;
+using WpfHelperClasses.Core;
+
+namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
+
+    /// <summary>Interaction logic for BLERun.xaml</summary>
+    public partial class BLERun : Window {
+
+        private Window parent = null;
+        private BluetoothLEDeviceInfo selectedDevice = null;
+
+        #region Constructors and window events
+
+        public BLERun(Window parent) {
+            this.parent = parent;
+            InitializeComponent();
+            WPF_ControlHelpers.CenterChild(parent, this);
+            this.SizeToContent = SizeToContent.WidthAndHeight;
+            this.ui.ExitClicked += this.OnUiExit;
+            this.ui.ConnectCicked += this.OnUiConnect;
+            this.ui.DiscoverClicked += this.OnUiDiscover;
+            this.ui.DisconnectClicked += this.OnUiDisconnect;
+            this.ui.SendClicked += this.OnUiSend;
+            this.ui.InfoClicked += this.OnUiInfo;
+            this.ui.SettingsClicked += this.OnUiSettings;
+            // Add connection, error and bytes received when supported
+        }
+
+
+        /// <summary>Connect the style mouse grab on title bar</summary>
+        public override void OnApplyTemplate() {
+            this.BindMouseDownToCustomTitleBar();
+            base.OnApplyTemplate();
+        }
+
+
+        private void Window_Loaded(object sender, RoutedEventArgs e) {
+            WPF_ControlHelpers.CenterChild(parent, this);
+            this.ui.OnLoad(this.parent);
+        }
+
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+            this.ui.ExitClicked -= this.OnUiExit;
+            this.ui.ConnectCicked -= this.OnUiConnect;
+            this.ui.DiscoverClicked -= this.OnUiDiscover;
+            this.ui.DisconnectClicked -= this.OnUiDisconnect;
+            this.ui.SendClicked -= this.OnUiSend;
+            this.ui.InfoClicked -= this.OnUiInfo;
+            this.ui.SettingsClicked -= this.OnUiSettings;
+            // Add connection, error and bytes received when supported
+            DI.Wrapper.BLE_DeviceInfoGathered -= deviceInfoGathered;
+            this.ui.OnClosing();
+        }
+
+        #endregion
+
+        #region DI event handlers
+
+        private void deviceInfoGathered(object sender, BluetoothLEDeviceInfo info) {
+            this.Dispatcher.Invoke(() => {
+                this.ui.IsBusy = false;
+                DI.Wrapper.BLE_DeviceInfoGathered -= deviceInfoGathered;
+                DeviceInfo_BLE win = new DeviceInfo_BLE(this, info);
+                win.ShowDialog();
+            });
+        }
+
+        // Add other handlers when connection supported
+
+        #endregion
+
+        #region UI Event handlers
+
+        private void OnUiExit(object sender, EventArgs e) {
+            this.Close();
+        }
+
+        private void OnUiDiscover(object sender, EventArgs e) {
+            this.Title = "Bluetooth";
+            this.selectedDevice = BLESelect.ShowBox(this, true);
+            if (this.selectedDevice != null) {
+                this.Title = this.selectedDevice.Name;
+            }
+        }
+
+
+        private void OnUiConnect(object sender, EventArgs e) {
+            if (this.selectedDevice == null) {
+                this.OnUiDiscover(sender, e);
+            }
+            if (this.selectedDevice != null) {
+                //this.ui.IsBusy = true;
+                //DI.Wrapper.BLE_ConnectAsync(this.selectedDevice);
+            }
+        }
+
+
+        private void OnUiDisconnect(object sender, EventArgs e) {
+            //DI.Wrapper.BLE_Disconnect();
+        }
+
+
+        private void OnUiSend(object sender, string msg) {
+            //DI.Wrapper.BLE_Send(msg);
+        }
+
+
+        private void OnUiInfo(object sender, EventArgs e) {
+            if (this.selectedDevice != null) {
+                DI.Wrapper.BLE_DeviceInfoGathered += deviceInfoGathered;
+                this.ui.IsBusy = true;
+                DI.Wrapper.BLE_GetInfo(this.selectedDevice);
+            }
+            else {
+                // TODO - open select and show 
+                App.ShowMsg(DI.Wrapper.GetText(MsgCode.NothingSelected));
+            }
+        }
+
+
+        private void OnUiSettings(object sender, EventArgs e) {
+            App.ShowMsgTitle("Bluetooth", "TBD");
+        }
+
+        #endregion
+
+    }
+}
