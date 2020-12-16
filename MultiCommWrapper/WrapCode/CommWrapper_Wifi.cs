@@ -4,6 +4,7 @@ using CommunicationStack.Net.DataModels;
 using CommunicationStack.Net.Enumerations;
 using LanguageFactory.Net.data;
 using MultiCommData.Net.StorageDataModels;
+using MultiCommWrapper.Net.DataModels;
 using MultiCommWrapper.Net.Helpers;
 using MultiCommWrapper.Net.interfaces;
 using StorageFactory.Net.interfaces;
@@ -11,6 +12,7 @@ using StorageFactory.Net.StorageManagers;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using VariousUtils.Net;
 using WifiCommon.Net.DataModels;
 using WifiCommon.Net.Enumerations;
 
@@ -84,6 +86,35 @@ namespace MultiCommWrapper.Net.WrapCode {
                 }, (err) => { });
             this.wifiStack.SendToComm(msg);
         }
+
+
+        public List<KeyValuePropertyDisplay> Wifi_GetDeviceInfoForDisplay(WifiNetworkInfo info) {
+            List<KeyValuePropertyDisplay> list = new List<KeyValuePropertyDisplay>();
+
+            // TODO - language
+
+            list.Add(new KeyValuePropertyDisplay("SSID", info.SSID));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.AuthenticationType), info.AuthenticationType.ToString().UnderlineToSpaces()));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.EncryptionType), info.EncryptionType.ToString().UnderlineToSpaces()));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.UpTime), info.UpTime.ToString("g")));
+            list.Add(new KeyValuePropertyDisplay(string.Format("{0} (Bars)",this.GetText(MsgCode.SignalStrength)), info.SignalStrengthInBars));
+            list.Add(new KeyValuePropertyDisplay("RSSI (Decible Milliwatts)", info.RssiInDecibleMilliwatts));
+            list.Add(new KeyValuePropertyDisplay("Physical Layer Kind", info.PhysicalLayerKind.ToString().UnderlineToSpaces()));
+            list.Add(new KeyValuePropertyDisplay(string.Format("{0} (BSSID)", this.GetText(MsgCode.MacAddress)), info.MacAddress_BSSID));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Kind), info.Kind));
+            list.Add(new KeyValuePropertyDisplay("WIFI Direct", info.IsWifiDirect));
+            list.Add(new KeyValuePropertyDisplay("Channel Center Frequency (Khz)", info.ChanneCenterFrequencyKlhz));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.BeaconInterval), info.BeaconInterval.ToString("g")));
+
+
+            // The host name and service name are credentials that are added to connect to exposed service
+            //list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Port), info.RemoteServiceName));
+            //list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.HostName), info.RemoteHostName));
+            // User name not used in connections
+            //list.Add(new KeyValuePropertyDisplay("User Name", info.UserName));
+            return list;
+        }
+
 
         #endregion
 

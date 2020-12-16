@@ -49,9 +49,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             WPF_ControlHelpers.CenterChild(parent, this);
-            this.ui.OnLoad(this.parent, new RunPageCtrlsEnabled() {
-                Info = false,
-            });
+            this.ui.OnLoad(this.parent, new RunPageCtrlsEnabled());
         }
 
 
@@ -137,7 +135,12 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
 
         private void OnUiInfo(object sender, EventArgs e) {
-            App.ShowMsgTitle(DI.Wrapper.GetText(MsgCode.Ethernet), "TBD");
+            if (this.selectedWifi == null) {
+                this.OnUiDiscover(sender, e);
+            }
+            if (this.selectedWifi != null) {
+                WifiInfo.ShowBox(this, this.selectedWifi);
+            }
         }
 
 

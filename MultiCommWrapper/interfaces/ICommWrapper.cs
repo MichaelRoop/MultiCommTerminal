@@ -281,6 +281,8 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void WifiSend(string msg);
 
+        List<KeyValuePropertyDisplay> Wifi_GetDeviceInfoForDisplay(WifiNetworkInfo info);
+
         #endregion
 
         #region Serial USB
