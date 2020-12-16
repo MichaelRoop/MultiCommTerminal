@@ -35,7 +35,7 @@
                 </ListBox.ItemTemplate>
             </ListBox>
                 <controls:UC_RoundIconButton x:Name="btnEdit"  
-                            Style="{StaticResource IconButton}" 
+                            Style="{StaticResource IconButton}" Visibility="Collapsed"
                             Margin="5,0" VerticalAlignment="Center"  Width="35" Height="35"
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Edit}}"  
                             Click="btnEdit_Click" />

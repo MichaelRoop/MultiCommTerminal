@@ -61,9 +61,8 @@ namespace Serial.UWP.Core {
                             // default in Arduino it does not show
                             using (SerialDevice dev = await SerialDevice.FromIdAsync(info.Id)) {
                             if (dev != null) {
-                                    UsbDisplay display = new UsbDisplay(dev.UsbVendorId, dev.UsbProductId);
-
-                                    SerialDeviceInfo device = new SerialDeviceInfo() {
+                                UsbDisplay display = new UsbDisplay(dev.UsbVendorId, dev.UsbProductId);
+                                SerialDeviceInfo device = new SerialDeviceInfo() {
                                     Id = info.Id,
                                     IsDefault = info.IsDefault,
                                     IsEnabled = info.IsEnabled,
