@@ -18,7 +18,8 @@
             <DockPanel>
                 
             <ListBox x:Name="listboxMain" MaxHeight="500" MinWidth="300" MinHeight="50" Margin="5" FontSize="16" Grid.IsSharedSizeScope="True"
-                     ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" >
+                     ScrollViewer.HorizontalScrollBarVisibility="Auto" BorderThickness="0"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto" IsEnabled="False" >
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="1">
