@@ -1,11 +1,7 @@
 ﻿using IconFactory.Net.data;
 using LanguageFactory.Net.data;
-using LanguageFactory.Net.interfaces;
-using LanguageFactory.Net.Messaging;
-using LogUtils.Net;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommTerminal.NetCore.DependencyInjection;
-using MultiCommTerminal.NetCore.WindowObjs;
 using MultiCommTerminal.NetCore.WindowObjs.BTWins;
 using MultiCommTerminal.NetCore.WindowObjs.EthernetWins;
 using MultiCommTerminal.NetCore.WindowObjs.SerialWins;
@@ -69,24 +65,9 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
                         Commands cmds = new Commands(this.mainWindow);
                         cmds.ShowDialog();
                         break;
-                    //case MenuCode.Credentials:
-                    //    WifiCredentialsWin.ShowBox(this.mainWindow);
-                    //    break;
-                    //case MenuCode.UsbConfig:
-                    //    DeviceSelect_USB.ShowBox(this.mainWindow);
-                    //    break;
                     case MenuCode.Ethernet:
-                        //DeviceSelect_Ethernet.ShowBox(this.mainWindow);
                         EthernetRun eth = new EthernetRun(this.mainWindow);
                         eth.ShowDialog();
-                        break;
-                    //case MenuCode.Settings:
-                    //    // TODO - settings window
-                    //    break;
-                    case MenuCode.About:
-                        AboutWin.ShowBox(this.mainWindow);
-
-
                         break;
                     case MenuCode.Usb:
                         SerialRun usb = new SerialRun(this.mainWindow);
@@ -103,7 +84,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
                     case MenuCode.BLE:
                         App.ShowMsg("TBD");
                         break;
-
                     default:
                         // Not supported
                         break;
@@ -137,11 +117,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
                 this.AddItem(MenuCode.Terminators, MsgCode.Terminators, UIIcon.Terminator, "0");
                 this.AddItem(MenuCode.Commands, MsgCode.command, UIIcon.Command, "0"); // TODO Get a new icon
                 this.AddItem(MenuCode.Language, MsgCode.language, UIIcon.Language, "0");
-                //this.AddItem(MenuCode.Credentials, MsgCode.Credentials, UIIcon.Credentials, "0");
-                //this.AddItem(MenuCode.UsbConfig, string.Format("USB {0}", DI.Wrapper.GetText(MsgCode.Settings)), UIIcon.Usb, "0");  // Need 
-                //this.AddItem(MenuCode.Settings, MsgCode.Settings, UIIcon.Settings, "0");
-                this.AddItem(MenuCode.About, MsgCode.About, UIIcon.About, "1");
-
                 this.lbxMenuItems.ItemsSource = this.items;
                 lbxMenuItems.SelectionChanged += this.lbxMenuItems_SelectionChanged;
             });
@@ -162,7 +137,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
             };
             this.items.Add(dataModel);
         }
-
 
         #endregion
 

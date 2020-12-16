@@ -7,6 +7,9 @@ using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.NetCore.WindowObjs {
 
+
+    // TODO REMOVE THIS FILE
+
     /// <summary>Interaction logic for AboutWin.xaml</summary>
     public partial class AboutWin : Window {
 
@@ -17,10 +20,10 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         #endregion
 
 
-        public static void ShowBox(Window parent) {
-            AboutWin win = new AboutWin(parent);
-            win.ShowDialog();
-        }
+        //public static void ShowBox(Window parent) {
+        //    AboutWin win = new AboutWin(parent);
+        //    win.ShowDialog();
+        //}
 
         public AboutWin(Window parent) {
             this.parent = parent;
@@ -29,33 +32,33 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         }
 
 
-        /// <summary>Connect the style mouse grab on title bar</summary>
-        public override void OnApplyTemplate() {
-            this.BindMouseDownToCustomTitleBar();
-            base.OnApplyTemplate();
-        }
+        ///// <summary>Connect the style mouse grab on title bar</summary>
+        //public override void OnApplyTemplate() {
+        //    this.BindMouseDownToCustomTitleBar();
+        //    base.OnApplyTemplate();
+        //}
 
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
-            this.CenterToParent(this.parent);
+            //this.CenterToParent(this.parent);
         }
 
 
-        private void btnExit_Click(object sender, RoutedEventArgs e) {
-            this.Close();
-        }
+        //private void btnExit_Click(object sender, RoutedEventArgs e) {
+        //    this.Close();
+        //}
 
 
-        /// <summary>Opens the browser because of the execution of a hyperlink</summary>
-        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e) {
-            try {
-                Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri) { UseShellExecute = true });
-            e.Handled = true;
-            }
-            catch (Exception ex) {
-                Log.Exception(9999, "", ex);
-            }
-        }
+        ///// <summary>Opens the browser because of the execution of a hyperlink</summary>
+        //private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e) {
+        //    try {
+        //        Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri) { UseShellExecute = true });
+        //        e.Handled = true;
+        //    }
+        //    catch (Exception ex) {
+        //        Log.Exception(9999, "", ex);
+        //    }
+        //}
 
     }
 }

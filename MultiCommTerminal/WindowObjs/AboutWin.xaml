@@ -15,7 +15,7 @@
         Loaded="Window_Loaded"
         >
     <Grid>
-        <StackPanel>
+        <!--<StackPanel>
             <Grid HorizontalAlignment="Left" Margin="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition MaxWidth="180" />
@@ -69,7 +69,7 @@
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Exit}}"
                             Click="btnExit_Click"/>
             </DockPanel>
-        </StackPanel>
+        </StackPanel>-->
 
     </Grid>
 </Window>

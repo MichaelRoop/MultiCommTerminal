@@ -1,34 +1,10 @@
-﻿using BluetoothCommon.Net;
-using BluetoothLE.Net.DataModels;
-using ChkUtils.Net;
-using Common.Net.Network;
-using CommunicationStack.Net.DataModels;
-using CommunicationStack.Net.Enumerations;
-using Ethernet.Common.Net.DataModels;
-using Ethernet.UWP.Core;
-using LanguageFactory.Net.data;
+﻿using LanguageFactory.Net.data;
 using LanguageFactory.Net.Messaging;
 using LogUtils.Net;
-using MultiCommData.Net.StorageDataModels;
-using MultiCommData.UserDisplayData.Net;
 using MultiCommTerminal.NetCore.DependencyInjection;
-using MultiCommTerminal.NetCore.WindowObjs;
-using MultiCommTerminal.NetCore.WindowObjs.SerialWins;
-using MultiCommTerminal.NetCore.WPF_Helpers;
-using MultiCommWrapper.Net.DataModels;
-using MultiCommWrapper.Net.interfaces;
-using Serial.UWP.Core;
-using SerialCommon.Net.DataModels;
-using StorageFactory.Net.interfaces;
-using StorageFactory.Net.StorageManagers;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using WifiCommon.Net.DataModels;
-using WifiCommon.Net.Enumerations;
 using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.NetCore.WindowObjs {
@@ -38,11 +14,10 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         MenuWin menu = null;
 
-
         public MainWindow() {
             InitializeComponent();
             this.SizeToContent = SizeToContent.WidthAndHeight;
-            this.OnStartupSuccess();
+            DI.Wrapper.LanguageChanged += this.LanguageChangedHandler;
         }
 
 
@@ -53,7 +28,11 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
-            this.OnTeardown();
+            DI.Wrapper.LanguageChanged -= this.LanguageChangedHandler;
+            if (this.menu != null) {
+                this.menu.Close();
+            }
+            DI.Wrapper.Teardown();
         }
 
 
@@ -114,22 +93,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         }
 
 
-        private void OnStartupSuccess() {
-            DI.Wrapper.LanguageChanged += this.LanguageChangedHandler;
-        }
-
-
-        private void OnTeardown() {
-            DI.Wrapper.LanguageChanged -= this.LanguageChangedHandler;
-            if (this.menu != null) {
-                this.menu.Close();
-            }
-            DI.Wrapper.Teardown();
-        }
-
-
-
-
         /// <summary>Handle the language changed event to update controls text</summary>
         private void LanguageChangedHandler(object sender, SupportedLanguage l) {
             this.btnExit.Content = l.GetText(MsgCode.exit);
@@ -138,9 +101,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
             this.txtUserManual.Text = l.GetText(MsgCode.UserManual);
             this.txtSupport.Text = l.GetText(MsgCode.Support);
         }
-
-
-
 
 
 #if THIS_IS_THE_OLD_MAIN_CODE

@@ -6,14 +6,9 @@ namespace MultiCommData.UserDisplayData.Net {
         Wifi,
         Bluetooth,
         BLE,
-
+        Ethernet,
         Language,
-        //Settings,
         Terminators,
         Commands,
-        //UsbConfig,
-        //Credentials,
-        Ethernet,
-        About,
     }
 }
