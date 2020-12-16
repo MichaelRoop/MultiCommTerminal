@@ -140,7 +140,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BTWins {
 
 
         private void OnUiSettings(object sender, EventArgs e) {
-            App.ShowMsgTitle("Bluetooth", "TBD");
+            BTSettings.ShowBox(this);
         }
 
 
