@@ -32,6 +32,7 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
         public static string Exit { get { return Source(UIIcon.Exit); } }
         public static string HamburgMenu_W { get { return Source(UIIcon.HamburgerMenuWhite); } }
         public static string Settings { get { return Source(UIIcon.Settings); } }
+        public static string Settings_W { get { return Source(UIIcon.SettingsWhite); } }
         public static string Language { get { return Source(UIIcon.Language); } }
         public static string Language_W { get { return Source(UIIcon.LanguageWhite); } }
         public static string Delete { get { return Source(UIIcon.Delete); } }
