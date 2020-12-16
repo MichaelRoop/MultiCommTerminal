@@ -7,6 +7,7 @@ using CommunicationStack.Net.Enumerations;
 using Ethernet.Common.Net.DataModels;
 using Ethernet.UWP.Core;
 using LanguageFactory.Net.data;
+using LanguageFactory.Net.Messaging;
 using LogUtils.Net;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommData.UserDisplayData.Net;
@@ -22,6 +23,7 @@ using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -33,6 +35,115 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
     /// <summary>Interaction logic for MainWindow.xaml</summary>
     public partial class MainWindow : Window {
+
+        MenuWin menu = null;
+
+
+        public MainWindow() {
+            InitializeComponent();
+            this.SizeToContent = SizeToContent.WidthAndHeight;
+            this.OnStartupSuccess();
+        }
+
+
+        private void Window_ContentRendered(object sender, EventArgs e) {
+            this.menu = new MenuWin(this);
+            this.menu.Collapse();
+        }
+
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+            this.OnTeardown();
+        }
+
+
+        /// <summary>Close opened menu window anywhere on window on mouse down</summary>
+        private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+            this.HideMenu();
+        }
+
+
+        /// <summary>Grab to window to move when click on title bar</summary>
+        private void TitleBarBorder_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+            this.HideMenu();
+            this.DragMove();
+        }
+
+
+        private void btnExit_Click(object sender, RoutedEventArgs e) {
+            this.Close();
+        }
+
+
+        /// <summary>Opens the browser because of the execution of a hyperlink</summary>
+        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e) {
+            try {
+                Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri) { UseShellExecute = true });
+                e.Handled = true;
+            }
+            catch (Exception ex) {
+                Log.Exception(9999, "", ex);
+            }
+        }
+
+
+        /// <summary>Click event on the hamburger icon to toggle menu window</summary>
+        private void imgMenu_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+            if (this.menu.IsVisible) {
+                this.menu.Hide();
+            }
+            else {
+                // Need to get offset from current position of main window at click time
+                this.menu.Left = this.Left;
+                this.menu.Top = this.Top + this.taskBar.ActualHeight;
+                this.menu.Show();
+            }
+        }
+
+
+        /// <summary>Catch the MouseDown event on hamburg menu before it bubbles up to the window and closes the menu</summary>
+        private void imgMenu_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+            e.Handled = true;
+        }
+
+
+        private void HideMenu() {
+            if (this.menu.IsVisible) {
+                this.menu.Hide();
+            }
+        }
+
+
+        private void OnStartupSuccess() {
+            DI.Wrapper.LanguageChanged += this.LanguageChangedHandler;
+        }
+
+
+        private void OnTeardown() {
+            DI.Wrapper.LanguageChanged -= this.LanguageChangedHandler;
+            if (this.menu != null) {
+                this.menu.Close();
+            }
+            DI.Wrapper.Teardown();
+        }
+
+
+
+
+        /// <summary>Handle the language changed event to update controls text</summary>
+        private void LanguageChangedHandler(object sender, SupportedLanguage l) {
+            this.btnExit.Content = l.GetText(MsgCode.exit);
+            this.lbAuthor.Content = l.GetText(MsgCode.Author);
+            this.lbIcons.Content = l.GetText(MsgCode.Icons);
+            this.txtUserManual.Text = l.GetText(MsgCode.UserManual);
+            this.txtSupport.Text = l.GetText(MsgCode.Support);
+        }
+
+
+
+
+
+#if THIS_IS_THE_OLD_MAIN_CODE
 
         #region Data
 
@@ -356,12 +467,12 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         }
 
 
-        private void BT_DeviceInfoGatheredHandler(object sender, BTDeviceInfo e) {
-            this.Dispatcher.Invoke(() => {
-                DeviceInfo_BT win = new DeviceInfo_BT(this, e);
-                win.ShowDialog();
-            });
-        }
+        //private void BT_DeviceInfoGatheredHandler(object sender, BTDeviceInfo e) {
+        //    this.Dispatcher.Invoke(() => {
+        //        DeviceInfo_BT win = new DeviceInfo_BT(this, e);
+        //        win.ShowDialog();
+        //    });
+        //}
 
 
         private void BT_BytesReceivedHandler(object sender, string msg) {
@@ -688,7 +799,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
                         item,
                         (data) => {
                             this.gridWait.Show();
-                            this.wrapper.EthernetConnect(data);
+                            this.wrapper.EthernetConnectAsync(data);
                         }, App.ShowMsg);
 
                 });
@@ -734,7 +845,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
             // BT
             this.wrapper.BT_DeviceDiscovered += this.BT_DeviceDiscoveredHandler;
             this.wrapper.BT_DiscoveryComplete += this.BT_DiscoveryCompleteHandler;
-            this.wrapper.BT_DeviceInfoGathered += this.BT_DeviceInfoGatheredHandler;
+            //this.wrapper.BT_DeviceInfoGathered += this.BT_DeviceInfoGatheredHandler;
             this.wrapper.BT_ConnectionCompleted += this.BT_ConnectionCompletedHandler;
             this.wrapper.BT_BytesReceived += this.BT_BytesReceivedHandler;
             this.wrapper.BT_PairInfoRequested += this.BT_PairInfoRequestedHandler;
@@ -805,7 +916,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
             //BT
             this.wrapper.BT_DeviceDiscovered -= this.BT_DeviceDiscoveredHandler;
             this.wrapper.BT_DiscoveryComplete -= this.BT_DiscoveryCompleteHandler;
-            this.wrapper.BT_DeviceInfoGathered -= this.BT_DeviceInfoGatheredHandler;
+            //this.wrapper.BT_DeviceInfoGathered -= this.BT_DeviceInfoGatheredHandler;
             this.wrapper.BT_ConnectionCompleted -= this.BT_ConnectionCompletedHandler;
             this.wrapper.BT_BytesReceived -= this.BT_BytesReceivedHandler;
             this.wrapper.BT_PairInfoRequested -= this.BT_PairInfoRequestedHandler;
@@ -1131,5 +1242,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
             this.lbLog.ToggleVisibility();
         }
 
+#endif
     }
 }
