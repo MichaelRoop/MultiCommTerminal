@@ -162,7 +162,13 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
                 DeviceInfo_USB.ShowBox(this, this.selectedSerial);
             }
             else {
-                App.ShowMsg(DI.Wrapper.GetText(MsgCode.NothingSelected));
+                this.OnUiDiscover(sender, e);
+                if (this.selectedSerial == null) {
+                    App.ShowMsg(DI.Wrapper.GetText(MsgCode.NothingSelected));
+                }
+                else {
+                    DeviceInfo_USB.ShowBox(this, this.selectedSerial);
+                }
             }
         }
 

@@ -3,6 +3,7 @@ using CommunicationStack.Net.Enumerations;
 using Ethernet.Common.Net.DataModels;
 using LanguageFactory.Net.data;
 using MultiCommTerminal.NetCore.DependencyInjection;
+using MultiCommTerminal.NetCore.UserControls;
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using System;
 using System.Collections.Generic;
@@ -48,7 +49,10 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             WPF_ControlHelpers.CenterChild(parent, this);
-            this.ui.OnLoad(this.parent);
+            this.ui.OnLoad(this.parent, new RunPageCtrlsEnabled() {
+                Info = false,
+                Settings = false,
+            });
         }
 
 
@@ -151,6 +155,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
 
 
         private void OnUiInfo(object sender, EventArgs e) {
+            // TODO put up the list and select first
+
             App.ShowMsgTitle(DI.Wrapper.GetText(MsgCode.Ethernet), "TBD");
         }
 

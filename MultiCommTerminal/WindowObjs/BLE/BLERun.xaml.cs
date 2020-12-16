@@ -1,6 +1,7 @@
 ﻿using BluetoothLE.Net.DataModels;
 using LanguageFactory.Net.data;
 using MultiCommTerminal.NetCore.DependencyInjection;
+using MultiCommTerminal.NetCore.UserControls;
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using System;
 using System.Windows;
@@ -41,7 +42,11 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             WPF_ControlHelpers.CenterChild(parent, this);
-            this.ui.OnLoad(this.parent);
+            this.ui.OnLoad(this.parent, new RunPageCtrlsEnabled() {
+                Connect = false,
+                Disconnect = false,
+                Settings = false,
+            });
         }
 
 
@@ -118,8 +123,15 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                 DI.Wrapper.BLE_GetInfo(this.selectedDevice);
             }
             else {
-                // TODO - open select and show 
-                App.ShowMsg(DI.Wrapper.GetText(MsgCode.NothingSelected));
+                this.OnUiDiscover(sender, e);
+                if (this.selectedDevice == null) {
+                    App.ShowMsg(DI.Wrapper.GetText(MsgCode.NothingSelected));
+                }
+                else {
+                    DI.Wrapper.BLE_DeviceInfoGathered += deviceInfoGathered;
+                    this.ui.IsBusy = true;
+                    DI.Wrapper.BLE_GetInfo(this.selectedDevice);
+                }
             }
         }
 

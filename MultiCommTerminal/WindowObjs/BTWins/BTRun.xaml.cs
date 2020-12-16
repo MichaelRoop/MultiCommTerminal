@@ -126,8 +126,15 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BTWins {
                 DI.Wrapper.BTClassicGetExtraInfoAsync(this.selectedDevice);
             }
             else {
-                // TODO - open select and show 
-                App.ShowMsg(DI.Wrapper.GetText(MsgCode.NothingSelected));
+                this.OnUiDiscover(sender, e);
+                if (this.selectedDevice == null) {
+                    App.ShowMsg(DI.Wrapper.GetText(MsgCode.NothingSelected));
+                }
+                else {
+                    DI.Wrapper.BT_DeviceInfoGathered += deviceInfoGathered;
+                    this.ui.IsBusy = true;
+                    DI.Wrapper.BTClassicGetExtraInfoAsync(this.selectedDevice);
+                }
             }
         }
 

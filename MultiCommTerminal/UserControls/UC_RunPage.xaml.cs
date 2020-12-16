@@ -65,6 +65,7 @@ namespace MultiCommTerminal.NetCore.UserControls {
 
         #region Constructors and window events
 
+        /// <summary>Default constructor required for designer load</summary>
         public UC_RunPage() {
             InitializeComponent();
             this.buttonSizer = new ButtonGroupSizeSyncManager(
@@ -73,10 +74,18 @@ namespace MultiCommTerminal.NetCore.UserControls {
         }
 
 
-
         /// <summary>Do any initialization here. Should be called by window at load</summary>
-        public void OnLoad(Window parent) {
+        public void OnLoad(Window parent, RunPageCtrlsEnabled enableList = null) {
             this.parent = parent;
+            if (enableList != null) {
+                this.btnInfo.SetVisualEnabled(enableList.Info);
+                this.btnSettings.SetVisualEnabled(enableList.Settings);
+                this.btnConnect.SetVisualEnabled(enableList.Connect);
+                this.connectedOff.SetVisualEnabled(enableList.Connect);
+                this.connectedOn.SetVisualEnabled(enableList.Connect);
+                this.btnDisconnect.SetVisualEnabled(enableList.Disconnect);
+            }
+
             this.inScroll = this.lbIncoming.GetScrollViewer();
             this.logScroll = this.lbLog.GetScrollViewer();
             this.lbLog.Collapse();
