@@ -50,7 +50,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             WPF_ControlHelpers.CenterChild(parent, this);
             this.ui.OnLoad(this.parent, new RunPageCtrlsEnabled() {
-                Info = false,
                 Settings = false,
             });
         }
@@ -124,7 +123,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
             this.Title = DI.Wrapper.GetText(MsgCode.Ethernet);
             this.selectedEthernet = EthernetSelect.ShowBox(this);
             if (this.selectedEthernet != null) {
-                this.Title = this.selectedEthernet.DataModel.DisplayString;
+                this.Title = this.selectedEthernet.DataModel.Name;
             }
             else {
                 // No entries. Create one
@@ -155,9 +154,13 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
 
 
         private void OnUiInfo(object sender, EventArgs e) {
-            // TODO put up the list and select first
+            if (this.selectedEthernet == null) {
+                this.OnUiDiscover(sender, e);
+            }
 
-            App.ShowMsgTitle(DI.Wrapper.GetText(MsgCode.Ethernet), "TBD");
+            if (this.selectedEthernet != null) {
+                EthernetInfo.ShowBox(this, this.selectedEthernet.DataModel);
+            }
         }
 
 

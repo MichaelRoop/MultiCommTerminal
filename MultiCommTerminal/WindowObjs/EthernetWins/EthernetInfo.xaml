@@ -1,0 +1,42 @@
+﻿<Window x:Class="MultiCommTerminal.NetCore.WindowObjs.EthernetWins.EthernetInfo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MultiCommTerminal.NetCore.WindowObjs.EthernetWins"
+        mc:Ignorable="d"
+        xmlns:controls="clr-namespace:MultiCommTerminal.NetCore.UserControls"
+        xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
+        Style="{StaticResource MyWindowStyle}" Title="" 
+        Icon="{Binding Source={x:Static wpfHelper:IconBinder.EthernetWhite}}"
+        WindowStartupLocation="CenterScreen" 
+        Loaded="Window_Loaded"
+        MinHeight="100" MinWidth="200" MaxHeight="800" MaxWidth="900" BorderThickness=".5">
+    <Grid>
+        <StackPanel>
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.HostNameIp}}"  
+                       Style="{StaticResource NameLabelLeft}" />
+                <Label Grid.Row="0" Grid.Column="1" x:Name="txtHost"  Style="{ StaticResource NameLabelRight}"/>
+
+                <Label Grid.Row="1" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.NetworkServicePort}}" 
+                       Style="{StaticResource NameLabelLeft}" />
+                <Label Grid.Row="1" Grid.Column="1" x:Name="txtService" Style="{ StaticResource NameLabelRight}" />
+            </Grid>
+            <DockPanel HorizontalAlignment="Center" Margin="10">
+                <controls:UC_IconButton x:Name="btnExit" Style="{StaticResource TextIconButton}" Margin="5" 
+                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Exit}}"
+                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Exit}}" 
+                    Click="btnExit_Click" />
+            </DockPanel>
+        </StackPanel>
+    </Grid>
+</Window>
