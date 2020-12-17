@@ -150,18 +150,21 @@ namespace MultiCommWrapper.Net.WrapCode {
         public List<KeyValuePropertyDisplay> BT_GetDeviceInfoForDisplay(BTDeviceInfo info) {
             List<KeyValuePropertyDisplay> list = new List<KeyValuePropertyDisplay>();
             list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Name), info.Name));
-            list.Add(new KeyValuePropertyDisplay("Address", info.Address));
-            list.Add(new KeyValuePropertyDisplay("Device Class", string.Format("{0} ({1})", info.DeviceClassName, info.DeviceClassInt)));
-            list.Add(new KeyValuePropertyDisplay("Service Class", string.Format("{0} (0x{1:X})", info.ServiceClassName, info.ServiceClassInt)));
-            list.Add(new KeyValuePropertyDisplay("Last Seen", info.LastSeen.ToString()));
-            list.Add(new KeyValuePropertyDisplay("Last Used", info.LastUsed.ToString()));
-            list.Add(new KeyValuePropertyDisplay("Authenticated", info.Authenticated));
-            list.Add(new KeyValuePropertyDisplay("Remote Host Name", info.RemoteHostName));
-            list.Add(new KeyValuePropertyDisplay("Remote Service Name", info.RemoteServiceName));
-            list.Add(new KeyValuePropertyDisplay("Connected", info.Connected));
-            list.Add(new KeyValuePropertyDisplay("Can Pair", info.CanPair));
-            list.Add(new KeyValuePropertyDisplay("Is Paired", info.IsPaired));
-            list.Add(new KeyValuePropertyDisplay("Strength", info.Strength));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Address), info.Address));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.DeviceClass), string.Format("{0} ({1})", info.DeviceClassName, info.DeviceClassInt)));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.ServiceClass), string.Format("{0} (0x{1:X})", info.ServiceClassName, info.ServiceClassInt)));
+            
+            // Apparently not used
+            //list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.LastSeen), info.LastSeen.ToString()));
+            //list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.LastUsed), info.LastUsed.ToString()));
+            
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Authenticated), info.Authenticated));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.RemoteHost), info.RemoteHostName));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.RemoteService), info.RemoteServiceName));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Connected), info.Connected));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.PairingAllowed), info.CanPair));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Paired), info.IsPaired));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.SignalStrength), info.Strength)); 
             return list;
         }
 

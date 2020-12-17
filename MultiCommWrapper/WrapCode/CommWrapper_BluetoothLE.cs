@@ -2,6 +2,7 @@
 using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
 using Common.Net.Network;
+using LanguageFactory.Net.data;
 using MultiCommWrapper.Net.DataModels;
 using MultiCommWrapper.Net.interfaces;
 using System;
@@ -155,20 +156,20 @@ namespace MultiCommWrapper.Net.WrapCode {
             try {
                 // TODO - language
                 List<KeyValuePropertyDisplay> list = new List<KeyValuePropertyDisplay>();
-                list.Add(new KeyValuePropertyDisplay("Name", info.Name));
-                list.Add(new KeyValuePropertyDisplay("Id", info.Id));
-                list.Add(new KeyValuePropertyDisplay("Access Status", info.AccessStatus.ToString().CamelCaseToSpaces()));
-                list.Add(new KeyValuePropertyDisplay("Address", info.AddressAsULong.ToString()));
-                list.Add(new KeyValuePropertyDisplay("Address Type", info.AddressType.ToString().CamelCaseToSpaces()));
-                list.Add(new KeyValuePropertyDisplay("Default", info.IsDefault.ToString()));
-                list.Add(new KeyValuePropertyDisplay("Enabled", info.IsEnabled.ToString()));
-                list.Add(new KeyValuePropertyDisplay("Device Kind", info.DeviceKind.ToString().UnderlineToSpaces()));
-                list.Add(new KeyValuePropertyDisplay("Can Pair", info.CanPair.ToString()));
-                list.Add(new KeyValuePropertyDisplay("Paired", info.IsPaired.ToString()));
-                list.Add(new KeyValuePropertyDisplay("Paired using secure connection", info.WasPairedUsingSecureConnection.ToString()));
-                list.Add(new KeyValuePropertyDisplay("Connected", info.IsConnected.ToString()));
-                list.Add(new KeyValuePropertyDisplay("Protection Level", info.ProtectionLevel.ToString().CamelCaseToSpaces()));
-                list.Add(new KeyValuePropertyDisplay("Bluetooth Type", info.TypeBluetooth.ToString().CamelCaseToSpaces()));
+                list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Name), info.Name));
+                list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Id), info.Id));
+                list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.AccessStatus), info.AccessStatus.ToString().CamelCaseToSpaces()));
+                list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Address), info.AddressAsULong.ToString()));
+                list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.AddressType), info.AddressType.ToString().CamelCaseToSpaces()));
+                list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Default), info.IsDefault.ToString()));
+                list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Enabled), info.IsEnabled.ToString()));
+                list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Kind), info.DeviceKind.ToString().UnderlineToSpaces()));
+                list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.PairingAllowed), info.CanPair.ToString()));
+                list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Paired), info.IsPaired.ToString()));
+                list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.PairedWithSecureConnection), info.WasPairedUsingSecureConnection.ToString()));
+                list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Connected), info.IsConnected.ToString()));
+                list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.ProtectionLevel), info.ProtectionLevel.ToString().CamelCaseToSpaces()));
+                list.Add(new KeyValuePropertyDisplay(string.Format("{0} (Bluetooth)", this.GetText(MsgCode.Kind)), info.TypeBluetooth.ToString().CamelCaseToSpaces()));
                 list.Add(new KeyValuePropertyDisplay("Enclosure(Dock)", info.EnclosureLocation.InDock.ToString()));
                 list.Add(new KeyValuePropertyDisplay("Enclosure(Lid)", info.EnclosureLocation.InLid.ToString()));
                 list.Add(new KeyValuePropertyDisplay("Enclosure(Clockwise Rotation)", info.EnclosureLocation.ClockWiseRotationInDegrees.ToString()));
