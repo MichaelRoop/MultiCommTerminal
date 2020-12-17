@@ -6,6 +6,7 @@ using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WindowObjs;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -203,6 +204,32 @@ namespace MultiCommTerminal.NetCore.UserControls {
             });
         }
 
+
+        private void btnCopyLog_Click(object sender, RoutedEventArgs e) {
+            try {
+                lock (this.lbLog) {
+                    // TODO - this fails.  Disabled for now. Revisit
+                    StringBuilder sb = new StringBuilder();
+                    foreach (object row in lbLog.SelectedItems) {
+                        sb.Append(row.ToString());
+                        sb.AppendLine();
+                    }
+                    sb.Remove(sb.Length - 1, 1); // Just to avoid copying last empty row
+                    Clipboard.SetData(System.Windows.Forms.DataFormats.Text, sb.ToString());
+                }
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnClearLog_Click(object sender, RoutedEventArgs e) {
+            lock (this.lbLog) {
+                this.lbLog.ItemsSource = null;
+            }
+        }
+
+
         #endregion
 
         #region Wrapper event handlers
@@ -220,8 +247,10 @@ namespace MultiCommTerminal.NetCore.UserControls {
         private void AppLogMsgEventHandler(object sender, string msg) {
             // Race condition with messages coming before window rendered
             try {
-                if (this.logScroll != null) {
-                    this.lbLog.AddAndScroll(msg, this.logScroll, 400);
+                lock (this.lbLog) {
+                    if (this.logScroll != null) {
+                        this.lbLog.AddAndScroll(msg, this.logScroll, 400);
+                    }
                 }
             }
             catch (Exception) { }

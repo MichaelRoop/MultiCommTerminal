@@ -135,6 +135,16 @@
                     </StackPanel>
                 </DockPanel>
             </Border>
+            <DockPanel HorizontalAlignment="Center" Visibility="Collapsed">
+                <local:UC_IconButton x:Name="btnCopyLog" Click="btnCopyLog_Click" 
+                                    Style="{StaticResource TextIconButton}" Margin="5,8"
+                                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Copy}}"
+                                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Add}}"/>
+                <local:UC_IconButton x:Name="btnClearLog" Click="btnClearLog_Click" 
+                                    Style="{StaticResource TextIconButton}" Margin="5,8"
+                                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Clear}}"
+                                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Delete}}"/>
+            </DockPanel>
             <ListBox x:Name="lbLog" Height="200" Visibility="Visible" 
                          ScrollViewer.VerticalScrollBarVisibility="Auto" 
                          ScrollViewer.HorizontalScrollBarVisibility="Auto" MaxWidth="700" />
