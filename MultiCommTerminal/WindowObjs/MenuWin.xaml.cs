@@ -85,7 +85,10 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
                     case MenuCode.BLE:
                         BLERun ble = new BLERun(this.mainWindow);
                         ble.ShowDialog();
-                        //App.ShowMsg("TBD");
+                        break;
+                    case MenuCode.CodeSamples:
+                        Help_CommunicationMediums cm = new Help_CommunicationMediums(this.mainWindow);
+                        cm.ShowDialog();
                         break;
                     default:
                         // Not supported
@@ -120,6 +123,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
                 this.AddItem(MenuCode.Terminators, MsgCode.Terminators, UIIcon.Terminator, "0");
                 this.AddItem(MenuCode.Commands, MsgCode.command, UIIcon.Command, "0"); // TODO Get a new icon
                 this.AddItem(MenuCode.Language, MsgCode.language, UIIcon.Language, "0");
+                this.AddItem(MenuCode.CodeSamples, MsgCode.CodeSamples, UIIcon.Code, "0");
                 this.lbxMenuItems.ItemsSource = this.items;
                 lbxMenuItems.SelectionChanged += this.lbxMenuItems_SelectionChanged;
             });

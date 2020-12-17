@@ -10,5 +10,6 @@ namespace MultiCommData.UserDisplayData.Net {
         Language,
         Terminators,
         Commands,
+        CodeSamples,
     }
 }

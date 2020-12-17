@@ -110,6 +110,10 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
                     return new IconDataModel(UIIcon.Configure, this.AddDir("icons8-index-50.png"), "1");
                 case UIIcon.EthernetWhite:
                     return new IconDataModel(UIIcon.Configure, this.AddDir("icons8-ethernet-on-50-white.png"), "1");
+                case UIIcon.Code:
+                    return new IconDataModel(UIIcon.Configure, this.AddDir("icons8_code.png"), "1");
+                case UIIcon.CodeWhite:
+                    return new IconDataModel(UIIcon.Configure, this.AddDir("icons8_code_white.png"), "1");
 
                 default:
                     return new IconDataModel(UIIcon.Cancel, this.AddDir("icons8-close-window-50-noborder.png"), "6");

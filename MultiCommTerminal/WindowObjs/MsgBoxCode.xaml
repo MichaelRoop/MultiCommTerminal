@@ -11,6 +11,7 @@
     WindowStartupLocation="Manual" 
         mc:Ignorable="d"
         Title="" 
+        Icon="{Binding Source={x:Static wpfHelper:IconBinder.CodeWhite}}"
         Style="{StaticResource MyWindowStyle}"
         MinHeight="150" MinWidth="150" BorderThickness=".25"
         Loaded="Window_Loaded" Closing="Window_Closing">

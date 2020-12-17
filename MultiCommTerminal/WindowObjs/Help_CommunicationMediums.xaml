@@ -7,7 +7,7 @@
         xmlns:controls="clr-namespace:MultiCommTerminal.NetCore.UserControls"
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
 
-        Icon="{Binding Source={x:Static wpfHelper:IconBinder.HelpWhite}}"
+        Icon="{Binding Source={x:Static wpfHelper:IconBinder.CodeWhite}}"
         Style="{StaticResource MyWindowStyle}"
         MinHeight="150" MinWidth="250" BorderThickness=".25"
         WindowStartupLocation="Manual" 
@@ -45,11 +45,11 @@
                             Click="btnCode_Click"/>
                 </StackPanel>
             </DockPanel>
-            <TextBlock HorizontalAlignment="Center" Margin="5">
+            <!--<TextBlock HorizontalAlignment="Center" Margin="5">
                 <Hyperlink NavigateUri="{Binding Source={x:Static wpfHelper:TxtBinder.UserManualUri }}" RequestNavigate="Hyperlink_RequestNavigate">
                     <TextBlock Text="{Binding Source={x:Static wpfHelper:TxtBinder.UserManual}}" />
                 </Hyperlink>
-            </TextBlock>
+            </TextBlock>-->
             <Grid HorizontalAlignment="Center" Margin="5,0" Visibility="Collapsed">
                 <TextBlock x:Name="lblUserManual" HorizontalAlignment="Center" Text="" FontSize="14" TextWrapping="Wrap" />
             </Grid>

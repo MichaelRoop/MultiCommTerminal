@@ -76,6 +76,9 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
         public static string EthernetWhite { get { return Source(UIIcon.EthernetWhite); } }
         public static string Wifi { get { return Source(UIIcon.Wifi); } }
         public static string WifiWhite { get { return Source(UIIcon.WifiWhite); } }
+        public static string Code { get { return Source(UIIcon.Code); } }
+        public static string CodeWhite { get { return Source(UIIcon.CodeWhite); } }
+
 
         #endregion
 
