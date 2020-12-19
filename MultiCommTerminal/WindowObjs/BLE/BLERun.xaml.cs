@@ -94,10 +94,10 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         }
 
         private void OnUiDiscover(object sender, EventArgs e) {
-            this.Title = "Bluetooth";
+            this.Title = "BLE";
             this.selectedDevice = BLESelect.ShowBox(this, true);
             if (this.selectedDevice != null) {
-                this.Title = this.selectedDevice.Name;
+                this.Title = string.Format("(BLE) {0}", this.selectedDevice.Name);
             }
         }
 
