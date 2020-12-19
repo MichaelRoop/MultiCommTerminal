@@ -42,6 +42,13 @@ namespace MultiCommWrapper.Net.interfaces {
         /// <summary>When the current terminator is changed</summary>
         event EventHandler<TerminatorDataModel> CurrentTerminatorChanged;
 
+        event EventHandler<TerminatorDataModel> CurrentTerminatorChangedBT;
+        event EventHandler<TerminatorDataModel> CurrentTerminatorChangedBLE;
+        event EventHandler<TerminatorDataModel> CurrentTerminatorChangedUSB;
+        event EventHandler<TerminatorDataModel> CurrentTerminatorChangedWIFI;
+        event EventHandler<TerminatorDataModel> CurrentTerminatorChangedEthernet;
+
+
         /// <summary>Raised when the current script has changed</summary>
         event EventHandler<ScriptDataModel> CurrentScriptChanged;
 
@@ -123,7 +130,28 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void GetCurrentTerminator(Action<TerminatorDataModel> onSuccess, OnErr onError);
 
+        /// <summary>Get the current saved terminator set for a communication medium type</summary>
+        /// <param name="medium">The communication medium type</param>
+        /// <param name="onSuccess">Raise on success with the terminator set</param>
+        /// <param name="onError">Raised on error</param>
+        void GetCurrentTerminator(CommMedium medium, Action<TerminatorDataModel> onSuccess, OnErr onError);
+
         void SetCurrentTerminators(TerminatorDataModel data, OnErr onError);
+
+        /// <summary>Set the default for a specific medium type</summary>
+        /// <param name="data">The new terminator data</param>
+        /// <param name="medium">The communication medium type</param>
+        /// <param name="onError">Raised on storage error</param>
+        void SetCurrentTerminators(TerminatorDataModel data, CommMedium medium, OnErr onError);
+
+
+        /// <summary>Set the default for a specific medium type</summary>
+        /// <param name="index">The index of the selected terminator set</param>
+        /// <param name="medium">The communication medium type</param>
+        /// <param name="onSuccess">Raised on success</param>
+        /// <param name="onError">Raised on storage error</param>
+        void SetCurrentTerminators(IIndexItem<DefaultFileExtraInfo> index, CommMedium medium, Action onSuccess, OnErr onError);
+
 
         void SetCurrentTerminators(IIndexItem<DefaultFileExtraInfo> index, Action onSuccess, OnErr onError);
 

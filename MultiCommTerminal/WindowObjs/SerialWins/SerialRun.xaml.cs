@@ -1,6 +1,7 @@
 ﻿using CommunicationStack.Net.DataModels;
 using CommunicationStack.Net.Enumerations;
 using LanguageFactory.Net.data;
+using MultiCommData.Net.Enumerations;
 using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using SerialCommon.Net.DataModels;
@@ -46,7 +47,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             WPF_ControlHelpers.CenterChild(parent, this);
-            this.ui.OnLoad(this.parent);
+            this.ui.OnLoad(this.parent, CommMedium.Usb);
         }
 
 

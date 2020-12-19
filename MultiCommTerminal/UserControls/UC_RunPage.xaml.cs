@@ -1,6 +1,7 @@
 ﻿using LanguageFactory.Net.data;
 using LanguageFactory.Net.Messaging;
 using LogUtils.Net;
+using MultiCommData.Net.Enumerations;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WindowObjs;
@@ -26,6 +27,7 @@ namespace MultiCommTerminal.NetCore.UserControls {
         private ButtonGroupSizeSyncManager buttonSizer = null;
         private List<ScriptItem> scriptItems = new List<ScriptItem>();
         bool isBusy = false;
+        CommMedium medium = CommMedium.None;
 
         // TODO size buttons
 
@@ -76,8 +78,9 @@ namespace MultiCommTerminal.NetCore.UserControls {
 
 
         /// <summary>Do any initialization here. Should be called by window at load</summary>
-        public void OnLoad(Window parent, RunPageCtrlsEnabled enableList = null) {
+        public void OnLoad(Window parent, CommMedium medium, RunPageCtrlsEnabled enableList = null) {
             this.parent = parent;
+            this.medium = medium;
             if (enableList != null) {
                 this.btnInfo.SetVisualEnabled(enableList.Info);
                 this.btnSettings.SetVisualEnabled(enableList.Settings);
@@ -91,24 +94,17 @@ namespace MultiCommTerminal.NetCore.UserControls {
             this.logScroll = this.lbLog.GetScrollViewer();
             this.lbLog.Collapse();
 
+            this.AddEventHandlers();
             DI.Wrapper.CurrentSupportedLanguage(this.SetLanguage);
-            DI.Wrapper.GetCurrentTerminator(this.SetTerminators, App.ShowMsg);
+            DI.Wrapper.GetCurrentTerminator(this.medium, this.SetTerminators, App.ShowMsg);
             DI.Wrapper.GetCurrentScript(this.PopulateScriptData, App.ShowMsg);
-
-            DI.Wrapper.LanguageChanged += this.languageChangedHandler;
-            DI.Wrapper.CurrentTerminatorChanged += this.currentTerminatorChangedHandler;
-            DI.Wrapper.CurrentScriptChanged += this.currentScriptChanged;
-            App.STATIC_APP.LogMsgEvent += this.AppLogMsgEventHandler;
         }
 
 
 
         /// <summary>Do any teardown here. Should be called by window at closing</summary>
         public void OnClosing() {
-            DI.Wrapper.LanguageChanged -= this.languageChangedHandler;
-            DI.Wrapper.CurrentTerminatorChanged -= this.currentTerminatorChangedHandler;
-            App.STATIC_APP.LogMsgEvent -= this.AppLogMsgEventHandler;
-            DI.Wrapper.CurrentScriptChanged -= this.currentScriptChanged;
+            this.RemoveEventHandlers();
             this.buttonSizer.Teardown();
         }
 
@@ -194,7 +190,7 @@ namespace MultiCommTerminal.NetCore.UserControls {
 
 
         private void terminatorView_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
-            TerminatorDataSelectorPopup.ShowBox(this.parent);
+            TerminatorDataSelectorPopup.ShowBox(this.parent, this.medium);
         }
 
 
@@ -311,6 +307,68 @@ namespace MultiCommTerminal.NetCore.UserControls {
                 this.lbIncoming.Items.Clear();
             }
         }
+
+
+        private void AddEventHandlers() {
+            DI.Wrapper.LanguageChanged += this.languageChangedHandler;
+            App.STATIC_APP.LogMsgEvent += this.AppLogMsgEventHandler;
+
+            DI.Wrapper.CurrentScriptChanged += this.currentScriptChanged;
+            
+            switch (this.medium) {
+                case CommMedium.Bluetooth:
+                    DI.Wrapper.CurrentTerminatorChangedBT += this.currentTerminatorChangedHandler;
+                    break;
+                case CommMedium.BluetoothLE:
+                    DI.Wrapper.CurrentTerminatorChangedBLE += this.currentTerminatorChangedHandler;
+                    break;
+                case CommMedium.Ethernet:
+                    DI.Wrapper.CurrentTerminatorChangedEthernet += this.currentTerminatorChangedHandler;
+                    break;
+                case CommMedium.Usb:
+                    DI.Wrapper.CurrentTerminatorChangedUSB += this.currentTerminatorChangedHandler;
+                    break;
+                case CommMedium.Wifi:
+                    DI.Wrapper.CurrentTerminatorChangedWIFI += this.currentTerminatorChangedHandler;
+                    break;
+                default:
+                    DI.Wrapper.CurrentTerminatorChanged += this.currentTerminatorChangedHandler;
+                    break;
+            }
+        }
+
+
+
+        private void RemoveEventHandlers() {
+            DI.Wrapper.LanguageChanged -= this.languageChangedHandler;
+            App.STATIC_APP.LogMsgEvent -= this.AppLogMsgEventHandler;
+           
+            DI.Wrapper.CurrentScriptChanged -= this.currentScriptChanged;
+
+            switch (this.medium) {
+                case CommMedium.Bluetooth:
+                    DI.Wrapper.CurrentTerminatorChangedBT -= this.currentTerminatorChangedHandler;
+                    break;
+                case CommMedium.BluetoothLE:
+                    DI.Wrapper.CurrentTerminatorChangedBLE -= this.currentTerminatorChangedHandler;
+                    break;
+                case CommMedium.Ethernet:
+                    DI.Wrapper.CurrentTerminatorChangedEthernet -= this.currentTerminatorChangedHandler;
+                    break;
+                case CommMedium.Usb:
+                    DI.Wrapper.CurrentTerminatorChangedUSB -= this.currentTerminatorChangedHandler;
+                    break;
+                case CommMedium.Wifi:
+                    DI.Wrapper.CurrentTerminatorChangedWIFI -= this.currentTerminatorChangedHandler;
+                    break;
+                default:
+                    DI.Wrapper.CurrentTerminatorChanged -= this.currentTerminatorChangedHandler;
+                    break;
+            }
+
+        }
+
+
 
         #endregion
 

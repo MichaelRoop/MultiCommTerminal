@@ -1,4 +1,5 @@
 ﻿using LanguageFactory.Net.data;
+using MultiCommData.Net.Enumerations;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WPF_Helpers;
@@ -16,17 +17,19 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         private Window parent = null;
         private ButtonGroupSizeSyncManager widthManager = null;
         private TerminatorDataModel original = null;
+        private CommMedium medium = CommMedium.None;
 
         #region Constructors and window events
 
-        public static void ShowBox(Window parent) {
-            TerminatorDataSelectorPopup win = new TerminatorDataSelectorPopup(parent);
+        public static void ShowBox(Window parent, CommMedium medium) {
+            TerminatorDataSelectorPopup win = new TerminatorDataSelectorPopup(parent, medium);
             win.ShowDialog();
         }
 
 
-        public TerminatorDataSelectorPopup(Window parent) {
+        public TerminatorDataSelectorPopup(Window parent, CommMedium medium) {
             this.parent = parent;
+            this.medium = medium;
             InitializeComponent();
             this.SizeToContent = SizeToContent.WidthAndHeight;
 
@@ -55,7 +58,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         #endregion
 
         private void btnCancel_Click(object sender, RoutedEventArgs e) {
-            DI.Wrapper.SetCurrentTerminators(this.original, this.HandleError);
+            DI.Wrapper.SetCurrentTerminators(this.original, this.medium, this.HandleError);
             this.Close();
         }
 
@@ -67,7 +70,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         private void listBoxTerminators_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             var item = this.listBoxTerminators.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
-            DI.Wrapper.SetCurrentTerminators(item, () => { }, App.ShowMsg);
+            DI.Wrapper.SetCurrentTerminators(item, this.medium, () => { }, App.ShowMsg);
         }
 
 
@@ -85,7 +88,32 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
 
         private void GetOriginal(SettingItems settings) {
-            this.original = settings.CurrentTerminator;
+            switch (this.medium) {
+                case CommMedium.Bluetooth:
+                    this.original = settings.CurrentTerminatorBT;
+                    break;
+                case CommMedium.BluetoothLE:
+                    this.original = settings.CurrentTerminatorBLE;
+                    break;
+                case CommMedium.Ethernet:
+                    this.original = settings.CurrentTerminatorEthernet;
+                    break;
+                case CommMedium.Usb:
+                    this.original = settings.CurrentTerminatorUSB;
+                    break;
+                case CommMedium.Wifi:
+                    this.original = settings.CurrentTerminatorWIFI;
+                    break;
+                default:
+                    break;
+            }
+
+            // Default with a know terminator set
+            if (this.original == null) {
+                this.original = settings.CurrentTerminator;
+            }
+
+            // This would be an error where both the specific and default is null. So, a read failure
             if (this.original == null) {
                 this.HandleError(DI.Wrapper.GetText(MsgCode.ReadFailure));
             }

@@ -2,6 +2,7 @@
 using CommunicationStack.Net.Enumerations;
 using Ethernet.Common.Net.DataModels;
 using LanguageFactory.Net.data;
+using MultiCommData.Net.Enumerations;
 using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.UserControls;
 using MultiCommTerminal.NetCore.WPF_Helpers;
@@ -55,7 +56,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             WPF_ControlHelpers.CenterChild(parent, this);
-            this.ui.OnLoad(this.parent, new RunPageCtrlsEnabled());
+            this.ui.OnLoad(this.parent, CommMedium.Ethernet);
         }
 
 

@@ -11,7 +11,7 @@
         Title="{Binding Source={x:Static wpfHelper:TxtBinder.Terminators}}" 
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.Terminator_W}}"
         WindowStartupLocation="Manual" MinHeight="150" MinWidth="150" BorderThickness=".25"
-        Loaded="Window_Loaded" Closing="Window_Closing"
+        Loaded="Window_Loaded"
         >
     <Grid>
         <StackPanel>
@@ -49,16 +49,11 @@
 
             </DockPanel>
             <DockPanel HorizontalAlignment="Center" Margin="10,5,10,15">
-                <controls:UC_IconButton x:Name="btnCancel"  Margin="0,0,10,0"
+                <controls:UC_IconButton x:Name="btnExit"  
                             Style="{StaticResource TextIconButton}" 
-                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Cancel}}" 
-                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}"
-                            Click="btnCancel_Click"/>
-                <controls:UC_IconButton x:Name="btnSelect" Style="{StaticResource TextIconButton}" 
-                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Select}}"
-                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Save}}"
-                            Click="btnSelect_Click" />
-
+                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Exit}}" 
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Exit}}"
+                            Click="btnExit_Click"/>
             </DockPanel>
         </StackPanel>
     </Grid>

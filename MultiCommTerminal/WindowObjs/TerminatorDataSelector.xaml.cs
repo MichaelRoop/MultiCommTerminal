@@ -15,7 +15,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         private Window parent = null;
         private ICommWrapper wrapper = null;
-        private ButtonGroupSizeSyncManager widthManager = null;
 
         #region Constructors and window events
 
@@ -31,11 +30,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
             InitializeComponent();
             this.SizeToContent = SizeToContent.WidthAndHeight;
             this.spEditButtons.Visibility = Visibility.Collapsed;
-
-            // Call before rendering which will trigger initial resize events
-            this.widthManager = new ButtonGroupSizeSyncManager(this.btnCancel, this.btnSelect);
-            this.widthManager.PrepForChange();
         }
+
 
         public override void OnApplyTemplate() {
             this.BindMouseDownToCustomTitleBar();
@@ -46,11 +42,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             ReloadList(true);
             WPF_ControlHelpers.CenterChild(parent, this);
-        }
-
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
-            this.widthManager.Teardown();
         }
 
         #endregion
@@ -87,15 +78,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         #region Window buttons
 
-        private void btnCancel_Click(object sender, RoutedEventArgs e) {
+        private void btnExit_Click(object sender, RoutedEventArgs e) {
             this.Close();
-        }
-
-        private void btnSelect_Click(object sender, RoutedEventArgs e) {
-            var item = this.listBoxTerminators.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
-            if (item != null) {
-                this.wrapper.SetCurrentTerminators(item, this.Close, App.ShowMsg);
-            }
         }
 
         #endregion
