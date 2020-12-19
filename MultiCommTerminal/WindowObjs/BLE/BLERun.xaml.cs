@@ -15,10 +15,16 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         private Window parent = null;
         private BluetoothLEDeviceInfo selectedDevice = null;
 
+        public static int Instances { get; private set; }
+
+        public event EventHandler<Type> CloseRequest;
+
+
         #region Constructors and window events
 
         public BLERun(Window parent) {
             this.parent = parent;
+            Instances++;
             InitializeComponent();
             WPF_ControlHelpers.CenterChild(parent, this);
             this.SizeToContent = SizeToContent.WidthAndHeight;
@@ -61,6 +67,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             // Add connection, error and bytes received when supported
             DI.Wrapper.BLE_DeviceInfoGathered -= deviceInfoGathered;
             this.ui.OnClosing();
+            Instances--;
         }
 
         #endregion
@@ -83,7 +90,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         #region UI Event handlers
 
         private void OnUiExit(object sender, EventArgs e) {
-            this.Close();
+            this.CloseRequest?.Invoke(this, typeof(BLERun));
         }
 
         private void OnUiDiscover(object sender, EventArgs e) {

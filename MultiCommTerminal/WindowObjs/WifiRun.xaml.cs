@@ -1,6 +1,5 @@
 ﻿using CommunicationStack.Net.DataModels;
 using CommunicationStack.Net.Enumerations;
-using LanguageFactory.Net.data;
 using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.UserControls;
 using MultiCommTerminal.NetCore.WindowObjs.WifiWins;
@@ -18,9 +17,14 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         private Window parent = null;
         private WifiNetworkInfo selectedWifi = null;
 
+        public static int Instances { get; private set; }
+
+        public event EventHandler<Type> CloseRequest;
+
 
         public WifiRun(Window parent) {
             this.parent = parent;
+            Instances++;
             InitializeComponent();
 
             WPF_ControlHelpers.CenterChild(parent, this);
@@ -66,6 +70,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
             DI.Wrapper.Wifi_BytesReceived -= this.bytesReceived;
 
             this.ui.OnClosing();
+            Instances--;
         }
 
 
@@ -101,7 +106,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         #region UI Event handlers
 
         private void OnUiExit(object sender, EventArgs e) {
-            this.Close();
+            this.CloseRequest?.Invoke(this, typeof(WifiRun));
         }
 
         private void OnUiDiscover(object sender, EventArgs e) {

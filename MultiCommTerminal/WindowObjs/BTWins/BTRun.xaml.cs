@@ -1,6 +1,5 @@
 ﻿using BluetoothCommon.Net;
 using LanguageFactory.Net.data;
-using LogUtils.Net;
 using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using System;
@@ -15,9 +14,12 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BTWins {
         private Window parent = null;
         private BTDeviceInfo selectedDevice = null;
 
+        public static int Instances { get; private set; }
+        public event EventHandler<Type> CloseRequest;
 
         public BTRun(Window parent) {
             this.parent = parent;
+            Instances++;
             InitializeComponent();
 
             WPF_ControlHelpers.CenterChild(parent, this);
@@ -59,6 +61,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BTWins {
             DI.Wrapper.BT_BytesReceived -= this.bytesReceived;
             DI.Wrapper.BT_DeviceInfoGathered -= deviceInfoGathered;
             this.ui.OnClosing();
+            Instances--;
         }
 
 
@@ -86,7 +89,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BTWins {
         #region UI Event handlers
 
         private void OnUiExit(object sender, EventArgs e) {
-            this.Close();
+            this.CloseRequest?.Invoke(this, typeof(BTRun));
         }
 
         private void OnUiDiscover(object sender, EventArgs e) {

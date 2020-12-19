@@ -5,16 +5,7 @@ using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using SerialCommon.Net.DataModels;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
@@ -26,9 +17,14 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
         private Window parent = null;
         private SerialDeviceInfo selectedSerial = null;
 
+        public static int Instances { get; private set; }
+
+        public event EventHandler<Type> CloseRequest;
+
 
         public SerialRun(Window parent) {
             this.parent = parent;
+            Instances++;
             InitializeComponent();
 
             WPF_ControlHelpers.CenterChild(parent, this);
@@ -67,6 +63,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
             DI.Wrapper.SerialOnError -= this.onSerialError;
             DI.Wrapper.Serial_BytesReceived -= this.bytesReceived;
             this.ui.OnClosing();
+            Instances--;
         }
 
 
@@ -119,7 +116,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
         #region UI Event handlers
 
         private void OnUiExit(object sender, EventArgs e) {
-            this.Close();
+            this.CloseRequest?.Invoke(this, typeof(SerialRun));
         }
 
         private void OnUiDiscover(object sender, EventArgs e) {

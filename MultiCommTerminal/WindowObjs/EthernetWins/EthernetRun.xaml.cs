@@ -18,10 +18,16 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
         private Window parent = null;
         private EthernetSelectResult selectedEthernet = null;
 
+        public static int Instances { get; private set; }
+
+        public event EventHandler<Type> CloseRequest;
+
+
         #region Constructors and windows events
 
         public EthernetRun(Window parent) {
             this.parent = parent;
+            Instances++;
             InitializeComponent();
             WPF_ControlHelpers.CenterChild(parent, this);
             this.SizeToContent = SizeToContent.WidthAndHeight;
@@ -67,6 +73,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
             DI.Wrapper.OnEthernetListChange -= this.onEthernetListChange;
             DI.Wrapper.OnEthernetConnectionAttemptCompleted -= this.onEthernetConnectionAttemptCompleted;
             this.ui.OnClosing();
+            Instances--;
         }
 
         #endregion
@@ -113,7 +120,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
         #region UI Event handlers
 
         private void OnUiExit(object sender, EventArgs e) {
-            this.Close();
+            this.CloseRequest?.Invoke(this, typeof(EthernetRun));
         }
 
 

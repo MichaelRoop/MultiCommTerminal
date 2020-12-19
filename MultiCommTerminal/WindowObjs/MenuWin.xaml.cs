@@ -23,6 +23,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         private Window mainWindow = null;
         private List<MenuItemDataModel> items = new List<MenuItemDataModel>();
         private ICommWrapper wrapper = null;
+        private RunPageManager runPageManager = null;
 
         #endregion
 
@@ -31,6 +32,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         public MenuWin(Window mainWindow) {
             this.wrapper = DI.Wrapper;
             this.mainWindow = mainWindow;
+            this.runPageManager = new RunPageManager(this.mainWindow);
             InitializeComponent();
             this.SizeToContent = SizeToContent.WidthAndHeight;
         }
@@ -45,6 +47,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             lbxMenuItems.SelectionChanged -= this.lbxMenuItems_SelectionChanged;
             this.wrapper.LanguageChanged -= this.Languages_LanguageChanged;
+            this.runPageManager.CloseAll();
         }
 
         #endregion
@@ -67,24 +70,19 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
                         cmds.ShowDialog();
                         break;
                     case MenuCode.Ethernet:
-                        EthernetRun eth = new EthernetRun(this.mainWindow);
-                        eth.ShowDialog();
+                        this.runPageManager.Open(typeof(EthernetRun));
                         break;
                     case MenuCode.Usb:
-                        SerialRun usb = new SerialRun(this.mainWindow);
-                        usb.ShowDialog();
+                        this.runPageManager.Open(typeof(SerialRun));
                         break;
                     case MenuCode.Wifi:
-                        WifiRun wifi = new WifiRun(this.mainWindow);
-                        wifi.ShowDialog();
+                        this.runPageManager.Open(typeof(WifiRun));
                         break;
                     case MenuCode.Bluetooth:
-                        BTRun bluetooth = new BTRun(this.mainWindow);
-                        bluetooth.ShowDialog();
+                        this.runPageManager.Open(typeof(BTRun));
                         break;
                     case MenuCode.BLE:
-                        BLERun ble = new BLERun(this.mainWindow);
-                        ble.ShowDialog();
+                        this.runPageManager.Open(typeof(BLERun));
                         break;
                     case MenuCode.CodeSamples:
                         Help_CommunicationMediums cm = new Help_CommunicationMediums(this.mainWindow);
