@@ -1,12 +1,12 @@
 ﻿
-namespace MultiCommData.UserDisplayData.Net {
+//namespace MultiCommData.UserDisplayData.Net {
 
-    public enum CommMediumType {
-        None,
-        Ethernet,
-        Wifi,
-        Bluetooth,
-        BluetoothLE,
-        Usb,
-    }
-}
+//    public enum CommMediumType {
+//        None,
+//        Ethernet,
+//        Wifi,
+//        Bluetooth,
+//        BluetoothLE,
+//        Usb,
+//    }
+//}

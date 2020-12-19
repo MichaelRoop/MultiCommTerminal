@@ -1,6 +1,7 @@
 ﻿//using AurelienRibon.Ui.SyntaxHighlightBox.src;
 using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
+using MultiCommData.Net.Enumerations;
 using MultiCommData.Net.UserDisplayData;
 using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WPF_Helpers;
@@ -21,11 +22,11 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
     public partial class MsgBoxCode : Window {
 
         private Window parent = null;
-        private CommHelpType medium = CommHelpType.None;
+        private CommMedium medium = CommMedium.None;
         private ButtonGroupSizeSyncManager buttonWidthManager = null;
 
 
-        public MsgBoxCode(Window parent, CommHelpType helpType) {
+        public MsgBoxCode(Window parent, CommMedium helpType) {
             this.parent = parent;
             this.medium = helpType;
             InitializeComponent();

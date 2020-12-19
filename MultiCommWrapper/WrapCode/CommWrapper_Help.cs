@@ -1,6 +1,7 @@
 ﻿using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
 using LanguageFactory.Net.data;
+using MultiCommData.Net.Enumerations;
 using MultiCommData.Net.UserDisplayData;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommWrapper.Net.interfaces;
@@ -30,19 +31,19 @@ namespace MultiCommWrapper.Net.WrapCode {
             // TODO Add specific text and code here from storage
             foreach (var i in helps) {
                 switch (i.Id) {
-                    case CommHelpType.Bluetooth:
+                    case CommMedium.Bluetooth:
                         i.Text = "Communicate with device using traditional Bluetooth like Arduino with HC50 chip";
                         break;
-                    case CommHelpType.BluetoothLE:
+                    case CommMedium.BluetoothLE:
                         i.Text = "Communicate with devices on BLE with 2 characteristics defined for serial input and output";
                         break;
-                    case CommHelpType.Wifi:
+                    case CommMedium.Wifi:
                         i.Text = "Communicate with devices using WIFI to send commands and receive responses";
                         break;
-                    case CommHelpType.Ethernet:
+                    case CommMedium.Ethernet:
                         i.Text = "Communicate with devices using a hard wired ethernet connection to send commands and receive responses";
                         break;
-                    case CommHelpType.Usb:
+                    case CommMedium.Usb:
                         i.Text = "Communicate with devices using a hard wired USB serial connection to send commands and receive responses";
                         break;
 
@@ -55,7 +56,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
     
 
-        public void HasCodeSample(CommHelpType helpType, Action<CommHelpType> onSuccess, OnErrTitle onError) {
+        public void HasCodeSample(CommMedium helpType, Action<CommMedium> onSuccess, OnErrTitle onError) {
             ErrReport report;
             WrapErr.ToErrReport(out report, 9999,
                 () => string.Format(""),
@@ -76,7 +77,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-        public void GetCodeSample(CommHelpType helpType, Action<string> onSuccess, OnErrTitle onError) {
+        public void GetCodeSample(CommMedium helpType, Action<string> onSuccess, OnErrTitle onError) {
             ErrReport report;
             WrapErr.ToErrReport(out report, 9999,
                 () => string.Format(""),
@@ -104,17 +105,17 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
     
 
-        private string GetFilename(CommHelpType medium) {
+        private string GetFilename(CommMedium medium) {
             switch (medium) {
-                case CommHelpType.Bluetooth:
+                case CommMedium.Bluetooth:
                     return this.AssembleWithSamplePath("Samples/BTSample.txt");
-                case CommHelpType.BluetoothLE:
+                case CommMedium.BluetoothLE:
                     return this.AssembleWithSamplePath("Samples/BLESample.txt");
-                case CommHelpType.Wifi:
+                case CommMedium.Wifi:
                     return this.AssembleWithSamplePath("Samples/WifiSample.txt");
-                case CommHelpType.Usb:
+                case CommMedium.Usb:
                     return this.AssembleWithSamplePath("Samples/USBSample.txt");
-                case CommHelpType.Ethernet:
+                case CommMedium.Ethernet:
                     return this.AssembleWithSamplePath("Samples/EthernetSample.txt");
                 default: return "";
             }

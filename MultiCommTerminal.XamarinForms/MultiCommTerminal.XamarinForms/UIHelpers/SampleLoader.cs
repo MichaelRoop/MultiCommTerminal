@@ -1,5 +1,6 @@
 ﻿using LanguageFactory.Net.data;
 using LogUtils.Net;
+using MultiCommData.Net.Enumerations;
 using MultiCommData.Net.UserDisplayData;
 using System;
 using System.IO;
@@ -22,7 +23,7 @@ namespace MultiCommTerminal.XamarinForms.UIHelpers {
         private const string USER_MANUAL_NAME = "UserManual.pdf";
         private const string USER_MANUAL_DIR = "Documents";
 
-        public static void Load(CommHelpType commHelpType, Action<string> onSuccess, Action<string,string> onErr) {
+        public static void Load(CommMedium commHelpType, Action<string> onSuccess, Action<string,string> onErr) {
             try {
                 var assembly = IntrospectionExtensions.GetTypeInfo(typeof(App)).Assembly;
                 string filename = string.Format("{0}.{1}", SAMPLES_RES_PREFIX, GetSimpleFilename(commHelpType));
@@ -102,17 +103,17 @@ namespace MultiCommTerminal.XamarinForms.UIHelpers {
         }
 
 
-        private static string GetSimpleFilename(CommHelpType medium) {
+        private static string GetSimpleFilename(CommMedium medium) {
             switch (medium) {
-                case CommHelpType.Bluetooth:
+                case CommMedium.Bluetooth:
                     return "BTSample.txt";
-                case CommHelpType.BluetoothLE:
+                case CommMedium.BluetoothLE:
                     return "BLESample.txt";
-                case CommHelpType.Wifi:
+                case CommMedium.Wifi:
                     return "WifiSample.txt";
-                case CommHelpType.Usb:
+                case CommMedium.Usb:
                     return "USBSample.txt";
-                case CommHelpType.Ethernet:
+                case CommMedium.Ethernet:
                     return "EthernetSample.txt";
                 default:
                     return "";

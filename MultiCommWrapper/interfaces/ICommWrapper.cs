@@ -7,6 +7,7 @@ using Ethernet.Common.Net.DataModels;
 using IconFactory.Net.data;
 using LanguageFactory.Net.data;
 using LanguageFactory.Net.Messaging;
+using MultiCommData.Net.Enumerations;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommData.Net.UserDisplayData;
 using MultiCommData.UserDisplayData.Net;
@@ -67,7 +68,7 @@ namespace MultiCommWrapper.Net.interfaces {
 
         string GetText(MsgCode code);
 
-        string GetText(CommHelpType medium);
+        string GetText(CommMedium medium);
 
         void GetMenuItemDataModel(
             MenuCode menuCode,
@@ -107,10 +108,10 @@ namespace MultiCommWrapper.Net.interfaces {
         /// <param name="medium">The type of communication medium to find sample</param>
         /// <param name="onSuccess">Raised when file is found and opened</param>
         /// <param name="onError">Raised on error</param>
-        void GetCodeSample(CommHelpType medium, Action<string> onSuccess, OnErrTitle onError);
+        void GetCodeSample(CommMedium medium, Action<string> onSuccess, OnErrTitle onError);
 
 
-        void HasCodeSample(CommHelpType medium, Action<CommHelpType> onSuccess, OnErrTitle onError);
+        void HasCodeSample(CommMedium medium, Action<CommMedium> onSuccess, OnErrTitle onError);
 
         #endregion
 

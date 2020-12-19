@@ -1,4 +1,6 @@
-﻿namespace MultiCommData.Net.UserDisplayData {
+﻿using MultiCommData.Net.Enumerations;
+
+namespace MultiCommData.Net.UserDisplayData {
 
     public class CommHelpDisplay {
 
@@ -13,17 +15,17 @@
         public string Display { get; set; }
 
         /// <summary>Enumeration of type</summary>
-        public CommHelpType HelpType { get; set; }
+        public CommMedium HelpType { get; set; }
 
         public CommHelpDisplay() { }
 
-        public CommHelpDisplay(string display, CommHelpType helpType) {
+        public CommHelpDisplay(string display, CommMedium helpType) {
             this.Display = display;
             this.HelpType = helpType;
         }
 
 
-        public CommHelpDisplay(string display, string iconSource, CommHelpType helpType)
+        public CommHelpDisplay(string display, string iconSource, CommMedium helpType)
             : this(display, helpType) {
             this.IconSource = iconSource;
         }

@@ -129,9 +129,11 @@ namespace MultiCommWrapper.Net.WrapCode {
             get {
                 if (this._serial == null) {
                     this._serial = this.container.GetObjSingleton<ISerialInterface>();
-
+                    // TODO may need to check if default is set already
                     // Connect comm channel and its stack - uses Property to ensure statck creation
                     this.serialStack.SetCommChannel(this._serial);
+
+                    // TODO - retrieve from settings
                     this.serialStack.InTerminators = "\r\n".ToAsciiByteArray();
                     this.serialStack.OutTerminators = "\r\n".ToAsciiByteArray();
                     this.serialStack.MsgReceived += this.SerialStack_MsgReceivedHandler;

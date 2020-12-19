@@ -2,6 +2,7 @@
 using ChkUtils.Net.ErrObjects;
 using IconFactory.Net.data;
 using LanguageFactory.Net.data;
+using MultiCommData.Net.Enumerations;
 using MultiCommData.Net.UserDisplayData;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommWrapper.Net.interfaces;
@@ -46,18 +47,18 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         public void CommMediumList(Action<List<CommMedialDisplay>> mediums) {
             List<CommMedialDisplay> items = new List<CommMedialDisplay>();
-            items.Add(this.CommItem("Bluetooth", UIIcon.BluetoothClassic, CommMediumType.Bluetooth));
+            items.Add(this.CommItem("Bluetooth", UIIcon.BluetoothClassic, CommMedium.Bluetooth));
             // TODO - for now serial, need a full BLE
             items.Add(this.CommItem(String.Format("BLE  {0} {1}", '\u2b84', '\u2b86'), 
-                UIIcon.BluetoothLE, CommMediumType.BluetoothLE));
-            items.Add(this.CommItem("Wifi", UIIcon.Wifi, CommMediumType.Wifi));
-            items.Add(this.CommItem("Ethernet", UIIcon.Ethernet, CommMediumType.Ethernet));
-            items.Add(this.CommItem("USB", UIIcon.Usb, CommMediumType.Usb));
+                UIIcon.BluetoothLE, CommMedium.BluetoothLE));
+            items.Add(this.CommItem("Wifi", UIIcon.Wifi, CommMedium.Wifi));
+            items.Add(this.CommItem("Ethernet", UIIcon.Ethernet, CommMedium.Ethernet));
+            items.Add(this.CommItem("USB", UIIcon.Usb, CommMedium.Usb));
             mediums.Invoke(items);
         }
 
 
-        private CommMedialDisplay CommItem(string name, UIIcon icon, CommMediumType mediumType) {
+        private CommMedialDisplay CommItem(string name, UIIcon icon, CommMedium mediumType) {
             return new CommMedialDisplay() {
                 Display = name,
                 IconHeight = 16,
@@ -70,18 +71,18 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         private void CommHelpList(Action<List<CommHelpDisplay>> helps) {
             List<CommHelpDisplay> items = new List<CommHelpDisplay>();
-            items.Add(this.HelpItem("Bluetooth", UIIcon.BluetoothClassic, CommHelpType.Bluetooth));
+            items.Add(this.HelpItem("Bluetooth", UIIcon.BluetoothClassic, CommMedium.Bluetooth));
             // TODO - for now serial, need a full BLE
             items.Add(this.HelpItem(String.Format("BLE  {0} {1}", '\u2b84', '\u2b86'),
-                UIIcon.BluetoothLE, CommHelpType.BluetoothLE));
-            items.Add(this.HelpItem("Wifi", UIIcon.Wifi, CommHelpType.Wifi));
-            items.Add(this.HelpItem("USB", UIIcon.Usb, CommHelpType.Usb));
-            items.Add(this.HelpItem(this.GetText(MsgCode.Ethernet), UIIcon.Ethernet, CommHelpType.Ethernet));
+                UIIcon.BluetoothLE, CommMedium.BluetoothLE));
+            items.Add(this.HelpItem("Wifi", UIIcon.Wifi, CommMedium.Wifi));
+            items.Add(this.HelpItem("USB", UIIcon.Usb, CommMedium.Usb));
+            items.Add(this.HelpItem(this.GetText(MsgCode.Ethernet), UIIcon.Ethernet, CommMedium.Ethernet));
             helps.Invoke(items);
         }
 
 
-        private CommHelpDisplay HelpItem(string name, UIIcon icon, CommHelpType helpType) {
+        private CommHelpDisplay HelpItem(string name, UIIcon icon, CommMedium helpType) {
             return new CommHelpDisplay() {
                 Display = name,
                 HelpType = helpType,

@@ -1,5 +1,6 @@
 ﻿using IconFactory.Net.data;
 using IconFactory.Net.interfaces;
+using MultiCommData.Net.Enumerations;
 using MultiCommData.Net.UserDisplayData;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommTerminal.NetCore.DependencyInjection;
@@ -86,27 +87,27 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
         /// <summary>Get the icon corresponding to the Communication Medium Type</summary>
         /// <param name="medium">The medium type</param>
         /// <returns>Icon source string</returns>
-        public static string CommMediumSource(this CommMediumType medium) {
+        public static string CommMediumSource(this CommMedium medium) {
             switch (medium) {
-                case CommMediumType.Bluetooth: return BluetoothClassic;
-                case CommMediumType.BluetoothLE: return BluetoothLE;
-                case CommMediumType.Ethernet: return Source(UIIcon.Ethernet);
-                case CommMediumType.Wifi: return Source(UIIcon.Wifi);
+                case CommMedium.Bluetooth: return BluetoothClassic;
+                case CommMedium.BluetoothLE: return BluetoothLE;
+                case CommMedium.Ethernet: return Source(UIIcon.Ethernet);
+                case CommMedium.Wifi: return Source(UIIcon.Wifi);
                 default: return Cancel;
             }
         }
 
 
-        public static string CommMediumSourceWhite(this CommHelpType helpType) {
+        public static string CommMediumSourceWhite(this CommMedium helpType) {
             switch (helpType) {
-                case CommHelpType.Bluetooth:
+                case CommMedium.Bluetooth:
                     return BluetoothClassic_W;
-                case CommHelpType.BluetoothLE:
+                case CommMedium.BluetoothLE:
                     return BluetoothLE_W;
-                case CommHelpType.Ethernet:
+                case CommMedium.Ethernet:
                     // TODO need white
                     return Source(UIIcon.EthernetWhite);
-                case CommHelpType.Wifi:
+                case CommMedium.Wifi:
                     return Source(UIIcon.Wifi);
                 default:
                     return Cancel;
@@ -114,11 +115,11 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
         }
 
 
-        public static BitmapImage ResourceWhiteBitmap(this CommHelpType helpType) {
+        public static BitmapImage ResourceWhiteBitmap(this CommMedium helpType) {
             return new BitmapImage(new Uri(helpType.PacketSourceWhite(), UriKind.Absolute));
         }
 
-        public static string PacketSourceWhite(this CommHelpType helpType) {
+        public static string PacketSourceWhite(this CommMedium helpType) {
             return string.Format("{0}{1}", GetIconPrefix(), IconBinder.CommMediumSourceWhite(helpType));
         }
 

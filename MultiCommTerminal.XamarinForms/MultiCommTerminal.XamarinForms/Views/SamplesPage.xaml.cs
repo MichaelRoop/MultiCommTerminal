@@ -1,5 +1,6 @@
 ﻿using LanguageFactory.Net.data;
 using LanguageFactory.Net.Messaging;
+using MultiCommData.Net.Enumerations;
 using MultiCommData.Net.UserDisplayData;
 using MultiCommTerminal.XamarinForms.UIHelpers;
 using System;
@@ -28,11 +29,11 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
         private void btnBluetooth_Clicked(object sender, EventArgs e) {
-            this.PostSample(CommHelpType.Bluetooth);
+            this.PostSample(CommMedium.Bluetooth);
         }
 
         private void btnWifi_Clicked(object sender, EventArgs e) {
-            this.PostSample(CommHelpType.Wifi);
+            this.PostSample(CommMedium.Wifi);
         }
 
         private void btnCopy_Clicked(object sender, EventArgs e) {
@@ -51,7 +52,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
 
-        private void PostSample(CommHelpType commHelpType) {
+        private void PostSample(CommMedium commHelpType) {
             SampleLoader.Load(commHelpType, this.OnLoadOk, this.OnErr);
         }
 

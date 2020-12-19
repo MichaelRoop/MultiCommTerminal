@@ -1,4 +1,5 @@
 ﻿using LogUtils.Net;
+using MultiCommData.Net.Enumerations;
 using MultiCommData.Net.UserDisplayData;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommTerminal.NetCore.DependencyInjection;
@@ -68,7 +69,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         }
 
 
-        private void OnHasCodeSampleView(CommHelpType helpType) {
+        private void OnHasCodeSampleView(CommMedium helpType) {
             // This to avoid opening the code highlighted box because
             // its control malfunctions with no content
             MsgBoxCode win = new MsgBoxCode(this, helpType);
@@ -76,7 +77,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         }
 
 
-        private void OnSelectedHasCodeSample(CommHelpType medium) {
+        private void OnSelectedHasCodeSample(CommMedium medium) {
             this.spView.Visibility = Visibility.Visible;
         }
 

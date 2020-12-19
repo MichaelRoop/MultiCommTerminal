@@ -3,6 +3,7 @@ using ChkUtils.Net.ErrObjects;
 using IconFactory.Net.data;
 using LanguageFactory.Net.data;
 using LanguageFactory.Net.Messaging;
+using MultiCommData.Net.Enumerations;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommData.Net.UserDisplayData;
 using MultiCommData.UserDisplayData.Net;
@@ -123,13 +124,13 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-        public string GetText(CommHelpType medium) {
+        public string GetText(CommMedium medium) {
             switch (medium) {
-                case CommHelpType.Bluetooth: return "Bluetooth";
-                case CommHelpType.BluetoothLE: return String.Format("BLE  {0} {1}", '\u2b84', '\u2b86');
-                case CommHelpType.Wifi: return "Wifi";
-                case CommHelpType.Ethernet: return "Ethernet";
-                case CommHelpType.Usb: return "USB";
+                case CommMedium.Bluetooth: return "Bluetooth";
+                case CommMedium.BluetoothLE: return String.Format("BLE  {0} {1}", '\u2b84', '\u2b86');
+                case CommMedium.Wifi: return "Wifi";
+                case CommMedium.Ethernet: return "Ethernet";
+                case CommMedium.Usb: return "USB";
                 default: return "N/A";
                     // TODO - others
             }
