@@ -42,6 +42,13 @@ namespace Bluetooth.UWP.Core {
                 this.log.Info("ConnectToDevice", () => string.Format("Device:{0} Connection status {1}",
                     this.currentDevice.Name, this.currentDevice.ConnectionStatus.ToString()));
 
+                //// Try force pairing - this does not fail but still catastrophic on GetGattSerivcesAsync
+                ////https://stackoverflow.com/questions/35420940/windows-uwp-connect-to-ble-device-after-discovery
+                //var pr = await this.currentDevice.DeviceInformation.Pairing.PairAsync();
+                //this.log.Info("ConnectToDevice", () => string.Format("Pairing Status:{0}", pr.Status));
+
+
+                // This gives the catastrophic failure message.  I connected once but after that NADA.
                 GattDeviceServicesResult services = await this.currentDevice.GetGattServicesAsync();
                 if (services.Status == GattCommunicationStatus.Success) {
                     if (services.Services != null) {

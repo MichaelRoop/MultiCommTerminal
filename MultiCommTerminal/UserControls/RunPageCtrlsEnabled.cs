@@ -7,6 +7,7 @@ namespace MultiCommTerminal.NetCore.UserControls {
         public bool Disconnect { get; set; } = true;
         public bool Info { get; set; } = true;
         public bool Settings { get; set; } = true;
+        public bool Send { get; set; } = true;
     }
 
 }

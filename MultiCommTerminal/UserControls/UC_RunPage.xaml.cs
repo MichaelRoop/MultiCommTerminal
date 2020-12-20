@@ -88,6 +88,7 @@ namespace MultiCommTerminal.NetCore.UserControls {
                 this.connectedOff.SetVisualEnabled(enableList.Connect);
                 this.connectedOn.SetVisualEnabled(enableList.Connect);
                 this.btnDisconnect.SetVisualEnabled(enableList.Disconnect);
+                this.btnSend.SetVisualEnabled(enableList.Send);
             }
 
             this.inScroll = this.lbIncoming.GetScrollViewer();

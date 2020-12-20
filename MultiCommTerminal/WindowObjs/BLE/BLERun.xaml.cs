@@ -53,6 +53,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                 Connect = false,
                 Disconnect = false,
                 Settings = false,
+                Send = false,
             });
         }
 
@@ -109,13 +110,13 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             }
             if (this.selectedDevice != null) {
                 //this.ui.IsBusy = true;
-                //DI.Wrapper.BLE_ConnectAsync(this.selectedDevice);
+                DI.Wrapper.BLE_ConnectAsync(this.selectedDevice);
             }
         }
 
 
         private void OnUiDisconnect(object sender, EventArgs e) {
-            //DI.Wrapper.BLE_Disconnect();
+            DI.Wrapper.BLE_Disconnect();
         }
 
 
