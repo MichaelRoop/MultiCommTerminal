@@ -44,6 +44,8 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
         public void Open(Type _type) {
             lock (this) {
                 if (_type == typeof(BTRun)) {
+                    // make sure only one Bluetooth/BLE opened at the same time
+                    this.cleanUpPage(this.blePage, typeof(BLERun));
                     this.CreateBTPage();
                 }
                 else if (_type == typeof(WifiRun)) {
@@ -56,6 +58,8 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
                     this.CreateEthernetPage();
                 }
                 else if (_type == typeof(BLERun)) {
+                    // make sure only one Bluetooth/BLE opened at the same time
+                    this.cleanUpPage(this.btPage, typeof(BTRun));
                     this.CreateBLEPage();
                 }
             }

@@ -162,6 +162,8 @@ namespace MultiCommTerminal.NetCore.UserControls {
 
 
         private void btnExit_Click(object sender, RoutedEventArgs e) {
+            // Make sure that the device is disconnected
+            btnDisconnect_Click(sender, e);
             this.ExitClicked?.Invoke(this, new EventArgs());
         }
 
