@@ -54,7 +54,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             WPF_ControlHelpers.CenterChild(parent, this);
-            this.ui.OnLoad(this.parent, CommMedium.Wifi);
+            this.ui.OnLoad(this, CommMedium.Wifi);
         }
 
 

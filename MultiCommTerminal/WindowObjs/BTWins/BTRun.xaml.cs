@@ -46,7 +46,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BTWins {
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             WPF_ControlHelpers.CenterChild(parent, this);
-            this.ui.OnLoad(this.parent, CommMedium.Bluetooth);
+            this.ui.OnLoad(this, CommMedium.Bluetooth);
         }
 
 

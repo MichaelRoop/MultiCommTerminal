@@ -47,7 +47,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             WPF_ControlHelpers.CenterChild(parent, this);
-            this.ui.OnLoad(this.parent, CommMedium.Usb);
+            this.ui.OnLoad(this, CommMedium.Usb);
         }
 
 

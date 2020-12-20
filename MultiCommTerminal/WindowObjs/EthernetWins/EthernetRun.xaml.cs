@@ -56,7 +56,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             WPF_ControlHelpers.CenterChild(parent, this);
-            this.ui.OnLoad(this.parent, CommMedium.Ethernet);
+            this.ui.OnLoad(this, CommMedium.Ethernet);
         }
 
 

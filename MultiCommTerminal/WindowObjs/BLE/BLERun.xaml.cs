@@ -49,7 +49,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             WPF_ControlHelpers.CenterChild(parent, this);
-            this.ui.OnLoad(this.parent, CommMedium.BluetoothLE, new RunPageCtrlsEnabled() {
+            this.ui.OnLoad(this, CommMedium.BluetoothLE, new RunPageCtrlsEnabled() {
                 Connect = false,
                 Disconnect = false,
                 Settings = false,
