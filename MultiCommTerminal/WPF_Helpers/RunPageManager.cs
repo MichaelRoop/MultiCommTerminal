@@ -70,11 +70,11 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
         public void CloseAll() {
             lock (this) {
                 try {
-                    this.btCloseRequest(this.btPage, typeof(BTRun));
-                    this.bleCloseRequest(this.blePage, typeof(BLERun));
-                    this.serialCloseRequest(this.serialPage, typeof(SerialRun));
-                    this.ethernetCloseRequest(this.ethernetPage, typeof(EthernetRun));
-                    this.wifiCloseRequest(this.wifiPage, typeof(WifiRun));
+                    this.cleanUpPage(this.btPage, typeof(BTRun));
+                    this.cleanUpPage(this.blePage, typeof(BLERun));
+                    this.cleanUpPage(this.serialPage, typeof(SerialRun));
+                    this.cleanUpPage(this.ethernetPage, typeof(EthernetRun));
+                    this.cleanUpPage(this.wifiPage, typeof(WifiRun));
                 }
                 catch(Exception e) {
                     Log.Exception(9999, "RunPageManager", "CloseAll", "", e);
