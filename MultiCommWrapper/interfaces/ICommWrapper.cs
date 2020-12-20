@@ -52,6 +52,12 @@ namespace MultiCommWrapper.Net.interfaces {
         /// <summary>Raised when the current script has changed</summary>
         event EventHandler<ScriptDataModel> CurrentScriptChanged;
 
+        event EventHandler<ScriptDataModel> CurrentScriptChangedBT;
+        event EventHandler<ScriptDataModel> CurrentScriptChangedBLE;
+        event EventHandler<ScriptDataModel> CurrentScriptChangedUSB;
+        event EventHandler<ScriptDataModel> CurrentScriptChangedWIFI;
+        event EventHandler<ScriptDataModel> CurrentScriptChangedEthernet;
+
         #endregion
 
         #region Properties
@@ -177,7 +183,29 @@ namespace MultiCommWrapper.Net.interfaces {
         void GetCurrentScript(Action<ScriptDataModel> onSuccess, OnErr onError);
 
 
+        /// <summary>Get the current default script for comm medium type</summary>
+        /// <param name="medium">The communication medium</param>
+        /// <param name="onSuccess">Raised on success</param>
+        /// <param name="onError">Raised on error</param>
+        void GetCurrentScript(CommMedium medium, Action<ScriptDataModel> onSuccess, OnErr onError);
+
+
         void SetCurrentScript(ScriptDataModel data, OnErr onError);
+
+
+        /// <summary>Set the default for a specific medium type</summary>
+        /// <param name="data">The new terminator data</param>
+        /// <param name="medium">The communication medium type</param>
+        /// <param name="onError">Raised on storage error</param>
+        void SetCurrentScript(ScriptDataModel data, CommMedium medium, OnErr onError);
+
+
+        /// <summary>Set the default for a specific medium type</summary>
+        /// <param name="index">The index of the selected terminator set</param>
+        /// <param name="medium">The communication medium type</param>
+        /// <param name="onSuccess">Raised on success</param>
+        /// <param name="onError">Raised on storage error</param>
+        void SetCurrentScript(IIndexItem<DefaultFileExtraInfo> index, CommMedium medium, Action onSuccess, OnErr onError);
 
 
         void SetCurrentScript(IIndexItem<DefaultFileExtraInfo> index, Action onSuccess, OnErr onError);

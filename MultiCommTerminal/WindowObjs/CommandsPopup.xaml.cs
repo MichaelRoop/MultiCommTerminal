@@ -1,4 +1,6 @@
-﻿using MultiCommData.Net.StorageDataModels;
+﻿using LanguageFactory.Net.data;
+using MultiCommData.Net.Enumerations;
+using MultiCommData.Net.StorageDataModels;
 using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using StorageFactory.Net.interfaces;
@@ -16,16 +18,17 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         private Window parent = null;
         private ButtonGroupSizeSyncManager widthManager = null;
         private ScriptDataModel original = null;
+        private CommMedium medium = CommMedium.None;
 
-
-        public static void ShowBox(Window parent) {
-            CommandsPopup win = new CommandsPopup(parent);
+        public static void ShowBox(Window parent, CommMedium medium) {
+            CommandsPopup win = new CommandsPopup(parent, medium);
             win.ShowDialog();
         }
 
 
-        private CommandsPopup(Window parent) {
+        private CommandsPopup(Window parent, CommMedium medium) {
             this.parent = parent;
+            this.medium = medium;
             InitializeComponent();
             this.SizeToContent = SizeToContent.WidthAndHeight;
 
@@ -55,7 +58,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
 
         private void btnCancel_Click(object sender, RoutedEventArgs e) {
-            DI.Wrapper.SetCurrentScript(this.original, this.OnGetError);
+            DI.Wrapper.SetCurrentScript(this.original, this.medium, this.OnGetError);
             this.Close();
         }
 
@@ -67,16 +70,45 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         private void selectionChangedHandler(object sender, SelectionChangedEventArgs e) {
             IIndexItem<DefaultFileExtraInfo> item = this.lbxCmds.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
-            DI.Wrapper.SetCurrentScript(item, () => { }, App.ShowMsg);
+            DI.Wrapper.SetCurrentScript(item, this.medium, () => { }, App.ShowMsg);
         }
 
 
-        private void OnGetOk(SettingItems items) {
-            if (items == null || items.CurrentScript == null) {
+        private void OnGetOk(SettingItems settings) {
+            if (settings == null) {
                 this.OnGetError("NULL COMMAND SET");
+                return;
             }
-            else {
-                this.original = items.CurrentScript;
+
+            this.original = settings.CurrentScript;
+            switch (this.medium) {
+                case CommMedium.Bluetooth:
+                    this.original = settings.CurrentScriptBT;
+                    break;
+                case CommMedium.BluetoothLE:
+                    this.original = settings.CurrentScriptBLE;
+                    break;
+                case CommMedium.Ethernet:
+                    this.original = settings.CurrentScriptEthernet;
+                    break;
+                case CommMedium.Usb:
+                    this.original = settings.CurrentScriptUSB;
+                    break;
+                case CommMedium.Wifi:
+                    this.original = settings.CurrentScriptWIFI;
+                    break;
+                default:
+                    this.original = settings.CurrentScript;
+                    break;
+            }
+
+            if (this.original == null) {
+                this.original = settings.CurrentScript;
+            }
+
+            // This would be an error where both the specific and default is null. So, a read failure
+            if (this.original == null) {
+                this.OnGetError(DI.Wrapper.GetText(MsgCode.ReadFailure));
             }
         }
 

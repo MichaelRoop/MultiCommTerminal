@@ -97,7 +97,7 @@ namespace MultiCommTerminal.NetCore.UserControls {
             this.AddEventHandlers();
             DI.Wrapper.CurrentSupportedLanguage(this.SetLanguage);
             DI.Wrapper.GetCurrentTerminator(this.medium, this.SetTerminators, App.ShowMsg);
-            DI.Wrapper.GetCurrentScript(this.PopulateScriptData, App.ShowMsg);
+            DI.Wrapper.GetCurrentScript(this.medium, this.PopulateScriptData, App.ShowMsg);
         }
 
 
@@ -187,7 +187,7 @@ namespace MultiCommTerminal.NetCore.UserControls {
 
 
         private void brdCommands_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
-            CommandsPopup.ShowBox(this.parent);
+            CommandsPopup.ShowBox(this.parent, this.medium);
         }
 
 
@@ -314,27 +314,31 @@ namespace MultiCommTerminal.NetCore.UserControls {
         private void AddEventHandlers() {
             DI.Wrapper.LanguageChanged += this.languageChangedHandler;
             App.STATIC_APP.LogMsgEvent += this.AppLogMsgEventHandler;
-
-            DI.Wrapper.CurrentScriptChanged += this.currentScriptChanged;
             
             switch (this.medium) {
                 case CommMedium.Bluetooth:
                     DI.Wrapper.CurrentTerminatorChangedBT += this.currentTerminatorChangedHandler;
+                    DI.Wrapper.CurrentScriptChangedBT += this.currentScriptChanged;
                     break;
                 case CommMedium.BluetoothLE:
                     DI.Wrapper.CurrentTerminatorChangedBLE += this.currentTerminatorChangedHandler;
+                    DI.Wrapper.CurrentScriptChangedBLE += this.currentScriptChanged;
                     break;
                 case CommMedium.Ethernet:
                     DI.Wrapper.CurrentTerminatorChangedEthernet += this.currentTerminatorChangedHandler;
+                    DI.Wrapper.CurrentScriptChangedEthernet += this.currentScriptChanged;
                     break;
                 case CommMedium.Usb:
                     DI.Wrapper.CurrentTerminatorChangedUSB += this.currentTerminatorChangedHandler;
+                    DI.Wrapper.CurrentScriptChangedUSB += this.currentScriptChanged;
                     break;
                 case CommMedium.Wifi:
                     DI.Wrapper.CurrentTerminatorChangedWIFI += this.currentTerminatorChangedHandler;
+                    DI.Wrapper.CurrentScriptChangedWIFI += this.currentScriptChanged;
                     break;
                 default:
                     DI.Wrapper.CurrentTerminatorChanged += this.currentTerminatorChangedHandler;
+                    DI.Wrapper.CurrentScriptChanged += this.currentScriptChanged;
                     break;
             }
         }
@@ -344,32 +348,34 @@ namespace MultiCommTerminal.NetCore.UserControls {
         private void RemoveEventHandlers() {
             DI.Wrapper.LanguageChanged -= this.languageChangedHandler;
             App.STATIC_APP.LogMsgEvent -= this.AppLogMsgEventHandler;
-           
-            DI.Wrapper.CurrentScriptChanged -= this.currentScriptChanged;
 
             switch (this.medium) {
                 case CommMedium.Bluetooth:
                     DI.Wrapper.CurrentTerminatorChangedBT -= this.currentTerminatorChangedHandler;
+                    DI.Wrapper.CurrentScriptChangedBT -= this.currentScriptChanged;
                     break;
                 case CommMedium.BluetoothLE:
                     DI.Wrapper.CurrentTerminatorChangedBLE -= this.currentTerminatorChangedHandler;
+                    DI.Wrapper.CurrentScriptChangedBLE -= this.currentScriptChanged;
                     break;
                 case CommMedium.Ethernet:
                     DI.Wrapper.CurrentTerminatorChangedEthernet -= this.currentTerminatorChangedHandler;
+                    DI.Wrapper.CurrentScriptChangedEthernet -= this.currentScriptChanged;
                     break;
                 case CommMedium.Usb:
                     DI.Wrapper.CurrentTerminatorChangedUSB -= this.currentTerminatorChangedHandler;
+                    DI.Wrapper.CurrentScriptChangedUSB -= this.currentScriptChanged;
                     break;
                 case CommMedium.Wifi:
                     DI.Wrapper.CurrentTerminatorChangedWIFI -= this.currentTerminatorChangedHandler;
+                    DI.Wrapper.CurrentScriptChangedWIFI -= this.currentScriptChanged;
                     break;
                 default:
                     DI.Wrapper.CurrentTerminatorChanged -= this.currentTerminatorChangedHandler;
+                    DI.Wrapper.CurrentScriptChanged -= this.currentScriptChanged;
                     break;
             }
-
         }
-
 
 
         #endregion

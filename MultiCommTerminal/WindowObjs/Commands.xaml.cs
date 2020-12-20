@@ -15,7 +15,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         private Window parent = null;
         private ICommWrapper wrapper = null;
-        private ButtonGroupSizeSyncManager widthManager = null;
 
 
         public Commands(Window parent) {
@@ -25,10 +24,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
             this.wrapper = DI.Wrapper;
             this.wrapper.CurrentScriptChanged += Wrapper_CurrentScriptChanged;
             this.spEditButtons.Visibility = Visibility.Collapsed;
-
-            // Call before rendering which will trigger initial resize events
-            this.widthManager = new ButtonGroupSizeSyncManager(this.btnCancel, this.btnSelect);
-            this.widthManager.PrepForChange();
         }
 
         private void Wrapper_CurrentScriptChanged(object sender, ScriptDataModel e) {
@@ -44,7 +39,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             this.lbxCmds.SelectionChanged -= this.lbxCmds_SelectionChanged;
             this.wrapper.CurrentScriptChanged -= this.Wrapper_CurrentScriptChanged;
-            this.widthManager.Teardown();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
@@ -52,15 +46,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
             WPF_ControlHelpers.CenterChild(parent, this);
         }
 
-        private void btnCancel_Click(object sender, RoutedEventArgs e) {
+        private void btnExit_Click(object sender, RoutedEventArgs e) {
             this.Close();
-        }
-
-        private void btnSelect_Click(object sender, RoutedEventArgs e) {
-            var item = this.lbxCmds.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
-            if (item != null) {
-                this.wrapper.SetCurrentScript(item, this.Close, App.ShowMsg);
-            }
         }
 
 

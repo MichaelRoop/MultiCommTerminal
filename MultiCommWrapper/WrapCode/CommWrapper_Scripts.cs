@@ -1,6 +1,7 @@
 ﻿using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
 using LanguageFactory.Net.data;
+using MultiCommData.Net.Enumerations;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommWrapper.Net.interfaces;
 using StorageFactory.Net.interfaces;
@@ -14,6 +15,12 @@ namespace MultiCommWrapper.Net.WrapCode {
     public partial class CommWrapper : ICommWrapper {
 
         public event EventHandler<ScriptDataModel> CurrentScriptChanged;
+        public event EventHandler<ScriptDataModel> CurrentScriptChangedBT;
+        public event EventHandler<ScriptDataModel> CurrentScriptChangedBLE;
+        public event EventHandler<ScriptDataModel> CurrentScriptChangedUSB;
+        public event EventHandler<ScriptDataModel> CurrentScriptChangedWIFI;
+        public event EventHandler<ScriptDataModel> CurrentScriptChangedEthernet;
+
 
         public void GetCurrentScript(Action<ScriptDataModel> onSuccess, OnErr onError) {
             WrapErr.ToErrReport(9999, () => {
@@ -62,6 +69,103 @@ namespace MultiCommWrapper.Net.WrapCode {
                     onError);
             }
         }
+
+
+        public void GetCurrentScript(CommMedium medium, Action<ScriptDataModel> onSuccess, OnErr onError) {
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    // Force default creation
+                    var x = this.scriptStorage;
+                    SettingItems items = this.settings.ReadObjectFromDefaultFile();
+
+                    ScriptDataModel dm = null;
+                    switch (medium) {
+                        case CommMedium.Bluetooth:
+                            dm = items.CurrentScriptBT;
+                            break;
+                        case CommMedium.BluetoothLE:
+                            dm = items.CurrentScriptBLE;
+                            break;
+                        case CommMedium.Ethernet:
+                            dm = items.CurrentScriptEthernet;
+                            break;
+                        case CommMedium.Usb:
+                            dm = items.CurrentScriptUSB;
+                            break;
+                        case CommMedium.Wifi:
+                            dm = items.CurrentScriptWIFI;
+                            break;
+                        default:
+                            dm = items.CurrentScript;
+                            break;
+                    }
+                    if (dm == null) {
+                        dm = items.CurrentScript;
+                    }
+                    dm = this.AssureScript(dm);
+
+                    onSuccess(dm);
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.LoadFailed));
+                }
+            });
+        }
+
+
+        public void SetCurrentScript(ScriptDataModel data, CommMedium medium, OnErr onError) {
+            this.GetSettings((settings) => {
+                EventHandler<ScriptDataModel> ev = null;
+                switch (medium) {
+                    case CommMedium.Bluetooth:
+                        settings.CurrentScriptBT= data;
+                        ev = this.CurrentScriptChangedBT;
+                        break;
+                    case CommMedium.BluetoothLE:
+                        settings.CurrentScriptBLE = data;
+                        ev = this.CurrentScriptChangedBLE;
+                        break;
+                    case CommMedium.Ethernet:
+                        settings.CurrentScriptEthernet = data;
+                        ev = this.CurrentScriptChangedEthernet;
+                        break;
+                    case CommMedium.Usb:
+                        settings.CurrentScriptUSB = data;
+                        ev = this.CurrentScriptChangedUSB;
+                        break;
+                    case CommMedium.Wifi:
+                        settings.CurrentScriptWIFI = data;
+                        ev = this.CurrentScriptChangedWIFI;
+                        break;
+                    default:
+                        settings.CurrentScript = data;
+                        ev = this.CurrentScriptChanged;
+                        break;
+                }
+
+                this.SaveSettings(settings, () => { ev?.Invoke(this, data); }, onError);
+            }, onError);
+        }
+
+
+
+        public void SetCurrentScript(IIndexItem<DefaultFileExtraInfo> index, CommMedium medium, Action onSuccess, OnErr onError) {
+            if (index == null) {
+                onError(this.GetText(MsgCode.NothingSelected));
+            }
+            else {
+                this.RetrieveScriptData(
+                    index,
+                    (data) => {
+                        this.SetCurrentScript(data, medium, onError);
+                        onSuccess.Invoke();
+                    },
+                    onError);
+            }
+        }
+
+
 
         public void RetrieveScriptData(IIndexItem<DefaultFileExtraInfo> index, Action<ScriptDataModel> onSuccess, OnErr onError) {
             WrapErr.ToErrReport(9999, () => {
@@ -223,6 +327,25 @@ namespace MultiCommWrapper.Net.WrapCode {
             });
         }
 
+
+
+        private ScriptDataModel AssureScript(ScriptDataModel dataModel) {
+            // TODO - create a temp 
+            if (string.IsNullOrWhiteSpace(dataModel.Display)) {
+                dataModel.Display = "TMP Script";
+            }
+            if (dataModel.Items.Count == 0) {
+                dataModel.Items.Add(new ScriptItem() {
+                    Display = "TEMP CMD1",
+                    Command = "CMD1",
+                });
+                dataModel.Items.Add(new ScriptItem() {
+                    Display = "TEMP CMD2",
+                    Command = "CMD2",
+                });
+            }
+            return dataModel;
+        }
 
 
     }
