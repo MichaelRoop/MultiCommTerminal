@@ -1,4 +1,5 @@
 ﻿using BluetoothLE.Net.DataModels;
+using BluetoothLE.Net.Enumerations;
 using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
 using Common.Net.Network;
@@ -29,7 +30,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         public event EventHandler<NetPropertiesUpdateDataModel> BLE_DeviceUpdated;
 
         /// <summary>Raised when BLE info on a device is finished gathering</summary>
-        public event EventHandler<BluetoothLEDeviceInfo> BLE_DeviceInfoGathered;
+        public event EventHandler<BLEGetInfoStatus> BLE_DeviceInfoGathered;
 
 
         private void BLE_DeviceDiscoveredHandler(object sender, BluetoothLEDeviceInfo e) {
@@ -79,11 +80,6 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         public void BLE_GetInfo(BluetoothLEDeviceInfo device) {
             this.bleBluetooth.GetInfo(device);
-        }
-
-
-        private void BleBluetooth_DeviceInfoAssembled(object sender, BluetoothLEDeviceInfo e) {
-            this.BLE_DeviceInfoGathered?.Invoke(this, e);
         }
 
 
@@ -200,6 +196,39 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         #endregion
 
+        #region Event handlers
+
+        private void BleDeviceInfoAssembledHandler(object sender, BLEGetInfoStatus info) {
+            info.Message = this.Translate(info.Status);
+            this.BLE_DeviceInfoGathered?.Invoke(this, info);
+        }
+
+
+        private string Translate(BLEOperationStatus status) {
+            switch (status) {
+                case BLEOperationStatus.Success:
+                    return this.GetText(MsgCode.Ok);
+                case BLEOperationStatus.NotFound:
+                    return this.GetText(MsgCode.NotFound);
+                case BLEOperationStatus.NoServices:
+                    return this.GetText(MsgCode.NoServices);
+                case BLEOperationStatus.GetServicesFailed:
+                    return this.GetText(MsgCode.ServicesFailure);
+                case BLEOperationStatus.Failed:
+                    return this.GetText(MsgCode.UnknownError);
+                case BLEOperationStatus.UnhandledError:
+                    return this.GetText(MsgCode.UnhandledError);
+                case BLEOperationStatus.UnknownError:
+                    return this.GetText(MsgCode.UnknownError);
+                default:
+                    return status.ToString().CamelCaseToSpaces();
+            }
+        }
+
+
+
+        #endregion
+
         #region Init and teardown
 
         private void BLE_TearDown() {
@@ -209,7 +238,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.bleBluetooth.DeviceRemoved -= this.BLE_DeviceRemovedHandler;
             this.bleBluetooth.DeviceUpdated -= BLE_DeviceUpdatedHandler;
             this.bleBluetooth.DeviceDiscoveryCompleted -= this.BLE_DeviceDiscoveryCompleted;
-            this.bleBluetooth.DeviceInfoAssembled -= this.BleBluetooth_DeviceInfoAssembled;
+            this.bleBluetooth.DeviceInfoAssembled -= this.BleDeviceInfoAssembledHandler;
         }
 
         #endregion

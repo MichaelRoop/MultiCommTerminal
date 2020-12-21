@@ -17,7 +17,7 @@ namespace Bluetooth.UWP.Core {
 
         public event EventHandler<NetPropertiesUpdateDataModel> DeviceUpdated;
 
-        public event EventHandler<BluetoothLEDeviceInfo> DeviceInfoAssembled;
+        public event EventHandler<BLEGetInfoStatus> DeviceInfoAssembled;
 
         #endregion
 

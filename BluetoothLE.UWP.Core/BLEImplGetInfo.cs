@@ -1,4 +1,5 @@
 ﻿using BluetoothLE.Net.DataModels;
+using BluetoothLE.Net.Enumerations;
 using BluetoothLE.Net.interfaces;
 using System;
 using System.Threading.Tasks;
@@ -15,6 +16,9 @@ namespace Bluetooth.UWP.Core {
                 deviceDataModel.Name, deviceDataModel.Id));
 
             BluetoothLEDevice device = null;
+            BLEGetInfoStatus result = new BLEGetInfoStatus() {
+                DeviceInfo = deviceDataModel,
+            };
 
             try {
                 // https://github.com/microsoft/Windows-universal-samples/blob/master/Samples/BluetoothLE/cs/Scenario2_Client.xaml.cs
@@ -37,30 +41,33 @@ namespace Bluetooth.UWP.Core {
                                 foreach (GattDeviceService service in services.Services) {
                                     await this.BuildServiceDataModel(service, deviceDataModel);
                                 }
+                                result.Status = BLEOperationStatus.Success;
                             }
                             else {
+                                result.Status = BLEOperationStatus.NoServices;
                                 this.log.Info("HarvestDeviceInfo", "No services exposed");
                             }
                         }
                         else {
+                            result.Status = BLEOperationStatus.GetServicesFailed;
                             this.log.Error(9999, "Null services");
                         }
                     }
                     else {
+                        result.Status = BLEOperationStatus.GetServicesFailed;
                         this.log.Error(9999, "HarvestDeviceInfo", () => string.Format("    Get Services Failed {0}", services.Status.ToString()));
                     }
                 }
                 catch(Exception e) {
+                    result.Status = BLEOperationStatus.GetServicesFailed;
                     this.log.Exception(9999, "HarvestDeviceInfo", "Failure", e);
                 }
 
-                // Raise event
-                this.DeviceInfoAssembled?.Invoke(this, deviceDataModel);
             }
             catch (Exception e) {
                 this.log.Exception(9999, "On harvest device info", e);
                 // TODO - raise event with null device
-                this.DeviceInfoAssembled?.Invoke(this, null);
+                result.Status = BLEOperationStatus.UnhandledError;
             }
             finally {
                 try {
@@ -72,6 +79,13 @@ namespace Bluetooth.UWP.Core {
                 catch (Exception ex) {
                     this.log.Exception(9999, "On fail to disconnect harvesting device data", ex);
                 }
+            }
+            try {
+                // Raise event
+                this.DeviceInfoAssembled?.Invoke(this, result);
+            }
+            catch(Exception e) {
+                this.log.Exception(9999, "On raise event", e);
             }
         }
 
