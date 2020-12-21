@@ -26,24 +26,32 @@ namespace Bluetooth.UWP.Core {
 
                 // Clear services and get a new set for the passed in device info
                 deviceDataModel.Services.Clear();
-                GattDeviceServicesResult services = await device.GetGattServicesAsync();
-                if (services.Status == GattCommunicationStatus.Success) {
-                    if (services.Services != null) {
-                        if (services.Services.Count > 0) {
-                            foreach (GattDeviceService service in services.Services) {
-                                await this.BuildServiceDataModel(service, deviceDataModel);
+
+                try {
+                    // Attempts pair and causes catastropic failure if not supported
+                    // This will happen with Arduinos
+                    GattDeviceServicesResult services = await device.GetGattServicesAsync();
+                    if (services.Status == GattCommunicationStatus.Success) {
+                        if (services.Services != null) {
+                            if (services.Services.Count > 0) {
+                                foreach (GattDeviceService service in services.Services) {
+                                    await this.BuildServiceDataModel(service, deviceDataModel);
+                                }
+                            }
+                            else {
+                                this.log.Info("HarvestDeviceInfo", "No services exposed");
                             }
                         }
                         else {
-                            this.log.Info("HarvestDeviceInfo", "No services exposed");
+                            this.log.Error(9999, "Null services");
                         }
                     }
                     else {
-                        this.log.Error(9999, "Null services");
+                        this.log.Error(9999, "HarvestDeviceInfo", () => string.Format("    Get Services Failed {0}", services.Status.ToString()));
                     }
                 }
-                else {
-                    this.log.Error(9999, "HarvestDeviceInfo", () => string.Format("    Get Services Failed {0}", services.Status.ToString()));
+                catch(Exception e) {
+                    this.log.Exception(9999, "HarvestDeviceInfo", "Failure", e);
                 }
 
                 // Raise event
