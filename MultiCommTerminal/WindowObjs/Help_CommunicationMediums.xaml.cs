@@ -23,8 +23,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         public Help_CommunicationMediums(Window parent) {
             this.parent = parent;
             InitializeComponent();
-            this.spView.Visibility = Visibility.Collapsed;
-            this.lblUserManual.Text = DI.Wrapper.UserManualFullFileName;
             this.SizeToContent = SizeToContent.WidthAndHeight;
             DI.Wrapper.CommMediumHelpList(this.OnBuildMediumHelp);
         }
@@ -39,21 +37,22 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             this.CenterToParent(this.parent);
+            this.listBoxMediums.SelectionChanged += this.listBoxMediums_SelectionChanged;
+        }
+
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+            this.listBoxMediums.SelectionChanged -= this.listBoxMediums_SelectionChanged;
         }
 
 
         private void listBoxMediums_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {
             if (this.listBoxMediums.SelectedItem != null) {
+                this.listBoxMediums.SelectionChanged -= this.listBoxMediums_SelectionChanged;
                 CommMediumHelp help = this.listBoxMediums.SelectedItem as CommMediumHelp;
-                DI.Wrapper.HasCodeSample(help.Id, this.OnSelectedHasCodeSample, this.OnSelectedNoCodeSample);
-            }
-        }
-
-
-        private void btnCode_Click(object sender, RoutedEventArgs e) {
-            if (this.listBoxMediums.SelectedItem != null) {
-                CommMediumHelp help = this.listBoxMediums.SelectedItem as CommMediumHelp;
-                DI.Wrapper.HasCodeSample(help.Id, this.OnHasCodeSampleView, WindowHelpers.ShowMsgTitle);
+                DI.Wrapper.HasCodeSample(help.Id, this.OnHasCodeSampleView, App.ShowMsgTitle);
+                this.listBoxMediums.SelectedItem = null;
+                this.listBoxMediums.SelectionChanged += this.listBoxMediums_SelectionChanged;
             }
         }
 
@@ -74,26 +73,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
             // its control malfunctions with no content
             MsgBoxCode win = new MsgBoxCode(this, helpType);
             win.ShowDialog();
-        }
-
-
-        private void OnSelectedHasCodeSample(CommMedium medium) {
-            this.spView.Visibility = Visibility.Visible;
-        }
-
-
-        private void OnSelectedNoCodeSample(string title, string msg) {
-            this.spView.Visibility = Visibility.Collapsed;
-        }
-
-        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e) {
-            try {
-                Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri) { UseShellExecute = true });
-                e.Handled = true;
-            }
-            catch(Exception ex) {
-                Log.Exception(9999, "", ex);
-            }
         }
 
     }

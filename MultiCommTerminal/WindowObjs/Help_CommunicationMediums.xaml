@@ -13,14 +13,13 @@
         WindowStartupLocation="Manual" 
         Title="{Binding Source={x:Static wpfHelper:TxtBinder.Info}}" 
         mc:Ignorable="d"
-        Loaded="Window_Loaded"
+        Loaded="Window_Loaded" Closing="Window_Closing"
         >
     <Grid>
         <StackPanel>
             <DockPanel Margin="10">
                 <ListBox x:Name="listBoxMediums" MinHeight="50" MaxHeight="400" MinWidth="200" MaxWidth="600"
-                      ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="listBoxMediums_SelectionChanged"
-                     >
+                      ScrollViewer.VerticalScrollBarVisibility="Auto" >
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0">
@@ -38,21 +37,7 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-                <StackPanel x:Name="spView" VerticalAlignment="Center">
-                    <controls:UC_RoundIconButton x:Name="btnCode" Margin="5" Width="40" Height="40"
-                            Style="{StaticResource IconButton}" 
-                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.View}}"
-                            Click="btnCode_Click"/>
-                </StackPanel>
             </DockPanel>
-            <!--<TextBlock HorizontalAlignment="Center" Margin="5">
-                <Hyperlink NavigateUri="{Binding Source={x:Static wpfHelper:TxtBinder.UserManualUri }}" RequestNavigate="Hyperlink_RequestNavigate">
-                    <TextBlock Text="{Binding Source={x:Static wpfHelper:TxtBinder.UserManual}}" />
-                </Hyperlink>
-            </TextBlock>-->
-            <Grid HorizontalAlignment="Center" Margin="5,0" Visibility="Collapsed">
-                <TextBlock x:Name="lblUserManual" HorizontalAlignment="Center" Text="" FontSize="14" TextWrapping="Wrap" />
-            </Grid>
             <Border HorizontalAlignment="Center">
                 <controls:UC_IconButton x:Name="btnExit" Margin="5"
                             Style="{StaticResource TextIconButton}" 

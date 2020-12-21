@@ -29,8 +29,6 @@ char msgCmpBuff[IN_BUFF_SIZE];
 int msgSize = 0;
 unsigned char inIndex = 0;
 
-char OPEN_DOOR_CMD_REV[] = "OpenDoor";
-char CLOSE_DOOR_CMD_REV[] = "CloseDoor";
 char OPEN_DOOR_CMD[] = "OpenDoor";
 char CLOSE_DOOR_CMD[] = "CloseDoor";
 int  OPEN_CMD_LEN = 8;
@@ -45,10 +43,6 @@ void setup() {
 	Serial.begin(115200, SERIAL_8N1);
 	while (!Serial) {
 	}
-
-	// Reverse the compare strings so we can filter out leading garbage in inputs
-	strrev(OPEN_DOOR_CMD_REV);
-	strrev(CLOSE_DOOR_CMD_REV);
 }
 
 
@@ -107,20 +101,7 @@ void CompareForResponse(int msgSize) {
 		CloseGarageDoor();
 	}
 	else {
-		// Reverse the incoming buffer. This will ignore garbage 
-		// at start of legit command (sdfsdfsOpenDoor)
-		strrev(msgCmpBuff);
-		if (strncmp(msgCmpBuff, OPEN_DOOR_CMD_REV, OPEN_CMD_LEN) == 0) {
-			Serial.write("OPENING\r\n");
-			OpenGarageDoor();
-		}
-		else if (strncmp(msgCmpBuff, CLOSE_DOOR_CMD_REV, CLOSE_CMD_LEN) == 0) {
-			Serial.write("CLOSING\r\n");
-			CloseGarageDoor();
-		}
-		else {
-			Serial.write("NOT_HANDLED\r\n");
-		}
+		Serial.write("NOT_HANDLED\r\n");
 	}
 }
 
