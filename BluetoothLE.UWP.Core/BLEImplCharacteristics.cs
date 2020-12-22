@@ -68,6 +68,8 @@ namespace Bluetooth.UWP.Core {
 
                             case GattNativeCharacteristicUuid.BatteryLevel:
                                 #region Battery Level
+                                // Hardcoded experiment with Arduino
+
                                 // This works until we get another add existing again
                                 // Setting it to notify so I can pick up the event
                                 var c = await ch.WriteClientCharacteristicConfigurationDescriptorAsync(GattClientCharacteristicConfigurationDescriptorValue.Notify);
@@ -130,6 +132,7 @@ namespace Bluetooth.UWP.Core {
                             default:
                                 byte[] data = new byte[readResult.Value.Length];
                                 Array.Copy(b, data, data.Length);
+                                // TODO - this is old hardcoded connection to serial Arduino in out. Replace
                                 if (BLE_DisplayHelpers.GetCharacteristicName(ch) == "39320") {
                                     var xx = await ch.WriteClientCharacteristicConfigurationDescriptorAsync(GattClientCharacteristicConfigurationDescriptorValue.Notify);
                                     ch.ValueChanged += Ch_ValueChangedSerialReturn;
@@ -148,6 +151,10 @@ namespace Bluetooth.UWP.Core {
                 else if (ch.CharacteristicProperties.HasFlag(GattCharacteristicProperties.Write)) {
                     if (BLE_DisplayHelpers.GetCharacteristicName(ch) == "39319") {
                         try {
+
+                            // TODO - old hardcoded to write values to an Arduino characteristic
+
+
                             //WrapErr.ToErrReport(9999, () => {
                             this.log.Info("LKDJFKLJSDFLK:JSDKLF", "GOT 39319 (output to device)");
                             // Test message                                    

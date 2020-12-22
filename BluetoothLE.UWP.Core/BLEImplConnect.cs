@@ -13,41 +13,54 @@ namespace Bluetooth.UWP.Core {
     public partial class BluetoothLEImplWin32Core : IBLETInterface {
 
 
+        private void AttachEvents() {
+            this.currentDevice.NameChanged += CurrentDevice_NameChanged;
+
+
+        }
+
         private async Task ConnectToDevice(BluetoothLEDeviceInfo deviceInfo) {
             this.log.Info("ConnectToDevice", () => string.Format("Attempting connection to {0}: FromIdAsync({1})",
                 deviceInfo.Name, deviceInfo.Id));
 
             try {
-                // https://github.com/microsoft/Windows-universal-samples/blob/master/Samples/BluetoothLE/cs/Scenario2_Client.xaml.cs
+                BLEGetInfoStatus result = await this.GetBLEDeviceInfo(deviceInfo, true);
+                if (result.Status == BluetoothLE.Net.Enumerations.BLEOperationStatus.Success) {
+                    if (this.currentDevice == null) {
+                        // TODO raise failed
+                    }
+                    else {
+                        // We have a device connected
+                        this.log.Info("ConnectToDevice", () => string.Format("Device:{0} Connection status {1}",
+                            this.currentDevice.Name, this.currentDevice.ConnectionStatus.ToString()));
 
-                this.log.Info("ConnectToDevice", () => string.Format("--------------------------------------------------------------------"));
-                this.log.Info("ConnectToDevice", () => string.Format(" Param Device Info ID {0}", deviceInfo.Id));
-                this.currentDevice = await BluetoothLEDevice.FromIdAsync(deviceInfo.Id);
 
-                if (this.currentDevice == null) {
-                    this.log.Info("ConnectToDevice", "Connection failed");
+                    }
                 }
                 else {
-                    this.log.Info("ConnectToDevice", "Connection ** OK **");
-                    this.currentDevice.NameChanged += CurrentDevice_NameChanged;
-
-
+                    // TODO raise failed
                 }
 
-                // This just does the easy serial communications - this is using a regular HC-05 Classic (RFCOMM) board
-                //RfcommDeviceService s = await RfcommDeviceService.FromIdAsync(this.id);
-                //BluetoothDevice.GetRfcommServicesAsync();
+
+                #region OLD
+                //// https://github.com/microsoft/Windows-universal-samples/blob/master/Samples/BluetoothLE/cs/Scenario2_Client.xaml.cs
+                //this.log.Info("ConnectToDevice", () => string.Format("--------------------------------------------------------------------"));
+                //this.log.Info("ConnectToDevice", () => string.Format(" Param Device Info ID {0}", deviceInfo.Id));
+                //this.currentDevice = await BluetoothLEDevice.FromIdAsync(deviceInfo.Id);
+
+                //if (this.currentDevice == null) {
+                //    this.log.Info("ConnectToDevice", "Connection failed");
+                //}
+                //else {
+                //    this.log.Info("ConnectToDevice", "Connection ** OK **");
+                //    this.currentDevice.NameChanged += CurrentDevice_NameChanged;
+                //}
 
 
-                this.log.Info("ConnectToDevice", () => string.Format("Device:{0} Connection status {1}",
-                    this.currentDevice.Name, this.currentDevice.ConnectionStatus.ToString()));
+                //this.log.Info("ConnectToDevice", () => string.Format("Device:{0} Connection status {1}",
+                //    this.currentDevice.Name, this.currentDevice.ConnectionStatus.ToString()));
 
-                //// Try force pairing - this does not fail but still catastrophic on GetGattSerivcesAsync
-                ////https://stackoverflow.com/questions/35420940/windows-uwp-connect-to-ble-device-after-discovery
-                //var pr = await this.currentDevice.DeviceInformation.Pairing.PairAsync();
-                //this.log.Info("ConnectToDevice", () => string.Format("Pairing Status:{0}", pr.Status));
-
-
+                /*
                 // This gives the catastrophic failure message.  I connected once but after that NADA.
                 GattDeviceServicesResult services = await this.currentDevice.GetGattServicesAsync();
                 if (services.Status == GattCommunicationStatus.Success) {
@@ -63,6 +76,7 @@ namespace Bluetooth.UWP.Core {
                                     if (characteristics.Characteristics != null) {
                                         if (characteristics.Characteristics.Count > 0) {
                                             foreach (GattCharacteristic ch in characteristics.Characteristics) {
+                                                // TODO - this also does the dummy read write
                                                 await this.DumpCharacteristic(ch);
                                                 GattDescriptorsResult descriptors = await ch.GetDescriptorsAsync();
                                                 if (descriptors.Status == GattCommunicationStatus.Success) {
@@ -109,6 +123,8 @@ namespace Bluetooth.UWP.Core {
                 }
 
                 this.log.Info("ConnectToDevice", () => string.Format("--------------------------------------------------------------------"));
+                */
+                #endregion
 
             }
             catch (Exception e) {
