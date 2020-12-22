@@ -1,4 +1,5 @@
 ﻿using BluetoothLE.Net.DataModels;
+using BluetoothLE.Net.Enumerations;
 using LanguageFactory.Net.data;
 using MultiCommData.Net.Enumerations;
 using MultiCommTerminal.NetCore.DependencyInjection;
@@ -49,6 +50,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             WPF_ControlHelpers.CenterChild(parent, this);
+            //this.ui.OnLoad(this, CommMedium.BluetoothLE);
             this.ui.OnLoad(this, CommMedium.BluetoothLE, new RunPageCtrlsEnabled() {
                 Connect = false,
                 Disconnect = false,
@@ -76,11 +78,14 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         #region DI event handlers
 
-        private void deviceInfoGathered(object sender, BluetoothLEDeviceInfo info) {
+        private void deviceInfoGathered(object sender, BLEGetInfoStatus info) {
             this.Dispatcher.Invoke(() => {
                 this.ui.IsBusy = false;
                 DI.Wrapper.BLE_DeviceInfoGathered -= deviceInfoGathered;
-                DeviceInfo_BLE win = new DeviceInfo_BLE(this, info);
+                if (info.Status != BLEOperationStatus.Success) {
+                    App.ShowMsg(info.Message);
+                }
+                DeviceInfo_BLE win = new DeviceInfo_BLE(this, info.DeviceInfo);
                 win.ShowDialog();
             });
         }
