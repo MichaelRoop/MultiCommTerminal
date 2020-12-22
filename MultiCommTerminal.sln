@@ -55,8 +55,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ethernet.UWP.Core", "Ethern
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ethernet.Common.Net", "..\SharedNetLibs\Ethernet.Common.Net\Ethernet.Common.Net.csproj", "{FB8026AE-BEDC-4D83-BCF2-BC419E1F5825}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiCommTerminal.AndroidXamarin", "MultiCommTerminal.AndroidXamarin\MultiCommTerminal.AndroidXamarin.csproj", "{8C7212A3-55C4-4925-9B9C-2AE5F5525586}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wifi.AndroidXamarin", "Wifi.AndroidXamarin\Wifi.AndroidXamarin.csproj", "{54D6678E-55C1-46DF-856F-FC9630026CFA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BluetoothRfComm.AndroidXamarin", "BluetoothRfComm.AndroidXamarin\BluetoothRfComm.AndroidXamarin.csproj", "{069F8D1A-9678-459E-8984-2EB5383A3EB4}"
@@ -825,48 +823,6 @@ Global
 		{FB8026AE-BEDC-4D83-BCF2-BC419E1F5825}.Release|x64.Build.0 = Release|Any CPU
 		{FB8026AE-BEDC-4D83-BCF2-BC419E1F5825}.Release|x86.ActiveCfg = Release|Any CPU
 		{FB8026AE-BEDC-4D83-BCF2-BC419E1F5825}.Release|x86.Build.0 = Release|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Debug|ARM.Build.0 = Debug|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Debug|ARM.Deploy.0 = Debug|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Debug|ARM64.ActiveCfg = Debug|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Debug|ARM64.Build.0 = Debug|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Debug|ARM64.Deploy.0 = Debug|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Debug|iPhone.ActiveCfg = Debug|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Debug|iPhone.Build.0 = Debug|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Debug|iPhone.Deploy.0 = Debug|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Debug|iPhoneSimulator.Deploy.0 = Debug|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Debug|x64.Build.0 = Debug|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Debug|x64.Deploy.0 = Debug|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Debug|x86.Build.0 = Debug|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Debug|x86.Deploy.0 = Debug|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Release|ARM.ActiveCfg = Release|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Release|ARM.Build.0 = Release|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Release|ARM.Deploy.0 = Release|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Release|ARM64.ActiveCfg = Release|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Release|ARM64.Build.0 = Release|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Release|ARM64.Deploy.0 = Release|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Release|iPhone.ActiveCfg = Release|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Release|iPhone.Build.0 = Release|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Release|iPhone.Deploy.0 = Release|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Release|iPhoneSimulator.Deploy.0 = Release|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Release|x64.ActiveCfg = Release|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Release|x64.Build.0 = Release|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Release|x64.Deploy.0 = Release|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Release|x86.ActiveCfg = Release|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Release|x86.Build.0 = Release|Any CPU
-		{8C7212A3-55C4-4925-9B9C-2AE5F5525586}.Release|x86.Deploy.0 = Release|Any CPU
 		{54D6678E-55C1-46DF-856F-FC9630026CFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{54D6678E-55C1-46DF-856F-FC9630026CFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54D6678E-55C1-46DF-856F-FC9630026CFA}.Debug|ARM.ActiveCfg = Debug|Any CPU
