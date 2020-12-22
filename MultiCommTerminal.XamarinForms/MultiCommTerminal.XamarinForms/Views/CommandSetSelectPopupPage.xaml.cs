@@ -63,9 +63,10 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         private void UpdateLanguage(SupportedLanguage l) {
             this.lbTitle.Text = l.GetText(MsgCode.commands);
-            //this.btnSelect.Text = l.GetText(MsgCode.select);
-            //this.btnCancel.Text = l.GetText(MsgCode.cancel);
+            this.btnSelect.SetScreenReader(l.GetText(MsgCode.select));
+            this.btnCancel.SetScreenReader(l.GetText(MsgCode.cancel));
         }
+
 
         private void Exit() {
             PopupNavigation.Instance.PopAsync(true);

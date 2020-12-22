@@ -112,6 +112,8 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.lbTitle.Text = language.GetText(MsgCode.Edit);
             this.lblCmd.Text = language.GetText(MsgCode.command);
             this.lblName.Text = language.GetText(MsgCode.Name);
+            this.btnCancel.SetScreenReader(MsgCode.cancel);
+            this.btnSave.SetScreenReader(MsgCode.save);
         }
 
 

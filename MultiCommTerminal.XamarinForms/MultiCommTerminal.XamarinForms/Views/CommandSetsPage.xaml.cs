@@ -76,6 +76,9 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         private void LanguageUpdate(SupportedLanguage language) {
             this.lbTitle.Text = language.GetText(MsgCode.commands);
+            this.btnAdd.SetScreenReader(MsgCode.New);
+            this.btnDelete.SetScreenReader(MsgCode.Delete);
+            this.btnEdit.SetScreenReader(MsgCode.Edit);
         }
 
 

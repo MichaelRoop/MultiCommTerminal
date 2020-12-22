@@ -70,8 +70,11 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         #region Event handlers
 
-        private void LanguageUpdate(SupportedLanguage language) {
-            this.lbTitle.Text = language.GetText(MsgCode.Credentials);
+        private void LanguageUpdate(SupportedLanguage l) {
+            this.lbTitle.Text = l.GetText(MsgCode.Credentials);
+            this.btnAdd.SetScreenReader(l.GetText(MsgCode.New));
+            this.btnDelete.SetScreenReader(l.GetText(MsgCode.Delete));
+            this.btnEdit.SetScreenReader(l.GetText(MsgCode.Edit));
         }
 
 

@@ -23,12 +23,12 @@
                 </ScrollView>
             </Grid>
             <StackLayout Orientation="Horizontal">
-                <Button x:Name="btnBluetooth" Text="" Clicked="btnBluetooth_Clicked"
-                            BorderWidth="0" ImageSource="{Binding Source={x:Static helpers:IconBinder.Bluetooth}}"  />
+                <Button x:Name="btnBluetooth" Text="" Clicked="btnBluetooth_Clicked" 
+                        BorderWidth="0" ImageSource="{Binding Source={x:Static helpers:IconBinder.Bluetooth}}"  />
                 <Button x:Name="btnWifi" Text="" Clicked="btnWifi_Clicked" BorderWidth="0"
-                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Wifi}}"  />
+                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Wifi}}"  />
                 <Button x:Name="btnCopy" Text="" Clicked="btnCopy_Clicked"
-                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}"  />
+                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}"  />
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

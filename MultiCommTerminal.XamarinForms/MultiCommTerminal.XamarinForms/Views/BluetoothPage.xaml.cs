@@ -151,6 +151,10 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         private void UpdateLanguage(SupportedLanguage language) {
             this.lbTitle.Text = language.GetText(MsgCode.PairedDevices);
+            this.btnDiscover.SetScreenReader(MsgCode.discover);
+            this.btnPair.SetScreenReader(MsgCode.Pair);
+            this.btnUnPair.SetScreenReader(MsgCode.Unpair);
+            this.btnSelect.SetScreenReader(MsgCode.select);
         }
 
 

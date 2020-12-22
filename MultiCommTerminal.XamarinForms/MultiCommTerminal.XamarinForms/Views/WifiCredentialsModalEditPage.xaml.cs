@@ -133,6 +133,9 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.lbPwd.Text = l.GetText(MsgCode.NetworkSecurityKey);
             this.lbHost.Text = l.GetText(MsgCode.HostName);
             this.lbPort.Text = l.GetText(MsgCode.Port);
+
+            this.btnCancel.SetScreenReader(l.GetText(MsgCode.cancel));
+            this.btnSave.SetScreenReader(l.GetText(MsgCode.save));
         }
 
 
