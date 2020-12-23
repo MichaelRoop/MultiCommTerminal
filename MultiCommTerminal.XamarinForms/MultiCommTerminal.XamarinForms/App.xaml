@@ -35,7 +35,7 @@
                 <Setter Property="FontSize" Value="18"/>
             </Style>
             <Style TargetType="Button">
-                <Setter Property="TextColor" Value="Black"></Setter>
+                <Setter Property="TextColor" Value="{StaticResource TextColor}"></Setter>
                 <Setter Property="BackgroundColor" Value="White"/>
                 <Setter Property="BorderColor" Value="LightGray"/>
                 <Setter Property="BorderWidth" Value=".5"/>

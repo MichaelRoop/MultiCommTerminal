@@ -4,7 +4,9 @@ using LanguageFactory.Net.Messaging;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommTerminal.XamarinForms.interfaces;
 using MultiCommTerminal.XamarinForms.Services;
+using MultiCommTerminal.XamarinForms.Views.MessageBoxes;
 using MultiCommWrapper.Net.interfaces;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
@@ -86,7 +88,9 @@ namespace MultiCommTerminal.XamarinForms {
 
         public static void ShowError(Page page, string title, string msg) {
             Xamarin.Forms.Device.BeginInvokeOnMainThread(async () => {
-                await page.DisplayAlert(title, msg, App.GetText(MsgCode.Ok));
+                //await page.DisplayAlert(title, msg, App.GetText(MsgCode.Ok));
+
+                await PopupNavigation.Instance.PushAsync(new AlertPopup(title, msg));
             });
         }
 
