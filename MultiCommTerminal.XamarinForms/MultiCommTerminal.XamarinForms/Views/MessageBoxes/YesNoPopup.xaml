@@ -25,9 +25,9 @@
             <Label x:Name="lbMsg" WidthRequest="200" Text="Message"/>
             <!--<Label x:Name="lbContinue" WidthRequest="200" Text="{Binding Source={x:Static helpers:TextBinder.Continue}}"/>-->
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,10,0,0" Padding="0" >
-                <Button x:Name="btnYes" ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}"
+                <Button x:Name="btnYes" ImageSource="{Binding Source={x:Static helpers:IconBinder.SaveSmall}}"
                         Clicked="btnYes_Clicked" Text="Yes" Margin="10" HeightRequest="60" FontSize="18" />
-                <Button x:Name="btnNo" ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}"
+                <Button x:Name="btnNo" ImageSource="{Binding Source={x:Static helpers:IconBinder.CancelSmall}}"
                         Clicked="btnNo_Clicked" Text="No" Margin="10" HeightRequest="60" FontSize="18" />
             </StackLayout>
         </StackLayout>

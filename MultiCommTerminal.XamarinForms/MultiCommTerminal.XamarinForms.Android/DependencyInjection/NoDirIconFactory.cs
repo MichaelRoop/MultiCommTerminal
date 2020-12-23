@@ -22,12 +22,16 @@ namespace MultiCommTerminal.XamarinForms.Droid.DependencyInjection {
                     return new IconDataModel(UIIcon.LanguageWhite, this.AddDir("icons8_language_white.png"), "6");
                 case UIIcon.Cancel:
                     return new IconDataModel(UIIcon.Cancel, this.AddDir("icons8_close_window_noborder.png"), "6");
+                case UIIcon.CancelSmall:
+                    return new IconDataModel(UIIcon.CancelSmall, this.AddDir("icons8_cancelSmall.png"), "6");
                 case UIIcon.BluetoothClassic:
                     return new IconDataModel(UIIcon.BluetoothClassic, this.AddDir("icons8_bluetooth.png"), "6");
                 case UIIcon.BluetoothClassicWhite:
                     return new IconDataModel(UIIcon.BluetoothClassicWhite, this.AddDir("icons8_bluetooth_white.png"), "6");
                 case UIIcon.Save:
                     return new IconDataModel(UIIcon.Save, this.AddDir("icons8_checkmark.png"), "0");
+                case UIIcon.SaveSmall:
+                    return new IconDataModel(UIIcon.SaveSmall, this.AddDir("icons8_checkmarkSmall.png"), "0");
                 case UIIcon.Delete:
                     return new IconDataModel(UIIcon.Delete, this.AddDir("icons8_trash_can.png"), "6");
                 case UIIcon.Edit:
