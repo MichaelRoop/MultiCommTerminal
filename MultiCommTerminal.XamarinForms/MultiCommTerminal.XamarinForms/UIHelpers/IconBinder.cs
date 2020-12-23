@@ -41,6 +41,10 @@ namespace MultiCommTerminal.XamarinForms.UIHelpers {
 
 
         private static string Source(UIIcon code) {
+
+            // TODO Set copy in factory project so we can access the strings directly 
+            //return "icons8_checkmark.png";
+
             return App.Wrapper.IconSource(code); 
         } 
 

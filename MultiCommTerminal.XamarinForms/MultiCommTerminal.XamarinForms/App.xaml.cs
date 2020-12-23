@@ -88,8 +88,6 @@ namespace MultiCommTerminal.XamarinForms {
 
         public static void ShowError(Page page, string title, string msg) {
             Xamarin.Forms.Device.BeginInvokeOnMainThread(async () => {
-                //await page.DisplayAlert(title, msg, App.GetText(MsgCode.Ok));
-
                 await PopupNavigation.Instance.PushAsync(new AlertPopup(title, msg));
             });
         }
@@ -102,13 +100,7 @@ namespace MultiCommTerminal.XamarinForms {
 
         public static void ShowYesNo(Page page, string title, string msg, Action onYes, Action onNo) {
             Xamarin.Forms.Device.BeginInvokeOnMainThread(async () => {
-                bool ok = await page.DisplayAlert(title, msg, GetText(MsgCode.yes), GetText(MsgCode.no));
-                if (ok) {
-                    onYes?.Invoke();
-                }
-                else {
-                    onNo?.Invoke();
-                }
+                await PopupNavigation.Instance.PushAsync(new YesNoPopup(title, msg, onYes, onNo));
             });
         }
 

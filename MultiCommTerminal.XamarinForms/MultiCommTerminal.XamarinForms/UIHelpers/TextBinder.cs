@@ -28,6 +28,7 @@ namespace MultiCommTerminal.XamarinForms.UIHelpers {
 
 
         public static string Name { get { return GetText(MsgCode.Name); } }
+        public static string Continue { get { return GetText(MsgCode.Continue); } }
 
 
         private static string GetText(MsgCode code) {
