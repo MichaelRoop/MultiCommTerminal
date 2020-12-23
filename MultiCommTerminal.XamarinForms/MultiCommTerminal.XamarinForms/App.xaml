@@ -8,7 +8,29 @@
     <Application.Resources>
         <ResourceDictionary>
             <!--<Color x:Key="Primary">#2196F3</Color>-->
-            <Color x:Key="Primary">#00bcd4</Color>
+            <Color x:Key="Primary">#005662</Color>
+            <Color x:Key="HighlightBackground">#b2ebf2</Color>
+            <Color x:Key="TextColor">#00363a</Color>
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource TextColor}"/>
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
+                <Setter Property="LineBreakMode" Value="TailTruncation"/>
+            </Style>
+            <Style TargetType="Editor">
+                <Setter Property="TextColor" Value="{StaticResource TextColor}"/>
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+                <Setter Property="HeightRequest" Value="50"/>
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="HorizontalOptions" Value="Start"/>
+                <Setter Property="AutoSize" Value="TextChanges"/>
+            </Style>
+            <Style TargetType="Entry">
+                <Setter Property="TextColor" Value="{StaticResource TextColor}"/>
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+                <Setter Property="HeightRequest" Value="50"/>
+                <Setter Property="FontSize" Value="18"/>
+            </Style>
             <Style TargetType="Button">
                 <Setter Property="TextColor" Value="Black"></Setter>
                 <Setter Property="BackgroundColor" Value="White"/>

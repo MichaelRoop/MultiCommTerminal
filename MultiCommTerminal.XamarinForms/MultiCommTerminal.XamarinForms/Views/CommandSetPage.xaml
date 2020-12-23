@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:helpers="clr-namespace:MultiCommTerminal.XamarinForms.UIHelpers"
+             
              x:Class="MultiCommTerminal.XamarinForms.Views.CommandSetPage">
     <Shell.TitleView>
         <StackLayout Orientation="Horizontal">
@@ -22,21 +23,26 @@
                                     <RowDefinition Height="50"/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="50"/>
-                                    <ColumnDefinition Width="3"/>
+                                    <ColumnDefinition Width="80" />
+                                    <ColumnDefinition Width="4"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Label Grid.Column="0" x:Name="lbName"  VerticalTextAlignment="Center" HorizontalTextAlignment="Start" />
-                                <Label Grid.Column="1" Text=":" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" />
-                                <Editor Grid.Column="2" x:Name="edName" FontSize="14" 
-                                         VerticalOptions="CenterAndExpand" AutoSize="TextChanges" HorizontalOptions="Start"  />
+                                <Label Grid.Column="0" x:Name="lbName" HorizontalOptions="End"
+                                       Text="{Binding Source={x:Static helpers:TextBinder.Name}}"
+                                       />
+                                <Label Grid.Column="1" Text=":" />
+                                <Entry Grid.Column="2" x:Name="edName" WidthRequest="300" 
+                                        Placeholder="{Binding Source={x:Static helpers:TextBinder.Name}}" />
                             </Grid>
                         </StackLayout>
                         <ListView x:Name="lstCmds" 
                       MinimumHeightRequest="20" MinimumWidthRequest="20">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <TextCell Text="{Binding Display}"/>
+                                    <ViewCell>
+                                        <Label Text="{Binding Display}" Margin="30,10"/>
+                                    </ViewCell>
+                                    <!--<TextCell Text="{Binding Display}" />-->
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>

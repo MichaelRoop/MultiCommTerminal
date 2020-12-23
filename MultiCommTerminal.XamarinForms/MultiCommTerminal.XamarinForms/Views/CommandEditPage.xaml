@@ -17,9 +17,9 @@
                 <Frame BorderColor="LightBlue" >
                     <Grid Margin="0,20" HorizontalOptions="StartAndExpand" >
                         <Grid.RowDefinitions>
-                            <RowDefinition/>
                             <RowDefinition Height="50"/>
-                            <RowDefinition/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
                             <RowDefinition Height="50"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>

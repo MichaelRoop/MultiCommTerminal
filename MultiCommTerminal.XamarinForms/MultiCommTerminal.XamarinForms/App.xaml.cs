@@ -19,6 +19,7 @@ namespace MultiCommTerminal.XamarinForms {
         #region Properties
 
         public static ICommWrapper Wrapper = null;
+        public static bool IsRunning { get; private set; } = false;
 
         #endregion
 
@@ -44,6 +45,7 @@ namespace MultiCommTerminal.XamarinForms {
 
 
         protected override void OnStart() {
+                App.IsRunning = true;
             // This will abort the app at the start if the WIFI permissions are not given
             //this.DoPermissionsCheck();
 
