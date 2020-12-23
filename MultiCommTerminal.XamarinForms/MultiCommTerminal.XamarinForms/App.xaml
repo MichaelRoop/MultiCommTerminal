@@ -17,14 +17,17 @@
                 <Setter Property="VerticalTextAlignment" Value="Center"/>
                 <Setter Property="LineBreakMode" Value="TailTruncation"/>
             </Style>
-            <Style TargetType="Editor">
+            <!--<Style TargetType="Editor">
                 <Setter Property="TextColor" Value="{StaticResource TextColor}"/>
                 <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
                 <Setter Property="HeightRequest" Value="50"/>
                 <Setter Property="FontSize" Value="18"/>
                 <Setter Property="HorizontalOptions" Value="Start"/>
                 <Setter Property="AutoSize" Value="TextChanges"/>
-            </Style>
+            </Style>-->
+            <!--<Style TargetType="Editor" x:Key="CodeBoxEditor">
+                <Setter Property="TextColor" Value="{StaticResource TextColor}"/>
+            </Style>-->
             <Style TargetType="Entry">
                 <Setter Property="TextColor" Value="{StaticResource TextColor}"/>
                 <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
@@ -36,7 +39,7 @@
                 <Setter Property="BackgroundColor" Value="White"/>
                 <Setter Property="BorderColor" Value="LightGray"/>
                 <Setter Property="BorderWidth" Value=".5"/>
-                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontSize" Value="16"/>
                 <Setter Property="VisualStateManager.VisualStateGroups">
                     <VisualStateGroupList>
                         <VisualStateGroup x:Name="CommonStates">

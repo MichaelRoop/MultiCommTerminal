@@ -22,7 +22,9 @@
                       MinimumHeightRequest="20" MinimumWidthRequest="20">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <TextCell Text="{Binding SSID}"/>
+                                        <ViewCell Height="50">
+                                            <Label Text="{Binding SSID}" Margin="30,10"/>
+                                        </ViewCell>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>

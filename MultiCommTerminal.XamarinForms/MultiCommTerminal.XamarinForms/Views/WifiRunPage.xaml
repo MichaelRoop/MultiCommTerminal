@@ -34,7 +34,9 @@
                                   MinimumHeightRequest="20" MinimumWidthRequest="20">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
-                                            <TextCell Text="{Binding Display}"/>
+                                            <ViewCell Height="50">
+                                                <Label Text="{Binding Display}" Margin="10,10"/>
+                                            </ViewCell>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                 </ListView>
@@ -56,11 +58,13 @@
                             </StackLayout>
                             <ListView x:Name="lstResponses" VerticalOptions="Center"  
                                 MinimumHeightRequest="20" MinimumWidthRequest="20">
-                                <!--<ListView.ItemTemplate>
+                                <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <ViewCell IsEnabled="False"/>
+                                        <ViewCell Height="50">
+                                            <Label Text="{Binding}" Margin="10,10" IsEnabled="False"/>
+                                        </ViewCell>
                                     </DataTemplate>
-                                </ListView.ItemTemplate>-->
+                                </ListView.ItemTemplate>
                             </ListView>
                         </StackLayout>
                     </Frame>
@@ -77,7 +81,7 @@
                         </Grid.ColumnDefinitions>
                         <Button Grid.Column="0" x:Name="btnSend" ImageSource="{Binding Source={x:Static helpers:IconBinder.Run}}"
                                 Text="Send" WidthRequest="150" HorizontalOptions="End" Clicked="btnSend_Clicked" />
-                        <Entry Grid.Column="1" Text="OpenDoor" x:Name="entryCmd" WidthRequest="400" HeightRequest="60" VerticalTextAlignment="Start" />
+                        <Entry Grid.Column="1" Text="OpenDoor" x:Name="entryCmd" WidthRequest="400" />
                     </Grid>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="10,15">

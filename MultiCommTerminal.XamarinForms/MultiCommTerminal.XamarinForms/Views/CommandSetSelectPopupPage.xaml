@@ -19,34 +19,38 @@
             EasingOut="SinIn"
             HasBackgroundAnimation="True"/>
     </pages:PopupPage.Animation>
-    <StackLayout Padding="10"  BackgroundColor="White">
-        <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand">
-            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="10">
-                <Image Source="{Binding Source={x:Static helpers:IconBinder.Command}}" HeightRequest="30" WidthRequest="30" VerticalOptions="Center" />
-                <Label x:Name="lbTitle" Text="Comm" FontSize="Large" FontAttributes="Bold" VerticalOptions="Center"/>
-            </StackLayout>
+    <Frame BorderColor="{StaticResource Primary}">
+        <StackLayout Padding="10"  BackgroundColor="White">
+            <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="10">
+                    <Image Source="{Binding Source={x:Static helpers:IconBinder.Command}}" HeightRequest="30" WidthRequest="30" VerticalOptions="Center" />
+                    <Label x:Name="lbTitle" Text="Comm" FontSize="Large" FontAttributes="Bold" VerticalOptions="Center"/>
+                </StackLayout>
 
-            <StackLayout Orientation="Horizontal">
-            <Frame BorderColor="LightBlue">
-                <ListView x:Name="lstCmdSets" 
+                <StackLayout Orientation="Horizontal">
+                    <Frame BorderColor="{StaticResource  HighlightBackground}">
+                        <ListView x:Name="lstCmdSets" 
                       MinimumHeightRequest="20" MinimumWidthRequest="20">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <TextCell  Text="{Binding Display}"/>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Frame>
-            <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand">
-                <Button x:Name="btnCancel" Clicked="btnCancel_Clicked" WidthRequest="40" Margin="5,0"
-                        BorderWidth="0"
-                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Cancel}}"  />
-                    <Button x:Name="btnSelect" Clicked="btnSelect_Clicked" WidthRequest="40"  Margin="5,0"
-                        BorderWidth="0"
-                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}"  />
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell Height="50">
+                                        <Label Text="{Binding Display}" Margin="10,10"/>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Frame>
+                    <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand">
+                        <Button x:Name="btnCancel" Clicked="btnCancel_Clicked" WidthRequest="40" Margin="8,0"
+                            BorderWidth="0"
+                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Cancel}}"  />
+                        <Button x:Name="btnSelect" Clicked="btnSelect_Clicked" WidthRequest="40"  Margin="8,0"
+                            BorderWidth="0"
+                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}"  />
+                    </StackLayout>
+                </StackLayout>
+
             </StackLayout>
-            </StackLayout>
-            
         </StackLayout>
-    </StackLayout>
+    </Frame>
 </pages:PopupPage>

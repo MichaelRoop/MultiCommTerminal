@@ -5,7 +5,7 @@
              xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"             
              xmlns:helpers="clr-namespace:MultiCommTerminal.XamarinForms.UIHelpers"
              x:Class="MultiCommTerminal.XamarinForms.Views.TerminatorsSetSelectPopupPage"
-            Padding="50,120,50,120"  WidthRequest="200" HeightRequest="150"             >
+            Padding="50,100,50,120"  WidthRequest="200" HeightRequest="150"             >
 
     <pages:PopupPage.Animation>
         <animations:ScaleAnimation 
@@ -19,43 +19,45 @@
             EasingOut="SinIn"
             HasBackgroundAnimation="True"/>
     </pages:PopupPage.Animation>
-
-    <StackLayout Padding="10"  BackgroundColor="White">
-        <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand">
-            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="10">
-                <Image Source="{Binding Source={x:Static helpers:IconBinder.Terminator}}" HeightRequest="30" WidthRequest="30" VerticalOptions="Center" />
-                <Label x:Name="lbTitle" Text="Termin" FontSize="Large" FontAttributes="Bold" VerticalOptions="Center"/>
-            </StackLayout>
-
-            <StackLayout Orientation="Horizontal">
-                <Frame BorderColor="LightBlue">
-                    <ListView x:Name="lstTerminatorSets" 
-                      MinimumHeightRequest="20" MinimumWidthRequest="20">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <TextCell  Text="{Binding Display}"/>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Frame>
-                <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand">
-                    <Button x:Name="btnCancel" Clicked="btnCancel_Clicked" WidthRequest="40" Margin="5,0"
-                        BorderWidth="0"
-                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Cancel}}"  />
-                    <Button x:Name="btnSelect" Clicked="btnSelect_Clicked" WidthRequest="40"  Margin="5,0"
-                        BorderWidth="0"
-                        ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}"  />
+    <Frame BorderColor="{StaticResource Primary}">
+        <StackLayout Padding="10"  BackgroundColor="White">
+            <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="10">
+                    <Image Source="{Binding Source={x:Static helpers:IconBinder.Terminator}}" HeightRequest="30" WidthRequest="30" VerticalOptions="Center" />
+                    <Label x:Name="lbTitle" Text="Termin" FontSize="Large" FontAttributes="Bold" VerticalOptions="Center"/>
                 </StackLayout>
-            </StackLayout>
 
-            <StackLayout Orientation="Horizontal" Margin="20" HorizontalOptions="Center">
-                <Label x:Name="lbTerminatorsText" HorizontalTextAlignment="Center" FontAttributes="Bold" Text="NULL,\r,SOH"  />
+                <StackLayout Orientation="Horizontal">
+                    <Frame BorderColor="{StaticResource HighlightBackground}" Padding="0">
+                        <ListView x:Name="lstTerminatorSets" 
+                            MinimumHeightRequest="20" MinimumWidthRequest="20">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell Height="50">
+                                        <Label Text="{Binding Display}" Margin="30,10"/>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Frame>
+                    <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand">
+                        <Button x:Name="btnCancel" Clicked="btnCancel_Clicked" WidthRequest="40" Margin="8,0"
+                            BorderWidth="0"
+                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Cancel}}"  />
+                        <Button x:Name="btnSelect" Clicked="btnSelect_Clicked" WidthRequest="40"  Margin="8,0"
+                            BorderWidth="0"
+                            ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}"  />
+                    </StackLayout>
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal" Margin="20" HorizontalOptions="Center">
+                    <Label x:Name="lbTerminatorsText" HorizontalTextAlignment="Center" FontAttributes="Bold" Text="NULL,\r,SOH"  />
+                </StackLayout>
+
+
             </StackLayout>
-            
-            
         </StackLayout>
-    </StackLayout>
 
-
+    </Frame>
 
 </pages:PopupPage>

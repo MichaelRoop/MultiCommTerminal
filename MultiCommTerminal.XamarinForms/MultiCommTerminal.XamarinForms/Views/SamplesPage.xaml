@@ -18,14 +18,15 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <ScrollView x:Name="scrlText" Orientation="Both" >
-                    <Editor x:Name="edSample" IsReadOnly="True"  AutoSize="TextChanges" Text="   "
+                    <Editor x:Name="edSample" IsReadOnly="True"  AutoSize="TextChanges" 
+                            
                         FontSize="Small" FontFamily="monospace" MinimumHeightRequest="500" MinimumWidthRequest="500"/>
                 </ScrollView>
             </Grid>
             <StackLayout Orientation="Horizontal" HeightRequest="55" Margin="10">
                 <Button x:Name="btnBluetooth" Text="" Clicked="btnBluetooth_Clicked" 
                         BorderWidth="0" ImageSource="{Binding Source={x:Static helpers:IconBinder.Bluetooth}}"  />
-                <Button x:Name="btnWifi" Text="" Clicked="btnWifi_Clicked" BorderWidth="0"
+                <Button x:Name="btnWifi" Text="" Clicked="btnWifi_Clicked" BorderWidth="0" HeightRequest="55"
                         ImageSource="{Binding Source={x:Static helpers:IconBinder.Wifi}}"  />
                 <Button x:Name="btnCopy" Text="Copy" Clicked="btnCopy_Clicked"
                         ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}"  />

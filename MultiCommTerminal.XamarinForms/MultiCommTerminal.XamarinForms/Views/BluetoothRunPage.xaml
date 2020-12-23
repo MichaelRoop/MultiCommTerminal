@@ -35,7 +35,9 @@
                           MinimumHeightRequest="20" MinimumWidthRequest="20">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
-                                            <TextCell Text="{Binding Display}"/>
+                                            <ViewCell Height="50">
+                                                <Label Text="{Binding Display}" Margin="30,10"/>
+                                            </ViewCell>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                 </ListView>
@@ -57,11 +59,13 @@
                             </StackLayout>
                             <ListView x:Name="lstResponses" VerticalOptions="Center"
                                 MinimumHeightRequest="20" MinimumWidthRequest="20">
-                                <!--<ListView.ItemTemplate>
+                                <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <ViewCell IsEnabled="False"/>
+                                        <ViewCell Height="50">
+                                            <Label Text="{Binding}" Margin="30,10"/>
+                                        </ViewCell>
                                     </DataTemplate>
-                                </ListView.ItemTemplate>-->
+                                </ListView.ItemTemplate>
                             </ListView>
                         </StackLayout>
                     </Frame>

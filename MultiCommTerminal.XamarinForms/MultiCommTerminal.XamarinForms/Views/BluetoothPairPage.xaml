@@ -20,7 +20,9 @@
                       MinimumHeightRequest="20" MinimumWidthRequest="20">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <TextCell Text="{Binding Name}"/>
+                                    <ViewCell Height="50">
+                                        <Label Text="{Binding Name}" Margin="30,10"/>
+                                    </ViewCell>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
