@@ -27,7 +27,7 @@
             <Label x:Name="lbMsg" WidthRequest="200" Text="Message"/>
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,10,0,0" Padding="0" >
                 <Button x:Name="btnOk" ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}"
-                        Clicked="btnOk_Clicked" Text="OK" Margin="10" Padding="20" HeightRequest="60" />
+                        Clicked="btnOk_Clicked" Text="OK" Margin="10" HeightRequest="60" FontSize="18" />
             </StackLayout>
         </StackLayout>
     </Frame>
