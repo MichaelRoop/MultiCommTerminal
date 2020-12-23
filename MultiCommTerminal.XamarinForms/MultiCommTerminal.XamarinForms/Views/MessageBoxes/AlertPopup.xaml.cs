@@ -11,6 +11,7 @@ namespace MultiCommTerminal.XamarinForms.Views.MessageBoxes {
 
         public AlertPopup(string title, string msg) {
             InitializeComponent();
+            this.CloseWhenBackgroundIsClicked = false;
             this.lbTitle.Text = title;
             this.lbMsg.Text = msg;
         }

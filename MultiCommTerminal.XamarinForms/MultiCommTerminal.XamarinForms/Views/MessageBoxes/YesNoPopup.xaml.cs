@@ -23,6 +23,7 @@ namespace MultiCommTerminal.XamarinForms.Views.MessageBoxes {
             this.yesAction = yes;
             this.noAction = no;
             InitializeComponent();
+            this.CloseWhenBackgroundIsClicked = false;
             this.lbTitle.Text = title;
             this.lbMsg.Text = msg;
         }
@@ -35,6 +36,7 @@ namespace MultiCommTerminal.XamarinForms.Views.MessageBoxes {
 
         protected override void OnAppearing() {
             App.Wrapper.CurrentSupportedLanguage(this.updateLanguage);
+            
             base.OnAppearing();
         }
 
