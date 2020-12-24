@@ -146,6 +146,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.edName.Text = this.dataModel.Name;
             this.terminatorDisplay.Reset();
             data.TerminatorInfos.ForEach(this.terminatorDisplay.AddEntry);
+            this.terminatorDisplay.IsChanged = false;
             this.edName.TextChanged += this.edName_TextChanged;
             this.interceptor.Changed = false;
         }

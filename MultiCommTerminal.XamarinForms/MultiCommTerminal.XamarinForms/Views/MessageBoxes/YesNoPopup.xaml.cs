@@ -29,11 +29,6 @@ namespace MultiCommTerminal.XamarinForms.Views.MessageBoxes {
         }
 
 
-        public YesNoPopup(string title, string msg, bool supressContinue, Action yes) 
-            : this(title, msg, yes, () => { }) {
-        }
-
-
         protected override void OnAppearing() {
             App.Wrapper.CurrentSupportedLanguage(this.updateLanguage);
             
@@ -48,22 +43,24 @@ namespace MultiCommTerminal.XamarinForms.Views.MessageBoxes {
 
         private void btnYes_Clicked(object sender, EventArgs args) {
             try {
+                PopupNavigation.Instance.PopAsync(true);
                 this.yesAction?.Invoke();
             }
             catch(Exception e) {
+                PopupNavigation.Instance.PopAsync(true);
                 this.log.Exception(9999, "btnYes_Clicked", "", e);
             }
-            PopupNavigation.Instance.PopAsync(true);
         }
 
         private void btnNo_Clicked(object sender, EventArgs args) {
             try {
+                PopupNavigation.Instance.PopAsync(true);
                 this.noAction?.Invoke();
             }
             catch (Exception e) {
+                PopupNavigation.Instance.PopAsync(true);
                 this.log.Exception(9999, "btnNo_Clicked", "", e);
             }
-            PopupNavigation.Instance.PopAsync(true);
         }
 
 
