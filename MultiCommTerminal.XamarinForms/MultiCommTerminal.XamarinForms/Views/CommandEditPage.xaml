@@ -26,10 +26,12 @@
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Label Grid.Row="0" Grid.Column="0" x:Name="lblName" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" />
-                        <Entry Grid.Row="1" Grid.Column="0" x:Name="edName" WidthRequest="500" Margin="10,-10,0,0"/>
+                        <Entry Grid.Row="1" Grid.Column="0" x:Name="edName" TextChanged="edTextChanged"
+                               WidthRequest="500" Margin="10,-10,0,0"/>
 
                         <Label Grid.Row="2" Grid.Column="0" x:Name="lblCmd" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" />
-                        <Entry Grid.Row="3" Grid.Column="0" x:Name="edCmd" WidthRequest="500" Margin="10,-10,0,0"/>
+                        <Entry Grid.Row="3" Grid.Column="0" x:Name="edCmd" TextChanged="edTextChanged"
+                               WidthRequest="500" Margin="10,-10,0,0"/>
                     </Grid>
                 </Frame>
             </StackLayout>

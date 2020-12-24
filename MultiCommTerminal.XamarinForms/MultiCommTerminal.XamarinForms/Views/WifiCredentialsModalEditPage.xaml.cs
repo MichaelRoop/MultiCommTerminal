@@ -123,6 +123,11 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.interceptor.MethodExitQuestion();
         }
 
+
+        private void ed_TextChanged(object sender, TextChangedEventArgs e) {
+            this.interceptor.Changed = true;
+        }
+
         #endregion
 
         #region Private
@@ -139,11 +144,6 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
 
-        // TODO - remove this.Sample of how to navigate back with multiple routes
-        //private async void PopBackRoute() {
-        //    //await Shell.Current.GoToAsync(string.Format("../{0}", nameof(WifiCredentialsPage)));
-        //    //await Shell.Current.GoToAsync("..");
-        //}
 
         private void OnLoadSuccess(WifiCredentialsDataModel dataModel) {
             this.dataModel = dataModel;
