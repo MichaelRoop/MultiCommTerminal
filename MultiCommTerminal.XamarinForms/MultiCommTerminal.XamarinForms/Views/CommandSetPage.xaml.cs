@@ -200,6 +200,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
             this.btnDelete.SetScreenReader(MsgCode.Delete);
             this.btnEdit.SetScreenReader(MsgCode.Edit);
             this.btnSave.SetScreenReader(MsgCode.save);
+            this.btnCancel.SetScreenReader(MsgCode.cancel);
         }
 
         private void SubscribeToEvents() {

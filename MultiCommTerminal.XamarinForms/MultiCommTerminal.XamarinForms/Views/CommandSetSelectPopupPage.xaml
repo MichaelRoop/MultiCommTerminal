@@ -40,10 +40,10 @@
                         </ListView>
                     </Frame>
                     <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand">
-                        <Button x:Name="btnCancel" Clicked="btnCancel_Clicked" WidthRequest="40" Margin="8,0"
+                        <Button x:Name="btnCancel" Clicked="btnCancel_Clicked" WidthRequest="50" HeightRequest="50" Margin="8,0"
                             BorderWidth="0"
                             ImageSource="{Binding Source={x:Static helpers:IconBinder.Cancel}}"  />
-                        <Button x:Name="btnSelect" Clicked="btnSelect_Clicked" WidthRequest="40"  Margin="8,0"
+                        <Button x:Name="btnSelect" Clicked="btnSelect_Clicked" WidthRequest="50" HeightRequest="60"  Margin="8,0"
                             BorderWidth="0"
                             ImageSource="{Binding Source={x:Static helpers:IconBinder.Save}}"  />
                     </StackLayout>
