@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="1.4" package="com.companyname.multicommterminal.xamarinforms" android:installLocation="auto" android:versionCode="5">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="1.5" package="com.companyname.multicommterminal.xamarinforms" android:installLocation="auto" android:versionCode="6">
 	<uses-sdk android:minSdkVersion="27" android:targetSdkVersion="29" />
 	<application android:label="MultiCommTerminal.XamarinForms.Android" android:theme="@style/MainTheme" android:allowBackup="false" android:icon="@drawable/MCT_Icon_512x512"></application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
