@@ -89,7 +89,6 @@
     <Compile Include="PermissionsObjects\WifiStateChangePermission.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DependencyInjection\NoDirIconFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="google-services .json" />
@@ -166,6 +165,10 @@
     <ProjectReference Include="..\..\MultiCommData\MultiCommData.Net.csproj">
       <Project>{e6ecdc5e-f10c-4730-bdd1-b45936bfe05e}</Project>
       <Name>MultiCommData.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MultiCommTerminalIconFactories\MultiCommTerminalIconFactories.csproj">
+      <Project>{b7a51635-a748-4a80-9d66-9a8573a9c09a}</Project>
+      <Name>MultiCommTerminalIconFactories</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\MultiCommWrapper\MultiCommWrapper.Net.csproj">
       <Project>{f86e019f-f046-4dc2-a949-d0ea0f0d0964}</Project>

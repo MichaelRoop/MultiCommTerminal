@@ -30,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\MultiCommTerminalIconFactories\MultiCommTerminalIconFactories.csproj" />
     <ProjectReference Include="..\..\MultiCommWrapper\MultiCommWrapper.Net.csproj" />
   </ItemGroup>
 

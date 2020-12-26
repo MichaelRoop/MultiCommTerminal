@@ -1,18 +1,10 @@
-﻿using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using IconFactory.Net.data;
+﻿using IconFactory.Net.data;
 using IconFactory.Net.interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace MultiCommTerminal.XamarinForms.Droid.DependencyInjection {
+namespace MultiCommTerminalIconFactories {
 
+    /// <summary>Icon factory that returns only the icon name</summary>
+    /// <remarks> This is how Xamarin Android requires its resources</remarks>
     public class NoDirIconFactory : IIconFactory {
         public IconDataModel GetIcon(UIIcon code) {
             switch (code) {
@@ -87,9 +79,10 @@ namespace MultiCommTerminal.XamarinForms.Droid.DependencyInjection {
         }
 
 
-        private string AddDir(string name) {
-            // TODO _ look at moving win to a common area and have virtual AddDir
-            // Just so we can bring entries over from Win
+        /// <summary>Override if adding path or prefix</summary>
+        /// <param name="name">The icon name</param>
+        /// <returns>The concatenated string. Here with only icon name</returns>
+        protected virtual string AddDir(string name) {
             return name;
 
         }

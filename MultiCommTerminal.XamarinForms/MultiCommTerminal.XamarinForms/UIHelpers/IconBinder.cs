@@ -1,4 +1,5 @@
 ﻿using IconFactory.Net.data;
+using MultiCommTerminalIconFactories;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,6 +7,9 @@ using System.Text;
 namespace MultiCommTerminal.XamarinForms.UIHelpers {
 
     public static class IconBinder {
+
+        private static NoDirIconFactory factory = new NoDirIconFactory();
+
 
         public static string Language { get { return Source(UIIcon.Language); } }
         public static string Language_W { get { return Source(UIIcon.LanguageWhite); } }
@@ -46,9 +50,12 @@ namespace MultiCommTerminal.XamarinForms.UIHelpers {
 
             // TODO Set copy in factory project so we can access the strings directly 
             //return "icons8_checkmarkSmall.png";
-
-            return App.Wrapper.IconSource(code); 
+            if (App.IsRunning) {
+                return App.Wrapper.IconSource(code);
+            }
+            return factory.GetIcon(code).IconSource as string;
         } 
+
 
     }
 

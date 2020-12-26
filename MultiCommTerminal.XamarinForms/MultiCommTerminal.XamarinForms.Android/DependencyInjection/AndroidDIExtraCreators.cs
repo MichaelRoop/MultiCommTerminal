@@ -7,6 +7,7 @@ using DependencyInjectorFactory.Net.interfaces;
 using Ethernet.Common.Net;
 using Ethernet.Common.Net.interfaces;
 using IconFactory.Net.interfaces;
+using MultiCommTerminalIconFactories;
 using MultiCommWrapper.Net.interfaces;
 using SerialCommon.Net;
 using SerialCommon.Net.interfaces;

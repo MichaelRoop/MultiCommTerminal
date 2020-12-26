@@ -67,6 +67,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiCommTerminal.XamarinFo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BluetoothCommonAndroidXamarin", "BluetoothCommonAndroidXamarin\BluetoothCommonAndroidXamarin.csproj", "{7728F061-B0FF-43BE-A039-F0000E1F43EC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiCommTerminalIconFactories", "MultiCommTerminalIconFactories\MultiCommTerminalIconFactories.csproj", "{B7A51635-A748-4A80-9D66-9A8573A9C09A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -995,6 +997,34 @@ Global
 		{7728F061-B0FF-43BE-A039-F0000E1F43EC}.Release|x64.Build.0 = Release|Any CPU
 		{7728F061-B0FF-43BE-A039-F0000E1F43EC}.Release|x86.ActiveCfg = Release|Any CPU
 		{7728F061-B0FF-43BE-A039-F0000E1F43EC}.Release|x86.Build.0 = Release|Any CPU
+		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Debug|ARM.Build.0 = Debug|Any CPU
+		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Debug|x64.Build.0 = Debug|Any CPU
+		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Debug|x86.Build.0 = Debug|Any CPU
+		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Release|ARM.ActiveCfg = Release|Any CPU
+		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Release|ARM.Build.0 = Release|Any CPU
+		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Release|ARM64.Build.0 = Release|Any CPU
+		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Release|iPhone.Build.0 = Release|Any CPU
+		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Release|x64.ActiveCfg = Release|Any CPU
+		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Release|x64.Build.0 = Release|Any CPU
+		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Release|x86.ActiveCfg = Release|Any CPU
+		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

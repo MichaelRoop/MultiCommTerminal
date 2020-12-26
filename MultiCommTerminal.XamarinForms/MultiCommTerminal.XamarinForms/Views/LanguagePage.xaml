@@ -13,7 +13,7 @@
     </Shell.TitleView>
     <ContentPage.Content>
         <StackLayout>
-            <ListView x:Name="lstLanguages" ItemSelected="lstLanguages_ItemSelected" RowHeight="50">
+            <ListView x:Name="lstLanguages" ItemSelected="lstLanguages_ItemSelected">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
