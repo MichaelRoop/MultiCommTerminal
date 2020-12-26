@@ -126,7 +126,6 @@ namespace MultiCommTerminal.XamarinForms.Views {
             if (device != null) {
                 App.ShowYesNo(this, device.Name, MsgCode.Unpair, () => {
                     App.Wrapper.BTClassicUnPairAsync(device);
-                    // Need an event on change the list
                 });
             }
             else {
