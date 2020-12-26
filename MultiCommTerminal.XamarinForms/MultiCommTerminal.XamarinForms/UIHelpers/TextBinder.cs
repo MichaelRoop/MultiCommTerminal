@@ -24,7 +24,7 @@ namespace MultiCommTerminal.XamarinForms.UIHelpers {
         public static string IconsUri { get { return "https://icons8.com"; } }
 
 
-        public static string BuildNumber { get { return "2020.12.11.1"; } }
+        public static string BuildNumber { get { return "2020.12.26.13"; } }
 
 
         public static string Name { get { return GetText(MsgCode.Name); } }
