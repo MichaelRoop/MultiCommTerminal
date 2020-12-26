@@ -18,9 +18,12 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <ScrollView x:Name="scrlText" Orientation="Both" >
-                    <Editor x:Name="edSample" IsReadOnly="True"  AutoSize="TextChanges" 
-                            
-                        FontSize="Small" FontFamily="monospace" MinimumHeightRequest="500" MinimumWidthRequest="500"/>
+                    <Label x:Name="lbSample" LineBreakMode="WordWrap" FontSize="Small" FontFamily="monospace" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"
+                           HeightRequest="3000" WidthRequest="800"
+                           MaxLines="1000"/>
+
+                    <!--<Editor x:Name="edSample" IsReadOnly="True"  AutoSize="TextChanges"
+                        FontSize="Small" FontFamily="monospace" MinimumHeightRequest="500" MinimumWidthRequest="500"/>-->
                 </ScrollView>
             </Grid>
             <StackLayout Orientation="Horizontal" HeightRequest="55" Margin="10">

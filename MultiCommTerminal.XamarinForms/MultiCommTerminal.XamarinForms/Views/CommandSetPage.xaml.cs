@@ -61,6 +61,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         public CommandSetPage() {
             InitializeComponent();
+            this.lstCmds.HeightRequest = 1000;
             this.BindingContext = this.viewModel = new CommandSetViewModel();
             this.interceptor = new NavigateBackInterceptor(this);
             this.btnSave.IsVisible = false;

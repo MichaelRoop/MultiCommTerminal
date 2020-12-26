@@ -22,6 +22,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         public TerminatorsSetSelectPopupPage() {
             InitializeComponent();
+            this.lstTerminatorSets.HeightRequest = 1000;
             this.CloseWhenBackgroundIsClicked = false;
         }
 

@@ -29,6 +29,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         public WifiCredentialsPage() {
             InitializeComponent();
+            this.lstCreds.HeightRequest = 1000;
             this.BindingContext = this.viewModel = new WifiCredentialsViewModel();
         }
 

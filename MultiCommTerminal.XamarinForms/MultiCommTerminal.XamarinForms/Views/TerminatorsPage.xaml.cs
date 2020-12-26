@@ -23,6 +23,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         public TerminatorsPage() {
             InitializeComponent();
+            this.lstTerminators.HeightRequest = 1000;
             this.BindingContext = this.viewer = new TerminatorsViewModel();
         }
 

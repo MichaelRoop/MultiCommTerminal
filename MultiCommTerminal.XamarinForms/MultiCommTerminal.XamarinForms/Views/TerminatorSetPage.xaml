@@ -17,14 +17,13 @@
                 <Frame BorderColor="LightBlue" Margin="0" Padding="0">
                     <StackLayout>
                         <StackLayout Padding="15">
-                            <ListView x:Name="lstStoredTerminators" 
-                            MinimumHeightRequest="20" MinimumWidthRequest="20">
+                            <ListView x:Name="lstStoredTerminators" RowHeight="50">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <ViewCell>
                                             <Grid Margin="1" >
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="35" />
+                                                    <ColumnDefinition Width="50" />
                                                     <ColumnDefinition Width="75"/>
                                                     <ColumnDefinition Width="*" />
                                                 </Grid.ColumnDefinitions>
@@ -40,9 +39,9 @@
                         <Frame BorderColor="LightBlue" HorizontalOptions="FillAndExpand" Padding="0" Margin="0">
                             <Grid HorizontalOptions="FillAndExpand" Padding="0" Margin="15">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="40"/>
-                                    <RowDefinition Height="20"/>
-                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="60"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
@@ -52,8 +51,7 @@
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
 
-                                <Entry x:Name="edName" Grid.Row="0" Grid.ColumnSpan="5" 
-                                        FontSize="Body" WidthRequest="400"
+                                <Entry x:Name="edName" Grid.Row="0" Grid.ColumnSpan="5" WidthRequest="400"
                                         VerticalOptions="Start" HorizontalOptions="CenterAndExpand" />
                                 <!-- Hex values -->
                                 <Label x:Name="hex1" Grid.Row="1" Grid.Column="0" />

@@ -27,6 +27,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         public BluetoothPairPage() {
             InitializeComponent();
+            this.lstDevices.HeightRequest = 1000;
         }
 
 

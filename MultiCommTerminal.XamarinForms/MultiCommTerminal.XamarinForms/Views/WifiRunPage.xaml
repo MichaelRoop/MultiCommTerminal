@@ -29,13 +29,12 @@
                                                 NumberOfTapsRequired="1" />
                                     </StackLayout.GestureRecognizers>
                                 </StackLayout>
-                                <ListView x:Name="lstCmds" VerticalOptions="Center" 
-                                  ItemSelected="lstCmds_ItemSelected"
-                                  MinimumHeightRequest="20" MinimumWidthRequest="20">
+                                <ListView x:Name="lstCmds" VerticalOptions="Center" RowHeight="50"
+                                  ItemSelected="lstCmds_ItemSelected">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
-                                            <ViewCell Height="50">
-                                                <Label Text="{Binding Display}" Margin="10,10"/>
+                                            <ViewCell>
+                                                <Label Text="{Binding Display}" Margin="10,0"/>
                                             </ViewCell>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
@@ -56,12 +55,11 @@
                                                 NumberOfTapsRequired="1" />
                                 </StackLayout.GestureRecognizers>
                             </StackLayout>
-                            <ListView x:Name="lstResponses" VerticalOptions="Center"  
-                                MinimumHeightRequest="20" MinimumWidthRequest="20">
+                            <ListView x:Name="lstResponses" VerticalOptions="Center" RowHeight="50">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <ViewCell Height="50">
-                                            <Label Text="{Binding}" Margin="10,10" IsEnabled="False"/>
+                                        <ViewCell>
+                                            <Label Text="{Binding}" Margin="10,0" IsEnabled="False"/>
                                         </ViewCell>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>

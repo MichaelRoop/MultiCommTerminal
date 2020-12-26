@@ -37,9 +37,9 @@ namespace MultiCommTerminal.XamarinForms.Views {
         }
 
         private void btnCopy_Clicked(object sender, EventArgs e) {
-            if (!string.IsNullOrWhiteSpace(this.edSample.Text)) {
+            if (!string.IsNullOrWhiteSpace(this.lbSample.Text)) {
                 Device.BeginInvokeOnMainThread(async () => {
-                    await Clipboard.SetTextAsync(this.edSample.Text);
+                    await Clipboard.SetTextAsync(this.lbSample.Text);
                     // TODO - need msg box?
                 });
             }
@@ -49,7 +49,6 @@ namespace MultiCommTerminal.XamarinForms.Views {
         private void LanguageUpdate(SupportedLanguage l) {
             this.btnCopy.Text = l.GetText(MsgCode.copy);
             this.lbTitle.Text = l.GetText(MsgCode.select);
-            AutomationProperties.SetIsInAccessibleTree(this.btnBluetooth, true);
             this.btnBluetooth.SetScreenReader("Bluetooth");
             this.btnWifi.SetScreenReader("WIFI");
         }
@@ -62,7 +61,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
 
         private void OnLoadOk(string txt) {
-            this.edSample.Text = txt;
+            this.lbSample.Text = txt;
             this.scrlText.ScrollToAsync(0, 0, true);
         }
 

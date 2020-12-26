@@ -29,12 +29,11 @@
 
                 <StackLayout Orientation="Horizontal">
                     <Frame BorderColor="{StaticResource  HighlightBackground}">
-                        <ListView x:Name="lstCmdSets" 
-                      MinimumHeightRequest="20" MinimumWidthRequest="20">
+                        <ListView x:Name="lstCmdSets" RowHeight="50">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <ViewCell Height="50">
-                                        <Label Text="{Binding Display}" Margin="10,10"/>
+                                    <ViewCell>
+                                        <Label Text="{Binding Display}" Margin="10,0"/>
                                     </ViewCell>
                                 </DataTemplate>
                             </ListView.ItemTemplate>

@@ -42,6 +42,8 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         public BluetoothRunPage() {
             InitializeComponent();
+            this.lstCmds.HeightRequest = 1000;
+            this.lstResponses.HeightRequest = 1000;
             this.lstCmds.ItemsSource = this.cmds;
             this.lstResponses.ItemsSource = this.responses;
         }

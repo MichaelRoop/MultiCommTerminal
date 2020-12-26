@@ -58,6 +58,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         public TerminatorSetPage() {
             InitializeComponent();
+            this.lstStoredTerminators.HeightRequest = 1000;
             this.interceptor = new NavigateBackInterceptor(this);
 
             // Only have to load the terminator list once

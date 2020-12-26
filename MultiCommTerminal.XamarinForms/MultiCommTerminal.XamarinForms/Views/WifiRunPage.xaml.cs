@@ -55,6 +55,8 @@ namespace MultiCommTerminal.XamarinForms.Views {
         public WifiRunPage() {
             InitializeComponent();
             this.BindingContext = this.viewModel = new WifiRunViewModel();
+            this.lstCmds.HeightRequest = 1000;
+            this.lstResponses.HeightRequest = 1000;
             this.lstCmds.ItemsSource = this.cmds;
             this.lstResponses.ItemsSource = this.responses;
         }

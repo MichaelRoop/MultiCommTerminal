@@ -14,6 +14,7 @@
             <Style TargetType="Label">
                 <Setter Property="TextColor" Value="{StaticResource TextColor}"/>
                 <Setter Property="FontSize" Value="18"/>
+                <Setter Property="HeightRequest" Value="50"/>
                 <Setter Property="VerticalTextAlignment" Value="Center"/>
                 <Setter Property="LineBreakMode" Value="TailTruncation"/>
             </Style>
@@ -31,8 +32,9 @@
             <Style TargetType="Entry">
                 <Setter Property="TextColor" Value="{StaticResource TextColor}"/>
                 <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
-                <Setter Property="HeightRequest" Value="50"/>
+                <Setter Property="HeightRequest" Value="55"/>
                 <Setter Property="FontSize" Value="18"/>
+                <Setter Property="TextColor" Value="#00363a"/>
             </Style>
             <Style TargetType="Button">
                 <Setter Property="TextColor" Value="{StaticResource TextColor}"></Setter>

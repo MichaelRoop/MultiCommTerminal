@@ -16,12 +16,11 @@
             <StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                     <Frame BorderColor="LightBlue">
-                        <ListView x:Name="lstDevices" VerticalOptions="Center" 
-                      MinimumHeightRequest="20" MinimumWidthRequest="20">
+                        <ListView x:Name="lstDevices" VerticalOptions="Center" RowHeight="50">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <ViewCell Height="50">
-                                        <Label Text="{Binding Name}" Margin="30,10"/>
+                                    <ViewCell>
+                                        <Label Text="{Binding Name}" Margin="30,0"/>
                                     </ViewCell>
                                 </DataTemplate>
                             </ListView.ItemTemplate>

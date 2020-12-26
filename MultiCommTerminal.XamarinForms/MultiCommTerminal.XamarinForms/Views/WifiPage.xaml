@@ -18,12 +18,11 @@
                 <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                     <Frame BorderColor="LightBlue">
                         <StackLayout>
-                            <ListView x:Name="lstWifi" 
-                      MinimumHeightRequest="20" MinimumWidthRequest="20">
+                            <ListView x:Name="lstWifi" RowHeight="50">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <ViewCell Height="50">
-                                            <Label Text="{Binding SSID}" Margin="30,10"/>
+                                        <ViewCell>
+                                            <Label Text="{Binding SSID}" Margin="30,0"/>
                                         </ViewCell>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>

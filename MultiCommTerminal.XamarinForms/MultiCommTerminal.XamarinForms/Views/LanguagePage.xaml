@@ -13,11 +13,11 @@
     </Shell.TitleView>
     <ContentPage.Content>
         <StackLayout>
-            <ListView x:Name="lstLanguages" ItemSelected="lstLanguages_ItemSelected">
+            <ListView x:Name="lstLanguages" ItemSelected="lstLanguages_ItemSelected" RowHeight="50">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell Height="50">
-                            <Label Text="{Binding Display}" Margin="30,10"/>
+                        <ViewCell>
+                            <Label Text="{Binding Display}" Margin="30,0"/>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

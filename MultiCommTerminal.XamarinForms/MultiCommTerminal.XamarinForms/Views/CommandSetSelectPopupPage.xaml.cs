@@ -15,6 +15,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         public CommandSetSelectPopupPage() {
             InitializeComponent();
+            this.lstCmdSets.HeightRequest = 1000;
             App.Wrapper.GetScriptList(this.UpdateCommandList, this.OnErr);
             this.CloseWhenBackgroundIsClicked = false;
         }

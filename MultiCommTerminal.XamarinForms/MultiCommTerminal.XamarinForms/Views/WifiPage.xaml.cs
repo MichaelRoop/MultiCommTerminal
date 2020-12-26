@@ -30,6 +30,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         public WifiPage() {
             InitializeComponent();
+            this.lstWifi.HeightRequest = 1000;
             this.BindingContext = this.viewModel = new WifiViewModel();
             App.Wrapper.CurrentSupportedLanguage(this.LanguageUpdate);
             this.lstWifi.ItemsSource = this.networks;

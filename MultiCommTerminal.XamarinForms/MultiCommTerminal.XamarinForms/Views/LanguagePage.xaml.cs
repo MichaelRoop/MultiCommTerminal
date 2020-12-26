@@ -1,5 +1,6 @@
 ﻿using LanguageFactory.Net.data;
 using LanguageFactory.Net.Messaging;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,10 +13,14 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         public LanguagePage() {
             InitializeComponent();
-
-            // Can do this in constructor since the list never changes
-            App.Wrapper.LanguageList((items) => {
-                this.lstLanguages.ItemsSource = items;
+            this.lstLanguages.HeightRequest = 1000;
+            Task.Run(() => {
+                // Can do this in constructor since the list never changes
+                App.Wrapper.LanguageList((items) => {
+                    Device.BeginInvokeOnMainThread(() => {
+                        this.lstLanguages.ItemsSource = items;
+                    });
+                });
             });
         }
 
@@ -51,7 +56,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
 
         private void UpdateLanguage(SupportedLanguage language) {
-            this.lbTitle.Text = language.GetText(MsgCode.language);
+            Device.BeginInvokeOnMainThread(() => this.lbTitle.Text = language.GetText(MsgCode.language));
         }
 
         #endregion

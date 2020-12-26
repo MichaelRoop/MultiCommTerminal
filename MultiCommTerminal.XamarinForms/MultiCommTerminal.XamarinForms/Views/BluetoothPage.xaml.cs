@@ -29,6 +29,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
         public BluetoothPage() {
             InitializeComponent();
             BindingContext = this.viewModel = new BluetoothViewModel();
+            this.lstDevices.HeightRequest = 1000;
         }
 
 
@@ -65,6 +66,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         private void DeviceDiscoveredHandler(object sender, BTDeviceInfo e) {
             Device.BeginInvokeOnMainThread(() => {
+                this.log.Info("DeviceDiscoveredHandler", () => string.Format("Adding device:{0}", e.Name));
                 this.lstDevices.ItemSelected -= LstDevices_ItemSelectedHandler;
                 this.activity.IsRunning = false;
                 this.lstDevices.ItemsSource = null;
@@ -124,6 +126,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
             if (device != null) {
                 App.ShowYesNo(this, device.Name, MsgCode.Unpair, () => {
                     App.Wrapper.BTClassicUnPairAsync(device);
+                    // Need an event on change the list
                 });
             }
             else {
