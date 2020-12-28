@@ -190,6 +190,7 @@ namespace MultiCommWrapper.Net.WrapCode {
                         onError.Invoke(this.GetText(MsgCode.EmptyName));
                     }
                     else {
+                        this.Validate5msReadWrite(data, data);
                         // Initialise extra index fields object
                         SerialIndexExtraInfo extraInfo = new SerialIndexExtraInfo() {
                             PortName = data.PortName,
@@ -230,8 +231,14 @@ namespace MultiCommWrapper.Net.WrapCode {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;
                 WrapErr.ToErrReport(out report, 9999, () => {
-                    // TODO - check if exists
-                    onSuccess.Invoke(this.serialStorage.Retrieve(index));
+                    var info = this.serialStorage.Retrieve(index);
+                    if (info == null) {
+                        onError.Invoke(this.GetText(MsgCode.NotFound));
+                    }
+                    else {
+                        this.Validate5msReadWrite(info, info);
+                        onSuccess.Invoke(info);
+                    }
                 });
                 if (report.Code != 0) {
                     onError.Invoke(this.GetText(MsgCode.LoadFailed));
@@ -250,8 +257,7 @@ namespace MultiCommWrapper.Net.WrapCode {
                     info.StopBits = storedInfo.StopBits;
                     info.Parity = storedInfo.Parity;
                     info.FlowHandshake = storedInfo.FlowHandshake;
-                    info.ReadTimeout = storedInfo.ReadTimeout;
-                    info.WriteTimeout = storedInfo.WriteTimeout;
+                    this.Validate5msReadWrite(info, storedInfo);
                     onSuccess();
                 },
                 () => {
@@ -272,6 +278,7 @@ namespace MultiCommWrapper.Net.WrapCode {
                         onError.Invoke(this.GetText(MsgCode.EmptyName));
                     }
                     else {
+                        this.Validate5msReadWrite(data, data);
                         this.serialStorage.Store(data, idx);
                         onSuccess.Invoke();
                     }
@@ -320,6 +327,20 @@ namespace MultiCommWrapper.Net.WrapCode {
             }, onError);
 
 
+        }
+
+
+        private TimeSpan ForceTo5msIf0(TimeSpan inValue) {
+            if (inValue.TotalMilliseconds == 0) {
+                return TimeSpan.FromMilliseconds(5);
+            }
+            return inValue;
+        }
+
+
+        private void Validate5msReadWrite(SerialDeviceInfo target, SerialDeviceInfo source) {
+            target.ReadTimeout = this.ForceTo5msIf0(source.ReadTimeout);
+            target.WriteTimeout = this.ForceTo5msIf0(source.WriteTimeout);
         }
 
 
