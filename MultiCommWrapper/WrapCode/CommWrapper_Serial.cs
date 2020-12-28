@@ -2,6 +2,7 @@
 using ChkUtils.Net.ErrObjects;
 using CommunicationStack.Net.DataModels;
 using LanguageFactory.Net.data;
+using MultiCommData.Net.Enumerations;
 using MultiCommWrapper.Net.DataModels;
 using MultiCommWrapper.Net.interfaces;
 using SerialCommon.Net.DataModels;
@@ -15,6 +16,7 @@ using System.Text;
 using VariousUtils.Net;
 
 namespace MultiCommWrapper.Net.WrapCode {
+
 
     public partial class CommWrapper : ICommWrapper {
 
@@ -51,6 +53,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         public void SerialUsbSend(string msg) {
             this.GetCurrentTerminator(
+                CommMedium.Usb,
                 (data) => {
                     this.serialStack.InTerminators = data.TerminatorBlock;
                     this.serialStack.OutTerminators = data.TerminatorBlock;

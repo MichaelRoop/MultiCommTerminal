@@ -3,6 +3,7 @@ using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
 using Common.Net.Network;
 using LanguageFactory.Net.data;
+using MultiCommData.Net.Enumerations;
 using MultiCommWrapper.Net.DataModels;
 using MultiCommWrapper.Net.interfaces;
 using System;
@@ -138,6 +139,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         public void BTClassicSend(string msg) {
             this.GetCurrentTerminator(
+                CommMedium.Bluetooth,
                 (data)=> {
                     this.btClassicStack.InTerminators = data.TerminatorBlock;
                     this.btClassicStack.OutTerminators = data.TerminatorBlock;

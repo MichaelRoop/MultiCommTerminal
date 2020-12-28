@@ -121,6 +121,7 @@ namespace MultiCommWrapper.Net.WrapCode {
                             break;
                     }
                     if (dm == null) {
+                        this.log.Error(9999, () => string.Format("Default terminators for {0} not found", medium));
                         dm = items.CurrentTerminator;
                     }
                     dm = this.AssureTerminators(dm);

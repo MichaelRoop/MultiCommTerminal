@@ -3,6 +3,7 @@ using ChkUtils.Net.ErrObjects;
 using CommunicationStack.Net.DataModels;
 using Ethernet.Common.Net.DataModels;
 using LanguageFactory.Net.data;
+using MultiCommData.Net.Enumerations;
 using MultiCommWrapper.Net.interfaces;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
@@ -40,6 +41,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         public void EthernetSend(string msg) {
             this.GetCurrentTerminator(
+                CommMedium.Ethernet,
                 (data) => {
                     this.ethernetStack.InTerminators = data.TerminatorBlock;
                     this.ethernetStack.OutTerminators = data.TerminatorBlock;

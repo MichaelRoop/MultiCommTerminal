@@ -3,6 +3,7 @@ using ChkUtils.Net.ErrObjects;
 using CommunicationStack.Net.DataModels;
 using CommunicationStack.Net.Enumerations;
 using LanguageFactory.Net.data;
+using MultiCommData.Net.Enumerations;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommWrapper.Net.DataModels;
 using MultiCommWrapper.Net.Helpers;
@@ -79,6 +80,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         public void WifiSend(string msg) {
             this.GetCurrentTerminator(
+                CommMedium.Wifi,
                 (data) => {
                     this.wifiStack.InTerminators = data.TerminatorBlock;
                     this.wifiStack.OutTerminators = data.TerminatorBlock;
