@@ -328,6 +328,69 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
+        public void CreateHC05AtCmds(Action onSuccess, OnErr onError) {
+            List<ScriptItem> items = new List<ScriptItem>();
+            this.AddCmd(items, "AT", "AT");
+            this.AddCmd(items, "AT+ADDR?", "AT+ADDR?");
+            this.AddCmd(items, "AT+NAME?", "AT+NAME?");
+            this.AddCmd(items, "AT+NAME=<Param>", "AT+NAME=<Param>");
+            this.AddCmd(items, "AT+VERSION", "AT+VERSION?");
+            this.AddCmd(items, "AT+UART?", "AT+UART?");
+            this.AddCmd(items, "AT+UART=<Param>,<Param2>,<Param3>", "AT+UART=<Param>,<Param2>,<Param3>");
+            this.AddCmd(items, "AT+RESET", "AT+RESET");
+            this.AddCmd(items, "AT+ORGL", "AT+ORGL");
+            this.AddCmd(items, "AT+RNAME?<Param>", "AT+RNAME?<Param1>");
+            this.AddCmd(items, "AT+ROLE?", "AT+ROLE?");
+            this.AddCmd(items, "AT+ROLE=<Param>", "AT+ROLE=<Param>");
+            this.AddCmd(items, "AT+CLASS", "AT+CLASS?");
+            this.AddCmd(items, "AT+CLASS=<Param>", "AT+CLASS=<Param>");
+            this.AddCmd(items, "AT+IAC?", "AT+IAC?");
+            this.AddCmd(items, "AT+IAC=<Param>", "AT+IAC=<Param>");
+            this.AddCmd(items, "AT+INQM?", "AT+INQM?");
+            this.AddCmd(items, "AT+INQM=<Param>,<Param2>,<Param3>", "AT+INQM=<Param>,<Param2>, <Param3>");
+            this.AddCmd(items, "AT+PSW?", "AT+PSWD?");
+            this.AddCmd(items, "AT+PSW=<Param>", "AT+PSWD=<Param>");
+            this.AddCmd(items, "AT+CMODE?", "AT+CMODE?");
+            this.AddCmd(items, "AT+CMODE=<Param>", "AT+CMODE=<Param>");
+            this.AddCmd(items, "AT+BIND?", "AT+BIND?");
+            this.AddCmd(items, "AT+BIND=<Param>", "AT+BIND=<Param>");
+            this.AddCmd(items, "AT+POLAR?", "AT+POLAR?");
+            this.AddCmd(items, "AT+POLAR=<Param>,<Param2>", "AT+POLAR=<Param1,<Param2>");
+            this.AddCmd(items, "AT+PIO", "AT+PIO=<Param1>,<Param2>");
+            this.AddCmd(items, "AT+IPSCAN?", "AT+IPSCAN?");
+            this.AddCmd(items, "AT+IPSCAN=<Param>,<Param2>,<Param3>,<Param4>", "AT+IPSCAN=<Param1>,<Param2>,<Param3>,<Param4>");
+            this.AddCmd(items, "AT+SNIFF", "AT+SNIFF?");
+            this.AddCmd(items, "AT+SNIFF=<Param>,<Param2>,<Param3>,<Param4>", "AT+SNIFF=<Param1>,<Param2>,<Param3>,<Param4>");
+            this.AddCmd(items, "AT+SENM?", "AT+SENM?");
+            this.AddCmd(items, "AT+SENM=<Param1>,<Param2>", "AT+SENM=<Param1>,<Param2>");
+            this.AddCmd(items, "AT+PMSAD=<Param1>", "AT+PMSAD=<Param>");
+            this.AddCmd(items, "AT+RMAAD", "AT+RMAAD");
+            this.AddCmd(items, "AT+FSAD=<Param1>", "AT+FSAD=<Param>");
+            this.AddCmd(items, "AT+ADCN?", "AT+ADCN?");
+            this.AddCmd(items, "AT+STATE?", "AT+STATE?");
+            this.AddCmd(items, "AT+INIT", "AT+INIT");
+            this.AddCmd(items, "AT+INQ", "AT+INQ");
+            this.AddCmd(items, "AT+INQC", "AT+INQC");
+            this.AddCmd(items, "AT+PAIR=<Param1>,<Param2>", "AT+PAIR=<Param1>,<Param2>");
+            this.AddCmd(items, "AT+LINK=<Param>", "AT+LINK=<Param>");
+            this.AddCmd(items, "AT+DISC", "AT+DISC");
+            this.AddCmd(items, "AT+EXSNIFF=<Param>", "AT+EXSNIFF=<Param>");
+            this.SaveCmdSet("HC-05", items, onSuccess, onError);
+        }
+
+        private void AddCmd(List<ScriptItem> list, string name, string cmd) {
+            list.AddNew(name, cmd);
+        }
+
+
+        private void SaveCmdSet(string name, List<ScriptItem> items, Action onSuccess, OnErr onError) {
+            ScriptDataModel dm = new ScriptDataModel(items) { 
+                Display = name
+            };
+            this.CreateNewScript(name, dm, onSuccess, onError);
+        }
+
+
 
         private ScriptDataModel AssureScript(ScriptDataModel dataModel) {
             // TODO - create a temp 

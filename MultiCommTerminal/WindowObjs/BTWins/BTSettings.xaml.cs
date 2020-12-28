@@ -1,4 +1,5 @@
 ﻿using BluetoothCommon.Net;
+using LanguageFactory.Net.data;
 using LogUtils.Net;
 using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WPF_Helpers;
@@ -25,10 +26,11 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BTWins {
         public BTSettings(Window parent) {
             this.parent = parent;
             InitializeComponent();
+            this.btnCmdsHc05.Content = string.Format("{0} (HC-05)", DI.Wrapper.GetText(LanguageFactory.Net.data.MsgCode.commands));
             WPF_ControlHelpers.CenterChild(parent, this);
             this.SizeToContent = SizeToContent.WidthAndHeight;
             this.widthManager = new ButtonGroupSizeSyncManager(
-                this.btnPair, this.btnUnpair, this.btnExit);
+                this.btnPair, this.btnUnpair, this.btnExit, this.btnCmdsHc05);
             this.widthManager.PrepForChange();
         }
 
@@ -141,5 +143,14 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BTWins {
 
         #endregion
 
+        private void btnCmdsHc05_Click(object sender, RoutedEventArgs e) {
+            if (MsgBoxYesNo.ShowBox(
+                this, DI.Wrapper.GetText(MsgCode.Create), 
+                string.Format("{0} (HC-05)", DI.Wrapper.GetText(MsgCode.commands))) == MsgBoxYesNo.MsgBoxResult.Yes) {
+                DI.Wrapper.CreateHC05AtCmds(() => { }, App.ShowMsg);
+            }
+
+
+        }
     }
 }

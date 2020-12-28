@@ -1,4 +1,6 @@
-﻿namespace MultiCommData.Net.StorageDataModels {
+﻿using System.Collections.Generic;
+
+namespace MultiCommData.Net.StorageDataModels {
 
     /// <summary>One command item to send via terminal</summary>
     public class ScriptItem {
@@ -15,6 +17,18 @@
             this.Command = command;
         }
 
+    }
+
+
+    public static class ScriptItemExtensions {
+
+        public static void AddNew(this List<ScriptItem> list, string name, string cmd) {
+            list.Add(new ScriptItem(name, cmd));
+        }
+
 
     }
+
+
+
 }

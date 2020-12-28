@@ -264,6 +264,8 @@ namespace MultiCommWrapper.Net.interfaces {
 
         List<NetPropertyDataModelDisplay> BT_GetProperties(BTDeviceInfo info);
 
+        void CreateHC05AtCmds(Action onSuccess, OnErr onError);
+
         #endregion
 
         #region BluetoothLE
