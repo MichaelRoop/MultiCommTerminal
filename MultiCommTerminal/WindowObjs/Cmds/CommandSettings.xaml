@@ -1,18 +1,18 @@
-﻿<Window x:Class="MultiCommTerminal.NetCore.WindowObjs.BTWins.BTSettings"
+﻿<Window x:Class="MultiCommTerminal.NetCore.WindowObjs.Cmds.CommandSettings"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MultiCommTerminal.NetCore.WindowObjs.BTWins"
+        xmlns:local="clr-namespace:MultiCommTerminal.NetCore.WindowObjs.Cmds"
         mc:Ignorable="d"
         xmlns:controls="clr-namespace:MultiCommTerminal.NetCore.UserControls"
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
         Style="{StaticResource MyWindowStyle}"
         WindowStartupLocation="CenterScreen" 
-        Title="Bluetooth"
-        Icon="{Binding Source={x:Static wpfHelper:IconBinder.Settings_W}}"
+        Title="{Binding Source={x:Static wpfHelper:TxtBinder.Commands}}"
+        Icon="{Binding Source={x:Static wpfHelper:IconBinder.Command_W}}"
         Loaded="Window_Loaded" Closing="Window_Closing"
-        MinHeight="200" MinWidth="200" MaxHeight="800" MaxWidth="900" BorderThickness=".5">
+        MinHeight="200" MinWidth="200" MaxHeight="800" MaxWidth="900" BorderThickness=".5"        >
     <Grid>
         <Grid x:Name="gridWait" Panel.ZIndex="10000" Visibility="Collapsed"
             HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  >
@@ -23,14 +23,10 @@
             <controls:UC_BusySpinner />
         </Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
-            <controls:UC_IconButton x:Name="btnPair" Style="{StaticResource TextIconButton}"
-                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Pair}}" Margin="5"
-                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Pair}}"                                                                                            
-                    Background="Transparent" Click="btnPair_Click" />
-            <controls:UC_IconButton x:Name="btnUnpair" Style="{StaticResource TextIconButton}"
-                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.UnPair}}" Margin="5"
-                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Unpair}}"                                                                                            
-                    Background="Transparent" Click="btnUnpair_Click" />
+            <controls:UC_IconButton x:Name="btnCmdsHc05" Style="{StaticResource TextIconButton}"
+                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Commands}}" Margin="5"
+                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Command}}"                                                                                            
+                    Background="Transparent" Click="btnCmdsHc05_Click" />
             <controls:UC_IconButton x:Name="btnExit" Style="{StaticResource TextIconButton}"
                     Content="{Binding Source={x:Static wpfHelper:TxtBinder.Exit}}" Margin="5,25,5,5"
                     IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Exit}}"                                                                                            

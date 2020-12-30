@@ -42,6 +42,9 @@
                                     IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Delete}}" Margin="0,5"
                                     Click="btnDelete_Click" />
                             </StackPanel>
+                            <controls:UC_RoundIconButton x:Name="btnSettings" Width="45" Height="45" Style="{StaticResource IconButton}"
+                                IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Settings}}" Margin="0,5"
+                                Click="btnSettings_Click" />
                         </StackPanel>
                     </DockPanel>
 
