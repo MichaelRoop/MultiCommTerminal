@@ -76,7 +76,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
         private void UpdateLanguage(SupportedLanguage l) {
             this.lbTitle.Text = l.GetText(MsgCode.PairBluetooth);
-            this.btnDiscover.SetScreenReader(MsgCode.discover);
+            this.btnDiscover.SetScreenReader(MsgCode.Search);
             this.btnPair.SetScreenReader(MsgCode.Pair);
         }
 

@@ -50,7 +50,7 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
         public static string Commands { get { return GetTxt(MsgCode.command); } }
 
         public static string Response { get { return GetTxt(MsgCode.response); } }
-        public static string Discover { get { return GetTxt(MsgCode.discover); } }
+        public static string Discover { get { return GetTxt(MsgCode.Search); } }
         public static string Connect { get { return GetTxt(MsgCode.connect); } }
         public static string Disconnect { get { return GetTxt(MsgCode.Disconnect); } }
         public static string Info { get { return GetTxt(MsgCode.info); } }

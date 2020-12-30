@@ -262,7 +262,7 @@ namespace MultiCommTerminal.NetCore.UserControls {
         private void SetLanguage(SupportedLanguage l) {
             this.lbResponse.Content = l.GetText(MsgCode.response);
             this.btnSend.Content = l.GetText(MsgCode.send);
-            this.btnBTDiscover.Content = l.GetText(MsgCode.discover);
+            this.btnBTDiscover.Content = l.GetText(MsgCode.Search);
             this.btnConnect.Content = l.GetText(MsgCode.connect);
             this.btnDisconnect.Content = l.GetText(MsgCode.Disconnect);
             this.btnLog.Content = l.GetText(MsgCode.Log);

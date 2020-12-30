@@ -121,7 +121,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
         private void LanguageUpdate(SupportedLanguage l) {
             this.lbTitle.Text = "WIFI";
             this.btnCredentials.SetScreenReader(l.GetText(MsgCode.Credentials));
-            this.btnDiscover.SetScreenReader(l.GetText(MsgCode.discover));
+            this.btnDiscover.SetScreenReader(l.GetText(MsgCode.Search));
             this.btnSelect.SetScreenReader(l.GetText(MsgCode.select));
         }
 
