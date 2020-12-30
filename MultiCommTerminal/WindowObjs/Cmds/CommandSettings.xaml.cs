@@ -26,7 +26,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.Cmds {
         public CommandSettings(Window parent) {
             this.parent = parent;
             InitializeComponent();
-            this.btnCmdsHc05.Content = string.Format("{0} (HC-05)", DI.Wrapper.GetText(LanguageFactory.Net.data.MsgCode.commands));
+            this.btnCmdsHc05.Content = string.Format("{0} (HC-05)", DI.Wrapper.GetText(MsgCode.commands));
             WPF_ControlHelpers.CenterChild(parent, this);
             this.SizeToContent = SizeToContent.WidthAndHeight;
             this.widthManager = new ButtonGroupSizeSyncManager(
@@ -65,5 +65,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs.Cmds {
         private void btnExit_Click(object sender, RoutedEventArgs e) {
             this.Close();
         }
+
     }
 }
