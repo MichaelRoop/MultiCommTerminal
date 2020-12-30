@@ -37,6 +37,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.Terminators {
             this.parent = parent;
             InitializeComponent();
             WPF_ControlHelpers.CenterChild(parent, this);
+            this.btnDefault.Content = string.Format("{0} \\n\\r", DI.Wrapper.GetText(MsgCode.Default));
             this.SizeToContent = SizeToContent.WidthAndHeight;
             this.widthManager = new ButtonGroupSizeSyncManager(
                 this.btnExit, this.btnArduino);
@@ -61,6 +62,16 @@ namespace MultiCommTerminal.NetCore.WindowObjs.Terminators {
 
         #endregion
 
+        private void btnDefault_Click(object sender, RoutedEventArgs e) {
+            if (MsgBoxYesNo.ShowBox(
+                this, DI.Wrapper.GetText(MsgCode.Create),
+                string.Format("{0} \\n\\r", DI.Wrapper.GetText(MsgCode.Default))) == MsgBoxYesNo.MsgBoxResult.Yes) {
+                this.IsChanged = true;
+                DI.Wrapper.CreateDefaultTerminators(this.Close, App.ShowMsg);
+            }
+        }
+
+
         private void btnArduino_Click(object sender, RoutedEventArgs e) {
             if (MsgBoxYesNo.ShowBox(
                 this, DI.Wrapper.GetText(MsgCode.Create),
@@ -73,5 +84,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs.Terminators {
         private void btnExit_Click(object sender, RoutedEventArgs e) {
             this.Close();
         }
+
     }
 }

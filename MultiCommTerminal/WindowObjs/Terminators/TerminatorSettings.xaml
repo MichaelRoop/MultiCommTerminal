@@ -23,6 +23,10 @@
             <controls:UC_BusySpinner />
         </Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
+            <controls:UC_IconButton x:Name="btnDefault" Style="{StaticResource TextIconButton}"
+                    Content="Deafult \n\r" Margin="5"
+                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Terminator}}"                                                                                            
+                    Background="Transparent" Click="btnDefault_Click" />
             <controls:UC_IconButton x:Name="btnArduino" Style="{StaticResource TextIconButton}"
                     Content="Arduino \r\n" Margin="5"
                     IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Terminator}}"                                                                                            

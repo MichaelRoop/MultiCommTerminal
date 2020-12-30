@@ -379,6 +379,17 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.CreateNewTerminator(dm.Name, dm, onSuccess, onError);
         }
 
+
+        public void CreateDefaultTerminators(Action onSuccess, OnErr onError) {
+            List<TerminatorInfo> infos = new List<TerminatorInfo>();
+            infos.Add(new TerminatorInfo(Terminator.LF));
+            infos.Add(new TerminatorInfo(Terminator.CR));
+            TerminatorDataModel dm = new TerminatorDataModel(infos) {
+                Name = string.Format("{0} \\n\\r", this.GetText(MsgCode.Default)),
+            };
+            this.CreateNewTerminator(dm.Name, dm, onSuccess, onError);
+        }
+
     }
 
 }
