@@ -19,9 +19,9 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
                 case UIIcon.HamburgerMenuWhite:
                     return new IconDataModel(UIIcon.HamburgerMenuWhite, this.AddDir("icons8-menu-white-50.png"), "6");
                 case UIIcon.Settings:
-                    return new IconDataModel(UIIcon.Settings, this.AddDir("icons8-gear-32.png"), "6");
+                    return new IconDataModel(UIIcon.Settings, this.AddDir("icons8_maintenance.png"), "6");
                 case UIIcon.SettingsWhite:
-                    return new IconDataModel(UIIcon.Settings, this.AddDir("icons8_settings_white.png"), "6");
+                    return new IconDataModel(UIIcon.Settings, this.AddDir("icons8_maintenance_white.png"), "6");
                 case UIIcon.Language:
                     return new IconDataModel(UIIcon.Language, this.AddDir("icons8-language-50.png"), "6");
                 case UIIcon.LanguageWhite:

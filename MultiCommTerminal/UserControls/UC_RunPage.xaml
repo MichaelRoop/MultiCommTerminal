@@ -116,7 +116,7 @@
                                         Style="{StaticResource IconButton}" Margin="2,0" Width="32" Height="32"
                                         IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Help}}"/>
                                     <local:UC_RoundIconButton x:Name="btnSettings" Click="btnSettings_Click" 
-                                        Style="{StaticResource IconButton}" Margin="4,0,2,-2" Width="35" Height="35"
+                                        Style="{StaticResource IconButton}" Margin="10,0,2,-2" Width="30" Height="30"
                                         IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Settings}}"/>
                                 </DockPanel>
                                 <local:UC_IconButton x:Name="btnLog" Click="btnLog_Click" 
