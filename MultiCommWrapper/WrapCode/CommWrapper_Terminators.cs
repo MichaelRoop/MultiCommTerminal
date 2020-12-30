@@ -369,6 +369,16 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
+        public void CreateArduinoTerminators(Action onSuccess, OnErr onError) {
+            List<TerminatorInfo> infos = new List<TerminatorInfo>();
+            infos.Add(new TerminatorInfo(Terminator.CR));
+            infos.Add(new TerminatorInfo(Terminator.LF));
+            TerminatorDataModel dm = new TerminatorDataModel(infos) {
+                Name = "Arduino \\r\\n"
+            };
+            this.CreateNewTerminator(dm.Name, dm, onSuccess, onError);
+        }
+
     }
 
 }

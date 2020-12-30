@@ -173,6 +173,8 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void DeleteTerminatorData(IIndexItem<DefaultFileExtraInfo> index, Action<bool> onComplete, OnErr onError);
 
+        void CreateArduinoTerminators(Action onSuccess, OnErr onError);
+
         #endregion
 
         #region Scripts

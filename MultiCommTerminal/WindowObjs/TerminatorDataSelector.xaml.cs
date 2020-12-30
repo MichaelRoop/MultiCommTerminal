@@ -1,4 +1,5 @@
 ﻿using MultiCommTerminal.NetCore.DependencyInjection;
+using MultiCommTerminal.NetCore.WindowObjs.Terminators;
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using MultiCommWrapper.Net.interfaces;
 using StorageFactory.Net.interfaces;
@@ -72,6 +73,11 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
                     this.wrapper.DeleteTerminatorData(item, this.ReloadList, App.ShowMsg);
                 }
             }
+        }
+
+
+        private void btnSettings_Click(object sender, RoutedEventArgs e) {
+            this.ReloadList(TerminatorSettings.ShowBox(this));
         }
 
         #endregion
