@@ -101,6 +101,7 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
         public static string Edit { get { return GetTxt(MsgCode.Edit); } }
         public static string Create { get { return GetTxt(MsgCode.Create); } }
         public static string Clear { get { return GetTxt(MsgCode.Clear); } }
+        public static string ResetAll { get { return GetTxt(MsgCode.ResetAll); } }
 
 
         public static string BuildNumber {

@@ -88,6 +88,9 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
                         Help_CommunicationMediums cm = new Help_CommunicationMediums(this.mainWindow);
                         cm.ShowDialog();
                         break;
+                    case MenuCode.Settings:
+                        MainSettings.ShowBox(this.mainWindow);
+                        break;
                     default:
                         // Not supported
                         break;
@@ -122,6 +125,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
                 this.AddItem(MenuCode.Commands, MsgCode.commands, UIIcon.Command, "0"); // TODO Get a new icon
                 this.AddItem(MenuCode.Language, MsgCode.language, UIIcon.Language, "0");
                 this.AddItem(MenuCode.CodeSamples, MsgCode.CodeSamples, UIIcon.Code, "0");
+                this.AddItem(MenuCode.Settings, MsgCode.Settings, UIIcon.Settings, "0");
                 this.lbxMenuItems.ItemsSource = this.items;
                 lbxMenuItems.SelectionChanged += this.lbxMenuItems_SelectionChanged;
             });

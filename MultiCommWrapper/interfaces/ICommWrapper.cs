@@ -460,5 +460,7 @@ namespace MultiCommWrapper.Net.interfaces {
         void DisconnectAll();
 
         string GetDataFilesPath();
+
+        void RebuildAllData();
     }
 }
