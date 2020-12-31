@@ -203,9 +203,6 @@ namespace MultiCommWrapper.Net.WrapCode {
             var wi = this.wifiCredStorage;
             var sc = this.scriptStorage;
             var tem = this.terminatorStorage;
-
-            this.CreateArduinoTerminators(() => { }, (err) => { });
-            this.CreateHC05AtCmds(() => { }, (err) => { });
         }
 
 
@@ -286,6 +283,9 @@ namespace MultiCommWrapper.Net.WrapCode {
                         this.SaveSettings(settings, () => { }, (err) => { });
                     },
                     (err) => { });
+
+                this.CreateArduinoTerminators(() => { }, (err) => { });
+
             }
             else {
                 // back compatible to add the display name into the data object
@@ -319,6 +319,9 @@ namespace MultiCommWrapper.Net.WrapCode {
                         this.SaveSettings(settings, () => { }, (err) => { });
                     },
                     (err) => { });
+
+                this.CreateHC05AtCmds(() => { }, (err) => { });
+
             }
         }
 
