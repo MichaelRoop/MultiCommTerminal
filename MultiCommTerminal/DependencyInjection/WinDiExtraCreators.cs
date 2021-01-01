@@ -7,6 +7,7 @@ using DependencyInjectorFactory.Net.interfaces;
 using Ethernet.Common.Net.interfaces;
 using Ethernet.UWP.Core;
 using IconFactory.Net.interfaces;
+using MultiCommTerminalIconFactories;
 using MultiCommWrapper.Net.interfaces;
 using Serial.UWP.Core;
 using SerialCommon.Net.interfaces;
@@ -25,7 +26,7 @@ namespace MultiCommTerminal.NetCore.DependencyInjection {
 
         public WinDiExtraCreators() {
             this.SingletonCreators.Add(
-                typeof(IIconFactory), new ObjSingletonCreator(() => new MultiCommTerminal.NetCore.WPF_Helpers.IconFactory()));
+                typeof(IIconFactory), new ObjSingletonCreator(() => new WinIconFactory()));
 
             this.SingletonCreators.Add(
                 typeof(IBTInterface), new ObjSingletonCreator(() => new BluetoothRfCommUwpCore()));

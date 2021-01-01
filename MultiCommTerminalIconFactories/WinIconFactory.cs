@@ -1,13 +1,14 @@
 ﻿using IconFactory.Net.data;
 using IconFactory.Net.interfaces;
 
-namespace MultiCommTerminal.NetCore.WPF_Helpers {
+namespace MultiCommTerminalIconFactories {
 
-    public class IconFactory : IIconFactory {
+    public class WinIconFactory : IIconFactory {
 
         /// <summary>Return info required to render an icon</summary>
         /// <param name="code">Icon code</param>
         /// <returns>The icon info object</returns>
+
         public IconDataModel GetIcon(UIIcon code) {
             switch (code) {
                 case UIIcon.Cancel:
@@ -117,12 +118,14 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
 
                 default:
                     return new IconDataModel(UIIcon.Cancel, this.AddDir("icons8-close-window-50-noborder.png"), "6");
-            }
 
+            }
         }
 
+
+
         private string AddDir(string name) {
-            // Any prefix added in OS specific
+            // Windows requires path
             return string.Format("/images/icons/{0}", name);
         }
 

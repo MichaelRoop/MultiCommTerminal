@@ -4,6 +4,7 @@ using MultiCommData.Net.Enumerations;
 using MultiCommData.Net.UserDisplayData;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommTerminal.NetCore.DependencyInjection;
+using MultiCommTerminalIconFactories;
 using System;
 using System.Windows.Media.Imaging;
 
@@ -23,7 +24,7 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
     public static class IconBinder {
 
         /// <summary>Used in VS XAML design when the DI cannot be loaded</summary>
-        private static IIconFactory designFactory = new IconFactory();
+        private static IIconFactory designFactory = new WinIconFactory();
 
 
         #region Icon paths for UI
