@@ -13,7 +13,7 @@ namespace Bluetooth.UWP.Core {
 
 
         private async Task HarvestDeviceInfo(BluetoothLEDeviceInfo deviceDataModel) {
-            this.log.Info("HarvestDeviceInfo", () => string.Format("Attempting connection to {0}: FromIdAsync({1})",
+            this.log.Info("HarvestDeviceInfo", () => string.Format("Harvesting from {0}: FromIdAsync({1})",
                 deviceDataModel.Name, deviceDataModel.Id));
 
             try {
@@ -110,7 +110,7 @@ namespace Bluetooth.UWP.Core {
 
 
         private async Task<BLEGetInfoStatus> GetBLEDeviceInfo(BluetoothLEDeviceInfo deviceDataModel, bool forConnection) {
-            this.log.Info("HarvestDeviceInfo", () => string.Format("Attempting connection to {0}: FromIdAsync({1})",
+            this.log.Info("GetBLEDeviceInfo", () => string.Format("Attempting info from {0}: FromIdAsync({1})",
                 deviceDataModel.Name, deviceDataModel.Id));
 
             BluetoothLEDevice device = null;
@@ -132,7 +132,30 @@ namespace Bluetooth.UWP.Core {
                 try {
                     // Attempts pair and causes catastropic failure if not supported
                     // This will happen with Arduinos
-                    GattDeviceServicesResult services = await device.GetGattServicesAsync();
+
+
+                    ////------------------------------------------------------------------------------
+                    //// This was a try in case OS though it had been paired and was requesting the key
+                    //GattDeviceServicesResult services = null;
+                    //try {
+                    //    services = await device.GetGattServicesAsync();
+                    //}
+                    //catch (Exception e) {
+                    //    this.log.Exception(8888, "", "On first services try", e);
+                    //    try {
+                    //        var r = await device.DeviceInformation.Pairing.UnpairAsync();
+                    //        services = await device.GetGattServicesAsync();
+                    //    }
+                    //    catch (Exception e2) {
+                    //        this.log.Exception(7777, "Unpair and getServices", e2);
+                    //    }
+                    //}
+                    //if (services == null) {
+                    //    return result;
+                    //}
+                    ////------------------------------------------------------------------------------
+
+                    GattDeviceServicesResult services = await device.GetGattServicesAsync(BluetoothCacheMode.Cached);
                     if (services.Status == GattCommunicationStatus.Success) {
                         if (services.Services != null) {
                             if (services.Services.Count > 0) {

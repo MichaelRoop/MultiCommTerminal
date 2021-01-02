@@ -1,11 +1,7 @@
 ﻿using BluetoothLE.Net.DataModels;
 using BluetoothLE.Net.interfaces;
-using BluetoothLE.Net.Parsers;
 using System;
 using System.Threading.Tasks;
-using Windows.Devices.Bluetooth;
-using Windows.Devices.Bluetooth.GenericAttributeProfile;
-// The using for the RFCOMM to communicate with classic items
 
 namespace Bluetooth.UWP.Core {
 
@@ -33,8 +29,6 @@ namespace Bluetooth.UWP.Core {
                         // We have a device connected
                         this.log.Info("ConnectToDevice", () => string.Format("Device:{0} Connection status {1}",
                             this.currentDevice.Name, this.currentDevice.ConnectionStatus.ToString()));
-
-
                     }
                 }
                 else {

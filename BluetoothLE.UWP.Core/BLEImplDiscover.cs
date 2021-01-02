@@ -11,36 +11,77 @@ namespace Bluetooth.UWP.Core {
         /// <summary>Called from syncronous Interface method .. to call async methods</summary>
         private void DoLEWatcherSearch() {
             this.TearDownWatcher();
-            if (this.devWatcher == null) {
-                this.SetupWatcher();
-                this.devWatcher.Start();
-            }
-            else {
-                // Subsequent calls
-                // https://docs.microsoft.com/en-us/uwp/api/windows.devices.enumeration.devicewatcherstatus
-                switch (this.devWatcher.Status) {
-                    case DeviceWatcherStatus.Created:
-                    case DeviceWatcherStatus.Stopped:
-                    case DeviceWatcherStatus.Aborted:
-                        this.devWatcher.Start();
-                        break;
-                    case DeviceWatcherStatus.Started:
-                        // Already started but enumeration not completed
-                        break;
-                    case DeviceWatcherStatus.EnumerationCompleted:
-                        // Call Stop and wait on stopped event
-                        this.stopped.Reset();
-                        this.devWatcher.Stop();
-                        if (this.stopped.WaitOne(500)) {
-                            this.log.Info("DoLEWatcherSearch", "THE WATCHER IS RESTARTED");
-                            this.devWatcher.Start();
-                        }
-                        break;
-                    case DeviceWatcherStatus.Stopping:
-                        // Wait on stopped event
-                        break;
-                }
-            }
+            this.SetupWatcher();
+            this.devWatcher.Start();
+
+
+
+            
+                //// Subsequent calls
+                //// https://docs.microsoft.com/en-us/uwp/api/windows.devices.enumeration.devicewatcherstatus
+                //switch (this.devWatcher.Status) {
+                //    case DeviceWatcherStatus.Created:
+                //        // Hook up the events
+                //        break;
+                //case DeviceWatcherStatus.Stopped:
+                //    case DeviceWatcherStatus.Aborted:
+                //        //this.devWatcher.Start();
+                //        break;
+                //    case DeviceWatcherStatus.Started:
+                //        // Already started but enumeration not completed
+                //        break;
+                //    case DeviceWatcherStatus.EnumerationCompleted:
+                //        // Call Stop and wait on stopped event
+                //        this.stopped.Reset();
+                //        this.devWatcher.Stop();
+                //        if (this.stopped.WaitOne(500)) {
+                //            this.log.Info("DoLEWatcherSearch", "THE WATCHER IS RESTARTED");
+                //            this.devWatcher.Start();
+                //        }
+                //        break;
+                //    case DeviceWatcherStatus.Stopping:
+                //        // Wait on stopped event
+                //        break;
+                //}
+            
+
+
+
+
+
+
+
+            //this.TearDownWatcher();
+            //if (this.devWatcher == null) {
+            //    this.SetupWatcher();
+            //    this.devWatcher.Start();
+            //}
+            //else {
+            //    // Subsequent calls
+            //    // https://docs.microsoft.com/en-us/uwp/api/windows.devices.enumeration.devicewatcherstatus
+            //    switch (this.devWatcher.Status) {
+            //        case DeviceWatcherStatus.Created:
+            //        case DeviceWatcherStatus.Stopped:
+            //        case DeviceWatcherStatus.Aborted:
+            //            this.devWatcher.Start();
+            //            break;
+            //        case DeviceWatcherStatus.Started:
+            //            // Already started but enumeration not completed
+            //            break;
+            //        case DeviceWatcherStatus.EnumerationCompleted:
+            //            // Call Stop and wait on stopped event
+            //            this.stopped.Reset();
+            //            this.devWatcher.Stop();
+            //            if (this.stopped.WaitOne(500)) {
+            //                this.log.Info("DoLEWatcherSearch", "THE WATCHER IS RESTARTED");
+            //                this.devWatcher.Start();
+            //            }
+            //            break;
+            //        case DeviceWatcherStatus.Stopping:
+            //            // Wait on stopped event
+            //            break;
+            //    }
+            //}
         }
 
 
@@ -82,7 +123,6 @@ namespace Bluetooth.UWP.Core {
                 this.devWatcher.Stopped -= DevWatcher_Stopped;
                 this.devWatcher.Stop();
                 this.devWatcher = null;
-                
             }
         }
 
@@ -97,10 +137,7 @@ namespace Bluetooth.UWP.Core {
         /// <summary>Event fired when the enumeration is complete</summary>
         private void DevWatcher_EnumerationCompleted(DeviceWatcher sender, object args) {
             this.log.Info("DevWatcher_EnumerationCompleted", "*****");
-            // TODO - implement
-            if (this.DeviceDiscoveryCompleted != null) {
-                this.DeviceDiscoveryCompleted.Invoke(this, true);
-            }
+            this.DeviceDiscoveryCompleted?.Invoke(this, true);
         }
 
 
@@ -108,10 +145,8 @@ namespace Bluetooth.UWP.Core {
         /// <param name="sender"></param>
         /// <param name="updateInfo">The removed device. Use the ID</param>
         private void DevWatcher_Removed(DeviceWatcher sender, DeviceInformationUpdate updateInfo) {
-            if (this.DeviceRemoved != null) {
-                //this.log.Info("DevWatcher_Removed", () => string.Format("----- {0}", updateInfo.Id));
-                this.DeviceRemoved(sender, updateInfo.Id);
-            }
+            this.log.Info("DevWatcher_Removed", () => string.Format("REMOVED ----- {0}", updateInfo.Id));
+            this.DeviceRemoved?.Invoke(sender, updateInfo.Id);
         }
 
 
@@ -119,41 +154,11 @@ namespace Bluetooth.UWP.Core {
         /// <param name="sender"></param>
         /// <param name="updateInfo"></param>
         private void DevWatcher_Updated(DeviceWatcher sender, DeviceInformationUpdate updateInfo) {
-            this.log.Info("DevWatcher_Updated", "------------------------------ START -----------------------------------------------------");
-            this.log.Info("DevWatcher_Updated", () => string.Format("***** {0}", updateInfo.Id));
+            this.log.Info("DevWatcher_Updated", () => string.Format("UPDATED ***** {0}", updateInfo.Id));
             WrapErr.ToErrReport(9999, () => {
-
                 NetPropertiesUpdateDataModel dm = updateInfo.CreatePropertiesUpdateData();
                 this.DeviceUpdated?.Invoke(this, dm);
-
-                //this.devic
-
-                //if (updateInfo.Properties != null) {
-                //    foreach (var p in updateInfo.Properties) {
-                //        string value = "Unhandled";
-                //        switch (p.Key) {
-                //            case "System.Devices.Aep.ContainerId":
-                //            case "Id":
-                //            case "System.ItemNameDisplay": // *
-                //            case "System.Devices.Icon":
-                //            case "System.Devices.GlyphIcon":
-                //                value = (string)p.Value;
-                //                break;
-                //            case "System.Devices.Aep.IsPaired": // *
-                //            case "System.Devices.Aep.IsConnected":
-                //            case "System.Devices.Aep.IsConnectable":
-                //            case "System.Devices.Aep.CanPair": // *
-                //                value = string.Format("{0}", (bool)p.Value);
-                //                break;
-                //                // "System.Devices.Icon"
-                //                // "System.Devices.GlyphIcon"
-
-                //        }
-                //        this.log.Info("DevWatcher_Updated", () => string.Format("    Property:{0}  Value:{1}", p.Key, value));
-                //    }
-                //}
             });
-            this.log.Info("DevWatcher_Updated", "------------------------------ END -----------------------------------------------------");
         }
 
 
@@ -163,26 +168,22 @@ namespace Bluetooth.UWP.Core {
         private void DevWatcher_Added(DeviceWatcher sender, DeviceInformation deviceInfo) {
             if (deviceInfo.Name.Length > 0) {
                 WrapErr.ToErrReport(9999, () => {
-
                     // TODO - find out what comes in with no name
-                    this.log.Info("DevWatcher_Added", () => string.Format("+++++ {0} : {1}", deviceInfo.Name, deviceInfo.Id));
-                    this.DebugDumpDeviceInfo(deviceInfo);
-                    
-                    if (this.DeviceDiscovered != null) {
-                        BluetoothLEDeviceInfo dev = new BluetoothLEDeviceInfo(new Bluetooth_WinPropertyKeys()) {
-                            Name = deviceInfo.Name,
-                            Id = deviceInfo.Id,
-                            IsDefault = deviceInfo.IsDefault,
-                            CanPair = deviceInfo?.Pairing.CanPair ?? false,
-                            IsPaired = deviceInfo?.Pairing.IsPaired ?? false,
-                            IsConnected = false,
-                            ServiceProperties = deviceInfo.CreatePropertiesDictionary(),
-                            // This would be the DeviceInformation object. Not required
-                            // but handy for updates in Windows
-                            OSSpecificObj = deviceInfo,
-                        };
-                        this.DeviceDiscovered(sender, dev);
-                    }
+                    this.log.Info("DevWatcher_Added", () => string.Format("ADDED +++++ {0} : {1}", deviceInfo.Name, deviceInfo.Id));
+                    //this.DebugDumpDeviceInfo(deviceInfo);
+                    BluetoothLEDeviceInfo dev = new BluetoothLEDeviceInfo(new Bluetooth_WinPropertyKeys()) {
+                        Name = deviceInfo.Name,
+                        Id = deviceInfo.Id,
+                        IsDefault = deviceInfo.IsDefault,
+                        CanPair = deviceInfo?.Pairing.CanPair ?? false,
+                        IsPaired = deviceInfo?.Pairing.IsPaired ?? false,
+                        IsConnected = false,
+                        ServiceProperties = deviceInfo.CreatePropertiesDictionary(),
+                        // This would be the DeviceInformation object. Not required
+                        // but handy for updates in Windows
+                        OSSpecificObj = deviceInfo,
+                    };
+                    this.DeviceDiscovered?.Invoke(sender, dev);
                 });
             }
         }
