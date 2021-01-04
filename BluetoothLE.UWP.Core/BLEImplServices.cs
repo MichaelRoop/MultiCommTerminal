@@ -59,7 +59,12 @@ namespace Bluetooth.UWP.Core {
                 if (characteristics.Characteristics != null) {
                     if (characteristics.Characteristics.Count > 0) {
                         foreach (GattCharacteristic ch in characteristics.Characteristics) {
-                            await this.BuildCharacteristicDataModel(ch, serviceDataModel);
+                            try {
+                                await this.BuildCharacteristicDataModel(ch, serviceDataModel);
+                            }
+                            catch (Exception e1) {
+                                this.log.Exception(9999, "HarvestDeviceInfo", e1);
+                            }
                         }
                     }
                     else {

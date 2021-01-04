@@ -16,6 +16,7 @@ namespace Bluetooth.UWP.Core {
 
         private async Task BuildCharacteristicDataModel(GattCharacteristic ch, BLE_ServiceDataModel service) {
             try {
+                this.log.InfoEntry("BuildCharacteristicDataModel");
                 BLE_CharacteristicDataModel characteristic = new BLE_CharacteristicDataModel();
                 characteristic.Uuid = ch.Uuid;
                 characteristic.UserDescription = ch.UserDescription;
@@ -26,7 +27,17 @@ namespace Bluetooth.UWP.Core {
                 characteristic.ProtectionLevel = (BLE_ProtectionLevel)ch.ProtectionLevel;
                 characteristic.PresentationFormats = this.BuildPresentationFormats(ch);
                 await this.BuildDescriptors(ch, characteristic);
+
+                // TODO - we would need to associate the UWP characteristic and the data model. 
+                //        and have 2 way events to set and get
+
+
                 service.Characteristics.Add(characteristic.Uuid.ToString(), characteristic);
+
+
+                // This also sends and receives dummy data to Arduino
+                //await this.DumpCharacteristic(ch);
+
             }
             catch (Exception e) {
                 this.log.Exception(9999, "Failed during build of characteristic", e);
@@ -35,8 +46,9 @@ namespace Bluetooth.UWP.Core {
 
 
         private List<BLE_PresentationFormat> BuildPresentationFormats(GattCharacteristic ch) {
+            this.log.InfoEntry("BuildPresentationFormats");
             List<BLE_PresentationFormat> formats = new List<BLE_PresentationFormat>();
-            foreach (var pf in ch.PresentationFormats) {
+            foreach (GattPresentationFormat pf in ch.PresentationFormats) {
                 BLE_PresentationFormat format = new BLE_PresentationFormat() {
                     Description = pf.Description,
                     Exponent = pf.Exponent,
@@ -45,9 +57,21 @@ namespace Bluetooth.UWP.Core {
                     Namespace = pf.Namespace,
                 };
                 formats.Add(format);
+                this.DebugDumpPresentationFormats(ch, format);
             }
             return formats;
         }
+
+
+        private void DebugDumpPresentationFormats(GattCharacteristic ch, BLE_PresentationFormat f) {
+            this.log.Info("DebugDumpPresentationFormats", () => string.Format("Characteristic : {0}", BLE_DisplayHelpers.GetCharacteristicName(ch)));
+            this.log.Info("DebugDumpPresentationFormats", () => string.Format("    Description: {0}", f.Description));
+            this.log.Info("DebugDumpPresentationFormats", () => string.Format("       Exponent: {0}", f.Exponent));
+            this.log.Info("DebugDumpPresentationFormats", () => string.Format("         Format: {0}", f.Format));
+            this.log.Info("DebugDumpPresentationFormats", () => string.Format("      Namespace: {0}", f.Namespace));
+            this.log.Info("DebugDumpPresentationFormats", () => string.Format("          Units: {0}", f.Units));
+        }
+
 
 
         private async Task DumpCharacteristic(GattCharacteristic ch) {

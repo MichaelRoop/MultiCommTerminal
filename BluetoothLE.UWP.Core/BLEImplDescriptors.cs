@@ -13,6 +13,7 @@ namespace Bluetooth.UWP.Core {
 
 
         private async Task BuildDescriptors(GattCharacteristic ch, BLE_CharacteristicDataModel dataModel) {
+            this.log.InfoEntry("BuildDescriptors");
             dataModel.Descriptors = new Dictionary<string, BLE_DescriptorDataModel>();
             GattDescriptorsResult descriptors = await ch.GetDescriptorsAsync();
             if (descriptors.Status == GattCommunicationStatus.Success) {
@@ -39,6 +40,12 @@ namespace Bluetooth.UWP.Core {
                 this.log.Error(9999, "BuildDescriptors", () => string.Format("Get Descriptors result:{0}", descriptors.Status.ToString()));
             }
         }
+
+
+        private void DebugDumpDescriptor(GattDescriptor d) {
+
+        }
+
     }
 
 }
