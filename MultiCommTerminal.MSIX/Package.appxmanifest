@@ -9,7 +9,7 @@
   <Identity
     Name="61651MRProductions.MultiCommTerminal"
     Publisher="CN=7734A2EB-64A7-45F9-9B6D-25AD392A5AB8"
-    Version="1.4.6.0" />
+    Version="1.4.7.0" />
 
   <Properties>
     <DisplayName>Multi Comm Terminal</DisplayName>
