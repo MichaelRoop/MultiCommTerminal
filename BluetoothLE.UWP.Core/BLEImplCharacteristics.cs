@@ -19,6 +19,7 @@ namespace Bluetooth.UWP.Core {
                 this.log.InfoEntry("BuildCharacteristicDataModel");
                 BLE_CharacteristicDataModel characteristic = new BLE_CharacteristicDataModel();
                 characteristic.Uuid = ch.Uuid;
+                characteristic.GattType = BLE_DisplayHelpers.GetCharacteristicEnum(ch);
                 characteristic.UserDescription = ch.UserDescription;
                 characteristic.AttributeHandle = ch.AttributeHandle;
                 characteristic.Service = service;
@@ -26,6 +27,8 @@ namespace Bluetooth.UWP.Core {
                 characteristic.PropertiesFlags = ch.CharacteristicProperties.ToUInt().ToEnum<CharacteristicProperties>();
                 characteristic.ProtectionLevel = (BLE_ProtectionLevel)ch.ProtectionLevel;
                 characteristic.PresentationFormats = this.BuildPresentationFormats(ch);
+                characteristic.CharValue = await this.ReadValue(ch);
+
                 await this.BuildDescriptors(ch, characteristic);
 
                 // TODO - we would need to associate the UWP characteristic and the data model. 
@@ -43,6 +46,30 @@ namespace Bluetooth.UWP.Core {
                 this.log.Exception(9999, "Failed during build of characteristic", e);
             }
         }
+
+
+        private async Task<string> ReadValue(GattCharacteristic ch) {
+            try {
+                if (ch.CharacteristicProperties.HasFlag(GattCharacteristicProperties.Read)) {
+                    GattReadResult readResult = await ch.ReadValueAsync();
+                    if (readResult.Status == GattCommunicationStatus.Success) {
+                        byte[] data = readResult.Value.FromBufferToBytes();
+                        return BLE_ParseHelpers.GetCharacteristicValueAsString(ch.Uuid, data);
+                    }
+                    else {
+                        this.log.Error(9999, "ReadValue", () => string.Format("Failed read:{0}", readResult.Status));
+                    }
+                }
+                else {
+                    this.log.Info("ReadValue", "No READ property");
+                }
+            }
+            catch(Exception e) {
+                this.log.Exception(9999, "ReadValue", "", e);
+            }
+            return "";
+        }
+
 
 
         private List<BLE_PresentationFormat> BuildPresentationFormats(GattCharacteristic ch) {

@@ -86,6 +86,9 @@ namespace Bluetooth.UWP.Core {
                 try {
                     this.DataModel.PushReadDataEvent(
                         args.CharacteristicValue.FromBufferToBytes());
+
+                    // We can translate to string here based on the characteristic type and write to CharValue
+                    //this.DataModel.CharValue = TranslateBytes...
                 }
                 catch (Exception e) {
                     this.log.Exception(9999, "OSCharacteristic_ValueChanged", "", e);
