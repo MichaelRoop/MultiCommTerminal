@@ -1,6 +1,6 @@
-MainPackage=D:\Dev\MultiCommTerminal\MultiCommTerminal.MSIX\bin\x86\Release\Upload\MultiCommTerminal.MSIX_1.4.7.0_x86.msix
-SymbolPackage=D:\Dev\MultiCommTerminal\MultiCommTerminal.MSIX\bin\x86\Release\Upload\MultiCommTerminal.MSIX_1.4.7.0\MultiCommTerminal.MSIX_1.4.7.0_x86.appxsym
-ResourcePack=D:\Dev\MultiCommTerminal\MultiCommTerminal.MSIX\bin\x86\Release\Upload\MultiCommTerminal.MSIX_1.4.7.0_scale-100.msix
-ResourcePack=D:\Dev\MultiCommTerminal\MultiCommTerminal.MSIX\bin\x86\Release\Upload\MultiCommTerminal.MSIX_1.4.7.0_scale-125.msix
-ResourcePack=D:\Dev\MultiCommTerminal\MultiCommTerminal.MSIX\bin\x86\Release\Upload\MultiCommTerminal.MSIX_1.4.7.0_scale-150.msix
-ResourcePack=D:\Dev\MultiCommTerminal\MultiCommTerminal.MSIX\bin\x86\Release\Upload\MultiCommTerminal.MSIX_1.4.7.0_scale-400.msix
+MainPackage=D:\Dev\MultiCommTerminal\MultiCommTerminal.MSIX\bin\x86\Release\Upload\MultiCommTerminal.MSIX_1.4.8.0_x86.msix
+SymbolPackage=D:\Dev\MultiCommTerminal\MultiCommTerminal.MSIX\bin\x86\Release\Upload\MultiCommTerminal.MSIX_1.4.8.0\MultiCommTerminal.MSIX_1.4.8.0_x86.appxsym
+ResourcePack=D:\Dev\MultiCommTerminal\MultiCommTerminal.MSIX\bin\x86\Release\Upload\MultiCommTerminal.MSIX_1.4.8.0_scale-100.msix
+ResourcePack=D:\Dev\MultiCommTerminal\MultiCommTerminal.MSIX\bin\x86\Release\Upload\MultiCommTerminal.MSIX_1.4.8.0_scale-125.msix
+ResourcePack=D:\Dev\MultiCommTerminal\MultiCommTerminal.MSIX\bin\x86\Release\Upload\MultiCommTerminal.MSIX_1.4.8.0_scale-150.msix
+ResourcePack=D:\Dev\MultiCommTerminal\MultiCommTerminal.MSIX\bin\x86\Release\Upload\MultiCommTerminal.MSIX_1.4.8.0_scale-400.msix

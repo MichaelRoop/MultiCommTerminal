@@ -13,7 +13,9 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace MultiCommTerminal.NetCore {
 
@@ -42,12 +44,10 @@ namespace MultiCommTerminal.NetCore {
             }
         }
 
-        /// <summary>Build to display
-        /// 
-        /// </summary>
+        /// <summary>Build number to display</summary>
         public static string Build {
             get {
-                return "2021.01.08.02";
+                return "2021.01.14.05";
             }
         }
 
@@ -62,12 +62,23 @@ namespace MultiCommTerminal.NetCore {
         #region Constructors
 
         public App() {
-            STATIC_APP = this;     
+            STATIC_APP = this;
+            this.SetupExceptionHandlers();
             this.SetupLogging();
             this.SetupDI();
         }
 
         #endregion
+
+        #region Setup methods
+
+        private void SetupExceptionHandlers() {
+            //// TODO - implement after next release
+            //this.DispatcherUnhandledException += this.App_DispatcherUnhandledException;
+            //TaskScheduler.UnobservedTaskException += this.TaskScheduler_UnobservedTaskException;
+            //AppDomain.CurrentDomain.UnhandledException += this.CurrentDomain_UnhandledException;
+        }
+
 
         private void SetupLogging() {
             this.loggerImpl = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -96,6 +107,30 @@ namespace MultiCommTerminal.NetCore {
 
         }
 
+        #endregion
+
+        #region Unhandled Exception capture
+
+
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e) {
+            this.log.Error(9999, "CurrentDomain_UnhandledException", () => string.Format(""));
+            // Cant do anything
+            Application.Current.Shutdown();
+        }
+
+        private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e) {
+            this.log.Error(9999, "TaskScheduler_UnobservedTaskException", () => string.Format(""));
+            Application.Current.Shutdown();
+        }
+
+        private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) {
+            this.log.Error(9999, "App_DispatcherUnhandledException", () => string.Format(""));
+            // Gets errors out of the UI. Need to decide what to do
+
+            Application.Current.Shutdown();
+        }
+
+        #endregion
 
         #region Log Event Handlers
 
