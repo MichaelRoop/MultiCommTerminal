@@ -23,7 +23,7 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
         private WifiRun wifiPage = null;
         private SerialRun serialPage = null;
         private EthernetRun ethernetPage = null;
-        private BLERun blePage = null;
+        private BLE_Full blePage = null;
 
         #endregion
 
@@ -45,7 +45,7 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
             lock (this) {
                 if (_type == typeof(BTRun)) {
                     // make sure only one Bluetooth/BLE opened at the same time
-                    this.cleanUpPage(this.blePage, typeof(BLERun));
+                    this.cleanUpPage(this.blePage, typeof(BLE_Full));
                     this.CreateBTPage();
                 }
                 else if (_type == typeof(WifiRun)) {
@@ -57,7 +57,7 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
                 else if (_type == typeof(EthernetRun)) {
                     this.CreateEthernetPage();
                 }
-                else if (_type == typeof(BLERun)) {
+                else if (_type == typeof(BLE_Full)) {
                     // make sure only one Bluetooth/BLE opened at the same time
                     this.cleanUpPage(this.btPage, typeof(BTRun));
                     this.CreateBLEPage();
@@ -71,7 +71,7 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
             lock (this) {
                 try {
                     this.cleanUpPage(this.btPage, typeof(BTRun));
-                    this.cleanUpPage(this.blePage, typeof(BLERun));
+                    this.cleanUpPage(this.blePage, typeof(BLE_Full));
                     this.cleanUpPage(this.serialPage, typeof(SerialRun));
                     this.cleanUpPage(this.ethernetPage, typeof(EthernetRun));
                     this.cleanUpPage(this.wifiPage, typeof(WifiRun));
@@ -97,10 +97,9 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
 
 
         private void CreateBLEPage() {
-            if (BLERun.Instances == 0) {
-                this.cleanUpPage(this.blePage, typeof(BLERun));
-                this.blePage = new BLERun(this.parent);
-                this.blePage.CloseRequest += this.bleCloseRequest;
+            if (BLE_Full.Instances == 0) {
+                this.cleanUpPage(this.blePage, typeof(BLE_Full));
+                this.blePage = new BLE_Full(this.parent);
                 this.blePage.Show();
             }
         }
@@ -185,8 +184,8 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
                         this.ethernetPage.CloseRequest -= this.ethernetCloseRequest;
                         this.ethernetPage = null;
                     }
-                    else if (_type == typeof(BLERun)) {
-                        this.blePage.CloseRequest -= this.bleCloseRequest;
+                    else if (_type == typeof(BLE_Full)) {
+                        this.blePage.Close();
                         this.blePage = null;
                     }
                 }

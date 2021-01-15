@@ -1,0 +1,127 @@
+﻿<Window x:Class="MultiCommTerminal.NetCore.WindowObjs.BLE.BLE_Full"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MultiCommTerminal.NetCore.WindowObjs.BLE"
+        mc:Ignorable="d"
+        xmlns:controls="clr-namespace:MultiCommTerminal.NetCore.UserControls"
+        xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
+        xmlns:dataModels="clr-namespace:BluetoothLE.Net.DataModels;assembly=BluetoothLE.Net"
+        Style="{StaticResource MyWindowStyle}"
+        WindowStartupLocation="CenterScreen" 
+        Title="BLE"
+        Icon="{Binding Source={x:Static wpfHelper:IconBinder.BluetoothClassic_W}}"
+        Loaded="Window_Loaded" Closing="Window_Closing"
+        MinHeight="100" MinWidth="200" MaxHeight="800" MaxWidth="900" BorderThickness=".5">
+    <Grid>
+        <Grid x:Name="gridWait" Panel.ZIndex="10000" 
+              HorizontalAlignment="Stretch" 
+              VerticalAlignment="Stretch" Visibility="Collapsed" >
+            <Grid.Background>
+                <!--  Prevent any control from getting input during spinner visibility -->
+                <SolidColorBrush Color="AntiqueWhite" Opacity=".1"/>
+            </Grid.Background>
+            <!--Image spinner no longer showing-->
+            <!--<controls:UC_BusyImageSpinner />-->
+            <controls:UC_BusySpinner />
+        </Grid>
+        <StackPanel>
+            <Border Style="{StaticResource brd075}" Padding="0" >
+                <TreeView x:Name="treeServices" HorizontalAlignment="Stretch" 
+                                MinWidth="400" MinHeight="250" MaxHeight="800" MaxWidth="1000"
+                                ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <TreeView.Resources>
+                        <HierarchicalDataTemplate
+                                    DataType="{x:Type dataModels:BLE_ServiceDataModel}" 
+                                    ItemsSource="{Binding Characteristics.Values}" >
+                            <!-- This data in the service -->
+                            <DockPanel>
+                                <TextBlock Text="service: " FontSize="16"/>
+                                <TextBlock Text="{Binding Path=DisplayName}" FontSize="16"/>
+                            </DockPanel>
+                        </HierarchicalDataTemplate>
+
+                        <HierarchicalDataTemplate
+                                    DataType="{x:Type dataModels:BLE_CharacteristicDataModel}"
+                                    ItemsSource="{Binding Path=Descriptors.Values}" >
+                            <!-- This is data in the characteristic -->
+                            <StackPanel>
+                                <DockPanel>
+                                    <TextBlock Text="characteristic: " FontSize="16" />
+                                    <TextBlock Text="{Binding CharName}" FontSize="16"/>
+                                    <TextBlock Text=" : " FontSize="16"/>
+                                    <TextBlock Text="{Binding CharValue}" FontSize="16"/>
+                                </DockPanel>
+                                <TextBlock Text="{Binding Uuid}" Visibility="Collapsed"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+
+                        <DataTemplate 
+                                    DataType="{x:Type dataModels:BLE_DescriptorDataModel}">
+                            <DockPanel >
+                                <TextBlock Text="Descriptor: " FontSize="16"/>
+                                <TextBlock Text="{Binding DisplayName}" FontSize="16"/>
+                            </DockPanel>
+                        </DataTemplate>
+
+                    </TreeView.Resources>
+                </TreeView>
+            </Border>
+            <!-- Send -->
+            <Border Style="{StaticResource brd075}" Visibility="Collapsed">
+                <DockPanel >
+                    <controls:UC_IconButton x:Name="btnSend" Style="{StaticResource TextIconButton}" Visibility="Visible"
+                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Send}}" 
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Send}}"                                                                                            
+                            Background="Transparent" Click="btnSend_Click" />
+                    <TextBox x:Name="txtCommmand" Text="ExampleCmd" Style="{Binding Source={StaticResource TxtBoxRight}}" Margin="10,0" HorizontalAlignment="Stretch" />
+                </DockPanel>
+            </Border>
+            <!-- Log stuff -->
+            <Border Style="{StaticResource brd075}" HorizontalAlignment="Stretch" Padding="0" Margin="0">
+                <DockPanel VerticalAlignment="Center" Margin="0,5">
+                    <StackPanel VerticalAlignment="Center">
+                        <DockPanel Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <StackPanel HorizontalAlignment="Center">
+                                <DockPanel Margin="0,6">
+                                    <Border x:Name="connectedOn" Style="{StaticResource brd075}" Padding="0" Height="15" Width="15" CornerRadius="7"
+                                            Background="Lime" BorderThickness="2" Margin="5,0" Visibility="Collapsed" />
+                                    <Border x:Name="connectedOff" Style="{StaticResource brd075}" Padding="0" Height="15" Width="15" CornerRadius="7"
+                                            Background="LightGray" BorderThickness="2" Margin="5,0" />
+                                    <controls:UC_IconButton x:Name="btnConnect" Style="{StaticResource TextIconButton}" 
+                                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.Connect}}"
+                                        IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Connect}}"                                                                                            
+                                        Background="Transparent" Click="btnConnect_Click" />
+                                    <controls:UC_IconButton x:Name="btnLog" Click="btnLog_Click" 
+                                        Style="{StaticResource TextIconButton}" Margin="10"
+                                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.LogText}}"
+                                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.LogIcon}}"/>
+                                    <controls:UC_IconButton x:Name="btnExit" Click="btnExit_Click" IconMargin="7"
+                                        Style="{StaticResource TextIconButton}"
+                                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.Exit}}"
+                                        IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Exit}}"/>
+                                </DockPanel>
+                            </StackPanel>
+                        </DockPanel>
+                    </StackPanel>
+                </DockPanel>
+            </Border>
+            <DockPanel HorizontalAlignment="Center" Visibility="Collapsed">
+                <controls:UC_IconButton x:Name="btnCopyLog" Click="btnCopyLog_Click" 
+                                    Style="{StaticResource TextIconButton}" Margin="5,8"
+                                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Copy}}"
+                                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Add}}"/>
+                <controls:UC_IconButton x:Name="btnClearLog" Click="btnClearLog_Click" 
+                                    Style="{StaticResource TextIconButton}" Margin="5,8"
+                                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Clear}}"
+                                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Delete}}"/>
+            </DockPanel>
+            <Border>
+                <ListBox x:Name="lbLog" Height="200" Visibility="Visible" 
+                         ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                         ScrollViewer.HorizontalScrollBarVisibility="Auto" MaxWidth="700" />
+            </Border>
+        </StackPanel>
+    </Grid>
+</Window>

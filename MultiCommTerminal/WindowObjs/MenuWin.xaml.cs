@@ -82,7 +82,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
                         this.runPageManager.Open(typeof(BTRun));
                         break;
                     case MenuCode.BLE:
-                        this.runPageManager.Open(typeof(BLERun));
+                        this.runPageManager.Open(typeof(BLE_Full));
                         break;
                     case MenuCode.CodeSamples:
                         Help_CommunicationMediums cm = new Help_CommunicationMediums(this.mainWindow);

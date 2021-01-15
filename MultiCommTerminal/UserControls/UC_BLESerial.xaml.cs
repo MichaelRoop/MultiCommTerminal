@@ -153,6 +153,9 @@ namespace MultiCommTerminal.NetCore.UserControls {
 
         private void btnConnect_Click(object sender, RoutedEventArgs e) {
             this.SetConnectState(false);
+            this.ClearResponses();
+            this.ClearBleToComputer();
+            this.ClearComputerToBle();
             this.ConnectCicked?.Invoke(this, new EventArgs());
         }
 
@@ -311,10 +314,6 @@ namespace MultiCommTerminal.NetCore.UserControls {
                     this.connectedOn.Collapse();
                     this.connectedOff.Show();
                 }
-
-                this.ClearResponses();
-                this.ClearBleToComputer();
-                this.ClearComputerToBle();
             });
         }
 
