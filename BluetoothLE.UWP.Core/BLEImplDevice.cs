@@ -11,7 +11,7 @@ namespace Bluetooth.UWP.Core {
         /// <summary>Update any previous information from discovery or other connections</summary>
         /// <param name="device">The BLE device returned</param>
         /// <param name="deviceDataModel">The portable data model to receive values</param>
-        public void UpdateDeviceOnConnect(BluetoothLEDevice device, BluetoothLEDeviceInfo deviceDataModel) {
+        public void UpdateDeviceInfo(BluetoothLEDevice device, BluetoothLEDeviceInfo deviceDataModel) {
             if (device.DeviceInformation != null) {
                 DeviceInformation di = device.DeviceInformation;
                 deviceDataModel.IsDefault = di.IsDefault;

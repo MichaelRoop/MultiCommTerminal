@@ -31,6 +31,13 @@ namespace Bluetooth.UWP.Core {
         }
 
 
+        public void Teardown() {
+            this.OSCharacteristic.ValueChanged -= this.OSCharacteristicReadValueChangedHandler;
+            this.DataModel.WriteRequestEvent -= this.onDataModelWriteRequestHandler;
+            this.DataModel.ReadRequestEvent -= this.onDataModelReadRequestHandler;
+        }
+
+
         #region Event handlers
 
         /// <summary>Handles read request from the user via the Characteristic Data Model</summary>

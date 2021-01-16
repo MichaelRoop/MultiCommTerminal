@@ -1,4 +1,5 @@
 ﻿using BluetoothLE.Net.DataModels;
+using BluetoothLE.Net.Enumerations;
 using BluetoothLE.Net.interfaces;
 using System;
 using System.Threading.Tasks;
@@ -7,6 +8,10 @@ namespace Bluetooth.UWP.Core {
 
 
     public partial class BluetoothLEImplWin32Core : IBLETInterface {
+
+
+        /// <summary>Raised on BLE connection attempt</summary>
+        public event EventHandler<BLEGetInfoStatus> DeviceConnectResult;
 
 
         private void AttachEvents() {
@@ -20,21 +25,8 @@ namespace Bluetooth.UWP.Core {
                 deviceInfo.Name, deviceInfo.Id));
 
             try {
-                BLEGetInfoStatus result = await this.GetBLEDeviceInfo(deviceInfo, true);
-                if (result.Status == BluetoothLE.Net.Enumerations.BLEOperationStatus.Success) {
-                    if (this.currentDevice == null) {
-                        // TODO raise failed
-                    }
-                    else {
-                        // We have a device connected
-                        this.log.Info("ConnectToDevice", () => string.Format("Device:{0} Connection status {1}",
-                            this.currentDevice.Name, this.currentDevice.ConnectionStatus.ToString()));
-                    }
-                }
-                else {
-                    // TODO raise failed
-                }
-
+                BLEGetInfoStatus result = await this.GetBLEDeviceInfo(deviceInfo);
+                this.DeviceConnectResult?.Invoke(this, result);
 
                 #region OLD
                 //// https://github.com/microsoft/Windows-universal-samples/blob/master/Samples/BluetoothLE/cs/Scenario2_Client.xaml.cs
@@ -123,27 +115,7 @@ namespace Bluetooth.UWP.Core {
             }
             catch (Exception e) {
                 this.log.Exception(9999, "BLE Connect Exception", e);
-            }
-
-            try {
-                if (this.currentDevice == null) {
-                    // report error
-                    this.log.Info("ConnectToDevice", () => string.Format("NULL device returned for {0}", deviceInfo.Id));
-                    return;
-                }
-                else {
-                    // Note: BluetoothLEDevice.GattServices property will return an empty list for unpaired devices. For all uses we recommend using the GetGattServicesAsync method.
-                    // BT_Code: GetGattServicesAsync returns a list of all the supported services of the device (even if it's not paired to the system).
-                    // If the services supported by the device are expected to change during BT usage, subscribe to the GattServicesChanged event.
-                    //GattDeviceServicesResult result =
-                    //    await this.currentDevice.GetGattServicesAsync(BluetoothCacheMode.Uncached);
-                    ////GattDeviceServicesResult result = await BluetoothLEDevice.FromIdAsync(this.currentDevice.DeviceId);
-                    //System.Diagnostics.Debug.WriteLine("Device Connected {0}", this.currentDevice.BluetoothAddress);
-                    this.log.Info("ConnectToDevice", () => string.Format("Device Connected {0}", this.currentDevice.BluetoothAddress));
-                }
-            }
-            catch(Exception ex) {
-                this.log.Exception(9999, "on main task", ex);
+                this.DeviceConnectResult?.Invoke(this, new BLEGetInfoStatus(BLEOperationStatus.UnknownError));
             }
 
         }

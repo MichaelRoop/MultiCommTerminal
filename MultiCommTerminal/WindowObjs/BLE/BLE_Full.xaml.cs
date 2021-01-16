@@ -104,11 +104,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             var device = BLESelect.ShowBox(this.parent, true);
             if (device != null) {
                 this.IsBusy = true;
-                DI.Wrapper.BLE_DeviceInfoGathered += this.DeviceInfoGatheredHandler;
-                DI.Wrapper.BLE_GetInfo(device);
-
-                // TODO using the existing get info. Need to fix connect
-                //DI.Wrapper.BLE_ConnectAsync(this.currentDevice);
+                DI.Wrapper.BLE_DeviceConnectResult += this.DeviceConnectResultHandler;
+                DI.Wrapper.BLE_ConnectAsync(device);
             }
         }
 
@@ -134,7 +131,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         private void RemoveEventHandlers() {
             DI.Wrapper.LanguageChanged -= this.languageChangedHandler;
             App.STATIC_APP.LogMsgEvent -= this.AppLogMsgEventHandler;
-            DI.Wrapper.BLE_DeviceInfoGathered -= this.DeviceInfoGatheredHandler;
+            DI.Wrapper.BLE_DeviceConnectResult -= this.DeviceConnectResultHandler;
         }
 
         private void languageChangedHandler(object sender, SupportedLanguage language) {
@@ -163,10 +160,10 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         }
 
 
-        private void DeviceInfoGatheredHandler(object sender, BLEGetInfoStatus info) {
+        private void DeviceConnectResultHandler(object sender, BLEGetInfoStatus info) {
             this.Dispatcher.Invoke(() => {
                 this.IsBusy = false;
-                DI.Wrapper.BLE_DeviceInfoGathered -= this.DeviceInfoGatheredHandler;
+                DI.Wrapper.BLE_DeviceConnectResult -= this.DeviceConnectResultHandler;
                 switch (info.Status) {
                     case BLEOperationStatus.Failed:
                     case BLEOperationStatus.UnhandledError:

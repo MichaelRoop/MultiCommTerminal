@@ -2,6 +2,7 @@
 using BluetoothLE.Net.interfaces;
 using LogUtils.Net;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Devices.Bluetooth;
@@ -19,6 +20,9 @@ namespace Bluetooth.UWP.Core {
         private DeviceWatcher devWatcher = null;
 
         private BluetoothLEDevice currentDevice = null;
+
+        private List<BLE_CharacteristicBinder> characteristicBinders = new List<BLE_CharacteristicBinder>();
+
         private ClassLog log = new ClassLog("BluetoothLEImplWin32");
 
         #endregion
@@ -45,12 +49,10 @@ namespace Bluetooth.UWP.Core {
 
         public void Disconnect() {
             if (this.currentDevice != null) {
-                // Apparently do not need this. Dispose will do it
-                //if (this.currentDevice.ConnectionStatus == BluetoothConnectionStatus.Connected) {
-                //    // Disconnect & wait for disconnection
-                //    //BluetoothLEDevice.
-                //}
-
+                foreach (var binder in this.characteristicBinders) {
+                    binder.Teardown();
+                }
+                this.characteristicBinders.Clear();
                 this.DisconnectBTLEDeviceEvents();
                 this.currentDevice.Dispose();
                 this.currentDevice = null;
@@ -75,6 +77,8 @@ namespace Bluetooth.UWP.Core {
         public void GetInfo(BluetoothLEDeviceInfo deviceDataModel) {
             Task.Run(async () => {
                 try {
+                    // Not using the get info anymore so make sure the device is nulled
+                    this.Disconnect();
                     await this.HarvestDeviceInfo(deviceDataModel);
                 }
                 catch (Exception e) {

@@ -31,7 +31,7 @@ namespace Bluetooth.UWP.Core {
         /// <param name="service">The OS GATT service object</param>
         /// <param name="deviceDataModel">The portable GATT session data model</param>
         /// <returns>The async task</returns>
-        public async Task BuildServiceDataModel(GattDeviceService service, BluetoothLEDeviceInfo deviceDataModel) {
+        public async Task BuildServiceDataModel(GattDeviceService service, BLEGetInfoStatus status) {
             this.log.Info("BuildServiceDataModel", () => string.Format("Gatt Service:{0}  Uid:{1}",
                BLE_DisplayHelpers.GetServiceName(service), service.Uuid.ToString()));
 
@@ -39,7 +39,7 @@ namespace Bluetooth.UWP.Core {
             BLE_ServiceDataModel serviceDataModel = new BLE_ServiceDataModel() {
                 Characteristics = new Dictionary<string, BLE_CharacteristicDataModel>(),
                 AttributeHandle = service.AttributeHandle,
-                DeviceId = deviceDataModel.Id,
+                DeviceId = status.DeviceInfo.Id,
                 DisplayName = BLE_DisplayHelpers.GetServiceName(service),
                 Uuid = service.Uuid,
                 SharingMode = (BLE_SharingMode)service.SharingMode,
@@ -77,7 +77,7 @@ namespace Bluetooth.UWP.Core {
             }
 
             // Add the service data model to the device info data model
-            deviceDataModel.Services.Add(serviceDataModel.Uuid.ToString(), serviceDataModel);
+            status.DeviceInfo.Services.Add(serviceDataModel.Uuid.ToString(), serviceDataModel);
         }
 
 

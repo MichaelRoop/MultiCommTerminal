@@ -292,6 +292,10 @@ namespace MultiCommWrapper.Net.interfaces {
         /// <summary>Raised when BLE info on a device is finished gathering</summary>
         event EventHandler<BLEGetInfoStatus> BLE_DeviceInfoGathered;
 
+        /// <summary>Raised on completion of a connection attempt</summary>
+        event EventHandler<BLEGetInfoStatus> BLE_DeviceConnectResult;
+
+
         void BLE_DiscoverAsync();
 
         void BLE_ConnectAsync(BluetoothLEDeviceInfo device);

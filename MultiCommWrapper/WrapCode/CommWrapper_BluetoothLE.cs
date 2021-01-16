@@ -32,6 +32,8 @@ namespace MultiCommWrapper.Net.WrapCode {
         /// <summary>Raised when BLE info on a device is finished gathering</summary>
         public event EventHandler<BLEGetInfoStatus> BLE_DeviceInfoGathered;
 
+        /// <summary>Raised on completion of a connection attempt</summary>
+        public event EventHandler<BLEGetInfoStatus> BLE_DeviceConnectResult;
 
         private void BLE_DeviceDiscoveredHandler(object sender, BluetoothLEDeviceInfo e) {
             if (this.BLE_DeviceDiscovered != null) {
@@ -204,6 +206,12 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
+        private void BleDeviceConnectResultHandler(object sender, BLEGetInfoStatus info) {
+            info.Message = this.Translate(info.Status);
+            this.BLE_DeviceConnectResult?.Invoke(this, info);
+        }
+
+
         private string Translate(BLEOperationStatus status) {
             switch (status) {
                 case BLEOperationStatus.Success:
@@ -239,6 +247,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.bleBluetooth.DeviceUpdated -= BLE_DeviceUpdatedHandler;
             this.bleBluetooth.DeviceDiscoveryCompleted -= this.BLE_DeviceDiscoveryCompleted;
             this.bleBluetooth.DeviceInfoAssembled -= this.BleDeviceInfoAssembledHandler;
+            this.bleBluetooth.DeviceConnectResult -= this.BleDeviceConnectResultHandler;
         }
 
         #endregion

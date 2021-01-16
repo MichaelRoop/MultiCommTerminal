@@ -17,7 +17,7 @@ namespace Bluetooth.UWP.Core {
                 deviceDataModel.Name, deviceDataModel.Id));
 
             try {
-                BLEGetInfoStatus result = await this.GetBLEDeviceInfo(deviceDataModel, false);
+                BLEGetInfoStatus result = await this.GetBLEDeviceInfo(deviceDataModel);
                 this.DeviceInfoAssembled?.Invoke(this, result);
             }
             catch (Exception e) {
@@ -108,109 +108,76 @@ namespace Bluetooth.UWP.Core {
         }
 
 
+        private async Task<BLEGetInfoStatus> GetBLEDeviceInfo(BluetoothLEDeviceInfo deviceDataModel) {
+            this.log.InfoEntry("GetBLEDeviceInfo");
+            BLEGetInfoStatus result = await this.GetDevice(deviceDataModel);
+            if (result.Status != BLEOperationStatus.Success) {
+                return result;
+            }
 
-        private async Task<BLEGetInfoStatus> GetBLEDeviceInfo(BluetoothLEDeviceInfo deviceDataModel, bool forConnection) {
-            this.log.Info("GetBLEDeviceInfo", () => string.Format("Attempting info from {0}: FromIdAsync({1})",
+            try {
+                deviceDataModel.Services.Clear();
+                GattDeviceServicesResult services = await this.currentDevice.GetGattServicesAsync(BluetoothCacheMode.Cached);
+                if (services.Status != GattCommunicationStatus.Success) {
+                    return this.BuildConnectFailure(BLEOperationStatus.GetServicesFailed, services.Status.ToString());
+                }
+
+                if (services.Services == null) {
+                    return this.BuildConnectFailure(BLEOperationStatus.GetServicesFailed, "Null Services");
+                }
+
+                if (services.Services.Count == 0) {
+                    return this.BuildConnectFailure(BLEOperationStatus.NoServices, "No services exposed");
+                }
+
+                result.Status = BLEOperationStatus.Success;
+                result.DeviceInfo = deviceDataModel;
+                foreach (GattDeviceService service in services.Services) {
+                    // TODO make sure status is set in functions
+                    await this.BuildServiceDataModel(service, result);
+                }
+
+                return result;
+            }
+            catch (Exception e) {
+                this.log.Exception(9999, "HarvestDeviceInfo", "Failure", e);
+                return this.BuildConnectFailure(BLEOperationStatus.GetServicesFailed, "Exception on getting services");
+            }
+        }
+
+
+        private async Task<BLEGetInfoStatus> GetDevice(BluetoothLEDeviceInfo deviceDataModel) {
+            this.log.Info("GetBLEDevice", () => string.Format("Attempting to get device for {0}: FromIdAsync({1})",
                 deviceDataModel.Name, deviceDataModel.Id));
-
-            BluetoothLEDevice device = null;
-            BLEGetInfoStatus result = new BLEGetInfoStatus() {
-                DeviceInfo = deviceDataModel,
-            };
-
             try {
                 // https://github.com/microsoft/Windows-universal-samples/blob/master/Samples/BluetoothLE/cs/Scenario2_Client.xaml.cs
                 this.log.Info("HarvestDeviceInfo", () => string.Format("--------------------------------------------------------------------"));
                 this.log.Info("HarvestDeviceInfo", () => string.Format(" Param Device Info ID {0}", deviceDataModel.Id));
-                device = await BluetoothLEDevice.FromIdAsync(deviceDataModel.Id);
+                this.currentDevice = await BluetoothLEDevice.FromIdAsync(deviceDataModel.Id);
                 deviceDataModel.InfoAttempted = true;
-                this.UpdateDeviceOnConnect(device, deviceDataModel);
-
-                // Clear services and get a new set for the passed in device info
-                deviceDataModel.Services.Clear();
-
-                try {
-                    // Attempts pair and causes catastropic failure if not supported
-                    // This will happen with Arduinos
-
-
-                    ////------------------------------------------------------------------------------
-                    //// This was a try in case OS though it had been paired and was requesting the key
-                    //GattDeviceServicesResult services = null;
-                    //try {
-                    //    services = await device.GetGattServicesAsync();
-                    //}
-                    //catch (Exception e) {
-                    //    this.log.Exception(8888, "", "On first services try", e);
-                    //    try {
-                    //        var r = await device.DeviceInformation.Pairing.UnpairAsync();
-                    //        services = await device.GetGattServicesAsync();
-                    //    }
-                    //    catch (Exception e2) {
-                    //        this.log.Exception(7777, "Unpair and getServices", e2);
-                    //    }
-                    //}
-                    //if (services == null) {
-                    //    return result;
-                    //}
-                    ////------------------------------------------------------------------------------
-
-                    GattDeviceServicesResult services = await device.GetGattServicesAsync(BluetoothCacheMode.Cached);
-                    if (services.Status == GattCommunicationStatus.Success) {
-                        if (services.Services != null) {
-                            if (services.Services.Count > 0) {
-                                foreach (GattDeviceService service in services.Services) {
-                                    await this.BuildServiceDataModel(service, deviceDataModel);
-                                }
-                                result.Status = BLEOperationStatus.Success;
-                            }
-                            else {
-                                result.Status = BLEOperationStatus.NoServices;
-                                this.log.Info("HarvestDeviceInfo", "No services exposed");
-                            }
-                        }
-                        else {
-                            this.log.Error(9999, "Null services");
-                            result.Status = BLEOperationStatus.GetServicesFailed;
-                        }
-                    }
-                    else {
-                        this.log.Error(9999, "HarvestDeviceInfo", () => string.Format("    Get Services Failed {0}", services.Status.ToString()));
-                        result.Status = BLEOperationStatus.GetServicesFailed;
-                    }
-                }
-                catch (Exception e) {
-                    result.Status = BLEOperationStatus.GetServicesFailed;
-                    this.log.Exception(9999, "HarvestDeviceInfo", "Failure", e);
-                }
+                this.UpdateDeviceInfo(this.currentDevice, deviceDataModel);
+                return new BLEGetInfoStatus(BLEOperationStatus.Success);
             }
             catch (Exception e) {
                 this.log.Exception(9999, "On harvest device info", e);
-                // TODO - raise event with null device
-                result.Status = BLEOperationStatus.UnhandledError;
+                return this.BuildConnectFailure(BLEOperationStatus.UnhandledError, "Exception connecting to device");
             }
-            finally {
-                try {
-                    if (!forConnection && device != null) {
-                        device.Dispose();
-                        device = null;
-                    }
-                    else {
-                        if (result.Status == BLEOperationStatus.Success) {
-                            this.currentDevice = device;
-                        }
-                    }
-                }
-                catch (Exception ex) {
-                    this.log.Exception(9999, "On fail to disconnect harvesting device data", ex);
-                }
-            }
-
-            return result;
         }
 
 
+        private BLEGetInfoStatus BuildConnectFailure(BLEOperationStatus status, string logMsg) {
+            this.log.Error(9999, "BuildConnectFailure", () => string.Format("{0} {1}", logMsg, status.ToString()));
+            this.DisposeDevice();
+            return new BLEGetInfoStatus(status);
+        }
 
+
+        private void DisposeDevice() {
+            if (this.currentDevice != null) {
+                this.currentDevice.Dispose();
+                this.currentDevice = null;
+            }
+        }
 
 
     }

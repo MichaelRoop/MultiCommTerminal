@@ -100,6 +100,7 @@ namespace MultiCommWrapper.Net.WrapCode {
                     this._bleBluetooth.DeviceUpdated += BLE_DeviceUpdatedHandler;
                     this._bleBluetooth.DeviceDiscoveryCompleted += this.BLE_DeviceDiscoveryCompleted;
                     this._bleBluetooth.DeviceInfoAssembled += this.BleDeviceInfoAssembledHandler;
+                    this.bleBluetooth.DeviceConnectResult += this.BleDeviceConnectResultHandler;
                 }
                 return this._bleBluetooth;
             }
