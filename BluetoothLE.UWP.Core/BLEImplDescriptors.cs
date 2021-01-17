@@ -14,7 +14,7 @@ namespace Bluetooth.UWP.Core {
 
         private async Task BuildDescriptors(GattCharacteristic ch, BLE_CharacteristicDataModel dataModel) {
             this.log.InfoEntry("BuildDescriptors");
-            dataModel.Descriptors = new Dictionary<string, BLE_DescriptorDataModel>();
+            dataModel.Descriptors = new List<BLE_DescriptorDataModel>();
             GattDescriptorsResult descriptors = await ch.GetDescriptorsAsync();
             if (descriptors.Status == GattCommunicationStatus.Success) {
                 if (descriptors.Descriptors.Count > 0) {
@@ -29,7 +29,7 @@ namespace Bluetooth.UWP.Core {
                                 DisplayName = BLE_ParseHelpers.GetDescriptorValueAsString(desc.Uuid, r.Value.FromBufferToBytes())
                             };
 
-                            dataModel.Descriptors.Add(descDataModel.Uuid.ToString(), descDataModel);
+                            dataModel.Descriptors.Add(descDataModel);
                             this.log.Info("ConnectToDevice", () => string.Format("        Descriptor:{0}  Uid:{1} Value:{2}",
                                 BLE_DisplayHelpers.GetDescriptorName(desc), desc.Uuid.ToString(), descDataModel.DisplayName));
                         };

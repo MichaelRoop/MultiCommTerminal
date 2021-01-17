@@ -28,26 +28,26 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
             // ---------------------------------------------
             BLE_ServiceDataModel service1 = new BLE_ServiceDataModel();
             service1.DisplayName = "Hogwarts 1 service";
-            service1.Characteristics.Add("1", new BLE_CharacteristicDataModel());
-            service1.Characteristics["1"].CharName = "George Characteristic";
-            service1.Characteristics["1"].Descriptors.Add("1", new BLE_DescriptorDataModel());
-            service1.Characteristics["1"].Descriptors["1"].DisplayName = "Output descriptor";
-            service1.Characteristics.Add("2", new BLE_CharacteristicDataModel());
-            service1.Characteristics["2"].CharName = "Fred Characteristic";
-            service1.Characteristics["2"].Descriptors.Add("1", new BLE_DescriptorDataModel());
-            service1.Characteristics["2"].Descriptors["1"].DisplayName = "Input descriptor";
-            service1.Characteristics["2"].Descriptors.Add("2", new BLE_DescriptorDataModel());
-            service1.Characteristics["2"].Descriptors["2"].DisplayName = "Name of stuff";
+            service1.Characteristics.Add(new BLE_CharacteristicDataModel());
+            service1.Characteristics[0].CharName = "George Characteristic";
+            service1.Characteristics[0].Descriptors.Add(new BLE_DescriptorDataModel());
+            service1.Characteristics[0].Descriptors[0].DisplayName = "Output descriptor";
+            service1.Characteristics.Add(new BLE_CharacteristicDataModel());
+            service1.Characteristics[1].CharName = "Fred Characteristic";
+            service1.Characteristics[1].Descriptors.Add(new BLE_DescriptorDataModel());
+            service1.Characteristics[1].Descriptors[0].DisplayName = "Input descriptor";
+            service1.Characteristics[1].Descriptors.Add(new BLE_DescriptorDataModel());
+            service1.Characteristics[1].Descriptors[1].DisplayName = "Name of stuff";
             this.treeDict.Add("1", service1);
             // ---------------------------------------------
 
             // ---------------------------------------------
             BLE_ServiceDataModel service2 = new BLE_ServiceDataModel();
             service2.DisplayName = "Hogwarts 2 service";
-            service2.Characteristics.Add("1", new BLE_CharacteristicDataModel());
-            service2.Characteristics["1"].CharName = "Hermioni characteristic";
-            service2.Characteristics.Add("2", new BLE_CharacteristicDataModel());
-            service2.Characteristics["2"].CharName = "Ginny characteristic";
+            service2.Characteristics.Add(new BLE_CharacteristicDataModel());
+            service2.Characteristics[0].CharName = "Hermioni characteristic";
+            service2.Characteristics.Add(new BLE_CharacteristicDataModel());
+            service2.Characteristics[1].CharName = "Ginny characteristic";
             this.treeDict.Add("2", service2);
 
             // Just pass list of Values to avoid headach in XAML    
@@ -72,7 +72,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
             this.info = info;
             // TODO - check if any previous selections
-            this.treeServices.ItemsSource = this.info.Services.Values;
+            this.treeServices.ItemsSource = this.info.Services;
         }
 
 

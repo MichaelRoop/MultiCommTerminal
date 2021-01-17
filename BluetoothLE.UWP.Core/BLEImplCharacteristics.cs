@@ -34,7 +34,7 @@ namespace Bluetooth.UWP.Core {
                 // Associate the UWP and data model characteristic for 2 way events to set and get
                 this.characteristicBinders.Add(new BLE_CharacteristicBinder(ch, characteristic));
 
-                service.Characteristics.Add(characteristic.Uuid.ToString(), characteristic);
+                service.Characteristics.Add(characteristic);
 
                 // This also sends and receives dummy data to Arduino
                 //await this.DumpCharacteristic(ch);

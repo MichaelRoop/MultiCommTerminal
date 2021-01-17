@@ -22,7 +22,7 @@
 
         <HierarchicalDataTemplate
                 DataType="{x:Type dataModels:BLE_ServiceDataModel}" 
-                ItemsSource="{Binding Characteristics.Values}" >
+                ItemsSource="{Binding Characteristics}" >
             <!-- This data in the service -->
             <DockPanel>
                 <TextBlock Text="service: "/>
@@ -32,7 +32,7 @@
         
         <HierarchicalDataTemplate
                 DataType="{x:Type dataModels:BLE_CharacteristicDataModel}"
-                ItemsSource="{Binding Path=Descriptors.Values}" >
+                ItemsSource="{Binding Path=Descriptors}" >
             <!-- This is data in the characteristic -->
             <StackPanel>
                 <DockPanel>

@@ -37,7 +37,7 @@ namespace Bluetooth.UWP.Core {
 
             // New service data model to add to device info
             BLE_ServiceDataModel serviceDataModel = new BLE_ServiceDataModel() {
-                Characteristics = new Dictionary<string, BLE_CharacteristicDataModel>(),
+                Characteristics = new List<BLE_CharacteristicDataModel>(),
                 AttributeHandle = service.AttributeHandle,
                 DeviceId = status.DeviceInfo.Id,
                 DisplayName = BLE_DisplayHelpers.GetServiceName(service),
@@ -77,7 +77,7 @@ namespace Bluetooth.UWP.Core {
             }
 
             // Add the service data model to the device info data model
-            status.DeviceInfo.Services.Add(serviceDataModel.Uuid.ToString(), serviceDataModel);
+            status.DeviceInfo.Services.Add(serviceDataModel);
         }
 
 

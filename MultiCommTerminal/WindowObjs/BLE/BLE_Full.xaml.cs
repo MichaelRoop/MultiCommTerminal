@@ -177,7 +177,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                         this.SetConnectState(true);
                         this.currentDevice = info.DeviceInfo;
                         this.Title = string.Format("(BLE) {0}", this.currentDevice.Name);
-                        this.treeServices.ItemsSource = this.currentDevice.Services.Values;
+                        this.treeServices.ItemsSource = this.currentDevice.Services;
                         break;
                 }
             });
