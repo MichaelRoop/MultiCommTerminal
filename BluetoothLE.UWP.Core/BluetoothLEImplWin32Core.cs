@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Devices.Bluetooth;
+using Windows.Devices.Bluetooth.GenericAttributeProfile;
 using Windows.Devices.Enumeration;
 
 namespace Bluetooth.UWP.Core {
@@ -20,6 +21,7 @@ namespace Bluetooth.UWP.Core {
         private DeviceWatcher devWatcher = null;
 
         private BluetoothLEDevice currentDevice = null;
+        private List<GattDeviceService> currentServices = new List<GattDeviceService>();
 
         private List<BLE_CharacteristicBinder> characteristicBinders = new List<BLE_CharacteristicBinder>();
 
@@ -48,15 +50,7 @@ namespace Bluetooth.UWP.Core {
 
 
         public void Disconnect() {
-            if (this.currentDevice != null) {
-                foreach (var binder in this.characteristicBinders) {
-                    binder.Teardown();
-                }
-                this.characteristicBinders.Clear();
-                this.DisconnectBTLEDeviceEvents();
-                this.currentDevice.Dispose();
-                this.currentDevice = null;
-            }
+            this.DoDisconnect();
         }
 
 

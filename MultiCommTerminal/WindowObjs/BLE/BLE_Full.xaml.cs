@@ -79,6 +79,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             this.RemoveEventHandlers();
             this.buttonSizer.Teardown();
+            DI.Wrapper.BLE_Disconnect();
             Instances--;
         }
 

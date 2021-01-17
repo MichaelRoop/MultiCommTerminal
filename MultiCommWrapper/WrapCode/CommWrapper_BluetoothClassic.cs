@@ -101,7 +101,6 @@ namespace MultiCommWrapper.Net.WrapCode {
         #endregion
 
         public void BTClassicDiscoverAsync(bool paired) {
-            this.DisconnectAll();
             this.classicBluetooth.DiscoverDevicesAsync(paired);
         }
 

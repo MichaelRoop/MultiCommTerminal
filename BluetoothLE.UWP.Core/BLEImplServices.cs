@@ -48,6 +48,7 @@ namespace Bluetooth.UWP.Core {
             if (service.DeviceAccessInformation != null) {
                 serviceDataModel.DeviceAccess = (BLE_DeviceAccessStatus)service.DeviceAccessInformation.CurrentStatus;
             }
+            this.currentServices.Add(service);
             this.BuildSessionDataModel(service.Session, serviceDataModel.Session);
 
             // TODO
