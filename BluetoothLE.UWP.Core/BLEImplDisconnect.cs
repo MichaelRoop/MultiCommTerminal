@@ -24,6 +24,16 @@ namespace Bluetooth.UWP.Core {
         }
 
 
+        /// <summary>Disconnect the BLE Device events</summary>
+        private void DisconnectBTLEDeviceEvents() {
+            if (this.currentDevice != null) {
+                this.currentDevice.ConnectionStatusChanged -= this.CurrentDevice_ConnectionStatusChanged;
+                this.currentDevice.GattServicesChanged -= this.CurrentDevice_GattServicesChanged;
+                this.currentDevice.NameChanged -= this.CurrentDevice_NameChanged;
+            }
+        }
+
+
         /// <summary>Dispose the services manualy since the device dispose does not do it</summary>
         private void DisposeServices() {
             try {

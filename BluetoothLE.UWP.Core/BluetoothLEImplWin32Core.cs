@@ -1,4 +1,5 @@
 ﻿using BluetoothLE.Net.DataModels;
+using BluetoothLE.Net.Enumerations;
 using BluetoothLE.Net.interfaces;
 using LogUtils.Net;
 using System;
@@ -60,10 +61,11 @@ namespace Bluetooth.UWP.Core {
             this.Disconnect();
             Task.Run(async () => {
                 try {
-                    await this.ConnectToDevice(deviceInfo);
+                    await this.ConnectToDeviceAsync(deviceInfo);
                 }
                 catch (Exception e) {
                     this.log.Exception(9999, "On Task Run ConnectToDevice", e);
+                    this.RaiseConnectAttemptResult(BLEOperationStatus.Failed);
                 }
             });
         }
@@ -84,23 +86,6 @@ namespace Bluetooth.UWP.Core {
         #endregion
 
         #region Connection to device code
-
-        private void ConnectBTLEDeviceEvents() {
-            if (this.currentDevice != null) {
-                this.currentDevice.ConnectionStatusChanged += this.CurrentDevice_ConnectionStatusChanged;
-                this.currentDevice.GattServicesChanged += this.CurrentDevice_GattServicesChanged;
-                this.currentDevice.NameChanged += this.CurrentDevice_NameChanged;
-            }
-        }
-
-
-        private void DisconnectBTLEDeviceEvents() {
-            if (this.currentDevice != null) {
-                this.currentDevice.ConnectionStatusChanged -= this.CurrentDevice_ConnectionStatusChanged;
-                this.currentDevice.GattServicesChanged -= this.CurrentDevice_GattServicesChanged;
-                this.currentDevice.NameChanged -= this.CurrentDevice_NameChanged;
-            }
-        }
 
 
 
