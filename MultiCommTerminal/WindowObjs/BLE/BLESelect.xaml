@@ -14,16 +14,6 @@
         Loaded="Window_Loaded" Closing="Window_Closing"
         MinHeight="100" MinWidth="200" MaxHeight="800" MaxWidth="900" BorderThickness=".5">
     <Grid>
-        <Grid x:Name="gridWait" Panel.ZIndex="10000" Visibility="Collapsed"
-            HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  >
-            <Grid.Background>
-                <!--  Prevent any control from getting input during spinner visibility -->
-                <SolidColorBrush Color="AntiqueWhite" Opacity=".1"/>
-            </Grid.Background>
-            <!--Image spinner no longer showing-->
-            <!--<controls:UC_BusyImageSpinner />-->
-            <controls:UC_BusySpinner />
-        </Grid>
         <StackPanel Margin="10,10">
             <ListBox x:Name="listBox_BLE" BorderThickness=".5" FontSize="16"
                      MinHeight="200" MinWidth="200" MaxHeight="300" 
@@ -41,11 +31,18 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <DockPanel HorizontalAlignment="Center" Margin="10">
-                <controls:UC_IconButton x:Name="btnCancel" Style="{StaticResource TextIconButton}"
-                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Cancel}}" Margin="0,2.5"
-                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}"                                                                                            
-                    Background="Transparent" Click="btnCancel_Click" />
+            <DockPanel HorizontalAlignment="Center" Margin="10,0,0,0">
+                <DockPanel HorizontalAlignment="Center">
+                    <Viewbox MaxWidth="40" MaxHeight="40">
+                        <Grid x:Name="gridWait" Panel.ZIndex="10000" Visibility="Collapsed">
+                            <controls:UC_BusySpinner Margin="0,5,0,0" />
+                        </Grid>
+                    </Viewbox>
+                    <controls:UC_IconButton x:Name="btnCancel" Style="{StaticResource TextIconButton}"
+                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.Cancel}}" Margin="8"
+                        IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}"                                                                                            
+                        Background="Transparent" Click="btnCancel_Click" />
+                </DockPanel>
             </DockPanel>
         </StackPanel>
     </Grid>

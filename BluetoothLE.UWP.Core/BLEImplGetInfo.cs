@@ -167,16 +167,8 @@ namespace Bluetooth.UWP.Core {
 
         private BLEGetInfoStatus BuildConnectFailure(BLEOperationStatus status, string logMsg) {
             this.log.Error(9999, "BuildConnectFailure", () => string.Format("{0} {1}", logMsg, status.ToString()));
-            this.DisposeDevice();
+            this.DoDisconnect();
             return new BLEGetInfoStatus(status);
-        }
-
-
-        private void DisposeDevice() {
-            if (this.currentDevice != null) {
-                this.currentDevice.Dispose();
-                this.currentDevice = null;
-            }
         }
 
 

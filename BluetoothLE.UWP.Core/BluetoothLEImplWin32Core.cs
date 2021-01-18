@@ -50,6 +50,11 @@ namespace Bluetooth.UWP.Core {
         }
 
 
+        public void CancelDiscoverDevices() {
+            this.TearDownWatcher();
+        }
+
+
         public void Disconnect() {
             this.DoDisconnect();
         }

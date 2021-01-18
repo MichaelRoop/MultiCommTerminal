@@ -57,13 +57,18 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             DI.Wrapper.BLE_DeviceRemoved += this.deviceRemoved;
             DI.Wrapper.BLE_DeviceUpdated += this.deviceUpdated;
             DI.Wrapper.BLE_DeviceDiscoveryComplete += this.deviceDiscoveryComplete;
+            this.listBox_BLE.SelectionChanged += this.selectionChanged;
             this.gridWait.Show();
-            // TODO - modify to look for paired or unpaired
             DI.Wrapper.BLE_DiscoverAsync();
         }
 
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+            this.DisconnectEvents();
+        }
+
+
+        private void DisconnectEvents() {
             DI.Wrapper.BLE_DeviceDiscovered -= this.deviceDiscovered;
             DI.Wrapper.BLE_DeviceRemoved -= this.deviceRemoved;
             DI.Wrapper.BLE_DeviceUpdated -= this.deviceUpdated;
@@ -72,17 +77,22 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         }
 
 
-
         private void btnCancel_Click(object sender, RoutedEventArgs e) {
+            this.DisconnectEvents();
+            DI.Wrapper.BLE_CancelDiscover();
             this.Close();
         }
 
 
         private void selectionChanged(object sender, SelectionChangedEventArgs e) {
             BluetoothLEDeviceInfo device = this.listBox_BLE.SelectedItem as BluetoothLEDeviceInfo;
-            if (device != null) {
-                this.SelectedBLE = device;
-                this.Close();
+            lock (this.listBox_BLE) {
+                if (device != null) {
+                    this.SelectedBLE = device;
+                    this.DisconnectEvents();
+                    DI.Wrapper.BLE_CancelDiscover();
+                    this.Close();
+                }
             }
         }
 
@@ -111,11 +121,9 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.Dispatcher.Invoke(() => {
                 this.gridWait.Collapse();
                 if (this.devices.Count == 0) {
+                    this.DisconnectEvents();
                     App.ShowMsgTitle("", DI.Wrapper.GetText(MsgCode.NotFound));
                     this.Close();
-                }
-                else {
-                    this.listBox_BLE.SelectionChanged += this.selectionChanged;
                 }
             });
         }

@@ -298,6 +298,9 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void BLE_DiscoverAsync();
 
+        /// <summary>Cancel any discovery in progress</summary>
+        void BLE_CancelDiscover();
+
         void BLE_ConnectAsync(BluetoothLEDeviceInfo device);
 
         /// <summary>Get complete info populated in device</summary>

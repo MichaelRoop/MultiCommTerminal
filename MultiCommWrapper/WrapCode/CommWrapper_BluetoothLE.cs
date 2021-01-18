@@ -73,6 +73,12 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.bleBluetooth.DiscoverDevices();
         }
 
+
+        public void BLE_CancelDiscover() {
+            this.bleBluetooth.CancelDiscoverDevices();
+        }
+
+
         public void BLE_ConnectAsync(BluetoothLEDeviceInfo device) {
             this.bleBluetooth.Connect(device);
         }
