@@ -10,7 +10,7 @@ namespace Bluetooth.UWP.Core {
         /// <summary>Execute the disconnection routines</summary>
         private void DoDisconnect() {
             if (this.currentDevice != null) {
-                this.TeardownBinders();
+                this.binderSet.ClearAll();
                 this.DisconnectBTLEDeviceEvents();
                 this.DisposeServices();
                 try {
@@ -31,6 +31,7 @@ namespace Bluetooth.UWP.Core {
                 this.currentDevice.GattServicesChanged -= this.CurrentDevice_GattServicesChanged;
                 this.currentDevice.NameChanged -= this.CurrentDevice_NameChanged;
             }
+            this.binderSet.ReadValueChanged += BinderSet_ReadValueChanged;
         }
 
 
@@ -51,27 +52,6 @@ namespace Bluetooth.UWP.Core {
             }
             finally {
                 WrapErr.SafeAction(this.currentServices.Clear);
-            }
-        }
-
-
-        /// <summary>Remove the event chain from OS-DataModel characteristics</summary>
-        private void TeardownBinders() {
-            try {
-                foreach (var binder in this.characteristicBinders) {
-                    try {
-                        binder.Teardown();
-                    }
-                    catch(Exception e) {
-                        this.log.Exception(9998, "TeardownBinders", "", e);
-                    }
-                }
-            }
-            catch (Exception e) {
-                this.log.Exception(9999, "TeardownBinders", "", e);
-            }
-            finally {
-                WrapErr.SafeAction(this.characteristicBinders.Clear);
             }
         }
 

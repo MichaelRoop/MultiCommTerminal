@@ -14,8 +14,7 @@ namespace Bluetooth.UWP.Core {
     public class BLE_CharacteristicBinder {
 
         private const int BLE_BLOCK_SIZE = 20;
-        private ClassLog log = new ClassLog("");
-
+        private ClassLog log = new ClassLog("BLE_CharacteristicBinder");
 
         public GattCharacteristic OSCharacteristic { get; set; }
         public BLE_CharacteristicDataModel DataModel { get; set; }
@@ -24,7 +23,7 @@ namespace Bluetooth.UWP.Core {
         public BLE_CharacteristicBinder(GattCharacteristic osCharacteristic, BLE_CharacteristicDataModel dataModel) {
             this.OSCharacteristic = osCharacteristic;
             this.DataModel = dataModel;
-            
+            this.log.InfoEntry("BLE_CharacteristicBinder");
             this.OSCharacteristic.ValueChanged += this.OSCharacteristicReadValueChangedHandler;
             this.DataModel.WriteRequestEvent += this.onDataModelWriteRequestHandler;
             this.DataModel.ReadRequestEvent += this.onDataModelReadRequestHandler;
@@ -32,6 +31,7 @@ namespace Bluetooth.UWP.Core {
 
 
         public void Teardown() {
+            this.log.InfoEntry("Teardown");
             this.OSCharacteristic.ValueChanged -= this.OSCharacteristicReadValueChangedHandler;
             this.DataModel.WriteRequestEvent -= this.onDataModelWriteRequestHandler;
             this.DataModel.ReadRequestEvent -= this.onDataModelReadRequestHandler;
@@ -48,6 +48,7 @@ namespace Bluetooth.UWP.Core {
                 try {
                     GattReadResult result = await this.OSCharacteristic.ReadValueAsync();
                     if (this.ParseGattStatue(result.Status)) {
+                        this.log.InfoEntry("onDataModelReadRequestHandler");
                         this.DataModel.PushReadDataEvent(result.Value.FromBufferToBytes());
                     }
                 }
@@ -89,6 +90,7 @@ namespace Bluetooth.UWP.Core {
         /// <param name="args">The event args with the data buffer and timestamp</param>
         private void OSCharacteristicReadValueChangedHandler(
             GattCharacteristic sender, GattValueChangedEventArgs args) {
+            this.log.InfoEntry("OSCharacteristicReadValueChangedHandler");
             Task.Run(() => {
                 try {
                     this.DataModel.PushReadDataEvent(

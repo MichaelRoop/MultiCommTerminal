@@ -1,5 +1,6 @@
 ﻿using BluetoothCommon.Net;
 using BluetoothLE.Net.DataModels;
+using BluetoothLE.Net.Enumerations;
 using Common.Net.Network;
 using CommunicationStack.Net.DataModels;
 using CommunicationStack.Net.Stacks;
@@ -295,6 +296,8 @@ namespace MultiCommWrapper.Net.interfaces {
         /// <summary>Raised on completion of a connection attempt</summary>
         event EventHandler<BLEGetInfoStatus> BLE_DeviceConnectResult;
 
+        /// <summary>Raised when BLE info on a device is finished gathering</summary>
+        event EventHandler<BLE_CharacteristicReadResult> BLE_CharacteristicReadValueChanged;
 
         void BLE_DiscoverAsync();
 

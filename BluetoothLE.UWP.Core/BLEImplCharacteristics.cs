@@ -32,7 +32,7 @@ namespace Bluetooth.UWP.Core {
                 await this.BuildDescriptors(ch, characteristic);
 
                 // Associate the UWP and data model characteristic for 2 way events to set and get
-                this.characteristicBinders.Add(new BLE_CharacteristicBinder(ch, characteristic));
+                this.binderSet.Add(new BLE_CharacteristicBinder(ch, characteristic));
 
                 service.Characteristics.Add(characteristic);
 

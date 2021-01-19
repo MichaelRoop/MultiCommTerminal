@@ -125,14 +125,29 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         private void AddEventHandlers() {
             DI.Wrapper.LanguageChanged += this.languageChangedHandler;
+            DI.Wrapper.BLE_CharacteristicReadValueChanged += this.characteristicReadValueChanged;
             App.STATIC_APP.LogMsgEvent += this.AppLogMsgEventHandler;
         }
 
+        private void characteristicReadValueChanged(object sender, BLE_CharacteristicReadResult e) {
+            this.Dispatcher.Invoke(() => {
+                try {
+                    this.log.InfoEntry("characteristicReadValueChanged");
+                    this.treeServices.Items.Refresh();
+                    this.ExpandTree();
+                }
+                catch (Exception e) {
+                    this.log.Exception(9999, "characteristicReadValueChanged", "", e);
+                }
+            });
+
+        }
 
         private void RemoveEventHandlers() {
             DI.Wrapper.LanguageChanged -= this.languageChangedHandler;
             App.STATIC_APP.LogMsgEvent -= this.AppLogMsgEventHandler;
             DI.Wrapper.BLE_DeviceConnectResult -= this.DeviceConnectResultHandler;
+            DI.Wrapper.BLE_CharacteristicReadValueChanged -= this.characteristicReadValueChanged;
         }
 
         private void languageChangedHandler(object sender, SupportedLanguage language) {

@@ -11,6 +11,9 @@ namespace Bluetooth.UWP.Core {
         /// <summary>Raised on BLE connection attempt</summary>
         public event EventHandler<BLEGetInfoStatus> DeviceConnectResult;
 
+        /// <summary>Raised when BLE info on a device is finished gathering</summary>
+        public event EventHandler<BLE_CharacteristicReadResult> CharacteristicReadValueChanged;
+
 
         private async Task ConnectToDeviceAsync(BluetoothLEDeviceInfo deviceInfo) {
             try {
@@ -33,8 +36,23 @@ namespace Bluetooth.UWP.Core {
                 this.currentDevice.GattServicesChanged += this.CurrentDevice_GattServicesChanged;
                 this.currentDevice.NameChanged += this.CurrentDevice_NameChanged;
             }
+            if (status == BLEOperationStatus.Success) {
+                this.binderSet.ReadValueChanged += BinderSet_ReadValueChanged;
+            }
         }
 
+
+        private void BinderSet_ReadValueChanged(object sender, BLE_CharacteristicReadResult e) {
+            Task.Run(() => {
+                try {
+                    this.log.InfoEntry("BinderSet_ReadValueChanged");
+                    this.CharacteristicReadValueChanged?.Invoke(sender, e);
+                }
+                catch (Exception e) {
+                    this.log.Exception(9999, "RaiseConnectAttemptResult", "", e);
+                }
+            });
+        }
 
         private void RaiseConnectAttemptResult(BLEGetInfoStatus status) {
             Task.Run(() => {

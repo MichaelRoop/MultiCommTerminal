@@ -24,7 +24,8 @@ namespace Bluetooth.UWP.Core {
         private BluetoothLEDevice currentDevice = null;
         private List<GattDeviceService> currentServices = new List<GattDeviceService>();
 
-        private List<BLE_CharacteristicBinder> characteristicBinders = new List<BLE_CharacteristicBinder>();
+        private BLE_CharcteristicsBinderSet binderSet = new BLE_CharcteristicsBinderSet();
+
 
         private ClassLog log = new ClassLog("BluetoothLEImplWin32");
 

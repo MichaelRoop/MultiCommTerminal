@@ -35,6 +35,10 @@ namespace MultiCommWrapper.Net.WrapCode {
         /// <summary>Raised on completion of a connection attempt</summary>
         public event EventHandler<BLEGetInfoStatus> BLE_DeviceConnectResult;
 
+        /// <summary>Raised when BLE info on a device is finished gathering</summary>
+        public event EventHandler<BLE_CharacteristicReadResult> BLE_CharacteristicReadValueChanged;
+
+
         private void BLE_DeviceDiscoveredHandler(object sender, BluetoothLEDeviceInfo e) {
             if (this.BLE_DeviceDiscovered != null) {
                 this.BLE_DeviceDiscovered(this, e);
@@ -64,6 +68,13 @@ namespace MultiCommWrapper.Net.WrapCode {
         private void BleStack_MsgReceived(object sender, byte[] e) {
             throw new NotImplementedException();
         }
+
+
+        private void BLE_CharacteristicReadValueChangeHandler(object sender, BLE_CharacteristicReadResult args) {
+            this.log.InfoEntry("BLE_CharacteristicReadValueChangeHandler");
+            this.BLE_CharacteristicReadValueChanged?.Invoke(sender, args);
+        }
+
 
         #endregion
 
@@ -253,6 +264,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.bleBluetooth.DeviceDiscoveryCompleted -= this.BLE_DeviceDiscoveryCompleted;
             this.bleBluetooth.DeviceInfoAssembled -= this.BleDeviceInfoAssembledHandler;
             this.bleBluetooth.DeviceConnectResult -= this.BleDeviceConnectResultHandler;
+            this.bleBluetooth.CharacteristicReadValueChanged -= this.BLE_CharacteristicReadValueChangeHandler;
         }
 
         #endregion
