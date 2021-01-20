@@ -3,7 +3,6 @@ using BluetoothLE.Net.Enumerations;
 using LanguageFactory.Net.data;
 using LanguageFactory.Net.Messaging;
 using LogUtils.Net;
-using MultiCommData.Net.Enumerations;
 using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using System;
@@ -132,7 +131,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         private void characteristicReadValueChanged(object sender, BLE_CharacteristicReadResult e) {
             this.Dispatcher.Invoke(() => {
                 try {
-                    this.log.InfoEntry("characteristicReadValueChanged");
                     this.treeServices.Items.Refresh();
                     this.ExpandTree();
                 }

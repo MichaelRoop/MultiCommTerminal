@@ -71,7 +71,6 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         private void BLE_CharacteristicReadValueChangeHandler(object sender, BLE_CharacteristicReadResult args) {
-            this.log.InfoEntry("BLE_CharacteristicReadValueChangeHandler");
             this.BLE_CharacteristicReadValueChanged?.Invoke(sender, args);
         }
 

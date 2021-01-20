@@ -24,15 +24,17 @@ namespace Bluetooth.UWP.Core {
                 characteristic.AttributeHandle = ch.AttributeHandle;
                 characteristic.Service = service;
                 characteristic.CharName = BLE_DisplayHelpers.GetCharacteristicName(ch);
+                characteristic.CharValue = await this.ReadValue(ch);
+                // Must put this before the properties for indicate or Notify to work
+                bool subscribe = await this.EnableNotifyIndicate(ch);
                 characteristic.PropertiesFlags = ch.CharacteristicProperties.ToUInt().ToEnum<CharacteristicProperties>();
                 characteristic.ProtectionLevel = (BLE_ProtectionLevel)ch.ProtectionLevel;
                 characteristic.PresentationFormats = this.BuildPresentationFormats(ch);
-                characteristic.CharValue = await this.ReadValue(ch);
 
                 await this.BuildDescriptors(ch, characteristic);
 
                 // Associate the UWP and data model characteristic for 2 way events to set and get
-                this.binderSet.Add(new BLE_CharacteristicBinder(ch, characteristic));
+                this.binderSet.Add(new BLE_CharacteristicBinder(ch, characteristic, subscribe));
 
                 service.Characteristics.Add(characteristic);
 
@@ -43,6 +45,38 @@ namespace Bluetooth.UWP.Core {
             catch (Exception e) {
                 this.log.Exception(9999, "Failed during build of characteristic", e);
             }
+        }
+
+
+        /// <summary>Write to characteristic to activate the Notify or Indicate</summary>
+        /// <param name="ch">The UWP characteristic</param>
+        /// <returns>true if subscribed, otherwise false</returns>
+        private async Task<bool> EnableNotifyIndicate(GattCharacteristic ch) {
+            try {
+                //https://github.com/microsoft/Windows-universal-samples/blob/master/Samples/BluetoothLE/cs/Scenario2_Client.xaml.cs
+                // Need to write to turn on the enable for indicate or Notify
+                var val = GattClientCharacteristicConfigurationDescriptorValue.None;
+                if (ch.CharacteristicProperties.HasFlag(GattCharacteristicProperties.Indicate)) {
+                    val = GattClientCharacteristicConfigurationDescriptorValue.Indicate;
+                }
+                else if (ch.CharacteristicProperties.HasFlag(GattCharacteristicProperties.Notify)) {
+                    val = GattClientCharacteristicConfigurationDescriptorValue.Notify;
+                }
+
+                if (val != GattClientCharacteristicConfigurationDescriptorValue.None) {
+                    GattCommunicationStatus cs = await ch.WriteClientCharacteristicConfigurationDescriptorAsync(val);
+                    if (cs == GattCommunicationStatus.Success) {
+                        return true;
+                    }
+                }
+            }
+            catch (UnauthorizedAccessException) {
+                this.log.Info("EnableNotifyIndicate", "No access authorized");
+            }
+            catch (Exception e) {
+                this.log.Exception(9999, "EnableNotifyIndicate", "", e);
+            }
+            return false;
         }
 
 

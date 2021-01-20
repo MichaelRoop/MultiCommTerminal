@@ -1,5 +1,6 @@
 ﻿using BluetoothLE.Net.DataModels;
 using BluetoothLE.Net.Enumerations;
+using BluetoothLE.Net.Parsers;
 using LogUtils.Net;
 using System;
 using System.Threading.Tasks;
@@ -9,34 +10,58 @@ using Windows.Storage.Streams;
 namespace Bluetooth.UWP.Core {
 
     /// <summary>
-    /// Bind the generic BLE Characteristic info with the OS specific characteristic
+    /// Bind the BLE Characteristic data model with the UWP characteristic
     /// </summary>
     public class BLE_CharacteristicBinder {
 
+        #region Data
+
         private const int BLE_BLOCK_SIZE = 20;
         private ClassLog log = new ClassLog("BLE_CharacteristicBinder");
+        private bool subscribed = false;
 
+        #endregion
+
+        #region Properties
+
+        /// <summary>The UWP characteristic</summary>
         public GattCharacteristic OSCharacteristic { get; set; }
+        
+        /// <summary>The cross platform data model</summary>
         public BLE_CharacteristicDataModel DataModel { get; set; }
 
+        #endregion
 
-        public BLE_CharacteristicBinder(GattCharacteristic osCharacteristic, BLE_CharacteristicDataModel dataModel) {
+        #region Constructor and teardown
+
+        /// <summary>Constructor</summary>
+        /// <param name="osCharacteristic">The UWP Characteristic</param>
+        /// <param name="dataModel">The cross platform data model</param>
+        /// <param name="subscribed">if true then subscribe to the UWP characteristic value changes</param>
+        public BLE_CharacteristicBinder(GattCharacteristic osCharacteristic, BLE_CharacteristicDataModel dataModel, bool subscribed) {
+            this.subscribed = subscribed;
             this.OSCharacteristic = osCharacteristic;
             this.DataModel = dataModel;
             this.log.InfoEntry("BLE_CharacteristicBinder");
-            this.OSCharacteristic.ValueChanged += this.OSCharacteristicReadValueChangedHandler;
+            if (this.subscribed) {
+                this.OSCharacteristic.ValueChanged += this.OSCharacteristicReadValueChangedHandler;
+            }
             this.DataModel.WriteRequestEvent += this.onDataModelWriteRequestHandler;
             this.DataModel.ReadRequestEvent += this.onDataModelReadRequestHandler;
         }
 
 
+        /// <summary>Remove all attached events</summary>
         public void Teardown() {
             this.log.InfoEntry("Teardown");
-            this.OSCharacteristic.ValueChanged -= this.OSCharacteristicReadValueChangedHandler;
+            if (this.subscribed) {
+                this.OSCharacteristic.ValueChanged -= this.OSCharacteristicReadValueChangedHandler;
+            }
             this.DataModel.WriteRequestEvent -= this.onDataModelWriteRequestHandler;
             this.DataModel.ReadRequestEvent -= this.onDataModelReadRequestHandler;
         }
 
+        #endregion
 
         #region Event handlers
 
@@ -49,7 +74,7 @@ namespace Bluetooth.UWP.Core {
                     GattReadResult result = await this.OSCharacteristic.ReadValueAsync();
                     if (this.ParseGattStatue(result.Status)) {
                         this.log.InfoEntry("onDataModelReadRequestHandler");
-                        this.DataModel.PushReadDataEvent(result.Value.FromBufferToBytes());
+                        this.PushReadValue(result.Value);
                     }
                 }
                 catch (Exception ex) {
@@ -90,14 +115,9 @@ namespace Bluetooth.UWP.Core {
         /// <param name="args">The event args with the data buffer and timestamp</param>
         private void OSCharacteristicReadValueChangedHandler(
             GattCharacteristic sender, GattValueChangedEventArgs args) {
-            this.log.InfoEntry("OSCharacteristicReadValueChangedHandler");
             Task.Run(() => {
                 try {
-                    this.DataModel.PushReadDataEvent(
-                        args.CharacteristicValue.FromBufferToBytes());
-
-                    // We can translate to string here based on the characteristic type and write to CharValue
-                    //this.DataModel.CharValue = TranslateBytes...
+                    this.PushReadValue(args.CharacteristicValue);
                 }
                 catch (Exception e) {
                     this.log.Exception(9999, "OSCharacteristic_ValueChanged", "", e);
@@ -156,6 +176,15 @@ namespace Bluetooth.UWP.Core {
             this.DataModel.PushCommunicationError(status);
             return false;
         }
+
+
+
+        private void PushReadValue(IBuffer buffer) {
+            byte[] data = buffer.FromBufferToBytes();
+            string str = BLE_ParseHelpers.GetCharacteristicValueAsString(this.OSCharacteristic.Uuid, data);
+            this.DataModel.PushReadDataEvent(data, str);
+        }
+
 
         #endregion
 
