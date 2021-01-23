@@ -116,10 +116,15 @@ namespace BluetoothCommonAndroidXamarin {
 
         private void StartAutoEnd() {
             Task.Run(() => {
-                AutoResetEvent timeout = new AutoResetEvent(false);
-                timeout.WaitOne(DISCOVER_TIMEOUT);
-                this.KillDiscoverReceiver();
-                this.DiscoveryComplete?.Invoke(this, this.UnBondedDevices.Count > 0);
+                try {
+                    AutoResetEvent timeout = new AutoResetEvent(false);
+                    timeout.WaitOne(DISCOVER_TIMEOUT);
+                    this.KillDiscoverReceiver();
+                    this.DiscoveryComplete?.Invoke(this, this.UnBondedDevices.Count > 0);
+                }
+                catch (Exception e) {
+                    this.log.Exception(9999, "StartAutoEnd", "", e);
+                }
             });
         }
 

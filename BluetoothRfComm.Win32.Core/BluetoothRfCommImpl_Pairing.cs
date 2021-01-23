@@ -13,7 +13,12 @@ namespace BluetoothRfComm.UWP.Core {
 
         public void UnPairAsync(BTDeviceInfo info) {
             Task.Run(async () => {
-                await this.DoUnPairing(info);
+                try {
+                    await this.DoUnPairing(info);
+                }
+                catch(Exception e) {
+                    this.log.Exception(9999, "UnPairAsync", "", e);
+                }
             });
             return;
         }
@@ -21,7 +26,12 @@ namespace BluetoothRfComm.UWP.Core {
 
         public void PairgAsync(BTDeviceInfo info) {
             Task.Run(async () => {
-                await this.DoPairing(info);
+                try {
+                    await this.DoPairing(info);
+                }
+                catch (Exception e) {
+                    this.log.Exception(9999, "PairgAsync", "", e);
+                }
             });
             return;
         }
