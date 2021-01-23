@@ -8,6 +8,7 @@ using log4net.Layout;
 using log4net.Repository.Hierarchy;
 using LogUtils.Net;
 using MultiCommTerminal.NetCore.DependencyInjection;
+using MultiCommTerminal.NetCore.WindowObjs.Utils;
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using System;
 using System.Diagnostics;
@@ -74,9 +75,9 @@ namespace MultiCommTerminal.NetCore {
 
         private void SetupExceptionHandlers() {
             //// TODO - implement after next release
-            //this.DispatcherUnhandledException += this.App_DispatcherUnhandledException;
-            //TaskScheduler.UnobservedTaskException += this.TaskScheduler_UnobservedTaskException;
-            //AppDomain.CurrentDomain.UnhandledException += this.CurrentDomain_UnhandledException;
+            this.DispatcherUnhandledException += this.App_DispatcherUnhandledException;
+            TaskScheduler.UnobservedTaskException += this.TaskScheduler_UnobservedTaskException;
+            AppDomain.CurrentDomain.UnhandledException += this.CurrentDomain_UnhandledException;
         }
 
 
@@ -115,20 +116,55 @@ namespace MultiCommTerminal.NetCore {
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e) {
             this.log.Error(9999, "CurrentDomain_UnhandledException", () => string.Format(""));
             // Cant do anything
-            Application.Current.Shutdown();
+            //App.ShowMsg("CurrentDomain_UnhandledException");
+            //if (!e.IsTerminating) {
+                this.ProcessException(e.ExceptionObject as Exception);
+            //}
+
+            // TODO - flag is exeption isTerminating but no other handlers has posted report
+
+            // You can also retrieve the IsTerminating to find if thrown during termination
         }
 
         private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e) {
             this.log.Error(9999, "TaskScheduler_UnobservedTaskException", () => string.Format(""));
-            Application.Current.Shutdown();
+            // Gets exceptions from a Task
+            
+            //App.ShowMsg("TaskScheduler_UnobservedTaskException");
+            this.ProcessException(e.Exception);
         }
 
         private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) {
             this.log.Error(9999, "App_DispatcherUnhandledException", () => string.Format(""));
             // Gets errors out of the UI. Need to decide what to do
+            //App.ShowMsg("App_DispatcherUnhandledException");
+            this.ProcessException(e.Exception as Exception);
+        }
+
+
+        private void ProcessException(Exception e) {
+            App.ShowMsg("Process Exception");
+
+            CrashReport.ShowBox(e);
+            //if (e != null) {
+            //    ErrReportException erex = e as ErrReportException;
+            //    if (erex != null) {
+            //        App.ShowMsg(erex.Report.Msg + erex.Report.StackTrace);
+            //    }
+            //    else {
+            //        ErrReport report = WrapErr.GetErrReport(0, e.Message, e);
+            //        App.ShowMsg(report.Msg + report.StackTrace);
+            //    }
+
+            //}
+            //else {
+            //    App.ShowMsg("Null Exception");
+            //}
 
             Application.Current.Shutdown();
         }
+
+
 
         #endregion
 

@@ -105,6 +105,10 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
         public static string Settings { get { return GetTxt(MsgCode.Settings); } }
 
 
+        public static string Email { get { return "Email"; } }
+        public static string CrashReport { get { return "Crash Report"; } }
+
+
         public static string BuildNumber {
             get {
                 return App.Build;
