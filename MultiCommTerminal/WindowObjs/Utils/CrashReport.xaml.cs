@@ -1,19 +1,10 @@
 ﻿using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
-using MultiCommData.Net.Enumerations;
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.NetCore.WindowObjs.Utils {
@@ -23,19 +14,21 @@ namespace MultiCommTerminal.NetCore.WindowObjs.Utils {
 
         #region Data
 
+        private Window parent = null;
         private ButtonGroupSizeSyncManager buttonWidthManager = null;
 
         #endregion
 
         #region Constructors and window events
 
-        public static void ShowBox(Exception ex) {
-            CrashReport win = new CrashReport(ex);
+        public static void ShowBox(Exception ex, Window parent) {
+            CrashReport win = new CrashReport(ex, parent);
             win.ShowDialog();
         }
 
 
-        public CrashReport(Exception ex) {
+        public CrashReport(Exception ex, Window parent) {
+            this.parent = parent;
             InitializeComponent();
             this.ProcessException(ex);
             this.buttonWidthManager = new ButtonGroupSizeSyncManager(this.btnCopy, this.btnCancel, this.btnEmail);
@@ -50,7 +43,9 @@ namespace MultiCommTerminal.NetCore.WindowObjs.Utils {
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             this.SizeToContent = SizeToContent.WidthAndHeight;
-            //this.CenterToParent(this.parent);
+            if (this.parent != null) {
+                this.CenterToParent(this.parent);
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
@@ -74,16 +69,24 @@ namespace MultiCommTerminal.NetCore.WindowObjs.Utils {
 
 
         private void btnEmail_Click(object sender, RoutedEventArgs e) {
-            string uri = 
-                string.Format(
-                    @"mailto:MultiCommTerminal@gmail.com?subject=Multi Comm Terminal Support Question&body=App Build number:{0}\n\n{1}", 
-                    TxtBinder.BuildNumber, this.errBox.Text);
-            Process.Start(new ProcessStartInfo(uri) { UseShellExecute = true });
+            try {
+                string body = this.errBox.Text.Replace("\r\n", "%0d%0A");
+                StringBuilder sb = new StringBuilder();
+                sb.Append("mailto:MultiCommTerminal@gmail.com")
+                    .Append("?subject=Multi Comm Terminal CRASH REPORT")
+                    .Append("&body=App Build number:").Append(TxtBinder.BuildNumber).Append("%0d%0A").Append("%0d%0A")
+                    .Append(DateTime.Now.ToLongDateString()).Append("%0d%0A").Append("%0d%0A")
+                    .Append(body).Append("%0d%0A");
+                Process.Start(new ProcessStartInfo(sb.ToString()) { UseShellExecute = true });
+            }
+            catch (Exception) {
+            }
             this.Close();
         }
 
         #endregion
 
+        #region Private
 
         private void ProcessException(Exception e) {
             try {
@@ -96,7 +99,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.Utils {
                     else {
                         report = WrapErr.GetErrReport(0, e.Message, e);
                     }
-                    this.errBox.Text = string.Format("{0}\n{1}", erex.Report.Msg,erex.Report.StackTrace);
+                    this.errBox.Text = string.Format("{0}\r\n{1}", erex.Report.Msg,erex.Report.StackTrace);
                 }
                 else {
                     this.errBox.Text = "Null exception. No info";
@@ -106,10 +109,9 @@ namespace MultiCommTerminal.NetCore.WindowObjs.Utils {
                 this.errBox.Text = "Failed to populate";
             }
         }
-            
 
-
-
+        #endregion
 
     }
+
 }
