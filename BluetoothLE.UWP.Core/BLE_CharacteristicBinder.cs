@@ -181,7 +181,7 @@ namespace Bluetooth.UWP.Core {
 
         private void PushReadValue(IBuffer buffer) {
             byte[] data = buffer.FromBufferToBytes();
-            string str = BLE_ParseHelpers.GetCharacteristicValueAsString(this.OSCharacteristic.Uuid, data);
+            string str = this.DataModel.Parser.Parse(data);
             this.DataModel.PushReadDataEvent(data, str);
         }
 

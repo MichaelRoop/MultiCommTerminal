@@ -27,14 +27,15 @@ namespace Bluetooth.UWP.Core {
                 characteristic.AttributeHandle = ch.AttributeHandle;
                 characteristic.Service = service;
                 characteristic.CharName = BLE_DisplayHelpers.GetCharacteristicName(ch);
-                // TODO - this is where we get the value from the Characteristic Parser.
-                // Need to do the descriptors first and pass them in to the Char parser
-                characteristic.CharValue = await this.ReadValue(ch);
                 // Must put this before the properties for indicate or Notify to work
                 bool subscribe = await this.EnableNotifyIndicate(ch);
                 characteristic.PropertiesFlags = ch.CharacteristicProperties.ToUInt().ToEnum<CharacteristicProperties>();
                 characteristic.ProtectionLevel = (BLE_ProtectionLevel)ch.ProtectionLevel;
                 characteristic.PresentationFormats = this.BuildPresentationFormats(ch);
+
+                // Do this after all else is defined
+                characteristic.Parser = BLE_ParseHelpers.GetCharacteristicParser(ch.Uuid);
+                characteristic.CharValue = await this.ReadValue(ch, characteristic);
 
                 // Associate the UWP and data model characteristic for 2 way events to set and get
                 this.binderSet.Add(new BLE_CharacteristicBinder(ch, characteristic, subscribe));
@@ -83,13 +84,14 @@ namespace Bluetooth.UWP.Core {
         }
 
 
-        private async Task<string> ReadValue(GattCharacteristic ch) {
+        private async Task<string> ReadValue(GattCharacteristic ch, BLE_CharacteristicDataModel dataModel) {
             try {
-                if (ch.CharacteristicProperties.HasFlag(GattCharacteristicProperties.Read)) {
+                // TODO - check if flag is in data model
+                if (dataModel.PropertiesFlags.HasFlag(CharacteristicProperties.Read)) {
                     GattReadResult readResult = await ch.ReadValueAsync();
                     if (readResult.Status == GattCommunicationStatus.Success) {
                         byte[] data = readResult.Value.FromBufferToBytes();
-                        return BLE_ParseHelpers.GetCharacteristicValueAsString(ch.Uuid, data);
+                        return dataModel.Parser.Parse(data);
                     }
                     else {
                         this.log.Error(9999, "ReadValue", () => string.Format("Failed read:{0}", readResult.Status));
