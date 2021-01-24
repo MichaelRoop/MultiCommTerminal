@@ -141,7 +141,7 @@ namespace Bluetooth.UWP.Core {
                         //if (ch.CharacteristicProperties.HasFlag(GattCharacteristicProperties.Read)) {
                         byte[] b = readResult.Value.FromBufferToBytes();
                         switch (BLE_DisplayHelpers.GetCharacteristicEnum(ch)) {
-                            case GattNativeCharacteristicUuid.String:
+                            //case GattNativeCharacteristicUuid.String:
                             case GattNativeCharacteristicUuid.DeviceName:
                             case GattNativeCharacteristicUuid.ManufacturerNameString: 
                                 string strVal = Encoding.ASCII.GetString(b, 0, (int)readResult.Value.Length);
