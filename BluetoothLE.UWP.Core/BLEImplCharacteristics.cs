@@ -18,20 +18,23 @@ namespace Bluetooth.UWP.Core {
             try {
                 this.log.InfoEntry("BuildCharacteristicDataModel");
                 BLE_CharacteristicDataModel characteristic = new BLE_CharacteristicDataModel();
+                // Build descriptors first to allow them to be used to build unknown Characteristic values
+                await this.BuildDescriptors(ch, characteristic);
+
                 characteristic.Uuid = ch.Uuid;
                 characteristic.GattType = BLE_DisplayHelpers.GetCharacteristicEnum(ch);
                 characteristic.UserDescription = ch.UserDescription;
                 characteristic.AttributeHandle = ch.AttributeHandle;
                 characteristic.Service = service;
                 characteristic.CharName = BLE_DisplayHelpers.GetCharacteristicName(ch);
+                // TODO - this is where we get the value from the Characteristic Parser.
+                // Need to do the descriptors first and pass them in to the Char parser
                 characteristic.CharValue = await this.ReadValue(ch);
                 // Must put this before the properties for indicate or Notify to work
                 bool subscribe = await this.EnableNotifyIndicate(ch);
                 characteristic.PropertiesFlags = ch.CharacteristicProperties.ToUInt().ToEnum<CharacteristicProperties>();
                 characteristic.ProtectionLevel = (BLE_ProtectionLevel)ch.ProtectionLevel;
                 characteristic.PresentationFormats = this.BuildPresentationFormats(ch);
-
-                await this.BuildDescriptors(ch, characteristic);
 
                 // Associate the UWP and data model characteristic for 2 way events to set and get
                 this.binderSet.Add(new BLE_CharacteristicBinder(ch, characteristic, subscribe));

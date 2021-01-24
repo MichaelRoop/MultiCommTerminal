@@ -22,11 +22,13 @@ namespace Bluetooth.UWP.Core {
                         GattReadResult r = await desc.ReadValueAsync();
                         if (r.Status == GattCommunicationStatus.Success) {
                             // New characteristic data model to add to service
+                            IDescParser parser = BLE_ParseHelpers.GetDescriptorParser(desc.Uuid);
                             BLE_DescriptorDataModel descDataModel = new BLE_DescriptorDataModel() {
                                 Uuid = desc.Uuid,
                                 AttributeHandle = desc.AttributeHandle,
                                 ProtectionLevel = (BLE_ProtectionLevel)desc.ProtectionLevel,
-                                DisplayName = BLE_ParseHelpers.GetDescriptorValueAsString(desc.Uuid, r.Value.FromBufferToBytes())
+                                DisplayName = parser.Parse(r.Value.FromBufferToBytes()),
+                                Parser = parser,
                             };
 
                             dataModel.Descriptors.Add(descDataModel);
