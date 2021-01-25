@@ -35,6 +35,7 @@ namespace Bluetooth.UWP.Core {
 
                 // Do this after all else is defined
                 characteristic.Parser = BLE_ParseHelpers.GetCharacteristicParser(ch.Uuid);
+                characteristic.SetDescriptorParsers();
                 characteristic.CharValue = await this.ReadValue(ch, characteristic);
 
                 // Associate the UWP and data model characteristic for 2 way events to set and get
