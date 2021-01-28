@@ -1,203 +1,238 @@
-﻿
-// -----------------------------------------------------------------------------
-// Name:    ArduinoBLESerial.ino
-// Created:	4/28/2020 8:55:58 PM
-// Author:	Michael
-//
-// Sets up the BLE to simulate a serial connection by having one characteristic
-// configured as an incoming channel, and another one as the outgoing
-//
-// Tested on the Arduino UNO WIFI Rev2
-//
-// Was working but a subsequent update of Windows 10 put in BLE pairing on 
-// connect which is not yet supported in the Arduino library so it will fail
-// on connection
-//
-// -----------------------------------------------------------------------------
+﻿/*
+  Name:    DemoArduinoBLE.ino
+  Created: Jan 15, 2021
+
+  Sets up the BLE to have characteristics that change value in real time.
+	Battery Level	// 0x180F Defined in BLE Spec
+	Temperature		// 0x2A6E
+	Humidity		// 0x2A6F
+	Pressure		// 0x2A6D
+	Custom          // My Uuid 0xF001 - has format descriptor for parsing
+
+	Here is a partial list of BLE Format data types for the Format Descriptor. Some are 
+	not yet supported. Those will be displayed as a series of bytes
+        Boolean = 1
+        UInt_2bit = 2
+        UInt_4bit = 3
+        UInt_8bit = 4
+        UInt_12bit = 5
+        UInt_16bit = 6
+        UInt_24bit = 7
+        UInt_32bit = 8
+        UInt_48bit = 9
+        UInt_64bit = 10
+        UInt_128bit = 11 ** Not supported **
+        Int_8bit = 12
+        Int_12bit = 13  ** Not supported **
+        Int_16bit = 14
+        Int_24bit = 15  ** Not supported **
+        Int_32bit = 16
+        Int_48bit = 17 ** Not supported **
+        Int_64bit = 18
+        Int_128bit = 19 ** Not supported **
+        IEEE_754_32bit_floating_point = 20
+        IEEE_754_64bit_floating_point = 21
+        IEEE_11073_16bit_SFLOAT = 22 ** Not supported **
+        IEEE_11073_32bit_FLOAT = 23  ** Not supported **
+        IEEE_20601_format = 24  ** Not supported **
+        UTF8_String = 25
+        UTF16_String = 26
+		OpaqueStructure = 27  ** Not supported **
+
+
+  For this to work you need the forked version of ArduinoBLE
+  which supports connection to Windows and Android
+  https://github.com/unknownconstant/ArduinoBLE/tree/pairing
+
+
+  Tested on Arduino Uno WIFI Rev 2
+
+  Arduino code partialy based on:
+  https://programmaticponderings.com/2020/08/04/getting-started-with-bluetooth-low-energy-ble-and-generic-attribute-profile-gatt-specification-for-iot/
+
+  With some modifications. 
+  Values are generated internally for demo instead or reading I/O
+  
+ */
 #include <ArduinoBLE.h>
-#include <string.h>
 
-#ifndef SECTION_DATA
+//---------------------------------------------------------------------
+// Variables
+const int GENERIC_ACCESS_APPEARANCE_ID = 1792; // BLE Spec 0x1792
 
-#define MAX_BLOCK_SIZE 20
+// Create battery service
+BLEService batteryService("180F");
+BLETypedCharacteristic<uint8_t> batteryLevelCharacteristic("2A19", BLERead | BLENotify);
 
-// Create services that will act as a serial port. Max 20 bytes at a time
-BLEService serialService("9999");
+// Environment sensing service
+BLEService environmentService("181A");
+BLETypedCharacteristic<uint32_t> pressureCharacteristic("2A6D", BLERead | BLENotify);
+BLETypedCharacteristic<int16_t> tempCharacteristic("2A6E", BLERead | BLENotify);
+BLETypedCharacteristic<uint16_t> humidCharacteristic("2A6F", BLERead | BLENotify);
 
-// Out channel 0x99,0x98 = 39,320 base 10. Caller reads or gets notifications from this device
-// Need a write in Setup with block of MAX_BLOCK_SIZE size OR it is not recognized by caller
-BLECharacteristic outputCharacteristic("9998", BLERead | BLENotify, MAX_BLOCK_SIZE);
+// Custom 2 byte sensor service
+BLEService ioService("FF01");
+BLETypedCharacteristic<uint16_t> analogSensorCharacteristic("F001", BLERead | BLENotify);
+BLEDescriptor sensorDescriptorUserDescription("2901", "aSensor1"); // Defined in Spec
+uint8_t format[7] = { 
+	0x6,		// Data type. BLE spec 6 = uint16_t. Defines size of data in characteristic read 
+	(byte)-2,	// Exponent -2 sbyte. stored as byte. parsed out as sbyte to maintain sign
+	0x0, 0x0 ,	// Measurement uint16_t. 0 is unit-less. Adds abbreviation on display string
+	0x0,		// Namespace byte. 0 is undefined, 1 is BLE Sig (only one defined in spec)
+	0x0, 0x0	// Description uint
+};
+// BLE spec 0x2904 is the Format Descriptor
+BLEDescriptor senforDescriptorFormat("2904", format, sizeof(format));
 
-// In channel 0x99,0x97 = 39,319 base 10. Caller writes to this device 
-BLECharacteristic inputCharacteristic("9997", BLEWrite, MAX_BLOCK_SIZE);
+// Track dummy values 
+uint8_t batteryLevel = 93;
+int16_t tempLevel = 3392;
+uint16_t humidityLevl = 4400;
+uint32_t pressureLevel = 28500;
+uint16_t analogLevel = 16025;
 
-// 0x2901 is CharacteristicUserDescription data type
-BLEDescriptor outputDescriptor("2901", "Serial Output");
-BLEDescriptor inputDescriptor("2901", "Serial Input");
+unsigned long lasMsTimeUpdate = 0;
+bool upIncrement = true;
+//---------------------------------------------------------------------
 
-bool hasInput = false;
-#define IN_BUFF_SIZE 500
-char buff[IN_BUFF_SIZE];
-unsigned char inIndex = 0;
 
-#endif
+//---------------------------------------------------------------------
+// Main Arduino functions
 
-// the setup function runs once when you press reset or power the board
+// Executed once on power on or reset
 void setup() {
-    // TODO - This needs to be removed to work if not connected to USB serial port
-    Serial.begin(9600);
-    while (!Serial) {
-        ; // wait for serial port to connect. Needed for Native USB only
-    }
-    Serial.println("Debug serial port active");
-
-    pinMode(LED_BUILTIN, OUTPUT);
-    if (!BLE.begin()) {
-        Serial.println("Failed to start BLE");
-        while (1);
-    }
-    else {
-        Serial.println("BLE begun");
-    }
-    
-    // Name that users see in list for 'Add Device'
-    BLE.setLocalName("Test Arduino BLE serial device");
-    // The Device Name Characteristic
-    BLE.setDeviceName("Test BLE serial device");
-
-    // assign event handlers for connected, disconnected events
-    BLE.setEventHandler(BLEConnected, bleOnConnectHandler);
-    BLE.setEventHandler(BLEDisconnected, bleOnDisconnectHandler);
-
-    setupSerialDescriptor(serialService, outputCharacteristic, outputDescriptor);
-
-    setupSerialDescriptor(serialService, inputCharacteristic, inputDescriptor);
-    inputCharacteristic.setEventHandler(BLEWritten, inBytesWritten);
-
-    // Add service to BLE and start advertising
-    BLE.addService(serialService);
-    BLE.setAdvertisedService(serialService);
-    BLE.advertise();
-    Serial.println("Bluetooth device active, waiting for connections...");
+	Serial.begin(9600);
+	while (!Serial) {}
+	Serial.println("started...");
+	SetupBLE();
 }
 
 
-// the loop function runs over and over again until power down or reset
+// the loop function runs over and over again forever
 void loop() {
-    BLEDevice central = BLE.central();
-    if (central) {
-        // This will hold up the loop function as long as the connection persists
-        while (central.connected()) {
-            // The message processing is done via the event handler for incoming bytes
-        }
-        // Since the current connection has terminated wipe out accumulated in bytes
-        ResetInBuffer();
-    }
+	BLEDevice central = BLE.central();
+	if (central) {
+		while (central.connected()) {
+			WriteBatteryLevelOnMsInterval(5000);
+			delayMicroseconds(10);
+		}
+	}
+}
+//---------------------------------------------------------------------
+
+//---------------------------------------------------------------------
+// Helper functions
+void SetupBLE() {
+	if (!BLE.begin()) {
+		Serial.println("FAIL");
+		while (1);
+	}
+	// Device
+	BLE.setLocalName("Mikie BLE"); // visible in search
+	BLE.setDeviceName("MR BLE Device");
+	BLE.setAppearance(GENERIC_ACCESS_APPEARANCE_ID);
+	BLE.setEventHandler(BLEConnected, bleOnConnectHandler);
+	BLE.setEventHandler(BLEDisconnected, bleOnDisconnectHandler);
+	
+	// Battery service
+	batteryService.addCharacteristic(batteryLevelCharacteristic);
+	BLE.addService(batteryService);
+	BLE.setAdvertisedService(batteryService);
+
+	// Environment sensing service with 3 characteristics
+	environmentService.addCharacteristic(tempCharacteristic);
+	environmentService.addCharacteristic(humidCharacteristic);
+	environmentService.addCharacteristic(pressureCharacteristic);
+	BLE.addService(environmentService);
+	BLE.setAdvertisedService(environmentService);
+
+	// My custom sensor service
+	analogSensorCharacteristic.addDescriptor(sensorDescriptorUserDescription);
+	analogSensorCharacteristic.addDescriptor(senforDescriptorFormat);
+	ioService.addCharacteristic(analogSensorCharacteristic);
+	BLE.addService(ioService);
+	BLE.setAdvertisedService(ioService);
+
+	BLE.advertise();
+
+	WriteValues();
+	Serial.println("BLE started");
 }
 
 
-// Initialize the serial Characteristic, add Descriptor and connect to serial
-void setupSerialDescriptor(BLEService& service, BLECharacteristic& characteristic, BLEDescriptor& desc) {
-    byte initBuffContents[MAX_BLOCK_SIZE];
-    // If we initialize with 0x00 (null) creates weird output in future writes
-    memset(initBuffContents, 0x20, MAX_BLOCK_SIZE);
-    characteristic.writeValue(initBuffContents, MAX_BLOCK_SIZE);
-    characteristic.addDescriptor(desc);
-    service.addCharacteristic(characteristic);
+void WriteBatteryLevelOnMsInterval(unsigned long msInterval) {
+	// Simulate reading of actual hardware sensors for demo
+	unsigned long currentMs = millis();
+	if ((currentMs - lasMsTimeUpdate) > msInterval) {
+		lasMsTimeUpdate = currentMs;
+		if (upIncrement) {
+			tempLevel += 111;
+			humidityLevl += 212;
+			pressureLevel += 18;
+			analogLevel += 67;
+			batteryLevel++;
+			if (batteryLevel > 99) {
+				batteryLevel = 99;
+				upIncrement = false;
+				batteryLevel--;
+			}
+		}
+		else {
+			tempLevel -= 111;
+			humidityLevl -= 212;
+			pressureLevel -= 18;
+			analogLevel -= 67;
+			batteryLevel--;
+			if (batteryLevel < 85) {
+				upIncrement = true;
+				batteryLevel = 60;
+			}
+		}
+		WriteValues();
+	}
 }
 
 
-void ProcessIncomingBuff() {
-    // Doing \n\r terminator sequence
-    if (buff[inIndex] == '\r') {
-        Serial.println("Printing msg in buffer");
-        hasInput = true;
-
-        Serial.print("Sending back ");
-        Serial.print(inIndex);
-        Serial.println(" bytes to write");
-
-        // This works by iterating through BLOCK_SIZE byte blocks.
-        int count = inIndex / MAX_BLOCK_SIZE;
-        int last = (inIndex % MAX_BLOCK_SIZE);
-        int lastIndex = 0;
-        for (int i = 0; i < count; i++) {
-            lastIndex = i * MAX_BLOCK_SIZE;
-            outputCharacteristic.writeValue(&buff[lastIndex], MAX_BLOCK_SIZE);
-        }
-        if (last > 0) {
-            if (lastIndex > 0) {
-                lastIndex += MAX_BLOCK_SIZE;
-            }
-            outputCharacteristic.writeValue(&buff[lastIndex], last);
-        }
-
-        ResetInBuffer();
-    }
-    else {
-        //
-        inIndex++;
-        // Wipe out buffer if too long
-        if (inIndex >= IN_BUFF_SIZE) {
-            ResetInBuffer();
-            Serial.println("Corrupt BT input. Buffer purged");
-        }
-    }
+void ResetValues() {
+	batteryLevel = 93;
+	tempLevel = 3392;
+	humidityLevl = 4400;
+	pressureLevel = 285;
+	analogLevel = 16025;
 }
 
 
-void ResetInBuffer() {
-    // Reset with spaces. Acts weird if you use 0x00 null)
-    memset(buff, 0x20, IN_BUFF_SIZE);
-    inIndex = 0;
+void WriteValues() {
+	batteryLevelCharacteristic.writeValue(batteryLevel);
+	tempCharacteristic.writeValue(tempLevel);
+	humidCharacteristic.writeValue(humidityLevl);
+	pressureCharacteristic.writeValue(pressureLevel);
+	analogSensorCharacteristic.writeValue(analogLevel);
+
+	Serial.print("    Battery:"); Serial.println(batteryLevel);
+	Serial.print("Temperature:"); Serial.println(tempLevel);
+	Serial.print("   Pressure:"); Serial.println(pressureLevel);
+	Serial.print("   Humidity:"); Serial.println(humidityLevl);
+	Serial.print("  An sensor:"); Serial.println(analogLevel);
 }
 
-
-byte inBuff[MAX_BLOCK_SIZE];
-
-// Event handler for when data is written to the inByte characteristic
-void inBytesWritten(BLEDevice device, BLECharacteristic  byteCharacteristic) {
-    digitalWrite(LED_BUILTIN, HIGH);
-
-    int count = inputCharacteristic.readValue(inBuff, MAX_BLOCK_SIZE);
-    ProcessIncomingBuff2(inBuff, count);
-    digitalWrite(LED_BUILTIN, LOW);
-}
+//---------------------------------------------------------------------
 
 
-void ProcessIncomingBuff2(uint8_t* inData, int length) {
-    // index is pos of next write
-    memcpy(&buff[inIndex], inData, length);
+//---------------------------------------------------------------------
+// Event handlers
 
-    int newIndex = inIndex + length;
-    // This is where I would process the data. Remove complete command, etc
-    inIndex = newIndex;
-
-    Serial.write(inData, length); Serial.println("");
-    Serial.write(buff, newIndex); Serial.println("");
-
-    // Just bounce back whatever came in
-    outputCharacteristic.writeValue(inData, length);
-    // Check if there was a \n and simply obliterate main buffer
-    for (int i = 0; i < length; i++) {
-        if (inData[i] == '\n') {
-            ResetInBuffer();
-            break;
-        }
-    }
-}
-
-
-// Event handler for on BLE connected
+// When a connection is established to device
 void bleOnConnectHandler(BLEDevice central) {
-    Serial.print("CONNECTED, central: ");
-    Serial.println(central.address());
+	Serial.println("CONNECTED");
 }
 
 
-// Event handler for on BLE disconnected
+// When a connection to device is broken
 void bleOnDisconnectHandler(BLEDevice central) {
-    Serial.print("DISCONNECTED, central: ");
-    Serial.println(central.address());
+	Serial.println("DISCONNECTED");
+	ResetValues();
 }
+
+//---------------------------------------------------------------------
 

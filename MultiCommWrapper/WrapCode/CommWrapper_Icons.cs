@@ -48,9 +48,10 @@ namespace MultiCommWrapper.Net.WrapCode {
         public void CommMediumList(Action<List<CommMedialDisplay>> mediums) {
             List<CommMedialDisplay> items = new List<CommMedialDisplay>();
             items.Add(this.CommItem("Bluetooth", UIIcon.BluetoothClassic, CommMedium.Bluetooth));
-            // TODO - for now serial, need a full BLE
-            items.Add(this.CommItem(String.Format("BLE  {0} {1}", '\u2b84', '\u2b86'), 
-                UIIcon.BluetoothLE, CommMedium.BluetoothLE));
+            //// TODO - this will be link when we have a BLE serial
+            //items.Add(this.CommItem(String.Format("BLE  {0} {1}", '\u2b84', '\u2b86'), 
+            //    UIIcon.BluetoothLE, CommMedium.BluetoothLE));
+            items.Add(this.CommItem("BLE", UIIcon.BluetoothLE, CommMedium.BluetoothLE));
             items.Add(this.CommItem("Wifi", UIIcon.Wifi, CommMedium.Wifi));
             items.Add(this.CommItem("Ethernet", UIIcon.Ethernet, CommMedium.Ethernet));
             items.Add(this.CommItem("USB", UIIcon.Usb, CommMedium.Usb));
@@ -72,9 +73,10 @@ namespace MultiCommWrapper.Net.WrapCode {
         private void CommHelpList(Action<List<CommHelpDisplay>> helps) {
             List<CommHelpDisplay> items = new List<CommHelpDisplay>();
             items.Add(this.HelpItem("Bluetooth", UIIcon.BluetoothClassic, CommMedium.Bluetooth));
-            // TODO - for now serial, need a full BLE
-            items.Add(this.HelpItem(String.Format("BLE  {0} {1}", '\u2b84', '\u2b86'),
-                UIIcon.BluetoothLE, CommMedium.BluetoothLE));
+            //// TODO - Will use this for serial BLE
+            //items.Add(this.HelpItem(String.Format("BLE  {0} {1}", '\u2b84', '\u2b86'),
+            //    UIIcon.BluetoothLE, CommMedium.BluetoothLE));
+            items.Add(this.HelpItem("BLE", UIIcon.BluetoothLE, CommMedium.BluetoothLE));
             items.Add(this.HelpItem("Wifi", UIIcon.Wifi, CommMedium.Wifi));
             items.Add(this.HelpItem("USB", UIIcon.Usb, CommMedium.Usb));
             items.Add(this.HelpItem(this.GetText(MsgCode.Ethernet), UIIcon.Ethernet, CommMedium.Ethernet));

@@ -35,7 +35,7 @@ namespace MultiCommWrapper.Net.WrapCode {
                         i.Text = "Communicate with device using traditional Bluetooth like Arduino with HC50 chip";
                         break;
                     case CommMedium.BluetoothLE:
-                        i.Text = "Communicate with devices on BLE with 2 characteristics defined for serial input and output";
+                        i.Text = "View service structures and data from BLE devices";
                         break;
                     case CommMedium.Wifi:
                         i.Text = "Communicate with devices using WIFI to send commands and receive responses";
