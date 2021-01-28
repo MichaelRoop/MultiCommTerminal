@@ -260,6 +260,8 @@ namespace MultiCommTerminal.NetCore.UserControls {
         #region Delegates
 
         private void SetLanguage(SupportedLanguage l) {
+            this.buttonSizer.PrepForChange();
+            this.InvalidateVisual();
             this.lbResponse.Content = l.GetText(MsgCode.response);
             this.btnSend.Content = l.GetText(MsgCode.send);
             this.btnBTDiscover.Content = l.GetText(MsgCode.Search);

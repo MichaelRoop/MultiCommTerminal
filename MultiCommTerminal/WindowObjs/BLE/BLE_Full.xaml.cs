@@ -216,6 +216,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
 
         private void SetLanguage(SupportedLanguage l) {
+            this.buttonSizer.PrepForChange();
+            this.InvalidateVisual();
             this.btnSend.Content = l.GetText(MsgCode.send);
             this.btnConnect.Content = l.GetText(MsgCode.connect);
             this.btnLog.Content = l.GetText(MsgCode.Log);
@@ -234,7 +236,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
                     // The this.ExpandAll(item, true) doesn't work but this 
                     // will expand characteristics to show descriptors
-                    //item.ExpandSubtree();
+                    item.ExpandSubtree();
                 }
             }
         }
