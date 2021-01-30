@@ -13,7 +13,7 @@
         Title="BLE"
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.BluetoothClassic_W}}"
         Loaded="Window_Loaded" Closing="Window_Closing"
-        MinHeight="100" MinWidth="200" MaxHeight="900" MaxWidth="1000" BorderThickness=".5">
+        MinHeight="100" MinWidth="200" MaxHeight="900" MaxWidth="1200" BorderThickness=".5">
     <Grid>
         <Grid x:Name="gridWait" Panel.ZIndex="10000" 
               HorizontalAlignment="Stretch" 
@@ -29,7 +29,7 @@
         <StackPanel>
             <Border Style="{StaticResource brd075}" Padding="0" >
                 <TreeView x:Name="treeServices" HorizontalAlignment="Stretch" Padding="10"
-                                MinWidth="400" MinHeight="250" MaxHeight="600" MaxWidth="1000"
+                                MinWidth="400" MinHeight="250" MaxHeight="600" 
                                 ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
                     <TreeView.Resources>
                         <HierarchicalDataTemplate
@@ -107,20 +107,22 @@
                     </StackPanel>
                 </DockPanel>
             </Border>
-            <DockPanel HorizontalAlignment="Center" Visibility="Collapsed">
-                <controls:UC_IconButton x:Name="btnCopyLog" Click="btnCopyLog_Click" 
+            <Border x:Name="logSection" >
+                <StackPanel>
+                    <DockPanel HorizontalAlignment="Center" Visibility="Visible" Margin="5">
+                        <controls:UC_IconButton x:Name="btnCopyLog" Click="btnCopyLog_Click" 
                                     Style="{StaticResource TextIconButton}" Margin="5,8"
                                     Content="{Binding Source={x:Static wpfHelper:TxtBinder.Copy}}"
                                     IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Add}}"/>
-                <controls:UC_IconButton x:Name="btnClearLog" Click="btnClearLog_Click" 
+                        <controls:UC_IconButton x:Name="btnClearLog" Click="btnClearLog_Click" 
                                     Style="{StaticResource TextIconButton}" Margin="5,8"
                                     Content="{Binding Source={x:Static wpfHelper:TxtBinder.Clear}}"
                                     IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Delete}}"/>
-            </DockPanel>
-            <Border>
-                <ListBox x:Name="lbLog" Height="200" Visibility="Visible" 
-                         ScrollViewer.VerticalScrollBarVisibility="Auto" 
-                         ScrollViewer.HorizontalScrollBarVisibility="Auto" MaxWidth="700" />
+                    </DockPanel>
+                    <ListBox x:Name="lbLog" Height="200" Visibility="Visible"  SelectionMode="Extended"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                        ScrollViewer.HorizontalScrollBarVisibility="Auto" />
+                </StackPanel>
             </Border>
         </StackPanel>
     </Grid>

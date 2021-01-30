@@ -45,7 +45,6 @@ namespace Bluetooth.UWP.Core {
         private void BinderSet_ReadValueChanged(object sender, BLE_CharacteristicReadResult e) {
             Task.Run(() => {
                 try {
-                    this.log.InfoEntry("BinderSet_ReadValueChanged");
                     this.CharacteristicReadValueChanged?.Invoke(sender, e);
                 }
                 catch (Exception e) {

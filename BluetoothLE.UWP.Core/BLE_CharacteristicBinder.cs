@@ -73,7 +73,7 @@ namespace Bluetooth.UWP.Core {
                 try {
                     GattReadResult result = await this.OSCharacteristic.ReadValueAsync();
                     if (this.ParseGattStatue(result.Status)) {
-                        this.log.InfoEntry("onDataModelReadRequestHandler");
+                        //this.log.InfoEntry("onDataModelReadRequestHandler");
                         this.PushReadValue(result.Value);
                     }
                 }

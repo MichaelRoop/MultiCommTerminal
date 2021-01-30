@@ -6,6 +6,7 @@ using LogUtils.Net;
 using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using System;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using WpfHelperClasses.Core;
@@ -69,7 +70,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             WPF_ControlHelpers.CenterChild(parent, this);
             this.logScroll = this.lbLog.GetScrollViewer();
-            this.lbLog.Collapse();
+            //this.lbLog.Collapse();
+            this.logSection.Collapse();
 
             this.AddEventHandlers();
             DI.Wrapper.CurrentSupportedLanguage(this.SetLanguage);
@@ -93,9 +95,11 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.Close();
         }
 
+
         private void btnLog_Click(object sender, RoutedEventArgs e) {
-            this.lbLog.ToggleVisibility();
+            this.logSection.ToggleVisibility();
         }
+
 
         private void btnConnect_Click(object sender, RoutedEventArgs e) {
             this.SetConnectState(false);
@@ -111,11 +115,36 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
 
         private void btnCopyLog_Click(object sender, RoutedEventArgs e) {
+            try {
+                lock (this.lbLog) {
+                    //App.ShowMsg("Copy");
 
+                    StringBuilder sb = new StringBuilder();
+                    this.lbLog.SelectAll();
+                    foreach (var item in lbLog.SelectedItems) {
+                        sb.AppendLine(item.ToString());
+                    }
+                    Clipboard.SetText(sb.ToString());
+                    //App.ShowMsgTitle("Stuff", sb.ToString());
+
+                    this.lbLog.SelectedItem = null;
+                    this.lbLog.UnselectAll();
+                }
+            }
+            catch (Exception ex) {
+                App.ShowMsgTitle("Exception", ex.Message);
+            }
         }
 
         private void btnClearLog_Click(object sender, RoutedEventArgs e) {
-
+            try {
+                lock (this.lbLog) {
+                    if (this.logScroll != null) {
+                        this.lbLog.Items.Clear();
+                    }
+                }
+            }
+            catch (Exception) { }
         }
 
 
