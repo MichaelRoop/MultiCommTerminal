@@ -6,9 +6,13 @@ using LogUtils.Net;
 using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Threading;
 using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
@@ -25,6 +29,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         BluetoothLEDeviceInfo currentDevice = null;
         public static int Instances { get; private set; } 
         bool isBusy = false;
+        DispatcherTimer timer = null;
+
 
         #endregion
 
@@ -59,7 +65,10 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.buttonSizer = new ButtonGroupSizeSyncManager(
                 this.btnConnect, this.btnExit, this.btnLog);
             this.buttonSizer.PrepForChange();
+            this.timer = new DispatcherTimer(DispatcherPriority.Normal);
+            this.timer.Interval = TimeSpan.FromMilliseconds(500);
         }
+
 
         public override void OnApplyTemplate() {
             this.BindMouseDownToCustomTitleBar();
@@ -70,22 +79,23 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             WPF_ControlHelpers.CenterChild(parent, this);
             this.logScroll = this.lbLog.GetScrollViewer();
-            //this.lbLog.Collapse();
             this.logSection.Collapse();
-
             this.AddEventHandlers();
+            this.timer.Start();
             DI.Wrapper.CurrentSupportedLanguage(this.SetLanguage);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             this.RemoveEventHandlers();
             this.buttonSizer.Teardown();
+            this.timer.Stop();
             DI.Wrapper.BLE_Disconnect();
             Instances--;
         }
 
         #endregion
 
+        #region button handlers
 
         private void btnSend_Click(object sender, RoutedEventArgs e) {
 
@@ -117,22 +127,18 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         private void btnCopyLog_Click(object sender, RoutedEventArgs e) {
             try {
                 lock (this.lbLog) {
-                    //App.ShowMsg("Copy");
-
                     StringBuilder sb = new StringBuilder();
                     this.lbLog.SelectAll();
                     foreach (var item in lbLog.SelectedItems) {
                         sb.AppendLine(item.ToString());
                     }
                     Clipboard.SetText(sb.ToString());
-                    //App.ShowMsgTitle("Stuff", sb.ToString());
-
                     this.lbLog.SelectedItem = null;
                     this.lbLog.UnselectAll();
                 }
             }
             catch (Exception ex) {
-                App.ShowMsgTitle("Exception", ex.Message);
+                this.log.Exception(9999, "btnCopyLog_Click", "", ex);
             }
         }
 
@@ -144,37 +150,84 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                     }
                 }
             }
-            catch (Exception) { }
+            catch (Exception ex) {
+                this.log.Exception(9999, "btnClearLog_Click", "", ex);
+            }
         }
 
-
+        #endregion
 
         #region Event handlers
+
+        bool dataChanged = false;
 
         private void AddEventHandlers() {
             DI.Wrapper.LanguageChanged += this.languageChangedHandler;
             DI.Wrapper.BLE_CharacteristicReadValueChanged += this.characteristicReadValueChanged;
+            this.timer.Tick += this.Timer_Tick;
             App.STATIC_APP.LogMsgEvent += this.AppLogMsgEventHandler;
         }
 
         private void characteristicReadValueChanged(object sender, BLE_CharacteristicReadResult e) {
-            this.Dispatcher.Invoke(() => {
-                try {
-                    this.treeServices.Items.Refresh();
-                    this.ExpandTree();
-                }
-                catch (Exception e) {
-                    this.log.Exception(9999, "characteristicReadValueChanged", "", e);
-                }
-            });
+            lock (this.treeServices) {
+                this.dataChanged = true;
+            }
+        }
+
+
+        //private void RecurseNode(TreeNode)
+
+
+        private void RecurseTree(TreeView treeView) {
+
 
         }
+
+
+        private void UpdateTreeView() {
+            try {
+                //if (treeServices.Items != null) {
+                //    isExp.Clear();
+
+
+
+
+
+                //    //using (var d = Dispatcher.DisableProcessing()) {
+                //    //    Dispatcher.BeginInvoke(() => {
+                //    //        foreach (object o in this.treeServices.Items) {
+                //    //            TreeViewItem item = this.treeServices.ItemContainerGenerator.ContainerFromItem(o) as TreeViewItem;
+                //    //            this.FindExpanded(this.treeServices, item);
+                //    //        }
+                //    //        this.log.Error(1001, () => string.Format("Number of bool in queue:{0}", this.isExp.Count));
+                //    //        this.treeServices.Items.Refresh();
+                //    //    });
+                //    //}
+                //}
+                //this.ExpandTree();
+                lock (this) {
+                    this.treeServices.RefreshAndExpand();
+                }
+
+
+            }
+            catch (Exception e) {
+                this.log.Exception(9999, "characteristicReadValueChanged", "", e);
+            }
+        }
+
+
+
+
+
+
 
         private void RemoveEventHandlers() {
             DI.Wrapper.LanguageChanged -= this.languageChangedHandler;
             App.STATIC_APP.LogMsgEvent -= this.AppLogMsgEventHandler;
             DI.Wrapper.BLE_DeviceConnectResult -= this.DeviceConnectResultHandler;
             DI.Wrapper.BLE_CharacteristicReadValueChanged -= this.characteristicReadValueChanged;
+            this.timer.Tick -= this.Timer_Tick;
         }
 
         private void languageChangedHandler(object sender, SupportedLanguage language) {
@@ -195,12 +248,12 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         }
 
 
-        private void CharacteristicDataChangeHandler() {
-            if (this.treeServices != null && this.treeServices.ItemsSource != null && this.treeServices.Items != null) {
-                this.treeServices.Items.Refresh();
-                this.ExpandTree();
-            }
-        }
+        //private void CharacteristicDataChangeHandler() {
+        //    //if (this.treeServices != null && this.treeServices.ItemsSource != null && this.treeServices.Items != null) {
+        //    //    this.treeServices.Items.Refresh();
+        //    //    this.ExpandTree();
+        //    //}
+        //}
 
 
         private void DeviceConnectResultHandler(object sender, BLEGetInfoStatus info) {
@@ -254,164 +307,22 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         }
 
 
-        private void ExpandTree() {
-
-            // This will expand the characteristic level so that we can see the updated data.
-            foreach (object o in this.treeServices.Items) {
-                TreeViewItem item = this.treeServices.ItemContainerGenerator.ContainerFromItem(o) as TreeViewItem;
-                if (item != null) {
-                    //this.ExpandAll(item, true);
-                    item.IsExpanded = true;
-
-                    // The this.ExpandAll(item, true) doesn't work but this 
-                    // will expand characteristics to show descriptors
-                    item.ExpandSubtree();
+        private void Timer_Tick(object sender, EventArgs args) {
+            lock (this.treeServices) {
+                if (this.dataChanged) {
+                    this.dataChanged = false;
+                    try {
+                        this.treeServices.RefreshAndExpand();
+                    }
+                    catch (Exception e) {
+                        this.log.Exception(9999, "characteristicReadValueChanged", "", e);
+                    }
                 }
             }
         }
 
         #endregion
 
-        #region THIS_DOES_NOT_YET_WORK
-
-#if BLAH_BLAH_BLAH
-                private static TreeViewItem ContainerFromItem(ItemContainerGenerator containerGenerator, object item) {
-            TreeViewItem container = (TreeViewItem)containerGenerator.ContainerFromItem(item);
-            if (container != null) {
-                return container;
-            }
-
-            foreach (object childItem in containerGenerator.Items) {
-                TreeViewItem parent = containerGenerator.ContainerFromItem(childItem) as TreeViewItem;
-                if (parent == null) {
-                    continue;
-                }
-
-                container = parent.ItemContainerGenerator.ContainerFromItem(item) as TreeViewItem;
-                if (container != null) {
-                    return container;
-                }
-
-                container = ContainerFromItem(parent.ItemContainerGenerator, item);
-                if (container != null) {
-                    return container;
-                }
-            }
-            return null;
-        }
-
-
-
-
-        ///////////////////////////
-
-        private void Expand3() {
-            foreach (var service in this.treeServices.Items) {
-                BLE_ServiceDataModel s = service as BLE_ServiceDataModel;
-                if (s!= null) {
-                    TreeViewItem tviS = treeServices.ItemContainerGenerator.ContainerFromItem(s) as TreeViewItem;
-                    if (tviS != null) {
-                        // This expands the characteristics held in the service tree object. A List
-                        tviS.IsExpanded = true;
-                        foreach (object xxx in tviS.Items) {
-                            LogUtils.Net.Log.Info("----------------", "------------------", () => string.Format("Type name:{0}", xxx.GetType().Name));
-
-                        }
-
-
-
-
-                        //foreach(var ch in s.Characteristics) {
-                        //    TreeViewItem tviC = tviS.ItemContainerGenerator.ContainerFromItem(ch.Value) as TreeViewItem;
-                        //    if (tviC != null) {
-                        //        tviC.IsExpanded = true;
-                        //        foreach (var d in ch.Value.Descriptors) {
-                        //            TreeViewItem tviD = tviC.ItemContainerGenerator.ContainerFromItem(d.Value) as TreeViewItem;
-                        //            if (tviD != null) {
-                        //                tviD.IsExpanded = true;
-                        //            }
-                        //        }
-                        //    }
-                        //}
-                    }
-                }
-            }
-        }
-
-
-
-        private void Expand2() {
-            //var tvi = FindTviFromObjectRecursive(this.treeServices, )
-        }
-
-
-
-
-
-
-        //https://www.xspdf.com/help/52475752.html
-        public static TreeViewItem FindTviFromObjectRecursive(ItemsControl ic, object o) {
-            //Search for the object model in first level children (recursively)
-            TreeViewItem tvi = ic.ItemContainerGenerator.ContainerFromItem(o) as TreeViewItem;
-            if (tvi != null) {
-                return tvi;
-            }
-            //Loop through user object models
-            foreach (object i in ic.Items) {
-                //Get the TreeViewItem associated with the iterated object model
-                TreeViewItem tvi2 = ic.ItemContainerGenerator.ContainerFromItem(i) as TreeViewItem;
-                tvi = FindTviFromObjectRecursive(tvi2, o);
-                if (tvi != null) {
-                    return tvi;
-                }
-            }
-            return null;
-        }
-
-
-        //////////////////////////
-        ///
-
-#endif
-
-
-        #endregion
-
     }
-
-
-#if TEST_CODE_TO_WRITE_TO_CHARACTERISTIC_AND_UPDATE
-    public static class TreeViewExtensions {
-
-        public static void ExpandAll(this TreeViewItem treeViewItem, bool isExpanded = true) {
-            try {
-                var stack = new Stack<TreeViewItem>(treeViewItem.Items.Cast<TreeViewItem>());
-                while (stack.Count > 0) {
-                    TreeViewItem item = stack.Pop();
-
-                    foreach (var child in item.Items) {
-                        var childContainer = child as TreeViewItem;
-                        if (childContainer == null) {
-                            childContainer = item.ItemContainerGenerator.ContainerFromItem(child) as TreeViewItem;
-                        }
-
-                        stack.Push(childContainer);
-                    }
-
-                    item.IsExpanded = isExpanded;
-                }
-            }
-            catch (System.Exception) {
-            }
-        }
-
-
-        public static void CollapseAll(this TreeViewItem treeViewItem) {
-            treeViewItem.ExpandAll(false);
-        }
-
-    }
-#endif
-
 
 }

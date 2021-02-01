@@ -37,7 +37,7 @@
                                     ItemsSource="{Binding Characteristics}" >
                             <!-- This data in the service -->
                             <DockPanel>
-                                <TextBlock Text="service: " FontSize="16"/>
+                                <TextBlock Text="Service: " FontSize="16"/>
                                 <TextBlock Text="{Binding Path=DisplayName}" FontSize="16"/>
                             </DockPanel>
                         </HierarchicalDataTemplate>
@@ -48,8 +48,8 @@
                             <!-- This is data in the characteristic -->
                             <StackPanel>
                                 <DockPanel>
-                                    <TextBlock Text="characteristic: " FontSize="16" />
-                                    <TextBlock Text="{Binding CharName}" FontSize="16"/>
+                                    <TextBlock Text="Characteristic: " FontSize="16" />
+                                    <TextBlock Text="{Binding Path=CharName}" FontSize="16"/>
                                     <TextBlock Text=" : " FontSize="16"/>
                                     <TextBlock Text="{Binding CharValue}" FontSize="16"/>
                                 </DockPanel>
@@ -57,13 +57,13 @@
                             </StackPanel>
                         </HierarchicalDataTemplate>
 
-                        <DataTemplate 
+                        <HierarchicalDataTemplate  x:Name="DescTemplate"
                                     DataType="{x:Type dataModels:BLE_DescriptorDataModel}">
                             <DockPanel >
                                 <TextBlock Text="Descriptor: " FontSize="16"/>
-                                <TextBlock Text="{Binding DisplayName}" FontSize="16"/>
+                                <TextBlock Text="{Binding Path=DisplayName}" FontSize="16"/>
                             </DockPanel>
-                        </DataTemplate>
+                        </HierarchicalDataTemplate>
 
                     </TreeView.Resources>
                 </TreeView>
