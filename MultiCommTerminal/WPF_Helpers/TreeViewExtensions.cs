@@ -1,4 +1,5 @@
 ﻿using BluetoothLE.Net.DataModels;
+using BluetoothLE.Net.interfaces;
 using LogUtils.Net;
 using System;
 using System.Collections.Generic;
@@ -24,29 +25,13 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
         }
 
 
-        // TODO replace with IUniqueIdentifiable
-        private static string GetGuid(object o) {
-            if (o is BLE_ServiceDataModel) {
-                return (o as BLE_ServiceDataModel).Uuid.ToString();
-            }
-            else if (o is BLE_CharacteristicDataModel) {
-                return (o as BLE_CharacteristicDataModel).Uuid.ToString();
-            }
-            else if (o is BLE_DescriptorDataModel) {
-                return (o as BLE_DescriptorDataModel).Uuid.ToString();
-            }
-            return Guid.NewGuid().ToString();
-        }
-
-
-
         private static void GetExpandedSubHeaders(ItemsControl parentContainer, List<string> expanded) {
             foreach (Object item in parentContainer.Items) {
                 try {
                     TreeViewItem currentContainer = parentContainer.ItemContainerGenerator.ContainerFromItem(item) as TreeViewItem;
                     if (currentContainer != null) {
                         if (currentContainer.IsExpanded) {
-                            expanded.Add(GetGuid(item));
+                            expanded.Add((item as IUniquelyIdentifiable).Uuid.ToString());
                         }
                         if (currentContainer.ItemContainerGenerator.Status != GeneratorStatus.ContainersGenerated) {
                             // If sub containers is not ready, we need to wait until they are generated.
@@ -72,8 +57,7 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
                 try {
                     TreeViewItem currentContainer = parentContainer.ItemContainerGenerator.ContainerFromItem(item) as TreeViewItem;
                     if (currentContainer != null) {
-                        string id = GetGuid(item);
-                        if (expanded.FirstOrDefault(x => x == id) != null) {
+                        if (expanded.FirstOrDefault(x => x == (item as IUniquelyIdentifiable).Uuid.ToString()) != null) {
                             currentContainer.IsExpanded = true;
                         }
                         if (currentContainer.ItemContainerGenerator.Status != GeneratorStatus.ContainersGenerated) {
