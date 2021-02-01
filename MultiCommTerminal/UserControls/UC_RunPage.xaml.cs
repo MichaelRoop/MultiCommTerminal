@@ -93,7 +93,7 @@ namespace MultiCommTerminal.NetCore.UserControls {
 
             this.inScroll = this.lbIncoming.GetScrollViewer();
             this.logScroll = this.lbLog.GetScrollViewer();
-            this.lbLog.Collapse();
+            this.logSection.Collapse();
 
             this.AddEventHandlers();
             DI.Wrapper.CurrentSupportedLanguage(this.SetLanguage);
@@ -158,7 +158,7 @@ namespace MultiCommTerminal.NetCore.UserControls {
 
 
         private void btnLog_Click(object sender, RoutedEventArgs e) {
-            this.lbLog.ToggleVisibility();
+            this.logSection.ToggleVisibility();
         }
 
 
@@ -207,24 +207,30 @@ namespace MultiCommTerminal.NetCore.UserControls {
         private void btnCopyLog_Click(object sender, RoutedEventArgs e) {
             try {
                 lock (this.lbLog) {
-                    // TODO - this fails.  Disabled for now. Revisit
                     StringBuilder sb = new StringBuilder();
+                    this.lbLog.SelectAll();
                     foreach (object row in lbLog.SelectedItems) {
-                        sb.Append(row.ToString());
-                        sb.AppendLine();
+                        sb.AppendLine(row.ToString());
                     }
-                    sb.Remove(sb.Length - 1, 1); // Just to avoid copying last empty row
-                    Clipboard.SetData(System.Windows.Forms.DataFormats.Text, sb.ToString());
+                    //sb.Remove(sb.Length - 1, 1); // Just to avoid copying last empty row
+                    Clipboard.SetText(sb.ToString());
+                    this.lbLog.UnselectAll();
                 }
             }
             catch (Exception ex) {
-                MessageBox.Show(ex.Message);
+                this.log.Exception(9999, "btnCopyLog_Click", "", ex);
             }
         }
 
+
         private void btnClearLog_Click(object sender, RoutedEventArgs e) {
             lock (this.lbLog) {
-                this.lbLog.ItemsSource = null;
+                try {
+                    this.lbLog.Items.Clear();
+                }
+                catch(Exception ex) {
+                    this.log.Exception(9999, "btnClearLog_Click", "", ex);
+                }
             }
         }
 

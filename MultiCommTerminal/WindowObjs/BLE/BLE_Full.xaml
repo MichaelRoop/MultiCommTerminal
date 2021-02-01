@@ -13,8 +13,8 @@
         Title="BLE"
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.BluetoothClassic_W}}"
         Loaded="Window_Loaded" Closing="Window_Closing"
-        MinHeight="100" MinWidth="200" MaxHeight="900" MaxWidth="1200" BorderThickness=".5">
-    <Grid>
+        MinHeight="100" MinWidth="200" MaxHeight="900"  BorderThickness=".5">
+    <Grid Width="850">
         <Grid x:Name="gridWait" Panel.ZIndex="10000" 
               HorizontalAlignment="Stretch" 
               VerticalAlignment="Stretch" Visibility="Collapsed" >
@@ -29,7 +29,7 @@
         <StackPanel>
             <Border Style="{StaticResource brd075}" Padding="0" >
                 <TreeView x:Name="treeServices" HorizontalAlignment="Stretch" Padding="10"
-                                MinWidth="400" MinHeight="250" MaxHeight="600" 
+                                MinHeight="250" MaxHeight="600" 
                                 ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
                     <TreeView.Resources>
                         <HierarchicalDataTemplate
@@ -90,15 +90,15 @@
                                     <Border x:Name="connectedOff" Style="{StaticResource brd075}" Padding="0" Height="15" Width="15" CornerRadius="7"
                                             Background="LightGray" BorderThickness="2" Margin="5,0" />
                                     <controls:UC_IconButton x:Name="btnConnect" Style="{StaticResource TextIconButton}" 
-                                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.Connect}}" MaxWidth="130"
+                                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.Connect}}" MaxWidth="150"
                                         IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Connect}}"                                                                                            
                                         Background="Transparent" Click="btnConnect_Click" />
-                                    <controls:UC_IconButton x:Name="btnLog" Click="btnLog_Click" MaxWidth="130"
+                                    <controls:UC_IconButton x:Name="btnLog" Click="btnLog_Click" MaxWidth="150"
                                         Style="{StaticResource TextIconButton}" Margin="10"
                                         Content="{Binding Source={x:Static wpfHelper:TxtBinder.LogText}}"
                                     IconSource="{Binding Source={x:Static wpfHelper:IconBinder.LogIcon}}"/>
                                     <controls:UC_IconButton x:Name="btnExit" Click="btnExit_Click" IconMargin="7"
-                                        Style="{StaticResource TextIconButton}" MaxWidth="130"
+                                        Style="{StaticResource TextIconButton}" MaxWidth="150"
                                         Content="{Binding Source={x:Static wpfHelper:TxtBinder.Exit}}"
                                         IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Exit}}"/>
                                 </DockPanel>
