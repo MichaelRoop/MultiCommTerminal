@@ -108,8 +108,19 @@ namespace Bluetooth.UWP.Core {
 
 
         private void CurrentDevice_ConnectionStatusChanged(BluetoothLEDevice sender, object args) {
-            this.log.Info("CurrentDevice_NameChanged", () =>
-                string.Format("Device '{0}' Connection status changed to {1}", sender.Name, sender.ConnectionStatus.ToString()));
+            Task.Run(() => {
+                try {
+                    this.log.Info("CurrentDevice_ConnectionStatusChanged", () =>
+                        string.Format("Device '{0}' Connection status changed to {1}", sender.Name, sender.ConnectionStatus.ToString()));
+                    this.ConnectionStatusChanged?.Invoke(sender, new BLE_ConnectStatusChangeInfo() {
+                        Status = sender.ConnectionStatus.Convert(),
+                        Message = "",
+                    });
+                }
+                catch(Exception ex) {
+                    this.log.Exception(9999, "CurrentDevice_ConnectionStatusChanged", "", ex);
+                }
+            });
         }
 
         #endregion

@@ -1,4 +1,5 @@
 ﻿using BluetoothLE.Net.DataModels;
+using BluetoothLE.Net.Enumerations;
 using BluetoothLE.Net.interfaces;
 using Common.Net.Network;
 using System;
@@ -18,6 +19,8 @@ namespace Bluetooth.UWP.Core {
         public event EventHandler<NetPropertiesUpdateDataModel> DeviceUpdated;
 
         public event EventHandler<BLEGetInfoStatus> DeviceInfoAssembled;
+
+        public event EventHandler<BLE_ConnectStatusChangeInfo> ConnectionStatusChanged;
 
         #endregion
 

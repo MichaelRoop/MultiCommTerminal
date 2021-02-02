@@ -1,6 +1,8 @@
-﻿using Common.Net.Network;
+﻿using BluetoothLE.Net.Enumerations;
+using Common.Net.Network;
 using LogUtils.Net;
 using System.Collections.Generic;
+using Windows.Devices.Bluetooth;
 using Windows.Devices.Enumeration;
 using Windows.Storage.Streams;
 
@@ -57,6 +59,21 @@ namespace Bluetooth.UWP.Core {
             };
             return dm;
         }
+
+
+        public static BLE_ConnectStatus Convert(this BluetoothConnectionStatus status) {
+            switch (status) {
+                case BluetoothConnectionStatus.Disconnected:
+                    return BLE_ConnectStatus.Disconnected;
+                case BluetoothConnectionStatus.Connected:
+                    return BLE_ConnectStatus.Connected;
+                default:
+                    // Just for compiler. Only 2 enums
+                    return BLE_ConnectStatus.Disconnected;
+            }
+        }
+
+
 
         #region Deprecated
 

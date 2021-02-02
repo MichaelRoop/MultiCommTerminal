@@ -299,6 +299,9 @@ namespace MultiCommWrapper.Net.interfaces {
         /// <summary>Raised when BLE info on a device is finished gathering</summary>
         event EventHandler<BLE_CharacteristicReadResult> BLE_CharacteristicReadValueChanged;
 
+        /// <summary>Used to track device provoked disconnection after connection</summary>
+        event EventHandler<BLE_ConnectStatusChangeInfo> BLE_ConnectionStatusChanged;
+
         void BLE_DiscoverAsync();
 
         /// <summary>Cancel any discovery in progress</summary>

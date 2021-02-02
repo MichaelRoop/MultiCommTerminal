@@ -38,6 +38,9 @@ namespace MultiCommWrapper.Net.WrapCode {
         /// <summary>Raised when BLE info on a device is finished gathering</summary>
         public event EventHandler<BLE_CharacteristicReadResult> BLE_CharacteristicReadValueChanged;
 
+        /// <summary>Used to track device provoked disconnection after connection</summary>
+        public event EventHandler<BLE_ConnectStatusChangeInfo> BLE_ConnectionStatusChanged;
+
 
         private void BLE_DeviceDiscoveredHandler(object sender, BluetoothLEDeviceInfo e) {
             if (this.BLE_DeviceDiscovered != null) {
@@ -227,6 +230,14 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
+        private void BLEBluetooth_ConnectionStatusChanged(object sender, BLE_ConnectStatusChangeInfo e) {
+            e.Message = e.Status == BLE_ConnectStatus.Connected 
+                ? this.GetText(MsgCode.Connected) 
+                : this.GetText(MsgCode.Disconnected);
+            this.BLE_ConnectionStatusChanged?.Invoke(sender, e);
+        }
+
+
         private string Translate(BLEOperationStatus status) {
             switch (status) {
                 case BLEOperationStatus.Success:
@@ -264,7 +275,9 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.bleBluetooth.DeviceInfoAssembled -= this.BleDeviceInfoAssembledHandler;
             this.bleBluetooth.DeviceConnectResult -= this.BleDeviceConnectResultHandler;
             this.bleBluetooth.CharacteristicReadValueChanged -= this.BLE_CharacteristicReadValueChangeHandler;
+            this.bleBluetooth.ConnectionStatusChanged -= this.BLEBluetooth_ConnectionStatusChanged;
         }
+
 
         #endregion
 

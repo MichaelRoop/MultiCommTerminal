@@ -85,10 +85,11 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             DI.Wrapper.CurrentSupportedLanguage(this.SetLanguage);
         }
 
+
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+            this.timer.Stop();
             this.RemoveEventHandlers();
             this.buttonSizer.Teardown();
-            this.timer.Stop();
             DI.Wrapper.BLE_Disconnect();
             Instances--;
         }
@@ -113,8 +114,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         private void btnConnect_Click(object sender, RoutedEventArgs e) {
             this.SetConnectState(false);
-            this.treeServices.ItemsSource = null;
-            this.currentDevice = null;
             var device = BLESelect.ShowBox(this.parent, true);
             if (device != null) {
                 this.IsBusy = true;
@@ -168,65 +167,13 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             App.STATIC_APP.LogMsgEvent += this.AppLogMsgEventHandler;
         }
 
-        private void characteristicReadValueChanged(object sender, BLE_CharacteristicReadResult e) {
-            lock (this.treeServices) {
-                this.dataChanged = true;
-            }
-        }
-
-
-        //private void RecurseNode(TreeNode)
-
-
-        private void RecurseTree(TreeView treeView) {
-
-
-        }
-
-
-        private void UpdateTreeView() {
-            try {
-                //if (treeServices.Items != null) {
-                //    isExp.Clear();
-
-
-
-
-
-                //    //using (var d = Dispatcher.DisableProcessing()) {
-                //    //    Dispatcher.BeginInvoke(() => {
-                //    //        foreach (object o in this.treeServices.Items) {
-                //    //            TreeViewItem item = this.treeServices.ItemContainerGenerator.ContainerFromItem(o) as TreeViewItem;
-                //    //            this.FindExpanded(this.treeServices, item);
-                //    //        }
-                //    //        this.log.Error(1001, () => string.Format("Number of bool in queue:{0}", this.isExp.Count));
-                //    //        this.treeServices.Items.Refresh();
-                //    //    });
-                //    //}
-                //}
-                //this.ExpandTree();
-                lock (this) {
-                    this.treeServices.RefreshAndExpand();
-                }
-
-
-            }
-            catch (Exception e) {
-                this.log.Exception(9999, "characteristicReadValueChanged", "", e);
-            }
-        }
-
-
-
-
-
-
 
         private void RemoveEventHandlers() {
             DI.Wrapper.LanguageChanged -= this.languageChangedHandler;
             App.STATIC_APP.LogMsgEvent -= this.AppLogMsgEventHandler;
             DI.Wrapper.BLE_DeviceConnectResult -= this.DeviceConnectResultHandler;
             DI.Wrapper.BLE_CharacteristicReadValueChanged -= this.characteristicReadValueChanged;
+            DI.Wrapper.BLE_ConnectionStatusChanged -= this.connectionStatusChanged;
             this.timer.Tick -= this.Timer_Tick;
         }
 
@@ -246,14 +193,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             }
             catch (Exception) { }
         }
-
-
-        //private void CharacteristicDataChangeHandler() {
-        //    //if (this.treeServices != null && this.treeServices.ItemsSource != null && this.treeServices.Items != null) {
-        //    //    this.treeServices.Items.Refresh();
-        //    //    this.ExpandTree();
-        //    //}
-        //}
 
 
         private void DeviceConnectResultHandler(object sender, BLEGetInfoStatus info) {
@@ -279,6 +218,21 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             });
         }
 
+
+        private void connectionStatusChanged(object sender, BLE_ConnectStatusChangeInfo e) {
+            if (e.Status == BLE_ConnectStatus.Disconnected) {
+                this.SetConnectState(false);
+                App.ShowMsg(e.Message);
+            }
+        }
+
+        private void characteristicReadValueChanged(object sender, BLE_CharacteristicReadResult e) {
+            lock (this.treeServices) {
+                this.dataChanged = true;
+            }
+        }
+
+
         #endregion
 
         #region Private
@@ -288,10 +242,14 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                 if (isConnected) {
                     this.connectedOff.Collapse();
                     this.connectedOn.Show();
+                    DI.Wrapper.BLE_ConnectionStatusChanged += this.connectionStatusChanged;
                 }
                 else {
                     this.connectedOn.Collapse();
                     this.connectedOff.Show();
+                    this.treeServices.ItemsSource = null;
+                    this.currentDevice = null;
+                    DI.Wrapper.BLE_ConnectionStatusChanged -= this.connectionStatusChanged;
                 }
             });
         }
