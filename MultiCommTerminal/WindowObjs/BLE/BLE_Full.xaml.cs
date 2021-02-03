@@ -250,6 +250,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                     this.treeServices.ItemsSource = null;
                     this.currentDevice = null;
                     DI.Wrapper.BLE_ConnectionStatusChanged -= this.connectionStatusChanged;
+                    DI.Wrapper.BLE_Disconnect();
                 }
             });
         }
