@@ -113,8 +113,13 @@ namespace BluetoothRfComm.UWP.Core {
 
 
         public void Disconnect() {
-            this.msgPump.Disconnect();
-            // TODO - check if BT has some things to tear down
+            try {
+                this.msgPump.Disconnect();
+                // TODO - check if BT has some things to tear down
+            }
+            catch (Exception e) {
+                this.log.Exception(9999, "Disconnect", "", e);
+            }
         }
 
         #endregion

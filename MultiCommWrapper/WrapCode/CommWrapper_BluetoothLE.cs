@@ -43,38 +43,50 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         private void BLE_DeviceDiscoveredHandler(object sender, BluetoothLEDeviceInfo e) {
-            if (this.BLE_DeviceDiscovered != null) {
-                this.BLE_DeviceDiscovered(this, e);
-            }
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 200050, "Failure on BLE_DeviceDiscoveredHandler", () => {
+                this.BLE_DeviceDiscovered?.Invoke(this, e);
+            });
+            this.RaiseIfException(report);
         }
 
 
         private void BLE_DeviceRemovedHandler(object sender, string e) {
-            if (this.BLE_DeviceRemoved != null) {
-                this.BLE_DeviceRemoved(this, e);
-            }
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 200051, "Failure on BLE_DeviceRemovedHandler", () => {
+                this.BLE_DeviceRemoved?.Invoke(this, e);
+            });
         }
 
 
         private void BLE_DeviceUpdatedHandler(object sender, NetPropertiesUpdateDataModel args) {
-            this.BLE_DeviceUpdated?.Invoke(this, args);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 200052, "Failure on BLE_DeviceUpdatedHandler", () => {
+                this.BLE_DeviceUpdated?.Invoke(this, args);
+            });
         }
 
 
         private void BLE_DeviceDiscoveryCompleted(object sender, bool e) {
-            if (this.BLE_DeviceDiscoveryComplete != null) {
-                this.BLE_DeviceDiscoveryComplete.Invoke(this, e);
-            }
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 200053, "Failure on BLE_DeviceDiscoveryCompleted", () => {
+                this.BLE_DeviceDiscoveryComplete?.Invoke(this, e);
+            });
         }
 
 
         private void BleStack_MsgReceived(object sender, byte[] e) {
-            throw new NotImplementedException();
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 200054, "Failure on BleStack_MsgReceived", () => {
+            });
         }
 
 
         private void BLE_CharacteristicReadValueChangeHandler(object sender, BLE_CharacteristicReadResult args) {
-            this.BLE_CharacteristicReadValueChanged?.Invoke(sender, args);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 200055, "Failure on BLE_CharacteristicReadValueChangeHandler", () => {
+                this.BLE_CharacteristicReadValueChanged?.Invoke(sender, args);
+            });
         }
 
 
@@ -83,23 +95,35 @@ namespace MultiCommWrapper.Net.WrapCode {
         #region Public
 
         public void BLE_DiscoverAsync() {
-            this.bleBluetooth.DiscoverDevices();
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 200056, "Failure on BLE_DiscoverAsync", () => {
+                this.bleBluetooth.DiscoverDevices();
+            });
         }
 
 
         public void BLE_CancelDiscover() {
-            this.bleBluetooth.CancelDiscoverDevices();
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 200057, "Failure on BLE_CancelDiscover", () => {
+                this.bleBluetooth.CancelDiscoverDevices();
+            });
         }
 
 
         public void BLE_ConnectAsync(BluetoothLEDeviceInfo device) {
-            this.bleBluetooth.Connect(device);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 200058, "Failure on BLE_ConnectAsync", () => {
+                this.bleBluetooth.Connect(device);
+            });
         }
 
 
 
         public void BLE_GetInfo(BluetoothLEDeviceInfo device) {
-            this.bleBluetooth.GetInfo(device);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 200059, "Failure on BluetoothLEDeviceInfo", () => {
+                this.bleBluetooth.GetInfo(device);
+            });
         }
 
 
@@ -164,7 +188,10 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void BLE_Disconnect() {
-            this.bleBluetooth.Disconnect();
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 200060, "Failure on BLE_Disconnect", () => {
+                this.bleBluetooth.Disconnect();
+            });
         }
 
 

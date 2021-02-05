@@ -26,93 +26,125 @@ namespace MultiCommWrapper.Net.WrapCode {
         #region Event handlers
 
         private void BTClassic_BytesReceivedHandler(object sender, byte[] data) {
-            // TODO Eventually assemble a message according to terminators and just send up completed message
-
-            string msg = Encoding.ASCII.GetString(data, 0, data.Length);
-            this.log.Info("", () => string.Format("Msg In: '{0}'", msg));
-            if (this.BT_BytesReceived != null) {
-                this.BT_BytesReceived(this, msg);
-            }
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 20010, "Failure on BTClassic_BytesReceivedHandler", () => {
+                string msg = Encoding.ASCII.GetString(data, 0, data.Length);
+                this.log.Info("", () => string.Format("Msg In: '{0}'", msg));
+                this.BT_BytesReceived?.Invoke(this, msg);
+            });
+            this.RaiseIfException(report);
         }
 
 
         private void BTClassic_ConnectionCompletedHander(object sender, bool e) {
-            if (this.BT_ConnectionCompleted != null) {
-                this.BT_ConnectionCompleted(this, e);
-            }
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 20011, "Failure on BTClassic_ConnectionCompletedHander", () => {
+                this.BT_ConnectionCompleted?.Invoke(this, e);
+            });
+            this.RaiseIfException(report);
         }
 
 
         private void BTClassic_DiscoveryCompleteHandler(object sender, bool e) {
-            if (this.BT_DiscoveryComplete != null) {
-                this.BT_DiscoveryComplete(this, e);
-            }
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 20012, "Failure on BTClassic_DiscoveryCompleteHandler", () => {
+                this.BT_DiscoveryComplete?.Invoke(this, e);
+            });
+            this.RaiseIfException(report);
+
         }
 
 
         private void BTClassic_DiscoveredDeviceHandler(object sender, BTDeviceInfo e) {
-            if (this.BT_DeviceDiscovered != null) {
-                this.BT_DeviceDiscovered(this, e);
-            }
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 20013, "Failure on BTClassic_DiscoveredDeviceHandler", () => {
+                this.BT_DeviceDiscovered?.Invoke(this, e);
+            });
+            this.RaiseIfException(report);
         }
 
 
         private void BTClassic_DeviceInfoGathered(object sender, BTDeviceInfo e) {
-            this.BT_DeviceInfoGathered?.Invoke(this, e);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 20014, "Failure on BTClassic_DeviceInfoGathered", () => {
+                this.BT_DeviceInfoGathered?.Invoke(this, e);
+            });
+            this.RaiseIfException(report);
         }
 
 
         private void BTClassic_PairInfoRequested(object sender, BT_PairInfoRequest e) {
-            if (this.BT_PairInfoRequested != null) {
-                // Build title
-                BT_PairingInfoDataModel dataModel = new BT_PairingInfoDataModel() {
-                    RequestTitle = string.Format("{0} ({1})",
-                        this.GetText(MsgCode.PairBluetooth), e.DeviceName)
-                };
-                dataModel.IsPinRequested = e.PinRequested;
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 20017, "Failure on BTClassic_PairInfoRequested", () => {
+                if (this.BT_PairInfoRequested != null) {
+                    // Build title
+                    BT_PairingInfoDataModel dataModel = new BT_PairingInfoDataModel() {
+                        RequestTitle = string.Format("{0} ({1})",
+                            this.GetText(MsgCode.PairBluetooth), e.DeviceName)
+                    };
+                    dataModel.IsPinRequested = e.PinRequested;
 
-                // Build message
-                dataModel.RequestMsg = e.PinRequested ?
-                     this.GetText(MsgCode.EnterPin) :
-                     this.GetText(MsgCode.Continue);
+                    // Build message
+                    dataModel.RequestMsg = e.PinRequested ?
+                         this.GetText(MsgCode.EnterPin) :
+                         this.GetText(MsgCode.Continue);
 
-                // push up to user
-                this.BT_PairInfoRequested(sender, dataModel);
+                    // push up to user
+                    this.BT_PairInfoRequested(sender, dataModel);
 
-                // copy data from user so BT calling up can determine what to do
-                e.Response = dataModel.HasUserConfirmed;
-                e.Pin = dataModel.PIN;
-            }
-            else {
-                this.log.Error(9999, "No subscribers to the wrapper pair info");
-            }
+                    // copy data from user so BT calling up can determine what to do
+                    e.Response = dataModel.HasUserConfirmed;
+                    e.Pin = dataModel.PIN;
+                }
+                else {
+                    this.log.Error(9999, "No subscribers to the wrapper pair info");
+                }
+            });
+            this.RaiseIfException(report);
         }
 
 
         private void BTClassic_PairStatus(object sender, BTPairOperationStatus e) {
-            this.BT_PairStatus?.Invoke(sender, e);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 20015, "Failure on BTClassic_PairStatus", () => {
+                this.BT_PairStatus?.Invoke(sender, e);
+            });
+            this.RaiseIfException(report);
         }
 
 
         private void BTClassic_UnPairStatus(object sender, BTUnPairOperationStatus e) {
-            this.BT_UnPairStatus?.Invoke(sender, e);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 20016, "Failure on BTClassic_UnPairStatus", () => {
+                this.BT_UnPairStatus?.Invoke(sender, e);
+            });
+            this.RaiseIfException(report);
         }
 
         #endregion
 
         public void BTClassicDiscoverAsync(bool paired) {
-            this.classicBluetooth.DiscoverDevicesAsync(paired);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 20001, "Failure on BTClassicDiscoverAsync", () => {
+                this.classicBluetooth.DiscoverDevicesAsync(paired);
+            });
+            this.RaiseIfException(report);
         }
 
+
         public void BTClassicGetExtraInfoAsync(BTDeviceInfo device) {
-            this.classicBluetooth.GetDeviceInfoAsync(device);                
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 20002, "Failure on BTClassicGetExtraInfoAsync", () => {
+                this.classicBluetooth.GetDeviceInfoAsync(device);                
+            });
+            this.RaiseIfException(report);
         }
 
 
         public void BTClassicConnectAsync(BTDeviceInfo device) {
             this.log.InfoEntry("BTClassicConnectAsync");
             ErrReport report;
-            WrapErr.ToErrReport(out report, 9999, "Failure on BTClassicConnectAsync", () => {
+            WrapErr.ToErrReport(out report, 20003, "Failure on BTClassicConnectAsync", () => {
                 this.classicBluetooth.ConnectAsync(device);
             });
             if (report.Code != 0) {
@@ -122,29 +154,45 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void BTClassicDisconnect() {
-            this.classicBluetooth.Disconnect();
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 20004, "Failure on BTClassicDisconnect", () => {
+                this.classicBluetooth.Disconnect();
+            });
+            this.RaiseIfException(report);
         }
 
 
         public void BTClassicPairAsync(BTDeviceInfo device) {
-            this.classicBluetooth.PairgAsync(device);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 20005, "Failure on BTClassicPairAsync", () => {
+                this.classicBluetooth.PairgAsync(device);
+            });
+            this.RaiseIfException(report);
         }
 
 
         public void BTClassicUnPairAsync(BTDeviceInfo device) {
-            this.classicBluetooth.UnPairAsync(device);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 20006, "Failure on BTClassicUnPairAsync", () => {
+                this.classicBluetooth.UnPairAsync(device);
+            });
+            this.RaiseIfException(report);
         }
 
 
         public void BTClassicSend(string msg) {
-            this.GetCurrentTerminator(
-                CommMedium.Bluetooth,
-                (data)=> {
-                    this.btClassicStack.InTerminators = data.TerminatorBlock;
-                    this.btClassicStack.OutTerminators = data.TerminatorBlock;
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 20007, "Failure on BTClassicSend", () => {
+                this.GetCurrentTerminator(
+                    CommMedium.Bluetooth,
+                    (data) => {
+                        this.btClassicStack.InTerminators = data.TerminatorBlock;
+                        this.btClassicStack.OutTerminators = data.TerminatorBlock;
 
-                }, (err) => { });
-            this.btClassicStack.SendToComm(msg);
+                    }, (err) => { });
+                this.btClassicStack.SendToComm(msg);
+            });
+            this.RaiseIfException(report);
         }
 
 
