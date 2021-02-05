@@ -67,7 +67,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiCommTerminal.XamarinFo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BluetoothCommonAndroidXamarin", "BluetoothCommonAndroidXamarin\BluetoothCommonAndroidXamarin.csproj", "{7728F061-B0FF-43BE-A039-F0000E1F43EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiCommTerminalIconFactories", "MultiCommTerminalIconFactories\MultiCommTerminalIconFactories.csproj", "{B7A51635-A748-4A80-9D66-9A8573A9C09A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiCommTerminalIconFactories", "MultiCommTerminalIconFactories\MultiCommTerminalIconFactories.csproj", "{B7A51635-A748-4A80-9D66-9A8573A9C09A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiCommTestCases.Core", "MultiCommTestCases.Core\MultiCommTestCases.Core.csproj", "{2A7F5C3F-D621-40C0-87DE-A477433D63F6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestCaseSupport.Core", "..\SharedNetLibs\TestCaseSupport.Core\TestCaseSupport.Core.csproj", "{0854A95C-34F6-416A-89FC-DCA394D9B3DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1025,6 +1029,62 @@ Global
 		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Release|x64.Build.0 = Release|Any CPU
 		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Release|x86.ActiveCfg = Release|Any CPU
 		{B7A51635-A748-4A80-9D66-9A8573A9C09A}.Release|x86.Build.0 = Release|Any CPU
+		{2A7F5C3F-D621-40C0-87DE-A477433D63F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A7F5C3F-D621-40C0-87DE-A477433D63F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A7F5C3F-D621-40C0-87DE-A477433D63F6}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{2A7F5C3F-D621-40C0-87DE-A477433D63F6}.Debug|ARM.Build.0 = Debug|Any CPU
+		{2A7F5C3F-D621-40C0-87DE-A477433D63F6}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{2A7F5C3F-D621-40C0-87DE-A477433D63F6}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{2A7F5C3F-D621-40C0-87DE-A477433D63F6}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{2A7F5C3F-D621-40C0-87DE-A477433D63F6}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{2A7F5C3F-D621-40C0-87DE-A477433D63F6}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{2A7F5C3F-D621-40C0-87DE-A477433D63F6}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{2A7F5C3F-D621-40C0-87DE-A477433D63F6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2A7F5C3F-D621-40C0-87DE-A477433D63F6}.Debug|x64.Build.0 = Debug|Any CPU
+		{2A7F5C3F-D621-40C0-87DE-A477433D63F6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2A7F5C3F-D621-40C0-87DE-A477433D63F6}.Debug|x86.Build.0 = Debug|Any CPU
+		{2A7F5C3F-D621-40C0-87DE-A477433D63F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A7F5C3F-D621-40C0-87DE-A477433D63F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A7F5C3F-D621-40C0-87DE-A477433D63F6}.Release|ARM.ActiveCfg = Release|Any CPU
+		{2A7F5C3F-D621-40C0-87DE-A477433D63F6}.Release|ARM.Build.0 = Release|Any CPU
+		{2A7F5C3F-D621-40C0-87DE-A477433D63F6}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{2A7F5C3F-D621-40C0-87DE-A477433D63F6}.Release|ARM64.Build.0 = Release|Any CPU
+		{2A7F5C3F-D621-40C0-87DE-A477433D63F6}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{2A7F5C3F-D621-40C0-87DE-A477433D63F6}.Release|iPhone.Build.0 = Release|Any CPU
+		{2A7F5C3F-D621-40C0-87DE-A477433D63F6}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{2A7F5C3F-D621-40C0-87DE-A477433D63F6}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{2A7F5C3F-D621-40C0-87DE-A477433D63F6}.Release|x64.ActiveCfg = Release|Any CPU
+		{2A7F5C3F-D621-40C0-87DE-A477433D63F6}.Release|x64.Build.0 = Release|Any CPU
+		{2A7F5C3F-D621-40C0-87DE-A477433D63F6}.Release|x86.ActiveCfg = Release|Any CPU
+		{2A7F5C3F-D621-40C0-87DE-A477433D63F6}.Release|x86.Build.0 = Release|Any CPU
+		{0854A95C-34F6-416A-89FC-DCA394D9B3DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0854A95C-34F6-416A-89FC-DCA394D9B3DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0854A95C-34F6-416A-89FC-DCA394D9B3DB}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{0854A95C-34F6-416A-89FC-DCA394D9B3DB}.Debug|ARM.Build.0 = Debug|Any CPU
+		{0854A95C-34F6-416A-89FC-DCA394D9B3DB}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{0854A95C-34F6-416A-89FC-DCA394D9B3DB}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{0854A95C-34F6-416A-89FC-DCA394D9B3DB}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{0854A95C-34F6-416A-89FC-DCA394D9B3DB}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{0854A95C-34F6-416A-89FC-DCA394D9B3DB}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{0854A95C-34F6-416A-89FC-DCA394D9B3DB}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{0854A95C-34F6-416A-89FC-DCA394D9B3DB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0854A95C-34F6-416A-89FC-DCA394D9B3DB}.Debug|x64.Build.0 = Debug|Any CPU
+		{0854A95C-34F6-416A-89FC-DCA394D9B3DB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0854A95C-34F6-416A-89FC-DCA394D9B3DB}.Debug|x86.Build.0 = Debug|Any CPU
+		{0854A95C-34F6-416A-89FC-DCA394D9B3DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0854A95C-34F6-416A-89FC-DCA394D9B3DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0854A95C-34F6-416A-89FC-DCA394D9B3DB}.Release|ARM.ActiveCfg = Release|Any CPU
+		{0854A95C-34F6-416A-89FC-DCA394D9B3DB}.Release|ARM.Build.0 = Release|Any CPU
+		{0854A95C-34F6-416A-89FC-DCA394D9B3DB}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{0854A95C-34F6-416A-89FC-DCA394D9B3DB}.Release|ARM64.Build.0 = Release|Any CPU
+		{0854A95C-34F6-416A-89FC-DCA394D9B3DB}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{0854A95C-34F6-416A-89FC-DCA394D9B3DB}.Release|iPhone.Build.0 = Release|Any CPU
+		{0854A95C-34F6-416A-89FC-DCA394D9B3DB}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{0854A95C-34F6-416A-89FC-DCA394D9B3DB}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{0854A95C-34F6-416A-89FC-DCA394D9B3DB}.Release|x64.ActiveCfg = Release|Any CPU
+		{0854A95C-34F6-416A-89FC-DCA394D9B3DB}.Release|x64.Build.0 = Release|Any CPU
+		{0854A95C-34F6-416A-89FC-DCA394D9B3DB}.Release|x86.ActiveCfg = Release|Any CPU
+		{0854A95C-34F6-416A-89FC-DCA394D9B3DB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
