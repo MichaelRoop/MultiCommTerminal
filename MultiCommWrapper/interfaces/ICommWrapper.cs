@@ -1,6 +1,7 @@
 ﻿using BluetoothCommon.Net;
 using BluetoothLE.Net.DataModels;
 using BluetoothLE.Net.Enumerations;
+using ChkUtils.Net.ErrObjects;
 using Common.Net.Network;
 using CommunicationStack.Net.DataModels;
 using CommunicationStack.Net.Stacks;
@@ -58,6 +59,10 @@ namespace MultiCommWrapper.Net.interfaces {
         event EventHandler<ScriptDataModel> CurrentScriptChangedUSB;
         event EventHandler<ScriptDataModel> CurrentScriptChangedWIFI;
         event EventHandler<ScriptDataModel> CurrentScriptChangedEthernet;
+
+        /// <summary>Use in all public facing functions to signal unexpected condition</summary>
+        event EventHandler<ErrReport> UnexpectedExceptionEvent;
+
 
         #endregion
 

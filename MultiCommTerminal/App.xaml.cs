@@ -14,6 +14,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
@@ -100,13 +101,25 @@ namespace MultiCommTerminal.NetCore {
             ErrReport err;
             WrapErr.ToErrReport(out err, 9999, () => {
                 DI.Wrapper.CurrentStoredLanguage();
+                DI.Wrapper.UnexpectedExceptionEvent += this.Wrapper_UnexpectedExceptionEvent;
+
             });
             if (err.Code != 0) {
                 MessageBox.Show(err.Msg, "Critical Error loading DI container");
                 Application.Current.Shutdown();
             }
-
         }
+
+        private void Wrapper_UnexpectedExceptionEvent(object sender, ErrReport report) {
+            Window main = null;
+            if (Application.Current != null && Application.Current.MainWindow != null) {
+                main = Application.Current.MainWindow;
+            }
+            CrashReport.ShowBox(report, main);
+        }
+
+
+
 
         #endregion
 

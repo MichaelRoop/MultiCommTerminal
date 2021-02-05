@@ -26,11 +26,24 @@ namespace MultiCommTerminal.NetCore.WindowObjs.Utils {
             win.ShowDialog();
         }
 
+        public static void ShowBox(ErrReport report, Window parent) {
+            CrashReport win = new CrashReport(report, parent);
+            win.ShowDialog();
+        }
+
 
         public CrashReport(Exception ex, Window parent) {
             this.parent = parent;
             InitializeComponent();
             this.ProcessException(ex);
+            this.buttonWidthManager = new ButtonGroupSizeSyncManager(this.btnCopy, this.btnCancel, this.btnEmail);
+            this.buttonWidthManager.PrepForChange();
+        }
+
+        public CrashReport(ErrReport report, Window parent) {
+            this.parent = parent;
+            InitializeComponent();
+            this.ProcessException(report);
             this.buttonWidthManager = new ButtonGroupSizeSyncManager(this.btnCopy, this.btnCancel, this.btnEmail);
             this.buttonWidthManager.PrepForChange();
         }
@@ -100,6 +113,21 @@ namespace MultiCommTerminal.NetCore.WindowObjs.Utils {
                     else {
                         report = WrapErr.GetErrReport(0, e.Message, e);
                     }
+                    this.errBox.Text = string.Format("{0}\r\n{1}", report.Msg, report.StackTrace);
+                }
+                else {
+                    this.errBox.Text = "Null exception. No info";
+                }
+            }
+            catch (Exception) {
+                this.errBox.Text = "Failed to populate";
+            }
+        }
+
+
+        private void ProcessException(ErrReport report) {
+            try {
+                if (report != null) {
                     this.errBox.Text = string.Format("{0}\r\n{1}", report.Msg, report.StackTrace);
                 }
                 else {
