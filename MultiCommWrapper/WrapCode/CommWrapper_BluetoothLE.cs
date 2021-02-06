@@ -15,7 +15,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
     public partial class CommWrapper : ICommWrapper {
 
-        #region Events and their handlers
+        #region Events
 
         /// <summary>Event raised when a device is discovered</summary>
         public event EventHandler<BluetoothLEDeviceInfo> BLE_DeviceDiscovered;
@@ -41,6 +41,9 @@ namespace MultiCommWrapper.Net.WrapCode {
         /// <summary>Used to track device provoked disconnection after connection</summary>
         public event EventHandler<BLE_ConnectStatusChangeInfo> BLE_ConnectionStatusChanged;
 
+        #endregion
+
+        #region Event handlers
 
         private void BLE_DeviceDiscoveredHandler(object sender, BluetoothLEDeviceInfo e) {
             ErrReport report;
@@ -88,7 +91,58 @@ namespace MultiCommWrapper.Net.WrapCode {
                 this.BLE_CharacteristicReadValueChanged?.Invoke(sender, args);
             });
         }
+        private void BleDeviceInfoAssembledHandler(object sender, BLEGetInfoStatus info) {
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 200056, "Failure on BLEGetInfoStatus", () => {
+                info.Message = this.Translate(info.Status);
+                this.BLE_DeviceInfoGathered?.Invoke(this, info);
+            });
+            this.RaiseIfException(report);
+        }
 
+
+        private void BleDeviceConnectResultHandler(object sender, BLEGetInfoStatus info) {
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 200057, "Failure on BLEGetInfoStatus", () => {
+                info.Message = this.Translate(info.Status);
+                this.BLE_DeviceConnectResult?.Invoke(this, info);
+            });
+            this.RaiseIfException(report);
+        }
+
+
+        private void BLEBluetooth_ConnectionStatusChanged(object sender, BLE_ConnectStatusChangeInfo e) {
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 200058, "Failure on BLE_ConnectStatusChangeInfo", () => {
+                e.Message = e.Status == BLE_ConnectStatus.Connected 
+                    ? this.GetText(MsgCode.Connected) 
+                    : this.GetText(MsgCode.Disconnected);
+                this.BLE_ConnectionStatusChanged?.Invoke(sender, e);
+            });
+            this.RaiseIfException(report);
+        }
+
+
+        private string Translate(BLEOperationStatus status) {
+            switch (status) {
+                case BLEOperationStatus.Success:
+                    return this.GetText(MsgCode.Ok);
+                case BLEOperationStatus.NotFound:
+                    return this.GetText(MsgCode.NotFound);
+                case BLEOperationStatus.NoServices:
+                    return this.GetText(MsgCode.NoServices);
+                case BLEOperationStatus.GetServicesFailed:
+                    return this.GetText(MsgCode.ServicesFailure);
+                case BLEOperationStatus.Failed:
+                    return this.GetText(MsgCode.UnknownError);
+                case BLEOperationStatus.UnhandledError:
+                    return this.GetText(MsgCode.UnhandledError);
+                case BLEOperationStatus.UnknownError:
+                    return this.GetText(MsgCode.UnknownError);
+                default:
+                    return status.ToString().CamelCaseToSpaces();
+            }
+        }
 
         #endregion
 
@@ -239,53 +293,6 @@ namespace MultiCommWrapper.Net.WrapCode {
                 return new List<NetPropertyDataModelDisplay>();
             }
         }
-
-
-        #endregion
-
-        #region Event handlers
-
-        private void BleDeviceInfoAssembledHandler(object sender, BLEGetInfoStatus info) {
-            info.Message = this.Translate(info.Status);
-            this.BLE_DeviceInfoGathered?.Invoke(this, info);
-        }
-
-
-        private void BleDeviceConnectResultHandler(object sender, BLEGetInfoStatus info) {
-            info.Message = this.Translate(info.Status);
-            this.BLE_DeviceConnectResult?.Invoke(this, info);
-        }
-
-
-        private void BLEBluetooth_ConnectionStatusChanged(object sender, BLE_ConnectStatusChangeInfo e) {
-            e.Message = e.Status == BLE_ConnectStatus.Connected 
-                ? this.GetText(MsgCode.Connected) 
-                : this.GetText(MsgCode.Disconnected);
-            this.BLE_ConnectionStatusChanged?.Invoke(sender, e);
-        }
-
-
-        private string Translate(BLEOperationStatus status) {
-            switch (status) {
-                case BLEOperationStatus.Success:
-                    return this.GetText(MsgCode.Ok);
-                case BLEOperationStatus.NotFound:
-                    return this.GetText(MsgCode.NotFound);
-                case BLEOperationStatus.NoServices:
-                    return this.GetText(MsgCode.NoServices);
-                case BLEOperationStatus.GetServicesFailed:
-                    return this.GetText(MsgCode.ServicesFailure);
-                case BLEOperationStatus.Failed:
-                    return this.GetText(MsgCode.UnknownError);
-                case BLEOperationStatus.UnhandledError:
-                    return this.GetText(MsgCode.UnhandledError);
-                case BLEOperationStatus.UnknownError:
-                    return this.GetText(MsgCode.UnknownError);
-                default:
-                    return status.ToString().CamelCaseToSpaces();
-            }
-        }
-
 
 
         #endregion

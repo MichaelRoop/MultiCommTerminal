@@ -33,33 +33,46 @@ namespace MultiCommWrapper.Net.WrapCode {
         #region ICommWrapper methods
 
         public void SerialUsbDisconnect() {
-            this.serial.Disconnect();
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2003001, "Failure on SerialUsbDisconnect", () => {
+                this.serial.Disconnect();
+            });
+            this.RaiseIfException(report);
         }
 
 
         public void SerialUsbDiscoverAsync() {
-            this.serial.DiscoverSerialDevicesAsync();
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2003002, "Failure on SerialUsbDiscoverAsync", () => {
+                this.serial.DiscoverSerialDevicesAsync();
+            });
+            this.RaiseIfException(report);
         }
 
 
         public void SerialUsbConnect(SerialDeviceInfo dataModel, OnErr onError) {
-            this.InitSerialDeviceInfoConfigFields(
-                dataModel,
-                () => {
-                    this.serial.ConnectAsync(dataModel);
-                },onError);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2003003, "Failure on SerialUsbConnect", () => {
+                this.InitSerialDeviceInfoConfigFields(
+                    dataModel, () => this.serial.ConnectAsync(dataModel), onError);
+            });
+            this.RaiseIfException(report);
         }
 
 
         public void SerialUsbSend(string msg) {
-            this.GetCurrentTerminator(
-                CommMedium.Usb,
-                (data) => {
-                    this.serialStack.InTerminators = data.TerminatorBlock;
-                    this.serialStack.OutTerminators = data.TerminatorBlock;
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2003004, "Failure on SerialUsbSend", () => {
+                this.GetCurrentTerminator(
+                    CommMedium.Usb,
+                    (data) => {
+                        this.serialStack.InTerminators = data.TerminatorBlock;
+                        this.serialStack.OutTerminators = data.TerminatorBlock;
 
-                }, (err) => { });
-            this.serialStack.SendToComm(msg);
+                    }, (err) => { });
+                this.serialStack.SendToComm(msg);
+            });
+            this.RaiseIfException(report);
         }
 
         #region Display data retrieval
@@ -91,77 +104,87 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void Serial_GetStopBitsForDisplay(SerialDeviceInfo info, Action<List<StopBitDisplayClass>,int> onSuccess) {
-            List<StopBitDisplayClass> stopBits = new List<StopBitDisplayClass>();
-            stopBits.Add(new StopBitDisplayClass(SerialStopBits.One));
-            stopBits.Add(new StopBitDisplayClass(SerialStopBits.OnePointFive));
-            stopBits.Add(new StopBitDisplayClass(SerialStopBits.Two));
-            int ndx = stopBits.FindIndex(x => x.StopBits == info.StopBits);
-            onSuccess.Invoke(
-                stopBits,
-                (ndx == -1) ? 0 : ndx);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2003005, "Failure on Serial_GetStopBitsForDisplay", () => {
+                List<StopBitDisplayClass> stopBits = new List<StopBitDisplayClass>();
+                stopBits.Add(new StopBitDisplayClass(SerialStopBits.One));
+                stopBits.Add(new StopBitDisplayClass(SerialStopBits.OnePointFive));
+                stopBits.Add(new StopBitDisplayClass(SerialStopBits.Two));
+                int ndx = stopBits.FindIndex(x => x.StopBits == info.StopBits);
+                onSuccess?.Invoke(stopBits, (ndx == -1) ? 0 : ndx);
+            });
+            this.RaiseIfException(report);
         }
 
 
         public void Serial_GetParitysForDisplay(SerialDeviceInfo info, Action<List<SerialParityDisplayClass>, int> onSuccess) {
-            List<SerialParityDisplayClass> paritys = new List<SerialParityDisplayClass>();
-            paritys.Add(new SerialParityDisplayClass(SerialParityType.None));
-            paritys.Add(new SerialParityDisplayClass(SerialParityType.Even));
-            paritys.Add(new SerialParityDisplayClass(SerialParityType.Odd));
-            paritys.Add(new SerialParityDisplayClass(SerialParityType.Mark));
-            paritys.Add(new SerialParityDisplayClass(SerialParityType.Space));
-            int ndx = paritys.FindIndex(x => x.ParityType == info.Parity);
-            onSuccess.Invoke(
-                paritys,
-                (ndx == -1) ? 0 : ndx);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2003006, "Failure on Serial_GetParitysForDisplay", () => {
+                List<SerialParityDisplayClass> paritys = new List<SerialParityDisplayClass>();
+                paritys.Add(new SerialParityDisplayClass(SerialParityType.None));
+                paritys.Add(new SerialParityDisplayClass(SerialParityType.Even));
+                paritys.Add(new SerialParityDisplayClass(SerialParityType.Odd));
+                paritys.Add(new SerialParityDisplayClass(SerialParityType.Mark));
+                paritys.Add(new SerialParityDisplayClass(SerialParityType.Space));
+                int ndx = paritys.FindIndex(x => x.ParityType == info.Parity);
+                onSuccess?.Invoke(paritys, (ndx == -1) ? 0 : ndx);
+            });
+            this.RaiseIfException(report);
         }
 
 
 
         public void Serial_GetBaudsForDisplay(SerialDeviceInfo info, Action<List<uint>, int> onSuccess) {
-            List<uint> bauds = new List<uint>();
-            bauds.Add(300);
-            bauds.Add(600);
-            bauds.Add(1200);
-            bauds.Add(2400);
-            bauds.Add(4800);
-            bauds.Add(9600);
-            bauds.Add(14400);
-            bauds.Add(19200);
-            bauds.Add(28800);
-            bauds.Add(31250);
-            bauds.Add(38400);
-            bauds.Add(57600);
-            bauds.Add(115200);
-            int ndx = bauds.FindIndex(x => x == info.Baud);
-            onSuccess.Invoke(
-                bauds,
-                (ndx == -1) ? 0 : ndx);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2003007, "Failure on Serial_GetBaudsForDisplay", () => {
+                List<uint> bauds = new List<uint>();
+                bauds.Add(300);
+                bauds.Add(600);
+                bauds.Add(1200);
+                bauds.Add(2400);
+                bauds.Add(4800);
+                bauds.Add(9600);
+                bauds.Add(14400);
+                bauds.Add(19200);
+                bauds.Add(28800);
+                bauds.Add(31250);
+                bauds.Add(38400);
+                bauds.Add(57600);
+                bauds.Add(115200);
+                int ndx = bauds.FindIndex(x => x == info.Baud);
+                onSuccess?.Invoke(bauds, (ndx == -1) ? 0 : ndx);
+            });
+            this.RaiseIfException(report);
         }
 
 
         public void Serial_GetDataBitsForDisplay(SerialDeviceInfo info, Action<List<ushort>, int> onSuccess) {
-            List<ushort> dataBits = new List<ushort>();
-            dataBits.Add(5);
-            dataBits.Add(6);
-            dataBits.Add(7);
-            dataBits.Add(8);
-            int ndx = dataBits.FindIndex(x => x == info.DataBits);
-            onSuccess.Invoke(
-                dataBits,
-                (ndx == -1) ? 0 : ndx);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2003008, "Failure on Serial_GetDataBitsForDisplay", () => {
+                List<ushort> dataBits = new List<ushort>();
+                dataBits.Add(5);
+                dataBits.Add(6);
+                dataBits.Add(7);
+                dataBits.Add(8);
+                int ndx = dataBits.FindIndex(x => x == info.DataBits);
+                onSuccess?.Invoke(dataBits, (ndx == -1) ? 0 : ndx);
+            });
+            this.RaiseIfException(report);
         }
 
 
-        public void Serial_FlowControlForDisplay(SerialDeviceInfo info, Action<List<FlowControlDisplay>,int> onSuccess) {
-            List<FlowControlDisplay> fc = new List<FlowControlDisplay>();
-            fc.Add(new FlowControlDisplay(SerialFlowControlHandshake.None));
-            fc.Add(new FlowControlDisplay(SerialFlowControlHandshake.RequestToSend));
-            fc.Add(new FlowControlDisplay(SerialFlowControlHandshake.XonXoff));
-            fc.Add(new FlowControlDisplay(SerialFlowControlHandshake.RequestToSendXonXoff));
-            int ndx = fc.FindIndex(x => x.FlowControl == info.FlowHandshake);
-            onSuccess.Invoke(
-                fc,
-                (ndx == -1) ? 0 : ndx);
+        public void Serial_FlowControlForDisplay(SerialDeviceInfo info, Action<List<FlowControlDisplay>, int> onSuccess) {
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2003009, "Failure on Serial_FlowControlForDisplay", () => {
+                List<FlowControlDisplay> fc = new List<FlowControlDisplay>();
+                fc.Add(new FlowControlDisplay(SerialFlowControlHandshake.None));
+                fc.Add(new FlowControlDisplay(SerialFlowControlHandshake.RequestToSend));
+                fc.Add(new FlowControlDisplay(SerialFlowControlHandshake.XonXoff));
+                fc.Add(new FlowControlDisplay(SerialFlowControlHandshake.RequestToSendXonXoff));
+                int ndx = fc.FindIndex(x => x.FlowControl == info.FlowHandshake);
+                onSuccess?.Invoke(fc, (ndx == -1) ? 0 : ndx);
+            });
+            this.RaiseIfException(report);
         }
 
         #endregion
@@ -216,14 +239,18 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         
         public void CreateOrSaveSerialCfg(string display, SerialDeviceInfo data, Action onSuccess, OnErr onError) {
-            // Only have access to the object and not its index object
-            this.RetrieveSerialIndexItem(data,
-                (indexItem) => {
-                    this.SaveSerialCfg(indexItem, data, onSuccess, onError);
-                },
-                () => {
-                    this.CreateNewSerialCfg(display, data, onSuccess, onError);
-                }, onError);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2003010, "Failure on CreateOrSaveSerialCfg", () => {
+                // Only have access to the object and not its index object
+                this.RetrieveSerialIndexItem(data,
+                    (indexItem) => {
+                        this.SaveSerialCfg(indexItem, data, onSuccess, onError);
+                    },
+                    () => {
+                        this.CreateNewSerialCfg(display, data, onSuccess, onError);
+                    }, onError);
+            });
+            this.RaiseIfException(report);
         }
 
 
@@ -291,7 +318,11 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void DeleteSerialCfg(IIndexItem<SerialIndexExtraInfo> index, Action<bool> onComplete, OnErr onError) {
-            this.DeleteFromStorage(this.serialStorage, index, onComplete, onError);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2003011, "Failure on DeleteSerialCfg", () => {
+                this.DeleteFromStorage(this.serialStorage, index, onComplete, onError);
+            });
+            this.RaiseIfException(report);
         }
 
 
@@ -362,27 +393,39 @@ namespace MultiCommWrapper.Net.WrapCode {
         #region Event handlers
 
         private void Serial_OnErrorHandler(object sender, SerialUsbError err) {
-            // TODO - determine if you have to clean up the serial USB
-            if (err.PortName.Length > 0) {
-                err.Message = string.Format("{0}:{1} - {2}", MsgCode.Port, err.PortName, this.GetSerialErrText(err.Code));
-            }
-            else {
-                err.Message = string.Format("{0}", this.GetSerialErrText(err.Code));
-            }
-            this.SerialOnError(sender, err);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2003012, "Failure on Serial_OnErrorHandler", () => {
+                // TODO - determine if you have to clean up the serial USB
+                if (err.PortName.Length > 0) {
+                    err.Message = string.Format("{0}:{1} - {2}", MsgCode.Port, err.PortName, this.GetSerialErrText(err.Code));
+                }
+                else {
+                    err.Message = string.Format("{0}", this.GetSerialErrText(err.Code));
+                }
+                this.SerialOnError?.Invoke(sender, err);
+            });
+            this.RaiseIfException(report);
         }
 
 
         private void Serial_DiscoveredDevicesHandler(object sender, List<SerialDeviceInfo> e) {
-            this.log.Info("Serial_DiscoveredDevicesHandler", () => string.Format("Is Serial_DiscoveredDevicesHandler null={0}", this.SerialDiscoveredDevices == null));
-            this.SerialDiscoveredDevices?.Invoke(sender, e);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2003013, "Failure on Serial_DiscoveredDevicesHandler", () => {
+                this.log.Info("Serial_DiscoveredDevicesHandler", () => string.Format("Is Serial_DiscoveredDevicesHandler null={0}", this.SerialDiscoveredDevices == null));
+                this.SerialDiscoveredDevices?.Invoke(sender, e);
+            });
+            this.RaiseIfException(report);
         }
 
 
         private void SerialStack_MsgReceivedHandler(object sender, byte[] data) {
-            string msg = Encoding.ASCII.GetString(data, 0, data.Length);
-            this.log.Info("SerialStack_MsgReceivedHandler", () => string.Format("Msg In: '{0}'", msg));
-            this.Serial_BytesReceived?.Invoke(sender, msg);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2003014, "Failure on SerialStack_MsgReceivedHandler", () => {
+                string msg = Encoding.ASCII.GetString(data, 0, data.Length);
+                this.log.Info("SerialStack_MsgReceivedHandler", () => string.Format("Msg In: '{0}'", msg));
+                this.Serial_BytesReceived?.Invoke(sender, msg);
+            });
+            this.RaiseIfException(report);
         }
 
 
@@ -402,7 +445,12 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         private void SerialConnectCompleteHandler(object sender, MsgPumpResults results) {
-            this.OnSerialConnectionAttemptCompleted?.Invoke(sender, results);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2003015, "Failure on SerialConnectCompleteHandler", () => {
+                this.OnSerialConnectionAttemptCompleted?.Invoke(sender, results);
+            });
+            this.RaiseIfException(report);
+
         }
 
 

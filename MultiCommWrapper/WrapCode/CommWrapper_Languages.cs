@@ -21,9 +21,11 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         private void Event_LanguageChanged(object sender, SupportedLanguage newLanguage) {
-            if (this.LanguageChanged != null) {
-                this.LanguageChanged(sender, newLanguage);
-            }
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2000201, "Failure on Event_LanguageChanged", () => {
+                this.LanguageChanged?.Invoke(sender, newLanguage);
+            });
+            this.RaiseIfException(report);
         }
 
         #endregion
@@ -90,7 +92,10 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void SaveLanguage(LangCode code, Action<string> onError) {
-            this.SaveLanguage(code, () => { }, onError);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2000202, "Failure on SaveLanguage", () => {
+                this.SaveLanguage(code, () => { }, onError);
+            });
         }
 
 
@@ -115,12 +120,16 @@ namespace MultiCommWrapper.Net.WrapCode {
                     WrapErr.SafeAction(() => { onError.Invoke("Unhandled Error on saving language"); });
                 }
             });
-
         }
 
 
         public string GetText(MsgCode code) {
-            return this.languages.GetMsgDisplay(code);
+            ErrReport report;
+            string msg = "ERR";
+            WrapErr.ToErrReport(out report, 2000203, "Failure on GetText", () => {
+                msg = this.languages.GetMsgDisplay(code);
+            });
+            return msg;
         }
 
 

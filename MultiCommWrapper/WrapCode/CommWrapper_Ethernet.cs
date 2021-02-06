@@ -28,27 +28,38 @@ namespace MultiCommWrapper.Net.WrapCode {
         #region ICommWrapper methods
 
         public void EthernetConnectAsync(EthernetParams dataModel) {
-            // TODO have an OnError and wrap this in try catch
-            this.log.Info("EthernetConnect", "Connecting to ethernet");
-            this.ethernet.ConnectAsync(dataModel);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 200100, "Failure on EthernetConnectAsync", () => {
+                this.log.Info("EthernetConnect", "Connecting to ethernet");
+                this.ethernet.ConnectAsync(dataModel);
+            });
+            this.RaiseIfException(report);
         }
 
 
         public void EthernetDisconnect() {
-            this.ethernet.Disconnect();
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 200101, "Failure on EthernetDisconnect", () => {
+                this.ethernet.Disconnect();
+            });
+            this.RaiseIfException(report);
         }
 
 
         public void EthernetSend(string msg) {
-            this.GetCurrentTerminator(
-                CommMedium.Ethernet,
-                (data) => {
-                    this.ethernetStack.InTerminators = data.TerminatorBlock;
-                    this.ethernetStack.OutTerminators = data.TerminatorBlock;
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 200102, "Failure on ", () => {
+                this.GetCurrentTerminator(
+                    CommMedium.Ethernet,
+                    (data) => {
+                        this.ethernetStack.InTerminators = data.TerminatorBlock;
+                        this.ethernetStack.OutTerminators = data.TerminatorBlock;
 
-                }, (err) => { });
+                    }, (err) => { });
 
-            this.ethernetStack.SendToComm(msg);
+                this.ethernetStack.SendToComm(msg);
+            });
+            this.RaiseIfException(report);
         }
 
         #endregion
@@ -98,7 +109,11 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void CreateNewEthernetData(EthernetParams data, Action onSuccess, OnErr onError) {
-            this.CreateNewEthernetData(data.DisplayString, data, onSuccess, onError);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 200103, "Failure on CreateNewEthernetData", () => {
+                this.CreateNewEthernetData(data.DisplayString, data, onSuccess, onError);
+            });
+            this.RaiseIfException(report);
         }
 
 
@@ -187,27 +202,42 @@ namespace MultiCommWrapper.Net.WrapCode {
         #region Event handlers
 
         private void Ethernet_OnEthernetConnectionAttemptCompletedHandler(object sender, MsgPumpResults e) {
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 200104, "Failure on Ethernet_OnEthernetConnectionAttemptCompletedHandler", () => {
+                // Can do something here to save any pending IP entered
+                this.log.Info("Ethernet_OnEthernetConnectionAttemptCompletedHandler", 
+                    () => string.Format("Connect attempt returned:{0}", e.Code));
 
-            // Can do something here to save any pending IP entered
-            this.log.Info("Ethernet_OnEthernetConnectionAttemptCompletedHandler", 
-                () => string.Format("Connect attempt returned:{0}", e.Code));
-
-            this.OnEthernetConnectionAttemptCompleted?.Invoke(sender, e);
+                this.OnEthernetConnectionAttemptCompleted?.Invoke(sender, e);
+            });
+            this.RaiseIfException(report);
         }
 
         private void Ethernet_OnErrorHandler(object sender, MsgPumpResults e) {
-            this.OnEthernetError?.Invoke(sender, e);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 200105, "Failure on Ethernet_OnErrorHandler", () => {
+                this.OnEthernetError?.Invoke(sender, e);
+            });
+            this.RaiseIfException(report);
         }
 
         private void EthernetStack_MsgReceivedHandler(object sender, byte[] e) {
-            string msg = Encoding.ASCII.GetString(e, 0, e.Length);
-            this.log.Info("", () => string.Format("Msg In: '{0}'", msg));
-            this.Ethernet_BytesReceived?.Invoke(sender, msg);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 200106, "Failure on EthernetStack_MsgReceivedHandler", () => {
+                string msg = Encoding.ASCII.GetString(e, 0, e.Length);
+                this.log.Info("", () => string.Format("Msg In: '{0}'", msg));
+                this.Ethernet_BytesReceived?.Invoke(sender, msg);
+            });
+            this.RaiseIfException(report);
         }
 
 
         private void Ethernet_ParamsRequestedEventHandler(object sender, EthernetParams e) {
-            this.EthernetParamsRequestedEvent?.Invoke(sender, e);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 200107, "Failure on Ethernet_ParamsRequestedEventHandler", () => {
+                this.EthernetParamsRequestedEvent?.Invoke(sender, e);
+            });
+            this.RaiseIfException(report);
         }
 
         #endregion

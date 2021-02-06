@@ -46,16 +46,20 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
         public void CommMediumList(Action<List<CommMedialDisplay>> mediums) {
-            List<CommMedialDisplay> items = new List<CommMedialDisplay>();
-            items.Add(this.CommItem("Bluetooth", UIIcon.BluetoothClassic, CommMedium.Bluetooth));
-            //// TODO - this will be link when we have a BLE serial
-            //items.Add(this.CommItem(String.Format("BLE  {0} {1}", '\u2b84', '\u2b86'), 
-            //    UIIcon.BluetoothLE, CommMedium.BluetoothLE));
-            items.Add(this.CommItem("BLE", UIIcon.BluetoothLE, CommMedium.BluetoothLE));
-            items.Add(this.CommItem("Wifi", UIIcon.Wifi, CommMedium.Wifi));
-            items.Add(this.CommItem("Ethernet", UIIcon.Ethernet, CommMedium.Ethernet));
-            items.Add(this.CommItem("USB", UIIcon.Usb, CommMedium.Usb));
-            mediums.Invoke(items);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 200151, "Failure on CommMediumList", () => {
+                List<CommMedialDisplay> items = new List<CommMedialDisplay>();
+                items.Add(this.CommItem("Bluetooth", UIIcon.BluetoothClassic, CommMedium.Bluetooth));
+                //// TODO - this will be link when we have a BLE serial
+                //items.Add(this.CommItem(String.Format("BLE  {0} {1}", '\u2b84', '\u2b86'), 
+                //    UIIcon.BluetoothLE, CommMedium.BluetoothLE));
+                items.Add(this.CommItem("BLE", UIIcon.BluetoothLE, CommMedium.BluetoothLE));
+                items.Add(this.CommItem("Wifi", UIIcon.Wifi, CommMedium.Wifi));
+                items.Add(this.CommItem("Ethernet", UIIcon.Ethernet, CommMedium.Ethernet));
+                items.Add(this.CommItem("USB", UIIcon.Usb, CommMedium.Usb));
+                mediums.Invoke(items);
+            });
+            this.RaiseIfException(report);
         }
 
 
