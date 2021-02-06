@@ -37,13 +37,16 @@ namespace MultiCommWrapper.Net.WrapCode {
         #region ICommWrapper methods
 
         public void WifiDiscoverAsync() {
-            this.wifi.DiscoverWifiAdaptersAsync();
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2000350, "Failure on WifiDiscoverAsync", () => {
+                this.wifi.DiscoverWifiAdaptersAsync();
+            });
+            this.RaiseIfException(report);
         }
 
 
         public void WifiConnectAsync(WifiNetworkInfo dataModel) {
             this.log.InfoEntry("WifiConnectAsync");
-
             // TODO use a try catch and change signature to have an error delegate return?
             try {
                 bool save = false;
@@ -67,26 +70,32 @@ namespace MultiCommWrapper.Net.WrapCode {
                 this.log.Exception(9999, "", e);
                 this.OnWifiError?.Invoke(this, new WifiError(WifiErrorCode.Unknown) { ExtraInfo = e.Message });
             }
-
-
-
         }
 
 
         public void WifiDisconect() {
-            this.wifi.Disconnect();
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2000351, "Failure on WifiDisconnect", () => {
+                this.wifi.Disconnect();
+            });
+            this.RaiseIfException(report);
+
         }
 
 
         public void WifiSend(string msg) {
-            this.GetCurrentTerminator(
-                CommMedium.Wifi,
-                (data) => {
-                    this.wifiStack.InTerminators = data.TerminatorBlock;
-                    this.wifiStack.OutTerminators = data.TerminatorBlock;
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2000352, "Failure on WifiSend", () => {
+                this.GetCurrentTerminator(
+                    CommMedium.Wifi,
+                    (data) => {
+                        this.wifiStack.InTerminators = data.TerminatorBlock;
+                        this.wifiStack.OutTerminators = data.TerminatorBlock;
 
-                }, (err) => { });
-            this.wifiStack.SendToComm(msg);
+                    }, (err) => { });
+                this.wifiStack.SendToComm(msg);
+            });
+            this.RaiseIfException(report);
         }
 
 
@@ -137,28 +146,31 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-
-
         /// <summary>Get discovered info to look up the stored WifiCredentials object to check for credentials
         /// 
         /// </summary>
         /// <param name="discoverData">The WifiNetworkInfo with info from discovered devices</param>
         /// <returns></returns>
         public WifiCredAndIndex ValidateCredentials(WifiNetworkInfo discoverData, OnErr onError) {
-            this.log.Info("WifiGetConnectCredentials", () => string.Format(""));
-            if (discoverData.SSID.Trim().Length == 0) {
-                this.log.Error(9999, "ValidateCredentialsAsync", () => string.Format("No SSID in data retrieved from Discover"));
-                return null;
-            }
-
-            this.log.Info("ValidateCredentialsAsync", () => string.Format("SSID:{0}", discoverData.SSID));
-            WifiCredAndIndex result = this.WifiGetStoredCredentials(discoverData.SSID, onError);
-            if (result != null && !result.RequiresUserData) {
-                // initialize the fields in the data model sent to connect to WIFI
-                discoverData.RemoteHostName = result.Data.RemoteHostName;
-                discoverData.RemoteServiceName = result.Data.RemoteServiceName;
-                discoverData.Password = result.Data.WifiPassword;
-            }
+            WifiCredAndIndex result = null;
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2000353, "Failure on ValidateCredentials", () => {
+                this.log.Info("WifiGetConnectCredentials", () => string.Format(""));
+                if (discoverData.SSID.Trim().Length == 0) {
+                    this.log.Error(9999, "ValidateCredentialsAsync", () => string.Format("No SSID in data retrieved from Discover"));
+                }
+                else {
+                    this.log.Info("ValidateCredentialsAsync", () => string.Format("SSID:{0}", discoverData.SSID));
+                    result = this.WifiGetStoredCredentials(discoverData.SSID, onError);
+                    if (result != null && !result.RequiresUserData) {
+                        // initialize the fields in the data model sent to connect to WIFI
+                        discoverData.RemoteHostName = result.Data.RemoteHostName;
+                        discoverData.RemoteServiceName = result.Data.RemoteServiceName;
+                        discoverData.Password = result.Data.WifiPassword;
+                    }
+                }
+            });
+            this.RaiseIfException(report);
             return result;
         }
 
@@ -383,48 +395,63 @@ namespace MultiCommWrapper.Net.WrapCode {
         #region Wifi event handlers
 
         private void WifiStack_BytesReceivedHander(object sender, byte[] e) {
-            string msg = Encoding.ASCII.GetString(e, 0, e.Length);
-            this.log.Info("", () => string.Format("Msg In: '{0}'", msg));
-            this.Wifi_BytesReceived?.Invoke(sender, msg);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2000354, "Failure on WifiStack_BytesReceivedHandler", () => {
+                string msg = Encoding.ASCII.GetString(e, 0, e.Length);
+                this.log.Info("", () => string.Format("Msg In: '{0}'", msg));
+                this.Wifi_BytesReceived?.Invoke(sender, msg);
+            });
+            this.RaiseIfException(report);
         }
 
 
         private void Wifi_OnWifiConnectionAttemptCompletedHandler(object sender, MsgPumpResults result) {
-            this.log.Info("Wifi_OnWifiConnectionAttemptCompletedHandler", () => string.Format(
-                "Is OnWifiConnectionAttemptCompleted null={0}",
-                this.OnWifiConnectionAttemptCompleted == null));
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2000355, "Failure on Wifi_OnWifiConnectionAttemptCompletedHandler", () => {
+                this.log.Info("Wifi_OnWifiConnectionAttemptCompletedHandler", () => string.Format(
+                    "Is OnWifiConnectionAttemptCompleted null={0}",
+                    this.OnWifiConnectionAttemptCompleted == null));
 
-            // Set when the current connection is using new parameters
-            if (this.pendingSaveConnectNetInfo != null) {
-                if (result.Code == MsgPumpResultCode.Connected) {
-                    this.WifiStoreNewCredentials(this.pendingSaveConnectNetInfo);
+                // Set when the current connection is using new parameters
+                if (this.pendingSaveConnectNetInfo != null) {
+                    if (result.Code == MsgPumpResultCode.Connected) {
+                        this.WifiStoreNewCredentials(this.pendingSaveConnectNetInfo);
+                    }
+                    else {
+                        // Wipping out password will cause dialog to come up on next connect
+                        this.pendingSaveConnectNetInfo.Password = "";
+                    }
+                    this.pendingSaveConnectNetInfo = null;
                 }
-                else {
-                    // Wipping out password will cause dialog to come up on next connect
-                    this.pendingSaveConnectNetInfo.Password = "";
-                }
-                this.pendingSaveConnectNetInfo = null;
-            }
-            this.OnWifiConnectionAttemptCompleted?.Invoke(sender, result);
+                this.OnWifiConnectionAttemptCompleted?.Invoke(sender, result);
+            });
+            this.RaiseIfException(report);
         }
 
 
         private void Wifi_OnErrorHandler(object sender, WifiError e) {
-            this.log.Info("Wifi_OnErrorHandler", () => string.Format("Is OnWifiError null={0}", this.OnWifiError == null));
-            // Possible to have other errors on connect so we will also wipe out connect params here
-            if (this.pendingSaveConnectNetInfo != null) {
-                // Wipping out password will cause dialog to come up on next connect
-                this.pendingSaveConnectNetInfo.Password = "";
-                this.pendingSaveConnectNetInfo = null;
-            }
-
-            this.OnWifiError?.Invoke(sender, e);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2000356, "Failure on Wifi_OnErrorHandler", () => {
+                this.log.Info("Wifi_OnErrorHandler", () => string.Format("Is OnWifiError null={0}", this.OnWifiError == null));
+                // Possible to have other errors on connect so we will also wipe out connect params here
+                if (this.pendingSaveConnectNetInfo != null) {
+                    // Wipping out password will cause dialog to come up on next connect
+                    this.pendingSaveConnectNetInfo.Password = "";
+                    this.pendingSaveConnectNetInfo = null;
+                }
+                this.OnWifiError?.Invoke(sender, e);
+            });
+            this.RaiseIfException(report);
         }
 
 
         private void Wifi_DiscoveredNetworksHandler(object sender, List<WifiNetworkInfo> e) {
-            this.log.Info("Wifi_DiscoveredNetworksHandler", () => string.Format("Is DiscoveredNetworks null={0}", this.DiscoveredWifiNetworks == null));
-            this.DiscoveredWifiNetworks?.Invoke(sender, e);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2000357, "Failure on Wifi_DiscoveredNetworksHandler", () => {
+                this.log.Info("Wifi_DiscoveredNetworksHandler", () => string.Format("Is DiscoveredNetworks null={0}", this.DiscoveredWifiNetworks == null));
+                this.DiscoveredWifiNetworks?.Invoke(sender, e);
+            });
+            this.RaiseIfException(report);
         }
 
         #endregion

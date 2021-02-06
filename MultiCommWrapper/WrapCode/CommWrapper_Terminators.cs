@@ -154,7 +154,9 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void SetCurrentTerminators(TerminatorDataModel data, CommMedium medium, OnErr onError) {
-            this.GetSettings((settings) => {
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2000301, "Failure on SetCurrentTerminators", () => {
+                this.GetSettings((settings) => {
                 EventHandler<TerminatorDataModel> ev = null;
                 switch (medium) {
                     case CommMedium.Bluetooth:
@@ -185,50 +187,64 @@ namespace MultiCommWrapper.Net.WrapCode {
 
                 this.SaveSettings(settings, () => { ev?.Invoke(this, data); }, onError);
             }, onError);
+            });
+            this.RaiseIfException(report);
         }
 
 
         public void SetCurrentTerminators(TerminatorDataModel data, OnErr onError) {
-            this.GetSettings((settings) => {
-                settings.CurrentTerminator = data;
-                this.SaveSettings(settings, () => {
-                    if (this.CurrentTerminatorChanged != null) {
-                        this.CurrentTerminatorChanged(this, data);
-                    }
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2000302, "Failure on SetCurrentTerminators", () => {
+                this.GetSettings((settings) => {
+                    settings.CurrentTerminator = data;
+                    this.SaveSettings(settings, () => {
+                        if (this.CurrentTerminatorChanged != null) {
+                            this.CurrentTerminatorChanged(this, data);
+                        }
+                    }, onError);
                 }, onError);
-            }, onError);
+            });
+            this.RaiseIfException(report);
         }
 
 
         public void SetCurrentTerminators(IIndexItem<DefaultFileExtraInfo> index, Action onSuccess, OnErr onError) {
-            if (index == null) {
-                onError(this.GetText(MsgCode.NothingSelected));
-            }
-            else {
-                this.RetrieveTerminatorData(
-                    index,
-                    (data) => {
-                        this.SetCurrentTerminators(data, onError);
-                        onSuccess.Invoke();
-                    },
-                    onError);
-            }
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2000303, "Failure on SetCurrentTerminators", () => {
+                if (index == null) {
+                    onError(this.GetText(MsgCode.NothingSelected));
+                }
+                else {
+                    this.RetrieveTerminatorData(
+                        index,
+                        (data) => {
+                            this.SetCurrentTerminators(data, onError);
+                            onSuccess.Invoke();
+                        },
+                        onError);
+                }
+            });
+            this.RaiseIfException(report);
         }
 
 
         public void SetCurrentTerminators(IIndexItem<DefaultFileExtraInfo> index, CommMedium medium, Action onSuccess, OnErr onError) {
-            if (index == null) {
-                onError(this.GetText(MsgCode.NothingSelected));
-            }
-            else {
-                this.RetrieveTerminatorData(
-                    index,
-                    (data) => {
-                        this.SetCurrentTerminators(data, medium, onError);
-                        onSuccess.Invoke();
-                    },
-                    onError);
-            }
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2000304, "Failure on SetCurrentTerminators", () => {
+                if (index == null) {
+                    onError(this.GetText(MsgCode.NothingSelected));
+                }
+                else {
+                    this.RetrieveTerminatorData(
+                        index,
+                        (data) => {
+                            this.SetCurrentTerminators(data, medium, onError);
+                            onSuccess.Invoke();
+                        },
+                        onError);
+                }
+            });
+            this.RaiseIfException(report);
         }
 
 
@@ -370,24 +386,33 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void CreateArduinoTerminators(Action onSuccess, OnErr onError) {
-            List<TerminatorInfo> infos = new List<TerminatorInfo>();
-            infos.Add(new TerminatorInfo(Terminator.CR));
-            infos.Add(new TerminatorInfo(Terminator.LF));
-            TerminatorDataModel dm = new TerminatorDataModel(infos) {
-                Name = "Arduino \\r\\n"
-            };
-            this.CreateNewTerminator(dm.Name, dm, onSuccess, onError);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2000305, "Failure on CreateArduinoTerminators", () => {
+                List<TerminatorInfo> infos = new List<TerminatorInfo>();
+                infos.Add(new TerminatorInfo(Terminator.CR));
+                infos.Add(new TerminatorInfo(Terminator.LF));
+                TerminatorDataModel dm = new TerminatorDataModel(infos) {
+                    Name = "Arduino \\r\\n"
+                };
+                this.CreateNewTerminator(dm.Name, dm, onSuccess, onError);
+            });
+            this.RaiseIfException(report);
+
         }
 
 
         public void CreateDefaultTerminators(Action onSuccess, OnErr onError) {
-            List<TerminatorInfo> infos = new List<TerminatorInfo>();
-            infos.Add(new TerminatorInfo(Terminator.LF));
-            infos.Add(new TerminatorInfo(Terminator.CR));
-            TerminatorDataModel dm = new TerminatorDataModel(infos) {
-                Name = string.Format("{0} \\n\\r", this.GetText(MsgCode.Default)),
-            };
-            this.CreateNewTerminator(dm.Name, dm, onSuccess, onError);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2000306, "Failure on CreateDefaultTerminators", () => {
+                List<TerminatorInfo> infos = new List<TerminatorInfo>();
+                infos.Add(new TerminatorInfo(Terminator.LF));
+                infos.Add(new TerminatorInfo(Terminator.CR));
+                TerminatorDataModel dm = new TerminatorDataModel(infos) {
+                    Name = string.Format("{0} \\n\\r", this.GetText(MsgCode.Default)),
+                };
+                this.CreateNewTerminator(dm.Name, dm, onSuccess, onError);
+            });
+            this.RaiseIfException(report);
         }
 
     }

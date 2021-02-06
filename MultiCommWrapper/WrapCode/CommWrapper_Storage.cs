@@ -149,64 +149,74 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void RebuildAllData() {
-            // If we call the property it will recreate it
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2000301, "Failure on RebuidAllData", () => {
+                // If we call the property it will recreate it
 
-            if (this._serialStorage == null) {
-                this._serialStorage =
-                    this.storageFactory.GetIndexedManager<SerialDeviceInfo, SerialIndexExtraInfo>(
-                        this.Dir(SERIAL_CFG_DIR), SERIAL_CFG_INDEX_FILE);
-            }
-            this._serialStorage.DeleteStorageDirectory();
-            this._serialStorage = null;
+                if (this._serialStorage == null) {
+                    this._serialStorage =
+                        this.storageFactory.GetIndexedManager<SerialDeviceInfo, SerialIndexExtraInfo>(
+                            this.Dir(SERIAL_CFG_DIR), SERIAL_CFG_INDEX_FILE);
+                }
+                this._serialStorage.DeleteStorageDirectory();
+                this._serialStorage = null;
 
-            if (this._ethernetStorage == null) {
-                this._ethernetStorage =
-                    this.storageFactory.GetIndexedManager<EthernetParams, DefaultFileExtraInfo>(this.Dir(ETHERNET_DATA_DIR), ETHERNET_DATA_INDEX_FILE);
-            }
-            this._ethernetStorage.DeleteStorageDirectory();
-            this._ethernetStorage = null;
+                if (this._ethernetStorage == null) {
+                    this._ethernetStorage =
+                        this.storageFactory.GetIndexedManager<EthernetParams, DefaultFileExtraInfo>(this.Dir(ETHERNET_DATA_DIR), ETHERNET_DATA_INDEX_FILE);
+                }
+                this._ethernetStorage.DeleteStorageDirectory();
+                this._ethernetStorage = null;
 
-            if (this._wifiCredStorage == null) {
-                this._wifiCredStorage =
-                    this.storageFactory.GetIndexedManager<WifiCredentialsDataModel, DefaultFileExtraInfo>(this.Dir(WIFI_CRED_DIR), WIFI_CRED_INDEX_FILE);
-            }
-            this._wifiCredStorage.DeleteStorageDirectory();
-            this._wifiCredStorage = null;
+                if (this._wifiCredStorage == null) {
+                    this._wifiCredStorage =
+                        this.storageFactory.GetIndexedManager<WifiCredentialsDataModel, DefaultFileExtraInfo>(this.Dir(WIFI_CRED_DIR), WIFI_CRED_INDEX_FILE);
+                }
+                this._wifiCredStorage.DeleteStorageDirectory();
+                this._wifiCredStorage = null;
 
-            if (this._scriptStorage == null) {
-                this._scriptStorage =
-                    this.storageFactory.GetIndexedManager<ScriptDataModel, DefaultFileExtraInfo>(this.Dir(SCRIPTS_DIR), SCRIPTS_INDEX_FILE);
-            }
-            this._scriptStorage.DeleteStorageDirectory();
-            this._scriptStorage = null;
+                if (this._scriptStorage == null) {
+                    this._scriptStorage =
+                        this.storageFactory.GetIndexedManager<ScriptDataModel, DefaultFileExtraInfo>(this.Dir(SCRIPTS_DIR), SCRIPTS_INDEX_FILE);
+                }
+                this._scriptStorage.DeleteStorageDirectory();
+                this._scriptStorage = null;
 
-            if (this._terminatorStorage == null) {
-                this._terminatorStorage =
-                    this.storageFactory.GetIndexedManager<TerminatorDataModel, DefaultFileExtraInfo>(this.Dir(TERMINATOR_DIR), TERMINATOR_INDEX_FILE);
-            }
-            this._terminatorStorage.DeleteStorageDirectory();
-            this._terminatorStorage = null;
+                if (this._terminatorStorage == null) {
+                    this._terminatorStorage =
+                        this.storageFactory.GetIndexedManager<TerminatorDataModel, DefaultFileExtraInfo>(this.Dir(TERMINATOR_DIR), TERMINATOR_INDEX_FILE);
+                }
+                this._terminatorStorage.DeleteStorageDirectory();
+                this._terminatorStorage = null;
 
-            if (this._settings == null) {
-                this._settings = 
-                    this.storageFactory.GetManager<SettingItems>(this.Dir(this.SETTINGS_DIR), this.SETTINGS_FILE);
-            }
-            this._settings.DeleteStorageDirectory();
-            this._settings = null;
+                if (this._settings == null) {
+                    this._settings =
+                        this.storageFactory.GetManager<SettingItems>(this.Dir(this.SETTINGS_DIR), this.SETTINGS_FILE);
+                }
+                this._settings.DeleteStorageDirectory();
+                this._settings = null;
 
 
 
-            // Calling the just in time properties will rebuild the data
-            var set = this.settings;
-            var ser = this.serialStorage;
-            var eth = this.ethernetStorage;
-            var wi = this.wifiCredStorage;
-            var sc = this.scriptStorage;
-            var tem = this.terminatorStorage;
+                // Calling the just in time properties will rebuild the data
+                var set = this.settings;
+                var ser = this.serialStorage;
+                var eth = this.ethernetStorage;
+                var wi = this.wifiCredStorage;
+                var sc = this.scriptStorage;
+                var tem = this.terminatorStorage;
+            });
+            this.RaiseIfException(report);
+
         }
 
 
         public string GetDataFilesPath() {
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 200030, "Failure on ", () => {
+            });
+            this.RaiseIfException(report);
+
             return Path.Combine(this.settings.StorageRootDir, APP_DIR);
         }
 
