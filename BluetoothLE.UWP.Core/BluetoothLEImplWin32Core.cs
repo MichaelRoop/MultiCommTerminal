@@ -1,6 +1,8 @@
 ﻿using BluetoothLE.Net.DataModels;
 using BluetoothLE.Net.Enumerations;
 using BluetoothLE.Net.interfaces;
+using BluetoothLE.Net.Parsers.Characteristics;
+using BluetoothLE.Net.Parsers.Descriptor;
 using LogUtils.Net;
 using System;
 using System.Collections.Generic;
@@ -25,7 +27,8 @@ namespace Bluetooth.UWP.Core {
         private List<GattDeviceService> currentServices = new List<GattDeviceService>();
 
         private BLE_CharcteristicsBinderSet binderSet = new BLE_CharcteristicsBinderSet();
-
+        private IDescParserFactory descParserfactory = new DescParserFactory();
+        private ICharParserFactory charParserFactory = new CharParserFactory();
 
         private ClassLog log = new ClassLog("BluetoothLEImplWin32");
 

@@ -28,14 +28,15 @@ namespace Bluetooth.UWP.Core {
                 characteristic.Service = service;
                 characteristic.CharName = BLE_DisplayHelpers.GetCharacteristicName(ch);
                 // Must put this before the properties for indicate or Notify to work
+                // TODO - notify value is no longer showing properly. But notification itself working
                 bool subscribe = await this.EnableNotifyIndicate(ch);
                 characteristic.PropertiesFlags = ch.CharacteristicProperties.ToUInt().ToEnum<CharacteristicProperties>();
                 characteristic.ProtectionLevel = (BLE_ProtectionLevel)ch.ProtectionLevel;
                 characteristic.PresentationFormats = this.BuildPresentationFormats(ch);
 
                 // Do this after all else is defined
-                characteristic.Parser = BLE_ParseHelpers.GetCharacteristicParser(ch.Uuid, ch.AttributeHandle);
-                characteristic.SetDescriptorParsers();
+                characteristic.Parser = this.charParserFactory.GetParser(ch.Uuid, ch.AttributeHandle);
+                this.RaiseIfError(characteristic.SetDescriptorParsers());
                 characteristic.CharValue = await this.ReadValue(ch, characteristic);
 
                 // Associate the UWP and data model characteristic for 2 way events to set and get

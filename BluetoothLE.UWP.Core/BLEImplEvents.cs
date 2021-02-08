@@ -3,6 +3,7 @@ using BluetoothLE.Net.Enumerations;
 using BluetoothLE.Net.interfaces;
 using Common.Net.Network;
 using System;
+using System.Threading.Tasks;
 
 namespace Bluetooth.UWP.Core {
 
@@ -22,6 +23,8 @@ namespace Bluetooth.UWP.Core {
 
         public event EventHandler<BLE_ConnectStatusChangeInfo> ConnectionStatusChanged;
 
+        public event EventHandler<BLEOperationStatus> BLE_Error;
+
         #endregion
 
         #region IBLETInterface:ICommStackChannel events
@@ -39,6 +42,19 @@ namespace Bluetooth.UWP.Core {
             this.MsgReceivedEvent?.Invoke(this, null);
         }
 
+
+        private void RaiseIfError(BLEOperationStatus status) {
+            if (status != BLEOperationStatus.Success) {
+                Task.Run(() => {
+                    try {
+                        BLE_Error?.Invoke(this, status);
+                    }
+                    catch(Exception e) {
+                        this.log.Exception(9999, "Raise if error", "", e);
+                    }
+                });
+            }
+        }
 
     }
 
