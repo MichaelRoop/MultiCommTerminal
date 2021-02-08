@@ -34,7 +34,7 @@ namespace Bluetooth.UWP.Core {
                 characteristic.PresentationFormats = this.BuildPresentationFormats(ch);
 
                 // Do this after all else is defined
-                characteristic.Parser = BLE_ParseHelpers.GetCharacteristicParser(ch.Uuid);
+                characteristic.Parser = BLE_ParseHelpers.GetCharacteristicParser(ch.Uuid, ch.AttributeHandle);
                 characteristic.SetDescriptorParsers();
                 characteristic.CharValue = await this.ReadValue(ch, characteristic);
 
@@ -92,6 +92,10 @@ namespace Bluetooth.UWP.Core {
                     GattReadResult readResult = await ch.ReadValueAsync();
                     if (readResult.Status == GattCommunicationStatus.Success) {
                         byte[] data = readResult.Value.FromBufferToBytes();
+
+                        // TODO The parser will know the data type so we could get that for the data model here.
+                        //      also need to know it for the write only values
+
                         return dataModel.Parser.Parse(data);
                     }
                     else {

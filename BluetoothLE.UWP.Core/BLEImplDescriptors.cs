@@ -22,7 +22,7 @@ namespace Bluetooth.UWP.Core {
                         GattReadResult r = await desc.ReadValueAsync();
                         if (r.Status == GattCommunicationStatus.Success) {
                             // New characteristic data model to add to service
-                            IDescParser parser = BLE_ParseHelpers.GetDescriptorParser(desc.Uuid);
+                            IDescParser parser = BLE_ParseHelpers.GetDescriptorParser(desc.Uuid, desc.AttributeHandle);
                             BLE_DescriptorDataModel descDataModel = new BLE_DescriptorDataModel() {
                                 Uuid = desc.Uuid,
                                 AttributeHandle = desc.AttributeHandle,
