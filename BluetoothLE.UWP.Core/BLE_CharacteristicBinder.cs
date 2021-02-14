@@ -105,6 +105,7 @@ namespace Bluetooth.UWP.Core {
                     }
                 }
                 catch (Exception e) {
+                    this.log.Exception(9999, "onDataModelWriteRequestHandler", "", e);
                 }
             });
         }
