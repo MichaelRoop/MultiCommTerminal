@@ -100,7 +100,9 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
 
 
         private void paramsRequestedEventHandler(object sender, EthernetParams e) {
-            EthernetEditRequest.ShowBox(this, this.selectedEthernet);
+            this.Dispatcher.Invoke(()=> {
+                EthernetEditRequest.ShowBox(this, this.selectedEthernet);
+            });
         }
 
 

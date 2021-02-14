@@ -32,53 +32,58 @@ namespace Bluetooth.UWP.Core {
         /// <param name="deviceDataModel">The portable GATT session data model</param>
         /// <returns>The async task</returns>
         public async Task BuildServiceDataModel(GattDeviceService service, BLEGetInfoStatus status) {
-            this.log.Info("BuildServiceDataModel", () => string.Format("Gatt Service:{0}  Uid:{1}",
-               BLE_DisplayHelpers.GetServiceName(service), service.Uuid.ToString()));
+            try {
+                this.log.Info("BuildServiceDataModel", () => string.Format("Gatt Service:{0}  Uid:{1}",
+                   BLE_DisplayHelpers.GetServiceName(service), service.Uuid.ToString()));
 
-            // New service data model to add to device info
-            BLE_ServiceDataModel serviceDataModel = new BLE_ServiceDataModel() {
-                Characteristics = new List<BLE_CharacteristicDataModel>(),
-                AttributeHandle = service.AttributeHandle,
-                DeviceId = status.DeviceInfo.Id,
-                DisplayName = BLE_DisplayHelpers.GetServiceName(service),
-                Uuid = service.Uuid,
-                SharingMode = (BLE_SharingMode)service.SharingMode,
-            };
+                // New service data model to add to device info
+                BLE_ServiceDataModel serviceDataModel = new BLE_ServiceDataModel() {
+                    Characteristics = new List<BLE_CharacteristicDataModel>(),
+                    AttributeHandle = service.AttributeHandle,
+                    DeviceId = status.DeviceInfo.Id,
+                    DisplayName = BLE_DisplayHelpers.GetServiceName(service),
+                    Uuid = service.Uuid,
+                    SharingMode = (BLE_SharingMode)service.SharingMode,
+                };
 
-            if (service.DeviceAccessInformation != null) {
-                serviceDataModel.DeviceAccess = (BLE_DeviceAccessStatus)service.DeviceAccessInformation.CurrentStatus;
-            }
-            this.currentServices.Add(service);
-            this.BuildSessionDataModel(service.Session, serviceDataModel.Session);
+                if (service.DeviceAccessInformation != null) {
+                    serviceDataModel.DeviceAccess = (BLE_DeviceAccessStatus)service.DeviceAccessInformation.CurrentStatus;
+                }
+                this.currentServices.Add(service);
+                this.BuildSessionDataModel(service.Session, serviceDataModel.Session);
 
-            // TODO
-            //service.ParentServices
+                // TODO
+                //service.ParentServices
 
-            // Get the characteristics for the service
-            GattCharacteristicsResult characteristics = await service.GetCharacteristicsAsync();
-            if (characteristics.Status == GattCommunicationStatus.Success) {
-                if (characteristics.Characteristics != null) {
-                    if (characteristics.Characteristics.Count > 0) {
-                        foreach (GattCharacteristic ch in characteristics.Characteristics) {
-                            try {
-                                await this.BuildCharacteristicDataModel(ch, serviceDataModel);
-                            }
-                            catch (Exception e1) {
-                                this.log.Exception(9999, "HarvestDeviceInfo", e1);
+                // Get the characteristics for the service
+                GattCharacteristicsResult characteristics = await service.GetCharacteristicsAsync();
+                if (characteristics.Status == GattCommunicationStatus.Success) {
+                    if (characteristics.Characteristics != null) {
+                        if (characteristics.Characteristics.Count > 0) {
+                            foreach (GattCharacteristic ch in characteristics.Characteristics) {
+                                try {
+                                    await this.BuildCharacteristicDataModel(ch, serviceDataModel);
+                                }
+                                catch (Exception e1) {
+                                    this.log.Exception(9999, "HarvestDeviceInfo", e1);
+                                }
                             }
                         }
-                    }
-                    else {
-                        this.log.Info("ConnectToDevice", () => string.Format("No characteristics"));
+                        else {
+                            this.log.Info("ConnectToDevice", () => string.Format("No characteristics"));
+                        }
                     }
                 }
-            }
-            else {
-                this.log.Error(9999, "HarvestDeviceInfo", () => string.Format("Failed to get Characteristics result {0}", characteristics.Status.ToString()));
-            }
+                else {
+                    this.log.Error(9999, "HarvestDeviceInfo", () => string.Format("Failed to get Characteristics result {0}", characteristics.Status.ToString()));
+                }
 
-            // Add the service data model to the device info data model
-            status.DeviceInfo.Services.Add(serviceDataModel);
+                // Add the service data model to the device info data model
+                status.DeviceInfo.Services.Add(serviceDataModel);
+            }
+            catch(Exception e) {
+                this.log.Exception(9999, "BuildServiceDataModel", "", e);
+            }
         }
 
 

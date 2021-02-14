@@ -220,16 +220,20 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
 
         private void connectionStatusChanged(object sender, BLE_ConnectStatusChangeInfo e) {
-            if (e.Status == BLE_ConnectStatus.Disconnected) {
-                this.SetConnectState(false);
-                App.ShowMsg(e.Message);
-            }
+            this.Dispatcher.Invoke(() => {
+                if (e.Status == BLE_ConnectStatus.Disconnected) {
+                    this.SetConnectState(false);
+                    App.ShowMsg(e.Message);
+                }
+            });
         }
 
         private void characteristicReadValueChanged(object sender, BLE_CharacteristicReadResult e) {
-            lock (this.treeServices) {
-                this.dataChanged = true;
-            }
+            this.Dispatcher.Invoke(() => {
+                lock (this.treeServices) {
+                    this.dataChanged = true;
+                }
+            });
         }
 
 
@@ -257,12 +261,14 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
 
         private void SetLanguage(SupportedLanguage l) {
-            this.buttonSizer.PrepForChange();
-            this.InvalidateVisual();
-            this.btnSend.Content = l.GetText(MsgCode.send);
-            this.btnConnect.Content = l.GetText(MsgCode.connect);
-            this.btnLog.Content = l.GetText(MsgCode.Log);
-            this.btnExit.Content = l.GetText(MsgCode.exit);
+            this.Dispatcher.Invoke(() => {
+                this.buttonSizer.PrepForChange();
+                this.InvalidateVisual();
+                this.btnSend.Content = l.GetText(MsgCode.send);
+                this.btnConnect.Content = l.GetText(MsgCode.connect);
+                this.btnLog.Content = l.GetText(MsgCode.Log);
+                this.btnExit.Content = l.GetText(MsgCode.exit);
+            });
         }
 
 

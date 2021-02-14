@@ -35,89 +35,94 @@ namespace BluetoothRfComm.UWP.Core {
         /// <param name="forceRetrieve">Force re-reading of all extra information</param>
         /// <returns>An asynchronous task result</returns>
         private async Task GetExtraInfo(BTDeviceInfo deviceInfo, bool forceRetrieve, bool display) {
-            this.log.InfoEntry("GetExtraInfo");
+            try {
+                this.log.InfoEntry("GetExtraInfo");
 
-            // TODO Cannot call this after the services have already been retrieved. So do not force
+                // TODO Cannot call this after the services have already been retrieved. So do not force
 
-            // 0 length remote host name indicates that we require more information for connection
-            if (deviceInfo.RemoteHostName.Length == 0 || forceRetrieve) {
-                this.log.Info("GetExtraInfo", () => string.Format("Getting info to fill in host name for address:{0}", deviceInfo.Address));
+                // 0 length remote host name indicates that we require more information for connection
+                if (deviceInfo.RemoteHostName.Length == 0 || forceRetrieve) {
+                    this.log.Info("GetExtraInfo", () => string.Format("Getting info to fill in host name for address:{0}", deviceInfo.Address));
 
-                using (BluetoothDevice device = await BluetoothDevice.FromIdAsync(deviceInfo.Address)) {
+                    using (BluetoothDevice device = await BluetoothDevice.FromIdAsync(deviceInfo.Address)) {
 
-                    // TODO - defer this to before connection or info request                            
-                    // SDP records only after services
-                    // Must use uncached
-                    RfcommDeviceServicesResult serviceResult = await device.GetRfcommServicesAsync(BluetoothCacheMode.Uncached);
+                        // TODO - defer this to before connection or info request                            
+                        // SDP records only after services
+                        // Must use uncached
+                        RfcommDeviceServicesResult serviceResult = await device.GetRfcommServicesAsync(BluetoothCacheMode.Uncached);
 
-                    this.log.Info("GetExtraInfo", () => string.Format("Success. Number of services:{0}", serviceResult.Services.Count));
+                        this.log.Info("GetExtraInfo", () => string.Format("Success. Number of services:{0}", serviceResult.Services.Count));
 
-                    //WrapErr.ChkTrue(serviceResult.Services.Count > 0, 9999, () => string.Format("No services for BT:{0}", deviceInfo.Name));
-                    if (serviceResult.Services.Count == 0) {
-                        throw new Exception(string.Format("No services for BT:{0}", deviceInfo.Name));
-                    }
-
-
-                    if (serviceResult.Error == BluetoothError.Success) {
-                        foreach (var service in serviceResult.Services) {
-                            BT_ServiceType serviceType = BT_ParseHelpers.GetServiceType(service.ServiceId.AsShortId());
-                            this.log.Info("GetExtraInfo", () => string.Format("Device {0} Connection host name {1} Service name {2} Type {3}",
-                                deviceInfo.Name,
-                                service.ConnectionHostName,
-                                service.ConnectionServiceName,
-                                serviceType.ToString()));
-                            if (serviceType == BT_ServiceType.SerialPort) {
-                                //await this.GetListSDPAttributes(service);
-                                deviceInfo.ServiceType = serviceType;
-                                deviceInfo.RemoteHostName = service.ConnectionHostName.ToString();
-                                deviceInfo.RemoteServiceName = service.ConnectionServiceName;
-                                deviceInfo.ServiceClassName = serviceType.ToString().CamelCaseToSpaces();
-                                deviceInfo.ServiceClassInt = (int)service.ServiceId.AsShortId();
-
-                                // TODO info on access 
-                                //service.DeviceAccessInformation.CurrentStatus == DeviceAccessStatus.Allowed
-
-                                this.log.Info("****", () => string.Format("Device:{0} Host Name:{1} Service:{2}",
-                                    deviceInfo.Name, deviceInfo.RemoteHostName, deviceInfo.RemoteServiceName));
-
-
-
-                                //deviceInfo.Strength = 0;
-                                this.ListDeviceInfoProperties(device);
-
-                                this.log.Info("****", () => string.Format("device.BluetoothAddress: {0}", device.BluetoothAddress));
-                                this.log.Info("****", () => string.Format("device.BluetoothDeviceId.id: {0}", device.BluetoothDeviceId.Id));
-                                this.log.Info("****", () => string.Format("device.DeviceId: {0}", device.DeviceId));
-                                this.log.Info("****", () => string.Format("device.DeviceInformation.Id: {0}", device.DeviceInformation.Id));
-                                this.log.Info("****", () => string.Format("device.ClassOfDevice: {0}", device.ClassOfDevice.RawValue));
-                                //this.log.Info("****", () => string.Format(":{0}", ));
-                                //this.log.Info("****", () => string.Format(":{0}", ));
-
-                                // Experimental. See the note on the method
-                                //await this.GetRadioInfo(device, deviceInfo, service.ConnectionServiceName);
-                                //await this.GetRadioInfo(device, deviceInfo, deviceInfo.RemoteHostName);
-
-                                // List of radios available on current device
-                                //await this.ListRadios();
-
-                                if (display) {
-                                    this.BT_DeviceInfoGathered?.Invoke(this, deviceInfo);
-                                }
-                            }
-                            else {
-                                //Not used. 
-                            }
-                            service.Dispose();
+                        //WrapErr.ChkTrue(serviceResult.Services.Count > 0, 9999, () => string.Format("No services for BT:{0}", deviceInfo.Name));
+                        if (serviceResult.Services.Count == 0) {
+                            throw new Exception(string.Format("No services for BT:{0}", deviceInfo.Name));
                         }
-                        
-                    }
-                    else {
-                        this.log.Error(9999, () => string.Format("Get Service result:{0}", serviceResult.Error.ToString()));
+
+
+                        if (serviceResult.Error == BluetoothError.Success) {
+                            foreach (var service in serviceResult.Services) {
+                                BT_ServiceType serviceType = BT_ParseHelpers.GetServiceType(service.ServiceId.AsShortId());
+                                this.log.Info("GetExtraInfo", () => string.Format("Device {0} Connection host name {1} Service name {2} Type {3}",
+                                    deviceInfo.Name,
+                                    service.ConnectionHostName,
+                                    service.ConnectionServiceName,
+                                    serviceType.ToString()));
+                                if (serviceType == BT_ServiceType.SerialPort) {
+                                    //await this.GetListSDPAttributes(service);
+                                    deviceInfo.ServiceType = serviceType;
+                                    deviceInfo.RemoteHostName = service.ConnectionHostName.ToString();
+                                    deviceInfo.RemoteServiceName = service.ConnectionServiceName;
+                                    deviceInfo.ServiceClassName = serviceType.ToString().CamelCaseToSpaces();
+                                    deviceInfo.ServiceClassInt = (int)service.ServiceId.AsShortId();
+
+                                    // TODO info on access 
+                                    //service.DeviceAccessInformation.CurrentStatus == DeviceAccessStatus.Allowed
+
+                                    this.log.Info("****", () => string.Format("Device:{0} Host Name:{1} Service:{2}",
+                                        deviceInfo.Name, deviceInfo.RemoteHostName, deviceInfo.RemoteServiceName));
+
+
+
+                                    //deviceInfo.Strength = 0;
+                                    this.ListDeviceInfoProperties(device);
+
+                                    this.log.Info("****", () => string.Format("device.BluetoothAddress: {0}", device.BluetoothAddress));
+                                    this.log.Info("****", () => string.Format("device.BluetoothDeviceId.id: {0}", device.BluetoothDeviceId.Id));
+                                    this.log.Info("****", () => string.Format("device.DeviceId: {0}", device.DeviceId));
+                                    this.log.Info("****", () => string.Format("device.DeviceInformation.Id: {0}", device.DeviceInformation.Id));
+                                    this.log.Info("****", () => string.Format("device.ClassOfDevice: {0}", device.ClassOfDevice.RawValue));
+                                    //this.log.Info("****", () => string.Format(":{0}", ));
+                                    //this.log.Info("****", () => string.Format(":{0}", ));
+
+                                    // Experimental. See the note on the method
+                                    //await this.GetRadioInfo(device, deviceInfo, service.ConnectionServiceName);
+                                    //await this.GetRadioInfo(device, deviceInfo, deviceInfo.RemoteHostName);
+
+                                    // List of radios available on current device
+                                    //await this.ListRadios();
+
+                                    if (display) {
+                                        this.BT_DeviceInfoGathered?.Invoke(this, deviceInfo);
+                                    }
+                                }
+                                else {
+                                    //Not used. 
+                                }
+                                service.Dispose();
+                            }
+
+                        }
+                        else {
+                            this.log.Error(9999, () => string.Format("Get Service result:{0}", serviceResult.Error.ToString()));
+                        }
                     }
                 }
+                else if (deviceInfo.RemoteHostName.Length > 0 && display) {
+                    this.BT_DeviceInfoGathered?.Invoke(this, deviceInfo);
+                }
             }
-            else if (deviceInfo.RemoteHostName.Length > 0 && display) {
-                this.BT_DeviceInfoGathered?.Invoke(this, deviceInfo);
+            catch (Exception e) {
+                this.log.Exception(9999, "GetExtraInfo", "", e);
             }
         }
 

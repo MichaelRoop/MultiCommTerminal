@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChkUtils.Net;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -73,32 +74,37 @@ namespace Wifi.UWP.Core {
 
 
         private async Task ScanForNetworks(WiFiAdapter adapter, WifiAdapterInfo info) {
-            // TODO - will need a list of available UWP network objects to be able to find fof connection - or use the UWP adapter
-            await adapter.ScanAsync();
-            networks = wifiAdapter.NetworkReport.AvailableNetworks;
-            info.Networks = new List<WifiNetworkInfo>();
-            // We will not return those with blank SSID
-            foreach (var net in networks) {
-                if (net.Ssid.Length > 0) {
-                    WifiNetworkInfo netInfo = new WifiNetworkInfo() {
-                        SSID = net.Ssid,
-                        Kind = net.NetworkKind.Convert(),
-                        ChanneCenterFrequencyKlhz = net.ChannelCenterFrequencyInKilohertz,
-                        BeaconInterval = net.BeaconInterval,
-                        MacAddress_BSSID = net.Bssid,
-                        RssiInDecibleMilliwatts = net.NetworkRssiInDecibelMilliwatts,
-                        PhysicalLayerKind = net.PhyKind.Convert(),
-                        AuthenticationType = net.SecuritySettings.NetworkAuthenticationType.Convert(),
-                        EncryptionType = net.SecuritySettings.NetworkEncryptionType.Convert(),
-                        IsWifiDirect = net.IsWiFiDirect,
-                        SignalStrengthInBars = net.SignalBars,
-                        UpTime = net.Uptime,
-                    };
-                    this.DumpNetworkInfo(netInfo);
-                    info.Networks.Add(netInfo);
+            try {
+                // TODO - will need a list of available UWP network objects to be able to find fof connection - or use the UWP adapter
+                await adapter.ScanAsync();
+                networks = wifiAdapter.NetworkReport.AvailableNetworks;
+                info.Networks = new List<WifiNetworkInfo>();
+                // We will not return those with blank SSID
+                foreach (var net in networks) {
+                    if (net.Ssid.Length > 0) {
+                        WifiNetworkInfo netInfo = new WifiNetworkInfo() {
+                            SSID = net.Ssid,
+                            Kind = net.NetworkKind.Convert(),
+                            ChanneCenterFrequencyKlhz = net.ChannelCenterFrequencyInKilohertz,
+                            BeaconInterval = net.BeaconInterval,
+                            MacAddress_BSSID = net.Bssid,
+                            RssiInDecibleMilliwatts = net.NetworkRssiInDecibelMilliwatts,
+                            PhysicalLayerKind = net.PhyKind.Convert(),
+                            AuthenticationType = net.SecuritySettings.NetworkAuthenticationType.Convert(),
+                            EncryptionType = net.SecuritySettings.NetworkEncryptionType.Convert(),
+                            IsWifiDirect = net.IsWiFiDirect,
+                            SignalStrengthInBars = net.SignalBars,
+                            UpTime = net.Uptime,
+                        };
+                        this.DumpNetworkInfo(netInfo);
+                        info.Networks.Add(netInfo);
+                    }
                 }
+                this.log.Info("ScanForNetworks", () => string.Format("Found {0} networks", info.Networks.Count));
             }
-            this.log.Info("ScanForNetworks", () => string.Format("Found {0} networks", info.Networks.Count));
+            catch (Exception e) {
+                this.log.Exception(9999, "ScanForNetworks", "", e);
+            }
         }
 
 
@@ -126,23 +132,31 @@ namespace Wifi.UWP.Core {
 
 
         private async Task<WifiErrorCode> ConnectToNetwork(WiFiAdapter adapter, string ssid, string password) {
-            // Should already be scanned
-            WiFiNetworkReport report = adapter.NetworkReport;
-            WifiErrorCode returnValue = WifiErrorCode.NetworkNotAvailable;
-            foreach (var net in report.AvailableNetworks) {
-                if (net.Ssid == ssid) {
-                    // TODO Will need to have multiple types of authentication
-                    PasswordCredential cred = new PasswordCredential() {
-                        Password = password
-                    };
-                    returnValue = (await adapter.ConnectAsync(net, WiFiReconnectionKind.Automatic, cred)).ConnectionStatus.Convert();
-                    break;
+            try {
+                // Should already be scanned
+                WiFiNetworkReport report = adapter.NetworkReport;
+                WifiErrorCode returnValue = WifiErrorCode.NetworkNotAvailable;
+                foreach (var net in report.AvailableNetworks) {
+                    if (net.Ssid == ssid) {
+                        // TODO Will need to have multiple types of authentication
+                        PasswordCredential cred = new PasswordCredential() {
+                            Password = password
+                        };
+                        returnValue = (await adapter.ConnectAsync(net, WiFiReconnectionKind.Automatic, cred)).ConnectionStatus.Convert();
+                        break;
+                    }
                 }
+                if (returnValue != WifiErrorCode.Success) {
+                    this.OnError?.Invoke(this, new WifiError(returnValue));
+                }
+                return returnValue;
             }
-            if (returnValue != WifiErrorCode.Success) {
-                this.OnError?.Invoke(this, new WifiError(returnValue));
+            catch (Exception e) {
+                WrapErr.SafeAction(() => {
+                    this.OnError?.Invoke(this, new WifiError( WifiErrorCode.Unknown));
+                });
+                return WifiErrorCode.Unknown;
             }
-            return returnValue;
         }
 
 

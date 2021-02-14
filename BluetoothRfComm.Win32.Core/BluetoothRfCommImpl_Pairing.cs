@@ -1,6 +1,7 @@
 ﻿using BluetoothCommon.Net;
 using BluetoothCommon.Net.Enumerations;
 using BluetoothCommon.Net.interfaces;
+using ChkUtils.Net;
 using System;
 using System.Threading.Tasks;
 using Windows.Devices.Bluetooth;
@@ -38,54 +39,64 @@ namespace BluetoothRfComm.UWP.Core {
 
 
         private async Task DoPairing(BTDeviceInfo info) {
+            try {
 
-            // Code in example does not work but has the calls. This one forces a prompt
-            // https://stackoverflow.com/questions/53010320/uwp-bluetooth-pairing-without-prompt
-
-
-            this.log.Info("DoPairing", () => string.Format("'{0}'", info.Name));
+                // Code in example does not work but has the calls. This one forces a prompt
+                // https://stackoverflow.com/questions/53010320/uwp-bluetooth-pairing-without-prompt
 
 
-            using (BluetoothDevice device = await BluetoothDevice.FromIdAsync(info.Address)) {
+                this.log.Info("DoPairing", () => string.Format("'{0}'", info.Name));
 
-                DeviceInformationPairing pairing = device.DeviceInformation.Pairing;
 
-                BTPairOperationStatus data = new BTPairOperationStatus() {
-                    Name = info.Name,
-                };
+                using (BluetoothDevice device = await BluetoothDevice.FromIdAsync(info.Address)) {
 
-                // TODO find if encryption required etc
-                //DevicePairingProtectionLevel pl = p.ProtectionLevel;
-                //pl.
+                    DeviceInformationPairing pairing = device.DeviceInformation.Pairing;
 
-                if (pairing == null) {
-                    data.PairStatus = BT_PairingStatus.NoParingObject;
-                    this.BT_PairStatus?.Invoke(this, data);
-                }
-                else if (!pairing.CanPair) {
-                    data.PairStatus = BT_PairingStatus.NotSupported;
-                    this.BT_PairStatus?.Invoke(this, data);
-                }
-                else {
-                    if (pairing.IsPaired) {
-                        data.IsSuccessful = true;
-                        data.PairStatus = BT_PairingStatus.AlreadyPaired;
+                    BTPairOperationStatus data = new BTPairOperationStatus() {
+                        Name = info.Name,
+                    };
+
+                    // TODO find if encryption required etc
+                    //DevicePairingProtectionLevel pl = p.ProtectionLevel;
+                    //pl.
+
+                    if (pairing == null) {
+                        data.PairStatus = BT_PairingStatus.NoParingObject;
+                        this.BT_PairStatus?.Invoke(this, data);
+                    }
+                    else if (!pairing.CanPair) {
+                        data.PairStatus = BT_PairingStatus.NotSupported;
                         this.BT_PairStatus?.Invoke(this, data);
                     }
                     else {
-                        DeviceInformationCustomPairing cpi = pairing.Custom;
-                        cpi.PairingRequested += this.OnPairRequestedAsyncCallback;
-                        // TODO - need to figure out if requesting PIN or just confirm
-                        DevicePairingResult result = await cpi.PairAsync(DevicePairingKinds.ProvidePin);
-                        cpi.PairingRequested -= this.OnPairRequestedAsyncCallback;
-                        this.log.Info("DoPairing", () =>
-                            string.Format("'{0}' Pair status {1}", info.Name, result.Status.ToString()));
+                        if (pairing.IsPaired) {
+                            data.IsSuccessful = true;
+                            data.PairStatus = BT_PairingStatus.AlreadyPaired;
+                            this.BT_PairStatus?.Invoke(this, data);
+                        }
+                        else {
+                            DeviceInformationCustomPairing cpi = pairing.Custom;
+                            cpi.PairingRequested += this.OnPairRequestedAsyncCallback;
+                            // TODO - need to figure out if requesting PIN or just confirm
+                            DevicePairingResult result = await cpi.PairAsync(DevicePairingKinds.ProvidePin);
+                            cpi.PairingRequested -= this.OnPairRequestedAsyncCallback;
+                            this.log.Info("DoPairing", () =>
+                                string.Format("'{0}' Pair status {1}", info.Name, result.Status.ToString()));
 
-                        data.IsSuccessful = result.Status.IsSuccessful();
-                        data.PairStatus = result.Status.ConvertStatus();
-                        this.BT_PairStatus?.Invoke(this, data);
+                            data.IsSuccessful = result.Status.IsSuccessful();
+                            data.PairStatus = result.Status.ConvertStatus();
+                            this.BT_PairStatus?.Invoke(this, data);
+                        }
                     }
                 }
+            }
+            catch (Exception e) {
+                this.log.Exception(9999, "DoPairing", "", e);
+                WrapErr.SafeAction(() => this.BT_PairStatus?.Invoke(
+                    this, 
+                    new BTPairOperationStatus() { 
+                        IsSuccessful = false, 
+                    }));
             }
         }
 
@@ -140,16 +151,27 @@ namespace BluetoothRfComm.UWP.Core {
 
         //https://stackoverflow.com/questions/45191412/deviceinformation-pairasync-not-working-in-wpf
         private async Task DoUnPairing(BTDeviceInfo info) {
-            using (BluetoothDevice device = await BluetoothDevice.FromIdAsync(info.Address)) {
-                this.log.Info("DoUnPairing", () => string.Format("'{0}'", info.Name));
-                DeviceUnpairingResult result = await device.DeviceInformation.Pairing.UnpairAsync();
-                this.log.Info("DoUnPairing", () =>
-                    string.Format("'{0}' Unpair status {1}", info.Name, result.Status.ToString()));
+            try {
+                using (BluetoothDevice device = await BluetoothDevice.FromIdAsync(info.Address)) {
+                    this.log.Info("DoUnPairing", () => string.Format("'{0}'", info.Name));
+                    DeviceUnpairingResult result = await device.DeviceInformation.Pairing.UnpairAsync();
+                    this.log.Info("DoUnPairing", () =>
+                        string.Format("'{0}' Unpair status {1}", info.Name, result.Status.ToString()));
 
-                this.BT_UnPairStatus?.Invoke(this, new BTUnPairOperationStatus() {
-                    Name = info.Name,
-                    UnpairStatus = result.Status.ConvertStatus(),
-                    IsSuccessful = result.Status.IsSuccessful(),
+                    this.BT_UnPairStatus?.Invoke(this, new BTUnPairOperationStatus() {
+                        Name = info.Name,
+                        UnpairStatus = result.Status.ConvertStatus(),
+                        IsSuccessful = result.Status.IsSuccessful(),
+                    });
+                }
+            }
+            catch(Exception e) {
+                WrapErr.SafeAction(()=>{
+                    this.BT_UnPairStatus?.Invoke(this, new BTUnPairOperationStatus() {
+                        Name = info.Name,
+                        UnpairStatus = BT_UnpairingStatus.Failed,
+                        IsSuccessful = false,
+                    });
                 });
             }
         }
