@@ -342,7 +342,7 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void BLE_GetRangeDisplay(BLE_CharacteristicDataModel dataModel, Action<string, string> onSuccess, OnErr onError);
 
-        void TranslateHeader(BluetoothLEDeviceInfo device);
+        void Translate(BluetoothLEDeviceInfo device);
 
         #endregion
 

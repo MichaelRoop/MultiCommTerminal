@@ -1,5 +1,6 @@
 ﻿using BluetoothLE.Net.DataModels;
 using BluetoothLE.Net.Enumerations;
+using BluetoothLE.Net.Parsers.Descriptor;
 using BluetoothLE.Net.Tools;
 using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
@@ -112,23 +113,17 @@ namespace MultiCommWrapper.Net.WrapCode {
             ErrReport report;
             WrapErr.ToErrReport(out report, 200057, "Failure on BLEGetInfoStatus", () => {
                 info.Message = this.Translate(info.Status);
-                this.TranslateHeader(info.DeviceInfo);
+                this.Translate(info.DeviceInfo);
                 this.BLE_DeviceConnectResult?.Invoke(this, info);
             });
             this.RaiseIfException(report);
         }
 
 
-        public void TranslateHeader(BluetoothLEDeviceInfo device) {
+        public void Translate(BluetoothLEDeviceInfo device) {
             try {
                 foreach (var s in device.Services) {
-                    s.DisplayHeader = this.GetText(MsgCode.Services);
-                    foreach (var c in s.Characteristics) {
-                        c.DisplayHeader = this.GetText(MsgCode.Characteristic);
-                        foreach (var d in c.Descriptors) {
-                            d.DisplayHeader = this.GetText(MsgCode.Descriptor);
-                        }
-                    }
+                    this.Translate(s);
                 }
             }
             catch (Exception e) {
@@ -380,6 +375,11 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
+
+        #endregion
+
+        #region Translation
+
         private string Translate(RangeValidationResult result) {
             switch (result.Status) {
                 case BLE_DataValidationStatus.Success:
@@ -401,7 +401,50 @@ namespace MultiCommWrapper.Net.WrapCode {
             }
         }
 
+
+        private void Translate(BLE_ServiceDataModel dataModel) {
+            dataModel.DisplayHeader = this.GetText(MsgCode.Services);
+            foreach (BLE_CharacteristicDataModel d in dataModel.Characteristics) {
+                this.Translate(d);
+            }
+        }
+
+
+        private void Translate(BLE_CharacteristicDataModel dataModel) {
+            dataModel.DisplayHeader = this.GetText(MsgCode.Characteristic);
+            dataModel.DisplayReadWrite = string.Empty;
+            if (dataModel.IsReadable || dataModel.IsWritable) {
+                StringBuilder sb = new StringBuilder();
+                if (dataModel.IsReadable) {
+                    sb.Append(this.GetText(MsgCode.Read));
+                }
+                if (dataModel.IsWritable) {
+                    if (sb.Length > 0) {
+                        sb.Append(", ");
+                    }
+                    sb.Append(this.GetText(MsgCode.Write));
+                }
+                if (sb.Length > 0) {
+                    dataModel.DisplayReadWrite = string.Format("({0})", sb.ToString());
+                }
+            }
+
+            foreach (BLE_DescriptorDataModel d in dataModel.Descriptors) {
+                this.Translate(d);
+            }
+        }
+
+
+        private void Translate(BLE_DescriptorDataModel dataModel) {
+            dataModel.DisplayHeader = this.GetText(MsgCode.Descriptor);
+            if (dataModel.Parser is DescParser_PresentationFormat) {
+                dataModel.DisplayName = (dataModel.Parser as DescParser_PresentationFormat)
+                    .TranslateDisplayString(this.GetText(MsgCode.DataType));
+            }
+        }
+
         #endregion
+
 
     }
 }

@@ -55,6 +55,8 @@
                                     <TextBlock Text="{Binding Path=CharName}" FontSize="16"/>
                                     <TextBlock Text=" : " FontSize="16"/>
                                     <TextBlock Text="{Binding CharValue}" FontSize="16"/>
+                                    <TextBlock Text=" " FontSize="16"/>
+                                    <TextBlock Text="{Binding DisplayReadWrite}" FontSize="16"/>
                                 </DockPanel>
                                 <TextBlock Text="{Binding Uuid}" Visibility="Collapsed"/>
                             </StackPanel>
