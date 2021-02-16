@@ -82,6 +82,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.logSection.Collapse();
             this.AddEventHandlers();
             this.timer.Start();
+            this.writeControl.OnStartup(this.parent);
             DI.Wrapper.CurrentSupportedLanguage(this.SetLanguage);
         }
 
@@ -114,6 +115,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         private void btnConnect_Click(object sender, RoutedEventArgs e) {
             this.SetConnectState(false);
+            this.writeControl.Reset();
             var device = BLESelect.ShowBox(this.parent, true);
             if (device != null) {
                 this.IsBusy = true;
@@ -213,10 +215,29 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                         this.currentDevice = info.DeviceInfo;
                         this.Title = string.Format("(BLE) {0}", this.currentDevice.Name);
                         this.treeServices.ItemsSource = this.currentDevice.Services;
+                        this.PopulateWriteControl(this.currentDevice);
                         break;
                 }
             });
         }
+
+
+        private void PopulateWriteControl(BluetoothLEDeviceInfo device) {
+            List<BLE_CharacteristicDataModel> list = new List<BLE_CharacteristicDataModel>();
+            foreach (BLE_ServiceDataModel service in device.Services) {
+                foreach (BLE_CharacteristicDataModel characteristic in service.Characteristics) {
+                    // TODO - turn on
+                    //if (characteristic.IsWritable) {
+                    //    list.Add(characteristic);
+                    //}
+
+                    // For now select all
+                    list.Add(characteristic);
+                }
+            }
+            this.writeControl.SetCharacteristics(list);
+        }
+
 
 
         private void connectionStatusChanged(object sender, BLE_ConnectStatusChangeInfo e) {

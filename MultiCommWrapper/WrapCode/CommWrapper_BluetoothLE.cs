@@ -1,5 +1,6 @@
 ﻿using BluetoothLE.Net.DataModels;
 using BluetoothLE.Net.Enumerations;
+using BluetoothLE.Net.Tools;
 using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
 using Common.Net.Network;
@@ -14,6 +15,12 @@ using VariousUtils.Net;
 namespace MultiCommWrapper.Net.WrapCode {
 
     public partial class CommWrapper : ICommWrapper {
+
+        #region Data
+
+        private BLERangeValidator validator = new BLERangeValidator();
+
+        #endregion
 
         #region Events
 
@@ -295,6 +302,48 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
+        public void BLE_Send(string value, BLE_CharacteristicDataModel dataModel, Action onSuccess, OnErr onError) {
+            try {
+                if (dataModel != null) {
+                    RangeValidationResult result = dataModel.Write(value);
+                    if (result.Status == BLE_DataValidationStatus.Success) {
+                        onSuccess.Invoke();
+                    }
+                    else {
+                        onError.Invoke(this.Translate(result));
+                    }
+                }
+            }
+            catch (Exception e) {
+                this.log.Exception(9999, "", e);
+                WrapErr.SafeAction(() => {
+                    onError.Invoke(this.GetText(MsgCode.UnhandledError));
+                });
+            }
+        }
+
+
+        public void BLE_GetRangeDisplay(BLE_CharacteristicDataModel dataModel, Action<string, string> onSuccess, OnErr onError) {
+            try {
+                // TODO translation
+                if (dataModel != null) {
+                    DataTypeDisplay display = this.validator.GetRange(dataModel.Parser.DataType);
+                    onSuccess(
+                        dataModel.CharName,
+                        string.Format("{0}:{1}  {2}:{3}  {4}:{5}",
+                        "Data Type", display.DataType,
+                        "Min", display.Min,
+                        "Max", display.Max));
+                }
+            }
+            catch (Exception e) {
+                this.log.Exception(9999, "", e);
+                WrapErr.SafeAction(() => {
+                    onError.Invoke(this.GetText(MsgCode.UnhandledError));
+                });
+            }
+        }
+
         #endregion
 
         #region Init and teardown
@@ -312,6 +361,27 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.bleBluetooth.ConnectionStatusChanged -= this.BLEBluetooth_ConnectionStatusChanged;
         }
 
+
+        private string Translate(RangeValidationResult result) {
+            switch (result.Status) {
+                case BLE_DataValidationStatus.Success:
+                    return this.GetText(MsgCode.Ok);
+                case BLE_DataValidationStatus.OutOfRange:
+                    return "Out of range"; // TODO
+                case BLE_DataValidationStatus.StringConversionFailed:
+                    return "Parse failed"; // TODO
+                case BLE_DataValidationStatus.Empty:
+                    return this.GetText(MsgCode.EmptyParameter);
+                case BLE_DataValidationStatus.InvalidInput:
+                    return "Invalid Input"; // TODO
+                case BLE_DataValidationStatus.NotHandled:
+                    return this.GetText(MsgCode.UnhandledError);
+                case BLE_DataValidationStatus.UnhandledError:
+                    return this.GetText(MsgCode.UnhandledError);
+                default:
+                    return "ERR";
+            }
+        }
 
         #endregion
 

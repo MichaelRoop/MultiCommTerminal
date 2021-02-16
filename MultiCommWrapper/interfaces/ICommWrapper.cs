@@ -338,6 +338,10 @@ namespace MultiCommWrapper.Net.interfaces {
         /// <param name="onComplete">Raisd with title and text for message box</param>
         void BLE_GetDbgInfoStringDump(object obj, Action<string, string> onComplete);
 
+        void BLE_Send(string value, BLE_CharacteristicDataModel dataModel, Action onSuccess, OnErr onError);
+
+        void BLE_GetRangeDisplay(BLE_CharacteristicDataModel dataModel, Action<string, string> onSuccess, OnErr onError);
+
         #endregion
 
         #region WIFI

@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:MultiCommTerminal.NetCore.WindowObjs.BLE"
         mc:Ignorable="d"
         xmlns:controls="clr-namespace:MultiCommTerminal.NetCore.UserControls"
+        xmlns:BLEcontrols="clr-namespace:MultiCommTerminal.NetCore.UserControls.BLE"
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
         xmlns:dataModels="clr-namespace:BluetoothLE.Net.DataModels;assembly=BluetoothLE.Net"
         Style="{StaticResource MyWindowStyle}"
@@ -13,7 +14,7 @@
         Title="BLE"
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.BluetoothClassic_W}}"
         Loaded="Window_Loaded" Closing="Window_Closing"
-        MinHeight="100" MinWidth="200" MaxHeight="900"  BorderThickness=".5">
+        MinHeight="100" MinWidth="200" MaxHeight="1200"  BorderThickness=".5">
     <Grid Width="850">
         <Grid x:Name="gridWait" Panel.ZIndex="10000" 
               HorizontalAlignment="Stretch" 
@@ -29,7 +30,7 @@
         <StackPanel>
             <Border Style="{StaticResource brd075}" Padding="0" >
                 <TreeView x:Name="treeServices" HorizontalAlignment="Stretch" Padding="10"
-                                MinHeight="250" MaxHeight="600" 
+                                MinHeight="250" MaxHeight="700" 
                                 ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
                     <TreeView.Resources>
                         <HierarchicalDataTemplate
@@ -78,10 +79,15 @@
                     <TextBox x:Name="txtCommmand" Text="ExampleCmd" Style="{Binding Source={StaticResource TxtBoxRight}}" Margin="10,0" HorizontalAlignment="Stretch" />
                 </DockPanel>
             </Border>
+            <Border>
+                <BLEcontrols:UC_BLEWriteGeneral x:Name="writeControl" />
+            </Border>
             <!-- Log stuff -->
             <Border Style="{StaticResource brd075}" HorizontalAlignment="Stretch" Padding="0" Margin="0">
                 <DockPanel VerticalAlignment="Center" Margin="0,5">
                     <StackPanel VerticalAlignment="Center">
+                        
+                        
                         <DockPanel Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <StackPanel HorizontalAlignment="Center">
                                 <DockPanel Margin="0,6">

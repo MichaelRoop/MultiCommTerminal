@@ -103,7 +103,11 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
         public static string Clear { get { return GetTxt(MsgCode.Clear); } }
         public static string ResetAll { get { return GetTxt(MsgCode.ResetAll); } }
         public static string Settings { get { return GetTxt(MsgCode.Settings); } }
+        public static string NothingSelected { get { return GetTxt(MsgCode.NothingSelected); } }
 
+
+        // TODO - translation
+        public static string Descriptor { get { return "Characteristic"; } }
 
         public static string Email { get { return "Email"; } }
         public static string CrashReport { get { return "Crash Report"; } }
