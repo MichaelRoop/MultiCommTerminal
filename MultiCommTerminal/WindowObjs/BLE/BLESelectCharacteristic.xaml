@@ -15,23 +15,21 @@
         MinHeight="100" MinWidth="200" MaxHeight="800" MaxWidth="900" BorderThickness=".5">
     <Grid>
         <StackPanel Margin="10,10">
-            <ListBox x:Name="listBox_BLE" BorderThickness=".5" FontSize="16"
+            <ListView x:Name="listBox_BLE" BorderThickness=".5" FontSize="16"
                      MinHeight="200" MinWidth="200" MaxHeight="500" 
                      ScrollViewer.VerticalScrollBarVisibility="Auto" 
                      ScrollViewer.HorizontalScrollBarVisibility="Auto">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Margin="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" />
-                                <ColumnDefinition Width="auto" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="{Binding Service.DisplayName}" Margin="10,5" />
-                            <TextBlock Grid.Column="1" Text="{Binding CharName}" Margin="10,5" />
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="Auto"
+                            Header="{Binding Source={x:Static wpfHelper:TxtBinder.Services}}"
+                                        DisplayMemberBinding="{Binding Service.DisplayName}" />
+                        <GridViewColumn Width="Auto"
+                            Header="{Binding Source={x:Static wpfHelper:TxtBinder.Characteristic}}"
+                                        DisplayMemberBinding="{Binding CharName}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
             <DockPanel HorizontalAlignment="Center" Margin="10,0,0,0">
                 <DockPanel HorizontalAlignment="Center">
                     <controls:UC_IconButton x:Name="btnCancel" Style="{StaticResource TextIconButton}"
