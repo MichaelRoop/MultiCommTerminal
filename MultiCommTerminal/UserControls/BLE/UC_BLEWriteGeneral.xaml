@@ -9,7 +9,7 @@
              xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
              Background="#fffffa"
             d:DesignWidth="600">
-    <Grid>
+    <Grid HorizontalAlignment="Stretch">
         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid HorizontalAlignment="Left">
                 <Grid.RowDefinitions>
@@ -20,27 +20,27 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition MinWidth="50"/>
                     <ColumnDefinition Width="18"/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" Grid.ColumnSpan="3" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Write}}" 
+                <Label Grid.Row="0" Grid.ColumnSpan="3" x:Name="lblWrite" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Write}}" 
                      Style="{Binding Source={StaticResource NameLabelRight}}" FontWeight="Bold" Margin="10,0"/>
 
-                <Label Grid.Row="1" Grid.Column="0"  Margin="0"
+                <Label Grid.Row="1" Grid.Column="0" x:Name="lblCharacteristic"  Margin="0"
                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.Characteristic}}" 
                        Style="{Binding Source={StaticResource NameLabelLeft}}" />
                 <Label Grid.Row="1" Grid.Column="1"  Content=" : " Margin="0"  
                        Style="{Binding Source={StaticResource NameLabelCenter}}" 
                        HorizontalContentAlignment="Center"/>
-                <Label Grid.Row="1" Grid.Column="2"  x:Name="lblCharacteristic" 
+                <Label Grid.Row="1" Grid.Column="2"  x:Name="lblCharacteristicContent" 
                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.NothingSelected}}" 
                        Style="{Binding Source={StaticResource NameLabelRight}}"/>
 
-                <Label Grid.Row="2" Grid.Column="0" Margin="0"
+                <Label Grid.Row="2" Grid.Column="0" Margin="0" x:Name="lblInfo"
                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.Info}}" 
                        Style="{Binding Source={StaticResource NameLabelLeft}}" />
                 <Label Grid.Row="2" Grid.Column="1" Content=" : "  Margin="0"
                        Style="{Binding Source={StaticResource NameLabelCenter}}"/>
-                <Label Grid.Row="2" Grid.Column="2" x:Name="lblInfo" Content="" 
+                <Label Grid.Row="2" Grid.Column="2" x:Name="lblInfoContent" Content="" 
                        Style="{Binding Source={StaticResource NameLabelRight}}"/>
             </Grid>
             <Border Style="{StaticResource brd075}" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">

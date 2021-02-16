@@ -325,15 +325,14 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         public void BLE_GetRangeDisplay(BLE_CharacteristicDataModel dataModel, Action<string, string> onSuccess, OnErr onError) {
             try {
-                // TODO translation
                 if (dataModel != null) {
                     DataTypeDisplay display = this.validator.GetRange(dataModel.Parser.DataType);
                     onSuccess(
                         dataModel.CharName,
-                        string.Format("{0}:{1}  {2}:{3}  {4}:{5}",
-                        "Data Type", display.DataType,
-                        "Min", display.Min,
-                        "Max", display.Max));
+                        string.Format("{0}: {1},  {2}: {3},  {4}: {5}",
+                        this.GetText(MsgCode.DataType), display.DataType,
+                        this.GetText(MsgCode.Min), display.Min,
+                        this.GetText(MsgCode.Max), display.Max));
                 }
             }
             catch (Exception e) {

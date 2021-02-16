@@ -1,6 +1,7 @@
 ﻿using BluetoothLE.Net.DataModels;
 using BluetoothLE.Net.Tools;
 using LanguageFactory.Net.data;
+using LanguageFactory.Net.Messaging;
 using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WindowObjs.BLE;
 using System.Collections.Generic;
@@ -23,7 +24,13 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
 
         public void OnStartup(Window parent) {
             this.parent = parent;
+            DI.Wrapper.LanguageChanged += this.languageChangedHandler;
         }
+
+        public void OnShutdown() {
+            DI.Wrapper.LanguageChanged -= this.languageChangedHandler;
+        }
+
 
         public void SetCharacteristics(List<BLE_CharacteristicDataModel> dataModels) {
             this.dataModels = dataModels;
@@ -31,8 +38,8 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
 
         public void Reset() {
             this.selected = null;
-            this.lblCharacteristic.Content = DI.Wrapper.GetText(MsgCode.NothingSelected);
-            this.lblInfo.Content = "";
+            this.lblCharacteristicContent.Content = DI.Wrapper.GetText(MsgCode.NothingSelected);
+            this.lblInfoContent.Content = "";
         }
 
 
@@ -55,10 +62,27 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
 
 
         private void DelegateSelectSuccess(string characteristicName, string dataInfo) {
-            this.lblCharacteristic.Content = characteristicName;
-            this.lblInfo.Content = dataInfo;
+            this.lblCharacteristicContent.Content = characteristicName;
+            this.lblInfoContent.Content = dataInfo;
         }
 
+
+        private void languageChangedHandler(object sender, SupportedLanguage l) {
+            Dispatcher.Invoke(() => {
+                // Labels
+                this.lblCharacteristic.Content = l.GetText(MsgCode.Characteristic);
+                this.lblInfo.Content = l.GetText(MsgCode.info);
+                this.lblWrite.Content = l.GetText(MsgCode.Write);
+                // Content
+                if (this.selected == null) {
+                    this.lblCharacteristicContent.Content = l.GetText(MsgCode.NothingSelected);
+                }
+                else {
+                    // translation and assembly happen in wrapper
+                    DI.Wrapper.BLE_GetRangeDisplay(this.selected, this.DelegateSelectSuccess, App.ShowMsg);
+                }
+            });
+        }
 
     }
 }
