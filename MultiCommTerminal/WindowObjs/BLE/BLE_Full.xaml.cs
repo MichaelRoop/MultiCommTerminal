@@ -290,6 +290,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                 this.btnConnect.Content = l.GetText(MsgCode.connect);
                 this.btnLog.Content = l.GetText(MsgCode.Log);
                 this.btnExit.Content = l.GetText(MsgCode.exit);
+                DI.Wrapper.TranslateHeader(this.currentDevice);
+                this.dataChanged = true;
             });
         }
 

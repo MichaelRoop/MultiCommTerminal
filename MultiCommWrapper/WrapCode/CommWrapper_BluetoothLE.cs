@@ -112,9 +112,28 @@ namespace MultiCommWrapper.Net.WrapCode {
             ErrReport report;
             WrapErr.ToErrReport(out report, 200057, "Failure on BLEGetInfoStatus", () => {
                 info.Message = this.Translate(info.Status);
+                this.TranslateHeader(info.DeviceInfo);
                 this.BLE_DeviceConnectResult?.Invoke(this, info);
             });
             this.RaiseIfException(report);
+        }
+
+
+        public void TranslateHeader(BluetoothLEDeviceInfo device) {
+            try {
+                foreach (var s in device.Services) {
+                    s.DisplayHeader = this.GetText(MsgCode.Services);
+                    foreach (var c in s.Characteristics) {
+                        c.DisplayHeader = this.GetText(MsgCode.Characteristic);
+                        foreach (var d in c.Descriptors) {
+                            d.DisplayHeader = this.GetText(MsgCode.Descriptor);
+                        }
+                    }
+                }
+            }
+            catch (Exception e) {
+                this.log.Exception(9999, "Translate", "", e);
+            }
         }
 
 
