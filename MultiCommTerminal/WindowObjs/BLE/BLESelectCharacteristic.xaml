@@ -27,6 +27,12 @@
                         <GridViewColumn Width="Auto"
                             Header="{Binding Source={x:Static wpfHelper:TxtBinder.Characteristic}}"
                                         DisplayMemberBinding="{Binding CharName}" />
+                        <GridViewColumn Width="Auto"
+                            Header="{Binding Source={x:Static wpfHelper:TxtBinder.DataType}}"
+                                        DisplayMemberBinding="{Binding DataTypeDisplay}" />
+                        <GridViewColumn Width="Auto"
+                            Header="{Binding Source={x:Static wpfHelper:TxtBinder.Description}}"
+                                        DisplayMemberBinding="{Binding UserDescription}" />
                     </GridView>
                 </ListView.View>
             </ListView>
