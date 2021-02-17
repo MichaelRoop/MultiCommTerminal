@@ -13,6 +13,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
     public partial class MainWindow : Window {
 
         MenuWin menu = null;
+        ClassLog log = new ClassLog("MainWindow");
 
         public MainWindow() {
             InitializeComponent();
@@ -22,8 +23,13 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
 
         private void Window_ContentRendered(object sender, EventArgs e) {
-            this.menu = new MenuWin(this);
-            this.menu.Collapse();
+            try {
+                this.menu = new MenuWin(this);
+                this.menu.Collapse();
+            }
+            catch (Exception ex) {
+                this.log.Exception(9999, "Window_MouseDown", "", ex);
+            }
         }
 
 
@@ -38,14 +44,24 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         /// <summary>Close opened menu window anywhere on window on mouse down</summary>
         private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
-            this.HideMenu();
+            try {
+                this.HideMenu();
+            }
+            catch (Exception ex) {
+                this.log.Exception(9999, "Window_MouseDown", "", ex);
+            }
         }
 
 
         /// <summary>Grab to window to move when click on title bar</summary>
         private void TitleBarBorder_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
-            this.HideMenu();
-            this.DragMove();
+            try {
+                this.HideMenu();
+                this.DragMove();
+            }
+            catch (Exception ex) {
+                this.log.Exception(9999, "TitleBarBorder_MouseDown", "", ex);
+            }
         }
 
 
@@ -68,14 +84,21 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         /// <summary>Click event on the hamburger icon to toggle menu window</summary>
         private void imgMenu_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
-            if (this.menu.IsVisible) {
-                this.menu.Hide();
+            try {
+                if (this.menu != null) {
+                if (this.menu.IsVisible) {
+                    this.menu.Hide();
+                }
+                else {
+                    // Need to get offset from current position of main window at click time
+                    this.menu.Left = this.Left;
+                    this.menu.Top = this.Top + this.taskBar.ActualHeight;
+                    this.menu.Show();
+                }
             }
-            else {
-                // Need to get offset from current position of main window at click time
-                this.menu.Left = this.Left;
-                this.menu.Top = this.Top + this.taskBar.ActualHeight;
-                this.menu.Show();
+            }
+            catch (Exception ex) {
+                this.log.Exception(9999, "imgMenu_MouseLeftButtonDown", "", ex);
             }
         }
 
@@ -87,19 +110,29 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
 
         private void HideMenu() {
-            if (this.menu.IsVisible) {
-                this.menu.Hide();
+            try {
+                if (this.menu != null && this.menu.IsVisible) {
+                    this.menu.Hide();
+                }
+            }
+            catch (Exception ex) {
+                this.log.Exception(9999, "HideMenu", "", ex);
             }
         }
 
 
         /// <summary>Handle the language changed event to update controls text</summary>
         private void LanguageChangedHandler(object sender, SupportedLanguage l) {
-            this.btnExit.Content = l.GetText(MsgCode.exit);
-            this.lbAuthor.Content = l.GetText(MsgCode.Author);
-            this.lbIcons.Content = l.GetText(MsgCode.Icons);
-            this.txtUserManual.Text = l.GetText(MsgCode.UserManual);
-            this.txtSupport.Text = l.GetText(MsgCode.Support);
+            try {
+                this.btnExit.Content = l.GetText(MsgCode.exit);
+                this.lbAuthor.Content = l.GetText(MsgCode.Author);
+                this.lbIcons.Content = l.GetText(MsgCode.Icons);
+                this.txtUserManual.Text = l.GetText(MsgCode.UserManual);
+                this.txtSupport.Text = l.GetText(MsgCode.Support);
+            }
+            catch (Exception ex) {
+                this.log.Exception(9999, "TitleBarBorder_MouseDown", "", ex);
+            }
         }
 
 
