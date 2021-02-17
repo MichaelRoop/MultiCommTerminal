@@ -98,6 +98,8 @@ namespace MultiCommWrapper.Net.WrapCode {
             return desc.TranslateDisplayString(
                 this.GetText(MsgCode.DataType),
                 this.GetText(MsgCode.Unit),
+                this.Translate(desc.MeasurementUnitsEnum),
+                "Exponent",
                 this.GetText(MsgCode.Description));
         }
 
@@ -139,6 +141,29 @@ namespace MultiCommWrapper.Net.WrapCode {
                     return status.ToString().CamelCaseToSpaces();
             }
         }
+
+
+        private string Translate(UnitsOfMeasurement unit) {
+            // First check for string returned if they are handled lower
+            string value = unit.ToStr();
+            if (value.Length > 0) {
+                return value;
+            }
+
+            // Others which do not return cross language string either because there
+            // it has not been implemented or a cross language string impractical
+            switch (unit) {
+                // Special case where user sets at zero. Non in spec
+                case UnitsOfMeasurement.Unknown:
+                case UnitsOfMeasurement.Unitless:
+                    return this.GetText(MsgCode.None);
+                case UnitsOfMeasurement.NOT_HANDLED:
+                    return this.GetText(MsgCode.NotFound);
+                default:
+                    return unit.ToString().CamelCaseToSpaces();
+            }
+        }
+
 
     }
 
