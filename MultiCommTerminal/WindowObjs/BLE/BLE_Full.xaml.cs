@@ -100,10 +100,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         #region button handlers
 
-        private void btnSend_Click(object sender, RoutedEventArgs e) {
-
-        }
-
         private void btnExit_Click(object sender, RoutedEventArgs e) {
             this.Close();
         }
@@ -284,7 +280,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.Dispatcher.Invoke(() => {
                 this.buttonSizer.PrepForChange();
                 this.InvalidateVisual();
-                this.btnSend.Content = l.GetText(MsgCode.send);
                 this.btnConnect.Content = l.GetText(MsgCode.connect);
                 this.btnLog.Content = l.GetText(MsgCode.Log);
                 this.btnExit.Content = l.GetText(MsgCode.exit);

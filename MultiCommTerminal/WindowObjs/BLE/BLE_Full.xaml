@@ -75,24 +75,13 @@
                 </TreeView>
             </Border>
             <!-- Send -->
-            <Border Style="{StaticResource brd075}" Visibility="Collapsed">
-                <DockPanel >
-                    <controls:UC_IconButton x:Name="btnSend" Style="{StaticResource TextIconButton}" Visibility="Visible"
-                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Send}}" 
-                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Send}}"                                                                                            
-                            Background="Transparent" Click="btnSend_Click" />
-                    <TextBox x:Name="txtCommmand" Text="ExampleCmd" Style="{Binding Source={StaticResource TxtBoxRight}}" Margin="10,0" HorizontalAlignment="Stretch" />
-                </DockPanel>
-            </Border>
             <Border>
-                <BLEcontrols:UC_BLEWriteGeneral x:Name="writeControl" />
+                <BLEcontrols:UC_BLEWriteGeneral x:Name="writeControl"/>
             </Border>
             <!-- Log stuff -->
             <Border Style="{StaticResource brd075}" HorizontalAlignment="Stretch" Padding="0" Margin="0">
                 <DockPanel VerticalAlignment="Center" Margin="0,5">
                     <StackPanel VerticalAlignment="Center">
-                        
-                        
                         <DockPanel Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <StackPanel HorizontalAlignment="Center">
                                 <DockPanel Margin="0,6">
