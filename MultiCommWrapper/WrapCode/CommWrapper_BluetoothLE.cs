@@ -403,7 +403,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         private void Translate(BLE_ServiceDataModel dataModel) {
-            dataModel.DisplayHeader = this.GetText(MsgCode.Services);
+            dataModel.DisplayHeader = this.GetText(MsgCode.Service);
             foreach (BLE_CharacteristicDataModel d in dataModel.Characteristics) {
                 this.Translate(d);
             }
@@ -435,12 +435,41 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-        private void Translate(BLE_DescriptorDataModel dataModel) {
-            dataModel.DisplayHeader = this.GetText(MsgCode.Descriptor);
-            if (dataModel.Parser is DescParser_PresentationFormat) {
-                dataModel.DisplayName = (dataModel.Parser as DescParser_PresentationFormat)
-                    .TranslateDisplayString(this.GetText(MsgCode.DataType));
+        private void Translate(BLE_DescriptorDataModel desc) {
+            desc.DisplayHeader = this.GetText(MsgCode.Descriptor);
+            if (desc.Parser is DescParser_PresentationFormat) {
+                desc.DisplayName = this.Translate(desc.Parser as DescParser_PresentationFormat);
             }
+            else if (desc.Parser is DescParser_ClientCharacteristicConfig) {
+                desc.DisplayName = this.Translate(
+                    desc.Parser as DescParser_ClientCharacteristicConfig);
+            }
+        }
+
+
+        private string Translate(DescParser_PresentationFormat desc) {
+            return desc.TranslateDisplayString(
+                this.GetText(MsgCode.DataType), 
+                this.GetText(MsgCode.Unit), 
+                this.GetText(MsgCode.Description));
+        }
+
+
+        private string Translate(DescParser_ClientCharacteristicConfig desc) {
+            return desc.TranslateDisplayString(
+                this.GetText(MsgCode.Notifications), 
+                this.Translate(desc.Notifications),
+                "Indications", 
+                this.Translate(desc.Indications));
+        }
+
+
+
+        private string Translate(EnabledDisabled state) {
+            if (state == EnabledDisabled.Enabled) {
+                return this.GetText(MsgCode.Enabled);
+            }
+            return this.GetText(MsgCode.Disabled);
         }
 
         #endregion

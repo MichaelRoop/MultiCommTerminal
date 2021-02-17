@@ -79,6 +79,7 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
         public static string About { get { return GetTxt(MsgCode.About); } }
         public static string Author { get { return GetTxt(MsgCode.Author); } }
         public static string Services { get { return GetTxt(MsgCode.Services); } }
+        public static string Service { get { return GetTxt(MsgCode.Service); } }
         public static string Properties { get { return GetTxt(MsgCode.Properties); } }
         public static string UserManual { get { return GetTxt(MsgCode.UserManual); } }
         public static string Vendor { get { return GetTxt(MsgCode.Vendor); } }

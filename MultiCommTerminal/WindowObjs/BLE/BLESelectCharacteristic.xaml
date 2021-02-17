@@ -22,7 +22,7 @@
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Width="Auto"
-                            Header="{Binding Source={x:Static wpfHelper:TxtBinder.Services}}"
+                            Header="{Binding Source={x:Static wpfHelper:TxtBinder.Service}}"
                                         DisplayMemberBinding="{Binding Service.DisplayName}" />
                         <GridViewColumn Width="Auto"
                             Header="{Binding Source={x:Static wpfHelper:TxtBinder.Characteristic}}"
