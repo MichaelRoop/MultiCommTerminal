@@ -46,6 +46,7 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
             this.selected = null;
             this.lblCharacteristicContent.Content = DI.Wrapper.GetText(MsgCode.NothingSelected);
             this.lblInfoContent.Content = "";
+            this.lblCharacteristicDescription.Content = "";
             this.txtCommmand.Text = "";
             this.SetEnabled(false);
         }
@@ -58,16 +59,24 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
 
 
         private void btnSelect_Click(object sender, RoutedEventArgs e) {
-            this.Reset();
             if (this.Connected) {
+                // Should never be called since disabled but double check
                 if (this.dataModels.Count == 0) {
+                    this.Reset();
                     App.ShowMsg(DI.Wrapper.GetText(MsgCode.ReadOnly));
                 }
                 else {
-                    this.selected = BLESelectCharacteristic.ShowBox(this.parent, this.dataModels);
-                    DI.Wrapper.BLE_GetRangeDisplay(this.selected, this.DelegateSelectSuccess, App.ShowMsg);
-                    // Reenable since we have data models even if none selected
-                    this.SetEnabled(true);
+                    BLESelectCharacteristic.SelectResult result = 
+                        BLESelectCharacteristic.ShowBox(this.parent, this.dataModels);
+                    if (!result.IsCanceled) {
+                        if (this.selected != result.SelectedCharacteristic) {
+                            this.Reset();
+                            this.selected = result.SelectedCharacteristic;
+                            this.lblCharacteristicDescription.Content = this.selected.UserDescription;
+                            DI.Wrapper.BLE_GetRangeDisplay(this.selected, this.DelegateSelectSuccess, App.ShowMsg);
+                            this.SetEnabled(true);
+                        }
+                    }
                 }
             }
         }

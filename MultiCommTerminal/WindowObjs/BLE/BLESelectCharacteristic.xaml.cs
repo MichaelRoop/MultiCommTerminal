@@ -13,20 +13,27 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         #region Data and properties
 
+        public class SelectResult {
+            public bool IsCanceled { get; set; } = false;
+            public BLE_CharacteristicDataModel SelectedCharacteristic { get; set; } = null;
+
+        }
+
+
         private Window parent = null;
         private List<BLE_CharacteristicDataModel> characteristics = new List<BLE_CharacteristicDataModel>();
         private ClassLog log = new ClassLog("BLESelectCharacteristic");
 
-        public BLE_CharacteristicDataModel SelectedCharacteristic { get; private set; } = null;
+        public SelectResult Result { get; private set; } = new SelectResult();
 
         #endregion
 
         #region Constructor and window event
 
-        public static BLE_CharacteristicDataModel ShowBox(Window parent, List<BLE_CharacteristicDataModel> characteristics) {
+        public static SelectResult ShowBox(Window parent, List<BLE_CharacteristicDataModel> characteristics) {
             BLESelectCharacteristic win = new BLESelectCharacteristic(parent, characteristics);
             win.ShowDialog();
-            return win.SelectedCharacteristic;
+            return win.Result;
         }
 
 
@@ -61,12 +68,14 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         #region Control events
 
         private void btnCancel_Click(object sender, RoutedEventArgs e) {
+            this.Result.IsCanceled = true;
             this.Close();
         }
 
 
         private void ListBox_BLE_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            this.SelectedCharacteristic = this.listBox_BLE.SelectedItem as BLE_CharacteristicDataModel;
+            this.Result.SelectedCharacteristic = this.listBox_BLE.SelectedItem as BLE_CharacteristicDataModel;
+            this.Result.IsCanceled = false;
             this.Close();
         }
 

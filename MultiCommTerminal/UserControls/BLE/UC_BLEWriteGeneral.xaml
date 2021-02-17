@@ -11,16 +11,17 @@
             d:DesignWidth="600">
     <Grid HorizontalAlignment="Stretch">
         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Grid HorizontalAlignment="Left">
+            <Grid HorizontalAlignment="Left"  >
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition MinWidth="50"/>
+                    <ColumnDefinition MinWidth="130"/>
                     <ColumnDefinition Width="18"/>
                     <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="132*"/>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Row="0" Grid.ColumnSpan="3" x:Name="lblWrite" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Write}}" 
                      Style="{Binding Source={StaticResource NameLabelRight}}" FontWeight="Bold" Margin="10,0"/>
@@ -34,13 +35,18 @@
                 <Label Grid.Row="1" Grid.Column="2"  x:Name="lblCharacteristicContent" 
                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.NothingSelected}}" 
                        Style="{Binding Source={StaticResource NameLabelRight}}"/>
+                <Label Grid.Row="1" Grid.Column="3"  x:Name="lblCharacteristicDescription" 
+                       Content="" 
+                       Style="{Binding Source={StaticResource NameLabelRight}}"/>
+
+
 
                 <Label Grid.Row="2" Grid.Column="0" Margin="0" x:Name="lblInfo"
                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.Info}}" 
                        Style="{Binding Source={StaticResource NameLabelLeft}}" />
                 <Label Grid.Row="2" Grid.Column="1" Content=" : "  Margin="0"
                        Style="{Binding Source={StaticResource NameLabelCenter}}"/>
-                <Label Grid.Row="2" Grid.Column="2" x:Name="lblInfoContent" Content="" 
+                <Label Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" x:Name="lblInfoContent" Content="" 
                        Style="{Binding Source={StaticResource NameLabelRight}}"/>
             </Grid>
             <Border Style="{StaticResource brd075}" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
