@@ -23,11 +23,13 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
 
         public UC_BLEWriteGeneral() {
             InitializeComponent();
+            this.SetEnabled(false);
         }
 
         public void OnStartup(Window parent) {
             this.parent = parent;
             DI.Wrapper.LanguageChanged += this.languageChangedHandler;
+            
         }
 
         public void OnShutdown() {
@@ -37,12 +39,15 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
 
         public void SetCharacteristics(List<BLE_CharacteristicDataModel> dataModels) {
             this.dataModels = dataModels;
+            this.SetEnabled(this.dataModels.Count > 0);
         }
 
         public void Reset() {
             this.selected = null;
             this.lblCharacteristicContent.Content = DI.Wrapper.GetText(MsgCode.NothingSelected);
             this.lblInfoContent.Content = "";
+            this.txtCommmand.Text = "";
+            this.SetEnabled(false);
         }
 
 
@@ -61,6 +66,8 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
                 else {
                     this.selected = BLESelectCharacteristic.ShowBox(this.parent, this.dataModels);
                     DI.Wrapper.BLE_GetRangeDisplay(this.selected, this.DelegateSelectSuccess, App.ShowMsg);
+                    // Reenable since we have data models even if none selected
+                    this.SetEnabled(true);
                 }
             }
         }
@@ -91,6 +98,13 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
                 }
             });
         }
+
+
+        private void SetEnabled(bool active) {
+            this.IsEnabled = active;
+            this.Opacity = active ? 1 : 0.5;
+        }
+
 
     }
 }
