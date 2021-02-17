@@ -241,6 +241,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.Dispatcher.Invoke(() => {
                 if (e.Status == BLE_ConnectStatus.Disconnected) {
                     this.SetConnectState(false);
+                    this.writeControl.Reset();
                     App.ShowMsg(e.Message);
                 }
             });

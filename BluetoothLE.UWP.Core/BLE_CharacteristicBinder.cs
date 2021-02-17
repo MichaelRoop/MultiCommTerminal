@@ -4,6 +4,7 @@ using BluetoothLE.Net.Parsers;
 using LogUtils.Net;
 using System;
 using System.Threading.Tasks;
+using VariousUtils.Net;
 using Windows.Devices.Bluetooth.GenericAttributeProfile;
 using Windows.Storage.Streams;
 
@@ -89,19 +90,31 @@ namespace Bluetooth.UWP.Core {
         private void onDataModelWriteRequestHandler(object sender, byte[] data) {
             Task.Run(async () => {
                 try {
-                    int count = data.Length / BLE_BLOCK_SIZE;
-                    int rest = (data.Length % BLE_BLOCK_SIZE);
-                    int lastIndex = 0;
-                    for (int i = 0; i < count; i++) {
-                        lastIndex = i * BLE_BLOCK_SIZE;
-                        if (await this.WriteBlock(data, lastIndex, BLE_BLOCK_SIZE) != true) {
-                            return;
+                    this.log.Info("onDataModelWriteRequestHandler", () => string.Format("{0}", data.ToFormatedByteString()));
+                    if (data.Length <= BLE_BLOCK_SIZE) {
+                        if (await this.WriteBlock(data, 0, data.Length) != true) {
+                            this.log.Error(9999, "onDataModelWriteRequestHandler", "Failed write single block");
                         }
+                        return;
                     }
-                    // Last block if partial block
-                    if (lastIndex > 0 && rest > 0) {
-                        lastIndex += BLE_BLOCK_SIZE;
-                        await this.WriteBlock(data, lastIndex, rest);
+                    else {
+                        int count = data.Length / BLE_BLOCK_SIZE;
+                        int rest = (data.Length % BLE_BLOCK_SIZE);
+                        int lastIndex = 0;
+                        for (int i = 0; i < count; i++) {
+                            lastIndex = i * BLE_BLOCK_SIZE;
+                            if (await this.WriteBlock(data, lastIndex, BLE_BLOCK_SIZE) != true) {
+                                this.log.Error(9999, "onDataModelWriteRequestHandler", "Failed write block");
+                                return;
+                            }
+                        }
+                        // Last block if partial block
+                        if (lastIndex > 0 && rest > 0) {
+                            lastIndex += BLE_BLOCK_SIZE;
+                            if (!await this.WriteBlock(data, lastIndex, rest)) {
+                                this.log.Error(9999, "onDataModelWriteRequestHandler", "Failed write last block");
+                            }
+                        }
                     }
                 }
                 catch (Exception e) {
@@ -137,12 +150,15 @@ namespace Bluetooth.UWP.Core {
         /// <returns>true on success, otherwise false with error raised</returns>
         private async Task<bool> WriteBlock(byte[] data, int index, int size) {
             try {
+                this.log.Info("WriteBlock", "Write to Gatt");
                 using (var ms = new DataWriter()) {
                     byte[] part = new byte[size];
                     Array.Copy(data, index, part, 0, part.Length);
                     ms.WriteBytes(part);
                     GattCommunicationStatus result = await 
                         this.OSCharacteristic.WriteValueAsync(ms.DetachBuffer());
+                    this.log.Info("WriteBlock", () => string.Format("WriteValueAsync result:{0}", result.ToString()));
+
                     return this.ParseGattStatue(result);
                 }
             }

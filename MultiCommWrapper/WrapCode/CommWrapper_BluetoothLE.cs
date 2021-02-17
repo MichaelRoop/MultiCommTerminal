@@ -293,7 +293,7 @@ namespace MultiCommWrapper.Net.WrapCode {
                 }
             }
             catch (Exception e) {
-                this.log.Exception(9999, "", e);
+                this.log.Exception(9999, "BLE_Send", "", e);
                 WrapErr.SafeAction(() => {
                     onError.Invoke(this.GetText(MsgCode.UnhandledError));
                 });
