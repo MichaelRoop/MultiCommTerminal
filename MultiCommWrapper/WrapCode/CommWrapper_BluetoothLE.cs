@@ -1,6 +1,5 @@
 ﻿using BluetoothLE.Net.DataModels;
 using BluetoothLE.Net.Enumerations;
-using BluetoothLE.Net.Parsers.Descriptor;
 using BluetoothLE.Net.Tools;
 using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
@@ -120,18 +119,6 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-        public void Translate(BluetoothLEDeviceInfo device) {
-            try {
-                foreach (var s in device.Services) {
-                    this.Translate(s);
-                }
-            }
-            catch (Exception e) {
-                this.log.Exception(9999, "Translate", "", e);
-            }
-        }
-
-
         private void BLEBluetooth_ConnectionStatusChanged(object sender, BLE_ConnectStatusChangeInfo e) {
             ErrReport report;
             WrapErr.ToErrReport(out report, 200058, "Failure on BLE_ConnectStatusChangeInfo", () => {
@@ -141,28 +128,6 @@ namespace MultiCommWrapper.Net.WrapCode {
                 this.BLE_ConnectionStatusChanged?.Invoke(sender, e);
             });
             this.RaiseIfException(report);
-        }
-
-
-        private string Translate(BLEOperationStatus status) {
-            switch (status) {
-                case BLEOperationStatus.Success:
-                    return this.GetText(MsgCode.Ok);
-                case BLEOperationStatus.NotFound:
-                    return this.GetText(MsgCode.NotFound);
-                case BLEOperationStatus.NoServices:
-                    return this.GetText(MsgCode.NoServices);
-                case BLEOperationStatus.GetServicesFailed:
-                    return this.GetText(MsgCode.ServicesFailure);
-                case BLEOperationStatus.Failed:
-                    return this.GetText(MsgCode.UnknownError);
-                case BLEOperationStatus.UnhandledError:
-                    return this.GetText(MsgCode.UnhandledError);
-                case BLEOperationStatus.UnknownError:
-                    return this.GetText(MsgCode.UnknownError);
-                default:
-                    return status.ToString().CamelCaseToSpaces();
-            }
         }
 
         #endregion
@@ -191,7 +156,6 @@ namespace MultiCommWrapper.Net.WrapCode {
                 this.bleBluetooth.Connect(device);
             });
         }
-
 
 
         public void BLE_GetInfo(BluetoothLEDeviceInfo device) {
@@ -374,106 +338,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.bleBluetooth.ConnectionStatusChanged -= this.BLEBluetooth_ConnectionStatusChanged;
         }
 
-
-
         #endregion
-
-        #region Translation
-
-        private string Translate(RangeValidationResult result) {
-            switch (result.Status) {
-                case BLE_DataValidationStatus.Success:
-                    return this.GetText(MsgCode.Ok);
-                case BLE_DataValidationStatus.OutOfRange:
-                    return "Out of range"; // TODO
-                case BLE_DataValidationStatus.StringConversionFailed:
-                    return "Parse failed"; // TODO
-                case BLE_DataValidationStatus.Empty:
-                    return this.GetText(MsgCode.EmptyParameter);
-                case BLE_DataValidationStatus.InvalidInput:
-                    return "Invalid Input"; // TODO
-                case BLE_DataValidationStatus.NotHandled:
-                    return this.GetText(MsgCode.UnhandledError);
-                case BLE_DataValidationStatus.UnhandledError:
-                    return this.GetText(MsgCode.UnhandledError);
-                default:
-                    return "ERR";
-            }
-        }
-
-
-        private void Translate(BLE_ServiceDataModel dataModel) {
-            dataModel.DisplayHeader = this.GetText(MsgCode.Service);
-            foreach (BLE_CharacteristicDataModel d in dataModel.Characteristics) {
-                this.Translate(d);
-            }
-        }
-
-
-        private void Translate(BLE_CharacteristicDataModel dataModel) {
-            dataModel.DisplayHeader = this.GetText(MsgCode.Characteristic);
-            dataModel.DisplayReadWrite = string.Empty;
-            if (dataModel.IsReadable || dataModel.IsWritable) {
-                StringBuilder sb = new StringBuilder();
-                if (dataModel.IsReadable) {
-                    sb.Append(this.GetText(MsgCode.Read));
-                }
-                if (dataModel.IsWritable) {
-                    if (sb.Length > 0) {
-                        sb.Append(", ");
-                    }
-                    sb.Append(this.GetText(MsgCode.Write));
-                }
-                if (sb.Length > 0) {
-                    dataModel.DisplayReadWrite = string.Format("({0})", sb.ToString());
-                }
-            }
-
-            foreach (BLE_DescriptorDataModel d in dataModel.Descriptors) {
-                this.Translate(d);
-            }
-        }
-
-
-        private void Translate(BLE_DescriptorDataModel desc) {
-            desc.DisplayHeader = this.GetText(MsgCode.Descriptor);
-            if (desc.Parser is DescParser_PresentationFormat) {
-                desc.DisplayName = this.Translate(desc.Parser as DescParser_PresentationFormat);
-            }
-            else if (desc.Parser is DescParser_ClientCharacteristicConfig) {
-                desc.DisplayName = this.Translate(
-                    desc.Parser as DescParser_ClientCharacteristicConfig);
-            }
-        }
-
-
-        private string Translate(DescParser_PresentationFormat desc) {
-            return desc.TranslateDisplayString(
-                this.GetText(MsgCode.DataType), 
-                this.GetText(MsgCode.Unit), 
-                this.GetText(MsgCode.Description));
-        }
-
-
-        private string Translate(DescParser_ClientCharacteristicConfig desc) {
-            return desc.TranslateDisplayString(
-                this.GetText(MsgCode.Notifications), 
-                this.Translate(desc.Notifications),
-                "Indications", 
-                this.Translate(desc.Indications));
-        }
-
-
-
-        private string Translate(EnabledDisabled state) {
-            if (state == EnabledDisabled.Enabled) {
-                return this.GetText(MsgCode.Enabled);
-            }
-            return this.GetText(MsgCode.Disabled);
-        }
-
-        #endregion
-
 
     }
 }

@@ -69,6 +69,9 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
 
         private void languageChangedHandler(object sender, SupportedLanguage l) {
             Dispatcher.Invoke(() => {
+                // Buttons
+                this.btnSelect.Content = l.GetText(MsgCode.select);
+                this.btnSend.Content = l.GetText(MsgCode.send);
                 // Labels
                 this.lblCharacteristic.Content = l.GetText(MsgCode.Characteristic);
                 this.lblInfo.Content = l.GetText(MsgCode.info);
