@@ -18,6 +18,9 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
         private BLERangeValidator validator = new BLERangeValidator();
         private Window parent = null;
 
+
+        public bool Connected { get; set; } = false;
+
         public UC_BLEWriteGeneral() {
             InitializeComponent();
         }
@@ -51,12 +54,14 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
 
         private void btnSelect_Click(object sender, RoutedEventArgs e) {
             this.Reset();
-            if (this.dataModels.Count == 0) {
-                App.ShowMsg(DI.Wrapper.GetText(MsgCode.None)); // TODO Translation
-            }
-            else {
-                this.selected = BLESelectCharacteristic.ShowBox(this.parent, this.dataModels);
-                DI.Wrapper.BLE_GetRangeDisplay(this.selected, this.DelegateSelectSuccess, App.ShowMsg);
+            if (this.Connected) {
+                if (this.dataModels.Count == 0) {
+                    App.ShowMsg(DI.Wrapper.GetText(MsgCode.ReadOnly));
+                }
+                else {
+                    this.selected = BLESelectCharacteristic.ShowBox(this.parent, this.dataModels);
+                    DI.Wrapper.BLE_GetRangeDisplay(this.selected, this.DelegateSelectSuccess, App.ShowMsg);
+                }
             }
         }
 

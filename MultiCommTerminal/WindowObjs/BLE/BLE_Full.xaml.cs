@@ -227,13 +227,9 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             List<BLE_CharacteristicDataModel> list = new List<BLE_CharacteristicDataModel>();
             foreach (BLE_ServiceDataModel service in device.Services) {
                 foreach (BLE_CharacteristicDataModel characteristic in service.Characteristics) {
-                    // TODO - turn on
-                    //if (characteristic.IsWritable) {
-                    //    list.Add(characteristic);
-                    //}
-
-                    // For now select all
-                    list.Add(characteristic);
+                    if (characteristic.IsWritable) {
+                        list.Add(characteristic);
+                    }
                 }
             }
             this.writeControl.SetCharacteristics(list);
@@ -265,6 +261,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         private void SetConnectState(bool isConnected) {
             this.Dispatcher.Invoke(() => {
+                this.writeControl.Connected = isConnected;
                 if (isConnected) {
                     this.connectedOff.Collapse();
                     this.connectedOn.Show();
