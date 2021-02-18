@@ -7,7 +7,8 @@
 	Temperature		// 0x2A6E
 	Humidity		// 0x2A6F
 	Pressure		// 0x2A6D
-	Custom          // My Uuid 0xF001 - has format descriptor for parsing
+	Custom          // My Uuid 0xF001 - has format descriptor for parsing - supports Write
+	Bool on/Off switch // My Uuid 0xF002 - has format descriptor for parsing - supports Write
 
 	Here is a partial list of BLE Format data types for the Format Descriptor. Some are 
 	not yet supported. Those will be displayed as a series of bytes
@@ -23,11 +24,11 @@
         UInt_64bit = 10
         UInt_128bit = 11 ** Not supported **
         Int_8bit = 12
-        Int_12bit = 13  ** Not supported **
+        Int_12bit = 13  
         Int_16bit = 14
-        Int_24bit = 15  ** Not supported **
+        Int_24bit = 15  
         Int_32bit = 16
-        Int_48bit = 17 ** Not supported **
+        Int_48bit = 17 
         Int_64bit = 18
         Int_128bit = 19 ** Not supported **
         IEEE_754_32bit_floating_point = 20
@@ -42,7 +43,7 @@
 
   For this to work you need the forked version of ArduinoBLE
   which supports connection to Windows and Android
-  https://github.com/unknownconstant/ArduinoBLE/tree/pairing
+  https://github.com/unknownconstant/ArduinoBLE
 
 
   Tested on Arduino Uno WIFI Rev 2
@@ -55,6 +56,7 @@
   
  */
 #include <ArduinoBLE.h>
+#include <string.h>
 
 //---------------------------------------------------------------------
 // Variables
@@ -72,8 +74,9 @@ BLETypedCharacteristic<uint16_t> humidCharacteristic("2A6F", BLERead | BLENotify
 
 // Custom 2 byte sensor service
 BLEService ioService("FF01");
-BLETypedCharacteristic<uint16_t> analogSensorCharacteristic("F001", BLERead | BLENotify);
-BLEDescriptor sensorDescriptorUserDescription("2901", "aSensor1"); // Defined in Spec
+BLETypedCharacteristic<uint16_t> analogSensorCharacteristic("F001", BLERead | BLENotify | BLEWrite);
+BLEDescriptor sensorDescriptorUserDescription("2901", "An Sensor 1"); // Defined in Spec
+
 uint8_t format[7] = { 
 	0x6,		// Data type. BLE spec 6 = uint16_t. Defines size of data in characteristic read 
 	(byte)-2,	// Exponent -2 sbyte. stored as byte. parsed out as sbyte to maintain sign
@@ -82,7 +85,13 @@ uint8_t format[7] = {
 	0x0, 0x0	// Description uint
 };
 // BLE spec 0x2904 is the Format Descriptor
-BLEDescriptor senforDescriptorFormat("2904", format, sizeof(format));
+BLEDescriptor sensorDescriptorFormat("2904", format, sizeof(format));
+
+// Custom bool onOff sensor
+BLEDescriptor onOffDescriptorUserDescription("2901", "On Off Switch"); // Defined in Spec
+BLEBooleanCharacteristic onOffCharacteristic("F002", BLERead | BLENotify | BLEWrite);
+uint8_t onOffData[]{ 0x01,0x0, 0x0,0x0, 0x0,0x0, 0x0 };
+BLEDescriptor onOffDataDesc("2904", onOffData, sizeof(onOffData));
 
 // Track dummy values 
 uint8_t batteryLevel = 93;
@@ -90,16 +99,14 @@ int16_t tempLevel = 3392;
 uint16_t humidityLevl = 4400;
 uint32_t pressureLevel = 28500;
 uint16_t analogLevel = 16025;
+byte isOn = 1; // On by default
 
 unsigned long lasMsTimeUpdate = 0;
 bool upIncrement = true;
-//---------------------------------------------------------------------
-
 
 //---------------------------------------------------------------------
 // Main Arduino functions
-
-// Executed once on power on or reset
+// the setup function runs once when you press reset or power the board
 void setup() {
 	Serial.begin(9600);
 	while (!Serial) {}
@@ -107,21 +114,20 @@ void setup() {
 	SetupBLE();
 }
 
-
 // the loop function runs over and over again forever
 void loop() {
 	BLEDevice central = BLE.central();
 	if (central) {
 		while (central.connected()) {
-			WriteBatteryLevelOnMsInterval(5000);
+			WriteBatteryLevelOnMsInterval(2000);
 			delayMicroseconds(10);
 		}
 	}
 }
-//---------------------------------------------------------------------
+
 
 //---------------------------------------------------------------------
-// Helper functions
+// Other functions
 void SetupBLE() {
 	if (!BLE.begin()) {
 		Serial.println("FAIL");
@@ -147,12 +153,18 @@ void SetupBLE() {
 	BLE.setAdvertisedService(environmentService);
 
 	// My custom sensor service
+	onOffCharacteristic.addDescriptor(onOffDataDesc);
+	onOffCharacteristic.addDescriptor(onOffDescriptorUserDescription);
+	onOffCharacteristic.setEventHandler(BLEWritten, onOffHandler);
+	ioService.addCharacteristic(onOffCharacteristic);
+
 	analogSensorCharacteristic.addDescriptor(sensorDescriptorUserDescription);
-	analogSensorCharacteristic.addDescriptor(senforDescriptorFormat);
+	analogSensorCharacteristic.addDescriptor(sensorDescriptorFormat);
+	analogSensorCharacteristic.setEventHandler(BLEWritten, uint16CustomWriteHandler);	
 	ioService.addCharacteristic(analogSensorCharacteristic);
+
 	BLE.addService(ioService);
 	BLE.setAdvertisedService(ioService);
-
 	BLE.advertise();
 
 	WriteValues();
@@ -165,30 +177,32 @@ void WriteBatteryLevelOnMsInterval(unsigned long msInterval) {
 	unsigned long currentMs = millis();
 	if ((currentMs - lasMsTimeUpdate) > msInterval) {
 		lasMsTimeUpdate = currentMs;
-		if (upIncrement) {
-			tempLevel += 111;
-			humidityLevl += 212;
-			pressureLevel += 18;
-			analogLevel += 67;
-			batteryLevel++;
-			if (batteryLevel > 99) {
-				batteryLevel = 99;
-				upIncrement = false;
+		if (isOn) {
+			if (upIncrement) {
+				tempLevel += 111;
+				humidityLevl += 212;
+				pressureLevel += 18;
+				analogLevel += 67;
+				batteryLevel++;
+				if (batteryLevel > 99) {
+					batteryLevel = 99;
+					upIncrement = false;
+					batteryLevel--;
+				}
+			}
+			else {
+				tempLevel -= 111;
+				humidityLevl -= 212;
+				pressureLevel -= 18;
+				analogLevel -= 67;
 				batteryLevel--;
+				if (batteryLevel < 85) {
+					upIncrement = true;
+					batteryLevel = 60;
+				}
 			}
+			WriteValues();
 		}
-		else {
-			tempLevel -= 111;
-			humidityLevl -= 212;
-			pressureLevel -= 18;
-			analogLevel -= 67;
-			batteryLevel--;
-			if (batteryLevel < 85) {
-				upIncrement = true;
-				batteryLevel = 60;
-			}
-		}
-		WriteValues();
 	}
 }
 
@@ -216,23 +230,26 @@ void WriteValues() {
 	Serial.print("  An sensor:"); Serial.println(analogLevel);
 }
 
-//---------------------------------------------------------------------
-
 
 //---------------------------------------------------------------------
 // Event handlers
-
-// When a connection is established to device
 void bleOnConnectHandler(BLEDevice central) {
 	Serial.println("CONNECTED");
 }
 
-
-// When a connection to device is broken
 void bleOnDisconnectHandler(BLEDevice central) {
 	Serial.println("DISCONNECTED");
 	ResetValues();
 }
 
-//---------------------------------------------------------------------
+void onOffHandler(BLEDevice central, BLECharacteristic characteristic) {
+	isOn = characteristic.value()[0];
+	Serial.print("OnOff:"); Serial.println(isOn);
+}
+
+void uint16CustomWriteHandler(BLEDevice central, BLECharacteristic characteristic) {
+	memcpy(&analogLevel, characteristic.value(), sizeof(analogLevel));
+	Serial.print("analogLevel:"); Serial.println(analogLevel);
+}
+
 
