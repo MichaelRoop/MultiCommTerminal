@@ -53,6 +53,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             dataModel.DisplayHeader = this.GetText(MsgCode.Service);
             foreach (BLE_CharacteristicDataModel d in dataModel.Characteristics) {
                 this.Translate(d);
+                this.TranslateBool(d);
             }
         }
 
@@ -162,6 +163,20 @@ namespace MultiCommWrapper.Net.WrapCode {
                 default:
                     return unit.ToString().CamelCaseToSpaces();
             }
+        }
+
+
+        private void TranslateBool(BLE_CharacteristicDataModel dm) {
+            if (dm.Parser.DataType == BLE_DataType.Bool) {
+                // TODO put in true false translation
+                //if (dm.CharValue == "True") {
+                //    dm.CharValue = "TrueX";
+                //}
+                //else if (dm.CharValue == "False") {
+                //    dm.CharValue = "FalseX";
+                //}
+            }
+
         }
 
 
