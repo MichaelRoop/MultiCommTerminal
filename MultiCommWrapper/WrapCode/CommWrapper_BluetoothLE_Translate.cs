@@ -100,7 +100,7 @@ namespace MultiCommWrapper.Net.WrapCode {
                 this.GetText(MsgCode.DataType),
                 this.GetText(MsgCode.Unit),
                 this.Translate(desc.MeasurementUnitsEnum),
-                "Exponent",
+                this.GetText(MsgCode.Exponent),
                 this.GetText(MsgCode.Description));
         }
 
@@ -169,14 +169,13 @@ namespace MultiCommWrapper.Net.WrapCode {
         private void TranslateBool(BLE_CharacteristicDataModel dm) {
             if (dm.Parser.DataType == BLE_DataType.Bool) {
                 // TODO put in true false translation
-                //if (dm.CharValue == "True") {
-                //    dm.CharValue = "TrueX";
-                //}
-                //else if (dm.CharValue == "False") {
-                //    dm.CharValue = "FalseX";
-                //}
+                if (dm.CharValue.ToLower() == "true") {
+                    dm.CharValue = this.GetText(MsgCode.True);
+                }
+                else if (dm.CharValue.ToLower() == "false") {
+                    dm.CharValue = this.GetText(MsgCode.False);
+                }
             }
-
         }
 
 
