@@ -79,8 +79,6 @@ namespace MultiCommWrapper.Net.WrapCode {
             }
 
             if (dataModel.Parser is CharParser_Appearance) {
-
-                //dataModel.DisplayHeader = 
                 dataModel.CharValue = this.Translate(dataModel.Parser as CharParser_Appearance);
             }
 
@@ -113,13 +111,18 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         private string Translate(DescParser_ClientCharacteristicConfig desc) {
-            return desc.TranslateDisplayString(
-                this.GetText(MsgCode.Notifications),
-                this.Translate(desc.Notifications),
-                "Indications",
-                this.Translate(desc.Indications));
+            return desc.Translate(() => {
+                return string.Format(
+                    "{0} : {1}, {2} : {3}",
+                    this.GetText(MsgCode.Notifications),
+                    this.Translate(desc.Notifications),
+                    "Indications",
+                    this.Translate(desc.Indications));
+            });
         }
 
+
+        #region Translate BLE units and results
 
         private string Translate(EnabledDisabled state) {
             if (state == EnabledDisabled.Enabled) {
@@ -148,15 +151,6 @@ namespace MultiCommWrapper.Net.WrapCode {
                 default:
                     return status.ToString().CamelCaseToSpaces();
             }
-        }
-
-
-        private string Translate(CharParser_Appearance p) {
-            p.Translate(() => {
-                return this.TranslateAppearance(
-                    p.Category, p.SubCategory, p.DisplayString);
-            });
-            return p.DisplayString;
         }
 
 
@@ -194,6 +188,16 @@ namespace MultiCommWrapper.Net.WrapCode {
             }
         }
 
+        #endregion
+
+        #region Appearance translation
+
+        private string Translate(CharParser_Appearance p) {
+            return p.Translate(() => {
+                return this.TranslateAppearance(
+                    p.Category, p.SubCategory, p.DisplayString);
+            });
+        }
 
         private string TranslateAppearance(uint category, uint sub, string existing) {
             // Some categories only have one entry
@@ -608,7 +612,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             }
         }
 
-
+        #endregion
 
     }
 
