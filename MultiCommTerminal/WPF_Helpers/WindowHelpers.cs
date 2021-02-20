@@ -23,30 +23,43 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
         /// <remarks>Call in the overriden OnApplyTemplate function</remarks>
         /// <param name="win">The window calling this function</param>
         public static void BindMouseDownToCustomTitleBar(this Window win) {
-            Border b = win.Template.FindName("brdTitle", win) as Border;
-            if (b != null) {
-                b.MouseDown += (sender, args) => {
-                    WrapErr.ToErrReport(9999, "Drag when mouse not down", () => {
-                        win.DragMove();
-                    });
-                };
+            try {
+                if (win != null) {
+                    Border b = win.Template.FindName("brdTitle", win) as Border;
+                    if (b != null) {
+                        b.MouseDown += (sender, args) => {
+                            WrapErr.ToErrReport(9999, "Drag when mouse not down", () => {
+                                win.DragMove();
+                            });
+                        };
+                    }
+                    else {
+                        LOG.Error(9999, "Could not find PART_topBar - are you sure you have style set to MyWindowStyle?");
+                    }
+                }
             }
-            else {
-                LOG.Error(9999, "Could not find PART_topBar - are you sure you have style set to MyWindowStyle?");
+            catch (Exception e) {
+                LOG.Exception(9999, "BindMouseDownToCustomTitleBar", "", e);
             }
         }
 
 
         public static void HideTitleBarIcon(this Window win) {
-            Border b = win.Template.FindName("PART_IconBorder", win) as Border;
-            if (b != null) {
-                b.Visibility = Visibility.Collapsed;
+            try {
+                if (win != null) {
+                    Border b = win.Template.FindName("PART_IconBorder", win) as Border;
+                    if (b != null) {
+                        b.Visibility = Visibility.Collapsed;
+                    }
+                    else {
+                        LOG.Error(9999, "Could not find PART_IconBorder - are you sure you have style set to MyWindowStyle?");
+                    }
+                }
             }
-            else {
-                LOG.Error(9999, "Could not find PART_IconBorder - are you sure you have style set to MyWindowStyle?");
+            catch (Exception e) {
+                LOG.Exception(9999, "HideTitleBarIcon", "", e);
             }
         }
-
 
 
         public static void ShowMsg(string msg) {
@@ -103,10 +116,14 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
         /// <param name="onFound"></param>
         /// <param name="onNone"></param>
         public static void GetSelectedChk<T>(this Selector selector, Action<T> onFound, Action<string> onNone) where T : class {
-            selector.GetSelected<T>(
-                onFound, () => onNone.Invoke(DI.Wrapper.GetText(MsgCode.NothingSelected)));
+            try {
+                selector.GetSelected<T>(
+                    onFound, () => onNone.Invoke(DI.Wrapper.GetText(MsgCode.NothingSelected)));
+            }
+            catch (Exception e) {
+                LOG.Exception(9999, "GetSelectedChk", "", e);
+            }
         }
-
 
     }
 }
