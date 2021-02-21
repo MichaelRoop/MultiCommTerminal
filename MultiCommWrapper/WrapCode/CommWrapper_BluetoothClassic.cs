@@ -1,4 +1,5 @@
 ﻿using BluetoothCommon.Net;
+using BluetoothCommon.Net.Enumerations;
 using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
 using Common.Net.Network;
@@ -9,6 +10,7 @@ using MultiCommWrapper.Net.interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using VariousUtils.Net;
 
 namespace MultiCommWrapper.Net.WrapCode {
 
@@ -233,6 +235,78 @@ namespace MultiCommWrapper.Net.WrapCode {
             }
         }
 
+        #region Translate
+
+        private string Translate(BT_PairingStatus status) {
+            switch (status) {
+                case BT_PairingStatus.Paired:
+                    return this.GetText(MsgCode.Paired);
+                case BT_PairingStatus.NotReadyToPair:
+                    break;
+                case BT_PairingStatus.NotPaired:
+                    break;
+                case BT_PairingStatus.AlreadyPaired:
+                    break;
+                case BT_PairingStatus.Rejected:
+                    break;
+                case BT_PairingStatus.TooManyConnections:
+                    break;
+                case BT_PairingStatus.HardwareFailure:
+                    break;
+                case BT_PairingStatus.AuthenticationTimeout:
+                    return this.GetText(MsgCode.Timeout);
+                case BT_PairingStatus.AuthenticationNotAllowed:
+                    break;
+                case BT_PairingStatus.AuthenticationFailure:
+                    break;
+                case BT_PairingStatus.NoSupportedProfiles:
+                    break;
+                case BT_PairingStatus.ProtectionLevelCouldNotBeMet:
+                    break;
+                case BT_PairingStatus.AccessDenied:
+                    break;
+                case BT_PairingStatus.InvalidCeremonyData:
+                    break;
+                case BT_PairingStatus.PairingCanceled:
+                    break;
+                case BT_PairingStatus.OperationAlreadyInProgress:
+                    break;
+                case BT_PairingStatus.RequiredHandlerNotRegistered:
+                    break;
+                case BT_PairingStatus.RejectedByHandler:
+                    break;
+                case BT_PairingStatus.RemoteDeviceHasAssociation:
+                    break;
+                case BT_PairingStatus.Failed:
+                    break;
+                case BT_PairingStatus.NoParingObject:
+                    break;
+                case BT_PairingStatus.NotSupported:
+                    break;
+            }
+
+            return status.ToString().CamelCaseToSpaces();
+        }
+
+
+        private string Translate(BT_UnpairingStatus status) {
+            switch (status) {
+                case BT_UnpairingStatus.Success:
+                    return this.GetText(MsgCode.Ok);
+                case BT_UnpairingStatus.AlreadyUnPaired:
+                    break;
+                case BT_UnpairingStatus.AlreadyInProgress:
+                    break;
+                case BT_UnpairingStatus.AccessDenied:
+                    break;
+                case BT_UnpairingStatus.Failed:
+                    break;
+            }
+
+            return status.ToString().CamelCaseToSpaces();
+        }
+
+        #endregion
 
         #region Init and teardown
 
