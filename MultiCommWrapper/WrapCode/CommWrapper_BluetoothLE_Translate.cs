@@ -1,5 +1,6 @@
 ﻿using BluetoothLE.Net.DataModels;
 using BluetoothLE.Net.Enumerations;
+using BluetoothLE.Net.Parsers;
 using BluetoothLE.Net.Parsers.Characteristics;
 using BluetoothLE.Net.Parsers.Descriptor;
 using BluetoothLE.Net.Tools;
@@ -52,6 +53,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         private void Translate(BLE_ServiceDataModel dataModel) {
             dataModel.DisplayHeader = this.GetText(MsgCode.Service);
+            dataModel.DisplayName = this.Translate(dataModel.ServiceTypeEnum);
             foreach (BLE_CharacteristicDataModel d in dataModel.Characteristics) {
                 this.Translate(d);
                 this.TranslateBool(d);
@@ -187,6 +189,66 @@ namespace MultiCommWrapper.Net.WrapCode {
                 }
             }
         }
+
+        private string Translate(GattNativeServiceUuid id) {
+            switch (id) {
+                case GattNativeServiceUuid.None:
+                    return this.GetText(MsgCode.None);
+                case GattNativeServiceUuid.GenericAccess:
+                case GattNativeServiceUuid.GenericAttribute:
+                case GattNativeServiceUuid.ImmediateAlert:
+                case GattNativeServiceUuid.LinkLoss:
+                case GattNativeServiceUuid.TxPower:
+                case GattNativeServiceUuid.CurrentTimeService:
+                case GattNativeServiceUuid.ReferenceTimeUpdateService:
+                case GattNativeServiceUuid.NextDSTChange:
+                case GattNativeServiceUuid.Glucose:
+                case GattNativeServiceUuid.HealthThermometer:
+                case GattNativeServiceUuid.DeviceInformation:
+                case GattNativeServiceUuid.HeartRate:
+                case GattNativeServiceUuid.PhoneAlertStatus:
+                case GattNativeServiceUuid.Battery:
+                case GattNativeServiceUuid.BloodPressure:
+                case GattNativeServiceUuid.AlertNotification:
+                case GattNativeServiceUuid.ScanParameters:
+                case GattNativeServiceUuid.HumanInterfaceDevice:
+                case GattNativeServiceUuid.RunningSpeedandCadence:
+                case GattNativeServiceUuid.AutomationIO:
+                case GattNativeServiceUuid.CyclingSpeedandCadence:
+                case GattNativeServiceUuid.CyclingPower:
+                case GattNativeServiceUuid.LocationAndNavigation:
+                case GattNativeServiceUuid.EnvironmentalSensing:
+                case GattNativeServiceUuid.BodyComposition:
+                case GattNativeServiceUuid.UserData:
+                case GattNativeServiceUuid.WeightScale:
+                case GattNativeServiceUuid.BondManagement:
+                case GattNativeServiceUuid.ContinuousGlucoseMonitoring:
+                case GattNativeServiceUuid.InternetProtocolSupport:
+                case GattNativeServiceUuid.IndoorPositioning:
+                case GattNativeServiceUuid.PulseOximeter:
+                case GattNativeServiceUuid.HTTPProxy:
+                case GattNativeServiceUuid.TransportDiscovery:
+                case GattNativeServiceUuid.ObjectTransfer:
+                case GattNativeServiceUuid.FitnessMachine:
+                case GattNativeServiceUuid.MeshProvisioning:
+                case GattNativeServiceUuid.MeshProxy:
+                case GattNativeServiceUuid.ReconnectionConfiguration:
+                case GattNativeServiceUuid.InsulinDelivery:
+                case GattNativeServiceUuid.BinarySensor:
+                case GattNativeServiceUuid.EmergencyConfiguration:
+                case GattNativeServiceUuid.PhysicalActivityMonitor:
+                case GattNativeServiceUuid.AudioInputControl:
+                case GattNativeServiceUuid.VolumeControl:
+                case GattNativeServiceUuid.VolumeOffsetControl:
+                case GattNativeServiceUuid.DeviceTime:
+                case GattNativeServiceUuid.ConstantToneExtension:
+                case GattNativeServiceUuid.SimpleKeyService:
+                    return id.ToString().CamelCaseToSpaces();
+                default:
+                    return this.GetText(MsgCode.NotFound);
+            }
+        }
+
 
         #endregion
 

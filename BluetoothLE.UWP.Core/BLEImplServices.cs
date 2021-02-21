@@ -1,6 +1,7 @@
 ﻿using BluetoothLE.Net.DataModels;
 using BluetoothLE.Net.Enumerations;
 using BluetoothLE.Net.interfaces;
+using BluetoothLE.Net.Parsers;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -41,6 +42,7 @@ namespace Bluetooth.UWP.Core {
                     Characteristics = new List<BLE_CharacteristicDataModel>(),
                     AttributeHandle = service.AttributeHandle,
                     DeviceId = status.DeviceInfo.Id,
+                    ServiceTypeEnum = BLE_ParseHelpers.GetServiceTypeEnum(service.Uuid),
                     DisplayName = BLE_DisplayHelpers.GetServiceName(service),
                     Uuid = service.Uuid,
                     SharingMode = (BLE_SharingMode)service.SharingMode,
