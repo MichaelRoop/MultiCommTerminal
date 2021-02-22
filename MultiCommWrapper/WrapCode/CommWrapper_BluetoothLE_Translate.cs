@@ -53,7 +53,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         private void Translate(BLE_ServiceDataModel dataModel) {
             dataModel.DisplayHeader = this.GetText(MsgCode.Service);
-            dataModel.DisplayName = this.Translate(dataModel.ServiceTypeEnum);
+            dataModel.DisplayName = this.Translate(dataModel.ServiceTypeEnum, dataModel.DisplayName);
             foreach (BLE_CharacteristicDataModel d in dataModel.Characteristics) {
                 this.Translate(d);
             }
@@ -186,10 +186,10 @@ namespace MultiCommWrapper.Net.WrapCode {
             }
         }
 
-        private string Translate(GattNativeServiceUuid id) {
+        private string Translate(GattNativeServiceUuid id, string current) {
             switch (id) {
                 case GattNativeServiceUuid.None:
-                    return this.GetText(MsgCode.None);
+                    return current;
                 case GattNativeServiceUuid.GenericAccess:
                 case GattNativeServiceUuid.GenericAttribute:
                 case GattNativeServiceUuid.ImmediateAlert:
