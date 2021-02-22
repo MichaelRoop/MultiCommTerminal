@@ -96,7 +96,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             ErrReport report;
             WrapErr.ToErrReport(out report, 200055, "Failure on BLE_CharacteristicReadValueChangeHandler", () => {
                 if (args.Status == BLE_CharacteristicCommunicationStatus.Success) {
-                    this.TranslateBool(args.DataModel);
+                    this.TranslateIfBool(args.DataModel);
                 }
                 this.BLE_CharacteristicReadValueChanged?.Invoke(sender, args);
             });

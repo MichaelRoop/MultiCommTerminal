@@ -56,7 +56,6 @@ namespace MultiCommWrapper.Net.WrapCode {
             dataModel.DisplayName = this.Translate(dataModel.ServiceTypeEnum);
             foreach (BLE_CharacteristicDataModel d in dataModel.Characteristics) {
                 this.Translate(d);
-                this.TranslateBool(d);
             }
         }
 
@@ -83,6 +82,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             if (dataModel.Parser is CharParser_Appearance) {
                 dataModel.CharValue = this.Translate(dataModel.Parser as CharParser_Appearance);
             }
+            this.TranslateIfBool(dataModel);
 
             foreach (BLE_DescriptorDataModel d in dataModel.Descriptors) {
                 this.Translate(d);
@@ -178,15 +178,11 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-        private void TranslateBool(BLE_CharacteristicDataModel dm) {
+        private void TranslateIfBool(BLE_CharacteristicDataModel dm) {
             if (dm.Parser.DataType == BLE_DataType.Bool) {
-                // TODO put in true false translation
-                if (dm.CharValue.ToLower() == "true") {
-                    dm.CharValue = this.GetText(MsgCode.True);
-                }
-                else if (dm.CharValue.ToLower() == "false") {
-                    dm.CharValue = this.GetText(MsgCode.False);
-                }
+                dm.CharValue = dm.Parser.BoolValue 
+                    ? this.GetText(MsgCode.True) 
+                    : this.GetText(MsgCode.False);
             }
         }
 
