@@ -60,7 +60,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-        private void Translate(BLE_CharacteristicDataModel dataModel) {
+        public void Translate(BLE_CharacteristicDataModel dataModel) {
             dataModel.DisplayHeader = this.GetText(MsgCode.Characteristic);
             dataModel.DisplayReadWrite = string.Empty;
             if (dataModel.IsReadable || dataModel.IsWritable) {

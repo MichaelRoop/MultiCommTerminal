@@ -344,6 +344,8 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void Translate(BluetoothLEDeviceInfo device);
 
+        void Translate(BLE_CharacteristicDataModel device);
+
         #endregion
 
         #region WIFI

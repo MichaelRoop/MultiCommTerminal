@@ -115,6 +115,8 @@ namespace MultiCommTerminalIconFactories {
                     return new IconDataModel(UIIcon.Configure, this.AddDir("icons8_code.png"), "1");
                 case UIIcon.CodeWhite:
                     return new IconDataModel(UIIcon.Configure, this.AddDir("icons8_code_white.png"), "1");
+                case UIIcon.Read:
+                    return new IconDataModel(UIIcon.Read, this.AddDir("icons8_openbook.png"), "1");
 
                 default:
                     return new IconDataModel(UIIcon.Cancel, this.AddDir("icons8-close-window-50-noborder.png"), "6");

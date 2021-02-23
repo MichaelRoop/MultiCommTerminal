@@ -67,6 +67,7 @@
     <None Remove="images\icons\icons8_code_white.png" />
     <None Remove="images\icons\icons8_maintenance.png" />
     <None Remove="images\icons\icons8_maintenance_white.png" />
+    <None Remove="images\icons\icons8_openbook.png" />
     <None Remove="images\icons\icons8_settings_white.png" />
     <None Remove="images\icons\icons8_wifi_white.png" />
     <None Remove="images\icons\language-white.png" />
@@ -260,6 +261,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="images\icons\icons8_maintenance_white.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="images\icons\icons8_openbook.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="images\icons\icons8_settings_white.png">

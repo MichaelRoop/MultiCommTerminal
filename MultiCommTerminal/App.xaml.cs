@@ -111,11 +111,18 @@ namespace MultiCommTerminal.NetCore {
         }
 
         private void Wrapper_UnexpectedExceptionEvent(object sender, ErrReport report) {
-            Window main = null;
-            if (Application.Current != null && Application.Current.MainWindow != null) {
-                main = Application.Current.MainWindow;
-            }
-            CrashReport.ShowBox(report, main);
+            Dispatcher.Invoke(() => {
+                try {
+                    Window main = null;
+                    if (Application.Current != null && Application.Current.MainWindow != null) {
+                        main = Application.Current.MainWindow;
+                    }
+                    CrashReport.ShowBox(report, main);
+                }
+                catch (Exception e) {
+                    this.log.Exception(9999, "Wrapper_UnexpectedExceptionEvent", "", e);
+                }
+            });
         }
 
 

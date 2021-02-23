@@ -221,14 +221,23 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         private void PopulateWriteControl(BluetoothLEDeviceInfo device) {
             List<BLE_CharacteristicDataModel> list = new List<BLE_CharacteristicDataModel>();
+            bool writable = false;
+            bool readable = false;
             foreach (BLE_ServiceDataModel service in device.Services) {
                 foreach (BLE_CharacteristicDataModel characteristic in service.Characteristics) {
                     if (characteristic.IsWritable) {
+                        writable = true;
+                    }
+                    if (characteristic.IsReadable) {
+                        readable = true;
+                    }
+
+                    if (characteristic.IsWritable || characteristic.IsReadable) {
                         list.Add(characteristic);
                     }
                 }
             }
-            this.writeControl.SetCharacteristics(list);
+            this.writeControl.SetCharacteristics(list, readable, writable);
         }
 
 

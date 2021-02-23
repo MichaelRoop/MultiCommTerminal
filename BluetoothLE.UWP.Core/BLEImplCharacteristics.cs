@@ -70,6 +70,21 @@ namespace Bluetooth.UWP.Core {
                 }
 
                 if (val != GattClientCharacteristicConfigurationDescriptorValue.None) {
+                    //// This is where I get exception if require authentification
+                    //// However it does not specify authentication required. This is on an iPad Simulator
+                    //// Might just be that it says read write but not actually true
+                    //if (ch.ProtectionLevel == GattProtectionLevel.AuthenticationRequired) {
+                    //    //var r = await ch.Service.Device.DeviceInformation.Pairing.PairAsync();
+                    //    //var r2 = await ch.Service.Session.Device.DeviceInformation.Pairing.PairAsync();
+                    //    this.log.Info("********************* ATTEMPT PAIR STATUS", "TICK");
+                    //    // TODO - Figure out pairing . Need access to the actual device. When is it set?
+                    //    var r3 = await this.currentDevice.DeviceInformation.Pairing.PairAsync();
+                    //    this.log.Info("********************* PAIR STATUS", r3.Status.ToString());
+                    //}
+                    //else {
+                    //    //this.log.Info("--------------------- NO ATTEMPT TO PAIR", "TICK");
+                    //}
+
                     GattCommunicationStatus cs = await ch.WriteClientCharacteristicConfigurationDescriptorAsync(val);
                     if (cs == GattCommunicationStatus.Success) {
                         return true;

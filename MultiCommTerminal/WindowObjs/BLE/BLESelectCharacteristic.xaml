@@ -13,6 +13,9 @@
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.BluetoothLE_W}}"
         Loaded="Window_Loaded" Closing="Window_Closing"
         MinHeight="100" MinWidth="200" MaxHeight="800" MaxWidth="900" BorderThickness=".5">
+    <Window.Resources>
+        <wpfHelper:BoolConvertToXorCheck x:Key="xCheckConvert"/>
+    </Window.Resources>
     <Grid>
         <StackPanel Margin="10,10">
             <ListView x:Name="listBox_BLE" BorderThickness=".5" FontSize="16"
@@ -33,6 +36,12 @@
                         <GridViewColumn Width="Auto"
                             Header="{Binding Source={x:Static wpfHelper:TxtBinder.Description}}"
                                         DisplayMemberBinding="{Binding UserDescription}" />
+                        <GridViewColumn Width="Auto"
+                            Header="{Binding Source={x:Static wpfHelper:TxtBinder.Read}}"
+                                        DisplayMemberBinding="{Binding Path=IsReadable, Converter={StaticResource xCheckConvert}}" />
+                        <GridViewColumn Width="Auto"
+                            Header="{Binding Source={x:Static wpfHelper:TxtBinder.Write}}"
+                                        DisplayMemberBinding="{Binding Path=IsWritable, Converter={StaticResource xCheckConvert}}" />
                     </GridView>
                 </ListView.View>
             </ListView>

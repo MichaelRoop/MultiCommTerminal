@@ -22,31 +22,30 @@
                     <ColumnDefinition Width="18"/>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="132*"/>
+                    <ColumnDefinition Width="32*"/>
                 </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" Grid.ColumnSpan="3" x:Name="lblWrite" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Write}}" 
-                     Style="{Binding Source={StaticResource NameLabelRight}}" FontWeight="Bold" Margin="10,0"/>
-
-                <Label Grid.Row="1" Grid.Column="0" x:Name="lblCharacteristic"  Margin="0"
+                <Label Grid.Row="0" Grid.Column="0" x:Name="lblCharacteristic"  Margin="0"
                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.Characteristic}}" 
                        Style="{Binding Source={StaticResource NameLabelLeft}}" />
-                <Label Grid.Row="1" Grid.Column="1"  Content=" : " Margin="0"  
+                <Label Grid.Row="0" Grid.Column="1"  Content=" : " Margin="0"  
                        Style="{Binding Source={StaticResource NameLabelCenter}}" 
                        HorizontalContentAlignment="Center"/>
-                <Label Grid.Row="1" Grid.Column="2"  x:Name="lblCharacteristicContent" 
+                <Label Grid.Row="0" Grid.Column="2"  x:Name="lblCharacteristicContent" 
                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.NothingSelected}}" 
                        Style="{Binding Source={StaticResource NameLabelRight}}"/>
-                <Label Grid.Row="1" Grid.Column="3"  x:Name="lblCharacteristicDescription" 
+                <Label Grid.Row="0" Grid.Column="3"  x:Name="lblCharacteristicDescription" 
                        Content="" 
                        Style="{Binding Source={StaticResource NameLabelRight}}"/>
+                <Label Grid.Row="0" Grid.Column="4" x:Name="lblValueContent" Content="xxxx" 
+                       Style="{Binding Source={StaticResource NameLabelRight}}" Margin="5,0" />
 
 
-
-                <Label Grid.Row="2" Grid.Column="0" Margin="0" x:Name="lblInfo"
+                <Label Grid.Row="1" Grid.Column="0" Margin="0" x:Name="lblInfo"
                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.Info}}" 
                        Style="{Binding Source={StaticResource NameLabelLeft}}" />
-                <Label Grid.Row="2" Grid.Column="1" Content=" : "  Margin="0"
+                <Label Grid.Row="1" Grid.Column="1" Content=" : "  Margin="0"
                        Style="{Binding Source={StaticResource NameLabelCenter}}"/>
-                <Label Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" x:Name="lblInfoContent" Content="" 
+                <Label Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" x:Name="lblInfoContent" Content="" 
                        Style="{Binding Source={StaticResource NameLabelRight}}"/>
             </Grid>
             <Border Style="{StaticResource brd075}" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -55,11 +54,16 @@
                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Select}}" Margin="10,10,15,10"
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Search}}"                                                                                            
                             Background="Transparent" Click="btnSelect_Click" />
-                    <UC:UC_IconButton x:Name="btnSend" Style="{StaticResource TextIconButton}" Visibility="Visible"
-                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Send}}" 
+                    <UC:UC_IconButton x:Name="btnRead" Style="{StaticResource TextIconButton}" Visibility="Visible" HorizontalAlignment="Right"
+                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Read}}" 
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Read}}"                                                                                            
+                            Background="Transparent" Click="btnRead_Click" />
+                    <UC:UC_IconButton x:Name="btnSend" Style="{StaticResource TextIconButton}" Visibility="Visible" Margin="10,0"
+                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Write}}" 
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Send}}"                                                                                            
                             Background="Transparent" Click="btnSend_Click" />
-                    <TextBox x:Name="txtCommmand"  Text="" Style="{Binding Source={StaticResource TxtBoxRight}}" Margin="10,0" HorizontalAlignment="Stretch" />
+                    <TextBox x:Name="txtCommmand"  Text="" Style="{Binding Source={StaticResource TxtBoxRight}}"  HorizontalAlignment="Stretch" />
+
                 </DockPanel>
             </Border>
         </StackPanel>
