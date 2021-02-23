@@ -30,8 +30,9 @@
         <StackPanel>
             <Border Style="{StaticResource brd075}" Padding="0" >
                 <TreeView x:Name="treeServices" HorizontalAlignment="Stretch" Padding="10"
-                                MinHeight="250" MaxHeight="700" 
-                                ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        SelectedItemChanged="treeServices_SelectedItemChanged"
+                        MinHeight="250" MaxHeight="700" 
+                        ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
                     <TreeView.Resources>
                         <HierarchicalDataTemplate
                                     DataType="{x:Type dataModels:BLE_ServiceDataModel}" 

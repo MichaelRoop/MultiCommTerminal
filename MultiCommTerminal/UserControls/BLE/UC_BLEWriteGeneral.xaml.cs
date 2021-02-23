@@ -15,7 +15,6 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
     /// <summary>Interaction logic for UC_BLEWriteGeneral.xaml</summary>
     public partial class UC_BLEWriteGeneral : UserControl {
 
-        private List<BLE_CharacteristicDataModel> dataModels = new List<BLE_CharacteristicDataModel>();
         private BLE_CharacteristicDataModel selected = null;
         private BLERangeValidator validator = new BLERangeValidator();
         private Window parent = null;
@@ -47,14 +46,12 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
         }
 
 
-        public void SetCharacteristics(List<BLE_CharacteristicDataModel> dataModels, bool readable, bool writable) {
-            this.dataModels = dataModels;
-            this.SetEnabled(readable, writable);
-        }
-
         public void Reset() {
+            if (this.selected != null) {
+                this.selected.OnReadValueChanged -= Selected_OnReadValueChanged;
+            }
             this.selected = null;
-            this.lblCharacteristicContent.Content = DI.Wrapper.GetText(MsgCode.NothingSelected);
+            this.lblCharacteristicName.Content = DI.Wrapper.GetText(MsgCode.NothingSelected);
             this.lblInfoContent.Content = "";
             this.lblCharacteristicDescription.Content = "";
             this.txtCommmand.Text = "";
@@ -63,37 +60,22 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
 
 
         private void btnSend_Click(object sender, RoutedEventArgs e) {
-            DI.Wrapper.BLE_Send(
-                this.txtCommmand.Text, this.selected, () => { }, App.ShowMsg);
+            DI.Wrapper.BLE_Send(this.txtCommmand.Text, this.selected, () => { }, App.ShowMsg);
         }
 
 
-        private void btnSelect_Click(object sender, RoutedEventArgs e) {
-            if (this.Connected) {
-                //if (this.selected != null) {
-                //    this.selected.OnReadValueChanged -= Selected_OnReadValueChanged;
-                //}
-                // Should never be called since disabled but double check
-                if (this.dataModels.Count == 0) {
-                    this.Reset();
-                    App.ShowMsg(DI.Wrapper.GetText(MsgCode.ReadOnly));
-                }
-                else {
-                    BLESelectCharacteristic.SelectResult result =
-                        BLESelectCharacteristic.ShowBox(this.parent, this.dataModels);
-                    if (!result.IsCanceled) {
-                        if (this.selected != result.SelectedCharacteristic) {
-                            this.Reset();
-                            this.selected = result.SelectedCharacteristic;
-                            this.lblCharacteristicDescription.Content = this.selected.UserDescription;
-                            DI.Wrapper.BLE_GetRangeDisplay(this.selected, this.DelegateSelectSuccess, App.ShowMsg);
-                            this.lblValueContent.Content = this.selected.CharValue;
-                            this.SetEnabled(this.selected.IsReadable, this.selected.IsWritable);
-                        }
-                    }
-                }
+        public void SetCharacteristic(BLE_CharacteristicDataModel dm) {
+            if (this.selected != dm) {
+                this.Reset();
+                this.selected = dm;
+                this.lblServiceContent.Content = this.selected.Service.DisplayName;
+                this.lblCharacteristicDescription.Content = this.selected.UserDescription;
+                DI.Wrapper.BLE_GetRangeDisplay(this.selected, this.DelegateSelectSuccess, App.ShowMsg);
+                this.lblValueContent.Content = this.selected.CharValue;
+                this.SetEnabled(this.selected.IsReadable, this.selected.IsWritable);
             }
         }
+
 
         private void btnRead_Click(object sender, RoutedEventArgs arg) {
             try {
@@ -124,7 +106,7 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
 
 
         private void DelegateSelectSuccess(string characteristicName, string dataInfo) {
-            this.lblCharacteristicContent.Content = characteristicName;
+            this.lblCharacteristicName.Content = characteristicName;
             this.lblInfoContent.Content = dataInfo;
         }
 
@@ -132,15 +114,16 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
         private void languageChangedHandler(object sender, SupportedLanguage l) {
             Dispatcher.Invoke(() => {
                 // Buttons
-                this.btnSelect.Content = l.GetText(MsgCode.select);
-                this.btnSend.Content = l.GetText(MsgCode.send);
+                this.btnSend.Content = l.GetText(MsgCode.Write);
                 this.btnRead.Content = l.GetText(MsgCode.Read);
                 // Labels
-                this.lblCharacteristic.Content = l.GetText(MsgCode.Characteristic);
+                this.lblServiceName.Content = l.GetText(MsgCode.Service);
+                this.lblCharacteristicName.Content = l.GetText(MsgCode.Characteristic);
                 this.lblInfo.Content = l.GetText(MsgCode.info);
                 // Content
                 if (this.selected == null) {
-                    this.lblCharacteristicContent.Content = l.GetText(MsgCode.NothingSelected);
+                    this.lblServiceName.Content = "";
+                    this.lblCharacteristicName.Content = "";
                     this.lblValueContent.Content = "";
                 }
                 else {

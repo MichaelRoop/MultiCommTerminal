@@ -6,12 +6,10 @@ using LogUtils.Net;
 using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Threading;
 using WpfHelperClasses.Core;
 
@@ -174,6 +172,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             DI.Wrapper.BLE_CharacteristicReadValueChanged -= this.characteristicReadValueChanged;
             DI.Wrapper.BLE_ConnectionStatusChanged -= this.connectionStatusChanged;
             this.timer.Tick -= this.Timer_Tick;
+            this.treeServices.SelectedItemChanged -= this.treeServices_SelectedItemChanged;
         }
 
         private void languageChangedHandler(object sender, SupportedLanguage language) {
@@ -212,34 +211,10 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                         this.currentDevice = info.DeviceInfo;
                         this.Title = string.Format("(BLE) {0}", this.currentDevice.Name);
                         this.treeServices.ItemsSource = this.currentDevice.Services;
-                        this.PopulateWriteControl(this.currentDevice);
                         break;
                 }
             });
         }
-
-
-        private void PopulateWriteControl(BluetoothLEDeviceInfo device) {
-            List<BLE_CharacteristicDataModel> list = new List<BLE_CharacteristicDataModel>();
-            bool writable = false;
-            bool readable = false;
-            foreach (BLE_ServiceDataModel service in device.Services) {
-                foreach (BLE_CharacteristicDataModel characteristic in service.Characteristics) {
-                    if (characteristic.IsWritable) {
-                        writable = true;
-                    }
-                    if (characteristic.IsReadable) {
-                        readable = true;
-                    }
-
-                    if (characteristic.IsWritable || characteristic.IsReadable) {
-                        list.Add(characteristic);
-                    }
-                }
-            }
-            this.writeControl.SetCharacteristics(list, readable, writable);
-        }
-
 
 
         private void connectionStatusChanged(object sender, BLE_ConnectStatusChangeInfo e) {
@@ -260,6 +235,21 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             });
         }
 
+        private void treeServices_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {
+            try {
+                if (e.NewValue is BLE_CharacteristicDataModel) {
+                    this.writeControl.SetCharacteristic(e.NewValue as BLE_CharacteristicDataModel);
+                }
+                //// Cannot reset if not Characteristic since that happens on update
+                else if (e.NewValue is BLE_ServiceDataModel || e.NewValue is BLE_DescriptorDataModel) {
+                    this.log.Info("------------------------------------------------------", e.NewValue.GetType().Name);
+                    this.writeControl.Reset();
+                }
+            }
+            catch (Exception ex) {
+                this.log.Exception(9999, "", "treeServices_SelectedItemChanged", ex);
+            }
+        }
 
         #endregion
 
@@ -303,7 +293,28 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                 if (this.dataChanged) {
                     this.dataChanged = false;
                     try {
+                        this.treeServices.SelectedItemChanged -= this.treeServices_SelectedItemChanged;
+                        List<string> selected = this.treeServices.GetSelected();
                         this.treeServices.RefreshAndExpand();
+                        this.treeServices.RestoreSelected(selected);
+
+                        //if (obj != null) {
+                        //    if (obj is TreeViewItem) {
+                        //        (obj as TreeViewItem).IsSelected = true;
+                        //    }
+                        //    //else {
+                        //    //    TreeViewItem item = pTreeView.ItemContainerGenerator.ContainerFromIndex(0) as TreeViewItem;
+                        //    //    if (item != null) {
+                        //    //        item.IsSelected = true;
+                        //    //        item.IsSelected = false;
+                        //    //    }
+                        //    //}
+
+
+                        //}
+
+
+                        this.treeServices.SelectedItemChanged += this.treeServices_SelectedItemChanged;
                     }
                     catch (Exception e) {
                         this.log.Exception(9999, "characteristicReadValueChanged", "", e);

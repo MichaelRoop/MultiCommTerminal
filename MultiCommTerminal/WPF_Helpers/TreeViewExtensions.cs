@@ -107,6 +107,77 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
             }
         }
 
+        #region Selecting previous
+
+        public static List<string> GetSelected(this TreeView treeView) {
+            List<string> expanded = new List<string>();
+            GetSelectedSubHeaders(treeView, expanded);
+            return expanded;
+        }
+
+        public static void RestoreSelected(this TreeView treeView, List<string> data) {
+            SelectSubHeaders(treeView, data);
+        }
+
+
+        private static void GetSelectedSubHeaders(ItemsControl parentContainer, List<string> expanded) {
+            foreach (Object item in parentContainer.Items) {
+                try {
+                    TreeViewItem currentContainer = parentContainer.ItemContainerGenerator.ContainerFromItem(item) as TreeViewItem;
+                    if (currentContainer != null) {
+                        if (currentContainer.IsSelected) {
+                            expanded.Add((item as IUniquelyIdentifiable).Uuid.ToString());
+                        }
+                        if (currentContainer.ItemContainerGenerator.Status != GeneratorStatus.ContainersGenerated) {
+                            // If sub containers is not ready, we need to wait until they are generated.
+                            currentContainer.ItemContainerGenerator.StatusChanged += delegate {
+                                GetSelectedSubHeaders(currentContainer, expanded);
+                            };
+                        }
+                        else {
+                            // If sub containers is ready, directly go to the next iteration to expand
+                            GetSelectedSubHeaders(currentContainer, expanded);
+                        }
+                    }
+                }
+                catch (Exception e) {
+                    log.Exception(1111, "GetExpandedSubHeaders", "", e);
+                }
+            }
+        }
+
+
+        private static void SelectSubHeaders(ItemsControl parentContainer, List<string> expanded) {
+            foreach (Object item in parentContainer.Items) {
+                try {
+                    TreeViewItem currentContainer = parentContainer.ItemContainerGenerator.ContainerFromItem(item) as TreeViewItem;
+                    if (currentContainer != null) {
+                        if (expanded.FirstOrDefault(x => x == (item as IUniquelyIdentifiable).Uuid.ToString()) != null) {
+                            currentContainer.IsSelected = true;
+                        }
+                        if (currentContainer.ItemContainerGenerator.Status != GeneratorStatus.ContainersGenerated) {
+                            // If sub containers is not ready, we need to wait until they are generated.
+                            currentContainer.ItemContainerGenerator.StatusChanged += delegate {
+                                SelectSubHeaders(currentContainer, expanded);
+                            };
+                        }
+                        else {
+                            // If sub containers is ready, directly go to the next iteration to expand
+                            SelectSubHeaders(currentContainer, expanded);
+                        }
+                    }
+                }
+                catch (Exception e) {
+                    log.Exception(2222, "ExpandSelectedSubHeaders", "", e);
+                }
+            }
+        }
+
+
+        #endregion
+
+
+
 #if FAILED_EXPERIMENT
 
         private static void ExpandSelectedSubContainers(ItemsControl parentContainer, Stack<bool> stack) {
