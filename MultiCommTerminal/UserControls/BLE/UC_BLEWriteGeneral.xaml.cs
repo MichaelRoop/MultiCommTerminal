@@ -4,9 +4,7 @@ using LanguageFactory.Net.data;
 using LanguageFactory.Net.Messaging;
 using LogUtils.Net;
 using MultiCommTerminal.NetCore.DependencyInjection;
-using MultiCommTerminal.NetCore.WindowObjs.BLE;
 using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -70,13 +68,7 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
                 this.selected = dm;
                 this.lblServiceContent.Content = this.selected.Service.DisplayName;
                 DI.Wrapper.BLE_GetRangeDisplay(
-                    this.selected, (name, info) => {
-                        this.lblCharacteristicName.Content =
-                            string.Format("{0}  {1}  {2}", 
-                            name, this.selected.CharValue, this.selected.UserDescription);
-                        this.lblInfoContent.Content = info;
-                    }, App.ShowMsg);
-
+                    this.selected, this.DelegateSelectSuccess, App.ShowMsg);
                 this.SetEnabled(this.selected.IsReadable, this.selected.IsWritable);
             }
         }
@@ -99,11 +91,7 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
                 try {
                     if (this.selected != null) {
                         DI.Wrapper.Translate(this.selected);
-                        this.lblCharacteristicName.Content =
-                            string.Format("{0}  {1}  {2}",
-                            this.selected.CharName, 
-                            this.selected.CharValue, 
-                            this.selected.UserDescription);
+                        this.AssembleCharacteristicLine();
                     }
                 }
                 catch (Exception e) {
@@ -114,8 +102,8 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
 
 
         private void DelegateSelectSuccess(string characteristicName, string dataInfo) {
-            this.lblCharacteristicName.Content = characteristicName;
             this.lblInfoContent.Content = dataInfo;
+            this.AssembleCharacteristicLine();
         }
 
 
@@ -135,12 +123,7 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
                 else {
                     // translation and assembly happen in wrapper
                     DI.Wrapper.BLE_GetRangeDisplay(
-                        this.selected, (name, info) => {
-                            this.lblCharacteristicName.Content =
-                                string.Format("{0}  {1}  {2}",
-                                name, this.selected.CharValue, this.selected.UserDescription);
-                            this.lblInfoContent.Content = info;
-                        }, App.ShowMsg);
+                        this.selected, this.DelegateSelectSuccess, App.ShowMsg);
                 }
             });
         }
@@ -169,6 +152,17 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
             }
         }
 
+
+        private void AssembleCharacteristicLine() {
+            if (this.selected != null) {
+                this.lblCharacteristicName.Content =
+                    string.Format("{0}  {1}  {2}",
+                    this.selected.CharName,
+                    this.selected.CharValue,
+                    this.selected.UserDescription);
+            }
+        }
+
     }
-    
+
 }
