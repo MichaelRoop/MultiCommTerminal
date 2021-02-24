@@ -13,10 +13,16 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
     /// <summary>Interaction logic for UC_BLEWriteGeneral.xaml</summary>
     public partial class UC_BLEWriteGeneral : UserControl {
 
+        #region Data
+
         private BLE_CharacteristicDataModel selected = null;
         private BLERangeValidator validator = new BLERangeValidator();
         private Window parent = null;
         private ClassLog log = new ClassLog("UC_BLEWriteGeneral");
+
+        #endregion
+
+        #region Public
 
         public bool Connected { get; set; } = false;
 
@@ -45,17 +51,25 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
 
 
         public void Reset() {
-            if (this.selected != null) {
-                this.selected.OnReadValueChanged -= Selected_OnReadValueChanged;
+            try {
+                if (this.selected != null) {
+                    this.selected.OnReadValueChanged -= Selected_OnReadValueChanged;
+                }
+                this.selected = null;
+                this.lblServiceContent.Content = "";
+                this.lblCharacteristicName.Content = "";
+                this.lblInfoContent.Content = "";
+                this.txtCommmand.Text = "";
+                this.SetEnabled(false, false);
             }
-            this.selected = null;
-            this.lblServiceContent.Content = "";
-            this.lblCharacteristicName.Content = "";
-            this.lblInfoContent.Content = "";
-            this.txtCommmand.Text = "";
-            this.SetEnabled(false, false);
+            catch(Exception e) {
+                this.log.Exception(9999, "Reset", "", e);
+            }
         }
 
+        #endregion
+
+        #region Private
 
         private void btnSend_Click(object sender, RoutedEventArgs e) {
             DI.Wrapper.BLE_Send(this.txtCommmand.Text, this.selected, () => { }, App.ShowMsg);
@@ -63,13 +77,18 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
 
 
         public void SetCharacteristic(BLE_CharacteristicDataModel dm) {
-            if (this.selected != dm) {
-                this.Reset();
-                this.selected = dm;
-                this.lblServiceContent.Content = this.selected.Service.DisplayName;
-                DI.Wrapper.BLE_GetRangeDisplay(
-                    this.selected, this.DelegateSelectSuccess, App.ShowMsg);
-                this.SetEnabled(this.selected.IsReadable, this.selected.IsWritable);
+            try {
+                if (this.selected != dm) {
+                    this.Reset();
+                    this.selected = dm;
+                    this.lblServiceContent.Content = this.selected.Service.DisplayName;
+                    DI.Wrapper.BLE_GetRangeDisplay(
+                        this.selected, this.DelegateSelectSuccess, App.ShowMsg);
+                    this.SetEnabled(this.selected.IsReadable, this.selected.IsWritable);
+                }
+            }
+            catch (Exception e) {
+                this.log.Exception(9999, "SetCharacteristic", "", e);
             }
         }
 
@@ -109,59 +128,76 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
 
         private void languageChangedHandler(object sender, SupportedLanguage l) {
             Dispatcher.Invoke(() => {
-                // Buttons
-                this.btnSend.Content = l.GetText(MsgCode.Write);
-                this.btnRead.Content = l.GetText(MsgCode.Read);
-                // Labels
-                this.lblServiceLabel.Content = l.GetText(MsgCode.Service);
-                this.lblCharacteristicLabel.Content = l.GetText(MsgCode.Characteristic);
-                this.lblInfoLabel.Content = l.GetText(MsgCode.info);
-                // Content
-                if (this.selected == null) {
-                    this.lblCharacteristicName.Content = "";
+                try {
+                    // Buttons
+                    this.btnSend.Content = l.GetText(MsgCode.Write);
+                    this.btnRead.Content = l.GetText(MsgCode.Read);
+                    // Labels
+                    this.lblServiceLabel.Content = l.GetText(MsgCode.Service);
+                    this.lblCharacteristicLabel.Content = l.GetText(MsgCode.Characteristic);
+                    this.lblInfoLabel.Content = l.GetText(MsgCode.info);
+                    // Content
+                    if (this.selected == null) {
+                        this.lblCharacteristicName.Content = "";
+                    }
+                    else {
+                        // translation and assembly happen in wrapper
+                        DI.Wrapper.BLE_GetRangeDisplay(
+                            this.selected, this.DelegateSelectSuccess, App.ShowMsg);
+                    }
                 }
-                else {
-                    // translation and assembly happen in wrapper
-                    DI.Wrapper.BLE_GetRangeDisplay(
-                        this.selected, this.DelegateSelectSuccess, App.ShowMsg);
+                catch (Exception e) {
+                    this.log.Exception(9999, "LanguageChangeHandler", "", e);
                 }
             });
         }
 
 
         private void SetEnabled(bool readable, bool writable) {
-            this.IsEnabled = readable || writable;
-            this.Opacity = this.IsEnabled ? 1 : 0.5;
-            if (this.IsEnabled) {
-                this.btnSend.IsEnabled = writable;
-                this.btnSend.Opacity =  writable ? 1 : 0.5;
-                this.txtCommmand.IsEnabled = writable;
-                this.txtCommmand.Opacity = writable ? 1 : 0.5;
-                
-                this.btnRead.IsEnabled = readable;
-                this.btnRead.Opacity = readable ? 1 : 0.5;
-                if (readable) {
-                    if (this.selected != null) {
-                        this.selected.OnReadValueChanged -= Selected_OnReadValueChanged;
-                        this.selected.OnReadValueChanged += Selected_OnReadValueChanged;
-                    }
-                    else {
-                        this.log.Error(9999, "SetEnabled", "No selected");
+            try {
+                this.IsEnabled = readable || writable;
+                this.Opacity = this.IsEnabled ? 1 : 0.5;
+                if (this.IsEnabled) {
+                    this.btnSend.IsEnabled = writable;
+                    this.btnSend.Opacity = writable ? 1 : 0.5;
+                    this.txtCommmand.IsEnabled = writable;
+                    this.txtCommmand.Opacity = writable ? 1 : 0.5;
+
+                    this.btnRead.IsEnabled = readable;
+                    this.btnRead.Opacity = readable ? 1 : 0.5;
+                    if (readable) {
+                        if (this.selected != null) {
+                            this.selected.OnReadValueChanged -= Selected_OnReadValueChanged;
+                            this.selected.OnReadValueChanged += Selected_OnReadValueChanged;
+                        }
+                        else {
+                            this.log.Error(9999, "SetEnabled", "No selected");
+                        }
                     }
                 }
+            }
+            catch (Exception ex) {
+                this.log.Exception(9999, "SetEnabled", "", ex);
             }
         }
 
 
         private void AssembleCharacteristicLine() {
-            if (this.selected != null) {
-                this.lblCharacteristicName.Content =
-                    string.Format("{0}  {1}  {2}",
-                    this.selected.CharName,
-                    this.selected.CharValue,
-                    this.selected.UserDescription);
+            try {
+                if (this.selected != null) {
+                    this.lblCharacteristicName.Content =
+                        string.Format("{0}  {1}  {2}",
+                        this.selected.CharName,
+                        this.selected.CharValue,
+                        this.selected.UserDescription);
+                }
+            }
+            catch (Exception e) {
+                this.log.Exception(9999, "AssembleCharacteristicLine", "", e);
             }
         }
+
+        #endregion
 
     }
 
