@@ -20,40 +20,32 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition MinWidth="130"/>
                     <ColumnDefinition Width="18"/>
-                    <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="132*"/>
-                    <ColumnDefinition Width="32*"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Row="0" Grid.Column="0" x:Name="lblServiceName"  Margin="0"
+                <Label Grid.Row="0" Grid.Column="0" x:Name="lblServiceLabel"  Margin="0"
                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.Service}}" 
                        Style="{Binding Source={StaticResource NameLabelLeft}}" />
                 <Label Grid.Row="0" Grid.Column="1"  Content=" : " Margin="0"  
                        Style="{Binding Source={StaticResource NameLabelCenter}}" 
                        HorizontalContentAlignment="Center"/>
-                <Label Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3"  x:Name="lblServiceContent" 
+                <Label Grid.Row="0" Grid.Column="2" x:Name="lblServiceContent" 
                        Content="" 
                        Style="{Binding Source={StaticResource NameLabelRight}}"/>
 
 
 
-                <Label Grid.Row="1" Grid.Column="0" x:Name="lblCharacteristicName"  Margin="0"
+                <Label Grid.Row="1" Grid.Column="0" x:Name="lblCharacteristicLabel"  Margin="0"
                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.Characteristic}}" 
                        Style="{Binding Source={StaticResource NameLabelLeft}}" />
                 <Label Grid.Row="1" Grid.Column="1"  Content=" : " Margin="0"  
                        Style="{Binding Source={StaticResource NameLabelCenter}}" 
                        HorizontalContentAlignment="Center"/>
-                <Label Grid.Row="1" Grid.Column="2"  x:Name="lblCharacteristicContent" 
+                <Label Grid.Row="1" Grid.Column="2"  x:Name="lblCharacteristicName" 
                        Content="" 
                        Style="{Binding Source={StaticResource NameLabelRight}}"/>
-                <Label Grid.Row="1" Grid.Column="3"  x:Name="lblCharacteristicDescription" 
-                       Content="" 
-                       Style="{Binding Source={StaticResource NameLabelRight}}"/>
-                <Label Grid.Row="1" Grid.Column="4" x:Name="lblValueContent" Content="xxxx" 
-                       Style="{Binding Source={StaticResource NameLabelRight}}" Margin="5,0" />
 
-
-                <Label Grid.Row="2" Grid.Column="0" Margin="0" x:Name="lblInfo"
+                <Label Grid.Row="2" Grid.Column="0" Margin="0" x:Name="lblInfoLabel"
                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.Info}}" 
                        Style="{Binding Source={StaticResource NameLabelLeft}}" />
                 <Label Grid.Row="2" Grid.Column="1" Content=" : "  Margin="0"

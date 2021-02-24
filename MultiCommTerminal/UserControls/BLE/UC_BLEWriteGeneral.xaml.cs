@@ -51,9 +51,9 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
                 this.selected.OnReadValueChanged -= Selected_OnReadValueChanged;
             }
             this.selected = null;
-            this.lblCharacteristicName.Content = DI.Wrapper.GetText(MsgCode.NothingSelected);
+            this.lblServiceContent.Content = "";
+            this.lblCharacteristicName.Content = "";
             this.lblInfoContent.Content = "";
-            this.lblCharacteristicDescription.Content = "";
             this.txtCommmand.Text = "";
             this.SetEnabled(false, false);
         }
@@ -69,9 +69,14 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
                 this.Reset();
                 this.selected = dm;
                 this.lblServiceContent.Content = this.selected.Service.DisplayName;
-                this.lblCharacteristicDescription.Content = this.selected.UserDescription;
-                DI.Wrapper.BLE_GetRangeDisplay(this.selected, this.DelegateSelectSuccess, App.ShowMsg);
-                this.lblValueContent.Content = this.selected.CharValue;
+                DI.Wrapper.BLE_GetRangeDisplay(
+                    this.selected, (name, info) => {
+                        this.lblCharacteristicName.Content =
+                            string.Format("{0}  {1}  {2}", 
+                            name, this.selected.CharValue, this.selected.UserDescription);
+                        this.lblInfoContent.Content = info;
+                    }, App.ShowMsg);
+
                 this.SetEnabled(this.selected.IsReadable, this.selected.IsWritable);
             }
         }
@@ -79,7 +84,6 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
 
         private void btnRead_Click(object sender, RoutedEventArgs arg) {
             try {
-                this.lblValueContent.Content = "";
                 if (this.selected != null) {
                     this.selected.Read();
                 }
@@ -95,7 +99,11 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
                 try {
                     if (this.selected != null) {
                         DI.Wrapper.Translate(this.selected);
-                        this.lblValueContent.Content = this.selected.CharValue;
+                        this.lblCharacteristicName.Content =
+                            string.Format("{0}  {1}  {2}",
+                            this.selected.CharName, 
+                            this.selected.CharValue, 
+                            this.selected.UserDescription);
                     }
                 }
                 catch (Exception e) {
@@ -117,19 +125,22 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
                 this.btnSend.Content = l.GetText(MsgCode.Write);
                 this.btnRead.Content = l.GetText(MsgCode.Read);
                 // Labels
-                this.lblServiceName.Content = l.GetText(MsgCode.Service);
-                this.lblCharacteristicName.Content = l.GetText(MsgCode.Characteristic);
-                this.lblInfo.Content = l.GetText(MsgCode.info);
+                this.lblServiceLabel.Content = l.GetText(MsgCode.Service);
+                this.lblCharacteristicLabel.Content = l.GetText(MsgCode.Characteristic);
+                this.lblInfoLabel.Content = l.GetText(MsgCode.info);
                 // Content
                 if (this.selected == null) {
-                    this.lblServiceName.Content = "";
                     this.lblCharacteristicName.Content = "";
-                    this.lblValueContent.Content = "";
                 }
                 else {
                     // translation and assembly happen in wrapper
-                    DI.Wrapper.BLE_GetRangeDisplay(this.selected, this.DelegateSelectSuccess, App.ShowMsg);
-                    this.lblValueContent.Content = this.selected.CharValue;
+                    DI.Wrapper.BLE_GetRangeDisplay(
+                        this.selected, (name, info) => {
+                            this.lblCharacteristicName.Content =
+                                string.Format("{0}  {1}  {2}",
+                                name, this.selected.CharValue, this.selected.UserDescription);
+                            this.lblInfoContent.Content = info;
+                        }, App.ShowMsg);
                 }
             });
         }
