@@ -1,9 +1,10 @@
 ﻿using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
+using LogUtils.Net;
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using System;
-using System.Diagnostics;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using WpfHelperClasses.Core;
 
@@ -74,28 +75,46 @@ namespace MultiCommTerminal.NetCore.WindowObjs.Utils {
         }
 
         private void btnCopy_Click(object sender, RoutedEventArgs e) {
-            this.errBox.SelectAll();
-            this.errBox.Copy();
-            this.errBox.Select(0, 0);
-            this.Close();
+            try {
+                this.errBox.SelectAll();
+                this.errBox.Copy();
+                StringBuilder sb = new StringBuilder();
+                sb.Append("Date: ").Append(DateTime.Now.ToLongDateString()).AppendLine("")
+                    .Append("Windows Ver: ").Append(Environment.OSVersion.VersionString).AppendLine("")
+                    .Append("App Build number: ").Append(TxtBinder.BuildNumber).AppendLine("").AppendLine("")
+                    .Append(Clipboard.GetText());
+                Clipboard.Clear();
+                Clipboard.SetText(sb.ToString());
+                this.errBox.Select(0, 0);
+                this.Close();
+            }
+            catch(Exception ex) {
+                Log.Exception(8888, "btnCopy_Click", "", ex);
+                this.Close();
+            }
         }
 
 
         private void btnEmail_Click(object sender, RoutedEventArgs e) {
-            try {
-                string body = this.errBox.Text.Replace("\r\n", "%0d%0A");
-                StringBuilder sb = new StringBuilder();
-                sb.Append("mailto:MultiCommTerminal@gmail.com")
-                    .Append("?subject=Multi Comm Terminal CRASH REPORT")
-                    .Append("&body=App Build number:").Append(TxtBinder.BuildNumber).Append("%0d%0A").Append("%0d%0A")
-                    .Append(DateTime.Now.ToLongDateString()).Append("%0d%0A").Append("%0d%0A")
-                    .Append(body).Append("%0d%0A");
-                Process.Start(new ProcessStartInfo(sb.ToString()) { UseShellExecute = true });
-                // this.DoEmail();
-            }
-            catch (Exception) {
-            }
-            this.Close();
+            Dispatcher.Invoke(async () => {
+                try {
+                    string body = this.errBox.Text.Replace("\r\n", "%0d%0A");
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("mailto:MultiCommTerminal@gmail.com")
+                        .Append("?subject=Multi Comm Terminal CRASH REPORT")
+                        .Append("&body=")
+                        .Append("Date: ").Append(DateTime.Now.ToLongDateString()).Append("%0d%0A")
+                        .Append("Windows Ver: ").Append(Environment.OSVersion.VersionString).Append("%0d%0A")
+                        .Append("App Build number: ").Append(TxtBinder.BuildNumber).Append("%0d%0A").Append("%0d%0A")
+                        .Append(body).Append("%0d%0A");
+                    await Windows.System.Launcher.LaunchUriAsync(new Uri(sb.ToString()));
+                    this.Close();
+                }
+                catch (Exception ex) {
+                    Log.Exception(8888, "btnEmail_Click", "", ex);
+                    this.Close();
+                }
+            });
         }
 
         #endregion
@@ -113,7 +132,9 @@ namespace MultiCommTerminal.NetCore.WindowObjs.Utils {
                     else {
                         report = WrapErr.GetErrReport(0, e.Message, e);
                     }
-                    this.errBox.Text = string.Format("{0}\r\n{1}", report.Msg, report.StackTrace);
+                    this.errBox.Text = string.Format(
+                        "{0}  {1}:{2}\r\n{3}\r\n{4}", 
+                        report.Code, report.AtClass, report.AtMethod, report.Msg, report.StackTrace);
                 }
                 else {
                     this.errBox.Text = "Null exception. No info";

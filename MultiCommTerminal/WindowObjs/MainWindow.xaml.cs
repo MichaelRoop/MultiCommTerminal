@@ -4,6 +4,7 @@ using LogUtils.Net;
 using MultiCommTerminal.NetCore.DependencyInjection;
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows;
 using WpfHelperClasses.Core;
 
@@ -73,7 +74,14 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         /// <summary>Opens the browser because of the execution of a hyperlink</summary>
         private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e) {
             try {
-                Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri) { UseShellExecute = true });
+                Task.Run( async () => {
+                    try {
+                        await Windows.System.Launcher.LaunchUriAsync(e.Uri);
+                    }
+                    catch (Exception ex) {
+                        this.log.Exception(9999, "Hyperlink_RequestNavigate", "", ex);
+                    }
+                });
                 e.Handled = true;
             }
             catch (Exception ex) {
