@@ -10,11 +10,16 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
     public class BoolConvertToXorCheck : IValueConverter {
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-            return string.Format(" {0} ", this.Convert(value, targetType) ? UTF8Helpers.HeavyCheckMark : UTF8Helpers.HeavyBallotX);
+            try {
+                return string.Format(" {0} ", this.Convert(value, targetType) ? UTF8Helpers.HeavyCheckMark : UTF8Helpers.HeavyBallotX);
+            }
+            catch (Exception) {
+                return "";
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
-            throw new NotImplementedException();
+            return false;
         }
 
 

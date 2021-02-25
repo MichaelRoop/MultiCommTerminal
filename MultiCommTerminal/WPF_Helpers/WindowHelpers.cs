@@ -63,13 +63,22 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
 
 
         public static void ShowMsg(string msg) {
-            MsgBoxSimple.ShowBox(DI.Wrapper.GetText(MsgCode.Error), msg);
-
+            try {
+                MsgBoxSimple.ShowBox(DI.Wrapper.GetText(MsgCode.Error), msg);
+            }
+            catch (Exception e) {
+                LOG.Exception(9999, "ShowMsg", "", e);
+            }
         }
 
 
         public static void ShowMsgTitle(string title, string msg) {
-            MsgBoxSimple.ShowBox(title, msg);
+            try {
+                MsgBoxSimple.ShowBox(title, msg);
+            }
+            catch (Exception e) {
+                LOG.Exception(9999, "ShowMsgTitle", "", e);
+            }
         }
 
 
@@ -77,7 +86,12 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
         /// <param name="win">The window opening the message box</param>
         /// <param name="msg">The message to display</param>
         public static void ShowMsgBox(this Window win, string msg) {
-            MsgBoxSimple.ShowBox(win, msg);
+            try {
+                MsgBoxSimple.ShowBox(win, msg);
+            }
+            catch (Exception e) {
+                LOG.Exception(9999, "ShowMsgBox", "", e);
+            }
         }
 
 
@@ -86,7 +100,12 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
         /// <param name="title">The text to show on title bar</param>
         /// <param name="msg">The message to display</param>
         public static void ShowMsgBox(this Window win, string title, string msg) {
-            MsgBoxSimple.ShowBox(win, title, msg);
+            try {
+                MsgBoxSimple.ShowBox(win, title, msg);
+            }
+            catch (Exception e) {
+                LOG.Exception(9999, "ShowMsgBox", "", e);
+            }
         }
 
 
@@ -94,7 +113,13 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
         /// <param name="win">The window opening the message box</param>
         /// <param name="msg">The message to display</param>
         public static MsgBoxResult ShowMsgBoxYesNo(this Window win, string msg, bool suppressContinue = false) {
-            return MsgBoxYesNo.ShowBox(win, msg, suppressContinue);
+            try {
+                return MsgBoxYesNo.ShowBox(win, msg, suppressContinue);
+            }
+            catch (Exception e) {
+                LOG.Exception(9999, "ShowMsgBoxYesNo", "", e);
+                return MsgBoxResult.No; 
+            }
         }
 
 
@@ -103,9 +128,14 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
         /// <param name="title">The text to show on title bar</param>
         /// <param name="msg">The message to display</param>
         public static MsgBoxResult ShowMsgBoxYesNo(this Window win, string title, string msg, bool suppressContinue = false) {
-            return MsgBoxYesNo.ShowBox(win, title, msg, suppressContinue);
+            try {
+                return MsgBoxYesNo.ShowBox(win, title, msg, suppressContinue);
+            }
+            catch (Exception e) {
+                LOG.Exception(9999, "ShowMsgBoxYesNo", "", e);
+                return MsgBoxResult.No;
+            }
         }
-
 
 
         /// <summary>Gets the selection and validate 
