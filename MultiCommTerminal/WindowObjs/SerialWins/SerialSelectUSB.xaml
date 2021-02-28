@@ -12,7 +12,10 @@
         Title="{Binding Source={x:Static wpfHelper:TxtBinder.Select}}"
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.USBPort_W}}"
         Loaded="Window_Loaded" Closing="Window_Closing"
-        MinHeight="100" MinWidth="200" MaxHeight="800" MaxWidth="900" BorderThickness=".5">
+        MinHeight="100" MinWidth="200" MaxHeight="800" MaxWidth="1200" BorderThickness=".5">
+    <Window.Resources>
+        <wpfHelper:BoolConvertToXorCheck x:Key="xCheckConvert"/>
+    </Window.Resources>
     <Grid>
         <Grid x:Name="gridWait" Panel.ZIndex="10000" Visibility="Collapsed"
             HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  >
@@ -25,8 +28,9 @@
             <controls:UC_BusySpinner />
         </Grid>
         <StackPanel Margin="10,10">
-            <ListView x:Name="lbUsb" MinHeight="100" MinWidth="200" MaxHeight="300"  Margin="10,0" 
-                BorderThickness=".5"
+            <DockPanel>
+                <ListView x:Name="lbUsb" MinHeight="100" MinWidth="200" MaxHeight="500"  Margin="10,0" 
+                BorderThickness=".5" FontSize="16"
                 ScrollViewer.VerticalScrollBarVisibility="Auto" 
                 ScrollViewer.HorizontalScrollBarVisibility="Auto">
                 <ListView.View>
@@ -40,13 +44,49 @@
                         <GridViewColumn x:Name="lvProductColumn" Width="Auto"
                             Header="{Binding Source={x:Static wpfHelper:TxtBinder.Product}}" 
                             DisplayMemberBinding="{Binding USB_ProductIdDisplay}"/>
-                    </GridView>
+                        <GridViewColumn x:Name="lvBaudColumn" Width="Auto"
+                            Header="{Binding Source={x:Static wpfHelper:TxtBinder.BaudRate}}" 
+                            DisplayMemberBinding="{Binding Baud}"/>
+                        <GridViewColumn x:Name="lvDataBitsColumn" Width="Auto"
+                            Header="{Binding Source={x:Static wpfHelper:TxtBinder.DataBits}}" 
+                            DisplayMemberBinding="{Binding DataBits}"/>
+                        <GridViewColumn x:Name="lvStopBitsColumn" Width="Auto"
+                            Header="{Binding Source={x:Static wpfHelper:TxtBinder.StopBits}}" 
+                            DisplayMemberBinding="{Binding StopBits}"/>
+                        <GridViewColumn x:Name="lvSParityColumn" Width="Auto"
+                            Header="{Binding Source={x:Static wpfHelper:TxtBinder.Parity}}" 
+                            DisplayMemberBinding="{Binding Parity}"/>
+                        <GridViewColumn x:Name="lvCfgColumn" Width="Auto"
+                            Header="{Binding Source={x:Static wpfHelper:TxtBinder.Settings}}" 
+                            DisplayMemberBinding="{Binding Path=HasCfg, Converter={StaticResource xCheckConvert}}"/>
+                        </GridView>
                 </ListView.View>
             </ListView>
+
+                <StackPanel Margin="0,10">
+                    <controls:UC_RoundIconButton x:Name="btnEdit" Style="{StaticResource IconButton}" Width="35" Height="35"
+                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.Edit}}" Margin="0,2.5" 
+                        IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Edit}}"                                                                                            
+                        Background="Transparent" Click="btnEdit_Click" />
+                    <controls:UC_RoundIconButton x:Name="btnDelete"  Style="{StaticResource IconButton}" 
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Delete}}" Margin="0,5"  Width="45" Height="45"
+                            Click="btnDelete_Click" />
+                </StackPanel>
+            </DockPanel>
+            
+            
             <DockPanel HorizontalAlignment="Center" Margin="10">
                 <controls:UC_IconButton x:Name="btnCancel" Style="{StaticResource TextIconButton}"
                     Content="{Binding Source={x:Static wpfHelper:TxtBinder.Cancel}}" Margin="0,2.5"
                     IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}"                                                                                            
+                    Background="Transparent" Click="btnCancel_Click" />
+                <controls:UC_IconButton x:Name="btnSelect" Style="{StaticResource TextIconButton}"
+                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Select}}" Margin="10,2.5"
+                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Save}}"                                                                                            
+                    Background="Transparent" Click="btnSelect_Click" />
+                <controls:UC_IconButton x:Name="btnExit" Style="{StaticResource TextIconButton}"
+                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Exit}}" Visibility="Collapsed"
+                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Exit}}"                                                                                            
                     Background="Transparent" Click="btnCancel_Click" />
             </DockPanel>
         </StackPanel>

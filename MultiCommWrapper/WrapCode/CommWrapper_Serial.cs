@@ -12,6 +12,7 @@ using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using VariousUtils.Net;
 
@@ -326,6 +327,25 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
+        public void DeleteSerialCfg(SerialDeviceInfo device, Func<string, bool> areYouSure, Action<bool> onComplete, OnErr onError) {
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 2003011, "Failure on DeleteSerialCfg", () => {
+                if (device == null) {
+                    onError?.Invoke(this.GetText(MsgCode.NothingSelected));
+                }
+                else {
+                    this.GetSerialIndex(device, (ndx) => {
+                        if (areYouSure(device.PortName)) {
+                            this.DeleteSerialCfg(ndx, onComplete, onError);
+                        }
+                    }, onError);
+                }
+            });
+            this.RaiseIfException(report);
+        }
+
+
+
         private void RetrieveSerialCfg(SerialDeviceInfo inObject, Action<SerialDeviceInfo> found, Action notFound, OnErr onError) {
             this.GetSerialCfgList((items) => {
                 // Iterate through index and compare fields
@@ -408,11 +428,17 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-        private void Serial_DiscoveredDevicesHandler(object sender, List<SerialDeviceInfo> e) {
+        private void Serial_DiscoveredDevicesHandler(object sender, List<SerialDeviceInfo> list) {
             ErrReport report;
             WrapErr.ToErrReport(out report, 2003013, "Failure on Serial_DiscoveredDevicesHandler", () => {
                 this.log.Info("Serial_DiscoveredDevicesHandler", () => string.Format("Is Serial_DiscoveredDevicesHandler null={0}", this.SerialDiscoveredDevices == null));
-                this.SerialDiscoveredDevices?.Invoke(sender, e);
+                // Replace OS params with saved cfg params to be what device is expecting on other side of USB
+                this.GetSerialCfgList((index) => {
+                    foreach (var item in list) {
+                        this.UpdateSerialFromCfg(index, item);
+                    }
+                }, (err) => { });
+                this.SerialDiscoveredDevices?.Invoke(sender, list);
             });
             this.RaiseIfException(report);
         }
@@ -452,6 +478,50 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.RaiseIfException(report);
 
         }
+
+
+        /// <summary>Update the values loaded from OS with saved parameters for that device</summary>
+        /// <param name="index">The configuration index</param>
+        /// <param name="item">The OS loaded device info to be updated</param>
+        private void UpdateSerialFromCfg(List<IIndexItem<SerialIndexExtraInfo>> index, SerialDeviceInfo item) {
+            var ndx = index.FirstOrDefault((i) =>
+                (i.ExtraInfoObj.PortName == item.PortName) &&
+                (i.ExtraInfoObj.USBProductId == item.USB_ProductId) &&
+                (i.ExtraInfoObj.USBVendorId == item.USB_VendorId));
+            if (ndx != null) {
+                this.RetrieveSerialCfg(ndx, (cfg) => {
+                    item.Baud = cfg.Baud;
+                    item.DataBits = cfg.DataBits;
+                    item.StopBits = cfg.StopBits;
+                    item.Parity = cfg.Parity;
+                    item.FlowHandshake = cfg.FlowHandshake;
+                    item.ReadTimeout = cfg.ReadTimeout;
+                    item.WriteTimeout = cfg.WriteTimeout;
+                    item.HasCfg = true;
+                }, (err) => { });
+            }
+        }
+
+
+        private void GetSerialIndex(SerialDeviceInfo item, Action<IIndexItem<SerialIndexExtraInfo>> onSuccess, OnErr onError) {
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 200309999, "Failure on GetSerialIndex", () => {
+                this.GetSerialCfgList((index) => {
+                    var ndx = index.FirstOrDefault((i) =>
+                        (i.ExtraInfoObj.PortName == item.PortName) &&
+                        (i.ExtraInfoObj.USBProductId == item.USB_ProductId) &&
+                        (i.ExtraInfoObj.USBVendorId == item.USB_VendorId));
+                    if (ndx != null) {
+                        onSuccess.Invoke(ndx);
+                    }
+                    else {
+                        onError.Invoke(this.GetText(MsgCode.NotFoundSettings));
+                    }
+                }, onError);
+            });
+            this.RaiseIfException(report);
+        }
+
 
 
         #endregion

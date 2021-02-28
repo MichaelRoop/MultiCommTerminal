@@ -415,7 +415,10 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void SaveSerialCfg(IIndexItem<SerialIndexExtraInfo> idx, SerialDeviceInfo data, Action onSuccess, OnErr onError);
 
+
         void DeleteSerialCfg(IIndexItem<SerialIndexExtraInfo> index, Action<bool> onComplete, OnErr onError);
+
+        void DeleteSerialCfg(SerialDeviceInfo device, Func<string, bool> areYouSure, Action<bool> onComplete, OnErr onError);
 
         /// <summary>Initialised device info object with configurable fields from storage or user</summary>
         /// <param name="info">The info object to initialise</param>

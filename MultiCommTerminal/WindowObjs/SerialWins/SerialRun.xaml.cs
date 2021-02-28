@@ -1,6 +1,5 @@
 ﻿using CommunicationStack.Net.DataModels;
 using CommunicationStack.Net.Enumerations;
-using LanguageFactory.Net.data;
 using MultiCommData.Net.Enumerations;
 using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WPF_Helpers;
@@ -49,6 +48,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
             WPF_ControlHelpers.CenterChild(parent, this);
             this.ui.OnLoad(this, CommMedium.Usb);
         }
+
 
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
@@ -122,7 +122,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
 
         private void OnUiDiscover(object sender, EventArgs e) {
             this.Title = "USB";
-            this.selectedSerial = SerialSelectUSB.ShowBox(this);
+            this.selectedSerial = SerialSelectUSB.ShowBox(this, true);
             if (this.selectedSerial != null) {
                 this.Title = this.selectedSerial.Name;
             }
@@ -133,20 +133,17 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
             if (this.selectedSerial == null) {
                 this.OnUiDiscover(sender, e);
             }
+
             if (this.selectedSerial != null) {
                 this.ui.IsBusy = true;
-                DI.Wrapper.SerialUsbConnect(
-                    this.selectedSerial,
-                    (err) => {
-                        this.ui.IsBusy = false;
-                        App.ShowMsg(err);
-                    });
+                DI.Wrapper.SerialUsbConnect(this.selectedSerial, this.OnConnectError);
             }
         }
 
 
         private void OnUiDisconnect(object sender, EventArgs e) {
             DI.Wrapper.SerialUsbDisconnect();
+            this.selectedSerial = null;
         }
 
 
@@ -159,21 +156,22 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
             if (this.selectedSerial != null) {
                 DeviceInfo_USB.ShowBox(this, this.selectedSerial);
             }
-            else {
-                this.OnUiDiscover(sender, e);
-                if (this.selectedSerial == null) {
-                    App.ShowMsg(DI.Wrapper.GetText(MsgCode.NothingSelected));
-                }
-                else {
-                    DeviceInfo_USB.ShowBox(this, this.selectedSerial);
-                }
-            }
         }
 
 
         private void OnUiSettings(object sender, EventArgs e) {
-            DeviceSelect_USB.ShowBox(this);
+            SerialSelectUSB.ShowBox(this, false);
         }
+
+        #endregion
+
+        #region Delegates
+
+        private void OnConnectError(string err) {
+            this.ui.IsBusy = false;
+            App.ShowMsg(err);
+        }
+
 
         #endregion
 
