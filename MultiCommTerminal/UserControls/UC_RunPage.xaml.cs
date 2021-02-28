@@ -95,6 +95,7 @@ namespace MultiCommTerminal.NetCore.UserControls {
             this.inScroll = this.lbIncoming.GetScrollViewer();
             this.logScroll = this.lbLog.GetScrollViewer();
             this.logSection.Collapse();
+            this.SetConnectState(false);
 
             this.AddEventHandlers();
             DI.Wrapper.CurrentSupportedLanguage(this.SetLanguage);
