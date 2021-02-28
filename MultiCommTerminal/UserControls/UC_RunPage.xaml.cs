@@ -81,6 +81,7 @@ namespace MultiCommTerminal.NetCore.UserControls {
         public void OnLoad(Window parent, CommMedium medium, RunPageCtrlsEnabled enableList = null) {
             this.parent = parent;
             this.medium = medium;
+            // TODO - remove the enable list
             if (enableList != null) {
                 this.btnInfo.SetVisualEnabled(enableList.Info);
                 this.btnSettings.SetVisualEnabled(enableList.Settings);
@@ -301,11 +302,17 @@ namespace MultiCommTerminal.NetCore.UserControls {
         private void SetConnectState(bool isConnected) {
             this.Dispatcher.Invoke(() => {
                 if (isConnected) {
+                    this.btnConnect.Collapse();
+                    this.btnDisconnect.Show();
+                    this.btnInfo.Enable();
                     this.connectedOff.Collapse();
                     this.connectedOn.Show();
                 }
                 else {
                     this.ClearResponses();
+                    this.btnInfo.Disable();
+                    this.btnDisconnect.Collapse();
+                    this.btnConnect.Show();
                     this.connectedOn.Collapse();
                     this.connectedOff.Show();
                 }

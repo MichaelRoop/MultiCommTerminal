@@ -105,11 +105,11 @@
                                         Content="{Binding Source={x:Static wpfHelper:TxtBinder.Connect}}" Margin="0"
                                         IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Connect}}"                                                                                            
                                         Background="Transparent" Click="btnConnect_Click" />
+                                    <local:UC_IconButton x:Name="btnDisconnect" Style="{StaticResource TextIconButton}" Visibility="Collapsed"
+                                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.Disconnect}}" HorizontalAlignment="Right"
+                                        IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}"                                                                                            
+                                        Background="Transparent" Click="btnDisconnect_Click" Margin="0,1" />
                                 </DockPanel>
-                                <local:UC_IconButton x:Name="btnDisconnect" Style="{StaticResource TextIconButton}"
-                                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Disconnect}}" HorizontalAlignment="Right"
-                                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}"                                                                                            
-                                    Background="Transparent" Click="btnDisconnect_Click" Margin="0,1" />
                             </StackPanel>
                             <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0">
                                 <DockPanel Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center">
