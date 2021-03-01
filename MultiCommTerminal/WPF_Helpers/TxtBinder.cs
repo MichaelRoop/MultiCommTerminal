@@ -111,6 +111,7 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
         public static string CrashReport { get { return GetTxt(MsgCode.CrashReport); } }
         public static string DataType { get { return GetTxt(MsgCode.DataType); } }
         public static string Description { get { return GetTxt(MsgCode.Description); } }
+        public static string Address { get { return GetTxt(MsgCode.Address); } }
 
 
         public static string BuildNumber {

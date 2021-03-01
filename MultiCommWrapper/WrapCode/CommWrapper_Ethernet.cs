@@ -4,11 +4,13 @@ using CommunicationStack.Net.DataModels;
 using Ethernet.Common.Net.DataModels;
 using LanguageFactory.Net.data;
 using MultiCommData.Net.Enumerations;
+using MultiCommWrapper.Net.DataModels;
 using MultiCommWrapper.Net.interfaces;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace MultiCommWrapper.Net.WrapCode {
@@ -86,6 +88,38 @@ namespace MultiCommWrapper.Net.WrapCode {
             });
         }
 
+        /// <summary>Split the display into data model fields for column display</summary>
+        /// <param name="onSuccess">Invoked on success</param>
+        /// <param name="onError">Invoked on error</param>
+        public void GetEthernetDataList(Action<List<EthernetDisplayDataModel>> onSuccess, OnErr onError) {
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    List<EthernetDisplayDataModel> list = new List<EthernetDisplayDataModel>();
+                    foreach(IIndexItem<DefaultFileExtraInfo> index in this.ethernetStorage.IndexedItems) {
+                        EthernetDisplayDataModel dm = new EthernetDisplayDataModel() {
+                            Index = index,
+                        };
+                        this.log.Info("**********", index.Display);
+                        string[] parts = index.Display.Split(':');
+                        if (parts != null && parts.Count() == 3) {
+                            dm.Name = parts[0];
+                            dm.Address = parts[1];
+                            dm.Port = parts[2];
+                        }
+                        list.Add(dm);
+                    }
+                    onSuccess?.Invoke(list);
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.LoadFailed));
+                }
+            });
+
+        }
+
+
+
 
         public void CreateNewEthernetData(string display, EthernetParams data, Action onSuccess, OnErr onError) {
             WrapErr.ToErrReport(9999, () => {
@@ -156,16 +190,18 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-        public void DeleteEthernetData(IIndexItem<DefaultFileExtraInfo> index, Action<bool> onComplete, OnErr onError) {
+        public void DeleteEthernetData(IIndexItem<DefaultFileExtraInfo> index, string name, Func<string, bool> areYouSure, Action<bool> onComplete, OnErr onError) {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;
                 WrapErr.ToErrReport(out report, 9999, () => {
-                    bool ok = this.ethernetStorage.DeleteFile(index);
-                    this.GetEthernetDataList(
-                        (list) => {
-                            this.OnEthernetListChange?.Invoke(this, list);
-                            onComplete(ok);
-                        }, onError);
+                    if (areYouSure(name)) {
+                        bool ok = this.ethernetStorage.DeleteFile(index);
+                        this.GetEthernetDataList(
+                            (list) => {
+                                this.OnEthernetListChange?.Invoke(this, list);
+                                onComplete(ok);
+                            }, onError);
+                    }
                 });
                 if (report.Code != 0) {
                     onError.Invoke(this.GetText(MsgCode.WriteFailue));

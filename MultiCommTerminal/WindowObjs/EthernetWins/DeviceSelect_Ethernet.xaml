@@ -12,33 +12,35 @@
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.EthernetWhite}}"
         WindowStartupLocation="Manual" MinHeight="150" MinWidth="150" BorderThickness=".25"
         Loaded="Window_Loaded" Closing="Window_Closing">
-    <Grid>
-        <StackPanel>
+    <Grid HorizontalAlignment="Stretch">
+        <StackPanel HorizontalAlignment="Stretch">
             <DockPanel>
-                <ListBox x:Name="lbEthernetDevices" MinWidth="250" Height="200" Margin="10" FontSize="16" 
-                     ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" >
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{Binding Display}" />
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-                    <StackPanel x:Name="spEditButtons" VerticalAlignment="Top" Margin="0,10,10,0" >
-                        <controls:UC_RoundIconButton x:Name="btnAdd"  Style="{StaticResource IconButton}"  Margin="0,5"
+                <ListView x:Name="lvEthernetDevices" MinHeight="100" MinWidth="200" MaxHeight="500"  Margin="10,0" HorizontalAlignment="Stretch"
+                    BorderThickness=".5" FontSize="16"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding Name}"
+                                Header="{Binding Source={x:Static wpfHelper:TxtBinder.Name}}" />
+                            <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding Address}"
+                                Header="{Binding Source={x:Static wpfHelper:TxtBinder.Address}}" />
+                            <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding Port}" 
+                                Header="{Binding Source={x:Static wpfHelper:TxtBinder.Port}}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <StackPanel x:Name="spEditButtons" VerticalAlignment="Top" Margin="0,10,10,0" >
+                    <controls:UC_RoundIconButton x:Name="btnAdd"  Style="{StaticResource IconButton}"  Margin="0,5"
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Add}}" Width="40" Height="40"
                             Click="btnAdd_Click" />
-                        <controls:UC_RoundIconButton x:Name="btnEdit"  Style="{StaticResource IconButton}" 
+                    <controls:UC_RoundIconButton x:Name="btnEdit"  Style="{StaticResource IconButton}" 
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Edit}}"  Margin="0,5"  Width="35" Height="35"
                             Click="btnEdit_Click" />
-                        <controls:UC_RoundIconButton x:Name="btnDelete"  Style="{StaticResource IconButton}" Margin="0,5"
+                    <controls:UC_RoundIconButton x:Name="btnDelete"  Style="{StaticResource IconButton}" Margin="0,5"
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Delete}}"  Width="45" Height="45"
                             Click="btnDelete_Click" />
-                    </StackPanel>
+                </StackPanel>
             </DockPanel>
             <DockPanel HorizontalAlignment="Center" Margin="10,5,10,15">
                 <controls:UC_IconButton x:Name="btnSelect"  Margin="0,0,10,0"

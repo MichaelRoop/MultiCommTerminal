@@ -1,9 +1,7 @@
 ﻿using Ethernet.Common.Net.DataModels;
 using MultiCommTerminal.NetCore.DependencyInjection;
-using MultiCommTerminal.NetCore.WindowObjs;
 using MultiCommTerminal.NetCore.WPF_Helpers;
-using StorageFactory.Net.interfaces;
-using StorageFactory.Net.StorageManagers;
+using MultiCommWrapper.Net.DataModels;
 using System.Collections.Generic;
 using System.Windows;
 using WpfHelperClasses.Core;
@@ -17,7 +15,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
 
         private Window parent = null;
         private ButtonGroupSizeSyncManager widthManager = null;
-        private List<IIndexItem<DefaultFileExtraInfo>> lstInfo = new List<IIndexItem<DefaultFileExtraInfo>>();
+        private List<EthernetDisplayDataModel> lstInfo = new List<EthernetDisplayDataModel>();
 
         #endregion
 
@@ -74,10 +72,10 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
 
 
         private void btnSelect_Click(object sender, RoutedEventArgs e) {
-            this.lbEthernetDevices.GetSelected<IIndexItem<DefaultFileExtraInfo>>(
+            this.lvEthernetDevices.GetSelected<EthernetDisplayDataModel>(
                 (info) => {
                     DI.Wrapper.RetrieveEthernetData(
-                        info, 
+                        info.Index, 
                         (data) => {
                             this.EthernetInfoObject = data;
                             this.Close();
@@ -88,19 +86,18 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
 
 
         private void btnEdit_Click(object sender, RoutedEventArgs e) {
-            this.lbEthernetDevices.GetSelectedChk<IIndexItem<DefaultFileExtraInfo>>(
+            this.lvEthernetDevices.GetSelectedChk<EthernetDisplayDataModel>(
                 (info) => {
-                    this.ReloadList(DeviceEdit_Ethernet.ShowBoxEdit(this, info));
+                    this.ReloadList(DeviceEdit_Ethernet.ShowBoxEdit(this, info.Index));
                 }, App.ShowMsg);
         }
 
 
         private void btnDelete_Click(object sender, RoutedEventArgs e) {
-            this.lbEthernetDevices.GetSelectedChk<IIndexItem<DefaultFileExtraInfo>>(
+            this.lvEthernetDevices.GetSelectedChk<EthernetDisplayDataModel>(
                 (info) => {
-                    if (MsgBoxYesNo.ShowBoxDelete(this, info.Display) == MsgBoxYesNo.MsgBoxResult.Yes) {
-                        DI.Wrapper.DeleteEthernetData(info, this.ReloadList, App.ShowMsg);
-                    }
+                    DI.Wrapper.DeleteEthernetData(
+                        info.Index, info.Name, this.DeleteDecision, this.ReloadList, App.ShowMsg);
                 }, App.ShowMsg);
         }
 
@@ -120,11 +117,21 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
 
         private void ReloadList(bool isChanged) {
             if (isChanged) {
-                DI.Wrapper.GetEthernetDataList((newList) => {
-                    lbEthernetDevices.SetNewSource(ref this.lstInfo, newList);
-                }, App.ShowMsg);
+                DI.Wrapper.GetEthernetDataList(this.ListLoad, App.ShowMsg);
             }
         }
+
+
+        private void ListLoad(List<EthernetDisplayDataModel> newList) {
+            lvEthernetDevices.SetNewSource(ref this.lstInfo, newList);
+        }
+
+
+        private bool DeleteDecision(string name) {
+            return MsgBoxYesNo.ShowBoxDelete(this, name) == MsgBoxYesNo.MsgBoxResult.Yes;
+        }
+
+
 
         #endregion
 
