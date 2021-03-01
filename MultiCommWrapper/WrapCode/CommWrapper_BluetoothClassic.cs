@@ -209,15 +209,20 @@ namespace MultiCommWrapper.Net.WrapCode {
             //list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.LastSeen), info.LastSeen.ToString()));
             //list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.LastUsed), info.LastUsed.ToString()));
             
-            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Authenticated), info.Authenticated));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Authenticated), this.Translate(info.Authenticated)));
             list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.RemoteHost), info.RemoteHostName));
             list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.RemoteService), info.RemoteServiceName));
-            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Connected), info.Connected));
-            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.PairingAllowed), info.CanPair));
-            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Paired), info.IsPaired));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Connected), this.Translate(info.Connected)));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.PairingAllowed), this.Translate(info.CanPair)));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Paired), this.Translate(info.IsPaired)));
             list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.SignalStrength), info.Strength)); 
             return list;
         }
+
+        private string Translate(bool isTrue) {
+            return isTrue ? this.GetText(MsgCode.True) : this.GetText(MsgCode.False);
+        }
+
 
 
         // TODO - change names. Properties for both BT and BLE
@@ -225,7 +230,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             try {
                 List<NetPropertyDataModelDisplay> list = new List<NetPropertyDataModelDisplay>();
                 foreach (var sp in info.Properties) {
-                    list.Add(new NetPropertyDataModelDisplay(sp.Value));
+                    list.Add(new NetPropertyDataModelDisplay(sp.Value, this.Translate));
                 }
                 return list;
             }
