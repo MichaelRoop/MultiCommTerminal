@@ -21,20 +21,25 @@
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" Grid.ColumnSpan="2" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Network}}"  Style="{StaticResource NameLabelLeft}" HorizontalAlignment="Center" />
-                <Label Grid.Row="1" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.NetworkSecurityKey}}"  Style="{StaticResource NameLabelLeft}"/>
-                <PasswordBox Grid.Row="1" Grid.Column="1" x:Name="txtPwd"  Style="{StaticResource PwdBoxRight}"/>
+                <Label Grid.Row="0" Grid.Column="0" x:Name="lbSSID" Content="SSID"  Style="{StaticResource NameLabelLeft}" Visibility="Collapsed"/>
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtSSID"  Style="{StaticResource TxtBoxRight}" Visibility="Collapsed" />
 
-                <Label Grid.Row="2" Grid.ColumnSpan="2" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Socket}}"  Style="{StaticResource NameLabelLeft}" HorizontalAlignment="Center" />
-                <Label Grid.Row="3" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.HostNameIp}}"  Style="{StaticResource NameLabelLeft}" />
-                <TextBox Grid.Row="3" Grid.Column="1" x:Name="txtHostName"  Style="{ StaticResource TxtBoxRight}"/>
-                <Label Grid.Row="4" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.NetworkServicePort}}" Style="{StaticResource NameLabelLeft}" />
-                <TextBox Grid.Row="4" Grid.Column="1" x:Name="txtServiceName" Style="{ StaticResource TxtBoxRight}" />
+                <Label Grid.Row="1" Grid.ColumnSpan="2" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Network}}"  Style="{StaticResource NameLabelLeft}" HorizontalAlignment="Center" />
+
+                <Label Grid.Row="2" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.NetworkSecurityKey}}"  Style="{StaticResource NameLabelLeft}"/>
+                <PasswordBox Grid.Row="2" Grid.Column="1" x:Name="txtPwd"  Style="{StaticResource PwdBoxRight}"/>
+
+                <Label Grid.Row="3" Grid.ColumnSpan="2" Content="{Binding Source={x:Static wpfHelper:TxtBinder.Socket}}"  Style="{StaticResource NameLabelLeft}" HorizontalAlignment="Center" />
+                <Label Grid.Row="4" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.HostNameIp}}"  Style="{StaticResource NameLabelLeft}" />
+                <TextBox Grid.Row="4" Grid.Column="1" x:Name="txtHostName"  Style="{ StaticResource TxtBoxRight}"/>
+                <Label Grid.Row="5" Grid.Column="0" Content="{Binding Source={x:Static wpfHelper:TxtBinder.NetworkServicePort}}" Style="{StaticResource NameLabelLeft}" />
+                <TextBox Grid.Row="5" Grid.Column="1" x:Name="txtServiceName" Style="{ StaticResource TxtBoxRight}" />
 
             </Grid>
 

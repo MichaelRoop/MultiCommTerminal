@@ -13,13 +13,21 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
     /// <summary>Interaction logic for MsgBoxWifiCred.xaml</summary>
     public partial class MsgBoxWifiCred : Window {
 
+        enum ProcessType {
+            Edit,
+            Init,
+            Create,
+        }
+
+
         #region Data
 
         private Window parent = null;
         private ButtonGroupSizeSyncManager widthManager = null;
         // For when we are editing existing
         private IIndexItem<DefaultFileExtraInfo> index = null;
-        WifiCredentialsDataModel dataModelToEdit = null;
+        private WifiCredentialsDataModel dataModelToEdit = null;
+        private ProcessType processType = ProcessType.Edit;
 
         #endregion
 
@@ -38,6 +46,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         /// <returns></returns>
         public static WifiCredResult ShowBox(Window win, string ssid, string host, string service) {
             MsgBoxWifiCred box = new MsgBoxWifiCred(win, ssid, host, service);
+            box.processType = ProcessType.Init;
             box.ShowDialog();
             return box.Result;
         }
@@ -48,11 +57,37 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         /// <param name="index">The data item index object</param>
         public static bool ShowBox(Window parent, IIndexItem<DefaultFileExtraInfo> index) {
             MsgBoxWifiCred box = new MsgBoxWifiCred(parent, index);
+            box.processType = ProcessType.Edit;
+            box.ShowDialog();
+            return box.Result.IsChanged;
+        }
+
+
+        public static bool ShowBox(Window parent) {
+            MsgBoxWifiCred box = new MsgBoxWifiCred(parent);
+            box.processType = ProcessType.Create;
             box.ShowDialog();
             return box.Result.IsChanged;
         }
 
         #endregion
+
+
+        public MsgBoxWifiCred(Window parent) {
+            this.parent = parent;
+            InitializeComponent();
+            this.Title = DI.Wrapper.GetText(MsgCode.Create);
+            this.lbSSID.Show();
+            this.txtSSID.Show();
+
+            this.txtHostName.Text = string.Empty;
+            this.txtServiceName.Text = string.Empty;
+            WPF_ControlHelpers.CenterChild(parent, this);
+            this.SizeToContent = SizeToContent.WidthAndHeight;
+            // Call before rendering which will trigger initial resize events
+            this.widthManager = new ButtonGroupSizeSyncManager(this.btnOk, this.btnCancel);
+            this.widthManager.PrepForChange();
+        }
 
 
         public MsgBoxWifiCred(Window parent, string title, string host, string service) {
@@ -103,21 +138,34 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
 
         private void btnOk_Click(object sender, RoutedEventArgs e) {
-            if (this.index == null) {
-                // Validate entries in wrapper level
-                this.Result.IsChanged = true;
-                this.Result.HostName = txtHostName.Text;
-                this.Result.ServiceName = txtServiceName.Text;
-                this.Result.Password = this.txtPwd.Password;
-                this.Close();
-            }
-            else {
-                // This is an edit of an existing
-                this.dataModelToEdit.RemoteHostName = this.txtHostName.Text;
-                this.dataModelToEdit.RemoteServiceName = this.txtServiceName.Text;
-                this.dataModelToEdit.WifiPassword = this.txtPwd.Password;
-                DI.Wrapper.SaveWifiCred(
-                    this.index, this.dataModelToEdit, this.OnSaveOk, this.OnDataErr);
+            switch (this.processType) {
+                case ProcessType.Edit:
+                    // This is an edit of an existing
+                    this.dataModelToEdit.RemoteHostName = this.txtHostName.Text;
+                    this.dataModelToEdit.RemoteServiceName = this.txtServiceName.Text;
+                    this.dataModelToEdit.WifiPassword = this.txtPwd.Password;
+                    DI.Wrapper.SaveWifiCred(
+                        this.index, this.dataModelToEdit, this.OnSaveOk, this.OnDataErr);
+                    break;
+                case ProcessType.Init:
+                    if (this.index == null) {
+                        // Validate entries in wrapper level
+                        this.Result.IsChanged = true;
+                        this.Result.HostName = txtHostName.Text;
+                        this.Result.ServiceName = txtServiceName.Text;
+                        this.Result.Password = this.txtPwd.Password;
+                        this.Close();
+                    }
+                    break;
+                case ProcessType.Create:
+                    WifiCredentialsDataModel dm = new WifiCredentialsDataModel() {
+                        SSID = this.txtSSID.Text,
+                        RemoteHostName = this.txtHostName.Text,
+                        RemoteServiceName = this.txtServiceName.Text,
+                        WifiPassword = this.txtPwd.Password,
+                    };
+                    DI.Wrapper.CreateNewWifiCred(dm.SSID, dm, this.OnSaveOk, this.OnDataErr);
+                    break;
             }
         }
 
@@ -129,7 +177,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
 
         private void PopulateFields(IIndexItem<DefaultFileExtraInfo> itemIndex) {
-            DI.Wrapper.RetrieveWifiCredData(itemIndex, this.OnRetrieveOk, this.OnDataErr);
+            DI.Wrapper.RetrieveWifiCredData(itemIndex, this.OnRetrieveOk, this.OnDataErrExit);
         }
 
 
@@ -149,11 +197,15 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
 
         private void OnDataErr(string err) {
-            this.Result.IsChanged = false;
             App.ShowMsg(err);
-            Close();
         }
 
+
+        private void OnDataErrExit(string err) {
+            App.ShowMsg(err);
+            this.Result.IsChanged = false;
+            Close();
+        }
 
 
     }

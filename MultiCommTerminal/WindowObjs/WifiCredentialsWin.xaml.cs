@@ -49,6 +49,11 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         }
 
 
+        private void btnAdd_Click(object sender, RoutedEventArgs e) {
+            this.ReloadList(MsgBoxWifiCred.ShowBox(this.parent));
+        }
+
+
         private void btnEdit_Click(object sender, RoutedEventArgs e) {
             var item = this.listBoxCreds.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
             if (item != null) {
