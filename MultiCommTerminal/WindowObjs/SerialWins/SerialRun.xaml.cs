@@ -160,6 +160,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
         private void OnConnectError(string err) {
             this.ui.IsBusy = false;
             App.ShowMsg(err);
+            this.selectedSerial = null;
         }
 
 
