@@ -78,6 +78,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BTWins {
                     this.ui.SetConnected();
                 }
                 else {
+                    this.selectedDevice = null;
                     App.ShowMsg(DI.Wrapper.GetText(MsgCode.ConnectionFailure));
                 }
             });
