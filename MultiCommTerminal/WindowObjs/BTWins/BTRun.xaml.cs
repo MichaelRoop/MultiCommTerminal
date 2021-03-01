@@ -27,7 +27,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BTWins {
             this.SizeToContent = SizeToContent.WidthAndHeight;
             this.ui.ExitClicked += this.OnUiExit;
             this.ui.ConnectCicked += this.OnUiConnect;
-            this.ui.DiscoverClicked += this.OnUiDiscover;
             this.ui.DisconnectClicked += this.OnUiDisconnect;
             this.ui.SendClicked += this.OnUiSend;
             this.ui.InfoClicked += this.OnUiInfo;
@@ -53,7 +52,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BTWins {
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             this.ui.ExitClicked -= this.OnUiExit;
             this.ui.ConnectCicked -= this.OnUiConnect;
-            this.ui.DiscoverClicked -= this.OnUiDiscover;
             this.ui.DisconnectClicked -= this.OnUiDisconnect;
             this.ui.SendClicked -= this.OnUiSend;
             this.ui.InfoClicked -= this.OnUiInfo;
@@ -93,18 +91,10 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BTWins {
             this.CloseRequest?.Invoke(this, typeof(BTRun));
         }
 
-        private void OnUiDiscover(object sender, EventArgs e) {
-            this.Title = "Bluetooth";
-            this.selectedDevice = BTSelect.ShowBox(this, true);
-            if (this.selectedDevice != null) {
-                this.Title = this.selectedDevice.Name;
-            }
-        }
-
 
         private void OnUiConnect(object sender, EventArgs e) {
             if (this.selectedDevice == null) {
-                this.OnUiDiscover(sender, e);
+                this.DoDiscovery();
             }
             if (this.selectedDevice != null) {
                 this.ui.IsBusy = true;
@@ -115,6 +105,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BTWins {
 
         private void OnUiDisconnect(object sender, EventArgs e) {
             DI.Wrapper.BTClassicDisconnect();
+            this.selectedDevice = null;
         }
 
 
@@ -129,17 +120,17 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BTWins {
                 this.ui.IsBusy = true;
                 DI.Wrapper.BTClassicGetExtraInfoAsync(this.selectedDevice);
             }
-            else {
-                this.OnUiDiscover(sender, e);
-                if (this.selectedDevice == null) {
-                    App.ShowMsg(DI.Wrapper.GetText(MsgCode.NothingSelected));
-                }
-                else {
-                    DI.Wrapper.BT_DeviceInfoGathered += deviceInfoGathered;
-                    this.ui.IsBusy = true;
-                    DI.Wrapper.BTClassicGetExtraInfoAsync(this.selectedDevice);
-                }
-            }
+            //else {
+            //    this.OnUiDiscover(sender, e);
+            //    if (this.selectedDevice == null) {
+            //        App.ShowMsg(DI.Wrapper.GetText(MsgCode.NothingSelected));
+            //    }
+            //    else {
+            //        DI.Wrapper.BT_DeviceInfoGathered += deviceInfoGathered;
+            //        this.ui.IsBusy = true;
+            //        DI.Wrapper.BTClassicGetExtraInfoAsync(this.selectedDevice);
+            //    }
+            //}
         }
 
 
@@ -155,6 +146,14 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BTWins {
                 DeviceInfo_BT win = new DeviceInfo_BT(this, e);
                 win.ShowDialog();
             });
+        }
+
+        private void DoDiscovery() {
+            this.Title = "Bluetooth";
+            this.selectedDevice = BTSelect.ShowBox(this, true);
+            if (this.selectedDevice != null) {
+                this.Title = this.selectedDevice.Name;
+            }
         }
 
         #endregion

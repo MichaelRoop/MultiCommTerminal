@@ -2,7 +2,6 @@
 using CommunicationStack.Net.Enumerations;
 using MultiCommData.Net.Enumerations;
 using MultiCommTerminal.NetCore.DependencyInjection;
-using MultiCommTerminal.NetCore.UserControls;
 using MultiCommTerminal.NetCore.WindowObjs.WifiWins;
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using System;
@@ -34,7 +33,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
             this.ui.ExitClicked+= this.OnUiExit;
             this.ui.ConnectCicked += this.OnUiConnect;
-            this.ui.DiscoverClicked += this.OnUiDiscover;
             this.ui.DisconnectClicked += this.OnUiDisconnect;
             this.ui.SendClicked += this.OnUiSend;
             this.ui.InfoClicked += this.OnUiInfo;
@@ -61,7 +59,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             this.ui.ExitClicked -= this.OnUiExit;
             this.ui.ConnectCicked -= this.OnUiConnect;
-            this.ui.DiscoverClicked -= this.OnUiDiscover;
             this.ui.DisconnectClicked -= this.OnUiDisconnect;
             this.ui.SendClicked -= this.OnUiSend;
             this.ui.InfoClicked -= this.OnUiInfo;
@@ -110,18 +107,10 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
             this.CloseRequest?.Invoke(this, typeof(WifiRun));
         }
 
-        private void OnUiDiscover(object sender, EventArgs e) {
-            this.Title = "WIFI";
-            this.selectedWifi = WifiSelect.ShowBox(this);
-            if (this.selectedWifi != null) {
-                this.Title = this.selectedWifi.SSID;
-            }
-        }
-
 
         private void OnUiConnect(object sender, EventArgs e) {
             if (this.selectedWifi == null) {
-                this.OnUiDiscover(sender, e);
+                this.DoDiscovery();
             }
             if (this.selectedWifi != null) {
                 this.ui.IsBusy = true;
@@ -141,9 +130,9 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
 
         private void OnUiInfo(object sender, EventArgs e) {
-            if (this.selectedWifi == null) {
-                this.OnUiDiscover(sender, e);
-            }
+            //if (this.selectedWifi == null) {
+            //    this.DoDiscovery(sender, e);
+            //}
             if (this.selectedWifi != null) {
                 WifiInfo.ShowBox(this, this.selectedWifi);
             }
@@ -152,6 +141,18 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         private void OnUiSettings(object sender, EventArgs e) {
             WifiCredentialsWin.ShowBox(this);
+        }
+
+        #endregion
+
+        #region Private
+
+        private void DoDiscovery() {
+            this.Title = "WIFI";
+            this.selectedWifi = WifiSelect.ShowBox(this);
+            if (this.selectedWifi != null) {
+                this.Title = this.selectedWifi.SSID;
+            }
         }
 
         #endregion

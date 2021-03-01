@@ -35,7 +35,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
             this.SizeToContent = SizeToContent.WidthAndHeight;
             this.ui.ExitClicked += this.OnUiExit;
             this.ui.ConnectCicked += this.OnUiConnect;
-            this.ui.DiscoverClicked += this.OnUiDiscover;
             this.ui.DisconnectClicked += this.OnUiDisconnect;
             this.ui.SendClicked += this.OnUiSend;
             this.ui.InfoClicked += this.OnUiInfo;
@@ -64,7 +63,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             this.ui.ExitClicked -= this.OnUiExit;
             this.ui.ConnectCicked -= this.OnUiConnect;
-            this.ui.DiscoverClicked -= this.OnUiDiscover;
             this.ui.DisconnectClicked -= this.OnUiDisconnect;
             this.ui.SendClicked -= this.OnUiSend;
             this.ui.InfoClicked -= this.OnUiInfo;
@@ -128,18 +126,9 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
         }
 
 
-        private void OnUiDiscover(object sender, EventArgs e) {
-            this.Title = DI.Wrapper.GetText(MsgCode.Ethernet);
-            this.selectedEthernet = DeviceSelect_Ethernet.ShowBox(this, true);
-            if (this.selectedEthernet != null) {
-                this.Title = this.selectedEthernet.DataModel.Name;
-            }
-        }
-
-
         private void OnUiConnect(object sender, EventArgs e) {
             if (this.selectedEthernet == null) {
-                this.OnUiDiscover(sender, e);
+                this.DoDiscovery();
             }
             if (this.selectedEthernet != null) {
                 this.ui.IsBusy = true;
@@ -168,6 +157,18 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
 
         private void OnUiSettings(object sender, EventArgs e) {
             DeviceSelect_Ethernet.ShowBox(this, false);
+        }
+
+        #endregion
+
+        #region Private
+
+        private void DoDiscovery() {
+            this.Title = DI.Wrapper.GetText(MsgCode.Ethernet);
+            this.selectedEthernet = DeviceSelect_Ethernet.ShowBox(this, true);
+            if (this.selectedEthernet != null) {
+                this.Title = this.selectedEthernet.DataModel.Name;
+            }
         }
 
         #endregion

@@ -32,7 +32,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
 
             this.ui.ExitClicked += this.OnUiExit;
             this.ui.ConnectCicked += this.OnUiConnect;
-            this.ui.DiscoverClicked += this.OnUiDiscover;
             this.ui.DisconnectClicked += this.OnUiDisconnect;
             this.ui.SendClicked += this.OnUiSend;
             this.ui.InfoClicked += this.OnUiInfo;
@@ -54,7 +53,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             this.ui.ExitClicked -= this.OnUiExit;
             this.ui.ConnectCicked -= this.OnUiConnect;
-            this.ui.DiscoverClicked -= this.OnUiDiscover;
             this.ui.DisconnectClicked -= this.OnUiDisconnect;
             this.ui.SendClicked -= this.OnUiSend;
             this.ui.InfoClicked -= this.OnUiInfo;
@@ -120,18 +118,10 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
             this.CloseRequest?.Invoke(this, typeof(SerialRun));
         }
 
-        private void OnUiDiscover(object sender, EventArgs e) {
-            this.Title = "USB";
-            this.selectedSerial = SerialSelectUSB.ShowBox(this, true);
-            if (this.selectedSerial != null) {
-                this.Title = this.selectedSerial.Name;
-            }
-        }
-
 
         private void OnUiConnect(object sender, EventArgs e) {
             if (this.selectedSerial == null) {
-                this.OnUiDiscover(sender, e);
+                this.DoDiscovery();
             }
 
             if (this.selectedSerial != null) {
@@ -172,6 +162,14 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
             App.ShowMsg(err);
         }
 
+
+        private void DoDiscovery() {
+            this.Title = "USB";
+            this.selectedSerial = SerialSelectUSB.ShowBox(this, true);
+            if (this.selectedSerial != null) {
+                this.Title = this.selectedSerial.Name;
+            }
+        }
 
         #endregion
 

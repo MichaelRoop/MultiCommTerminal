@@ -35,7 +35,6 @@ namespace MultiCommTerminal.NetCore.UserControls {
 
         #region Events
 
-        public EventHandler DiscoverClicked;
         public EventHandler ExitClicked;
         public EventHandler ConnectCicked;
         public EventHandler DisconnectClicked;
@@ -72,7 +71,7 @@ namespace MultiCommTerminal.NetCore.UserControls {
         public UC_RunPage() {
             InitializeComponent();
             this.buttonSizer = new ButtonGroupSizeSyncManager(
-                this.btnBTDiscover, this.btnConnect, this.btnDisconnect, this.btnExit, this.btnLog);
+                this.btnConnect, this.btnDisconnect, this.btnExit, this.btnLog);
             this.buttonSizer.PrepForChange();
         }
 
@@ -137,13 +136,6 @@ namespace MultiCommTerminal.NetCore.UserControls {
             if (!string.IsNullOrWhiteSpace(this.txtCommmand.Text)) {
                 this.SendClicked?.Invoke(this, this.txtCommmand.Text);
             }
-        }
-
-
-        private void btnBTDiscover_Click(object sender, RoutedEventArgs e) {
-            // TODO - do we need not to disconnect?
-            this.DisconnectClicked(this, null);
-            this.DiscoverClicked?.Invoke(this, new EventArgs());
         }
 
 
@@ -272,7 +264,6 @@ namespace MultiCommTerminal.NetCore.UserControls {
             this.InvalidateVisual();
             this.lbResponse.Content = l.GetText(MsgCode.response);
             this.btnSend.Content = l.GetText(MsgCode.send);
-            this.btnBTDiscover.Content = l.GetText(MsgCode.Search);
             this.btnConnect.Content = l.GetText(MsgCode.connect);
             this.btnDisconnect.Content = l.GetText(MsgCode.Disconnect);
             this.btnLog.Content = l.GetText(MsgCode.Log);
