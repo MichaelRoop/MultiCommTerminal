@@ -52,7 +52,8 @@ namespace Wifi.UWP.Core {
                         else {
                             result = await wifiAdapter.ConnectAsync(net, WiFiReconnectionKind.Automatic, cred);
                         }
-
+    
+                        // If the password is bad you get a timeout rather than failed credentials
                         switch (result.ConnectionStatus) {
                             case WiFiConnectionStatus.Success:
                                 //ConnectionProfile profile = await this.wifiAdapter.NetworkAdapter.GetConnectedProfileAsync();
@@ -61,8 +62,10 @@ namespace Wifi.UWP.Core {
 
                                 await this.DumpWifiAdapterInfo(wifiAdapter);
                                 this.log.Info("ConnectAsync", () => string.Format("Connecting to {0}:{1}", dataModel.RemoteHostName, dataModel.RemoteServiceName));
+                                //this.log.Info("ConnectAsync", () => string.Format(
+                                //    "Connecting to {0}:{1}:{2}", dataModel.RemoteHostName, dataModel.RemoteServiceName, dataModel.Password));
                                 // Connect socket
-                               await msgPump.ConnectAsync2(new SocketMsgPumpConnectData() {
+                                await msgPump.ConnectAsync2(new SocketMsgPumpConnectData() {
                                     MaxReadBufferSize = 255,
                                     RemoteHostName = dataModel.RemoteHostName,
                                     ServiceName = dataModel.RemoteServiceName,

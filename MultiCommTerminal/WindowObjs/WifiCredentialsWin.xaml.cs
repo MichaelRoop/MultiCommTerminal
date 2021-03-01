@@ -52,20 +52,15 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         private void btnEdit_Click(object sender, RoutedEventArgs e) {
             var item = this.listBoxCreds.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
             if (item != null) {
-                MsgBoxWifiCred.ShowBox(this.parent, item);
-
-                //ScriptEdit win = new ScriptEdit(this, item, useType);
-                //win.ShowDialog();
+                this.ReloadList(MsgBoxWifiCred.ShowBox(this.parent, item));
             }
-
-
-
         }
 
 
         private void btnDelete_Click(object sender, RoutedEventArgs e) {
             var item = this.listBoxCreds.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
             if (item != null) {
+                // move decision to wrapper
                 if (MsgBoxYesNo.ShowBoxDelete(this, item.Display) == MsgBoxYesNo.MsgBoxResult.Yes) {
                     DI.Wrapper.DeleteWifiCredData(item, this.ReloadList, App.ShowMsg);
                 }

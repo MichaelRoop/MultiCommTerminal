@@ -538,7 +538,16 @@ namespace MultiCommWrapper.Net.WrapCode {
                         onError.Invoke(this.GetText(MsgCode.EmptyName));
                     }
                     else if (string.IsNullOrWhiteSpace(data.SSID)) {
-                        onError.Invoke(this.GetText(MsgCode.EmptyName));
+                        onError.Invoke(this.GetText(MsgCode.EmptySSID));
+                    }
+                    else if (string.IsNullOrWhiteSpace(data.RemoteHostName)) {
+                        onError.Invoke(this.GetText(MsgCode.EmptyHostName));
+                    }
+                    else if (string.IsNullOrWhiteSpace(data.RemoteServiceName)) {
+                        onError.Invoke(this.GetText(MsgCode.EmptyPort));
+                    }
+                    else if (string.IsNullOrWhiteSpace(data.WifiPassword)) {
+                        onError.Invoke(this.GetText(MsgCode.EmptyPwd));
                     }
                     else {
                         idx.Display = data.SSID;

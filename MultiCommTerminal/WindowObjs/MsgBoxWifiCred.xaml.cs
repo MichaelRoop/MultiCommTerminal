@@ -1,6 +1,7 @@
 ﻿using LanguageFactory.Net.data;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommTerminal.NetCore.DependencyInjection;
+using MultiCommTerminal.NetCore.WindowObjs.WifiWins;
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
@@ -12,25 +13,13 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
     /// <summary>Interaction logic for MsgBoxWifiCred.xaml</summary>
     public partial class MsgBoxWifiCred : Window {
 
-        #region Data types
-
-        public class WifiCredResult {
-            public bool IsOk { get; set; } = false;
-            public bool Save { get; set; } = false;
-            public string HostName { get; set; } = string.Empty;
-            public string ServiceName { get; set; } = string.Empty;
-            public string Password { get; set; } = string.Empty;
-        }
-
-        #endregion
-
         #region Data
 
         private Window parent = null;
         private ButtonGroupSizeSyncManager widthManager = null;
         // For when we are editing existing
         private IIndexItem<DefaultFileExtraInfo> index = null;
-        WifiCredentialsDataModel originalData = null;
+        WifiCredentialsDataModel dataModelToEdit = null;
 
         #endregion
 
@@ -60,7 +49,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         public static bool ShowBox(Window parent, IIndexItem<DefaultFileExtraInfo> index) {
             MsgBoxWifiCred box = new MsgBoxWifiCred(parent, index);
             box.ShowDialog();
-            return box.Result.IsOk;
+            return box.Result.IsChanged;
         }
 
         #endregion
@@ -89,9 +78,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
             this.PopulateFields(this.index);
             WPF_ControlHelpers.CenterChild(parent, this);
             this.btnOk.Content = DI.Wrapper.GetText(MsgCode.save);
-            this.chkSave.Collapse();
-            this.txtChkSave.Collapse();
-
             this.SizeToContent = SizeToContent.WidthAndHeight;
             // Call before rendering which will trigger initial resize events
             this.widthManager = new ButtonGroupSizeSyncManager(this.btnOk, this.btnCancel);
@@ -119,24 +105,25 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         private void btnOk_Click(object sender, RoutedEventArgs e) {
             if (this.index == null) {
                 // Validate entries in wrapper level
-                this.Result.IsOk = true;
-                this.Result.Save = this.chkSave.IsChecked.GetValueOrDefault(false);
+                this.Result.IsChanged = true;
                 this.Result.HostName = txtHostName.Text;
                 this.Result.ServiceName = txtServiceName.Text;
                 this.Result.Password = this.txtPwd.Password;
                 this.Close();
             }
             else {
-                // This is an edit 
-                // TODO - validation of entries?
+                // This is an edit of an existing
+                this.dataModelToEdit.RemoteHostName = this.txtHostName.Text;
+                this.dataModelToEdit.RemoteServiceName = this.txtServiceName.Text;
+                this.dataModelToEdit.WifiPassword = this.txtPwd.Password;
                 DI.Wrapper.SaveWifiCred(
-                    this.index, this.originalData, this.OnSaveOk, this.OnDataErr);
+                    this.index, this.dataModelToEdit, this.OnSaveOk, this.OnDataErr);
             }
         }
 
 
         private void btnCancel_Click(object sender, RoutedEventArgs e) {
-            this.Result.IsOk = false;
+            this.Result.IsChanged = false;
             this.Close();
         }
 
@@ -147,7 +134,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
 
         private void OnRetrieveOk(WifiCredentialsDataModel data) {
-            this.originalData = data;
+            this.dataModelToEdit = data;
             this.Title = data.SSID;
             this.txtPwd.Password = data.WifiPassword;
             this.txtHostName.Text = data.RemoteHostName;
@@ -156,13 +143,13 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
 
         private void OnSaveOk() {
-            this.Result.IsOk = true;
+            this.Result.IsChanged = true;
             this.Close();
         }
 
 
         private void OnDataErr(string err) {
-            this.Result.IsOk = false;
+            this.Result.IsChanged = false;
             App.ShowMsg(err);
             Close();
         }

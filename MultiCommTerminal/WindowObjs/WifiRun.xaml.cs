@@ -38,6 +38,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
             this.ui.InfoClicked += this.OnUiInfo;
             this.ui.SettingsClicked += this.OnUiSettings;
             DI.Wrapper.OnWifiError += this.onWifiError;
+            DI.Wrapper.CredentialsRequestedEvent += this.onCredentialsRequested;
             DI.Wrapper.OnWifiConnectionAttemptCompleted += this.onWifiConnectionAttemptCompleted;
             DI.Wrapper.Wifi_BytesReceived += this.bytesReceived;
         }
@@ -95,8 +96,24 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         private void onWifiError(object sender, WifiError e) {
             this.Dispatcher.Invoke(() => {
                 this.ui.IsBusy =false;
+                this.selectedWifi = null;
                 App.ShowMsg(string.Format("{0} '{1}'", e.Code, e.ExtraInfo));
             });
+        }
+
+
+        private void onCredentialsRequested(object sender, WifiCredentials item) {
+            WifiCredResult result = MsgBoxWifiCred.ShowBox(this.parent, item.SSID, item.RemoteHostName, item.RemoteServiceName);
+            if (result.IsChanged) {
+                item.IsUserSaveRequest = true;
+                item.WifiPassword = result.Password;
+                item.IsUserCanceled = false;
+                item.RemoteHostName = result.HostName;
+                item.RemoteServiceName = result.ServiceName;
+            }
+            else {
+                item.IsUserCanceled = true;
+            }
         }
 
         #endregion
@@ -121,6 +138,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         private void OnUiDisconnect(object sender, EventArgs e) {
             DI.Wrapper.WifiDisconect();
+            this.selectedWifi = null;
         }
 
 
@@ -130,9 +148,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
 
         private void OnUiInfo(object sender, EventArgs e) {
-            //if (this.selectedWifi == null) {
-            //    this.DoDiscovery(sender, e);
-            //}
             if (this.selectedWifi != null) {
                 WifiInfo.ShowBox(this, this.selectedWifi);
             }
