@@ -4,8 +4,9 @@ using Ethernet.Common.Net.DataModels;
 using LanguageFactory.Net.data;
 using MultiCommData.Net.Enumerations;
 using MultiCommTerminal.NetCore.DependencyInjection;
-using MultiCommTerminal.NetCore.UserControls;
 using MultiCommTerminal.NetCore.WPF_Helpers;
+using StorageFactory.Net.interfaces;
+using StorageFactory.Net.StorageManagers;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -86,7 +87,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
         }
 
 
-        private void onEthernetListChange(object sender, List<StorageFactory.Net.interfaces.IIndexItem<StorageFactory.Net.StorageManagers.DefaultFileExtraInfo>> e) {
+        private void onEthernetListChange(object sender, List<IIndexItem<DefaultFileExtraInfo>> e) {
             // Irrelevant at this level since we only work with the current selected connection
         }
 
@@ -129,13 +130,9 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
 
         private void OnUiDiscover(object sender, EventArgs e) {
             this.Title = DI.Wrapper.GetText(MsgCode.Ethernet);
-            this.selectedEthernet = EthernetSelect.ShowBox(this);
+            this.selectedEthernet = DeviceSelect_Ethernet.ShowBox(this, true);
             if (this.selectedEthernet != null) {
                 this.Title = this.selectedEthernet.DataModel.Name;
-            }
-            else {
-                // No entries. Create one
-                DeviceEdit_Ethernet.ShowBoxAdd(this, null);
             }
         }
 
@@ -153,6 +150,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
 
         private void OnUiDisconnect(object sender, EventArgs e) {
             DI.Wrapper.EthernetDisconnect();
+            this.selectedEthernet = null;
         }
 
 
@@ -162,10 +160,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
 
 
         private void OnUiInfo(object sender, EventArgs e) {
-            if (this.selectedEthernet == null) {
-                this.OnUiDiscover(sender, e);
-            }
-
             if (this.selectedEthernet != null) {
                 EthernetInfo.ShowBox(this, this.selectedEthernet.DataModel);
             }
@@ -173,7 +167,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
 
 
         private void OnUiSettings(object sender, EventArgs e) {
-            DeviceSelect_Ethernet.ShowBox(this);
+            DeviceSelect_Ethernet.ShowBox(this, false);
         }
 
         #endregion
