@@ -43,12 +43,17 @@
                 </StackPanel>
             </DockPanel>
             <DockPanel HorizontalAlignment="Center" Margin="10,5,10,15">
-                <controls:UC_IconButton x:Name="btnSelect"  Margin="0,0,10,0"
+                <controls:UC_IconButton x:Name="btnSelect"  Margin="5,0"
                             Style="{StaticResource TextIconButton}" 
                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Select}}" 
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Save}}"
                             Click="btnSelect_Click"/>
-                <controls:UC_IconButton x:Name="btnExit"  Margin="0,0,10,0"
+                <controls:UC_IconButton x:Name="btnCancel"  Margin="5,0"
+                            Style="{StaticResource TextIconButton}" 
+                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Cancel}}" 
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}"
+                            Click="btnExit_Click"/>
+                <controls:UC_IconButton x:Name="btnExit" Visibility="Collapsed"
                             Style="{StaticResource TextIconButton}" 
                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Exit}}" 
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Exit}}"

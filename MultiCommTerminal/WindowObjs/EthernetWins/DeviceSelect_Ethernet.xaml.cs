@@ -21,27 +21,34 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
 
         #region Properties
 
-        public EthernetParams EthernetInfoObject { get; set; }
+        public EthernetSelectResult SelectedEthernet { get; private set; } = null;
+
+
 
         #endregion
 
         #region Constructor and windows events
 
-        public static EthernetParams ShowBox(Window parent) {
-            DeviceSelect_Ethernet win = new DeviceSelect_Ethernet(parent);
+        public static EthernetSelectResult ShowBox(Window parent, bool isSelect) {
+            DeviceSelect_Ethernet win = new DeviceSelect_Ethernet(parent, isSelect);
             win.ShowDialog();
-            return win.EthernetInfoObject;
+            return win.SelectedEthernet;
         }
 
 
-        public DeviceSelect_Ethernet(Window parent) {
+        public DeviceSelect_Ethernet(Window parent, bool isSelect) {
             this.parent = parent;
             InitializeComponent();
             this.Init();
             this.SizeToContent = SizeToContent.WidthAndHeight;
             // Call before rendering which will trigger initial resize events
-            this.widthManager = new ButtonGroupSizeSyncManager(this.btnExit, this.btnSelect);
+            this.widthManager = new ButtonGroupSizeSyncManager(this.btnCancel, this.btnSelect);
             this.widthManager.PrepForChange();
+            if (!isSelect) {
+                this.btnCancel.Collapse();
+                this.btnSelect.Collapse();
+                this.btnExit.Show();
+            }
         }
 
 
@@ -66,7 +73,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
         #region Button event handlers
 
         private void btnExit_Click(object sender, RoutedEventArgs e) {
-            this.EthernetInfoObject = null;
+            this.SelectedEthernet = null;
             this.Close();
         }
 
@@ -77,7 +84,10 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
                     DI.Wrapper.RetrieveEthernetData(
                         info.Index, 
                         (data) => {
-                            this.EthernetInfoObject = data;
+                            this.SelectedEthernet = new EthernetSelectResult() {
+                                Index = info.Index,
+                                DataModel = data,
+                            };
                             this.Close();
                         }, App.ShowMsg);
                 }, () => {
