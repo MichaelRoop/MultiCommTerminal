@@ -113,7 +113,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             list.Add(new KeyValuePropertyDisplay("Physical Layer Kind", info.PhysicalLayerKind.ToString().UnderlineToSpaces()));
             list.Add(new KeyValuePropertyDisplay(string.Format("{0} (BSSID)", this.GetText(MsgCode.MacAddress)), info.MacAddress_BSSID));
             list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Kind), info.Kind));
-            list.Add(new KeyValuePropertyDisplay("WIFI Direct", info.IsWifiDirect));
+            list.Add(new KeyValuePropertyDisplay("WIFI Direct", this.Translate(info.IsWifiDirect)));
             list.Add(new KeyValuePropertyDisplay("Channel Center Frequency (Khz)", info.ChanneCenterFrequencyKlhz));
             list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.BeaconInterval), info.BeaconInterval.ToString("g")));
 
