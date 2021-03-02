@@ -86,14 +86,14 @@ namespace MultiCommWrapper.Net.WrapCode {
             list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.BaudRate), info.Baud));
             list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.DataBits), info.DataBits));
             list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.StopBits), info.StopBits.Display()));
-            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Parity), info.Parity.ToString())); // Converter
-            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.FlowControl), info.FlowHandshake.ToString().CamelCaseToSpaces()));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Parity), this.Translate(info.Parity)));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.FlowControl), this.Translate(info.FlowHandshake)));
             list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.ReadTimeout), info.ReadTimeout.TotalMilliseconds.ToString()));
             list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.WriteTimeout), info.WriteTimeout.TotalMilliseconds.ToString()));
             list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Vendor), info.USB_VendorIdDisplay));
             list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Product), info.USB_ProductIdDisplay));
-            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Default), info.IsDefault));
-            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Enabled), info.IsEnabled));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Default), this.Translate(info.IsDefault)));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Enabled), this.Translate(info.IsEnabled)));
 
             // TODO Add others
 
@@ -122,17 +122,16 @@ namespace MultiCommWrapper.Net.WrapCode {
             ErrReport report;
             WrapErr.ToErrReport(out report, 2003006, "Failure on Serial_GetParitysForDisplay", () => {
                 List<SerialParityDisplayClass> paritys = new List<SerialParityDisplayClass>();
-                paritys.Add(new SerialParityDisplayClass(SerialParityType.None));
-                paritys.Add(new SerialParityDisplayClass(SerialParityType.Even));
-                paritys.Add(new SerialParityDisplayClass(SerialParityType.Odd));
-                paritys.Add(new SerialParityDisplayClass(SerialParityType.Mark));
-                paritys.Add(new SerialParityDisplayClass(SerialParityType.Space));
+                paritys.Add(new SerialParityDisplayClass(SerialParityType.None, this.Translate));
+                paritys.Add(new SerialParityDisplayClass(SerialParityType.Even, this.Translate));
+                paritys.Add(new SerialParityDisplayClass(SerialParityType.Odd, this.Translate));
+                paritys.Add(new SerialParityDisplayClass(SerialParityType.Mark, this.Translate));
+                paritys.Add(new SerialParityDisplayClass(SerialParityType.Space, this.Translate));
                 int ndx = paritys.FindIndex(x => x.ParityType == info.Parity);
                 onSuccess?.Invoke(paritys, (ndx == -1) ? 0 : ndx);
             });
             this.RaiseIfException(report);
         }
-
 
 
         public void Serial_GetBaudsForDisplay(SerialDeviceInfo info, Action<List<uint>, int> onSuccess) {
@@ -178,10 +177,10 @@ namespace MultiCommWrapper.Net.WrapCode {
             ErrReport report;
             WrapErr.ToErrReport(out report, 2003009, "Failure on Serial_FlowControlForDisplay", () => {
                 List<FlowControlDisplay> fc = new List<FlowControlDisplay>();
-                fc.Add(new FlowControlDisplay(SerialFlowControlHandshake.None));
-                fc.Add(new FlowControlDisplay(SerialFlowControlHandshake.RequestToSend));
-                fc.Add(new FlowControlDisplay(SerialFlowControlHandshake.XonXoff));
-                fc.Add(new FlowControlDisplay(SerialFlowControlHandshake.RequestToSendXonXoff));
+                fc.Add(new FlowControlDisplay(SerialFlowControlHandshake.None, this.Translate));
+                fc.Add(new FlowControlDisplay(SerialFlowControlHandshake.RequestToSend, this.Translate));
+                fc.Add(new FlowControlDisplay(SerialFlowControlHandshake.XonXoff, this.Translate));
+                fc.Add(new FlowControlDisplay(SerialFlowControlHandshake.RequestToSendXonXoff, this.Translate));
                 int ndx = fc.FindIndex(x => x.FlowControl == info.FlowHandshake);
                 onSuccess?.Invoke(fc, (ndx == -1) ? 0 : ndx);
             });
@@ -393,6 +392,40 @@ namespace MultiCommWrapper.Net.WrapCode {
             target.ReadTimeout = this.ForceTo5msIf0(source.ReadTimeout);
             target.WriteTimeout = this.ForceTo5msIf0(source.WriteTimeout);
         }
+
+        public string Translate(SerialParityType parityType) {
+            switch (parityType) {
+                case SerialParityType.None:
+                    return this.GetText(MsgCode.None);
+                case SerialParityType.Odd:
+                    return this.GetText(MsgCode.Odd);
+                case SerialParityType.Even:
+                    return this.GetText(MsgCode.Even);
+                case SerialParityType.Mark:
+                    return this.GetText(MsgCode.Mark);
+                case SerialParityType.Space:
+                    return this.GetText(MsgCode.Space);
+                default:
+                    return parityType.ToString();
+            }
+        }
+
+
+        public string Translate(SerialFlowControlHandshake controlFlow) {
+            switch (controlFlow) {
+                case SerialFlowControlHandshake.None:
+                    return this.GetText(MsgCode.None);
+                case SerialFlowControlHandshake.RequestToSend:
+                    return "RTS";
+                case SerialFlowControlHandshake.XonXoff:
+                    return "Xon/Xoff";
+                case SerialFlowControlHandshake.RequestToSendXonXoff:
+                    return "RTS/Xon/Xoff";
+                default:
+                    return controlFlow.ToString().CamelCaseToSpaces();
+            }
+        }
+
 
 
         #endregion
