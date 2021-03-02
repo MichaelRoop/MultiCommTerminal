@@ -33,9 +33,8 @@ int keyIndex = 0;
 int status = WL_IDLE_STATUS;
 int led = LED_BUILTIN;
 
-// Port 80 of socket usually used for HTTP - just using it as a entry
-// The Multi Comm Terminal must enter whatever port number is set in 
-// the Arduino
+// Socket Port 80 is for HTTP - using it as demo entry point
+// Set Multi Comm Terminal port number to the same as in Arduino
 WiFiServer server(80); 
 
 void setup() {
@@ -80,8 +79,6 @@ void setup() {
 		Serial.println("Access point creation failed");
 		while (true) { }
 	}
-
-	delay(10000);
 
 	server.begin();
 	// you're connected now, so print out the status to the serial debug:
