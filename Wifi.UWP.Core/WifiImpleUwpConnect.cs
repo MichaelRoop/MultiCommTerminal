@@ -60,7 +60,7 @@ namespace Wifi.UWP.Core {
                                 //this.log.Info("ConnectAsync", () => string.Format("Connected to:{0}", profile.ProfileName));
                                 //if (profile.IsWlanConnectionProfile) {
 
-                                await this.DumpWifiAdapterInfo(wifiAdapter);
+                                //await this.DumpWifiAdapterInfo(wifiAdapter);
                                 this.log.Info("ConnectAsync", () => string.Format("Connecting to {0}:{1}", dataModel.RemoteHostName, dataModel.RemoteServiceName));
                                 //this.log.Info("ConnectAsync", () => string.Format(
                                 //    "Connecting to {0}:{1}:{2}", dataModel.RemoteHostName, dataModel.RemoteServiceName, dataModel.Password));

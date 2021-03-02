@@ -96,7 +96,7 @@ namespace Wifi.UWP.Core {
                             SignalStrengthInBars = net.SignalBars,
                             UpTime = net.Uptime,
                         };
-                        this.DumpNetworkInfo(netInfo);
+                        //this.DumpNetworkInfo(netInfo);
                         info.Networks.Add(netInfo);
                     }
                 }
