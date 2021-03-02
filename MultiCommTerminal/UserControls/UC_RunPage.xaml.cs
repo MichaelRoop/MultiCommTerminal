@@ -108,6 +108,7 @@ namespace MultiCommTerminal.NetCore.UserControls {
         public void OnClosing() {
             this.RemoveEventHandlers();
             this.buttonSizer.Teardown();
+            this.DisconnectClicked?.Invoke(this, new EventArgs());
         }
 
         #endregion
