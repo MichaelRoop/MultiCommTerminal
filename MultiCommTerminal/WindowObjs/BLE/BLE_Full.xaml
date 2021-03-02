@@ -94,6 +94,10 @@
                                         Content="{Binding Source={x:Static wpfHelper:TxtBinder.Connect}}" MaxWidth="150"
                                         IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Connect}}"                                                                                            
                                         Background="Transparent" Click="btnConnect_Click" />
+                                    <controls:UC_IconButton x:Name="btnDisconnect" Style="{StaticResource TextIconButton}" 
+                                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.Disconnect}}" MaxWidth="150"
+                                        IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}" Visibility="Collapsed"                                                                                           
+                                        Background="Transparent" Click="btnDisconnect_Click" />
                                     <controls:UC_IconButton x:Name="btnLog" Click="btnLog_Click" MaxWidth="150"
                                         Style="{StaticResource TextIconButton}" Margin="10"
                                         Content="{Binding Source={x:Static wpfHelper:TxtBinder.LogText}}"

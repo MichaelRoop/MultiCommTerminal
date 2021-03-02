@@ -61,7 +61,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             InitializeComponent();
             this.SizeToContent = SizeToContent.WidthAndHeight;
             this.buttonSizer = new ButtonGroupSizeSyncManager(
-                this.btnConnect, this.btnExit, this.btnLog);
+                this.btnConnect, this.btnDisconnect, this.btnExit, this.btnLog);
             this.buttonSizer.PrepForChange();
             this.timer = new DispatcherTimer(DispatcherPriority.Normal);
             this.timer.Interval = TimeSpan.FromMilliseconds(500);
@@ -109,14 +109,19 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
 
         private void btnConnect_Click(object sender, RoutedEventArgs e) {
-            this.SetConnectState(false);
-            this.writeControl.Reset();
             var device = BLESelect.ShowBox(this.parent, true);
             if (device != null) {
                 this.IsBusy = true;
                 DI.Wrapper.BLE_DeviceConnectResult += this.DeviceConnectResultHandler;
                 DI.Wrapper.BLE_ConnectAsync(device);
             }
+        }
+
+
+        private void btnDisconnect_Click(object sender, RoutedEventArgs e) {
+            this.writeControl.Reset();
+            // This will call the disconnect as well as set the visuals
+            this.SetConnectState(false);
         }
 
 
@@ -261,11 +266,15 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                 if (isConnected) {
                     this.connectedOff.Collapse();
                     this.connectedOn.Show();
+                    this.btnConnect.Collapse();
+                    this.btnDisconnect.Show();
                     DI.Wrapper.BLE_ConnectionStatusChanged += this.connectionStatusChanged;
                 }
                 else {
                     this.connectedOn.Collapse();
                     this.connectedOff.Show();
+                    this.btnDisconnect.Collapse();
+                    this.btnConnect.Show();
                     this.treeServices.ItemsSource = null;
                     this.currentDevice = null;
                     DI.Wrapper.BLE_ConnectionStatusChanged -= this.connectionStatusChanged;
@@ -280,6 +289,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                 this.buttonSizer.PrepForChange();
                 this.InvalidateVisual();
                 this.btnConnect.Content = l.GetText(MsgCode.connect);
+                this.btnDisconnect.Content = l.GetText(MsgCode.Disconnect);
                 this.btnLog.Content = l.GetText(MsgCode.Log);
                 this.btnExit.Content = l.GetText(MsgCode.exit);
                 DI.Wrapper.Translate(this.currentDevice);
