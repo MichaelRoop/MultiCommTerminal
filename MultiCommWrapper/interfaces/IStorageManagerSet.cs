@@ -1,5 +1,6 @@
 ﻿using Ethernet.Common.Net.DataModels;
 using MultiCommData.Net.StorageDataModels;
+using MultiCommData.Net.StorageIndexInfoModels;
 using SerialCommon.Net.DataModels;
 using SerialCommon.Net.StorageIndexExtraInfo;
 using StorageFactory.Net.interfaces;
@@ -23,7 +24,7 @@ namespace MultiCommWrapper.Net.interfaces {
 
 
         /// <summary>BLE commands</summary>
-        IIndexedStorageManager<BLECommandSetDataModel, DefaultFileExtraInfo> BLECommands { get; }
+        IIndexedStorageManager<BLECommandSetDataModel, BLECmdIndexExtraInfo> BLECommands { get; }
 
         /// <summary>WIFI credentials indexed storage</summary>
         IIndexedStorageManager<WifiCredentialsDataModel, DefaultFileExtraInfo> WifiCred { get; }

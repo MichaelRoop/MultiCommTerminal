@@ -11,6 +11,7 @@ using LanguageFactory.Net.data;
 using LanguageFactory.Net.Messaging;
 using MultiCommData.Net.Enumerations;
 using MultiCommData.Net.StorageDataModels;
+using MultiCommData.Net.StorageIndexInfoModels;
 using MultiCommData.Net.UserDisplayData;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommWrapper.Net.DataModels;
@@ -350,16 +351,15 @@ namespace MultiCommWrapper.Net.interfaces {
 
         #region BluetoothLECmds
 
-        void GetBLECmdList(Action<List<IIndexItem<DefaultFileExtraInfo>>> onSuccess, OnErr onError);
+        void GetBLECmdList(Action<List<IIndexItem<BLECmdIndexExtraInfo>>> onSuccess, OnErr onError);
 
-        void CreateBLECmdSet(string display, BLECommandSetDataModel data, Action onSuccess, OnErr onError);
+        void CreateBLECmdSet(string display, BLECommandSetDataModel data, BLECmdIndexExtraInfo extra, Action<IIndexItem<BLECmdIndexExtraInfo>> onSuccess, OnErr onError);
+        
+        void RetrieveBLECmdSet(IIndexItem<BLECmdIndexExtraInfo> index, Action<BLECommandSetDataModel> onSuccess, OnErr onError);
 
-        void CreateBLECmdSet(string display, BLECommandSetDataModel data, Action<IIndexItem<DefaultFileExtraInfo>> onSuccess, OnErr onError);
-        void RetrieveBLECmdSet(IIndexItem<DefaultFileExtraInfo> index, Action<BLECommandSetDataModel> onSuccess, OnErr onError);
+        void SaveBLECmdSet(IIndexItem<BLECmdIndexExtraInfo> idx, BLECommandSetDataModel data, Action onSuccess, OnErr onError);
 
-        void SaveBLECmdSet(IIndexItem<DefaultFileExtraInfo> idx, BLECommandSetDataModel data, Action onSuccess, OnErr onError);
-
-        void DeleteBLECmdSet(IIndexItem<DefaultFileExtraInfo> index, Action<bool> onComplete, OnErr onError);
+        void DeleteBLECmdSet(IIndexItem<BLECmdIndexExtraInfo> index, Action<bool> onComplete, OnErr onError);
 
         void ValidateBLECmdItem(BLE_DataType dataType, ScriptItem item, Action onSuccess, OnErr onError);
 

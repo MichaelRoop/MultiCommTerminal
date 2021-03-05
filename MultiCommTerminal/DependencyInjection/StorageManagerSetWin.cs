@@ -1,5 +1,6 @@
 ﻿using Ethernet.Common.Net.DataModels;
 using MultiCommData.Net.StorageDataModels;
+using MultiCommData.Net.StorageIndexInfoModels;
 using MultiCommWrapper.Net.interfaces;
 using SerialCommon.Net.DataModels;
 using SerialCommon.Net.StorageIndexExtraInfo;
@@ -28,10 +29,10 @@ namespace MultiCommTerminal.NetCore.DependencyInjection {
                 new JsonReadWriteSerializerIndented<ScriptDataModel>(),
                 new JsonReadWriteSerializerIndented<IIndexGroup<DefaultFileExtraInfo>>());
 
-        private IIndexedStorageManager<BLECommandSetDataModel, DefaultFileExtraInfo> bleCommandsStorage =
-            new IndexedStorageManager<BLECommandSetDataModel, DefaultFileExtraInfo>(
+        private IIndexedStorageManager<BLECommandSetDataModel, BLECmdIndexExtraInfo> bleCommandsStorage =
+            new IndexedStorageManager<BLECommandSetDataModel, BLECmdIndexExtraInfo>(
                 new JsonReadWriteSerializerIndented<BLECommandSetDataModel>(),
-                new JsonReadWriteSerializerIndented<IIndexGroup<DefaultFileExtraInfo>>());
+                new JsonReadWriteSerializerIndented<IIndexGroup<BLECmdIndexExtraInfo>>());
 
 
         /// <summary>Encrypted storage for the WIFI credentials</summary>
@@ -68,7 +69,7 @@ namespace MultiCommTerminal.NetCore.DependencyInjection {
             get { return this.scriptStorage; }
         }
 
-        public IIndexedStorageManager<BLECommandSetDataModel, DefaultFileExtraInfo> BLECommands {
+        public IIndexedStorageManager<BLECommandSetDataModel, BLECmdIndexExtraInfo> BLECommands {
             get { return this.bleCommandsStorage; } 
         }
 

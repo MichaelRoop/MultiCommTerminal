@@ -1,10 +1,12 @@
-﻿using ChkUtils.Net;
+﻿using BluetoothLE.Net.Enumerations;
+using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
 using CommunicationStack.Net.Stacks;
 using Ethernet.Common.Net.DataModels;
 using LanguageFactory.Net.data;
 using MultiCommData.Net.interfaces;
 using MultiCommData.Net.StorageDataModels;
+using MultiCommData.Net.StorageIndexInfoModels;
 using MultiCommWrapper.Net.interfaces;
 using SerialCommon.Net.DataModels;
 using SerialCommon.Net.StorageIndexExtraInfo;
@@ -14,7 +16,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using VariousUtils.Net;
 
 namespace MultiCommWrapper.Net.WrapCode {
     public partial class CommWrapper : ICommWrapper {
@@ -39,8 +40,6 @@ namespace MultiCommWrapper.Net.WrapCode {
         private readonly string SERIAL_CFG_DIR = "SerialConfigurations";
         private readonly string SERIAL_CFG_INDEX_FILE = "SerialCfgIndex.txt";
 
-        private readonly string USER_MANUAL_DIR = "Documents";
-
 
         // UWP path and file name for document
         private readonly string UWP_ORIGINE_USER_MANUAL_PATH_AND_FILE = string.Format("{0}{1}",             
@@ -59,7 +58,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         private IStorageManager<SettingItems> _settings = null;
         private IIndexedStorageManager<TerminatorDataModel, DefaultFileExtraInfo> _terminatorStorage = null;
         private IIndexedStorageManager<ScriptDataModel, DefaultFileExtraInfo> _scriptStorage = null;
-        private IIndexedStorageManager<BLECommandSetDataModel, DefaultFileExtraInfo> _bleCmdStorage = null;
+        private IIndexedStorageManager<BLECommandSetDataModel, BLECmdIndexExtraInfo> _bleCmdStorage = null;
         private IIndexedStorageManager<WifiCredentialsDataModel, DefaultFileExtraInfo> _wifiCredStorage = null;
         private IIndexedStorageManager<EthernetParams, DefaultFileExtraInfo> _ethernetStorage = null;
         private IIndexedStorageManager<SerialDeviceInfo, SerialIndexExtraInfo> _serialStorage = null;
@@ -112,12 +111,13 @@ namespace MultiCommWrapper.Net.WrapCode {
             }
         }
 
-        private IIndexedStorageManager<BLECommandSetDataModel, DefaultFileExtraInfo> bleCmdStorage {
+        private IIndexedStorageManager<BLECommandSetDataModel, BLECmdIndexExtraInfo> bleCmdStorage {
             get {
                 if (this._bleCmdStorage == null) {
                     this._bleCmdStorage =
-                        this.storageFactory.GetIndexedManager<BLECommandSetDataModel, DefaultFileExtraInfo>(this.Dir(BLE_CMD_DIR), BLE_CMD_INDEX_FILE);
-                    this.AssureBLECmdsDefault(this._bleCmdStorage);
+                        this.storageFactory.GetIndexedManager<BLECommandSetDataModel, BLECmdIndexExtraInfo>(this.Dir(BLE_CMD_DIR), BLE_CMD_INDEX_FILE);
+                    // Not required to have default
+                    //this.AssureBLECmdsDefault(this._bleCmdStorage);
 
                 }
                 return this._bleCmdStorage;
@@ -200,7 +200,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
                 if (this._bleCmdStorage == null) {
                     this._bleCmdStorage =
-                        this.storageFactory.GetIndexedManager<BLECommandSetDataModel, DefaultFileExtraInfo>(this.Dir(BLE_CMD_DIR), BLE_CMD_INDEX_FILE);
+                        this.storageFactory.GetIndexedManager<BLECommandSetDataModel, BLECmdIndexExtraInfo> (this.Dir(BLE_CMD_DIR), BLE_CMD_INDEX_FILE);
                 }
                 this._bleCmdStorage.DeleteStorageDirectory();
                 this._bleCmdStorage = null;
@@ -358,8 +358,8 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-        private void AssureBLECmdsDefault(IIndexedStorageManager<BLECommandSetDataModel, DefaultFileExtraInfo> manager) {
-            List<IIndexItem<DefaultFileExtraInfo>> index = this.bleCmdStorage.IndexedItems;
+        private void AssureBLECmdsDefault(IIndexedStorageManager<BLECommandSetDataModel, BLECmdIndexExtraInfo> manager) {
+            List<IIndexItem<BLECmdIndexExtraInfo>> index = this.bleCmdStorage.IndexedItems;
             // TODO Not necessary to have a default.
             if (index.Count == 0) {
                 List<ScriptItem> items = new List<ScriptItem>();
@@ -367,10 +367,11 @@ namespace MultiCommWrapper.Net.WrapCode {
                 items.Add(new ScriptItem() { Display = "Close door cmd", Command = "0" });
 
                 BLECommandSetDataModel dm = new BLECommandSetDataModel(items) {
-                    DataType = BluetoothLE.Net.Enumerations.BLE_DataType.UInt_8bit,
+                    CharacteristicName = "6195", // Pseudo Guid for test. TODO . Comment out
+                    DataType = BLE_DataType.UInt_8bit,
                     Display = "Demo uint 8 bit open close"
                 };
-                this.Create(dm.Display, dm, manager, () => { }, (err) => { });
+                this.Create(dm.Display, dm, new BLECmdIndexExtraInfo(dm),  manager, (idx) => { }, (err) => { });
             }
         }
 
@@ -447,7 +448,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-
+        #region No extra info Simple action on success
 
         private void Create<TSToreObject, TExtraInfo>(
             string display,
@@ -458,7 +459,6 @@ namespace MultiCommWrapper.Net.WrapCode {
             where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class {
             this.Create(display, data, manager, onSuccess, (d) => { }, onError);
         }
-
 
 
         private void Create<TSToreObject, TExtraInfo>(
@@ -489,6 +489,9 @@ namespace MultiCommWrapper.Net.WrapCode {
             });
         }
 
+        #endregion
+
+        #region No extra info Return index at success
 
         private void Create<TSToreObject, TExtraInfo>(
             string display,
@@ -531,6 +534,75 @@ namespace MultiCommWrapper.Net.WrapCode {
             });
         }
 
+        #endregion
+
+
+        #region Create with extra index info and index on success
+
+        private void Create<TSToreObject, TExtraInfo>(
+            string display,
+            TSToreObject data,
+            TExtraInfo extraInfo,
+            IIndexedStorageManager<TSToreObject, TExtraInfo> manager,
+            Action<IIndexItem<TExtraInfo>> onSuccess,
+            OnErr onError)
+            where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class {
+
+            this.Create(display, data, extraInfo, manager, onSuccess, (d) => { }, onError);
+        }
+
+
+        private void Create<TSToreObject, TExtraInfo>(
+            string display,
+            TSToreObject data,
+            TExtraInfo extraInfo,
+            IIndexedStorageManager<TSToreObject, TExtraInfo> manager,
+            Action<IIndexItem<TExtraInfo>> onSuccess,
+            Action<TSToreObject> onChange,
+            OnErr onError)
+            where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class {
+
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    if (display.Length == 0) {
+                        onError.Invoke(this.GetText(MsgCode.EmptyName));
+                    }
+                    else {
+                        IIndexItem<TExtraInfo> idx = new IndexItem<TExtraInfo>(data.UId, extraInfo) {
+                            Display = display,
+                        };
+                        this.Save(manager, idx, data, () => onSuccess(idx), onChange, onError);
+                    }
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.SaveFailed));
+                }
+            });
+        }
+
+        #endregion
+
+        // TODO - avoid duplication and just use success with index of saved
+
+        //// Create with simple success, no index
+        //private void Create<TSToreObject, TExtraInfo>(string display, TSToreObject data, TExtraInfo extraInfo,
+        //    IIndexedStorageManager<TSToreObject, TExtraInfo> manager, Action onSuccess, OnErr onError)
+        //    where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class {
+
+        //    this.Create(display, data, extraInfo, manager, onSuccess, (d) => { }, onError);
+        //}
+
+
+        //private void Create<TSToreObject, TExtraInfo>(string display, TSToreObject data, TExtraInfo extraInfo,
+        //    IIndexedStorageManager<TSToreObject, TExtraInfo> manager, Action onSuccess, Action<TSToreObject> onChange, OnErr onError)
+        //    where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class {
+
+        //    this.Create(display, data, extraInfo, manager, (idx) => { onSuccess(); }, onChange, onError);
+        //}
+
+
+        #region Save
 
         private void Save<TSToreObject, TExtraInfo>(
             IIndexedStorageManager<TSToreObject, TExtraInfo> manager,
@@ -576,6 +648,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             });
         }
 
+        #endregion
 
 
         #endregion
