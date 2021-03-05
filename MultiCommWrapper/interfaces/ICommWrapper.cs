@@ -348,6 +348,25 @@ namespace MultiCommWrapper.Net.interfaces {
 
         #endregion
 
+        #region BluetoothLECmds
+
+        void GetBLECmdList(Action<List<IIndexItem<DefaultFileExtraInfo>>> onSuccess, OnErr onError);
+
+        void CreateBLECmdSet(string display, BLECommandSetDataModel data, Action onSuccess, OnErr onError);
+
+        void CreateBLECmdSet(string display, BLECommandSetDataModel data, Action<IIndexItem<DefaultFileExtraInfo>> onSuccess, OnErr onError);
+        void RetrieveBLECmdSet(IIndexItem<DefaultFileExtraInfo> index, Action<BLECommandSetDataModel> onSuccess, OnErr onError);
+
+        void SaveBLECmdSet(IIndexItem<DefaultFileExtraInfo> idx, BLECommandSetDataModel data, Action onSuccess, OnErr onError);
+
+        void DeleteBLECmdSet(IIndexItem<DefaultFileExtraInfo> index, Action<bool> onComplete, OnErr onError);
+
+        void ValidateBLECmdItem(BLE_DataType dataType, ScriptItem item, Action onSuccess, OnErr onError);
+
+        #endregion
+
+
+
         #region WIFI
 
         event EventHandler<List<WifiNetworkInfo>> DiscoveredWifiNetworks;

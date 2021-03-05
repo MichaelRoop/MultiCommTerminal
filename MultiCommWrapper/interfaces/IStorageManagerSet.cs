@@ -22,6 +22,9 @@ namespace MultiCommWrapper.Net.interfaces {
         IIndexedStorageManager<ScriptDataModel, DefaultFileExtraInfo> Scripts { get; }
 
 
+        /// <summary>BLE commands</summary>
+        IIndexedStorageManager<BLECommandSetDataModel, DefaultFileExtraInfo> BLECommands { get; }
+
         /// <summary>WIFI credentials indexed storage</summary>
         IIndexedStorageManager<WifiCredentialsDataModel, DefaultFileExtraInfo> WifiCred { get; }
 

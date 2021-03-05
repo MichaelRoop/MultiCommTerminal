@@ -28,6 +28,11 @@ namespace MultiCommTerminal.NetCore.DependencyInjection {
                 new JsonReadWriteSerializerIndented<ScriptDataModel>(),
                 new JsonReadWriteSerializerIndented<IIndexGroup<DefaultFileExtraInfo>>());
 
+        private IIndexedStorageManager<BLECommandSetDataModel, DefaultFileExtraInfo> bleCommandsStorage =
+            new IndexedStorageManager<BLECommandSetDataModel, DefaultFileExtraInfo>(
+                new JsonReadWriteSerializerIndented<BLECommandSetDataModel>(),
+                new JsonReadWriteSerializerIndented<IIndexGroup<DefaultFileExtraInfo>>());
+
 
         /// <summary>Encrypted storage for the WIFI credentials</summary>
         private IIndexedStorageManager<WifiCredentialsDataModel, DefaultFileExtraInfo> wifiCredStorage =
@@ -59,8 +64,12 @@ namespace MultiCommTerminal.NetCore.DependencyInjection {
             get { return this.terminatorStorage; } 
         }
 
-        public IIndexedStorageManager<ScriptDataModel, DefaultFileExtraInfo> Scripts { 
-            get { return this.scriptStorage; } 
+        public IIndexedStorageManager<ScriptDataModel, DefaultFileExtraInfo> Scripts {
+            get { return this.scriptStorage; }
+        }
+
+        public IIndexedStorageManager<BLECommandSetDataModel, DefaultFileExtraInfo> BLECommands {
+            get { return this.bleCommandsStorage; } 
         }
 
         public IIndexedStorageManager<WifiCredentialsDataModel, DefaultFileExtraInfo> WifiCred { 

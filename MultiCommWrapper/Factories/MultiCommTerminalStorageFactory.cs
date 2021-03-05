@@ -70,6 +70,9 @@ namespace MultiCommWrapper.Net.Factories {
             else if (typeof(TData).Name == typeof(EthernetParams).Name) {
                 return this.set.Ethernet as IIndexedStorageManager<TData, TIndexExtraInfo>;
             }
+            else if (typeof(TData).Name == typeof(BLECommandSetDataModel).Name) {
+                return this.set.BLECommands as IIndexedStorageManager<TData, TIndexExtraInfo>;
+            }
             // Add others
 
             return null;

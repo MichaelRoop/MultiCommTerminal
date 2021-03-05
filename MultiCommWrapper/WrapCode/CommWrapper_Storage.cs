@@ -3,6 +3,7 @@ using ChkUtils.Net.ErrObjects;
 using CommunicationStack.Net.Stacks;
 using Ethernet.Common.Net.DataModels;
 using LanguageFactory.Net.data;
+using MultiCommData.Net.interfaces;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommWrapper.Net.interfaces;
 using SerialCommon.Net.DataModels;
@@ -29,6 +30,8 @@ namespace MultiCommWrapper.Net.WrapCode {
         private readonly string TERMINATOR_INDEX_FILE = "TerminatorsIndex.txt";
         private readonly string SCRIPTS_DIR = "Scripts";
         private readonly string SCRIPTS_INDEX_FILE = "ScriptsIndex.txt";
+        private readonly string BLE_CMD_DIR = "BleCommands";
+        private readonly string BLE_CMD_INDEX_FILE = "BleCommandsIndex.txt";
         private readonly string WIFI_CRED_DIR = "WifiCredentials";
         private readonly string WIFI_CRED_INDEX_FILE = "WifiCredIndex.txt";
         private readonly string ETHERNET_DATA_DIR = "EthernetData";
@@ -56,6 +59,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         private IStorageManager<SettingItems> _settings = null;
         private IIndexedStorageManager<TerminatorDataModel, DefaultFileExtraInfo> _terminatorStorage = null;
         private IIndexedStorageManager<ScriptDataModel, DefaultFileExtraInfo> _scriptStorage = null;
+        private IIndexedStorageManager<BLECommandSetDataModel, DefaultFileExtraInfo> _bleCmdStorage = null;
         private IIndexedStorageManager<WifiCredentialsDataModel, DefaultFileExtraInfo> _wifiCredStorage = null;
         private IIndexedStorageManager<EthernetParams, DefaultFileExtraInfo> _ethernetStorage = null;
         private IIndexedStorageManager<SerialDeviceInfo, SerialIndexExtraInfo> _serialStorage = null;
@@ -105,6 +109,18 @@ namespace MultiCommWrapper.Net.WrapCode {
                     this.AssureScriptDefault(this._scriptStorage);
                 }
                 return this._scriptStorage;
+            }
+        }
+
+        private IIndexedStorageManager<BLECommandSetDataModel, DefaultFileExtraInfo> bleCmdStorage {
+            get {
+                if (this._bleCmdStorage == null) {
+                    this._bleCmdStorage =
+                        this.storageFactory.GetIndexedManager<BLECommandSetDataModel, DefaultFileExtraInfo>(this.Dir(BLE_CMD_DIR), BLE_CMD_INDEX_FILE);
+                    this.AssureBLECmdsDefault(this._bleCmdStorage);
+
+                }
+                return this._bleCmdStorage;
             }
         }
 
@@ -182,6 +198,13 @@ namespace MultiCommWrapper.Net.WrapCode {
                 this._scriptStorage.DeleteStorageDirectory();
                 this._scriptStorage = null;
 
+                if (this._bleCmdStorage == null) {
+                    this._bleCmdStorage =
+                        this.storageFactory.GetIndexedManager<BLECommandSetDataModel, DefaultFileExtraInfo>(this.Dir(BLE_CMD_DIR), BLE_CMD_INDEX_FILE);
+                }
+                this._bleCmdStorage.DeleteStorageDirectory();
+                this._bleCmdStorage = null;
+
                 if (this._terminatorStorage == null) {
                     this._terminatorStorage =
                         this.storageFactory.GetIndexedManager<TerminatorDataModel, DefaultFileExtraInfo>(this.Dir(TERMINATOR_DIR), TERMINATOR_INDEX_FILE);
@@ -196,14 +219,13 @@ namespace MultiCommWrapper.Net.WrapCode {
                 this._settings.DeleteStorageDirectory();
                 this._settings = null;
 
-
-
                 // Calling the just in time properties will rebuild the data
                 var set = this.settings;
                 var ser = this.serialStorage;
                 var eth = this.ethernetStorage;
                 var wi = this.wifiCredStorage;
                 var sc = this.scriptStorage;
+                var cmd = this.bleCmdStorage;
                 var tem = this.terminatorStorage;
             });
             this.RaiseIfException(report);
@@ -335,6 +357,23 @@ namespace MultiCommWrapper.Net.WrapCode {
             }
         }
 
+
+        private void AssureBLECmdsDefault(IIndexedStorageManager<BLECommandSetDataModel, DefaultFileExtraInfo> manager) {
+            List<IIndexItem<DefaultFileExtraInfo>> index = this.bleCmdStorage.IndexedItems;
+            // TODO Not necessary to have a default.
+            if (index.Count == 0) {
+                List<ScriptItem> items = new List<ScriptItem>();
+                items.Add(new ScriptItem() { Display = "Open door cmd", Command = "1" });
+                items.Add(new ScriptItem() { Display = "Close door cmd", Command = "0" });
+
+                BLECommandSetDataModel dm = new BLECommandSetDataModel(items) {
+                    DataType = BluetoothLE.Net.Enumerations.BLE_DataType.UInt_8bit,
+                    Display = "Demo uint 8 bit open close"
+                };
+                this.Create(dm.Display, dm, manager, () => { }, (err) => { });
+            }
+        }
+
         #endregion
 
         #region Storage generics
@@ -350,11 +389,193 @@ namespace MultiCommWrapper.Net.WrapCode {
                     onComplete(ok);
                 });
                 if (report.Code != 0) {
-                    // TODO - add language - delete failed
+                    onError.Invoke(this.GetText(MsgCode.DeleteFailure));
+                }
+            });
+        }
+
+
+        private void RetrieveIndex<TSToreObject, TExtraInfo>(
+            IIndexedStorageManager<TSToreObject, TExtraInfo> manager, 
+            Action<List<IIndexItem<TExtraInfo>>> onSuccess, OnErr onError)
+            where TSToreObject : class where TExtraInfo : class {
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    onSuccess.Invoke(manager.IndexedItems);
+                });
+                if (report.Code != 0) {
                     onError.Invoke(this.GetText(MsgCode.LoadFailed));
                 }
             });
         }
+
+
+
+        private void RetrieveItem<TSToreObject, TExtraInfo>(
+            IIndexedStorageManager<TSToreObject, TExtraInfo> manager,
+            IIndexItem<TExtraInfo> index,
+            Action<TSToreObject> onSuccess, 
+            OnErr onError)
+            where TSToreObject : class where TExtraInfo : class {
+
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    if (index == null) {
+                        onError(this.GetText(MsgCode.NothingSelected));
+                    }
+                    else {
+                        if (manager.FileExists(index)) {
+                            TSToreObject item = manager.Retrieve(index);
+                            if (item != null) {
+                                onSuccess.Invoke(item);
+                            }
+                            else {
+                                onError.Invoke(this.GetText(MsgCode.NotFound));
+                            }
+                        }
+                        else {
+                            onError.Invoke(this.GetText(MsgCode.NotFound));
+                        }
+                    }
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.LoadFailed));
+                }
+            });
+        }
+
+
+
+
+        private void Create<TSToreObject, TExtraInfo>(
+            string display,
+            TSToreObject data,
+            IIndexedStorageManager<TSToreObject, TExtraInfo> manager,
+            Action onSuccess,
+            OnErr onError)
+            where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class {
+            this.Create(display, data, manager, onSuccess, (d) => { }, onError);
+        }
+
+
+
+        private void Create<TSToreObject, TExtraInfo>(
+            string display,
+            TSToreObject data,
+            IIndexedStorageManager<TSToreObject, TExtraInfo> manager,
+            Action onSuccess,
+            Action<TSToreObject> onChange,
+            OnErr onError)
+            where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class {
+
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    if (display.Length == 0) {
+                        onError.Invoke(this.GetText(MsgCode.EmptyName));
+                    }
+                    else {
+                        IIndexItem<TExtraInfo> idx = new IndexItem<TExtraInfo>(data.UId) {
+                            Display = display,
+                        };
+                        this.Save(manager, idx, data, onSuccess, onChange, onError);
+                    }
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.SaveFailed));
+                }
+            });
+        }
+
+
+        private void Create<TSToreObject, TExtraInfo>(
+            string display,
+            TSToreObject data,
+            IIndexedStorageManager<TSToreObject, TExtraInfo> manager,
+            Action<IIndexItem<TExtraInfo>> onSuccess,
+            OnErr onError)
+            where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class {
+
+            this.Create(display, data, manager, onSuccess, (d) => { }, onError);
+        }
+
+
+
+        private void Create<TSToreObject, TExtraInfo>(
+            string display,
+            TSToreObject data,
+            IIndexedStorageManager<TSToreObject, TExtraInfo> manager,
+            Action<IIndexItem<TExtraInfo>> onSuccess,
+            Action<TSToreObject> onChange,
+            OnErr onError)
+            where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class {
+
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    if (display.Length == 0) {
+                        onError.Invoke(this.GetText(MsgCode.EmptyName));
+                    }
+                    else {
+                        IIndexItem<TExtraInfo> idx = new IndexItem<TExtraInfo>(data.UId) {
+                            Display = display,
+                        };
+                        this.Save(manager, idx, data, () => onSuccess(idx), onChange, onError);
+                    }
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.SaveFailed));
+                }
+            });
+        }
+
+
+        private void Save<TSToreObject, TExtraInfo>(
+            IIndexedStorageManager<TSToreObject, TExtraInfo> manager,
+            IIndexItem<TExtraInfo> idx,
+            TSToreObject data,
+            Action onSuccess,
+            OnErr onError) 
+            where TSToreObject : class, IDisplayableData where TExtraInfo : class {
+
+            this.Save(manager, idx, data, onSuccess, (d) => { }, onError);
+        }
+
+
+        private void Save<TSToreObject, TExtraInfo>(
+            IIndexedStorageManager<TSToreObject, TExtraInfo> manager,
+            IIndexItem<TExtraInfo> idx,
+            TSToreObject data,
+            Action onSuccess, 
+            Action<TSToreObject> onChange,
+            OnErr onError) 
+            where TSToreObject : class, IDisplayableData where TExtraInfo : class {
+
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    if (idx.Display.Length == 0) {
+                        onError.Invoke(this.GetText(MsgCode.EmptyName));
+                    }
+                    else if (string.IsNullOrWhiteSpace(data.Display)) {
+                        onError.Invoke(this.GetText(MsgCode.EmptyName));
+                    }
+                    else {
+                        // Transfer display name
+                        idx.Display = data.Display;
+                        manager.Store(data, idx);
+                        onSuccess.Invoke();
+                        onChange.Invoke(data);
+                    }
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.SaveFailed));
+                }
+            });
+        }
+
 
 
         #endregion
