@@ -29,7 +29,9 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
 
         [SetUp]
         public void SetupEachTest() {
-            TDI.Wrapper.DeleteAllBLECmds(() => { }, (err) => {});
+            string error = string.Empty;
+            TDI.Wrapper.DeleteAllBLECmds(() => { }, (err) => { error = err; });
+            Assert.AreEqual(string.Empty, error, "MAKE SURE TO CLOSE ANY STORAGE FILES");
         }
 
         #endregion

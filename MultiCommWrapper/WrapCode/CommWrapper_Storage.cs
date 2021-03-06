@@ -371,7 +371,7 @@ namespace MultiCommWrapper.Net.WrapCode {
                     DataType = BLE_DataType.UInt_8bit,
                     Display = "Demo uint 8 bit open close"
                 };
-                this.Create(dm.Display, dm, new BLECmdIndexExtraInfo(dm),  manager, (idx) => { }, (err) => { });
+                this.Create(dm.Display, dm,  manager, (idx) => { }, (err) => { }, new BLECmdIndexExtraInfo(dm));
             }
         }
 
@@ -396,6 +396,27 @@ namespace MultiCommWrapper.Net.WrapCode {
                 });
                 if (report.Code != 0) {
                     onError.Invoke(this.GetText(MsgCode.DeleteFailure));
+                }
+            });
+        }
+
+
+        private void DeleteAllFromStorage<TSToreObject, TExtraInfo>(
+            IIndexedStorageManager<TSToreObject, TExtraInfo> manager, Action onSuccess, OnErr onError)
+            where TSToreObject : class where TExtraInfo : class {
+
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    if (manager.DeleteStorageDirectory()) {
+                        onSuccess.Invoke();
+                    }
+                    else {
+                        onError.Invoke(this.GetText(MsgCode.DeleteFailure));
+                    }
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.UnknownError));
                 }
             });
         }
@@ -455,89 +476,89 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         #region No extra info Simple action on success
 
-        private void Create<TSToreObject, TExtraInfo>(
-            string display,
-            TSToreObject data,
-            IIndexedStorageManager<TSToreObject, TExtraInfo> manager,
-            Action onSuccess,
-            OnErr onError)
-            where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class {
-            this.Create(display, data, manager, onSuccess, (d) => { }, onError);
-        }
+        //private void Create<TSToreObject, TExtraInfo>(
+        //    string display,
+        //    TSToreObject data,
+        //    IIndexedStorageManager<TSToreObject, TExtraInfo> manager,
+        //    Action onSuccess,
+        //    OnErr onError)
+        //    where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class {
+        //    this.Create(display, data, manager, onSuccess, (d) => { }, onError);
+        //}
 
 
-        private void Create<TSToreObject, TExtraInfo>(
-            string display,
-            TSToreObject data,
-            IIndexedStorageManager<TSToreObject, TExtraInfo> manager,
-            Action onSuccess,
-            Action<TSToreObject> onChange,
-            OnErr onError)
-            where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class {
+        //private void Create<TSToreObject, TExtraInfo>(
+        //    string display,
+        //    TSToreObject data,
+        //    IIndexedStorageManager<TSToreObject, TExtraInfo> manager,
+        //    Action onSuccess,
+        //    Action<TSToreObject> onChange,
+        //    OnErr onError)
+        //    where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class {
 
-            WrapErr.ToErrReport(9999, () => {
-                ErrReport report;
-                WrapErr.ToErrReport(out report, 9999, () => {
-                    if (display.Length == 0) {
-                        onError.Invoke(this.GetText(MsgCode.EmptyName));
-                    }
-                    else {
-                        IIndexItem<TExtraInfo> idx = new IndexItem<TExtraInfo>(data.UId) {
-                            Display = display,
-                        };
-                        this.Save(manager, idx, data, onSuccess, onChange, onError);
-                    }
-                });
-                if (report.Code != 0) {
-                    onError.Invoke(this.GetText(MsgCode.SaveFailed));
-                }
-            });
-        }
+        //    WrapErr.ToErrReport(9999, () => {
+        //        ErrReport report;
+        //        WrapErr.ToErrReport(out report, 9999, () => {
+        //            if (display.Length == 0) {
+        //                onError.Invoke(this.GetText(MsgCode.EmptyName));
+        //            }
+        //            else {
+        //                IIndexItem<TExtraInfo> idx = new IndexItem<TExtraInfo>(data.UId) {
+        //                    Display = display,
+        //                };
+        //                this.Save(manager, idx, data, onSuccess, onChange, onError);
+        //            }
+        //        });
+        //        if (report.Code != 0) {
+        //            onError.Invoke(this.GetText(MsgCode.SaveFailed));
+        //        }
+        //    });
+        //}
 
         #endregion
 
         #region No extra info Return index at success
 
-        private void Create<TSToreObject, TExtraInfo>(
-            string display,
-            TSToreObject data,
-            IIndexedStorageManager<TSToreObject, TExtraInfo> manager,
-            Action<IIndexItem<TExtraInfo>> onSuccess,
-            OnErr onError)
-            where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class {
+        //private void Create<TSToreObject, TExtraInfo>(
+        //    string display,
+        //    TSToreObject data,
+        //    IIndexedStorageManager<TSToreObject, TExtraInfo> manager,
+        //    Action<IIndexItem<TExtraInfo>> onSuccess,
+        //    OnErr onError)
+        //    where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class {
 
-            this.Create(display, data, manager, onSuccess, (d) => { }, onError);
-        }
+        //    this.Create(display, data, manager, onSuccess, (d) => { }, onError);
+        //}
 
 
 
-        private void Create<TSToreObject, TExtraInfo>(
-            string display,
-            TSToreObject data,
-            IIndexedStorageManager<TSToreObject, TExtraInfo> manager,
-            Action<IIndexItem<TExtraInfo>> onSuccess,
-            Action<TSToreObject> onChange,
-            OnErr onError)
-            where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class {
+        //private void Create<TSToreObject, TExtraInfo>(
+        //    string display,
+        //    TSToreObject data,
+        //    IIndexedStorageManager<TSToreObject, TExtraInfo> manager,
+        //    Action<IIndexItem<TExtraInfo>> onSuccess,
+        //    Action<TSToreObject> onChange,
+        //    OnErr onError)
+        //    where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class {
 
-            WrapErr.ToErrReport(9999, () => {
-                ErrReport report;
-                WrapErr.ToErrReport(out report, 9999, () => {
-                    if (display.Length == 0) {
-                        onError.Invoke(this.GetText(MsgCode.EmptyName));
-                    }
-                    else {
-                        IIndexItem<TExtraInfo> idx = new IndexItem<TExtraInfo>(data.UId) {
-                            Display = display,
-                        };
-                        this.Save(manager, idx, data, () => onSuccess(idx), onChange, onError);
-                    }
-                });
-                if (report.Code != 0) {
-                    onError.Invoke(this.GetText(MsgCode.SaveFailed));
-                }
-            });
-        }
+        //    WrapErr.ToErrReport(9999, () => {
+        //        ErrReport report;
+        //        WrapErr.ToErrReport(out report, 9999, () => {
+        //            if (display.Length == 0) {
+        //                onError.Invoke(this.GetText(MsgCode.EmptyName));
+        //            }
+        //            else {
+        //                IIndexItem<TExtraInfo> idx = new IndexItem<TExtraInfo>(data.UId) {
+        //                    Display = display,
+        //                };
+        //                this.Save(manager, idx, data, () => onSuccess(idx), onChange, onError);
+        //            }
+        //        });
+        //        if (report.Code != 0) {
+        //            onError.Invoke(this.GetText(MsgCode.SaveFailed));
+        //        }
+        //    });
+        //}
 
         #endregion
 
@@ -547,24 +568,22 @@ namespace MultiCommWrapper.Net.WrapCode {
         private void Create<TSToreObject, TExtraInfo>(
             string display,
             TSToreObject data,
-            TExtraInfo extraInfo,
             IIndexedStorageManager<TSToreObject, TExtraInfo> manager,
             Action<IIndexItem<TExtraInfo>> onSuccess,
-            OnErr onError)
+            OnErr onError, TExtraInfo extraInfo = null)
             where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class {
 
-            this.Create(display, data, extraInfo, manager, onSuccess, (d) => { }, onError);
+            this.Create(display, data, manager, onSuccess, (d) => { }, onError, extraInfo);
         }
 
 
         private void Create<TSToreObject, TExtraInfo>(
             string display,
             TSToreObject data,
-            TExtraInfo extraInfo,
             IIndexedStorageManager<TSToreObject, TExtraInfo> manager,
             Action<IIndexItem<TExtraInfo>> onSuccess,
             Action<TSToreObject> onChange,
-            OnErr onError)
+            OnErr onError, TExtraInfo extraInfo = null)
             where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class {
 
             WrapErr.ToErrReport(9999, () => {
@@ -574,9 +593,10 @@ namespace MultiCommWrapper.Net.WrapCode {
                         onError.Invoke(this.GetText(MsgCode.EmptyName));
                     }
                     else {
-                        IIndexItem<TExtraInfo> idx = new IndexItem<TExtraInfo>(data.UId, extraInfo) {
-                            Display = display,
-                        };
+                        IIndexItem<TExtraInfo> idx = (extraInfo == null)
+                        ? new IndexItem<TExtraInfo>(data.UId)
+                        : new IndexItem<TExtraInfo>(data.UId, extraInfo);
+                        idx.Display = display;
                         this.Save(manager, idx, data, () => onSuccess(idx), onChange, onError);
                     }
                 });
@@ -587,25 +607,6 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
         #endregion
-
-        // TODO - avoid duplication and just use success with index of saved
-
-        //// Create with simple success, no index
-        //private void Create<TSToreObject, TExtraInfo>(string display, TSToreObject data, TExtraInfo extraInfo,
-        //    IIndexedStorageManager<TSToreObject, TExtraInfo> manager, Action onSuccess, OnErr onError)
-        //    where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class {
-
-        //    this.Create(display, data, extraInfo, manager, onSuccess, (d) => { }, onError);
-        //}
-
-
-        //private void Create<TSToreObject, TExtraInfo>(string display, TSToreObject data, TExtraInfo extraInfo,
-        //    IIndexedStorageManager<TSToreObject, TExtraInfo> manager, Action onSuccess, Action<TSToreObject> onChange, OnErr onError)
-        //    where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class {
-
-        //    this.Create(display, data, extraInfo, manager, (idx) => { onSuccess(); }, onChange, onError);
-        //}
-
 
         #region Save
 

@@ -20,10 +20,11 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.RetrieveIndex(this.bleCmdStorage, onSuccess, onError);
         }
 
+
         public void CreateBLECmdSet(string display, BLECommandSetDataModel data, BLECmdIndexExtraInfo extraInfo, Action<IIndexItem<BLECmdIndexExtraInfo>> onSuccess, OnErr onError) {
             this.ValidateRanges(data,
                 () => {
-                    this.Create(display, data, extraInfo, this.bleCmdStorage, onSuccess, onError);
+                    this.Create(display, data, this.bleCmdStorage, onSuccess, onError, extraInfo);
                 }, onError);
         }
 
@@ -50,7 +51,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void DeleteAllBLECmds(Action onSuccess, OnErr onError) {
-            this.bleCmdStorage.DeleteStorageDirectory();
+            this.DeleteAllFromStorage(this.bleCmdStorage, onSuccess, onError);
         }
 
 
