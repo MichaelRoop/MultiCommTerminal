@@ -21,26 +21,10 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
         public void CreateBLECmdSet(string display, BLECommandSetDataModel data, BLECmdIndexExtraInfo extraInfo, Action<IIndexItem<BLECmdIndexExtraInfo>> onSuccess, OnErr onError) {
-            ErrReport report;
-            WrapErr.ToErrReport(out report, 9999, () => {
-                string error = string.Empty;
-                foreach (ScriptItem item in data.Items) {
-                    this.ValidateBLECmdItem(data.DataType, item, () => { }, (err) => {
-                        if (error == string.Empty) {
-                            error = err;
-                        }
-                    });
-                }
-                if (error == string.Empty) {
+            this.ValidateRanges(data,
+                () => {
                     this.Create(display, data, extraInfo, this.bleCmdStorage, onSuccess, onError);
-                }
-                else {
-                    onError(error);
-                }
-            });
-            if (report.Code != 0) {
-                WrapErr.SafeAction(() => onError(report.Msg));
-            }
+                }, onError);
         }
 
 
@@ -50,7 +34,13 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void SaveBLECmdSet(IIndexItem<BLECmdIndexExtraInfo> idx, BLECommandSetDataModel data, Action onSuccess, OnErr onError) {
-            this.Save(this.bleCmdStorage, idx, data, onSuccess, onError);
+            this.ValidateRanges(data,
+                () => {
+                    idx.ExtraInfoObj.CharacteristicName = data.CharacteristicName;
+                    idx.ExtraInfoObj.DataType = data.DataType;
+                    idx.ExtraInfoObj.DataTypeDisplay = data.DataType.ToStr();
+                    this.Save(this.bleCmdStorage, idx, data, onSuccess, onError);
+                }, onError);
         }
 
 
@@ -58,9 +48,9 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.DeleteFromStorage(this.bleCmdStorage, index, onComplete, onError);
         }
 
+
         public void DeleteAllBLECmds(Action onSuccess, OnErr onError) {
             this.bleCmdStorage.DeleteStorageDirectory();
-
         }
 
 
@@ -80,6 +70,33 @@ namespace MultiCommWrapper.Net.WrapCode {
             }
         }
 
+
+        #region Private
+
+        private void ValidateRanges(BLECommandSetDataModel data, Action onSuccess, OnErr onError) {
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 9999, () => {
+                string error = string.Empty;
+                foreach (ScriptItem item in data.Items) {
+                    this.ValidateBLECmdItem(data.DataType, item, () => { }, (err) => {
+                        if (error == string.Empty) {
+                            error = err;
+                        }
+                    });
+                }
+                if (error == string.Empty) {
+                    onSuccess();
+                }
+                else {
+                    onError(error);
+                }
+            });
+            if (report.Code != 0) {
+                WrapErr.SafeAction(() => onError(report.Msg));
+            }
+        }
+
+        #endregion
 
     }
 
