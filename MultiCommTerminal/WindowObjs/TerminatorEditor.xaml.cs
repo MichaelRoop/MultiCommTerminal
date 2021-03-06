@@ -102,13 +102,13 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         private void TEditor_OnSave(object sender, TerminatorDataModel data) {
             if (this.index == null) {
-                data.Name = this.txtBoxDisplay.Text;
+                data.Display = this.txtBoxDisplay.Text;
                 this.wrapper.CreateNewTerminator(
                     this.txtBoxDisplay.Text, data, this.OnSaveOk, this.OnSaveFailed);
             }
             else {
                 this.index.Display = this.txtBoxDisplay.Text;
-                data.Name = this.index.Display;
+                data.Display = this.index.Display;
                 this.wrapper.SaveTerminator(this.index, data, this.OnSaveOk, this.OnSaveFailed);
             }
         }
@@ -140,7 +140,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         private void OnInitOk(TerminatorDataModel dataModel) {
             this.txtBoxDisplay.Text = index.Display;
-            dataModel.Name = index.Display;
+            dataModel.Display = index.Display;
             this.tEditor.InitialiseEditor(parent, dataModel);
         }
 

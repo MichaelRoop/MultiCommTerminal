@@ -50,9 +50,9 @@ namespace MultiCommTerminal.NetCore.UserControls {
 
 
         public void Initialise(TerminatorDataModel data) {
-            if (data.Name.Length > 0) {
+            if (data.Display.Length > 0) {
                 this.hasName = true;
-                this.lblTerminators.Text = data.Name;
+                this.lblTerminators.Text = data.Display;
             }
             else {
                 this.lblTerminators.Text = this.wrapper.GetText(MsgCode.Terminators);

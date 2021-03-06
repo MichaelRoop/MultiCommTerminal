@@ -296,11 +296,11 @@ namespace MultiCommWrapper.Net.WrapCode {
                 infos.Add(new TerminatorInfo(Terminator.LF));
                 infos.Add(new TerminatorInfo(Terminator.CR));
                 TerminatorDataModel dm = new TerminatorDataModel(infos) {
-                    Name = "Demo terminator set \\n\\r"
+                    Display = "Demo terminator set \\n\\r"
                 };
 
                 IIndexItem<DefaultFileExtraInfo> idx = new IndexItem<DefaultFileExtraInfo>(dm.UId) {
-                    Display = dm.Name
+                    Display = dm.Display
                 };
                 data.Store(dm, idx);
 

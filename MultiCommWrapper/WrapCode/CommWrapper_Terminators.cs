@@ -33,8 +33,8 @@ namespace MultiCommWrapper.Net.WrapCode {
                             this.RetrieveTerminatorData(
                                 item,
                                 (tData) => {
-                                    if (tData.Name.Length == 0) {
-                                        tData.Name = item.Display;
+                                    if (tData.Display.Length == 0) {
+                                        tData.Display = item.Display;
                                         this.SaveTerminator(item, tData, () => { }, (err) => { });
                                     }
                                 },
@@ -138,8 +138,8 @@ namespace MultiCommWrapper.Net.WrapCode {
         /// <param name="dm"></param>
         /// <returns></returns>
         private TerminatorDataModel AssureTerminators(TerminatorDataModel dm) {
-            if (string.IsNullOrWhiteSpace(dm.Name)) {
-                dm.Name = "TMP terminators";
+            if (string.IsNullOrWhiteSpace(dm.Display)) {
+                dm.Display = "TMP terminators";
             }
             if (dm.TerminatorInfos.Count == 0) {
                 List<TerminatorInfo> infos = new List<TerminatorInfo>();
@@ -249,102 +249,112 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void GetTerminatorList(Action<List<IIndexItem<DefaultFileExtraInfo>>> onSuccess, OnErr onError) {
-            WrapErr.ToErrReport(9999, () => {
-                ErrReport report;
-                WrapErr.ToErrReport(out report, 9999, () => {
-                    onSuccess.Invoke(this.terminatorStorage.IndexedItems);
-                });
-                if (report.Code != 0) {
-                    onError.Invoke(this.GetText(MsgCode.LoadFailed));
-                }
-            });
+            this.RetrieveIndex(this.terminatorStorage, onSuccess, onError);
+
+            //WrapErr.ToErrReport(9999, () => {
+            //    ErrReport report;
+            //    WrapErr.ToErrReport(out report, 9999, () => {
+            //        onSuccess.Invoke(this.terminatorStorage.IndexedItems);
+            //    });
+            //    if (report.Code != 0) {
+            //        onError.Invoke(this.GetText(MsgCode.LoadFailed));
+            //    }
+            //});
         }
 
 
 
         public void RetrieveTerminatorData(IIndexItem<DefaultFileExtraInfo> index, Action<TerminatorDataModel> onSuccess, OnErr onError) {
-            WrapErr.ToErrReport(9999, () => {
-                ErrReport report;
-                WrapErr.ToErrReport(out report, 9999, () => {
-                    if (index == null) {
-                        onError.Invoke(this.GetText(MsgCode.NothingSelected));
-                    }
-                    else {
-                        // TODO - check if exists
-                        onSuccess.Invoke(this.terminatorStorage.Retrieve(index));
-                    }
-                });
-                if (report.Code != 0) {
-                    onError.Invoke(this.GetText(MsgCode.LoadFailed));
-                }
-            });
+            this.RetrieveItem(this.terminatorStorage, index, onSuccess, onError);
+
+            //WrapErr.ToErrReport(9999, () => {
+            //    ErrReport report;
+            //    WrapErr.ToErrReport(out report, 9999, () => {
+            //        if (index == null) {
+            //            onError.Invoke(this.GetText(MsgCode.NothingSelected));
+            //        }
+            //        else {
+            //            // TODO - check if exists
+            //            onSuccess.Invoke(this.terminatorStorage.Retrieve(index));
+            //        }
+            //    });
+            //    if (report.Code != 0) {
+            //        onError.Invoke(this.GetText(MsgCode.LoadFailed));
+            //    }
+            //});
         }
 
 
         public void CreateNewTerminator(string display, TerminatorDataModel data, Action onSuccess, OnErr onError) {
-            WrapErr.ToErrReport(9999, () => {
-                ErrReport report;
-                WrapErr.ToErrReport(out report, 9999, () => {
-                    if (display.Length == 0) {
-                        onError.Invoke(this.GetText(MsgCode.EmptyName));
-                    }
-                    else {
-                        IIndexItem<DefaultFileExtraInfo> idx = new IndexItem<DefaultFileExtraInfo>(data.UId) {
-                            Display = display,
-                        };
-                        this.SaveTerminator(idx, data, onSuccess, onError);
-                    }
-                });
-                if (report.Code != 0) {
-                    onError.Invoke(this.GetText(MsgCode.SaveFailed));
-                }
-            });
+            this.Create(display, data, this.terminatorStorage, (idx) => onSuccess(), onError);
+
+            //WrapErr.ToErrReport(9999, () => {
+            //    ErrReport report;
+            //    WrapErr.ToErrReport(out report, 9999, () => {
+            //        if (display.Length == 0) {
+            //            onError.Invoke(this.GetText(MsgCode.EmptyName));
+            //        }
+            //        else {
+            //            IIndexItem<DefaultFileExtraInfo> idx = new IndexItem<DefaultFileExtraInfo>(data.UId) {
+            //                Display = display,
+            //            };
+            //            this.SaveTerminator(idx, data, onSuccess, onError);
+            //        }
+            //    });
+            //    if (report.Code != 0) {
+            //        onError.Invoke(this.GetText(MsgCode.SaveFailed));
+            //    }
+            //});
         }
 
 
         public void CreateNewTerminator(string display, TerminatorDataModel data, Action<IIndexItem<DefaultFileExtraInfo>> onSuccess, OnErr onError) {
-            WrapErr.ToErrReport(9999, () => {
-                ErrReport report;
-                WrapErr.ToErrReport(out report, 9999, () => {
-                    if (display.Length == 0) {
-                        onError.Invoke(this.GetText(MsgCode.EmptyName));
-                    }
-                    else {
-                        IIndexItem<DefaultFileExtraInfo> idx = new IndexItem<DefaultFileExtraInfo>(data.UId) {
-                            Display = display,
-                        };
-                        data.Name = display;
-                        this.SaveTerminator(idx, data, () => onSuccess.Invoke(idx), onError);
-                    }
-                });
-                if (report.Code != 0) {
-                    onError.Invoke(this.GetText(MsgCode.SaveFailed));
-                }
-            });
+            this.Create(display, data, this.terminatorStorage, onSuccess, onError);
+            
+            //WrapErr.ToErrReport(9999, () => {
+            //    ErrReport report;
+            //    WrapErr.ToErrReport(out report, 9999, () => {
+            //        if (display.Length == 0) {
+            //            onError.Invoke(this.GetText(MsgCode.EmptyName));
+            //        }
+            //        else {
+            //            IIndexItem<DefaultFileExtraInfo> idx = new IndexItem<DefaultFileExtraInfo>(data.UId) {
+            //                Display = display,
+            //            };
+            //            data.Display = display;
+            //            this.SaveTerminator(idx, data, () => onSuccess.Invoke(idx), onError);
+            //        }
+            //    });
+            //    if (report.Code != 0) {
+            //        onError.Invoke(this.GetText(MsgCode.SaveFailed));
+            //    }
+            //});
         }
 
 
         public void SaveTerminator(IIndexItem<DefaultFileExtraInfo> idx, TerminatorDataModel data, Action onSuccess, OnErr onError) {
-            WrapErr.ToErrReport(9999, () => {
-                ErrReport report;
-                WrapErr.ToErrReport(out report, 9999, () => {
-                    if (data.Name.Length == 0) {
-                        onError.Invoke(this.GetText(MsgCode.EmptyName));
-                    }
-                    else if (idx.Display.Length == 0) {
-                        onError.Invoke(this.GetText(MsgCode.EmptyName));
-                    }
-                    else {
-                        // Update the index display
-                        idx.Display = data.Name;
-                        this.terminatorStorage.Store(data, idx);
-                        onSuccess.Invoke();
-                    }
-                });
-                if (report.Code != 0) {
-                    onError.Invoke(this.GetText(MsgCode.SaveFailed));
-                }
-            });
+            this.Save(this.terminatorStorage, idx, data, onSuccess, onError);
+
+            //WrapErr.ToErrReport(9999, () => {
+            //    ErrReport report;
+            //    WrapErr.ToErrReport(out report, 9999, () => {
+            //        if (data.Display.Length == 0) {
+            //            onError.Invoke(this.GetText(MsgCode.EmptyName));
+            //        }
+            //        else if (idx.Display.Length == 0) {
+            //            onError.Invoke(this.GetText(MsgCode.EmptyName));
+            //        }
+            //        else {
+            //            // Update the index display
+            //            idx.Display = data.Display;
+            //            this.terminatorStorage.Store(data, idx);
+            //            onSuccess.Invoke();
+            //        }
+            //    });
+            //    if (report.Code != 0) {
+            //        onError.Invoke(this.GetText(MsgCode.SaveFailed));
+            //    }
+            //});
         }
 
 
@@ -352,30 +362,53 @@ namespace MultiCommWrapper.Net.WrapCode {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;
                 WrapErr.ToErrReport(out report, 9999, () => {
-                    if (index == null) {
-                        onError(this.GetText(MsgCode.NothingSelected));
-                    }
-                    else if (terminatorStorage.IndexedItems.Count < 2) {
+                    //if (index == null) {
+                    //    onError(this.GetText(MsgCode.NothingSelected));
+                    //}
+                    //else if (terminatorStorage.IndexedItems.Count < 2) {
+                    //    onError(this.GetText(MsgCode.CannotDeleteLast));
+                    //}
+                    if (terminatorStorage.IndexedItems.Count < 2) {
                         onError(this.GetText(MsgCode.CannotDeleteLast));
                     }
                     else {
-                        bool ok = this.terminatorStorage.DeleteFile(index);
+                        this.DeleteFromStorage(this.terminatorStorage, index,
+                            (tf) => {
+                                this.GetCurrentTerminator(
+                                    (data) => {
+                                        if (data.UId == index.UId_Object) {
+                                            this.RetrieveTerminatorData(
+                                                this.terminatorStorage.IndexedItems[0],
+                                                (newData) => {
+                                                    // TODO error handling if we fail to set current
+                                                    this.SetCurrentTerminators(newData, (err) => { });
+                                                },
+                                                // TODO error handling if we fail to retrieve current terminator
+                                                (err) => { });
+                                        }
+                                    },
+                                    (err) => { });
+
+                                onComplete(tf);
+                            }, onError);
+
+                        //bool ok = this.terminatorStorage.DeleteFile(index);
                         // If deleted terminator was the current, update current to first in list
-                        this.GetCurrentTerminator(
-                            (data) => {
-                                if (data.UId == index.UId_Object) {
-                                    this.RetrieveTerminatorData(
-                                        this.terminatorStorage.IndexedItems[0],
-                                        (newData) => {
-                                            // TODO error handling if we fail to set current
-                                            this.SetCurrentTerminators(newData, (err) => { });
-                                        },
-                                        // TODO error handling if we fail to retrieve current terminator
-                                        (err) => { });
-                                }
-                            },
-                            (err) => { });
-                        onComplete(ok);
+                        //this.GetCurrentTerminator(
+                        //    (data) => {
+                        //        if (data.UId == index.UId_Object) {
+                        //            this.RetrieveTerminatorData(
+                        //                this.terminatorStorage.IndexedItems[0],
+                        //                (newData) => {
+                        //                    // TODO error handling if we fail to set current
+                        //                    this.SetCurrentTerminators(newData, (err) => { });
+                        //                },
+                        //                // TODO error handling if we fail to retrieve current terminator
+                        //                (err) => { });
+                        //        }
+                        //    },
+                        //    (err) => { });
+                        //onComplete(ok);
                     }
                 });
                 if (report.Code != 0) {
@@ -392,9 +425,9 @@ namespace MultiCommWrapper.Net.WrapCode {
                 infos.Add(new TerminatorInfo(Terminator.CR));
                 infos.Add(new TerminatorInfo(Terminator.LF));
                 TerminatorDataModel dm = new TerminatorDataModel(infos) {
-                    Name = "Arduino \\r\\n"
+                    Display = "Arduino \\r\\n"
                 };
-                this.CreateNewTerminator(dm.Name, dm, onSuccess, onError);
+                this.Create(dm.Display, dm, this.terminatorStorage, (ndx) => onSuccess(), onError);
             });
             this.RaiseIfException(report);
 
@@ -408,9 +441,9 @@ namespace MultiCommWrapper.Net.WrapCode {
                 infos.Add(new TerminatorInfo(Terminator.LF));
                 infos.Add(new TerminatorInfo(Terminator.CR));
                 TerminatorDataModel dm = new TerminatorDataModel(infos) {
-                    Name = string.Format("{0} \\n\\r", this.GetText(MsgCode.Default)),
+                    Display = string.Format("{0} \\n\\r", this.GetText(MsgCode.Default)),
                 };
-                this.CreateNewTerminator(dm.Name, dm, onSuccess, onError);
+                this.Create(dm.Display, dm, this.terminatorStorage, (ndx)=> onSuccess(), onError);
             });
             this.RaiseIfException(report);
         }
