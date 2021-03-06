@@ -184,102 +184,124 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void RetrieveScriptData(IIndexItem<DefaultFileExtraInfo> index, Action<ScriptDataModel> onSuccess, OnErr onError) {
-            WrapErr.ToErrReport(9999, () => {
-                ErrReport report;
-                WrapErr.ToErrReport(out report, 9999, () => {
-                    if (index == null) {
-                        onError(this.GetText(MsgCode.NothingSelected));
-                    }
-                    else { 
-                        // TODO - check if exists
-                        onSuccess.Invoke(this.scriptStorage.Retrieve(index));
-                    }
-                });
-                if (report.Code != 0) {
-                    onError.Invoke(this.GetText(MsgCode.LoadFailed));
-                }
-            });
+            this.RetrieveItem(this.scriptStorage, index, onSuccess, onError);
+            //WrapErr.ToErrReport(9999, () => {
+            //    ErrReport report;
+            //    WrapErr.ToErrReport(out report, 9999, () => {
+            //        if (index == null) {
+            //            onError(this.GetText(MsgCode.NothingSelected));
+            //        }
+            //        else { 
+            //            // TODO - check if exists
+            //            onSuccess.Invoke(this.scriptStorage.Retrieve(index));
+            //        }
+            //    });
+            //    if (report.Code != 0) {
+            //        onError.Invoke(this.GetText(MsgCode.LoadFailed));
+            //    }
+            //});
         }
 
 
         public void CreateNewScript(string display, ScriptDataModel data, Action onSuccess, OnErr onError) {
-            WrapErr.ToErrReport(9999, () => {
-                ErrReport report;
-                WrapErr.ToErrReport(out report, 9999, () => {
-                    if (display.Length == 0) {
-                        onError.Invoke(this.GetText(MsgCode.EmptyName));
-                    }
-                    else {
-                        IIndexItem<DefaultFileExtraInfo> idx = new IndexItem<DefaultFileExtraInfo>(data.UId) {
-                            Display = display,
-                        };
-                        this.SaveScript(idx, data, onSuccess, onError);
-                    }
-                });
-                if (report.Code != 0) {
-                    onError.Invoke(this.GetText(MsgCode.SaveFailed));
-                }
-            });
+            this.Create(display, data, this.scriptStorage, 
+                (ndx) => {
+                    this.CurrentScriptChanged?.Invoke(this, data);
+                    onSuccess(); 
+                }, onError);
+
+
+
+
+            //WrapErr.ToErrReport(9999, () => {
+            //    ErrReport report;
+            //    WrapErr.ToErrReport(out report, 9999, () => {
+            //        if (display.Length == 0) {
+            //            onError.Invoke(this.GetText(MsgCode.EmptyName));
+            //        }
+            //        else {
+            //            IIndexItem<DefaultFileExtraInfo> idx = new IndexItem<DefaultFileExtraInfo>(data.UId) {
+            //                Display = display,
+            //            };
+            //            this.SaveScript(idx, data, onSuccess, onError);
+            //        }
+            //    });
+            //    if (report.Code != 0) {
+            //        onError.Invoke(this.GetText(MsgCode.SaveFailed));
+            //    }
+            //});
         }
 
 
         public void CreateNewScript(string display, ScriptDataModel data, Action<IIndexItem<DefaultFileExtraInfo>> onSuccess, OnErr onError) {
-            WrapErr.ToErrReport(9999, () => {
-                ErrReport report;
-                WrapErr.ToErrReport(out report, 9999, () => {
-                    if (display.Length == 0) {
-                        onError.Invoke(this.GetText(MsgCode.EmptyName));
-                    }
-                    else {
-                        IIndexItem<DefaultFileExtraInfo> idx = new IndexItem<DefaultFileExtraInfo>(data.UId) {
-                            Display = display,
-                        };
-                        this.SaveScript(idx, data, () => onSuccess.Invoke(idx), onError);
-                    }
-                });
-                if (report.Code != 0) {
-                    onError.Invoke(this.GetText(MsgCode.SaveFailed));
-                }
-            });
+            this.Create(display, data, this.scriptStorage, 
+                (ndx) => {
+                    this.CurrentScriptChanged?.Invoke(this, data);
+                    onSuccess(ndx);
+                }, onError);
+
+            //WrapErr.ToErrReport(9999, () => {
+            //    ErrReport report;
+            //    WrapErr.ToErrReport(out report, 9999, () => {
+            //        if (display.Length == 0) {
+            //            onError.Invoke(this.GetText(MsgCode.EmptyName));
+            //        }
+            //        else {
+            //            IIndexItem<DefaultFileExtraInfo> idx = new IndexItem<DefaultFileExtraInfo>(data.UId) {
+            //                Display = display,
+            //            };
+            //            this.SaveScript(idx, data, () => onSuccess.Invoke(idx), onError);
+            //        }
+            //    });
+            //    if (report.Code != 0) {
+            //        onError.Invoke(this.GetText(MsgCode.SaveFailed));
+            //    }
+            //});
         }
 
-
-
         public void GetScriptList(Action<List<IIndexItem<DefaultFileExtraInfo>>> onSuccess, OnErr onError) {
-            WrapErr.ToErrReport(9999, () => {
-                ErrReport report;
-                WrapErr.ToErrReport(out report, 9999, () => {
-                    onSuccess.Invoke(this.scriptStorage.IndexedItems);
-                });
-                if (report.Code != 0) {
-                    onError.Invoke(this.GetText(MsgCode.LoadFailed));
-                }
-            });
+            this.RetrieveIndex(this.scriptStorage, onSuccess, onError);
+            //WrapErr.ToErrReport(9999, () => {
+            //    ErrReport report;
+            //    WrapErr.ToErrReport(out report, 9999, () => {
+            //        onSuccess.Invoke(this.scriptStorage.IndexedItems);
+            //    });
+            //    if (report.Code != 0) {
+            //        onError.Invoke(this.GetText(MsgCode.LoadFailed));
+            //    }
+            //});
         }
 
 
         public void SaveScript(IIndexItem<DefaultFileExtraInfo> idx, ScriptDataModel data, Action onSuccess, OnErr onError) {
-            WrapErr.ToErrReport(9999, () => {
-                ErrReport report;
-                WrapErr.ToErrReport(out report, 9999, () => {
-                    if (idx.Display.Length == 0) {
-                        onError.Invoke(this.GetText(MsgCode.EmptyName));
-                    }
-                    else if (string.IsNullOrWhiteSpace(data.Display)) {
-                        onError.Invoke(this.GetText(MsgCode.EmptyName));
-                    }
-                    else {
-                        // Transfer display name
-                        idx.Display = data.Display;
-                        this.scriptStorage.Store(data, idx);
-                        this.CurrentScriptChanged?.Invoke(this, data);
-                        onSuccess.Invoke();
-                    }
-                });
-                if (report.Code != 0) {
-                    onError.Invoke(this.GetText(MsgCode.SaveFailed));
-                }
-            });
+            this.Save(this.scriptStorage, idx, data, 
+                ()=> {
+                    this.CurrentScriptChanged?.Invoke(this, data);
+                    onSuccess.Invoke();
+                }, onError);
+
+
+            //WrapErr.ToErrReport(9999, () => {
+            //    ErrReport report;
+            //    WrapErr.ToErrReport(out report, 9999, () => {
+            //        if (idx.Display.Length == 0) {
+            //            onError.Invoke(this.GetText(MsgCode.EmptyName));
+            //        }
+            //        else if (string.IsNullOrWhiteSpace(data.Display)) {
+            //            onError.Invoke(this.GetText(MsgCode.EmptyName));
+            //        }
+            //        else {
+            //            // Transfer display name
+            //            idx.Display = data.Display;
+            //            this.scriptStorage.Store(data, idx);
+            //            this.CurrentScriptChanged?.Invoke(this, data);
+            //            onSuccess.Invoke();
+            //        }
+            //    });
+            //    if (report.Code != 0) {
+            //        onError.Invoke(this.GetText(MsgCode.SaveFailed));
+            //    }
+            //});
         }
 
 
@@ -288,28 +310,46 @@ namespace MultiCommWrapper.Net.WrapCode {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;
                 WrapErr.ToErrReport(out report, 9999, () => {
-                    if (index == null) {
-                        onError(this.GetText(MsgCode.NothingSelected));
-                    }
-                    else if (this.scriptStorage.IndexedItems.Count < 2) {
+                    //if (index == null) {
+                    //    onError(this.GetText(MsgCode.NothingSelected));
+                    //}
+                    if (this.scriptStorage.IndexedItems.Count < 2) {
                         onError(this.GetText(MsgCode.CannotDeleteLast));
                     }
                     else {
-                        bool ok = this.scriptStorage.DeleteFile(index);
-                        this.GetCurrentTerminator(
-                            (data) => {
-                                // If deleted script was the current, set current to first in list
-                                if (data.UId == index.UId_Object) {
-                                    this.RetrieveScriptData(
-                                        this.scriptStorage.IndexedItems[0],
-                                        (newData) => {
-                                            this.SetCurrentScript(newData, (err) => { });
-                                        },
-                                        (err) => { });
-                               }
-                            },
-                            (err) => { });
-                        onComplete(ok);
+                        this.DeleteFromStorage(this.scriptStorage, index,
+                            (ok) => {
+                                this.GetCurrentTerminator(
+                                    (data) => {
+                                        // If deleted script was the current, set current to first in list
+                                        if (data.UId == index.UId_Object) {
+                                            this.RetrieveScriptData(
+                                                this.scriptStorage.IndexedItems[0],
+                                                (newData) => {
+                                                    this.SetCurrentScript(newData, (err) => { });
+                                                },
+                                                (err) => { });
+                                        }
+                                    },
+                                    (err) => { });
+                                onComplete(ok);
+                            }, onError);
+
+                        //bool ok = this.scriptStorage.DeleteFile(index);
+                        //this.GetCurrentTerminator(
+                        //    (data) => {
+                        //        // If deleted script was the current, set current to first in list
+                        //        if (data.UId == index.UId_Object) {
+                        //            this.RetrieveScriptData(
+                        //                this.scriptStorage.IndexedItems[0],
+                        //                (newData) => {
+                        //                    this.SetCurrentScript(newData, (err) => { });
+                        //                },
+                        //                (err) => { });
+                        //       }
+                        //    },
+                        //    (err) => { });
+                        //onComplete(ok);
                     }
                 });
                 if (report.Code != 0) {

@@ -1,10 +1,11 @@
-﻿using System;
+﻿using MultiCommData.Net.interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace MultiCommData.Net.StorageDataModels {
 
     /// <summary>Storage data for one script with multiple commands</summary>
-    public class ScriptDataModel {
+    public class ScriptDataModel : IDisplayableData, IIndexible {
 
         #region Properties
 
