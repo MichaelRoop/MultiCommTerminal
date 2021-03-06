@@ -168,7 +168,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
             this.Title = "USB";
             this.selectedSerial = SerialSelectUSB.ShowBox(this, true);
             if (this.selectedSerial != null) {
-                this.Title = this.selectedSerial.Name;
+                this.Title = this.selectedSerial.Display;
             }
         }
 

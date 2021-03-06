@@ -66,7 +66,7 @@ namespace Serial.UWP.Core {
                                     Id = info.Id,
                                     IsDefault = info.IsDefault,
                                     IsEnabled = info.IsEnabled,
-                                    Name = info.Name,
+                                    Display = info.Name,
                                     Properties = NetPropertyHelpers.CreatePropertiesDictionary(info.Properties),
                                     // Ignore pairing
                                     // Ignore enclosure location

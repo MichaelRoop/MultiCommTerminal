@@ -80,7 +80,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         public List<KeyValuePropertyDisplay> Serial_GetDeviceInfoForDisplay(SerialDeviceInfo info) {
             List<KeyValuePropertyDisplay> list = new List<KeyValuePropertyDisplay>();
-            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Name), info.Name));
+            list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Name), info.Display));
             // Primary values
             list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Port), info.PortName));
             list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.BaudRate), info.Baud));
@@ -193,49 +193,52 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void GetSerialCfgList(Action<List<IIndexItem<SerialIndexExtraInfo>>> onSuccess, OnErr onError) {
-            WrapErr.ToErrReport(9999, () => {
-                ErrReport report;
-                WrapErr.ToErrReport(out report, 9999, () => {
-                    onSuccess.Invoke(this.serialStorage.IndexedItems);
-                });
-                if (report.Code != 0) {
-                    onError.Invoke(this.GetText(MsgCode.LoadFailed));
-                }
-            });
+            this.RetrieveIndex(this.serialStorage, onSuccess, onError);
+            //WrapErr.ToErrReport(9999, () => {
+            //    ErrReport report;
+            //    WrapErr.ToErrReport(out report, 9999, () => {
+            //        onSuccess.Invoke(this.serialStorage.IndexedItems);
+            //    });
+            //    if (report.Code != 0) {
+            //        onError.Invoke(this.GetText(MsgCode.LoadFailed));
+            //    }
+            //});
         }
 
 
         public void CreateNewSerialCfg(string display, SerialDeviceInfo data, Action onSuccess, OnErr onError) {
-            WrapErr.ToErrReport(9999, () => {
-                ErrReport report;
-                WrapErr.ToErrReport(out report, 9999, () => {
-                    if (display.Length == 0) {
-                        onError.Invoke(this.GetText(MsgCode.EmptyName));
-                    }
-                    else {
-                        this.Validate5msReadWrite(data, data);
-                        // Initialise extra index fields object
-                        SerialIndexExtraInfo extraInfo = new SerialIndexExtraInfo() {
-                            PortName = data.PortName,
-                            USBVendorId = data.USB_VendorId,
-                            USBVendor = data.USB_VendorIdDisplay,
-                            USBProductId = data.USB_ProductId,
-                            USBProduct = data.USB_ProductIdDisplay
-                        };
+            this.Validate5msReadWrite(data, data);
+            this.Create(display, data, this.serialStorage, (idx) => onSuccess(), onError, new SerialIndexExtraInfo(data));
 
-                        IIndexItem<SerialIndexExtraInfo> idx = new IndexItem<SerialIndexExtraInfo>(
-                            data.StorageUid, extraInfo) {
-                            Display = display,
-                        };
-                        this.SaveSerialCfg(idx, data, onSuccess, onError);
-                    }
-                });
-                if (report.Code != 0) {
-                    onError.Invoke(this.GetText(MsgCode.SaveFailed));
-                }
-            });
+            //WrapErr.ToErrReport(9999, () => {
+            //    ErrReport report;
+            //    WrapErr.ToErrReport(out report, 9999, () => {
+            //        if (display.Length == 0) {
+            //            onError.Invoke(this.GetText(MsgCode.EmptyName));
+            //        }
+            //        else {
+            //            this.Validate5msReadWrite(data, data);
+            //            // Initialise extra index fields object
+            //            SerialIndexExtraInfo extraInfo = new SerialIndexExtraInfo() {
+            //                PortName = data.PortName,
+            //                USBVendorId = data.USB_VendorId,
+            //                USBVendor = data.USB_VendorIdDisplay,
+            //                USBProductId = data.USB_ProductId,
+            //                USBProduct = data.USB_ProductIdDisplay
+            //            };
+
+            //            IIndexItem<SerialIndexExtraInfo> idx = new IndexItem<SerialIndexExtraInfo>(
+            //                data.UId, extraInfo) {
+            //                Display = display,
+            //            };
+            //            this.SaveSerialCfg(idx, data, onSuccess, onError);
+            //        }
+            //    });
+            //    if (report.Code != 0) {
+            //        onError.Invoke(this.GetText(MsgCode.SaveFailed));
+            //    }
+            //});
         }
-
 
         
         public void CreateOrSaveSerialCfg(string display, SerialDeviceInfo data, Action onSuccess, OnErr onError) {
@@ -255,22 +258,28 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void RetrieveSerialCfg(IIndexItem<SerialIndexExtraInfo> index, Action<SerialDeviceInfo> onSuccess, OnErr onError) {
-            WrapErr.ToErrReport(9999, () => {
-                ErrReport report;
-                WrapErr.ToErrReport(out report, 9999, () => {
-                    var info = this.serialStorage.Retrieve(index);
-                    if (info == null) {
-                        onError.Invoke(this.GetText(MsgCode.NotFound));
-                    }
-                    else {
-                        this.Validate5msReadWrite(info, info);
-                        onSuccess.Invoke(info);
-                    }
-                });
-                if (report.Code != 0) {
-                    onError.Invoke(this.GetText(MsgCode.LoadFailed));
-                }
-            });
+            this.RetrieveItem(this.serialStorage, index,
+                (obj) => {
+                    this.Validate5msReadWrite(obj, obj);
+                    onSuccess.Invoke(obj);
+                }, onError);
+            
+            //WrapErr.ToErrReport(9999, () => {
+            //    ErrReport report;
+            //    WrapErr.ToErrReport(out report, 9999, () => {
+            //        var info = this.serialStorage.Retrieve(index);
+            //        if (info == null) {
+            //            onError.Invoke(this.GetText(MsgCode.NotFound));
+            //        }
+            //        else {
+            //            this.Validate5msReadWrite(info, info);
+            //            onSuccess.Invoke(info);
+            //        }
+            //    });
+            //    if (report.Code != 0) {
+            //        onError.Invoke(this.GetText(MsgCode.LoadFailed));
+            //    }
+            //});
         }
 
 
@@ -298,31 +307,33 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void SaveSerialCfg(IIndexItem<SerialIndexExtraInfo> idx, SerialDeviceInfo data, Action onSuccess, OnErr onError) {
-            WrapErr.ToErrReport(9999, () => {
-                ErrReport report;
-                WrapErr.ToErrReport(out report, 9999, () => {
-                    if (idx.Display.Length == 0) {
-                        onError.Invoke(this.GetText(MsgCode.EmptyName));
-                    }
-                    else {
-                        this.Validate5msReadWrite(data, data);
-                        this.serialStorage.Store(data, idx);
-                        onSuccess.Invoke();
-                    }
-                });
-                if (report.Code != 0) {
-                    onError.Invoke(this.GetText(MsgCode.SaveFailed));
-                }
-            });
+            this.Validate5msReadWrite(data, data);
+            this.Save(this.serialStorage, idx, data, onSuccess, onError);
+            //WrapErr.ToErrReport(9999, () => {
+            //    ErrReport report;
+            //    WrapErr.ToErrReport(out report, 9999, () => {
+            //        if (idx.Display.Length == 0) {
+            //            onError.Invoke(this.GetText(MsgCode.EmptyName));
+            //        }
+            //        else {
+            //            this.Validate5msReadWrite(data, data);
+            //            this.serialStorage.Store(data, idx);
+            //            onSuccess.Invoke();
+            //        }
+            //    });
+            //    if (report.Code != 0) {
+            //        onError.Invoke(this.GetText(MsgCode.SaveFailed));
+            //    }
+            //});
         }
 
 
         public void DeleteSerialCfg(IIndexItem<SerialIndexExtraInfo> index, Action<bool> onComplete, OnErr onError) {
-            ErrReport report;
-            WrapErr.ToErrReport(out report, 2003011, "Failure on DeleteSerialCfg", () => {
+            //ErrReport report;
+            //WrapErr.ToErrReport(out report, 2003011, "Failure on DeleteSerialCfg", () => {
                 this.DeleteFromStorage(this.serialStorage, index, onComplete, onError);
-            });
-            this.RaiseIfException(report);
+            //});
+            //this.RaiseIfException(report);
         }
 
 
@@ -342,7 +353,6 @@ namespace MultiCommWrapper.Net.WrapCode {
             });
             this.RaiseIfException(report);
         }
-
 
 
         private void RetrieveSerialCfg(SerialDeviceInfo inObject, Action<SerialDeviceInfo> found, Action notFound, OnErr onError) {
