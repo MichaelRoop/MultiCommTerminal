@@ -47,6 +47,7 @@ namespace MultiCommTestCases.Core.Wrapper.Utils {
         public void OneTimeTeardown() {
             TDI.Wrapper.Teardown();
             Thread.Sleep(500);
+            this.logReader.StopLogging();
             this.logHelper.InfoMsgEvent -= this.LogHelper_InfoMsgEvent;
             this.logHelper.DebugMsgEvent -= this.LogHelper_DebugMsgEvent;
             this.logHelper.WarningMsgEvent -= this.LogHelper_WarningMsgEvent;
