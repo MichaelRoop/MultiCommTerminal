@@ -47,5 +47,17 @@ namespace MultiCommData.Net.StorageDataModels {
             }
         }
 
+
+        public BLECommandSetDataModel(
+            List<ScriptItem> scripts, 
+            string characteristicName, 
+            BLE_DataType dataType, 
+            string display) : this(scripts) {
+            this.CharacteristicName = characteristicName;
+            this.DataType = dataType;
+            this.Display = display;
+        }
+
+
     }
 }

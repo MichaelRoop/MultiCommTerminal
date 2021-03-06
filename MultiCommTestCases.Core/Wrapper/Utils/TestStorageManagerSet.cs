@@ -1,5 +1,6 @@
 ﻿using Ethernet.Common.Net.DataModels;
 using MultiCommData.Net.StorageDataModels;
+using MultiCommData.Net.StorageIndexInfoModels;
 using MultiCommWrapper.Net.interfaces;
 using SerialCommon.Net.DataModels;
 using SerialCommon.Net.StorageIndexExtraInfo;
@@ -33,6 +34,10 @@ namespace MultiCommTestCases.Core.Wrapper.Utils {
                 new JsonReadWriteSerializerIndented<ScriptDataModel>(),
                 new JsonReadWriteSerializerIndented<IIndexGroup<DefaultFileExtraInfo>>());
 
+        private IIndexedStorageManager<BLECommandSetDataModel, BLECmdIndexExtraInfo> bleCommandsStorage =
+            new IndexedStorageManager<BLECommandSetDataModel, BLECmdIndexExtraInfo>(
+                new JsonReadWriteSerializerIndented<BLECommandSetDataModel>(),
+                new JsonReadWriteSerializerIndented<IIndexGroup<BLECmdIndexExtraInfo>>());
 
         /// <summary>Encrypted storage for the WIFI credentials</summary>
         private IIndexedStorageManager<WifiCredentialsDataModel, DefaultFileExtraInfo> wifiCredStorage =
@@ -59,12 +64,12 @@ namespace MultiCommTestCases.Core.Wrapper.Utils {
             this.settingStorage.StorageRootDir = testRoot;
             this.terminatorStorage.StorageRootDir = testRoot;
             this.scriptStorage.StorageRootDir = testRoot;
+            this.bleCommandsStorage.StorageRootDir = testRoot;
             this.wifiCredStorage.StorageRootDir = testRoot;
             this.serialStorage.StorageRootDir = testRoot;
             this.ethernetStorage.StorageRootDir = testRoot;
 
             // Now delete anything in those directories
-
 
         }
 
@@ -82,6 +87,10 @@ namespace MultiCommTestCases.Core.Wrapper.Utils {
 
         public IIndexedStorageManager<ScriptDataModel, DefaultFileExtraInfo> Scripts {
             get { return this.scriptStorage; }
+        }
+
+        public IIndexedStorageManager<BLECommandSetDataModel, BLECmdIndexExtraInfo> BLECommands {
+            get { return this.bleCommandsStorage; }
         }
 
         public IIndexedStorageManager<WifiCredentialsDataModel, DefaultFileExtraInfo> WifiCred {

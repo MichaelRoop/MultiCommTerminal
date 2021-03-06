@@ -386,8 +386,13 @@ namespace MultiCommWrapper.Net.WrapCode {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;
                 WrapErr.ToErrReport(out report, 9999, () => {
-                    bool ok = manager.DeleteFile(indexItem);
-                    onComplete(ok);
+                    if (indexItem == null) {
+                        onError(this.GetText(MsgCode.NothingSelected));
+                    }
+                    else {
+                        bool ok = manager.DeleteFile(indexItem);
+                        onComplete(ok);
+                    }
                 });
                 if (report.Code != 0) {
                     onError.Invoke(this.GetText(MsgCode.DeleteFailure));

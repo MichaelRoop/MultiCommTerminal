@@ -1,5 +1,7 @@
 ﻿using DependencyInjectorFactory.Net.interfaces;
+using MultiCommWrapper.Net.DI;
 using MultiCommWrapper.Net.interfaces;
+using MultiCommWrapper.Net.WrapCode;
 
 namespace MultiCommTestCases.Core.Wrapper.Utils {
 
@@ -14,9 +16,9 @@ namespace MultiCommTestCases.Core.Wrapper.Utils {
 
         /// <summary>Get the full container of objects</summary>
         /// <returns>The container</returns>
-        private static IObjContainer GetContainer() {
+        public static IObjContainer GetContainer() {
             if (TDI.container == null) {
-                TDI.container = new MultiCommWrapper.Net.DI.MultiCommIOC();
+                TDI.container = new MultiCommIOC();
                 TDI.container.Initialise(new TestDIExtraCreators());
             }
             return TDI.container;
@@ -28,7 +30,7 @@ namespace MultiCommTestCases.Core.Wrapper.Utils {
         public static ICommWrapper Wrapper {
             get {
                 if (TDI.wrapper == null) {
-                    TDI.wrapper = new MultiCommWrapper.Net.WrapCode.CommWrapper(TDI.GetContainer());
+                    TDI.wrapper = new CommWrapper(TDI.GetContainer());
                 }
                 return TDI.wrapper;
             }

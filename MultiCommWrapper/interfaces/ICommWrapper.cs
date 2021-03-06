@@ -361,6 +361,9 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void DeleteBLECmdSet(IIndexItem<BLECmdIndexExtraInfo> index, Action<bool> onComplete, OnErr onError);
 
+        void DeleteAllBLECmds(Action onSuccess, OnErr onError);
+
+
         void ValidateBLECmdItem(BLE_DataType dataType, ScriptItem item, Action onSuccess, OnErr onError);
 
         #endregion

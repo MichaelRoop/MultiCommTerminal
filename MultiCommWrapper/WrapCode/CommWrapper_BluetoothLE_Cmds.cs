@@ -21,7 +21,26 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
         public void CreateBLECmdSet(string display, BLECommandSetDataModel data, BLECmdIndexExtraInfo extraInfo, Action<IIndexItem<BLECmdIndexExtraInfo>> onSuccess, OnErr onError) {
-            this.Create(display, data, extraInfo, this.bleCmdStorage, onSuccess, onError);
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 9999, () => {
+                string error = string.Empty;
+                foreach (ScriptItem item in data.Items) {
+                    this.ValidateBLECmdItem(data.DataType, item, () => { }, (err) => {
+                        if (error == string.Empty) {
+                            error = err;
+                        }
+                    });
+                }
+                if (error == string.Empty) {
+                    this.Create(display, data, extraInfo, this.bleCmdStorage, onSuccess, onError);
+                }
+                else {
+                    onError(error);
+                }
+            });
+            if (report.Code != 0) {
+                WrapErr.SafeAction(() => onError(report.Msg));
+            }
         }
 
 
@@ -37,6 +56,11 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         public void DeleteBLECmdSet(IIndexItem<BLECmdIndexExtraInfo> index, Action<bool> onComplete, OnErr onError) {
             this.DeleteFromStorage(this.bleCmdStorage, index, onComplete, onError);
+        }
+
+        public void DeleteAllBLECmds(Action onSuccess, OnErr onError) {
+            this.bleCmdStorage.DeleteStorageDirectory();
+
         }
 
 
