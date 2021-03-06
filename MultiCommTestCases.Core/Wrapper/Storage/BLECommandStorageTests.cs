@@ -13,39 +13,33 @@ using TestCaseSupport.Core;
 
 namespace MultiCommTestCases.Core.Wrapper.Storage {
 
+
     [TestFixture]
     public class BLECommandStorageTests : WrapperTestBase {
 
         ClassLog log = new ClassLog("BLECommandStorageTests");
-        //private IStorageManagerSet storageManager = null;
-        //private IIndexedStorageManager<BLECommandSetDataModel, BLECmdIndexExtraInfo> bleCmdStorage = null;
 
         #region Setup
 
         [OneTimeSetUp]
-        public void TestSetSetup() { 
-            this.OneTimeSetup();
-            // Get a copy of the singleton so we can call some of the methods directly        
-            //this.bleCmdStorage = TDI.GetContainer().GetObjSingleton<IStorageManagerSet>().BLECommands;
-
-
-        }
-
+        public void TestSetSetup() { this.OneTimeSetup(); }
 
         [OneTimeTearDown]
         public void TestSetTeardown() { this.OneTimeTeardown(); }
 
         [SetUp]
         public void SetupEachTest() {
-            // Start clean for each test
-            //this.bleCmdStorage.DeleteStorageDirectory();
-            TDI.Wrapper.DeleteAllBLECmds(() => { }, (err) => { });
+            TDI.Wrapper.DeleteAllBLECmds(() => { }, (err) => {});
         }
 
         #endregion
 
+        int tstNumber = 0;
+
         [Test]
         public void T001_Create_Success() {
+            this.tstNumber++;
+            this.log.InfoEntry("T001_Create_Success");
             TestHelpers.CatchUnexpected(() => {
                 List<ScriptItem> items = new List<ScriptItem>();
                 items.Add(new ScriptItem() { Display = "Close door", Command = "0" });
@@ -59,6 +53,7 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
 
         [Test]
         public void T002_Create_SingletemOutOfRange() {
+            this.tstNumber++;
             TestHelpers.CatchUnexpected(() => {
                 ScriptItem item = new ScriptItem() { Display = "Close door", Command = "3000" };
                 string error = string.Empty;
@@ -74,6 +69,7 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
 
         [Test]
         public void T003_Create_ItemInListOutOfRange() {
+            this.tstNumber++;
             TestHelpers.CatchUnexpected(() => {
                 List<ScriptItem> items = new List<ScriptItem>();
                 items.Add(new ScriptItem() { Display = "Close door", Command = "3000" });
@@ -88,6 +84,7 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
 
         [Test]
         public void T004_Create_ValidateCount() {
+            this.tstNumber++;
             TestHelpers.CatchUnexpected(() => {
                 this.SetupData();
                 //return;
@@ -139,6 +136,8 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
         private IIndexItem<BLECmdIndexExtraInfo> CreateItem(List<ScriptItem> items, string characteristicName, BLE_DataType dataType, string display, string errExpected) {
             IIndexItem<BLECmdIndexExtraInfo> index = null;
             string error = string.Empty;
+            display = string.Format("{0}:{1}", display, this.tstNumber.ToString());
+
             BLECommandSetDataModel dm = new BLECommandSetDataModel(
                 items, characteristicName, dataType, display);
             TDI.Wrapper.CreateBLECmdSet(dm.Display, dm, new BLECmdIndexExtraInfo(dm), (ndx) => {

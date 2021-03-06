@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="FakeItEasy" Version="6.2.1" />
+    <PackageReference Include="log4net" Version="2.0.12" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
     <PackageReference Include="NUnit" Version="3.13.1" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
@@ -21,6 +22,12 @@
     <ProjectReference Include="..\MultiCommWrapper\MultiCommWrapper.Net.csproj" />
     <ProjectReference Include="..\Serial.UWP.Core\Serial.UWP.Core.csproj" />
     <ProjectReference Include="..\Wifi.UWP.Core\Wifi.UWP.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
