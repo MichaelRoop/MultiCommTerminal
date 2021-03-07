@@ -487,10 +487,6 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void GetEthernetDataList(Action<List<IIndexItem<EthernetExtraInfo>>> onSuccess, OnErr onError);
 
-        //void GetEthernetDataList(Action<List<EthernetDisplayDataModel>> onSuccess, OnErr onError);
-
-        //void CreateNewEthernetData(string display, EthernetParams data, Action onSuccess, OnErr onError);
-
         void CreateNewEthernetData(EthernetParams data, Action onSuccess, OnErr onError);
 
         void RetrieveEthernetData(IIndexItem<EthernetExtraInfo> index, Action<EthernetParams> onSuccess, OnErr onError);
@@ -498,8 +494,6 @@ namespace MultiCommWrapper.Net.interfaces {
         void SaveEthernetData(IIndexItem<EthernetExtraInfo> idx, EthernetParams data, Action onSuccess, OnErr onError);
 
         void DeleteEthernetData(IIndexItem<EthernetExtraInfo> index, string name, Func<string, bool> areYouSure, Action<bool> onComplete, OnErr onError);
-
-       // void DeleteEthernetData(IIndexItem<EthernetExtraInfo> index, Action<bool> onComplete, OnErr onError);
 
         #endregion
 
