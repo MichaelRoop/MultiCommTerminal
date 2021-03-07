@@ -1,7 +1,8 @@
-﻿using Ethernet.Common.Net.DataModels;
+﻿using MultiCommData.Net.StorageIndexInfoModels;
 using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using MultiCommWrapper.Net.DataModels;
+using StorageFactory.Net.interfaces;
 using System.Collections.Generic;
 using System.Windows;
 using WpfHelperClasses.Core;
@@ -15,7 +16,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
 
         private Window parent = null;
         private ButtonGroupSizeSyncManager widthManager = null;
-        private List<EthernetDisplayDataModel> lstInfo = new List<EthernetDisplayDataModel>();
+        private List<IIndexItem<EthernetExtraInfo>> lstInfo = new List<IIndexItem<EthernetExtraInfo>>();
 
         #endregion
 
@@ -96,18 +97,18 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
 
 
         private void btnEdit_Click(object sender, RoutedEventArgs e) {
-            this.lvEthernetDevices.GetSelectedChk<EthernetDisplayDataModel>(
+            this.lvEthernetDevices.GetSelectedChk<IIndexItem<EthernetExtraInfo>>(
                 (info) => {
-                    this.ReloadList(DeviceEdit_Ethernet.ShowBoxEdit(this, info.Index));
+                    this.ReloadList(DeviceEdit_Ethernet.ShowBoxEdit(this, info));
                 }, App.ShowMsg);
         }
 
 
         private void btnDelete_Click(object sender, RoutedEventArgs e) {
-            this.lvEthernetDevices.GetSelectedChk<EthernetDisplayDataModel>(
+            this.lvEthernetDevices.GetSelectedChk<IIndexItem<EthernetExtraInfo>>(
                 (info) => {
                     DI.Wrapper.DeleteEthernetData(
-                        info.Index, info.Name, this.DeleteDecision, this.ReloadList, App.ShowMsg);
+                        info, info.Display, this.DeleteDecision, this.ReloadList, App.ShowMsg);
                 }, App.ShowMsg);
         }
 
@@ -132,7 +133,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
         }
 
 
-        private void ListLoad(List<EthernetDisplayDataModel> newList) {
+        private void ListLoad(List<IIndexItem<EthernetExtraInfo>> newList) {
+            //this.lstInfo[0].ExtraInfoObj.Address
             lvEthernetDevices.SetNewSource(ref this.lstInfo, newList);
         }
 

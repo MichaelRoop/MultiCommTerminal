@@ -44,7 +44,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
 
 
         private void btnSave_Click(object sender, RoutedEventArgs e) {
-            this.data.DataModel.Name = this.txtName.Text;
+            this.data.DataModel.Display = this.txtName.Text;
             this.data.DataModel.EthernetAddress = this.txtHostName.Text;
             this.data.DataModel.EthernetServiceName = this.txtServiceName.Text;
             DI.Wrapper.SaveEthernetData(data.Index, data.DataModel, this.Close, this.OnFail);
@@ -52,7 +52,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
 
 
         private void Init() {
-            this.txtName.Text = this.data.DataModel.Name;
+            this.txtName.Text = this.data.DataModel.Display;
             this.txtHostName.Text = this.data.DataModel.EthernetAddress;
             this.txtServiceName.Text = this.data.DataModel.EthernetServiceName;
         }

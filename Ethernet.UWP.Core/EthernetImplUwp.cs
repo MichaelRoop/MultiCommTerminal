@@ -1,16 +1,11 @@
 ﻿using Communications.UWP.Core.MsgPumps;
 using CommunicationStack.Net.DataModels;
 using CommunicationStack.Net.interfaces;
-using Ethernet.Common.Net.DataModels;
 using Ethernet.Common.Net.interfaces;
 using LogUtils.Net;
+using MultiCommData.Net.StorageDataModels;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using VariousUtils.Net;
-using Windows.Devices.Enumeration;
-using Windows.Networking.Connectivity;
 
 namespace Ethernet.UWP.Core {
 

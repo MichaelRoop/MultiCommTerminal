@@ -21,11 +21,11 @@
                     ScrollViewer.HorizontalScrollBarVisibility="Auto">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding Name}"
+                            <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding Display}"
                                 Header="{Binding Source={x:Static wpfHelper:TxtBinder.Name}}" />
-                            <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding Address}"
+                            <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding ExtraInfoObj.Address}"
                                 Header="{Binding Source={x:Static wpfHelper:TxtBinder.Address}}" />
-                            <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding Port}" 
+                            <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding ExtraInfoObj.Port}" 
                                 Header="{Binding Source={x:Static wpfHelper:TxtBinder.Port}}" />
                         </GridView>
                     </ListView.View>

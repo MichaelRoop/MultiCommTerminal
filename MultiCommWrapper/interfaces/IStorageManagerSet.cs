@@ -1,5 +1,4 @@
-﻿using Ethernet.Common.Net.DataModels;
-using MultiCommData.Net.StorageDataModels;
+﻿using MultiCommData.Net.StorageDataModels;
 using MultiCommData.Net.StorageIndexInfoModels;
 using SerialCommon.Net.DataModels;
 using SerialCommon.Net.StorageIndexExtraInfo;
@@ -35,7 +34,7 @@ namespace MultiCommWrapper.Net.interfaces {
 
 
         /// <summary>Ethernet params indexed storage</summary>
-        IIndexedStorageManager<EthernetParams, DefaultFileExtraInfo> Ethernet { get; }
+        IIndexedStorageManager<EthernetParams, EthernetExtraInfo> Ethernet { get; }
 
     }
 

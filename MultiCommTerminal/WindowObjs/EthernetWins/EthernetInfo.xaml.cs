@@ -1,4 +1,4 @@
-﻿using Ethernet.Common.Net.DataModels;
+﻿using MultiCommData.Net.StorageDataModels;
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using System.Windows;
 using WpfHelperClasses.Core;
@@ -19,7 +19,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
         public EthernetInfo(Window parent, EthernetParams info) {
             this.parent = parent;
             InitializeComponent();
-            this.Title = info.Name;
+            this.Title = info.Display;
             this.txtHost.Content = info.EthernetAddress;
             this.txtService.Content = info.EthernetServiceName;
             this.SizeToContent = SizeToContent.WidthAndHeight;

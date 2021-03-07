@@ -9,6 +9,7 @@ using LogUtils.Net;
 using MultiCommWrapper.Net.Helpers;
 using MultiCommWrapper.Net.interfaces;
 using SerialCommon.Net.interfaces;
+using System;
 using System.Threading.Tasks;
 using VariousUtils.Net;
 using WifiCommon.Net.interfaces;
@@ -222,6 +223,13 @@ namespace MultiCommWrapper.Net.WrapCode {
         /// <param name="container">The Dependency injection container</param>
         public CommWrapper(IObjContainer container) {
             this.container = container;
+
+            try {
+                this.DoEthernetPort();
+            }
+            catch(Exception e) {
+                this.log.Exception(11111, "On Constructor", "Calling PO", e);
+            }
         }
 
         #endregion

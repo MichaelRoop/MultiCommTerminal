@@ -2,7 +2,6 @@
 using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
 using CommunicationStack.Net.Stacks;
-using Ethernet.Common.Net.DataModels;
 using LanguageFactory.Net.data;
 using MultiCommData.Net.interfaces;
 using MultiCommData.Net.StorageDataModels;
@@ -35,7 +34,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         private readonly string BLE_CMD_INDEX_FILE = "BleCommandsIndex.txt";
         private readonly string WIFI_CRED_DIR = "WifiCredentials";
         private readonly string WIFI_CRED_INDEX_FILE = "WifiCredIndex.txt";
-        private readonly string ETHERNET_DATA_DIR = "EthernetData";
+        private readonly string ETHERNET_DATA_DIR = "EthernetCfgData";
         private readonly string ETHERNET_DATA_INDEX_FILE = "EthernetDataIndex.txt";
         private readonly string SERIAL_CFG_DIR = "SerialConfigurations";
         private readonly string SERIAL_CFG_INDEX_FILE = "SerialCfgIndex.txt";
@@ -60,7 +59,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         private IIndexedStorageManager<ScriptDataModel, DefaultFileExtraInfo> _scriptStorage = null;
         private IIndexedStorageManager<BLECommandSetDataModel, BLECmdIndexExtraInfo> _bleCmdStorage = null;
         private IIndexedStorageManager<WifiCredentialsDataModel, DefaultFileExtraInfo> _wifiCredStorage = null;
-        private IIndexedStorageManager<EthernetParams, DefaultFileExtraInfo> _ethernetStorage = null;
+        private IIndexedStorageManager<EthernetParams, EthernetExtraInfo> _ethernetStorage = null;
         private IIndexedStorageManager<SerialDeviceInfo, SerialIndexExtraInfo> _serialStorage = null;
 
         #endregion
@@ -137,11 +136,11 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-        private IIndexedStorageManager<EthernetParams, DefaultFileExtraInfo> ethernetStorage {
+        private IIndexedStorageManager<EthernetParams, EthernetExtraInfo> ethernetStorage {
             get {
                 if (this._ethernetStorage == null) {
                     this._ethernetStorage =
-                        this.storageFactory.GetIndexedManager<EthernetParams, DefaultFileExtraInfo>(this.Dir(ETHERNET_DATA_DIR), ETHERNET_DATA_INDEX_FILE);
+                        this.storageFactory.GetIndexedManager<EthernetParams, EthernetExtraInfo>(this.Dir(ETHERNET_DATA_DIR), ETHERNET_DATA_INDEX_FILE);
                 }
                 return this._ethernetStorage;
             }
@@ -179,7 +178,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
                 if (this._ethernetStorage == null) {
                     this._ethernetStorage =
-                        this.storageFactory.GetIndexedManager<EthernetParams, DefaultFileExtraInfo>(this.Dir(ETHERNET_DATA_DIR), ETHERNET_DATA_INDEX_FILE);
+                        this.storageFactory.GetIndexedManager<EthernetParams, EthernetExtraInfo>(this.Dir(ETHERNET_DATA_DIR), ETHERNET_DATA_INDEX_FILE);
                 }
                 this._ethernetStorage.DeleteStorageDirectory();
                 this._ethernetStorage = null;

@@ -1,5 +1,5 @@
-﻿using StorageFactory.Net.interfaces;
-using StorageFactory.Net.StorageManagers;
+﻿using MultiCommData.Net.StorageIndexInfoModels;
+using StorageFactory.Net.interfaces;
 
 namespace MultiCommWrapper.Net.DataModels {
 
@@ -9,7 +9,7 @@ namespace MultiCommWrapper.Net.DataModels {
     public class EthernetDisplayDataModel {
 
         /// <summary>Storage index</summary>
-        public IIndexItem<DefaultFileExtraInfo> Index { get; set; } = null;
+        public IIndexItem<EthernetExtraInfo> Index { get; set; } = null;
 
         public string Name { get; set; } = string.Empty;
 

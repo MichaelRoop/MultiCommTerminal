@@ -1,9 +1,9 @@
-﻿using Ethernet.Common.Net.DataModels;
-using LanguageFactory.Net.data;
+﻿using LanguageFactory.Net.data;
+using MultiCommData.Net.StorageDataModels;
+using MultiCommData.Net.StorageIndexInfoModels;
 using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using StorageFactory.Net.interfaces;
-using StorageFactory.Net.StorageManagers;
 using System.Windows;
 using WpfHelperClasses.Core;
 
@@ -22,7 +22,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
         private Mode mode = Mode.Edit;
         private Window parent = null;
         private ButtonGroupSizeSyncManager widthManager = null;
-        private IIndexItem<DefaultFileExtraInfo> index = null;
+        private IIndexItem<EthernetExtraInfo> index = null;
         private EthernetParams data = new EthernetParams();
 
         #endregion
@@ -35,20 +35,20 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
 
         #region Constructors and windows events
 
-        public static bool ShowBoxEdit(Window parent, IIndexItem<DefaultFileExtraInfo> index) {
+        public static bool ShowBoxEdit(Window parent, IIndexItem<EthernetExtraInfo> index) {
             DeviceEdit_Ethernet win = new DeviceEdit_Ethernet(parent, index);
             win.ShowDialog();
             return win.IsChanged;
         }
 
 
-        public static bool ShowBoxAdd(Window parent, IIndexItem<DefaultFileExtraInfo> index) {
+        public static bool ShowBoxAdd(Window parent, IIndexItem<EthernetExtraInfo> index) {
             return ShowBoxEdit(parent, null);
         }
 
 
 
-        public DeviceEdit_Ethernet(Window parent, IIndexItem<DefaultFileExtraInfo> index) {
+        public DeviceEdit_Ethernet(Window parent, IIndexItem<EthernetExtraInfo> index) {
             this.parent = parent;
             this.index = index;
             this.mode = this.index == null ? Mode.Create : Mode.Edit;
@@ -82,7 +82,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
         #region Button event handlers
 
         private void btnSave_Click(object sender, RoutedEventArgs e) {
-            this.data.Name = this.txtName.Text;
+            this.data.Display = this.txtName.Text;
             this.data.EthernetAddress = this.txtHostName.Text;
             this.data.EthernetServiceName = this.txtServiceName.Text;
 
@@ -118,14 +118,14 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
                         this.OnFailure);
                     break;
                 case Mode.Create:
-                    this.data.Name = "SampleName";
+                    this.data.Display = "SampleName";
                     this.data.EthernetAddress = "192.168.1.100";
                     this.data.EthernetServiceName = "9999";
                     this.Title = DI.Wrapper.GetText(MsgCode.Create);
                     break;
             }
 
-            this.txtName.Text = this.data.Name;
+            this.txtName.Text = this.data.Display;
             this.txtHostName.Text = this.data.EthernetAddress;
             this.txtServiceName.Text = this.data.EthernetServiceName;
         }

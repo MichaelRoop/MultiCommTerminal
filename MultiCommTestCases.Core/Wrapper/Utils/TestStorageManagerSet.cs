@@ -1,5 +1,4 @@
-﻿using Ethernet.Common.Net.DataModels;
-using MultiCommData.Net.StorageDataModels;
+﻿using MultiCommData.Net.StorageDataModels;
 using MultiCommData.Net.StorageIndexInfoModels;
 using MultiCommWrapper.Net.interfaces;
 using SerialCommon.Net.DataModels;
@@ -51,10 +50,10 @@ namespace MultiCommTestCases.Core.Wrapper.Utils {
                 new JsonReadWriteSerializerIndented<SerialDeviceInfo>(),
                 new JsonReadWriteSerializerIndented<IIndexGroup<SerialIndexExtraInfo>>());
 
-        private IIndexedStorageManager<EthernetParams, DefaultFileExtraInfo> ethernetStorage =
-            new IndexedStorageManager<EthernetParams, DefaultFileExtraInfo>(
+        private IIndexedStorageManager<EthernetParams, EthernetExtraInfo> ethernetStorage =
+            new IndexedStorageManager<EthernetParams, EthernetExtraInfo>(
                 new JsonReadWriteSerializerIndented<EthernetParams>(),
-                new JsonReadWriteSerializerIndented<IIndexGroup<DefaultFileExtraInfo>>());
+                new JsonReadWriteSerializerIndented<IIndexGroup<EthernetExtraInfo>>());
 
 
         #endregion
@@ -101,7 +100,7 @@ namespace MultiCommTestCases.Core.Wrapper.Utils {
             get { return this.serialStorage; }
         }
 
-        public IIndexedStorageManager<EthernetParams, DefaultFileExtraInfo> Ethernet {
+        public IIndexedStorageManager<EthernetParams, EthernetExtraInfo> Ethernet {
             get { return this.ethernetStorage; }
         }
 

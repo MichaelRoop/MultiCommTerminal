@@ -1,12 +1,12 @@
 ﻿using CommunicationStack.Net.DataModels;
 using CommunicationStack.Net.Enumerations;
-using Ethernet.Common.Net.DataModels;
 using LanguageFactory.Net.data;
 using MultiCommData.Net.Enumerations;
+using MultiCommData.Net.StorageDataModels;
+using MultiCommData.Net.StorageIndexInfoModels;
 using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using StorageFactory.Net.interfaces;
-using StorageFactory.Net.StorageManagers;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -85,7 +85,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
         }
 
 
-        private void onEthernetListChange(object sender, List<IIndexItem<DefaultFileExtraInfo>> e) {
+        private void onEthernetListChange(object sender, List<IIndexItem<EthernetExtraInfo>> e) {
             // Irrelevant at this level since we only work with the current selected connection
         }
 
@@ -167,7 +167,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
             this.Title = DI.Wrapper.GetText(MsgCode.Ethernet);
             this.selectedEthernet = DeviceSelect_Ethernet.ShowBox(this, true);
             if (this.selectedEthernet != null) {
-                this.Title = this.selectedEthernet.DataModel.Name;
+                this.Title = this.selectedEthernet.DataModel.Display;
             }
         }
 

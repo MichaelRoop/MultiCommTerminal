@@ -1,5 +1,4 @@
 ﻿using ChkUtils.Net;
-using Ethernet.Common.Net.DataModels;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommWrapper.Net.interfaces;
 using SerialCommon.Net.DataModels;

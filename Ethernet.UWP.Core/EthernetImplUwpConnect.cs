@@ -1,8 +1,8 @@
 ﻿using Communications.UWP.Core.MsgPumps;
 using CommunicationStack.Net.DataModels;
 using CommunicationStack.Net.Enumerations;
-using Ethernet.Common.Net.DataModels;
 using Ethernet.Common.Net.interfaces;
+using MultiCommData.Net.StorageDataModels;
 using System.Threading;
 using Windows.Networking.Sockets;
 

@@ -5,14 +5,12 @@ using ChkUtils.Net.ErrObjects;
 using Common.Net.Network;
 using CommunicationStack.Net.DataModels;
 using CommunicationStack.Net.Stacks;
-using Ethernet.Common.Net.DataModels;
 using IconFactory.Net.data;
 using LanguageFactory.Net.data;
 using LanguageFactory.Net.Messaging;
 using MultiCommData.Net.Enumerations;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommData.Net.StorageIndexInfoModels;
-using MultiCommData.Net.UserDisplayData;
 using MultiCommData.UserDisplayData.Net;
 using MultiCommWrapper.Net.DataModels;
 using MultiCommWrapper.Net.Helpers;
@@ -22,7 +20,6 @@ using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using WifiCommon.Net.DataModels;
 
 namespace MultiCommWrapper.Net.interfaces {
@@ -482,27 +479,27 @@ namespace MultiCommWrapper.Net.interfaces {
         event EventHandler<MsgPumpResults> OnEthernetError;
 
         /// <summary>Raised when items added, removed or changed</summary>
-        event EventHandler<List<IIndexItem<DefaultFileExtraInfo>>> OnEthernetListChange;
+        event EventHandler<List<IIndexItem<EthernetExtraInfo>>> OnEthernetListChange;
 
         void EthernetConnectAsync(EthernetParams dataModel);
         void EthernetDisconnect();
         void EthernetSend(string msg);
 
-        void GetEthernetDataList(Action<List<IIndexItem<DefaultFileExtraInfo>>> onSuccess, OnErr onError);
+        void GetEthernetDataList(Action<List<IIndexItem<EthernetExtraInfo>>> onSuccess, OnErr onError);
 
-        void GetEthernetDataList(Action<List<EthernetDisplayDataModel>> onSuccess, OnErr onError);
+        //void GetEthernetDataList(Action<List<EthernetDisplayDataModel>> onSuccess, OnErr onError);
 
-        void CreateNewEthernetData(string display, EthernetParams data, Action onSuccess, OnErr onError);
+        //void CreateNewEthernetData(string display, EthernetParams data, Action onSuccess, OnErr onError);
 
         void CreateNewEthernetData(EthernetParams data, Action onSuccess, OnErr onError);
 
-        void RetrieveEthernetData(IIndexItem<DefaultFileExtraInfo> index, Action<EthernetParams> onSuccess, OnErr onError);
+        void RetrieveEthernetData(IIndexItem<EthernetExtraInfo> index, Action<EthernetParams> onSuccess, OnErr onError);
 
-        void SaveEthernetData(IIndexItem<DefaultFileExtraInfo> idx, EthernetParams data, Action onSuccess, OnErr onError);
+        void SaveEthernetData(IIndexItem<EthernetExtraInfo> idx, EthernetParams data, Action onSuccess, OnErr onError);
 
-        void DeleteEthernetData(IIndexItem<DefaultFileExtraInfo> index, string name, Func<string, bool> areYouSure, Action<bool> onComplete, OnErr onError);
+        void DeleteEthernetData(IIndexItem<EthernetExtraInfo> index, string name, Func<string, bool> areYouSure, Action<bool> onComplete, OnErr onError);
 
-        void DeleteEthernetData(object index, Action<bool> onComplete, OnErr onError);
+       // void DeleteEthernetData(IIndexItem<EthernetExtraInfo> index, Action<bool> onComplete, OnErr onError);
 
         #endregion
 
