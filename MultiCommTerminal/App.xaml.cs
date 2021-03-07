@@ -175,7 +175,12 @@ namespace MultiCommTerminal.NetCore {
         #region Log Event Handlers
 
         private void LogHelper_EveryMsgEvent(object sender, string msg) {
-            STATIC_APP.DispatchProxy(() => this.LogMsgEvent?.Invoke(this, msg));
+            STATIC_APP.DispatchProxy(() => {
+                try {
+                    this.LogMsgEvent?.Invoke(this, msg);
+                }
+                catch (Exception) { }
+            });
         }
 
 
