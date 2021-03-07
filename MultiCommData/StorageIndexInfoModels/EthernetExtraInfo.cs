@@ -14,6 +14,10 @@ namespace MultiCommData.Net.StorageIndexInfoModels {
 
 
         public EthernetExtraInfo(EthernetParams info) {
+            this.Update(info);
+        }
+
+        public void Update(EthernetParams info) {
             this.Address = info.EthernetAddress;
             this.Port = info.EthernetServiceName;
         }

@@ -208,16 +208,25 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void SaveEthernetData(IIndexItem<EthernetExtraInfo> idx, EthernetParams data, Action onSuccess, OnErr onError) {
-            this.Save(this.ethernetStorage, idx, data, onSuccess,
-                (d) => {
-                    this.RaiseEthernetListChange(() => { }, onError);
-                    //this.GetEthernetDataList(
-                    //    (list) => {
-                    //        this.OnEthernetListChange?.Invoke(this, list);
-                    //        //onSuccess.Invoke();
-                    //    }, onError);
-                }, onError);
-            
+
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    idx.ExtraInfoObj.Update(data);
+                    this.Save(this.ethernetStorage, idx, data, onSuccess,
+                        (d) => {
+                            this.RaiseEthernetListChange(() => { }, onError);
+                            //this.GetEthernetDataList(
+                            //    (list) => {
+                            //        this.OnEthernetListChange?.Invoke(this, list);
+                            //        //onSuccess.Invoke();
+                            //    }, onError);
+                        }, onError);
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.SaveFailed));
+                }
+            });
             //WrapErr.ToErrReport(9999, () => {
             //    ErrReport report;
             //    WrapErr.ToErrReport(out report, 9999, () => {
@@ -287,6 +296,10 @@ namespace MultiCommWrapper.Net.WrapCode {
             //        onError.Invoke(this.GetText(MsgCode.DeleteFailure));
             //    }
             //});
+        }
+
+        public void DeleteAllEthernetData(Action onSuccess, OnErr onError) {
+            this.DeleteAllFromStorage(this.ethernetStorage, onSuccess, onError);
         }
 
 

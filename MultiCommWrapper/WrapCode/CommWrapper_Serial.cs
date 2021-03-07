@@ -307,8 +307,23 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void SaveSerialCfg(IIndexItem<SerialIndexExtraInfo> idx, SerialDeviceInfo data, Action onSuccess, OnErr onError) {
-            this.Validate5msReadWrite(data, data);
-            this.Save(this.serialStorage, idx, data, onSuccess, onError);
+
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    this.Validate5msReadWrite(data, data);
+                    // Update the index extra info
+                    idx.ExtraInfoObj.Update(data);
+                    this.Save(this.serialStorage, idx, data, onSuccess, onError);
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.SaveFailed));
+                }
+            });
+
+
+
+
             //WrapErr.ToErrReport(9999, () => {
             //    ErrReport report;
             //    WrapErr.ToErrReport(out report, 9999, () => {

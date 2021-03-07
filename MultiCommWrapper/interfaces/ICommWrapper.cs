@@ -495,6 +495,8 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void DeleteEthernetData(IIndexItem<EthernetExtraInfo> index, string name, Func<string, bool> areYouSure, Action<bool> onComplete, OnErr onError);
 
+        void DeleteAllEthernetData(Action onSuccess, OnErr onError);
+
         #endregion
 
         ScratchSet GetScratch();
