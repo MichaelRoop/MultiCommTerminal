@@ -1,0 +1,36 @@
+{
+  "$type": "StorageFactory.Net.StorageManagers.IndexGroup`1[[SerialCommon.Net.StorageIndexExtraInfo.SerialIndexExtraInfo, SerialCommon.Net]], StorageFactory.Net",
+  "Items": {
+    "$type": "System.Collections.Generic.List`1[[StorageFactory.Net.interfaces.IIndexItem`1[[SerialCommon.Net.StorageIndexExtraInfo.SerialIndexExtraInfo, SerialCommon.Net]], StorageFactory.Net]], System.Private.CoreLib",
+    "$values": [
+      {
+        "$type": "StorageFactory.Net.StorageManagers.IndexItem`1[[SerialCommon.Net.StorageIndexExtraInfo.SerialIndexExtraInfo, SerialCommon.Net]], StorageFactory.Net",
+        "Display": "COM8",
+        "UId_FileName": "e46968b0-fa0c-4962-ba2d-e6af35e12922.txt",
+        "UId_Object": "e46968b0-fa0c-4962-ba2d-e6af35e12922",
+        "ExtraInfoObj": {
+          "$type": "SerialCommon.Net.StorageIndexExtraInfo.SerialIndexExtraInfo, SerialCommon.Net",
+          "PortName": "COM8",
+          "USBVendor": "Arduino",
+          "USBProduct": "Due Programming Port",
+          "USBVendorId": 9025,
+          "USBProductId": 61
+        }
+      },
+      {
+        "$type": "StorageFactory.Net.StorageManagers.IndexItem`1[[SerialCommon.Net.StorageIndexExtraInfo.SerialIndexExtraInfo, SerialCommon.Net]], StorageFactory.Net",
+        "Display": "COM4",
+        "UId_FileName": "84a2782f-596d-4049-9d2f-29b673137bb4.txt",
+        "UId_Object": "84a2782f-596d-4049-9d2f-29b673137bb4",
+        "ExtraInfoObj": {
+          "$type": "SerialCommon.Net.StorageIndexExtraInfo.SerialIndexExtraInfo, SerialCommon.Net",
+          "PortName": "COM4",
+          "USBVendor": "Atmel",
+          "USBProduct": "ATMEGA328P - XMINI(CDC ACM)",
+          "USBVendorId": 1003,
+          "USBProductId": 8517
+        }
+      }
+    ]
+  }
+}

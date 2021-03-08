@@ -1,0 +1,22 @@
+{
+  "$type": "StorageFactory.Net.StorageManagers.IndexGroup`1[[StorageFactory.Net.StorageManagers.DefaultFileExtraInfo, StorageFactory.Net]], StorageFactory.Net",
+  "Items": {
+    "$type": "System.Collections.Generic.List`1[[StorageFactory.Net.interfaces.IIndexItem`1[[StorageFactory.Net.StorageManagers.DefaultFileExtraInfo, StorageFactory.Net]], StorageFactory.Net]], System.Private.CoreLib",
+    "$values": [
+      {
+        "$type": "StorageFactory.Net.StorageManagers.IndexItem`1[[StorageFactory.Net.StorageManagers.DefaultFileExtraInfo, StorageFactory.Net]], StorageFactory.Net",
+        "Display": "Demo terminator set \\n\\r",
+        "UId_FileName": "e80795ee-b02b-420b-8b7d-306193dfeae4.txt",
+        "UId_Object": "e80795ee-b02b-420b-8b7d-306193dfeae4",
+        "ExtraInfoObj": null
+      },
+      {
+        "$type": "StorageFactory.Net.StorageManagers.IndexItem`1[[StorageFactory.Net.StorageManagers.DefaultFileExtraInfo, StorageFactory.Net]], StorageFactory.Net",
+        "Display": "Arduino \\r\\n",
+        "UId_FileName": "09a95ae4-5755-40d7-8e0e-f915ff3cbe3c.txt",
+        "UId_Object": "09a95ae4-5755-40d7-8e0e-f915ff3cbe3c",
+        "ExtraInfoObj": null
+      }
+    ]
+  }
+}

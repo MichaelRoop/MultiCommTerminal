@@ -1,0 +1,30 @@
+{
+  "$type": "MultiCommData.Net.StorageDataModels.TerminatorDataModel, MultiCommData.Net",
+  "UId": "e80795ee-b02b-420b-8b7d-306193dfeae4",
+  "TerminatorBlock": {
+    "$type": "System.Byte[], System.Private.CoreLib",
+    "$value": "Cg0="
+  },
+  "TerminatorInfos": {
+    "$type": "System.Collections.Generic.List`1[[CommunicationStack.Net.Stacks.TerminatorInfo, CommunicationStack.Net]], System.Private.CoreLib",
+    "$values": [
+      {
+        "$type": "CommunicationStack.Net.Stacks.TerminatorInfo, CommunicationStack.Net",
+        "Code": 10,
+        "Value": 10,
+        "Display": "\\n",
+        "HexDisplay": "0x0a",
+        "Description": "Line feed"
+      },
+      {
+        "$type": "CommunicationStack.Net.Stacks.TerminatorInfo, CommunicationStack.Net",
+        "Code": 13,
+        "Value": 13,
+        "Display": "\\r",
+        "HexDisplay": "0x0d",
+        "Description": "Carriage return"
+      }
+    ]
+  },
+  "Name": "Demo terminator set \\n\\r"
+}

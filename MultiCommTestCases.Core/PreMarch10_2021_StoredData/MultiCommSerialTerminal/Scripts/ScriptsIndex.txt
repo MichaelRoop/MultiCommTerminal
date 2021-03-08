@@ -1,0 +1,22 @@
+{
+  "$type": "StorageFactory.Net.StorageManagers.IndexGroup`1[[StorageFactory.Net.StorageManagers.DefaultFileExtraInfo, StorageFactory.Net]], StorageFactory.Net",
+  "Items": {
+    "$type": "System.Collections.Generic.List`1[[StorageFactory.Net.interfaces.IIndexItem`1[[StorageFactory.Net.StorageManagers.DefaultFileExtraInfo, StorageFactory.Net]], StorageFactory.Net]], System.Private.CoreLib",
+    "$values": [
+      {
+        "$type": "StorageFactory.Net.StorageManagers.IndexItem`1[[StorageFactory.Net.StorageManagers.DefaultFileExtraInfo, StorageFactory.Net]], StorageFactory.Net",
+        "Display": "Demo script",
+        "UId_FileName": "2203a34f-fc4c-4c7d-bbeb-efcae3140ba1.txt",
+        "UId_Object": "2203a34f-fc4c-4c7d-bbeb-efcae3140ba1",
+        "ExtraInfoObj": null
+      },
+      {
+        "$type": "StorageFactory.Net.StorageManagers.IndexItem`1[[StorageFactory.Net.StorageManagers.DefaultFileExtraInfo, StorageFactory.Net]], StorageFactory.Net",
+        "Display": "HC-05",
+        "UId_FileName": "9917a9df-449b-404e-8e89-aa5016acaf01.txt",
+        "UId_Object": "9917a9df-449b-404e-8e89-aa5016acaf01",
+        "ExtraInfoObj": null
+      }
+    ]
+  }
+}

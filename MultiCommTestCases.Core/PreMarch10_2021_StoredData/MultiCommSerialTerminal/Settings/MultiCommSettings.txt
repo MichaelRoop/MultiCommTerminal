@@ -1,0 +1,305 @@
+{
+  "$type": "MultiCommData.Net.StorageDataModels.SettingItems, MultiCommData.Net",
+  "Language": 0,
+  "LanguageName": "English",
+  "CurrentTerminator": {
+    "$type": "MultiCommData.Net.StorageDataModels.TerminatorDataModel, MultiCommData.Net",
+    "UId": "e80795ee-b02b-420b-8b7d-306193dfeae4",
+    "TerminatorBlock": {
+      "$type": "System.Byte[], System.Private.CoreLib",
+      "$value": "Cg0="
+    },
+    "TerminatorInfos": {
+      "$type": "System.Collections.Generic.List`1[[CommunicationStack.Net.Stacks.TerminatorInfo, CommunicationStack.Net]], System.Private.CoreLib",
+      "$values": [
+        {
+          "$type": "CommunicationStack.Net.Stacks.TerminatorInfo, CommunicationStack.Net",
+          "Code": 10,
+          "Value": 10,
+          "Display": "\\n",
+          "HexDisplay": "0x0a",
+          "Description": "Line feed"
+        },
+        {
+          "$type": "CommunicationStack.Net.Stacks.TerminatorInfo, CommunicationStack.Net",
+          "Code": 13,
+          "Value": 13,
+          "Display": "\\r",
+          "HexDisplay": "0x0d",
+          "Description": "Carriage return"
+        }
+      ]
+    },
+    "Name": "Demo terminator set \\n\\r"
+  },
+  "CurrentScript": {
+    "$type": "MultiCommData.Net.StorageDataModels.ScriptDataModel, MultiCommData.Net",
+    "UId": "2203a34f-fc4c-4c7d-bbeb-efcae3140ba1",
+    "Display": "Demo open close commands",
+    "Items": {
+      "$type": "System.Collections.Generic.List`1[[MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net]], System.Private.CoreLib",
+      "$values": [
+        {
+          "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+          "Display": "Open door cmd",
+          "Command": "OpenDoor"
+        },
+        {
+          "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+          "Display": "Close door cmd",
+          "Command": "CloseDoor"
+        }
+      ]
+    }
+  },
+  "CurrentTerminatorBT": {
+    "$type": "MultiCommData.Net.StorageDataModels.TerminatorDataModel, MultiCommData.Net",
+    "UId": "e80795ee-b02b-420b-8b7d-306193dfeae4",
+    "TerminatorBlock": {
+      "$type": "System.Byte[], System.Private.CoreLib",
+      "$value": "Cg0="
+    },
+    "TerminatorInfos": {
+      "$type": "System.Collections.Generic.List`1[[CommunicationStack.Net.Stacks.TerminatorInfo, CommunicationStack.Net]], System.Private.CoreLib",
+      "$values": [
+        {
+          "$type": "CommunicationStack.Net.Stacks.TerminatorInfo, CommunicationStack.Net",
+          "Code": 10,
+          "Value": 10,
+          "Display": "\\n",
+          "HexDisplay": "0x0a",
+          "Description": "Line feed"
+        },
+        {
+          "$type": "CommunicationStack.Net.Stacks.TerminatorInfo, CommunicationStack.Net",
+          "Code": 13,
+          "Value": 13,
+          "Display": "\\r",
+          "HexDisplay": "0x0d",
+          "Description": "Carriage return"
+        }
+      ]
+    },
+    "Name": "Demo terminator set \\n\\r"
+  },
+  "CurrentTerminatorBLE": {
+    "$type": "MultiCommData.Net.StorageDataModels.TerminatorDataModel, MultiCommData.Net",
+    "UId": "e80795ee-b02b-420b-8b7d-306193dfeae4",
+    "TerminatorBlock": {
+      "$type": "System.Byte[], System.Private.CoreLib",
+      "$value": "Cg0="
+    },
+    "TerminatorInfos": {
+      "$type": "System.Collections.Generic.List`1[[CommunicationStack.Net.Stacks.TerminatorInfo, CommunicationStack.Net]], System.Private.CoreLib",
+      "$values": [
+        {
+          "$type": "CommunicationStack.Net.Stacks.TerminatorInfo, CommunicationStack.Net",
+          "Code": 10,
+          "Value": 10,
+          "Display": "\\n",
+          "HexDisplay": "0x0a",
+          "Description": "Line feed"
+        },
+        {
+          "$type": "CommunicationStack.Net.Stacks.TerminatorInfo, CommunicationStack.Net",
+          "Code": 13,
+          "Value": 13,
+          "Display": "\\r",
+          "HexDisplay": "0x0d",
+          "Description": "Carriage return"
+        }
+      ]
+    },
+    "Name": "Demo terminator set \\n\\r"
+  },
+  "CurrentTerminatorEthernet": {
+    "$type": "MultiCommData.Net.StorageDataModels.TerminatorDataModel, MultiCommData.Net",
+    "UId": "e80795ee-b02b-420b-8b7d-306193dfeae4",
+    "TerminatorBlock": {
+      "$type": "System.Byte[], System.Private.CoreLib",
+      "$value": "Cg0="
+    },
+    "TerminatorInfos": {
+      "$type": "System.Collections.Generic.List`1[[CommunicationStack.Net.Stacks.TerminatorInfo, CommunicationStack.Net]], System.Private.CoreLib",
+      "$values": [
+        {
+          "$type": "CommunicationStack.Net.Stacks.TerminatorInfo, CommunicationStack.Net",
+          "Code": 10,
+          "Value": 10,
+          "Display": "\\n",
+          "HexDisplay": "0x0a",
+          "Description": "Line feed"
+        },
+        {
+          "$type": "CommunicationStack.Net.Stacks.TerminatorInfo, CommunicationStack.Net",
+          "Code": 13,
+          "Value": 13,
+          "Display": "\\r",
+          "HexDisplay": "0x0d",
+          "Description": "Carriage return"
+        }
+      ]
+    },
+    "Name": "Demo terminator set \\n\\r"
+  },
+  "CurrentTerminatorUSB": {
+    "$type": "MultiCommData.Net.StorageDataModels.TerminatorDataModel, MultiCommData.Net",
+    "UId": "e80795ee-b02b-420b-8b7d-306193dfeae4",
+    "TerminatorBlock": {
+      "$type": "System.Byte[], System.Private.CoreLib",
+      "$value": "Cg0="
+    },
+    "TerminatorInfos": {
+      "$type": "System.Collections.Generic.List`1[[CommunicationStack.Net.Stacks.TerminatorInfo, CommunicationStack.Net]], System.Private.CoreLib",
+      "$values": [
+        {
+          "$type": "CommunicationStack.Net.Stacks.TerminatorInfo, CommunicationStack.Net",
+          "Code": 10,
+          "Value": 10,
+          "Display": "\\n",
+          "HexDisplay": "0x0a",
+          "Description": "Line feed"
+        },
+        {
+          "$type": "CommunicationStack.Net.Stacks.TerminatorInfo, CommunicationStack.Net",
+          "Code": 13,
+          "Value": 13,
+          "Display": "\\r",
+          "HexDisplay": "0x0d",
+          "Description": "Carriage return"
+        }
+      ]
+    },
+    "Name": "Demo terminator set \\n\\r"
+  },
+  "CurrentTerminatorWIFI": {
+    "$type": "MultiCommData.Net.StorageDataModels.TerminatorDataModel, MultiCommData.Net",
+    "UId": "e80795ee-b02b-420b-8b7d-306193dfeae4",
+    "TerminatorBlock": {
+      "$type": "System.Byte[], System.Private.CoreLib",
+      "$value": "Cg0="
+    },
+    "TerminatorInfos": {
+      "$type": "System.Collections.Generic.List`1[[CommunicationStack.Net.Stacks.TerminatorInfo, CommunicationStack.Net]], System.Private.CoreLib",
+      "$values": [
+        {
+          "$type": "CommunicationStack.Net.Stacks.TerminatorInfo, CommunicationStack.Net",
+          "Code": 10,
+          "Value": 10,
+          "Display": "\\n",
+          "HexDisplay": "0x0a",
+          "Description": "Line feed"
+        },
+        {
+          "$type": "CommunicationStack.Net.Stacks.TerminatorInfo, CommunicationStack.Net",
+          "Code": 13,
+          "Value": 13,
+          "Display": "\\r",
+          "HexDisplay": "0x0d",
+          "Description": "Carriage return"
+        }
+      ]
+    },
+    "Name": "Demo terminator set \\n\\r"
+  },
+  "CurrentScriptBT": {
+    "$type": "MultiCommData.Net.StorageDataModels.ScriptDataModel, MultiCommData.Net",
+    "UId": "2203a34f-fc4c-4c7d-bbeb-efcae3140ba1",
+    "Display": "Demo open close commands",
+    "Items": {
+      "$type": "System.Collections.Generic.List`1[[MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net]], System.Private.CoreLib",
+      "$values": [
+        {
+          "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+          "Display": "Open door cmd",
+          "Command": "OpenDoor"
+        },
+        {
+          "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+          "Display": "Close door cmd",
+          "Command": "CloseDoor"
+        }
+      ]
+    }
+  },
+  "CurrentScriptBLE": {
+    "$type": "MultiCommData.Net.StorageDataModels.ScriptDataModel, MultiCommData.Net",
+    "UId": "2203a34f-fc4c-4c7d-bbeb-efcae3140ba1",
+    "Display": "Demo open close commands",
+    "Items": {
+      "$type": "System.Collections.Generic.List`1[[MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net]], System.Private.CoreLib",
+      "$values": [
+        {
+          "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+          "Display": "Open door cmd",
+          "Command": "OpenDoor"
+        },
+        {
+          "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+          "Display": "Close door cmd",
+          "Command": "CloseDoor"
+        }
+      ]
+    }
+  },
+  "CurrentScriptEthernet": {
+    "$type": "MultiCommData.Net.StorageDataModels.ScriptDataModel, MultiCommData.Net",
+    "UId": "2203a34f-fc4c-4c7d-bbeb-efcae3140ba1",
+    "Display": "Demo open close commands",
+    "Items": {
+      "$type": "System.Collections.Generic.List`1[[MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net]], System.Private.CoreLib",
+      "$values": [
+        {
+          "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+          "Display": "Open door cmd",
+          "Command": "OpenDoor"
+        },
+        {
+          "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+          "Display": "Close door cmd",
+          "Command": "CloseDoor"
+        }
+      ]
+    }
+  },
+  "CurrentScriptUSB": {
+    "$type": "MultiCommData.Net.StorageDataModels.ScriptDataModel, MultiCommData.Net",
+    "UId": "2203a34f-fc4c-4c7d-bbeb-efcae3140ba1",
+    "Display": "Demo open close commands",
+    "Items": {
+      "$type": "System.Collections.Generic.List`1[[MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net]], System.Private.CoreLib",
+      "$values": [
+        {
+          "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+          "Display": "Open door cmd",
+          "Command": "OpenDoor"
+        },
+        {
+          "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+          "Display": "Close door cmd",
+          "Command": "CloseDoor"
+        }
+      ]
+    }
+  },
+  "CurrentScriptWIFI": {
+    "$type": "MultiCommData.Net.StorageDataModels.ScriptDataModel, MultiCommData.Net",
+    "UId": "2203a34f-fc4c-4c7d-bbeb-efcae3140ba1",
+    "Display": "Demo open close commands",
+    "Items": {
+      "$type": "System.Collections.Generic.List`1[[MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net]], System.Private.CoreLib",
+      "$values": [
+        {
+          "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+          "Display": "Open door cmd",
+          "Command": "OpenDoor"
+        },
+        {
+          "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+          "Display": "Close door cmd",
+          "Command": "CloseDoor"
+        }
+      ]
+    }
+  }
+}

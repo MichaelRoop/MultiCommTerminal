@@ -1,0 +1,15 @@
+{
+  "$type": "StorageFactory.Net.StorageManagers.IndexGroup`1[[StorageFactory.Net.StorageManagers.DefaultFileExtraInfo, StorageFactory.Net]], StorageFactory.Net",
+  "Items": {
+    "$type": "System.Collections.Generic.List`1[[StorageFactory.Net.interfaces.IIndexItem`1[[StorageFactory.Net.StorageManagers.DefaultFileExtraInfo, StorageFactory.Net]], StorageFactory.Net]], System.Private.CoreLib",
+    "$values": [
+      {
+        "$type": "StorageFactory.Net.StorageManagers.IndexItem`1[[StorageFactory.Net.StorageManagers.DefaultFileExtraInfo, StorageFactory.Net]], StorageFactory.Net",
+        "Display": "Demo uint 8 bit open close",
+        "UId_FileName": "cce40954-c9ef-4f0a-ae81-a1514bdab71f.txt",
+        "UId_Object": "cce40954-c9ef-4f0a-ae81-a1514bdab71f",
+        "ExtraInfoObj": null
+      }
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "$type": "MultiCommData.Net.StorageDataModels.TerminatorDataModel, MultiCommData.Net",
+  "UId": "09a95ae4-5755-40d7-8e0e-f915ff3cbe3c",
+  "TerminatorBlock": {
+    "$type": "System.Byte[], System.Private.CoreLib",
+    "$value": "DQo="
+  },
+  "TerminatorInfos": {
+    "$type": "System.Collections.Generic.List`1[[CommunicationStack.Net.Stacks.TerminatorInfo, CommunicationStack.Net]], System.Private.CoreLib",
+    "$values": [
+      {
+        "$type": "CommunicationStack.Net.Stacks.TerminatorInfo, CommunicationStack.Net",
+        "Code": 13,
+        "Value": 13,
+        "Display": "\\r",
+        "HexDisplay": "0x0d",
+        "Description": "Carriage return"
+      },
+      {
+        "$type": "CommunicationStack.Net.Stacks.TerminatorInfo, CommunicationStack.Net",
+        "Code": 10,
+        "Value": 10,
+        "Display": "\\n",
+        "HexDisplay": "0x0a",
+        "Description": "Line feed"
+      }
+    ]
+  },
+  "Name": "Arduino \\r\\n"
+}

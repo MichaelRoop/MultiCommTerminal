@@ -1,0 +1,22 @@
+{
+  "$type": "MultiCommData.Net.StorageDataModels.BLECommandSetDataModel, MultiCommData.Net",
+  "UId": "cce40954-c9ef-4f0a-ae81-a1514bdab71f",
+  "Display": "Demo uint 8 bit open close",
+  "CharacteristicName": "",
+  "DataType": 4,
+  "Items": {
+    "$type": "System.Collections.Generic.List`1[[MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net]], System.Private.CoreLib",
+    "$values": [
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "Open door cmd",
+        "Command": "1"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "Close door cmd",
+        "Command": "0"
+      }
+    ]
+  }
+}

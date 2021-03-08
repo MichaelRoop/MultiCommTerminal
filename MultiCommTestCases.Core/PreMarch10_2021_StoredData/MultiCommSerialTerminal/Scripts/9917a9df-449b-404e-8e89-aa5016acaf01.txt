@@ -1,0 +1,235 @@
+{
+  "$type": "MultiCommData.Net.StorageDataModels.ScriptDataModel, MultiCommData.Net",
+  "UId": "9917a9df-449b-404e-8e89-aa5016acaf01",
+  "Display": "HC-05",
+  "Items": {
+    "$type": "System.Collections.Generic.List`1[[MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net]], System.Private.CoreLib",
+    "$values": [
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT",
+        "Command": "AT"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+ADDR?",
+        "Command": "AT+ADDR?"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+NAME?",
+        "Command": "AT+NAME?"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+NAME=<Param>",
+        "Command": "AT+NAME=<Param>"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+VERSION",
+        "Command": "AT+VERSION?"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+UART?",
+        "Command": "AT+UART?"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+UART=<Param>,<Param2>,<Param3>",
+        "Command": "AT+UART=<Param>,<Param2>,<Param3>"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+RESET",
+        "Command": "AT+RESET"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+ORGL",
+        "Command": "AT+ORGL"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+RNAME?<Param>",
+        "Command": "AT+RNAME?<Param1>"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+ROLE?",
+        "Command": "AT+ROLE?"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+ROLE=<Param>",
+        "Command": "AT+ROLE=<Param>"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+CLASS",
+        "Command": "AT+CLASS?"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+CLASS=<Param>",
+        "Command": "AT+CLASS=<Param>"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+IAC?",
+        "Command": "AT+IAC?"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+IAC=<Param>",
+        "Command": "AT+IAC=<Param>"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+INQM?",
+        "Command": "AT+INQM?"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+INQM=<Param>,<Param2>,<Param3>",
+        "Command": "AT+INQM=<Param>,<Param2>, <Param3>"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+PSW?",
+        "Command": "AT+PSWD?"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+PSW=<Param>",
+        "Command": "AT+PSWD=<Param>"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+CMODE?",
+        "Command": "AT+CMODE?"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+CMODE=<Param>",
+        "Command": "AT+CMODE=<Param>"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+BIND?",
+        "Command": "AT+BIND?"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+BIND=<Param>",
+        "Command": "AT+BIND=<Param>"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+POLAR?",
+        "Command": "AT+POLAR?"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+POLAR=<Param>,<Param2>",
+        "Command": "AT+POLAR=<Param1,<Param2>"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+PIO",
+        "Command": "AT+PIO=<Param1>,<Param2>"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+IPSCAN?",
+        "Command": "AT+IPSCAN?"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+IPSCAN=<Param>,<Param2>,<Param3>,<Param4>",
+        "Command": "AT+IPSCAN=<Param1>,<Param2>,<Param3>,<Param4>"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+SNIFF",
+        "Command": "AT+SNIFF?"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+SNIFF=<Param>,<Param2>,<Param3>,<Param4>",
+        "Command": "AT+SNIFF=<Param1>,<Param2>,<Param3>,<Param4>"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+SENM?",
+        "Command": "AT+SENM?"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+SENM=<Param1>,<Param2>",
+        "Command": "AT+SENM=<Param1>,<Param2>"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+PMSAD=<Param1>",
+        "Command": "AT+PMSAD=<Param>"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+RMAAD",
+        "Command": "AT+RMAAD"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+FSAD=<Param1>",
+        "Command": "AT+FSAD=<Param>"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+ADCN?",
+        "Command": "AT+ADCN?"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+STATE?",
+        "Command": "AT+STATE?"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+INIT",
+        "Command": "AT+INIT"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+INQ",
+        "Command": "AT+INQ"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+INQC",
+        "Command": "AT+INQC"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+PAIR=<Param1>,<Param2>",
+        "Command": "AT+PAIR=<Param1>,<Param2>"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+LINK=<Param>",
+        "Command": "AT+LINK=<Param>"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+DISC",
+        "Command": "AT+DISC"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "AT+EXSNIFF=<Param>",
+        "Command": "AT+EXSNIFF=<Param>"
+      }
+    ]
+  }
+}

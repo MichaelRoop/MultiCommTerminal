@@ -1,0 +1,8 @@
+{
+  "$type": "Ethernet.Common.Net.DataModels.EthernetParams, Ethernet.Common.Net",
+  "UId": "6fe19fc4-e6ea-4483-9aa2-65a9d6e69e1c",
+  "Name": "ArduinoTCP",
+  "EthernetAddress": "192.168.1.88",
+  "EthernetServiceName": "9999",
+  "DisplayString": "ArduinoTCP:192.168.1.88:9999"
+}

@@ -1,0 +1,89 @@
+{
+  "$type": "SerialCommon.Net.DataModels.SerialDeviceInfo, SerialCommon.Net",
+  "StorageUid": "84a2782f-596d-4049-9d2f-29b673137bb4",
+  "Id": "\\\\?\\USB#VID_03EB&PID_2145&MI_01#7&111c2a96&1&0001#{86e0d1e0-8089-11d0-9ce4-08003e301f73}",
+  "Name": "mEDBG CMSIS-DAP",
+  "Aqs": "",
+  "IsDefault": false,
+  "IsEnabled": true,
+  "PortName": "COM4",
+  "Baud": 115200,
+  "DataBits": 8,
+  "StopBits": 0,
+  "Parity": 0,
+  "FlowHandshake": 0,
+  "WriteTimeout": "00:00:00.0050000",
+  "ReadTimeout": "00:00:00.0050000",
+  "TX_BreakSignalEnabled": false,
+  "CD_CarrierDetectLineState": false,
+  "CTS_ClearToSendLineState": false,
+  "CTS_IsClearToSendEnabled": false,
+  "RTS_IsRequesttoSendEnabled": false,
+  "DTR_IsDataTerminalReady": false,
+  "DSR_DataSetReadyState": false,
+  "BytesReceivedOnLastInput": 0,
+  "USB_VendorId": 1003,
+  "USB_ProductId": 8517,
+  "USB_VendorIdDisplay": "Atmel",
+  "USB_ProductIdDisplay": "ATMEGA328P - XMINI(CDC ACM)",
+  "HasCfg": false,
+  "Properties": {
+    "$type": "System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib],[Common.Net.Network.NetPropertyDataModel, Common.Net]], System.Private.CoreLib",
+    "System.ItemNameDisplay": {
+      "$type": "Common.Net.Network.NetPropertyDataModel, Common.Net",
+      "Target": 0,
+      "Key": "System.ItemNameDisplay",
+      "DataType": 1,
+      "Value": "mEDBG CMSIS-DAP"
+    },
+    "System.Devices.DeviceInstanceId": {
+      "$type": "Common.Net.Network.NetPropertyDataModel, Common.Net",
+      "Target": 0,
+      "Key": "System.Devices.DeviceInstanceId",
+      "DataType": 1,
+      "Value": "USB\\VID_03EB&PID_2145&MI_01\\7&111c2a96&1&0001"
+    },
+    "System.Devices.Icon": {
+      "$type": "Common.Net.Network.NetPropertyDataModel, Common.Net",
+      "Target": 0,
+      "Key": "System.Devices.Icon",
+      "DataType": 1,
+      "Value": "C:\\Windows\\System32\\DDORes.dll,-2001"
+    },
+    "System.Devices.GlyphIcon": {
+      "$type": "Common.Net.Network.NetPropertyDataModel, Common.Net",
+      "Target": 0,
+      "Key": "System.Devices.GlyphIcon",
+      "DataType": 1,
+      "Value": "C:\\Windows\\System32\\DDORes.dll,-3001"
+    },
+    "System.Devices.InterfaceEnabled": {
+      "$type": "Common.Net.Network.NetPropertyDataModel, Common.Net",
+      "Target": 0,
+      "Key": "System.Devices.InterfaceEnabled",
+      "DataType": 2,
+      "Value": true
+    },
+    "System.Devices.IsDefault": {
+      "$type": "Common.Net.Network.NetPropertyDataModel, Common.Net",
+      "Target": 0,
+      "Key": "System.Devices.IsDefault",
+      "DataType": 2,
+      "Value": false
+    },
+    "System.Devices.PhysicalDeviceLocation": {
+      "$type": "Common.Net.Network.NetPropertyDataModel, Common.Net",
+      "Target": 0,
+      "Key": "System.Devices.PhysicalDeviceLocation",
+      "DataType": 1,
+      "Value": ""
+    },
+    "System.Devices.ContainerId": {
+      "$type": "Common.Net.Network.NetPropertyDataModel, Common.Net",
+      "Target": 0,
+      "Key": "System.Devices.ContainerId",
+      "DataType": 3,
+      "Value": "dbd23d27-c9f7-1843-b47c-71f782faf8e3"
+    }
+  }
+}

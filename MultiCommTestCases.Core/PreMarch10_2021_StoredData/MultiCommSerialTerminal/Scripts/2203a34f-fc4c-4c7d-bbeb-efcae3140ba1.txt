@@ -1,0 +1,20 @@
+{
+  "$type": "MultiCommData.Net.StorageDataModels.ScriptDataModel, MultiCommData.Net",
+  "UId": "2203a34f-fc4c-4c7d-bbeb-efcae3140ba1",
+  "Display": "Demo open close commands",
+  "Items": {
+    "$type": "System.Collections.Generic.List`1[[MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net]], System.Private.CoreLib",
+    "$values": [
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "Open door cmd",
+        "Command": "OpenDoor"
+      },
+      {
+        "$type": "MultiCommData.Net.StorageDataModels.ScriptItem, MultiCommData.Net",
+        "Display": "Close door cmd",
+        "Command": "CloseDoor"
+      }
+    ]
+  }
+}
