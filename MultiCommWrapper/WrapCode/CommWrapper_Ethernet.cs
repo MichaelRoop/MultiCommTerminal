@@ -145,22 +145,33 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void CreateNewEthernetData(EthernetParams data, Action onSuccess, OnErr onError) {
-            this.Create(data.Display, data, this.ethernetStorage,
-                (idx) => onSuccess(),
-                (d) => {
-                    this.RaiseEthernetListChange(() => { }, onError);
-                    //this.GetEthernetDataList(
-                    //    (list) => {
-                    //        this.OnEthernetListChange?.Invoke(this, list);
-                    //        //onSuccess.Invoke();
-                    //    }, onError);
-                }, onError, new EthernetExtraInfo(data));
+            this.CreateNewEthernetData(data, (idx) => { onSuccess(); }, onError);
+            
+            //this.Create(data.Display, data, this.ethernetStorage,
+            //    (idx) => onSuccess(),
+            //    (d) => {
+            //        this.RaiseEthernetListChange(() => { }, onError);
+            //        //this.GetEthernetDataList(
+            //        //    (list) => {
+            //        //        this.OnEthernetListChange?.Invoke(this, list);
+            //        //        //onSuccess.Invoke();
+            //        //    }, onError);
+            //    }, onError, new EthernetExtraInfo(data));
             //ErrReport report;
             //WrapErr.ToErrReport(out report, 200103, "Failure on CreateNewEthernetData", () => {
             //    this.CreateNewEthernetData(data.DisplayString, data, onSuccess, onError);
             //});
             //this.RaiseIfException(report);
         }
+
+
+        public void CreateNewEthernetData(EthernetParams data, Action<IIndexItem<EthernetExtraInfo>> onSuccess, OnErr onError) {
+            this.Create(data.Display, data, this.ethernetStorage, onSuccess,
+                (ethernetParam) => {
+                    this.RaiseEthernetListChange(() => { }, onError);
+                }, onError, new EthernetExtraInfo(data));
+        }
+
 
 
         ///// <summary>As of March 2021 I ported the storage to generic which lost the old ethernet Name field

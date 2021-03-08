@@ -1,5 +1,4 @@
-﻿//using Ethernet.Common.Net.DataModels;
-using LogUtils.Net;
+﻿using LogUtils.Net;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommData.Net.StorageIndexInfoModels;
 using MultiCommTestCases.Core.Wrapper.Utils;
@@ -9,7 +8,6 @@ using StorageFactory.Net.StorageManagers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using TestCaseSupport.Core;
 
 namespace MultiCommTestCases.Core.Wrapper.Storage {
@@ -34,6 +32,7 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
 
         #endregion
 
+        #region Creation
 
         [Test]
         public void T01_CreateNew() {
@@ -49,7 +48,37 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
         }
 
         [Test]
-        public void T02_ValidateIndexExtraInfo() {
+        public void T02_CreateNewWithIndex() {
+            TestHelpers.CatchUnexpected(() => {
+                EthernetParams data = new EthernetParams() {
+                    Display = "Extra param",
+                    EthernetAddress = "192.168.1.33",
+                    EthernetServiceName = "10000",
+                };
+                IIndexItem<EthernetExtraInfo> idx = null;
+                TDI.Wrapper.CreateNewEthernetData(data, 
+                    (x) => {
+                        idx = x;
+
+                    }, AssertErr);
+                Assert.NotNull(idx, "Bad index item");
+                this.SetupData(3);
+                EthernetParams retrieved = this.RetrieveData(idx);
+                Assert.NotNull(retrieved, "Bad retrieved params");
+                Assert.AreEqual(data.UId, retrieved.UId);
+                Assert.AreEqual(data.Display, retrieved.Display, "retrieved");
+                Assert.AreEqual(data.EthernetAddress, retrieved.EthernetAddress, "retrieved");
+                Assert.AreEqual(data.EthernetServiceName, retrieved.EthernetServiceName, "retrieved");
+                Assert.AreEqual(data.Display, idx.Display, "idx");
+                Assert.AreEqual(data.EthernetAddress, idx.ExtraInfoObj.Address, "idx");
+                Assert.AreEqual(data.EthernetServiceName, idx.ExtraInfoObj.Port, "idx");
+            });
+        }
+
+
+
+        [Test]
+        public void T03_ValidateIndexExtraInfo() {
             TestHelpers.CatchUnexpected(() => {
                 var index = this.SetupAndRetrieveList(1);
                 Assert.AreEqual("192.168.1.0", index[0].ExtraInfoObj.Address);
@@ -57,9 +86,12 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
             });
         }
 
+        #endregion
+
+        #region Retrieval
 
         [Test]
-        public void T03_RetrieveItem() {
+        public void T04_RetrieveItem() {
             TestHelpers.CatchUnexpected(() => {
                 var index = this.SetupAndRetrieveList(2);
                 EthernetParams p = this.RetrieveData(index[0]);
@@ -69,9 +101,12 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
             });
         }
 
+        #endregion
+
+        #region Delete
 
         [Test]
-        public void T04_DeleteItemYes() {
+        public void T05_DeleteItemYes() {
             TestHelpers.CatchUnexpected(() => {
                 var index = this.SetupAndRetrieveList(3);
                 // Delete middle one
@@ -84,7 +119,7 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
         }
 
         [Test]
-        public void T05_DeleteItemNo() {
+        public void T06_DeleteItemNo() {
             TestHelpers.CatchUnexpected(() => {
                 var index = this.SetupAndRetrieveList(3);
                 // Delete middle one
@@ -94,9 +129,8 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
             });
         }
 
-
         [Test]
-        public void T06_DeleteTwice() {
+        public void T07_DeleteTwice() {
             TestHelpers.CatchUnexpected(() => {
                 var List = this.SetupAndRetrieveList(3);
                 IIndexItem<EthernetExtraInfo> idx = List[0];
@@ -111,9 +145,8 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
             });
         }
 
-
         [Test]
-        public void T07_DeleteNull() {
+        public void T08_DeleteNull() {
             TestHelpers.CatchUnexpected(() => {
                 var List = this.SetupAndRetrieveList(3);
                 IIndexItem<EthernetExtraInfo> idx = List[0];
@@ -128,7 +161,7 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
 
 
         [Test]
-        public void T08_DeleteNullNoFiles() {
+        public void T09_DeleteNullNoFiles() {
             TestHelpers.CatchUnexpected(() => {
                 string err = string.Empty;
                 TDI.Wrapper.DeleteEthernetData(
@@ -141,7 +174,7 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
 
 
         [Test]
-        public void T09_NoFileValidFormatIndex() {
+        public void T10_DeleteNoFileValidFormatIndex() {
             TestHelpers.CatchUnexpected(() => {
                 IIndexItem<EthernetExtraInfo> idx = new IndexItem<EthernetExtraInfo>(Guid.NewGuid().ToString());
                 string err = string.Empty;
@@ -156,9 +189,12 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
             });
         }
 
+        #endregion
+
+        #region Edit save
 
         [Test]
-        public void T10_EditAndSave() {
+        public void T11_EditAndSave() {
             TestHelpers.CatchUnexpected(() => {
                 List<IIndexItem<EthernetExtraInfo>> list = this.SetupAndRetrieveList(2);
                 IIndexItem<EthernetExtraInfo> idx = list[0];
@@ -174,9 +210,12 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
             });
         }
 
+        #endregion
+
+        #region Others
 
         [Test]
-        public void T11_MultiCreateDelete() {
+        public void T12_MultiCreateDelete() {
             TestHelpers.CatchUnexpected(() => {
                 // With 200 it was: 
                 // Time to Create 200 - 672
@@ -209,8 +248,7 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
             });
         }
 
-
-
+        #endregion
 
         #region Private
 

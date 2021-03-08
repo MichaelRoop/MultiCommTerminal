@@ -489,6 +489,9 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void CreateNewEthernetData(EthernetParams data, Action onSuccess, OnErr onError);
 
+        void CreateNewEthernetData(EthernetParams data, Action<IIndexItem<EthernetExtraInfo>> onSuccess, OnErr onError);
+
+
         void RetrieveEthernetData(IIndexItem<EthernetExtraInfo> index, Action<EthernetParams> onSuccess, OnErr onError);
 
         void SaveEthernetData(IIndexItem<EthernetExtraInfo> idx, EthernetParams data, Action onSuccess, OnErr onError);
