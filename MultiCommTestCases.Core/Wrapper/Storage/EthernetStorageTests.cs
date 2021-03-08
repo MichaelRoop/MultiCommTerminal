@@ -8,6 +8,7 @@ using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using TestCaseSupport.Core;
 
@@ -172,6 +173,42 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
                 this.RetrieveAndValidate(idx, display, address, port);
             });
         }
+
+
+        [Test]
+        public void T11_MultiCreateDelete() {
+            TestHelpers.CatchUnexpected(() => {
+                // With 200 it was: 
+                // Time to Create 200 - 672
+                // Time to Delete 200 - 438
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                List<IIndexItem<EthernetExtraInfo>> list = this.SetupAndRetrieveList(20);
+                sw.Stop();
+                this.log.Info("", () => string.Format("Time to Create {0} - {1}", list.Count, sw.ElapsedMilliseconds));
+                TestContext.WriteLine(string.Format("Time to Create {0} - {1}", list.Count, sw.ElapsedMilliseconds));
+                sw.Restart();
+                //int count = list.Count;
+
+
+                // Need copy of list since the one loaded is being shrunk on each delete
+                List<IIndexItem<EthernetExtraInfo>> list2 = new List<IIndexItem<EthernetExtraInfo>>();
+                foreach (var item in list) {
+                    list2.Add(item);
+                }
+
+                for (int i = 0; i < list2.Count; i++) {
+                    TDI.Wrapper.DeleteEthernetData(list2[i], "msg", AreYouSureYes, this.DummyOk, AssertErr);
+                }
+                sw.Stop();
+                this.log.Info("", () => string.Format("Time to Delete {0} - {1}", list2.Count, sw.ElapsedMilliseconds));
+                TestContext.WriteLine(string.Format("Time to Delete {0} - {1}", list2.Count, sw.ElapsedMilliseconds));
+
+                list = this.RetrieveList(0);
+
+            });
+        }
+
 
 
 
