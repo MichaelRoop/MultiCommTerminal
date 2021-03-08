@@ -185,60 +185,38 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         public void RetrieveScriptData(IIndexItem<DefaultFileExtraInfo> index, Action<ScriptDataModel> onSuccess, OnErr onError) {
             this.RetrieveItem(this.scriptStorage, index, onSuccess, onError);
-            //WrapErr.ToErrReport(9999, () => {
-            //    ErrReport report;
-            //    WrapErr.ToErrReport(out report, 9999, () => {
-            //        if (index == null) {
-            //            onError(this.GetText(MsgCode.NothingSelected));
-            //        }
-            //        else { 
-            //            // TODO - check if exists
-            //            onSuccess.Invoke(this.scriptStorage.Retrieve(index));
-            //        }
-            //    });
-            //    if (report.Code != 0) {
-            //        onError.Invoke(this.GetText(MsgCode.LoadFailed));
-            //    }
-            //});
+        }
+
+
+        private void RaiseScriptChange(ScriptDataModel dm) {
+            WrapErr.ToErrReport(9999, () => this.CurrentScriptChanged?.Invoke(this, dm));
         }
 
 
         public void CreateNewScript(string display, ScriptDataModel data, Action onSuccess, OnErr onError) {
-            this.Create(display, data, this.scriptStorage, 
-                (ndx) => {
-                    this.CurrentScriptChanged?.Invoke(this, data);
-                    onSuccess(); 
-                }, onError);
+            //this.Create(display, data, this.scriptStorage, 
+            //    (ndx) => {
+            //        this.CurrentScriptChanged?.Invoke(this, data);
+            //        onSuccess(); 
+            //    }, onError);
 
+            //this.Create(display, data, this.scriptStorage, idx => onSuccess(), this.RaiseScriptChange, onError);
 
-
-
-            //WrapErr.ToErrReport(9999, () => {
-            //    ErrReport report;
-            //    WrapErr.ToErrReport(out report, 9999, () => {
-            //        if (display.Length == 0) {
-            //            onError.Invoke(this.GetText(MsgCode.EmptyName));
-            //        }
-            //        else {
-            //            IIndexItem<DefaultFileExtraInfo> idx = new IndexItem<DefaultFileExtraInfo>(data.UId) {
-            //                Display = display,
-            //            };
-            //            this.SaveScript(idx, data, onSuccess, onError);
-            //        }
-            //    });
-            //    if (report.Code != 0) {
-            //        onError.Invoke(this.GetText(MsgCode.SaveFailed));
-            //    }
-            //});
+            this.CreateNewScript(display, data, idx => onSuccess(), onError);
         }
 
 
         public void CreateNewScript(string display, ScriptDataModel data, Action<IIndexItem<DefaultFileExtraInfo>> onSuccess, OnErr onError) {
-            this.Create(display, data, this.scriptStorage, 
-                (ndx) => {
-                    this.CurrentScriptChanged?.Invoke(this, data);
-                    onSuccess(ndx);
-                }, onError);
+            this.Create(display, data, this.scriptStorage, onSuccess, this.RaiseScriptChange, onError);
+
+
+
+            //this.Create(display, data, this.scriptStorage, 
+            //    (ndx) => {
+            //        this.CurrentScriptChanged?.Invoke(this, data);
+            //        onSuccess(ndx);
+            //    }, onError);
+
 
             //WrapErr.ToErrReport(9999, () => {
             //    ErrReport report;
@@ -274,11 +252,13 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void SaveScript(IIndexItem<DefaultFileExtraInfo> idx, ScriptDataModel data, Action onSuccess, OnErr onError) {
-            this.Save(this.scriptStorage, idx, data, 
-                ()=> {
-                    this.CurrentScriptChanged?.Invoke(this, data);
-                    onSuccess.Invoke();
-                }, onError);
+            this.Save(this.scriptStorage, idx, data, onSuccess, this.RaiseScriptChange, onError);
+            
+            //this.Save(this.scriptStorage, idx, data, 
+            //    ()=> {
+            //        this.CurrentScriptChanged?.Invoke(this, data);
+            //        onSuccess.Invoke();
+            //    }, onError);
 
 
             //WrapErr.ToErrReport(9999, () => {
@@ -359,6 +339,10 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         }
 
+
+        public void DeleteAllScriptData(Action onSuccess, OnErr onError) {
+            this.DeleteAllFromStorage(this.scriptStorage, onSuccess, onError);
+        }
 
         public void ValidateScriptItem(ScriptItem item, Action onSuccess, OnErr onError) {
             WrapErr.ToErrReport(9999, () => {

@@ -5,13 +5,10 @@ using LanguageFactory.Net.data;
 using MultiCommData.Net.Enumerations;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommData.Net.StorageIndexInfoModels;
-using MultiCommWrapper.Net.DataModels;
 using MultiCommWrapper.Net.interfaces;
 using StorageFactory.Net.interfaces;
-using StorageFactory.Net.StorageManagers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace MultiCommWrapper.Net.WrapCode {
@@ -91,77 +88,9 @@ namespace MultiCommWrapper.Net.WrapCode {
             });
         }
 
-        ///// <summary>Split the display into data model fields for column display</summary>
-        ///// <param name="onSuccess">Invoked on success</param>
-        ///// <param name="onError">Invoked on error</param>
-        //public void GetEthernetDataList(Action<List<EthernetDisplayDataModel>> onSuccess, OnErr onError) {
-        //    WrapErr.ToErrReport(9999, () => {
-        //        ErrReport report;
-        //        WrapErr.ToErrReport(out report, 9999, () => {
-        //            List<EthernetDisplayDataModel> list = new List<EthernetDisplayDataModel>();
-        //            foreach(IIndexItem<EthernetExtraInfo> index in this.ethernetStorage.IndexedItems) {
-        //                EthernetDisplayDataModel dm = new EthernetDisplayDataModel() {
-        //                    Index = index,
-        //                };
-        //                this.log.Info("**********", index.Display);
-        //                string[] parts = index.Display.Split(':');
-        //                if (parts != null && parts.Count() == 3) {
-        //                    dm.Name = parts[0];
-        //                    dm.Address = parts[1];
-        //                    dm.Port = parts[2];
-        //                }
-        //                list.Add(dm);
-        //            }
-        //            onSuccess?.Invoke(list);
-        //        });
-        //        if (report.Code != 0) {
-        //            onError.Invoke(this.GetText(MsgCode.LoadFailed));
-        //        }
-        //    });
-
-        //}
-
-
-        //public void CreateNewEthernetData(string display, EthernetParams data, Action onSuccess, OnErr onError) {
-        //    WrapErr.ToErrReport(9999, () => {
-        //        ErrReport report;
-        //        WrapErr.ToErrReport(out report, 9999, () => {
-        //            if (display.Length == 0) {
-        //                onError.Invoke(this.GetText(MsgCode.EmptyName));
-        //            }
-        //            else {
-        //                // For now
-        //                IIndexItem<EthernetExtraInfo> idx = new IndexItem<EthernetExtraInfo>(data.UId, new EthernetExtraInfo(data)) {
-        //                    Display = display,
-        //                };
-        //                this.SaveEthernetData(idx, data, onSuccess, onError);
-        //            }
-        //        });
-        //        if (report.Code != 0) {
-        //            onError.Invoke(this.GetText(MsgCode.SaveFailed));
-        //        }
-        //    });
-        //}
-
 
         public void CreateNewEthernetData(EthernetParams data, Action onSuccess, OnErr onError) {
             this.CreateNewEthernetData(data, (idx) => { onSuccess(); }, onError);
-            
-            //this.Create(data.Display, data, this.ethernetStorage,
-            //    (idx) => onSuccess(),
-            //    (d) => {
-            //        this.RaiseEthernetListChange(() => { }, onError);
-            //        //this.GetEthernetDataList(
-            //        //    (list) => {
-            //        //        this.OnEthernetListChange?.Invoke(this, list);
-            //        //        //onSuccess.Invoke();
-            //        //    }, onError);
-            //    }, onError, new EthernetExtraInfo(data));
-            //ErrReport report;
-            //WrapErr.ToErrReport(out report, 200103, "Failure on CreateNewEthernetData", () => {
-            //    this.CreateNewEthernetData(data.DisplayString, data, onSuccess, onError);
-            //});
-            //this.RaiseIfException(report);
         }
 
 
@@ -171,30 +100,6 @@ namespace MultiCommWrapper.Net.WrapCode {
                     this.RaiseEthernetListChange(() => { }, onError);
                 }, onError, new EthernetExtraInfo(data));
         }
-
-
-
-        ///// <summary>As of March 2021 I ported the storage to generic which lost the old ethernet Name field
-        ///// 
-        ///// </summary>
-        ///// <param name="display"></param>
-        ///// <returns></returns>
-        //private string PortEhernetName(string newDisplay, string oldName) {
-        //    try {
-        //        // Porting issue in case saved under the old 'Name' field, move index display to item Display
-        //        if (newDisplay.Length == 0) {
-        //            // The old index string has concatenated values
-        //            string[] parts = oldName.Split(':');
-        //            if (parts != null && parts.Count() > 0) {
-        //                return parts[0];
-        //            }
-        //        }
-        //        return newDisplay;
-        //    }
-        //    catch (Exception) {
-        //        return newDisplay;
-        //    }
-        //}
 
 
         public void RetrieveEthernetData(IIndexItem<EthernetExtraInfo> index, Action<EthernetParams> onSuccess, OnErr onError) {
@@ -238,27 +143,6 @@ namespace MultiCommWrapper.Net.WrapCode {
                     onError.Invoke(this.GetText(MsgCode.SaveFailed));
                 }
             });
-            //WrapErr.ToErrReport(9999, () => {
-            //    ErrReport report;
-            //    WrapErr.ToErrReport(out report, 9999, () => {
-            //        if (idx.Display.Length == 0) {
-            //            onError.Invoke(this.GetText(MsgCode.EmptyName));
-            //        }
-            //        else {
-            //            // This one a bit different since we create the display from the field values
-            //            idx.Display = data.DisplayString;
-            //            this.ethernetStorage.Store(data, idx);
-            //            this.GetEthernetDataList(
-            //                (list) => {
-            //                    this.OnEthernetListChange?.Invoke(this, list);
-            //                    onSuccess.Invoke();
-            //                }, onError);
-            //        }
-            //    });
-            //    if (report.Code != 0) {
-            //        onError.Invoke(this.GetText(MsgCode.SaveFailed));
-            //    }
-            //});
         }
 
 
@@ -279,69 +163,12 @@ namespace MultiCommWrapper.Net.WrapCode {
                 (ok) => {
                     this.RaiseEthernetListChange(() => onComplete(ok), onError);
                 }, onError);
-            
-            
-            //WrapErr.ToErrReport(9999, () => {
-            //    ErrReport report;
-            //    WrapErr.ToErrReport(out report, 9999, () => {
-            //        if (areYouSure(name)) {
-            //            this.DeleteFromStorage(this.ethernetStorage, index,
-            //                (ok) => {
-            //                    this.GetEthernetDataList(
-            //                        (list) => {
-            //                            this.OnEthernetListChange?.Invoke(this, list);
-            //                            onComplete(ok);
-            //                        }, onError);
-            //                }, onError);
-
-
-            //            //bool ok = this.ethernetStorage.DeleteFile(index);
-            //            //this.GetEthernetDataList(
-            //            //    (list) => {
-            //            //        this.OnEthernetListChange?.Invoke(this, list);
-            //            //        onComplete(ok);
-            //            //    }, onError);
-            //        }
-            //    });
-            //    if (report.Code != 0) {
-            //        onError.Invoke(this.GetText(MsgCode.DeleteFailure));
-            //    }
-            //});
         }
+
 
         public void DeleteAllEthernetData(Action onSuccess, OnErr onError) {
             this.DeleteAllFromStorage(this.ethernetStorage, onSuccess, onError);
         }
-
-
-        //public void DeleteEthernetData(IIndexItem<EthernetExtraInfo> index, Action<bool> onComplete, OnErr onError) {
-        //    this.DeleteFromStorage(this.ethernetStorage, index,
-        //        (ok) => {
-
-        //        }, onError);
-
-
-        //    WrapErr.ToErrReport(9999, () => {
-        //        ErrReport report;
-        //        WrapErr.ToErrReport(out report, 9999, () => {
-        //            IIndexItem<EthernetExtraInfo> idx = index as IIndexItem<EthernetExtraInfo>;
-        //            if (idx == null) {
-        //                bool ok = this.ethernetStorage.DeleteFile(idx);
-        //                this.GetEthernetDataList(
-        //                    (list) => {
-        //                        this.OnEthernetListChange?.Invoke(this, list);
-        //                        onComplete(ok);
-        //                    }, onError);
-        //            }
-        //            else {
-        //                onError(this.GetText(MsgCode.NothingSelected));
-        //            }
-        //        });
-        //        if (report.Code != 0) {
-        //            onError.Invoke(this.GetText(MsgCode.WriteFailue));
-        //        }
-        //    });
-        //}
 
         #endregion
 

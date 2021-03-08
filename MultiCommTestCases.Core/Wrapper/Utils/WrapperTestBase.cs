@@ -18,10 +18,15 @@ namespace MultiCommTestCases.Core.Wrapper.Utils {
 
     public class WrapperTestBase {
 
+        #region Data
+
         private log4net.ILog loggerImpl = null;
         private LogHelper logHelper = new LogHelper();
         protected HelperLogReader logReader = new HelperLogReader();
 
+        #endregion
+
+        #region Setup
 
         public void OneTimeSetup() {
             this.SetupLogger();
@@ -54,6 +59,8 @@ namespace MultiCommTestCases.Core.Wrapper.Utils {
             this.logHelper.ErrorMsgEvent -= this.LogHelper_ErrorMsgEvent;
             this.logHelper.ExceptionMsgEvent -= this.LogHelper_ExceptionMsgEvent;
         }
+
+        #endregion
 
         #region File Logger setup
 
@@ -128,6 +135,32 @@ namespace MultiCommTestCases.Core.Wrapper.Utils {
         private void LogHelper_ExceptionMsgEvent(object sender, string msg) {
             this.loggerImpl.Error(msg);
         }
+
+        #endregion
+
+        #region Protected common tools
+
+        protected void AssertErr(string err) {
+            Assert.AreEqual(string.Empty, err);
+        }
+
+
+        protected void AssertOnDeleteAllErrMsg(string msg) {
+            Assert.AreEqual(string.Empty, msg, "MAKE SURE TO CLOSE ANY STORAGE FILES");
+        }
+
+        protected void OnSuccessDummy() { }
+
+        protected void OnSuccessAssertTrue(bool ok) { Assert.True(ok); }
+
+        protected bool AreYouSureYes(string name) {
+            return true;
+        }
+
+        protected bool AreYouSureNo(string name) {
+            return false;
+        }
+
 
         #endregion
 

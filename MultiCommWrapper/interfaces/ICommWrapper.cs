@@ -229,6 +229,8 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void DeleteScriptData(IIndexItem<DefaultFileExtraInfo> index, Action<bool> onComplete, OnErr onError);
 
+        void DeleteAllScriptData(Action onSuccess, OnErr onError);
+
         void ValidateScriptItem(ScriptItem item, Action onSuccess, OnErr onError);
 
         #endregion
@@ -364,8 +366,6 @@ namespace MultiCommWrapper.Net.interfaces {
         void ValidateBLECmdItem(BLE_DataType dataType, ScriptItem item, Action onSuccess, OnErr onError);
 
         #endregion
-
-
 
         #region WIFI
 
