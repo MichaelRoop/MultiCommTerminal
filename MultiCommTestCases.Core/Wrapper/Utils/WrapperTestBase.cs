@@ -24,6 +24,16 @@ namespace MultiCommTestCases.Core.Wrapper.Utils {
         private LogHelper logHelper = new LogHelper();
         protected HelperLogReader logReader = new HelperLogReader();
 
+        protected readonly string DIR_SCRIPTS = "Scripts";
+        protected readonly string DIR_BLE_CMDS = "BleCommands";
+        protected readonly string DIR_ETHERNET = "EthernetData";
+        protected readonly string DIR_SERIAL = "SerialConfigurations";
+        protected readonly string DIR_SETTINGS = "Settings";
+        protected readonly string DIR_TERMINATORS = "Terminators";
+        protected readonly string DIR_WIFI = "WifiCredentials";
+
+
+
         #endregion
 
         #region Setup
@@ -160,6 +170,44 @@ namespace MultiCommTestCases.Core.Wrapper.Utils {
         protected bool AreYouSureNo(string name) {
             return false;
         }
+
+        protected string March2021DataDir(string subDir) {
+            return Path.Combine(
+                Directory.GetCurrentDirectory(),
+                "PreMarch10_2021_StoredData",
+                "MultiCommSerialTerminal", 
+                subDir);
+
+
+        }
+
+
+        protected string TestDataDir(string subDir) {
+            return Path.Combine(
+                Environment.GetFolderPath(
+                    Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.None),
+                    "MR_TestCases",
+                    "MultiCommSerialTerminal", 
+                    subDir);
+        }
+
+        protected void CopyTestDataMarch2021(string subDir) {
+            string targetDir = this.TestDataDir(subDir);
+
+            if (!Directory.Exists(targetDir)) {
+                Directory.CreateDirectory(targetDir);
+            }
+            foreach (var file in Directory.GetFiles(this.March2021DataDir(subDir))) {
+
+                string target = Path.Combine(targetDir, Path.GetFileName(file));
+                Log.Info("", "", () => string.Format("Copy {0} to {1}", file, target));
+
+
+                File.Copy(file, target);
+            }
+
+        }
+
 
 
         #endregion

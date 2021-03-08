@@ -28,6 +28,61 @@
     <None Update="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="PreMarch10_2021_StoredData\MultiCommSerialTerminal\BleCommands\BleCommandsIndex.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="PreMarch10_2021_StoredData\MultiCommSerialTerminal\BleCommands\cce40954-c9ef-4f0a-ae81-a1514bdab71f.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="PreMarch10_2021_StoredData\MultiCommSerialTerminal\EthernetData\6fe19fc4-e6ea-4483-9aa2-65a9d6e69e1c.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="PreMarch10_2021_StoredData\MultiCommSerialTerminal\EthernetData\EthernetDataIndex.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="PreMarch10_2021_StoredData\MultiCommSerialTerminal\Scripts\2203a34f-fc4c-4c7d-bbeb-efcae3140ba1.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="PreMarch10_2021_StoredData\MultiCommSerialTerminal\Scripts\9917a9df-449b-404e-8e89-aa5016acaf01.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="PreMarch10_2021_StoredData\MultiCommSerialTerminal\Scripts\ScriptsIndex.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="PreMarch10_2021_StoredData\MultiCommSerialTerminal\SerialConfigurations\84a2782f-596d-4049-9d2f-29b673137bb4.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="PreMarch10_2021_StoredData\MultiCommSerialTerminal\SerialConfigurations\e46968b0-fa0c-4962-ba2d-e6af35e12922.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="PreMarch10_2021_StoredData\MultiCommSerialTerminal\SerialConfigurations\SerialCfgIndex.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="PreMarch10_2021_StoredData\MultiCommSerialTerminal\Settings\MultiCommSettings.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="PreMarch10_2021_StoredData\MultiCommSerialTerminal\Terminators\09a95ae4-5755-40d7-8e0e-f915ff3cbe3c.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="PreMarch10_2021_StoredData\MultiCommSerialTerminal\Terminators\e80795ee-b02b-420b-8b7d-306193dfeae4.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="PreMarch10_2021_StoredData\MultiCommSerialTerminal\Terminators\TerminatorsIndex.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="PreMarch10_2021_StoredData\MultiCommSerialTerminal\WifiCredentials\81ed80a4-2e77-4e38-8a9c-1351fc327a4e.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="PreMarch10_2021_StoredData\MultiCommSerialTerminal\WifiCredentials\d659e419-b477-4ed1-87df-12748ea9550c.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="PreMarch10_2021_StoredData\MultiCommSerialTerminal\WifiCredentials\WifiCredIndex.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="PreMarch10_2021_StoredData\" />
   </ItemGroup>
 
 </Project>

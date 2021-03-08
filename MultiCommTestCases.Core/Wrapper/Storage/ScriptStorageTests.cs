@@ -6,6 +6,7 @@ using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using TestCaseSupport.Core;
 
@@ -14,8 +15,7 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
     [TestFixture]
     public class ScriptStorageTests : WrapperTestBase {
 
-
-        ClassLog log = new ClassLog("ScriptStorageTests");
+        private ClassLog log = new ClassLog("ScriptStorageTests");
 
         #region Setup
 
@@ -28,6 +28,45 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
         [SetUp]
         public void SetupEachTest() {
             TDI.Wrapper.DeleteAllScriptData(this.OnSuccessDummy, this.AssertOnDeleteAllErrMsg);
+        }
+
+        #endregion
+
+        #region Back compatibility
+
+        // Explicit has stopped working so it will run every time
+        [Test, Explicit]
+        public void T0_BackCompatible01_March2021() {
+            TestHelpers.CatchUnexpected(() => {
+                // Copy over pre-March 10, 2021 data
+                this.CopyTestDataMarch2021(DIR_SCRIPTS);
+                List<string> names = new List<string>();
+                names.Add("Demo open close commands");
+                names.Add("HC-05");
+                // Only for first
+                List<ScriptItem> scriptItems = new List<ScriptItem>();
+                scriptItems.Add(new ScriptItem("Open door cmd", "OpenDoor"));
+                scriptItems.Add(new ScriptItem("Close door cmd", "CloseDoor"));
+
+                var list = this.RetrieveList();
+                Assert.True(list.Count == 2, "List count");
+                for (int i = 0; i < list.Count; i++) {
+                    var item = this.RetrieveData(list[i]);
+                    Assert.NotNull(item, "ScriptDataModel");
+                    Assert.AreEqual(names[i], item.Display);
+                    if (i == 0) {
+                        Assert.IsTrue(item.Items.Count == 2, "Command items");
+                        for (int j = 0; j < item.Items.Count; j++) {
+                            Assert.AreEqual(scriptItems[i].Display, item.Items[i].Display);
+                            Assert.AreEqual(scriptItems[i].Command, item.Items[i].Command);
+                        }
+                    }
+                    //for (int j = 0; j < item.Items.Count; j++) {
+                    //    TestContext.WriteLine("    {0}:{1}", item.Items[j].Display, item.Items[j].Command);
+                    //}
+                }
+            });
+
         }
 
         #endregion
@@ -63,6 +102,8 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
 
         #region Retrieve
 
+
+
         [Test]
         public void T02_Retrieve01_Good() {
             TestHelpers.CatchUnexpected(() => {
@@ -74,7 +115,72 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
             });
         }
 
+        [Test]
+        public void T02_Retrieve02_BadIndex() {
+            TestHelpers.CatchUnexpected(() => {
+                var list = this.SetupAndRetrieveData(3);
+                string error = string.Empty;
+                ScriptDataModel dataModel = null;
+                TDI.Wrapper.RetrieveScriptData(
+                    new IndexItem<DefaultFileExtraInfo>(Guid.NewGuid().ToString()),
+                    (dm) => {
+                        dataModel = dm;
+                    },
+                    (err) => {
+                        error = err;
+                    });
+                Assert.AreEqual("Not Found", error);
+                Assert.Null(dataModel);
+            });
+        }
 
+        [Test]
+        public void T02_Retrieve03_NullIndex() {
+            TestHelpers.CatchUnexpected(() => {
+                var list = this.SetupAndRetrieveData(3);
+                string error = string.Empty;
+                ScriptDataModel dataModel = null;
+                TDI.Wrapper.RetrieveScriptData(null,
+                    (dm) => {
+                        dataModel = dm;
+                    },
+                    (err) => {
+                        error = err;
+                    });
+                Assert.AreEqual("Nothing Selected", error);
+                Assert.Null(dataModel);
+            });
+        }
+
+        #endregion
+
+        #region Delete
+
+
+
+        #endregion
+
+        #region Edit and save
+
+        [Test]
+        public void T04_EditSave01_validateDisplayAndIndex() {
+            TestHelpers.CatchUnexpected(() => {
+                //Make su both name and index change
+                var ndx = this.SetupAndRetrieveData(1)[0];
+                var dm = this.RetrieveData(ndx);
+                dm.Display = "Blipo";
+                TDI.Wrapper.SaveScript(ndx, dm, this.OnSuccessDummy, this.AssertErr);
+
+                var dm2 = this.RetrieveData(ndx);
+                Assert.AreEqual("Blipo", dm2.Display, "Data model");
+                Assert.AreEqual("Blipo", ndx.Display, "Index");
+                var ndx2 = this.RetrieveList(1)[0];
+                Assert.AreEqual("Blipo", ndx2.Display, "Index retrieved");
+
+
+
+            });
+        }
 
 
         #endregion
