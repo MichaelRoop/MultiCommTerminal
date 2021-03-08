@@ -27,7 +27,7 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
 
         [SetUp]
         public void SetupEachTest() {
-            TDI.Wrapper.DeleteAllEthernetData(this.DummyOk, this.AssertOnDeleteAllErrMsg);
+            TDI.Wrapper.DeleteAllEthernetData(this.OnSuccessDummy, this.AssertOnDeleteAllErrMsg);
         }
 
         #endregion
@@ -111,7 +111,7 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
                 var index = this.SetupAndRetrieveList(3);
                 // Delete middle one
                 TDI.Wrapper.DeleteEthernetData(
-                    index[1], index[1].Display, this.AreYouSureYes, this.DummyOk, AssertErr);
+                    index[1], index[1].Display, this.AreYouSureYes, this.OnSuccessAssertTrue, AssertErr);
                 index = this.RetrieveList(2);
                 RetrieveAndValidate(index[0], "EthernetParam 0", "192.168.1.0", "0");
                 RetrieveAndValidate(index[1], "EthernetParam 2", "192.168.1.2", "2");
@@ -124,7 +124,7 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
                 var index = this.SetupAndRetrieveList(3);
                 // Delete middle one
                 TDI.Wrapper.DeleteEthernetData(
-                    index[1], index[1].Display, this.AreYouSureNo, this.DummyOk, AssertErr);
+                    index[1], index[1].Display, this.AreYouSureNo, this.OnSuccessAssertTrue, AssertErr);
                 index = this.RetrieveList(3);
             });
         }
@@ -205,7 +205,7 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
                 p.Display = display;
                 p.EthernetAddress = address;
                 p.EthernetServiceName = port;
-                TDI.Wrapper.SaveEthernetData(idx, p, this.DummyOk, AssertErr);
+                TDI.Wrapper.SaveEthernetData(idx, p, this.OnSuccessDummy, AssertErr);
                 this.RetrieveAndValidate(idx, display, address, port);
             });
         }
@@ -237,7 +237,7 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
                 }
 
                 for (int i = 0; i < list2.Count; i++) {
-                    TDI.Wrapper.DeleteEthernetData(list2[i], "msg", AreYouSureYes, this.DummyOk, AssertErr);
+                    TDI.Wrapper.DeleteEthernetData(list2[i], "msg", AreYouSureYes, this.OnSuccessAssertTrue, AssertErr);
                 }
                 sw.Stop();
                 this.log.Info("", () => string.Format("Time to Delete {0} - {1}", list2.Count, sw.ElapsedMilliseconds));
@@ -297,31 +297,10 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
                     EthernetAddress = string.Format("192.168.1.{0}", i),
                     EthernetServiceName = i.ToString(),
                 };
-                TDI.Wrapper.CreateNewEthernetData(item, this.DummyOk, this.AssertErr);
+                TDI.Wrapper.CreateNewEthernetData(item, this.OnSuccessDummy, this.AssertErr);
             }
         }
 
-
-        private void AssertErr(string err) {
-            Assert.AreEqual(string.Empty, err);
-        }
-
-
-        private void AssertOnDeleteAllErrMsg(string msg) {
-            Assert.AreEqual(string.Empty, msg, "MAKE SURE TO CLOSE ANY STORAGE FILES");
-        }
-
-        private void DummyOk() {}
-
-        private void DummyOk(bool ok) { Assert.True(ok); }
-
-        private bool AreYouSureYes(string name) {
-            return true;
-        }
-
-        private bool AreYouSureNo(string name) {
-            return false;
-        }
 
         #endregion
 
