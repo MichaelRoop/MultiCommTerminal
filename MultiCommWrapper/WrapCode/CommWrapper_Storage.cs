@@ -429,6 +429,36 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
+        private void DeleteFromStorage<TSToreObject, TExtraInfo>(
+            IIndexedStorageManager<TSToreObject, TExtraInfo> manager,
+            TSToreObject data,
+            Func<string, bool> areYouSure,
+            Action<bool> onComplete,
+            OnErr onError)
+            where TSToreObject : class, IDisplayableData, IIndexible  where TExtraInfo : class {
+
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    this.RetrievelIndexedItem(manager, data,
+                        (ndx) => {
+                            if (areYouSure(data.Display)) {
+                                bool ok = manager.DeleteFile(ndx);
+                                onComplete(ok);
+                            }
+                        }, onError);
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.DeleteFailure));
+                }
+            });
+        }
+
+
+
+
+
+
         private void DeleteFromStorageNotLast<TSToreObject, TExtraInfo>(
             IIndexedStorageManager<TSToreObject, TExtraInfo> manager, IIndexItem<TExtraInfo> indexItem, Action<bool> onComplete, OnErr onError)
             where TSToreObject : class where TExtraInfo : class {
@@ -484,6 +514,9 @@ namespace MultiCommWrapper.Net.WrapCode {
                 }
             });
         }
+
+
+
 
 
         private void DeleteAllFromStorage<TSToreObject, TExtraInfo>(
@@ -723,6 +756,23 @@ namespace MultiCommWrapper.Net.WrapCode {
                     }
                     notFound.Invoke();
                 }, onError);
+        }
+
+
+        /// <summary>Get the index with no event if not found</summary>
+        /// <typeparam name="TSToreObject"></typeparam>
+        /// <typeparam name="TExtraInfo"></typeparam>
+        /// <param name="manager"></param>
+        /// <param name="inObject"></param>
+        /// <param name="found"></param>
+        /// <param name="onError"></param>
+        private void RetrievelIndexedItem<TSToreObject, TExtraInfo>(
+            IIndexedStorageManager<TSToreObject, TExtraInfo> manager,
+            TSToreObject inObject,
+            Action<IIndexItem<TExtraInfo>> found,
+            OnErr onError)
+            where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class {
+            this.RetrievelIndexedItem(manager, inObject, found, () => { }, onError);
         }
 
 
