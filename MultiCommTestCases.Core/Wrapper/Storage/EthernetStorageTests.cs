@@ -28,6 +28,7 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
         [SetUp]
         public void SetupEachTest() {
             TDI.Wrapper.DeleteAllEthernetData(this.OnSuccessDummy, this.AssertOnDeleteAllErrMsg);
+            this.PerTestSetup();
         }
 
         #endregion
@@ -50,28 +51,35 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
         [Test]
         public void T02_CreateNewWithIndex() {
             TestHelpers.CatchUnexpected(() => {
-                EthernetParams data = new EthernetParams() {
-                    Display = "Extra param",
-                    EthernetAddress = "192.168.1.33",
-                    EthernetServiceName = "10000",
-                };
-                IIndexItem<EthernetExtraInfo> idx = null;
-                TDI.Wrapper.CreateNewEthernetData(data, 
-                    (x) => {
-                        idx = x;
+                try {
+                    this.SubscribeToChange();
+                    EthernetParams data = new EthernetParams() {
+                        Display = "Extra param",
+                        EthernetAddress = "192.168.1.33",
+                        EthernetServiceName = "10000",
+                    };
+                    IIndexItem<EthernetExtraInfo> idx = null;
+                    TDI.Wrapper.CreateNewEthernetData(data,
+                        (x) => {
+                            idx = x;
 
-                    }, AssertErr);
-                Assert.NotNull(idx, "Bad index item");
-                this.SetupData(3);
-                EthernetParams retrieved = this.RetrieveData(idx);
-                Assert.NotNull(retrieved, "Bad retrieved params");
-                Assert.AreEqual(data.UId, retrieved.UId);
-                Assert.AreEqual(data.Display, retrieved.Display, "retrieved");
-                Assert.AreEqual(data.EthernetAddress, retrieved.EthernetAddress, "retrieved");
-                Assert.AreEqual(data.EthernetServiceName, retrieved.EthernetServiceName, "retrieved");
-                Assert.AreEqual(data.Display, idx.Display, "idx");
-                Assert.AreEqual(data.EthernetAddress, idx.ExtraInfoObj.Address, "idx");
-                Assert.AreEqual(data.EthernetServiceName, idx.ExtraInfoObj.Port, "idx");
+                        }, AssertErr);
+                    Assert.NotNull(idx, "Bad index item");
+                    this.AssertIndexChangeFired();
+                    this.SetupData(3);
+                    EthernetParams retrieved = this.RetrieveData(idx);
+                    Assert.NotNull(retrieved, "Bad retrieved params");
+                    Assert.AreEqual(data.UId, retrieved.UId);
+                    Assert.AreEqual(data.Display, retrieved.Display, "retrieved");
+                    Assert.AreEqual(data.EthernetAddress, retrieved.EthernetAddress, "retrieved");
+                    Assert.AreEqual(data.EthernetServiceName, retrieved.EthernetServiceName, "retrieved");
+                    Assert.AreEqual(data.Display, idx.Display, "idx");
+                    Assert.AreEqual(data.EthernetAddress, idx.ExtraInfoObj.Address, "idx");
+                    Assert.AreEqual(data.EthernetServiceName, idx.ExtraInfoObj.Port, "idx");
+                }
+                finally {
+                    this.UnsubscribeToChange();
+                }
             });
         }
 
@@ -195,22 +203,69 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
 
         [Test]
         public void T11_EditAndSave() {
-            TestHelpers.CatchUnexpected(() => {
-                List<IIndexItem<EthernetExtraInfo>> list = this.SetupAndRetrieveList(2);
-                IIndexItem<EthernetExtraInfo> idx = list[0];
-                EthernetParams p = this.RetrieveData(idx);
-                string display = "BLAH PHUT";
-                string address = "221.221.221.1";
-                string port = "99";
-                p.Display = display;
-                p.EthernetAddress = address;
-                p.EthernetServiceName = port;
-                TDI.Wrapper.SaveEthernetData(idx, p, this.OnSuccessDummy, AssertErr);
-                this.RetrieveAndValidate(idx, display, address, port);
-            });
+            try {
+                TestHelpers.CatchUnexpected(() => {
+                    this.SubscribeToChange();
+                    List<IIndexItem<EthernetExtraInfo>> list = this.SetupAndRetrieveList(2);
+                    IIndexItem<EthernetExtraInfo> idx = list[0];
+                    EthernetParams p = this.RetrieveData(idx);
+                    string display = "BLAH PHUT";
+                    string address = "221.221.221.1";
+                    string port = "99";
+                    p.Display = display;
+                    p.EthernetAddress = address;
+                    p.EthernetServiceName = port;
+                    TDI.Wrapper.SaveEthernetData(idx, p, this.OnSuccessDummy, AssertErr);
+                    this.AssertCompleteFired();
+                    this.AssertIndexChangeFired();
+
+                    this.RetrieveAndValidate(idx, display, address, port);
+                });
+            }
+            finally {
+                this.UnsubscribeToChange();
+            }
         }
 
         #endregion
+
+        ScriptDataModel changedScript = null;
+        List<IIndexItem<EthernetExtraInfo>> changedIndex = null;
+
+
+        private void AssertScriptChangeFired(ScriptDataModel dm) {
+            Assert.NotNull(this.changedScript, "The change event not fired");
+            Assert.AreEqual(dm, this.changedScript, "Did not raise the changed object");
+        }
+
+        private void AssertIndexChangeFired() {
+            Assert.NotNull(this.changedIndex, "Index change did not fire");
+        }
+
+
+
+        private void SubscribeToChange() {
+            this.changedScript = null;
+            this.changedIndex = null;
+            TDI.Wrapper.CurrentScriptChangedEthernet += scriptChanged;
+            TDI.Wrapper.OnEthernetListChange += listChange;
+        }
+
+        private void listChange(object sender, List<IIndexItem<EthernetExtraInfo>> e) {
+            this.changedIndex = e;
+        }
+
+        private void UnsubscribeToChange() {
+            this.changedScript = null;
+            this.changedIndex = null;
+            TDI.Wrapper.CurrentScriptChangedEthernet -= scriptChanged;
+            TDI.Wrapper.OnEthernetListChange -= listChange;
+        }
+
+        private void scriptChanged(object sender, ScriptDataModel e) {
+            this.changedScript = e;
+        }
+
 
         #region Others
 
@@ -297,7 +352,15 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
                     EthernetAddress = string.Format("192.168.1.{0}", i),
                     EthernetServiceName = i.ToString(),
                 };
-                TDI.Wrapper.CreateNewEthernetData(item, this.OnSuccessDummy, this.AssertErr);
+                try {
+                    this.SubscribeToChange();
+                    TDI.Wrapper.CreateNewEthernetData(item, this.OnSuccessDummy, this.AssertErr);
+                    this.AssertCompleteFired();
+                    this.AssertIndexChangeFired();
+                }
+                finally {
+                    this.UnsubscribeToChange();
+                }
             }
         }
 
