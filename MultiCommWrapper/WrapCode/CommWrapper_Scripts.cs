@@ -299,21 +299,26 @@ namespace MultiCommWrapper.Net.WrapCode {
                     else {
                         this.DeleteFromStorage(this.scriptStorage, index,
                             (ok) => {
-                                this.GetCurrentTerminator(
-                                    (data) => {
-                                        // If deleted script was the current, set current to first in list
-                                        if (data.UId == index.UId_Object) {
-                                            this.RetrieveScriptData(
-                                                this.scriptStorage.IndexedItems[0],
-                                                (newData) => {
-                                                    this.SetCurrentScript(newData, (err) => { });
-                                                },
-                                                (err) => { });
-                                        }
-                                    },
-                                    (err) => { });
+                                this.CheckAndSetCurrentScript(index);
+                                //// Refactor with 2nd Delete
+                                ////TODO oops. checking with the terminator instead of script
+                                //this.GetCurrentTerminator(
+                                //    (data) => {
+                                //        // If deleted script was the current, set current to first in list
+                                //        if (data.UId == index.UId_Object) {
+                                //            this.RetrieveScriptData(
+                                //                this.scriptStorage.IndexedItems[0],
+                                //                (newData) => {
+                                //                    this.SetCurrentScript(newData, (err) => { });
+                                //                },
+                                //                (err) => { });
+                                //        }
+                                //    },
+                                //    (err) => { });
                                 onComplete(ok);
                             }, onError);
+
+
 
                         //bool ok = this.scriptStorage.DeleteFile(index);
                         //this.GetCurrentTerminator(
@@ -337,6 +342,34 @@ namespace MultiCommWrapper.Net.WrapCode {
                 }
             });
 
+        }
+
+
+
+        private void CheckAndSetCurrentScript(IIndexItem<DefaultFileExtraInfo> index) {
+            this.GetCurrentScript(
+                (data) => {
+                    // If deleted script was the current, set current to first in list
+                    if (data.UId == index.UId_Object) {
+                        if (this.scriptStorage.IndexedItems.Count > 0) {
+                            this.RetrieveScriptData(this.scriptStorage.IndexedItems[0],
+                                (newData) => {
+                                    this.SetCurrentScript(newData, (err) => { });
+                                },
+                                (err) => { });
+                        }
+                    }
+                },
+                (err) => { });
+        }
+
+
+        public void DeleteScriptData(IIndexItem<DefaultFileExtraInfo> index, string name, Func<string, bool> areYouSure, Action<bool> onComplete, OnErr onError) {
+            this.DeleteFromStorage(this.scriptStorage, index, name, areYouSure, 
+                (ok) => {
+                    this.CheckAndSetCurrentScript(index);
+                    onComplete(ok);
+                }, onError);
         }
 
 

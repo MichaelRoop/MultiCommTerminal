@@ -102,8 +102,6 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
 
         #region Retrieve
 
-
-
         [Test]
         public void T02_Retrieve01_Good() {
             TestHelpers.CatchUnexpected(() => {
@@ -156,7 +154,101 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
 
         #region Delete
 
+        [Test]
+        public void T03_Delete00_Item() {
+            TestHelpers.CatchUnexpected(() => {
+                IIndexItem<DefaultFileExtraInfo> idx = this.SetupAndRetrieveData(3, 4)[1];
+                // Delete middle one
+                TDI.Wrapper.DeleteScriptData(idx, this.OnSuccessAssertTrue, AssertErr);
+                var indexList = this.RetrieveList(2);
+                List<ScriptItem> scriptItems = this.CreateScriptItems(4);
+                RetrieveAndValidate(indexList[0], "Script Set 0", scriptItems);
+                RetrieveAndValidate(indexList[1], "Script Set 2", scriptItems);
+            });
+        }
 
+
+        [Test]
+        public void T03_Delete01_ItemYes() {
+            TestHelpers.CatchUnexpected(() => {
+                IIndexItem<DefaultFileExtraInfo> idx = this.SetupAndRetrieveData(3,4)[1];
+                // Delete middle one
+                TDI.Wrapper.DeleteScriptData(
+                    idx, idx.Display, this.AreYouSureYes, this.OnSuccessAssertTrue, AssertErr);
+                var indexList = this.RetrieveList(2);
+                List<ScriptItem> scriptItems = this.CreateScriptItems(4);
+                RetrieveAndValidate(indexList[0], "Script Set 0", scriptItems);
+                RetrieveAndValidate(indexList[1], "Script Set 2", scriptItems);
+            });
+        }
+
+
+        [Test]
+        public void T03_Delete02_ItemNo() {
+            TestHelpers.CatchUnexpected(() => {
+                TestHelpers.CatchUnexpected(() => {
+                    IIndexItem<DefaultFileExtraInfo> idx = this.SetupAndRetrieveData(3, 4)[1];
+                    // Delete middle one
+                    TDI.Wrapper.DeleteScriptData(
+                        idx, idx.Display, this.AreYouSureNo, this.OnSuccessAssertTrue, AssertErr);
+                    var indexList = this.RetrieveList(3);
+                    List<ScriptItem> scriptItems = this.CreateScriptItems(4);
+                    RetrieveAndValidate(indexList[0], "Script Set 0", scriptItems);
+                    RetrieveAndValidate(indexList[1], "Script Set 1", scriptItems);
+                    RetrieveAndValidate(indexList[2], "Script Set 2", scriptItems);
+                });
+            });
+        }
+
+
+
+        [Test]
+        public void T03_Delete03_Twice() {
+            TestHelpers.CatchUnexpected(() => {
+                IIndexItem<DefaultFileExtraInfo> idx = this.SetupAndRetrieveData(3, 4)[1];
+                TDI.Wrapper.DeleteScriptData(
+                    idx, idx.Display, this.AreYouSureYes, this.OnSuccessAssertTrue, AssertErr);
+                // Base line. If it does not exist it still returns true. False is only for exceptions on actual delete
+                TDI.Wrapper.DeleteScriptData(
+                    idx, idx.Display, this.AreYouSureYes, this.OnSuccessAssertTrue, AssertErr);
+            });
+        }
+
+
+        [Test]
+        public void T03_Delete04_Null() {
+            TestHelpers.CatchUnexpected(() => {
+                this.SetupAndRetrieveData(3);
+                string error = string.Empty;
+                TDI.Wrapper.DeleteScriptData(
+                    null, "Blipo", this.AreYouSureYes, this.OnSuccessAssertTrue,
+                    err => error = err);
+                Assert.AreEqual("Nothing Selected", error);
+            });
+        }
+
+
+        [Test]
+        public void T03_Delete05_NullNoFiles() {
+            TestHelpers.CatchUnexpected(() => {
+                string error = string.Empty;
+                TDI.Wrapper.DeleteScriptData(
+                    null, "Blipo", this.AreYouSureYes, this.OnSuccessAssertTrue,
+                    err => error = err);
+                Assert.AreEqual("Nothing Selected", error);
+            });
+        }
+
+
+        [Test]
+        public void T03_Delete06_NoFileValidFormatIndex() {
+            TestHelpers.CatchUnexpected(() => {
+                IIndexItem<DefaultFileExtraInfo> idx = new IndexItem<DefaultFileExtraInfo>(Guid.NewGuid().ToString());
+                // Base line. If it does not exist it still returns true. False is only for exceptions on actual delete
+                TDI.Wrapper.DeleteScriptData(
+                    idx, "Blipo", this.AreYouSureYes, this.OnSuccessAssertTrue, this.AssertErr);
+            });
+        }
 
         #endregion
 

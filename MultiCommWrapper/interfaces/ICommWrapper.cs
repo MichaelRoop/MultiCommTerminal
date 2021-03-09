@@ -229,6 +229,9 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void DeleteScriptData(IIndexItem<DefaultFileExtraInfo> index, Action<bool> onComplete, OnErr onError);
 
+        void DeleteScriptData(IIndexItem<DefaultFileExtraInfo> index, string name, Func<string, bool> areYouSure, Action<bool> onComplete, OnErr onError);
+
+
         void DeleteAllScriptData(Action onSuccess, OnErr onError);
 
         void ValidateScriptItem(ScriptItem item, Action onSuccess, OnErr onError);
