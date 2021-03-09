@@ -376,7 +376,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         #endregion
 
-        #region Generic Retrieve
+        #region Generic Delete
 
         private void DeleteFromStorage<TSToreObject, TExtraInfo>(
             IIndexedStorageManager<TSToreObject, TExtraInfo> manager, IIndexItem<TExtraInfo> indexItem, Action<bool> onComplete, OnErr onError)
@@ -414,6 +414,63 @@ namespace MultiCommWrapper.Net.WrapCode {
                 WrapErr.ToErrReport(out report, 9999, () => {
                     if (indexItem == null) {
                         onError(this.GetText(MsgCode.NothingSelected));
+                    }
+                    else {
+                        if (areYouSure(msg)) {
+                            bool ok = manager.DeleteFile(indexItem);
+                            onComplete(ok);
+                        }
+                    }
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.DeleteFailure));
+                }
+            });
+        }
+
+
+        private void DeleteFromStorageNotLast<TSToreObject, TExtraInfo>(
+            IIndexedStorageManager<TSToreObject, TExtraInfo> manager, IIndexItem<TExtraInfo> indexItem, Action<bool> onComplete, OnErr onError)
+            where TSToreObject : class where TExtraInfo : class {
+
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    if (indexItem == null) {
+                        onError(this.GetText(MsgCode.NothingSelected));
+                    }
+                    else if (manager.IndexedItems.Count < 2) {
+                        onError(this.GetText(MsgCode.CannotDeleteLast));
+                    }
+                    else {
+                        bool ok = manager.DeleteFile(indexItem);
+                        onComplete(ok);
+                    }
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.DeleteFailure));
+                }
+            });
+        }
+
+
+        private void DeleteFromStorageNotLast<TSToreObject, TExtraInfo>(
+            IIndexedStorageManager<TSToreObject, TExtraInfo> manager, 
+            IIndexItem<TExtraInfo> indexItem,
+            string msg, 
+            Func<string, bool> areYouSure,
+            Action<bool> onComplete, 
+            OnErr onError)
+            where TSToreObject : class where TExtraInfo : class {
+
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    if (indexItem == null) {
+                        onError(this.GetText(MsgCode.NothingSelected));
+                    }
+                    else if (manager.IndexedItems.Count < 2) {
+                        onError(this.GetText(MsgCode.CannotDeleteLast));
                     }
                     else {
                         if (areYouSure(msg)) {
