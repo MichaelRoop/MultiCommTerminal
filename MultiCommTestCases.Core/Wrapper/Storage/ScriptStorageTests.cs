@@ -6,8 +6,6 @@ using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using TestCaseSupport.Core;
 
 namespace MultiCommTestCases.Core.Wrapper.Storage {
@@ -28,6 +26,7 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
         [SetUp]
         public void SetupEachTest() {
             TDI.Wrapper.DeleteAllScriptData(this.OnSuccessDummy, this.AssertOnDeleteAllErrMsg);
+            this.PerTestSetup();
         }
 
         #endregion
@@ -164,6 +163,7 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
                 List<ScriptItem> scriptItems = this.CreateScriptItems(4);
                 RetrieveAndValidate(indexList[0], "Script Set 0", scriptItems);
                 RetrieveAndValidate(indexList[1], "Script Set 2", scriptItems);
+                this.AssertCompleteFired();
             });
         }
 
@@ -179,6 +179,7 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
                 List<ScriptItem> scriptItems = this.CreateScriptItems(4);
                 RetrieveAndValidate(indexList[0], "Script Set 0", scriptItems);
                 RetrieveAndValidate(indexList[1], "Script Set 2", scriptItems);
+                this.AssertCompleteFired();
             });
         }
 
@@ -188,9 +189,10 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
             TestHelpers.CatchUnexpected(() => {
                 TestHelpers.CatchUnexpected(() => {
                     IIndexItem<DefaultFileExtraInfo> idx = this.SetupAndRetrieveData(3, 4)[1];
-                    // Delete middle one
+                    // Delete middle one but answer No so it is not deleted
                     TDI.Wrapper.DeleteScriptData(
                         idx, idx.Display, this.AreYouSureNo, this.OnSuccessAssertTrue, AssertErr);
+                    this.AssertCompleteDidNotFire();
                     var indexList = this.RetrieveList(3);
                     List<ScriptItem> scriptItems = this.CreateScriptItems(4);
                     RetrieveAndValidate(indexList[0], "Script Set 0", scriptItems);
@@ -201,16 +203,17 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
         }
 
 
-
         [Test]
         public void T03_Delete03_Twice() {
             TestHelpers.CatchUnexpected(() => {
                 IIndexItem<DefaultFileExtraInfo> idx = this.SetupAndRetrieveData(3, 4)[1];
                 TDI.Wrapper.DeleteScriptData(
                     idx, idx.Display, this.AreYouSureYes, this.OnSuccessAssertTrue, AssertErr);
+                this.AssertCompleteFired();
                 // Base line. If it does not exist it still returns true. False is only for exceptions on actual delete
                 TDI.Wrapper.DeleteScriptData(
                     idx, idx.Display, this.AreYouSureYes, this.OnSuccessAssertTrue, AssertErr);
+                this.AssertCompleteFired();
             });
         }
 
@@ -218,12 +221,13 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
         [Test]
         public void T03_Delete04_Null() {
             TestHelpers.CatchUnexpected(() => {
+                Assert.False(this.completeFired, "TEST BEFORE - IS FIRED");
                 this.SetupAndRetrieveData(3);
                 string error = string.Empty;
                 TDI.Wrapper.DeleteScriptData(
-                    null, "Blipo", this.AreYouSureYes, this.OnSuccessAssertTrue,
-                    err => error = err);
+                    null, "Blipo", this.AreYouSureYes, this.OnSuccessAssertTrue, err => error = err);
                 Assert.AreEqual("Nothing Selected", error);
+                this.AssertCompleteDidNotFire();
             });
         }
 
@@ -236,6 +240,7 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
                     null, "Blipo", this.AreYouSureYes, this.OnSuccessAssertTrue,
                     err => error = err);
                 Assert.AreEqual("Nothing Selected", error);
+                this.AssertCompleteDidNotFire();
             });
         }
 
@@ -243,12 +248,51 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
         [Test]
         public void T03_Delete06_NoFileValidFormatIndex() {
             TestHelpers.CatchUnexpected(() => {
+                // Need to create some valid entries to avoid tripping the "Cannot delete last"
+                this.SetupData(2);
+                // Dummy index item create that is not in index 
                 IIndexItem<DefaultFileExtraInfo> idx = new IndexItem<DefaultFileExtraInfo>(Guid.NewGuid().ToString());
                 // Base line. If it does not exist it still returns true. False is only for exceptions on actual delete
                 TDI.Wrapper.DeleteScriptData(
                     idx, "Blipo", this.AreYouSureYes, this.OnSuccessAssertTrue, this.AssertErr);
+                this.AssertCompleteFired();
             });
         }
+
+
+        [Test]
+        public void T03_Delete07_Yes_DeleteLast() {
+            TestHelpers.CatchUnexpected(() => {
+                TestHelpers.CatchUnexpected(() => {
+                    IIndexItem<DefaultFileExtraInfo> idx = this.SetupAndRetrieveData(1, 4)[0];
+                    string error = "";
+                    bool ok = false;
+                    TDI.Wrapper.DeleteScriptData(
+                        idx, idx.Display, this.AreYouSureYes, (tf) => ok = tf, e => error = e);
+                    Assert.AreEqual("Cannot delete last entry", error);
+                    this.AssertCompleteDidNotFire();
+                });
+            });
+        }
+
+
+        [Test]
+        public void T03_Delete08_DeleteLast() {
+            TestHelpers.CatchUnexpected(() => {
+                TestHelpers.CatchUnexpected(() => {
+                    IIndexItem<DefaultFileExtraInfo> idx = this.SetupAndRetrieveData(1, 4)[0];
+                    string error = "";
+                    TDI.Wrapper.DeleteScriptData(
+                        idx, this.OnSuccessAssertTrue, e => error = e);
+                    Assert.AreEqual("Cannot delete last entry", error);
+                    this.AssertCompleteDidNotFire();
+                });
+            });
+        }
+
+
+
+        // TODO - set new current on delete of current
 
         #endregion
 
@@ -262,15 +306,13 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
                 var dm = this.RetrieveData(ndx);
                 dm.Display = "Blipo";
                 TDI.Wrapper.SaveScript(ndx, dm, this.OnSuccessDummy, this.AssertErr);
+                this.AssertCompleteFired();
 
                 var dm2 = this.RetrieveData(ndx);
                 Assert.AreEqual("Blipo", dm2.Display, "Data model");
                 Assert.AreEqual("Blipo", ndx.Display, "Index");
                 var ndx2 = this.RetrieveList(1)[0];
                 Assert.AreEqual("Blipo", ndx2.Display, "Index retrieved");
-
-
-
             });
         }
 
@@ -283,7 +325,8 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
             for (uint i = 0; i < count; i++) {
                 string name = string.Format("Script Set {0}", i);
                 TDI.Wrapper.CreateNewScript(
-                    name, this.CreateScriptSet(name, itemCount), this.OnSuccessDummy, this.AssertErr); 
+                    name, this.CreateScriptSet(name, itemCount), this.OnSuccessDummy, this.AssertErr);
+                this.AssertCompleteFired();
             }
         }
 
@@ -293,6 +336,7 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
                 string name = string.Format("Script Set {0}", i);
                 TDI.Wrapper.CreateNewScript(
                     name, this.CreateScriptSet(name, itemCount), this.OnSuccessDummy, this.AssertErr);
+                this.AssertCompleteFired();
             }
             return this.RetrieveList(count);
         }

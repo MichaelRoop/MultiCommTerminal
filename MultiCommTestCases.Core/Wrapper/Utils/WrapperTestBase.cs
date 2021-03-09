@@ -23,6 +23,7 @@ namespace MultiCommTestCases.Core.Wrapper.Utils {
         private log4net.ILog loggerImpl = null;
         private LogHelper logHelper = new LogHelper();
         protected HelperLogReader logReader = new HelperLogReader();
+        protected bool completeFired = false;
 
         protected readonly string DIR_SCRIPTS = "Scripts";
         protected readonly string DIR_BLE_CMDS = "BleCommands";
@@ -69,6 +70,11 @@ namespace MultiCommTestCases.Core.Wrapper.Utils {
             this.logHelper.ErrorMsgEvent -= this.LogHelper_ErrorMsgEvent;
             this.logHelper.ExceptionMsgEvent -= this.LogHelper_ExceptionMsgEvent;
         }
+
+        protected void PerTestSetup() {
+            this.completeFired = false;
+        }
+
 
         #endregion
 
@@ -159,9 +165,29 @@ namespace MultiCommTestCases.Core.Wrapper.Utils {
             Assert.AreEqual(string.Empty, msg, "MAKE SURE TO CLOSE ANY STORAGE FILES");
         }
 
-        protected void OnSuccessDummy() { }
+        protected void OnSuccessDummy() {
+            completeFired = true;
+        }
 
-        protected void OnSuccessAssertTrue(bool ok) { Assert.True(ok); }
+        protected void OnSuccessAssertTrue(bool ok) {
+            completeFired = true;
+            Assert.True(ok, "OnSuccess or OnComplete did not have true param"); 
+        }
+
+        protected void AssertCompleteFired() {
+            Assert.True(this.completeFired, "OnComplete or OnSuccess did not fire");
+            this.ResetCompleteFired();
+        }
+
+        protected void AssertCompleteDidNotFire() {
+            Assert.False(this.completeFired, "OnComplete or OnSuccess should not have fired");
+        }
+
+
+        protected void ResetCompleteFired() {
+            this.completeFired = false;
+        }
+
 
         protected bool AreYouSureYes(string name) {
             return true;
