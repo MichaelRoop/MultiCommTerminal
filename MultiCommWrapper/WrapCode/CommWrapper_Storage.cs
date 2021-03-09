@@ -455,10 +455,6 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-
-
-
-
         private void DeleteFromStorageNotLast<TSToreObject, TExtraInfo>(
             IIndexedStorageManager<TSToreObject, TExtraInfo> manager, IIndexItem<TExtraInfo> indexItem, Action<bool> onComplete, OnErr onError)
             where TSToreObject : class where TExtraInfo : class {
@@ -697,12 +693,13 @@ namespace MultiCommWrapper.Net.WrapCode {
             IIndexedStorageManager<TSToreObject, TExtraInfo> manager,
             string display,
             TSToreObject data,
+            Action<TSToreObject, IIndexItem<TExtraInfo>> preSaveIndexUpdate,
             Action<IIndexItem<TExtraInfo>> onSuccess,
             OnErr onError,
             TExtraInfo extraInfo = null)
             where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class {
 
-            this.SaveOrCreate(manager, display, data, onSuccess, (d) => { }, onError, extraInfo);
+            this.SaveOrCreate(manager, display, data, preSaveIndexUpdate, onSuccess, (d) => { }, onError, extraInfo);
         }
 
 
@@ -711,6 +708,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             IIndexedStorageManager<TSToreObject, TExtraInfo> manager,
             string display,
             TSToreObject data,
+            Action<TSToreObject, IIndexItem<TExtraInfo>> preSaveIndexUpdate,
             Action<IIndexItem<TExtraInfo>> onSuccess,
             Action<TSToreObject> onChange,
             OnErr onError, 
@@ -723,6 +721,7 @@ namespace MultiCommWrapper.Net.WrapCode {
                     this.RetrievelIndexedItem(manager, data,
                         (idx) => {
                             // Found. Save
+                            preSaveIndexUpdate(data, idx);
                             this.Save(manager, idx, data, () => onSuccess(idx), onChange, onError);
                         },
                         () => {

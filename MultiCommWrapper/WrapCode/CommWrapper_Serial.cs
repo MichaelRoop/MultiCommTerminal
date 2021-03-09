@@ -253,8 +253,13 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         public void CreateOrSaveSerialCfg(string display, SerialDeviceInfo data, Action onSuccess, OnErr onError) {
             this.Validate5msReadWrite(data, data);
-            this.SaveOrCreate(this.serialStorage, display, data, (idx) => onSuccess(), onError);
+            this.SaveOrCreate(this.serialStorage, display, data, 
+                (dm, idx)=> idx.ExtraInfoObj.Update(dm),
+                (idx) => onSuccess(), onError);
             
+
+
+
             //ErrReport report;
             //WrapErr.ToErrReport(out report, 2003010, "Failure on CreateOrSaveSerialCfg", () => {
             //    // Only have access to the object and not its index object

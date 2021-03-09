@@ -77,9 +77,24 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
                 IIndexItem<SerialIndexExtraInfo> ndx = this.RetrieveList(2)[0];
                 var cfg = this.RetrieveData(ndx);
                 cfg.Display = "BLAH BLAH BLAH";
+                cfg.Baud = 55000;
+                cfg.DataBits = 1;
+                cfg.USB_VendorId = 44;
+                cfg.USB_VendorIdDisplay = "blah";
                 TDI.Wrapper.CreateOrSaveSerialCfg(cfg.Display, cfg, this.OnSuccessDummy, this.AssertErr);
                 this.AssertCompleteFired();
-                this.RetrieveList(2);
+                var list = this.RetrieveList(2);
+                bool found = false;
+                for (int i = 0; i< 2; i++) {
+                    if (list[i].UId_Object == ndx.UId_Object) {
+                        found = true;
+                        this.RetrieveAndValidate(list[i], "BLAH BLAH BLAH", 55000, 1, cfg.StopBits, cfg.Parity, cfg.FlowHandshake);
+                    }
+                }
+                Assert.True(found, "Did not find original index");
+
+
+
             });
         }
 
