@@ -8,11 +8,12 @@ using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MultiCommWrapper.Net.WrapCode {
 
     public partial class CommWrapper : ICommWrapper {
+
+        #region Events
 
         public event EventHandler<ScriptDataModel> CurrentScriptChanged;
         public event EventHandler<ScriptDataModel> CurrentScriptChangedBT;
@@ -21,6 +22,9 @@ namespace MultiCommWrapper.Net.WrapCode {
         public event EventHandler<ScriptDataModel> CurrentScriptChangedWIFI;
         public event EventHandler<ScriptDataModel> CurrentScriptChangedEthernet;
 
+        #endregion
+
+        #region Public Current methods
 
         public void GetCurrentScript(Action<ScriptDataModel> onSuccess, OnErr onError) {
             WrapErr.ToErrReport(9999, () => {
@@ -109,10 +113,11 @@ namespace MultiCommWrapper.Net.WrapCode {
                             break;
                     }
                     if (dm == null) {
+                        if (items.CurrentScript == null) {
+                            items.CurrentScript = this.AssureScript(new ScriptDataModel());
+                        }
                         dm = items.CurrentScript;
                     }
-                    dm = this.AssureScript(dm);
-
                     onSuccess(dm);
                 });
                 if (report.Code != 0) {
@@ -181,201 +186,53 @@ namespace MultiCommWrapper.Net.WrapCode {
             this.RaiseIfException(report);
         }
 
+        #endregion
 
+        #region Public storage methods
 
         public void RetrieveScriptData(IIndexItem<DefaultFileExtraInfo> index, Action<ScriptDataModel> onSuccess, OnErr onError) {
             this.RetrieveItem(this.scriptStorage, index, onSuccess, onError);
         }
 
 
-        private void RaiseScriptChange(ScriptDataModel dm) {
-            WrapErr.ToErrReport(9999, () => this.CurrentScriptChanged?.Invoke(this, dm));
-        }
-
-
         public void CreateNewScript(string display, ScriptDataModel data, Action onSuccess, OnErr onError) {
-            //this.Create(display, data, this.scriptStorage, 
-            //    (ndx) => {
-            //        this.CurrentScriptChanged?.Invoke(this, data);
-            //        onSuccess(); 
-            //    }, onError);
-
-            //this.Create(display, data, this.scriptStorage, idx => onSuccess(), this.RaiseScriptChange, onError);
-
             this.CreateNewScript(display, data, idx => onSuccess(), onError);
         }
 
 
         public void CreateNewScript(string display, ScriptDataModel data, Action<IIndexItem<DefaultFileExtraInfo>> onSuccess, OnErr onError) {
             this.Create(display, data, this.scriptStorage, onSuccess, this.RaiseScriptChange, onError);
-
-
-
-            //this.Create(display, data, this.scriptStorage, 
-            //    (ndx) => {
-            //        this.CurrentScriptChanged?.Invoke(this, data);
-            //        onSuccess(ndx);
-            //    }, onError);
-
-
-            //WrapErr.ToErrReport(9999, () => {
-            //    ErrReport report;
-            //    WrapErr.ToErrReport(out report, 9999, () => {
-            //        if (display.Length == 0) {
-            //            onError.Invoke(this.GetText(MsgCode.EmptyName));
-            //        }
-            //        else {
-            //            IIndexItem<DefaultFileExtraInfo> idx = new IndexItem<DefaultFileExtraInfo>(data.UId) {
-            //                Display = display,
-            //            };
-            //            this.SaveScript(idx, data, () => onSuccess.Invoke(idx), onError);
-            //        }
-            //    });
-            //    if (report.Code != 0) {
-            //        onError.Invoke(this.GetText(MsgCode.SaveFailed));
-            //    }
-            //});
         }
+
 
         public void GetScriptList(Action<List<IIndexItem<DefaultFileExtraInfo>>> onSuccess, OnErr onError) {
             this.RetrieveIndex(this.scriptStorage, onSuccess, onError);
-            //WrapErr.ToErrReport(9999, () => {
-            //    ErrReport report;
-            //    WrapErr.ToErrReport(out report, 9999, () => {
-            //        onSuccess.Invoke(this.scriptStorage.IndexedItems);
-            //    });
-            //    if (report.Code != 0) {
-            //        onError.Invoke(this.GetText(MsgCode.LoadFailed));
-            //    }
-            //});
         }
 
 
         public void SaveScript(IIndexItem<DefaultFileExtraInfo> idx, ScriptDataModel data, Action onSuccess, OnErr onError) {
             this.Save(this.scriptStorage, idx, data, onSuccess, this.RaiseScriptChange, onError);
-            
-            //this.Save(this.scriptStorage, idx, data, 
-            //    ()=> {
-            //        this.CurrentScriptChanged?.Invoke(this, data);
-            //        onSuccess.Invoke();
-            //    }, onError);
-
-
-            //WrapErr.ToErrReport(9999, () => {
-            //    ErrReport report;
-            //    WrapErr.ToErrReport(out report, 9999, () => {
-            //        if (idx.Display.Length == 0) {
-            //            onError.Invoke(this.GetText(MsgCode.EmptyName));
-            //        }
-            //        else if (string.IsNullOrWhiteSpace(data.Display)) {
-            //            onError.Invoke(this.GetText(MsgCode.EmptyName));
-            //        }
-            //        else {
-            //            // Transfer display name
-            //            idx.Display = data.Display;
-            //            this.scriptStorage.Store(data, idx);
-            //            this.CurrentScriptChanged?.Invoke(this, data);
-            //            onSuccess.Invoke();
-            //        }
-            //    });
-            //    if (report.Code != 0) {
-            //        onError.Invoke(this.GetText(MsgCode.SaveFailed));
-            //    }
-            //});
         }
-
 
 
         public void DeleteScriptData(IIndexItem<DefaultFileExtraInfo> index, Action<bool> onComplete, OnErr onError) {
-            WrapErr.ToErrReport(9999, () => {
-                ErrReport report;
-                WrapErr.ToErrReport(out report, 9999, () => {
-                    //if (index == null) {
-                    //    onError(this.GetText(MsgCode.NothingSelected));
-                    //}
-                    if (this.scriptStorage.IndexedItems.Count < 2) {
-                        onError(this.GetText(MsgCode.CannotDeleteLast));
-                    }
-                    else {
-                        this.DeleteFromStorage(this.scriptStorage, index,
-                            (ok) => {
-                                this.CheckAndSetCurrentScript(index);
-                                //// Refactor with 2nd Delete
-                                ////TODO oops. checking with the terminator instead of script
-                                //this.GetCurrentTerminator(
-                                //    (data) => {
-                                //        // If deleted script was the current, set current to first in list
-                                //        if (data.UId == index.UId_Object) {
-                                //            this.RetrieveScriptData(
-                                //                this.scriptStorage.IndexedItems[0],
-                                //                (newData) => {
-                                //                    this.SetCurrentScript(newData, (err) => { });
-                                //                },
-                                //                (err) => { });
-                                //        }
-                                //    },
-                                //    (err) => { });
-                                onComplete(ok);
-                            }, onError);
-
-
-
-                        //bool ok = this.scriptStorage.DeleteFile(index);
-                        //this.GetCurrentTerminator(
-                        //    (data) => {
-                        //        // If deleted script was the current, set current to first in list
-                        //        if (data.UId == index.UId_Object) {
-                        //            this.RetrieveScriptData(
-                        //                this.scriptStorage.IndexedItems[0],
-                        //                (newData) => {
-                        //                    this.SetCurrentScript(newData, (err) => { });
-                        //                },
-                        //                (err) => { });
-                        //       }
-                        //    },
-                        //    (err) => { });
-                        //onComplete(ok);
-                    }
-                });
-                if (report.Code != 0) {
-                    onError.Invoke(this.GetText(MsgCode.LoadFailed));
-                }
-            });
-
-        }
-
-
-
-        private void CheckAndSetCurrentScript(IIndexItem<DefaultFileExtraInfo> index) {
-            this.GetCurrentScript(
-                (data) => {
-                    // If deleted script was the current, set current to first in list
-                    if (data.UId == index.UId_Object) {
-                        if (this.scriptStorage.IndexedItems.Count > 0) {
-                            this.RetrieveScriptData(this.scriptStorage.IndexedItems[0],
-                                (newData) => {
-                                    this.SetCurrentScript(newData, (err) => { });
-                                },
-                                (err) => { });
-                        }
-                    }
-                },
-                (err) => { });
+            this.DeleteFromStorageNotLast(this.scriptStorage, index,
+                (ok) => this.CheckAndSetCurrentScript(index, () => onComplete(ok)), onError);
         }
 
 
         public void DeleteScriptData(IIndexItem<DefaultFileExtraInfo> index, string name, Func<string, bool> areYouSure, Action<bool> onComplete, OnErr onError) {
-            this.DeleteFromStorage(this.scriptStorage, index, name, areYouSure, 
-                (ok) => {
-                    this.CheckAndSetCurrentScript(index);
-                    onComplete(ok);
-                }, onError);
+            this.DeleteFromStorageNotLast(
+                this.scriptStorage, index, name, areYouSure,
+                (ok) => this.CheckAndSetCurrentScript(index, () => onComplete(ok)), 
+                onError);
         }
 
 
         public void DeleteAllScriptData(Action onSuccess, OnErr onError) {
             this.DeleteAllFromStorage(this.scriptStorage, onSuccess, onError);
         }
+
 
         public void ValidateScriptItem(ScriptItem item, Action onSuccess, OnErr onError) {
             WrapErr.ToErrReport(9999, () => {
@@ -454,6 +311,34 @@ namespace MultiCommWrapper.Net.WrapCode {
             });
         }
 
+        #endregion
+
+        #region Private
+
+        private void RaiseScriptChange(ScriptDataModel dm) {
+            WrapErr.ToErrReport(9999, () => this.CurrentScriptChanged?.Invoke(this, dm));
+        }
+
+
+        private void CheckAndSetCurrentScript(IIndexItem<DefaultFileExtraInfo> index, Action done) {
+            this.GetCurrentScript(
+                (data) => {
+                    // If deleted script was the current, set current to first in list
+                    if (data.UId == index.UId_Object) {
+                        if (this.scriptStorage.IndexedItems.Count > 0) {
+                            this.RetrieveScriptData(this.scriptStorage.IndexedItems[0],
+                                (newData) => {
+                                    this.SetCurrentScript(newData, (err) => { });
+                                },
+                                (err) => { });
+                        }
+                    }
+                },
+                (err) => { });
+            done.Invoke();
+        }
+
+
         private void AddCmd(List<ScriptItem> list, string name, string cmd) {
             list.AddNew(name, cmd);
         }
@@ -486,6 +371,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             return dataModel;
         }
 
+        #endregion
 
     }
 }
