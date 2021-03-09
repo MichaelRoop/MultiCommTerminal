@@ -207,9 +207,12 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void CreateNewSerialCfg(string display, SerialDeviceInfo data, Action onSuccess, OnErr onError) {
-            this.Validate5msReadWrite(data, data);
-            this.Create(display, data, this.serialStorage, 
-                (idx) => onSuccess(), onError, new SerialIndexExtraInfo(data));
+            this.CreateNewSerialCfg(display, data, (idx) => onSuccess(), onError);
+            
+            //this.Validate5msReadWrite(data, data);
+            //this.Create(display, data, this.serialStorage, 
+            //    (idx) => onSuccess(), onError, new SerialIndexExtraInfo(data));
+
 
             //WrapErr.ToErrReport(9999, () => {
             //    ErrReport report;
@@ -241,8 +244,15 @@ namespace MultiCommWrapper.Net.WrapCode {
             //});
         }
 
-        
+
+        public void CreateNewSerialCfg(string display, SerialDeviceInfo data, Action<IIndexItem<SerialIndexExtraInfo>> onSuccess, OnErr onError) {
+            this.Validate5msReadWrite(data, data);
+            this.Create(display, data, this.serialStorage, onSuccess, onError, new SerialIndexExtraInfo(data));
+        }
+
+
         public void CreateOrSaveSerialCfg(string display, SerialDeviceInfo data, Action onSuccess, OnErr onError) {
+            this.Validate5msReadWrite(data, data);
             this.SaveOrCreate(this.serialStorage, display, data, (idx) => onSuccess(), onError);
             
             //ErrReport report;
@@ -354,22 +364,42 @@ namespace MultiCommWrapper.Net.WrapCode {
             //this.RaiseIfException(report);
         }
 
+        public void DeleteSerialCfg(IIndexItem<SerialIndexExtraInfo> index, string msg, Func<string, bool> areYouSure, Action<bool> onComplete, OnErr onError) {
+            this.DeleteFromStorage(this.serialStorage, index, msg, areYouSure, onComplete, onError);
+        }
+
 
         public void DeleteSerialCfg(SerialDeviceInfo device, Func<string, bool> areYouSure, Action<bool> onComplete, OnErr onError) {
-            ErrReport report;
-            WrapErr.ToErrReport(out report, 2003011, "Failure on DeleteSerialCfg", () => {
-                if (device == null) {
-                    onError?.Invoke(this.GetText(MsgCode.NothingSelected));
-                }
-                else {
-                    this.GetSerialIndex(device, (ndx) => {
-                        if (areYouSure(device.PortName)) {
-                            this.DeleteSerialCfg(ndx, onComplete, onError);
-                        }
-                    }, onError);
-                }
-            });
-            this.RaiseIfException(report);
+            this.DeleteFromStorage(this.serialStorage, device, areYouSure, onComplete, onError);
+            
+            
+            //ErrReport report;
+            //WrapErr.ToErrReport(out report, 2003011, "Failure on DeleteSerialCfg", () => {
+            //    if (device == null) {
+            //        onError?.Invoke(this.GetText(MsgCode.NothingSelected));
+            //    }
+            //    else {
+            //        this.RetrievelIndexedItem (
+            //            this.serialStorage,
+            //            device,
+            //            (ndx) => {
+            //                // Found
+            //                this.DeleteSerialCfg(ndx, device.Display, areYouSure, onComplete, onError);
+            //            }, 
+            //            () => {
+            //                // Not found. Do nothing
+            //            }, onError);
+
+            //        //private void RetrieveSerialIndexItem{ params...
+            //        //this.GetSerialIndex(device, (ndx) => {
+            //        //    if (areYouSure(device.PortName)) {
+            //        //        this.DeleteSerialCfg(ndx, onComplete, onError);
+            //        //    }
+            //        //}, onError);
+            //        //}, onError);
+            //    }
+            //});
+            //this.RaiseIfException(report);
         }
 
 
@@ -572,24 +602,24 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-        private void GetSerialIndex(SerialDeviceInfo item, Action<IIndexItem<SerialIndexExtraInfo>> onSuccess, OnErr onError) {
-            ErrReport report;
-            WrapErr.ToErrReport(out report, 200309999, "Failure on GetSerialIndex", () => {
-                this.GetSerialCfgList((index) => {
-                    var ndx = index.FirstOrDefault((i) =>
-                        (i.ExtraInfoObj.PortName == item.PortName) &&
-                        (i.ExtraInfoObj.USBProductId == item.USB_ProductId) &&
-                        (i.ExtraInfoObj.USBVendorId == item.USB_VendorId));
-                    if (ndx != null) {
-                        onSuccess.Invoke(ndx);
-                    }
-                    else {
-                        onError.Invoke(this.GetText(MsgCode.NotFoundSettings));
-                    }
-                }, onError);
-            });
-            this.RaiseIfException(report);
-        }
+        //private void GetSerialIndex(SerialDeviceInfo item, Action<IIndexItem<SerialIndexExtraInfo>> onSuccess, OnErr onError) {
+        //    ErrReport report;
+        //    WrapErr.ToErrReport(out report, 200309999, "Failure on GetSerialIndex", () => {
+        //        this.GetSerialCfgList((index) => {
+        //            var ndx = index.FirstOrDefault((i) =>
+        //                (i.ExtraInfoObj.PortName == item.PortName) &&
+        //                (i.ExtraInfoObj.USBProductId == item.USB_ProductId) &&
+        //                (i.ExtraInfoObj.USBVendorId == item.USB_VendorId));
+        //            if (ndx != null) {
+        //                onSuccess.Invoke(ndx);
+        //            }
+        //            else {
+        //                onError.Invoke(this.GetText(MsgCode.NotFoundSettings));
+        //            }
+        //        }, onError);
+        //    });
+        //    this.RaiseIfException(report);
+        //}
 
 
 

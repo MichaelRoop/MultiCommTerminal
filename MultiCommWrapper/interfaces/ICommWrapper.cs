@@ -426,6 +426,9 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void CreateNewSerialCfg(string display, SerialDeviceInfo data, Action onSuccess, OnErr onError);
 
+        void CreateNewSerialCfg(string display, SerialDeviceInfo data, Action<IIndexItem<SerialIndexExtraInfo>> onSuccess, OnErr onError);
+
+
         /// <summary>Create or save updated configuration data for a serial connection</summary>
         /// <param name="display">Item to display in index</param>
         /// <param name="data">The object to store</param>
@@ -439,6 +442,8 @@ namespace MultiCommWrapper.Net.interfaces {
 
 
         void DeleteSerialCfg(IIndexItem<SerialIndexExtraInfo> index, Action<bool> onComplete, OnErr onError);
+
+        void DeleteSerialCfg(IIndexItem<SerialIndexExtraInfo> index, string msg, Func<string, bool> areYouSure, Action<bool> onComplete, OnErr onError);
 
         void DeleteSerialCfg(SerialDeviceInfo device, Func<string, bool> areYouSure, Action<bool> onComplete, OnErr onError);
 
