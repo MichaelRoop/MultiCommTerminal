@@ -208,7 +208,8 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         public void CreateNewSerialCfg(string display, SerialDeviceInfo data, Action onSuccess, OnErr onError) {
             this.Validate5msReadWrite(data, data);
-            this.Create(display, data, this.serialStorage, (idx) => onSuccess(), onError, new SerialIndexExtraInfo(data));
+            this.Create(display, data, this.serialStorage, 
+                (idx) => onSuccess(), onError, new SerialIndexExtraInfo(data));
 
             //WrapErr.ToErrReport(9999, () => {
             //    ErrReport report;
@@ -242,18 +243,20 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         
         public void CreateOrSaveSerialCfg(string display, SerialDeviceInfo data, Action onSuccess, OnErr onError) {
-            ErrReport report;
-            WrapErr.ToErrReport(out report, 2003010, "Failure on CreateOrSaveSerialCfg", () => {
-                // Only have access to the object and not its index object
-                this.RetrieveSerialIndexItem(data,
-                    (indexItem) => {
-                        this.SaveSerialCfg(indexItem, data, onSuccess, onError);
-                    },
-                    () => {
-                        this.CreateNewSerialCfg(display, data, onSuccess, onError);
-                    }, onError);
-            });
-            this.RaiseIfException(report);
+            this.SaveOrCreate(this.serialStorage, display, data, (idx) => onSuccess(), onError);
+            
+            //ErrReport report;
+            //WrapErr.ToErrReport(out report, 2003010, "Failure on CreateOrSaveSerialCfg", () => {
+            //    // Only have access to the object and not its index object
+            //    this.RetrieveSerialIndexItem(data,
+            //        (indexItem) => {
+            //            this.SaveSerialCfg(indexItem, data, onSuccess, onError);
+            //        },
+            //        () => {
+            //            this.CreateNewSerialCfg(display, data, onSuccess, onError);
+            //        }, onError);
+            //});
+            //this.RaiseIfException(report);
         }
 
 
@@ -385,24 +388,32 @@ namespace MultiCommWrapper.Net.WrapCode {
             }, onError);
         }
 
-
-        private void RetrieveSerialIndexItem(SerialDeviceInfo inObject, Action<IIndexItem<SerialIndexExtraInfo>> found, Action notFound, OnErr onError) {
-            this.GetSerialCfgList((items) => {
-                // Iterate through index and compare fields
-                foreach (IIndexItem<SerialIndexExtraInfo> item in items) {
-                    if (item.ExtraInfoObj.PortName == inObject.PortName &&
-                        item.ExtraInfoObj.USBVendorId == inObject.USB_VendorId &&
-                        item.ExtraInfoObj.USBProductId == inObject.USB_ProductId) {
-                        found.Invoke(item);
-                        this.log.Info("RetrieveSerialIndexItem", "Found the serial index");
-                        return;
-                    }
-                }
-                notFound.Invoke();
-            }, onError);
-
-
+        public void DeleteAllSerialCfg(Action onComplete, OnErr onError) {
+            this.DeleteAllFromStorage(this.serialStorage, onComplete, onError);
         }
+
+
+        //private void RetrieveSerialIndexItem(SerialDeviceInfo inObject, Action<IIndexItem<SerialIndexExtraInfo>> found, Action notFound, OnErr onError) {
+        //    this.GetSerialCfgList((items) => {
+        //        // Iterate through index and compare fields
+        //        foreach (IIndexItem<SerialIndexExtraInfo> item in items) {
+        //            if (item.UId_Object == inObject.UId) {
+        //                found.Invoke(item);
+        //                this.log.Info("RetrieveSerialIndexItem", "Found the serial index");
+        //                return;
+        //            }
+
+        //            //if (item.ExtraInfoObj.PortName == inObject.PortName &&
+        //            //    item.ExtraInfoObj.USBVendorId == inObject.USB_VendorId &&
+        //            //    item.ExtraInfoObj.USBProductId == inObject.USB_ProductId) {
+        //            //    found.Invoke(item);
+        //            //    this.log.Info("RetrieveSerialIndexItem", "Found the serial index");
+        //            //    return;
+        //            //}
+        //        }
+        //        notFound.Invoke();
+        //    }, onError);
+        //}
 
 
         private TimeSpan ForceTo5msIf0(TimeSpan inValue) {

@@ -658,5 +658,77 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         #endregion
 
+        #region Generic Save or Create
+
+        private void SaveOrCreate<TSToreObject, TExtraInfo>(
+            IIndexedStorageManager<TSToreObject, TExtraInfo> manager,
+            string display,
+            TSToreObject data,
+            Action<IIndexItem<TExtraInfo>> onSuccess,
+            OnErr onError,
+            TExtraInfo extraInfo = null)
+            where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class {
+
+            this.SaveOrCreate(manager, display, data, onSuccess, (d) => { }, onError, extraInfo);
+        }
+
+
+
+        private void SaveOrCreate<TSToreObject, TExtraInfo>(
+            IIndexedStorageManager<TSToreObject, TExtraInfo> manager,
+            string display,
+            TSToreObject data,
+            Action<IIndexItem<TExtraInfo>> onSuccess,
+            Action<TSToreObject> onChange,
+            OnErr onError, 
+            TExtraInfo extraInfo = null)
+            where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class {
+
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    this.RetrievelIndexedItem(manager, data,
+                        (idx) => {
+                            // Found. Save
+                            this.Save(manager, idx, data, () => onSuccess(idx), onChange, onError);
+                        },
+                        () => {
+                            // Not found. Create
+                            this.Create(display, data, manager, onSuccess, onChange, onError, extraInfo);
+                        }, onError);
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.SaveFailed));
+                }
+            });
+        }
+
+
+        private void RetrievelIndexedItem<TSToreObject, TExtraInfo>(
+            IIndexedStorageManager<TSToreObject, TExtraInfo> manager,
+            TSToreObject inObject,
+            Action<IIndexItem<TExtraInfo>> found,
+            Action notFound,
+            OnErr onError)
+            where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class {
+
+            this.RetrieveIndex(manager,
+                (idx) => {
+                    foreach (IIndexItem<TExtraInfo> item in idx) {
+                        if (item.UId_Object == inObject.UId) {
+                            found.Invoke(item);
+                            this.log.Info("RetrievelIndexedItem", "Found the object index");
+                            return;
+                        }
+                    }
+                    notFound.Invoke();
+                }, onError);
+        }
+
+
+
+
+        #endregion
+
     }
 }
