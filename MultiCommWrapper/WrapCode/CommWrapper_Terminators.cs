@@ -286,7 +286,18 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void CreateNewTerminator(string display, TerminatorDataModel data, Action onSuccess, OnErr onError) {
-            this.Create(display, data, this.terminatorStorage, (idx) => onSuccess(), onError);
+            this.Create(display, data, this.terminatorStorage, (idx) => onSuccess(), 
+                (obj)=> {
+                    // TODO Currently only changed current event.  Need an update even to push reload
+                    //CurrentTerminatorChanged
+                },onError);
+
+
+            //            // Update the index display
+            //            idx.Display = data.Display;
+            //            this.terminatorStorage.Store(data, idx);
+            //            onSuccess.Invoke();
+
 
             //WrapErr.ToErrReport(9999, () => {
             //    ErrReport report;
@@ -310,7 +321,14 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         public void CreateNewTerminator(string display, TerminatorDataModel data, Action<IIndexItem<DefaultFileExtraInfo>> onSuccess, OnErr onError) {
             this.Create(display, data, this.terminatorStorage, onSuccess, onError);
-            
+
+
+            //            // Update the index display
+            //            idx.Display = data.Display;
+            //            this.terminatorStorage.Store(data, idx);
+            //            onSuccess.Invoke();
+
+
             //WrapErr.ToErrReport(9999, () => {
             //    ErrReport report;
             //    WrapErr.ToErrReport(out report, 9999, () => {
@@ -417,6 +435,10 @@ namespace MultiCommWrapper.Net.WrapCode {
             });
         }
 
+
+        public void DeleteAllTerminators(Action onComplete, OnErr onError) {
+            this.DeleteAllFromStorage(this.terminatorStorage, onComplete, onError);
+        }
 
         public void CreateArduinoTerminators(Action onSuccess, OnErr onError) {
             ErrReport report;
