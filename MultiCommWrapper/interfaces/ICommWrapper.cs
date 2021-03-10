@@ -450,11 +450,11 @@ namespace MultiCommWrapper.Net.interfaces {
         void DeleteAllSerialCfg(Action onComplete, OnErr onError);
 
 
-        /// <summary>Initialised device info object with configurable fields from storage or user</summary>
-        /// <param name="info">The info object to initialise</param>
-        /// <param name="onSuccess">invoked on successful initialisation</param>
-        /// <param name="onError">Invoked on error condition</param>
-        void InitSerialDeviceInfoConfigFields(SerialDeviceInfo info, Action onSuccess, OnErr onError);
+        ///// <summary>Initialised device info object with configurable fields from storage or user</summary>
+        ///// <param name="info">The info object to initialise</param>
+        ///// <param name="onSuccess">invoked on successful initialisation</param>
+        ///// <param name="onError">Invoked on error condition</param>
+        //void InitSerialDeviceInfoConfigFields(SerialDeviceInfo info, Action onSuccess, OnErr onError);
         
         #endregion
 

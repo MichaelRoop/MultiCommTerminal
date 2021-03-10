@@ -54,7 +54,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         public void SerialUsbConnect(SerialDeviceInfo dataModel, OnErr onError) {
             ErrReport report;
             WrapErr.ToErrReport(out report, 2003003, "Failure on SerialUsbConnect", () => {
-                this.InitSerialDeviceInfoConfigFields(
+                this.InitOSSerialDeviceInfoConfigFields(
                     dataModel, () => this.serial.ConnectAsync(dataModel), onError);
             });
             this.RaiseIfException(report);
@@ -301,7 +301,11 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-        public void InitSerialDeviceInfoConfigFields(SerialDeviceInfo info, Action onSuccess, OnErr onError) {
+        /// <summary>Initialised OS loaded device info object with configurable fields from storage or user</summary>
+        /// <param name="info">The info object to initialise</param>
+        /// <param name="onSuccess">invoked on successful initialisation</param>
+        /// <param name="onError">Invoked on error condition</param>
+        private void InitOSSerialDeviceInfoConfigFields(SerialDeviceInfo info, Action onSuccess, OnErr onError) {
             ErrReport report;
             WrapErr.ToErrReport(out report, 9999, () => {
                 this.RetrieveSerialCfg(info, (storedInfo) => {
@@ -408,6 +412,15 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
+        /// <summary>
+        /// Used to find if a saved configuration is similar to a stored set. The OS loaded
+        /// may not have the correct values in its parameter fields. We search based on 
+        /// the Port name 'COMx', vendor and product ID
+        /// </summary>
+        /// <param name="inObject"></param>
+        /// <param name="found"></param>
+        /// <param name="notFound"></param>
+        /// <param name="onError"></param>
         private void RetrieveSerialCfg(SerialDeviceInfo inObject, Action<SerialDeviceInfo> found, Action notFound, OnErr onError) {
             this.GetSerialCfgList((items) => {
                 // Iterate through index and compare fields
@@ -422,6 +435,7 @@ namespace MultiCommWrapper.Net.WrapCode {
                 notFound.Invoke();
             }, onError);
         }
+
 
         public void DeleteAllSerialCfg(Action onComplete, OnErr onError) {
             this.DeleteAllFromStorage(this.serialStorage, onComplete, onError);
