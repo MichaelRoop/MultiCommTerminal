@@ -386,11 +386,11 @@ namespace MultiCommWrapper.Net.WrapCode {
                     //else if (terminatorStorage.IndexedItems.Count < 2) {
                     //    onError(this.GetText(MsgCode.CannotDeleteLast));
                     //}
-                    if (terminatorStorage.IndexedItems.Count < 2) {
-                        onError(this.GetText(MsgCode.CannotDeleteLast));
-                    }
-                    else {
-                        this.DeleteFromStorage(this.terminatorStorage, index,
+                    //if (terminatorStorage.IndexedItems.Count < 2) {
+                    //    onError(this.GetText(MsgCode.CannotDeleteLast));
+                    //}
+                    //else {
+                        this.DeleteFromStorageNotLast(this.terminatorStorage, index,
                             (tf) => {
                                 this.GetCurrentTerminator(
                                     (data) => {
@@ -427,7 +427,7 @@ namespace MultiCommWrapper.Net.WrapCode {
                         //    },
                         //    (err) => { });
                         //onComplete(ok);
-                    }
+                    //}
                 });
                 if (report.Code != 0) {
                     onError.Invoke(this.GetText(MsgCode.LoadFailed));

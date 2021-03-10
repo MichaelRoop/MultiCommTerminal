@@ -632,7 +632,7 @@ namespace MultiCommWrapper.Net.WrapCode {
                     }
                 });
                 if (report.Code != 0) {
-                    onError.Invoke(this.GetText(MsgCode.SaveFailed));
+                    onError.Invoke(this.GetText(MsgCode.UnknownError));
                 }
             });
         }
@@ -667,8 +667,8 @@ namespace MultiCommWrapper.Net.WrapCode {
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;
                 WrapErr.ToErrReport(out report, 9999, () => {
-                    if (idx.Display.Length == 0) {
-                        onError.Invoke(this.GetText(MsgCode.EmptyName));
+                    if (idx == null) {
+                        onError.Invoke(this.GetText(MsgCode.NothingSelected));
                     }
                     else if (string.IsNullOrWhiteSpace(data.Display)) {
                         onError.Invoke(this.GetText(MsgCode.EmptyName));
