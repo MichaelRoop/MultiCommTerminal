@@ -211,7 +211,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void SaveScript(IIndexItem<DefaultFileExtraInfo> idx, ScriptDataModel data, Action onSuccess, OnErr onError) {
-            this.Save(this.scriptStorage, idx, data, onSuccess, this.RaiseScriptChange, onError);
+            this.Save(this.scriptStorage, idx, data, (obj, idx) => { }, onSuccess, this.RaiseScriptChange, onError);
         }
 
 

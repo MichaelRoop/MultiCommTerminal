@@ -22,10 +22,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void CreateBLECmdSet(string display, BLECommandSetDataModel data, BLECmdIndexExtraInfo extraInfo, Action<IIndexItem<BLECmdIndexExtraInfo>> onSuccess, OnErr onError) {
-            this.ValidateRanges(data,
-                () => {
-                    this.Create(display, data, this.bleCmdStorage, onSuccess, onError, extraInfo);
-                }, onError);
+            this.ValidateRanges(data, () => this.Create(display, data, this.bleCmdStorage, onSuccess, onError, extraInfo), onError);
         }
 
 
@@ -35,13 +32,8 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void SaveBLECmdSet(IIndexItem<BLECmdIndexExtraInfo> idx, BLECommandSetDataModel data, Action onSuccess, OnErr onError) {
-            this.ValidateRanges(data,
-                () => {
-                    idx.ExtraInfoObj.CharacteristicName = data.CharacteristicName;
-                    idx.ExtraInfoObj.DataType = data.DataType;
-                    idx.ExtraInfoObj.DataTypeDisplay = data.DataType.ToStr();
-                    this.Save(this.bleCmdStorage, idx, data, onSuccess, onError);
-                }, onError);
+            this.ValidateRanges(data, 
+                () => this.Save(this.bleCmdStorage, idx, data, (dm, index) => index.ExtraInfoObj.Update(dm), onSuccess, onError), onError);
         }
 
 

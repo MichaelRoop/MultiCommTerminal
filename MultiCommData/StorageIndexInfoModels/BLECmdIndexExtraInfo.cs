@@ -12,6 +12,11 @@ namespace MultiCommData.Net.StorageIndexInfoModels {
 
 
         public BLECmdIndexExtraInfo(BLECommandSetDataModel dm) {
+            this.Update(dm);
+        }
+
+
+        public void Update(BLECommandSetDataModel dm) {
             this.CharacteristicName = dm.CharacteristicName;
             this.DataTypeDisplay = dm.DataType.ToStr();
             this.DataType = dm.DataType;

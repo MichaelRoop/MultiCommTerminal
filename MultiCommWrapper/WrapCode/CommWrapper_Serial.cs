@@ -252,13 +252,12 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void CreateOrSaveSerialCfg(string display, SerialDeviceInfo data, Action onSuccess, OnErr onError) {
-            this.Validate5msReadWrite(data, data);
-            this.SaveOrCreate(this.serialStorage, display, data, 
-                (dm, idx)=> idx.ExtraInfoObj.Update(dm),
-                (idx) => onSuccess(), onError);
-            
+            this.SaveOrCreate(this.serialStorage, display, data, this.PreSaveOps, (idx) => onSuccess(), onError);
 
-
+            //this.Validate5msReadWrite(data, data);
+            //this.SaveOrCreate(this.serialStorage, display, data, 
+            //    (dm, idx)=> idx.ExtraInfoObj.Update(dm),
+            //    (idx) => onSuccess(), onError);
 
             //ErrReport report;
             //WrapErr.ToErrReport(out report, 2003010, "Failure on CreateOrSaveSerialCfg", () => {
@@ -328,23 +327,25 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
+        private void PreSaveOps(SerialDeviceInfo data, IIndexItem<SerialIndexExtraInfo> idx) {
+            this.Validate5msReadWrite(data, data);
+            idx.ExtraInfoObj.Update(data);
+        }
+
         public void SaveSerialCfg(IIndexItem<SerialIndexExtraInfo> idx, SerialDeviceInfo data, Action onSuccess, OnErr onError) {
+            this.Save(this.serialStorage, idx, data, this.PreSaveOps, onSuccess, onError);
 
-            WrapErr.ToErrReport(9999, () => {
-                ErrReport report;
-                WrapErr.ToErrReport(out report, 9999, () => {
-                    this.Validate5msReadWrite(data, data);
-                    // Update the index extra info
-                    idx.ExtraInfoObj.Update(data);
-                    this.Save(this.serialStorage, idx, data, onSuccess, onError);
-                });
-                if (report.Code != 0) {
-                    onError.Invoke(this.GetText(MsgCode.SaveFailed));
-                }
-            });
-
-
-
+            //WrapErr.ToErrReport(9999, () => {
+            //    ErrReport report;
+            //    WrapErr.ToErrReport(out report, 9999, () => {
+            //        this.Validate5msReadWrite(data, data);
+            //        this.Save(this.serialStorage, idx, data, 
+            //            (dm, index)=> index.ExtraInfoObj.Update(dm), onSuccess, onError);
+            //    });
+            //    if (report.Code != 0) {
+            //        onError.Invoke(this.GetText(MsgCode.SaveFailed));
+            //    }
+            //});
 
             //WrapErr.ToErrReport(9999, () => {
             //    ErrReport report;

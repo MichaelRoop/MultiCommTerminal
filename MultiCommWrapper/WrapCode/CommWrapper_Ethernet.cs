@@ -129,7 +129,7 @@ namespace MultiCommWrapper.Net.WrapCode {
                 ErrReport report;
                 WrapErr.ToErrReport(out report, 9999, () => {
                     idx.ExtraInfoObj.Update(data);
-                    this.Save(this.ethernetStorage, idx, data, onSuccess,
+                    this.Save(this.ethernetStorage, idx, data, (obj,idx)=> { }, onSuccess,
                         (d) => {
                             this.RaiseEthernetListChange(() => { }, onError);
                             //this.GetEthernetDataList(

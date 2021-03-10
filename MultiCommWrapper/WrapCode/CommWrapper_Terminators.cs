@@ -333,7 +333,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void SaveTerminator(IIndexItem<DefaultFileExtraInfo> idx, TerminatorDataModel data, Action onSuccess, OnErr onError) {
-            this.Save(this.terminatorStorage, idx, data, onSuccess, onError);
+            this.Save(this.terminatorStorage, idx, data, (dm, index) => { }, onSuccess, onError);
 
             //WrapErr.ToErrReport(9999, () => {
             //    ErrReport report;

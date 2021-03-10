@@ -628,7 +628,7 @@ namespace MultiCommWrapper.Net.WrapCode {
                             ? new IndexItem<TExtraInfo>(data.UId)
                             : new IndexItem<TExtraInfo>(data.UId, extraInfo);
                         idx.Display = display;
-                        this.Save(manager, idx, data, () => onSuccess(idx), onChange, onError);
+                        this.Save(manager, idx, data, (obj, idx) => { }, () => onSuccess(idx), onChange, onError);
                     }
                 });
                 if (report.Code != 0) {
@@ -645,11 +645,12 @@ namespace MultiCommWrapper.Net.WrapCode {
             IIndexedStorageManager<TSToreObject, TExtraInfo> manager,
             IIndexItem<TExtraInfo> idx,
             TSToreObject data,
+            Action<TSToreObject, IIndexItem<TExtraInfo>> preSaveIndexUpdate,
             Action onSuccess,
             OnErr onError) 
             where TSToreObject : class, IDisplayableData where TExtraInfo : class {
 
-            this.Save(manager, idx, data, onSuccess, (d) => { }, onError);
+            this.Save(manager, idx, data, preSaveIndexUpdate, onSuccess, (d) => { }, onError);
         }
 
 
@@ -657,6 +658,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             IIndexedStorageManager<TSToreObject, TExtraInfo> manager,
             IIndexItem<TExtraInfo> idx,
             TSToreObject data,
+            Action<TSToreObject, IIndexItem<TExtraInfo>> preSaveIndexUpdate,
             Action onSuccess, 
             Action<TSToreObject> onChange,
             OnErr onError) 
@@ -674,6 +676,8 @@ namespace MultiCommWrapper.Net.WrapCode {
                     else {
                         // Transfer display name
                         idx.Display = data.Display;
+                        // update index
+                        preSaveIndexUpdate(data, idx);
                         manager.Store(data, idx);
                         onSuccess.Invoke();
                         onChange.Invoke(data);
@@ -721,8 +725,7 @@ namespace MultiCommWrapper.Net.WrapCode {
                     this.RetrievelIndexedItem(manager, data,
                         (idx) => {
                             // Found. Save
-                            preSaveIndexUpdate(data, idx);
-                            this.Save(manager, idx, data, () => onSuccess(idx), onChange, onError);
+                            this.Save(manager, idx, data, preSaveIndexUpdate, () => onSuccess(idx), onChange, onError);
                         },
                         () => {
                             // Not found. Create
