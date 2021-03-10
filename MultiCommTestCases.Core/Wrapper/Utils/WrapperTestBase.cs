@@ -1,11 +1,13 @@
 ﻿using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
+using LanguageFactory.Net.data;
 using log4net;
 using log4net.Appender;
 using log4net.Core;
 using log4net.Layout;
 using log4net.Repository.Hierarchy;
 using LogUtils.Net;
+using MultiCommWrapper.Net.interfaces;
 using NUnit.Framework;
 using System;
 using System.Diagnostics;
@@ -36,6 +38,13 @@ namespace MultiCommTestCases.Core.Wrapper.Utils {
 
 
         #endregion
+
+        #region Properties
+
+        protected static ICommWrapper W { get { return TDI.Wrapper; } }
+
+        #endregion
+
 
         #region Setup
 
@@ -171,7 +180,7 @@ namespace MultiCommTestCases.Core.Wrapper.Utils {
 
         protected void OnSuccessAssertTrue(bool ok) {
             completeFired = true;
-            Assert.True(ok, "OnSuccess or OnComplete did not have true param"); 
+            Assert.True(ok, "OnSuccess or OnComplete did not have true param");
         }
 
         protected void AssertCompleteFired() {
@@ -201,7 +210,7 @@ namespace MultiCommTestCases.Core.Wrapper.Utils {
             return Path.Combine(
                 Directory.GetCurrentDirectory(),
                 "PreMarch10_2021_StoredData",
-                "MultiCommSerialTerminal", 
+                "MultiCommSerialTerminal",
                 subDir);
 
 
@@ -213,7 +222,7 @@ namespace MultiCommTestCases.Core.Wrapper.Utils {
                 Environment.GetFolderPath(
                     Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.None),
                     "MR_TestCases",
-                    "MultiCommSerialTerminal", 
+                    "MultiCommSerialTerminal",
                     subDir);
         }
 
@@ -234,7 +243,9 @@ namespace MultiCommTestCases.Core.Wrapper.Utils {
 
         }
 
-
+        protected string GetMsg(MsgCode code) {
+            return TDI.Wrapper.GetText(code);
+        }
 
         #endregion
 
