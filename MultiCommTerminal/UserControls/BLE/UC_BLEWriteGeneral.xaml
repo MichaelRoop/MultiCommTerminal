@@ -10,63 +10,68 @@
              Background="#fffffa"
             d:DesignWidth="600">
     <Grid HorizontalAlignment="Stretch">
-        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
-            <Grid HorizontalAlignment="Left" Margin="5,0" >
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="18"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
 
-                <Label Grid.Row="0" Grid.Column="0" x:Name="lblServiceLabel"  Margin="0"
+        <Grid Grid.Row="0" HorizontalAlignment="Left" Margin="5,0" >
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="18"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" x:Name="lblServiceLabel"  Margin="0"
                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.Service}}" 
                        Style="{Binding Source={StaticResource NameLabelLeft}}" />
-                <Label Grid.Row="0" Grid.Column="1"  Content=" : " Margin="0"  
+            <Label Grid.Row="0" Grid.Column="1"  Content=" : " Margin="0"  
                        Style="{Binding Source={StaticResource NameLabelCenter}}" 
                        HorizontalContentAlignment="Center"/>
-                <Label Grid.Row="0" Grid.Column="2" x:Name="lblServiceContent" 
+            <Label Grid.Row="0" Grid.Column="2" x:Name="lblServiceContent" 
                        Content="" 
                        Style="{Binding Source={StaticResource NameLabelRight}}"/>
 
-
-
-                <Label Grid.Row="1" Grid.Column="0" x:Name="lblCharacteristicLabel"  Margin="0"
+            <Label Grid.Row="1" Grid.Column="0" x:Name="lblCharacteristicLabel"  Margin="0"
                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.Characteristic}}" 
                        Style="{Binding Source={StaticResource NameLabelLeft}}" />
-                <Label Grid.Row="1" Grid.Column="1"  Content=" : " Margin="0"  
+            <Label Grid.Row="1" Grid.Column="1"  Content=" : " Margin="0"  
                        Style="{Binding Source={StaticResource NameLabelCenter}}" 
                        HorizontalContentAlignment="Center"/>
-                <Label Grid.Row="1" Grid.Column="2"  x:Name="lblCharacteristicName" 
+            <Label Grid.Row="1" Grid.Column="2"  x:Name="lblCharacteristicName" 
                        Content="" 
                        Style="{Binding Source={StaticResource NameLabelRight}}"/>
 
-                <Label Grid.Row="2" Grid.Column="0" Margin="0" x:Name="lblInfoLabel"
+            <Label Grid.Row="2" Grid.Column="0" Margin="0" x:Name="lblInfoLabel"
                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.Info}}" 
                        Style="{Binding Source={StaticResource NameLabelLeft}}" />
-                <Label Grid.Row="2" Grid.Column="1" Content=" : "  Margin="0"
+            <Label Grid.Row="2" Grid.Column="1" Content=" : "  Margin="0"
                        Style="{Binding Source={StaticResource NameLabelCenter}}"/>
-                <Label Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" x:Name="lblInfoContent" Content="" 
+            <Label Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" x:Name="lblInfoContent" Content="" 
                        Style="{Binding Source={StaticResource NameLabelRight}}"/>
-            </Grid>
-            <Border Style="{StaticResource brd075}" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <DockPanel >
-                    <UC:UC_IconButton x:Name="btnRead" Style="{StaticResource TextIconButton}" Visibility="Visible" HorizontalAlignment="Right"
+        </Grid>
+        <Border Grid.Row="1" Style="{StaticResource brd075}" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>                
+                <UC:UC_IconButton Grid.Column="0" x:Name="btnRead" Style="{StaticResource TextIconButton}" Visibility="Visible" HorizontalAlignment="Right"
                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Read}}" 
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Read}}"                                                                                            
                             Background="Transparent" Click="btnRead_Click" />
-                    <UC:UC_IconButton x:Name="btnSend" Style="{StaticResource TextIconButton}" Visibility="Visible" Margin="10,0"
+                <UC:UC_IconButton Grid.Column="1" x:Name="btnSend" Style="{StaticResource TextIconButton}" Visibility="Visible" Margin="10,0"
                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Write}}" 
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Send}}"                                                                                            
                             Background="Transparent" Click="btnSend_Click" />
-                    <TextBox x:Name="txtCommmand"  Text="" Style="{Binding Source={StaticResource TxtBoxRight}}"  HorizontalAlignment="Stretch" />
-
-                </DockPanel>
-            </Border>
-        </StackPanel>
+                <TextBox Grid.Column="2" x:Name="txtCommmand"  Text="" Style="{Binding Source={StaticResource TxtBoxRight}}"  HorizontalAlignment="Stretch" />
+            </Grid>
+        </Border>
     </Grid>
 </UserControl>
