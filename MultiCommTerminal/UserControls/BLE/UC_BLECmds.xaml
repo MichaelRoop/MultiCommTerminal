@@ -8,53 +8,49 @@
              xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
              Background="#fffffa"
              mc:Ignorable="d" 
-             d:DesignHeight="460" d:DesignWidth="300"
-             VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-             >
+             d:DesignHeight="450" d:DesignWidth="260"
+             VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
     <Grid>
-        <StackPanel Grid.Column="1" x:Name="spCommands" VerticalAlignment="Stretch">
-            <DockPanel HorizontalAlignment="Center">
-
-                <Label x:Name="lblCmdDataTypeLabel" Content="{Binding Source={x:Static wpfHelper:TxtBinder.DataType}}" 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition MaxHeight="120"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!-- Data type label -->
+        <DockPanel Grid.Row="0" HorizontalAlignment="Center" >
+            <Label x:Name="lblCmdDataTypeLabel" Content="{Binding Source={x:Static wpfHelper:TxtBinder.DataType}}" 
                    Style="{Binding Source={StaticResource NameLabelLeft}}"     />
-                <Label x:Name="lblCmdDataTypeContent" Content="xxxx" 
+            <Label x:Name="lblCmdDataTypeContent" Content="xxxx" 
                    Style="{Binding Source={StaticResource NameLabelRight}}"     />
-            </DockPanel>
-
-            <ListView x:Name="lbUsb" MinHeight="100" MaxHeight="140" Margin="10,0,10,10" 
-                    BorderThickness=".5" FontSize="16" 
-                    ScrollViewer.VerticalScrollBarVisibility="Auto" 
-                    ScrollViewer.HorizontalScrollBarVisibility="Auto">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding Display}"
-                                Header="{Binding Source={x:Static wpfHelper:TxtBinder.Name}}" />
-                        <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding BLECmdIndexExtraInfo.CharacteristicName}"
-                                Header="{Binding Source={x:Static wpfHelper:TxtBinder.Characteristic}}" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
-
-            <DockPanel VerticalAlignment="Stretch">
-                <Label/>
-
-                <Border Margin="10" Style="{Binding Source={StaticResource brd075}}"  >
-                <ListBox x:Name="listBox_BLE" BorderThickness=".5" FontSize="16"
+        </DockPanel>
+        <!-- List of command sets  -->
+        <ListView Grid.Row="1" x:Name="lbUsb" Margin="10,0" BorderThickness=".5" FontSize="16" 
+            ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding Display}"
+                        Header="{Binding Source={x:Static wpfHelper:TxtBinder.Name}}" />
+                    <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding BLECmdIndexExtraInfo.CharacteristicName}"
+                        Header="{Binding Source={x:Static wpfHelper:TxtBinder.Characteristic}}" />
+                </GridView>
+            </ListView.View>
+        </ListView >
+        <!-- Commands for selected command set -->
+        <Border Grid.Row="2" Margin="10" Style="{Binding Source={StaticResource brd075}}"  >
+            <ListBox x:Name="listBox_BLE" BorderThickness=".5" FontSize="16"
                                  ScrollViewer.VerticalScrollBarVisibility="Auto" 
                                  ScrollViewer.HorizontalScrollBarVisibility="Auto">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="1">
-                                <TextBlock Text="{Binding Display}" FontSize="16" />
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </Border>
-            
-            
-            </DockPanel>
-            
-        </StackPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="1">
+                            <TextBlock Text="{Binding Display}" FontSize="16" />
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Border>
     </Grid>
 </UserControl>
