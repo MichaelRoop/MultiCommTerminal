@@ -9,13 +9,18 @@
         xmlns:BLEcontrols="clr-namespace:MultiCommTerminal.NetCore.UserControls.BLE"
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
         xmlns:dataModels="clr-namespace:BluetoothLE.Net.DataModels;assembly=BluetoothLE.Net"
+        WindowStartupLocation="CenterScreen"
         Style="{StaticResource MyWindowStyle}" 
-        WindowStartupLocation="CenterScreen" 
+        ResizeMode="CanResize"
         Title="BLE"
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.BluetoothClassic_W}}"
         Loaded="Window_Loaded" Closing="Window_Closing"
         MinHeight="100" MinWidth="200" MaxHeight="1200"  BorderThickness=".5">
-    <Grid Width="850">
+    
+        <!--
+    --> 
+    
+    <Grid MinWidth="650">
         <Grid x:Name="gridWait" Panel.ZIndex="10000" 
               HorizontalAlignment="Stretch" 
               VerticalAlignment="Stretch" Visibility="Collapsed" >
@@ -27,8 +32,16 @@
             <!--<controls:UC_BusyImageSpinner />-->
             <controls:UC_BusySpinner />
         </Grid>
-        <StackPanel>
-            <Border Style="{StaticResource brd075}" Padding="0" >
+
+        <Grid Margin="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" Style="{StaticResource brd075}" Padding="0" >
                 <TreeView x:Name="treeServices" HorizontalAlignment="Stretch" Padding="10"
                         SelectedItemChanged="treeServices_SelectedItemChanged"
                         MinHeight="250" MaxHeight="700" 
@@ -76,11 +89,11 @@
                 </TreeView>
             </Border>
             <!-- Send -->
-            <Border>
+            <Border Grid.Row="1" >
                 <BLEcontrols:UC_BLEWriteGeneral x:Name="writeControl"/>
             </Border>
             <!-- Log stuff -->
-            <Border Style="{StaticResource brd075}" HorizontalAlignment="Stretch" Padding="0" Margin="0">
+            <Border Grid.Row="2" Style="{StaticResource brd075}" HorizontalAlignment="Stretch" Padding="0" Margin="0">
                 <DockPanel VerticalAlignment="Center" Margin="0,5">
                     <StackPanel VerticalAlignment="Center">
                         <DockPanel Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -113,9 +126,9 @@
                 </DockPanel>
             </Border>
 
-            <Border>
-                <controls:UC_Logging x:Name="ucLogger" Visibility="Visible" VerticalAlignment="Stretch" MaxHeight="250"/>
+            <Border Grid.Row="3">
+                <controls:UC_Logging x:Name="ucLogger" Visibility="Visible" MaxHeight="300"/>
             </Border>
-        </StackPanel>
+        </Grid>
     </Grid>
 </Window>

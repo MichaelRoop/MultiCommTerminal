@@ -56,7 +56,11 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             Instances++;
             this.parent = parent;
             InitializeComponent();
+            //this.MaxHeight = SystemParameters.VirtualScreenHeight;
             this.SizeToContent = SizeToContent.WidthAndHeight;
+            //this.MaxHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
+
+
             this.buttonSizer = new ButtonGroupSizeSyncManager(
                 this.btnConnect, this.btnDisconnect, this.btnExit, this.btnLog);
             this.buttonSizer.PrepForChange();
@@ -71,6 +75,15 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.BindMouseDownToCustomTitleBar();
             base.OnApplyTemplate();
         }
+
+
+        //protected override void OnStateChanged(EventArgs e) {
+        //    if (this.WindowState == WindowState.Maximized) {
+        //        //this.BindMouseDownToCustomTitleBar();
+        //    }
+        //    base.OnStateChanged(e);
+        //}
+
 
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
