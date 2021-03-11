@@ -248,7 +248,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                     BLE_CharacteristicDataModel dm = e.NewValue as BLE_CharacteristicDataModel;
                     this.writeControl.SetCharacteristic(dm);
                     if (dm != null) {
-                        this.lblCmdDataTypeContent.Content = dm.DataTypeDisplay;
+                        //this.lblCmdDataTypeContent.Content = dm.DataTypeDisplay;
                         // TODO load list of commands based on data type
 
                     }
