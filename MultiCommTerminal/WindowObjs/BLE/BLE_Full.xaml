@@ -15,7 +15,7 @@
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.BluetoothClassic_W}}"
         Loaded="Window_Loaded" Closing="Window_Closing"
         MinHeight="100" MinWidth="200" MaxHeight="1200"  BorderThickness=".5">
-    <Grid Width="850">
+    <Grid MinWidth="900">
         <Grid x:Name="gridWait" Panel.ZIndex="10000" 
               HorizontalAlignment="Stretch" 
               VerticalAlignment="Stretch" Visibility="Collapsed" >
@@ -27,108 +27,170 @@
             <!--<controls:UC_BusyImageSpinner />-->
             <controls:UC_BusySpinner />
         </Grid>
-        <StackPanel>
-            <Border Style="{StaticResource brd075}" Padding="0" >
-                <TreeView x:Name="treeServices" HorizontalAlignment="Stretch" Padding="10"
-                        SelectedItemChanged="treeServices_SelectedItemChanged"
-                        MinHeight="250" MaxHeight="700" 
-                        ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                    <TreeView.Resources>
-                        <HierarchicalDataTemplate
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel>
+
+                <DockPanel>
+
+                    <StackPanel Grid.Column="0" VerticalAlignment="Stretch">
+                        <Border Style="{StaticResource brd075}" Padding="0" >
+                            <TreeView x:Name="treeServices" HorizontalAlignment="Stretch" Padding="10"
+                                SelectedItemChanged="treeServices_SelectedItemChanged"
+                                MinHeight="255" MaxHeight="400" MinWidth="500"
+                                ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                <TreeView.Resources>
+                                    <HierarchicalDataTemplate
                                     DataType="{x:Type dataModels:BLE_ServiceDataModel}" 
                                     ItemsSource="{Binding Characteristics}" >
-                            <!-- This data in the service -->
-                            <DockPanel>
-                                <TextBlock x:Name="txtServiceHeader" Text="{Binding Path=DisplayHeader}" FontSize="16"/>
-                                <TextBlock Text=" : " FontSize="16"/>
-                                <TextBlock Text="{Binding Path=DisplayName}" FontSize="16"/>
-                            </DockPanel>
-                        </HierarchicalDataTemplate>
+                                        <!-- This data in the service -->
+                                        <DockPanel>
+                                            <TextBlock x:Name="txtServiceHeader" Text="{Binding Path=DisplayHeader}" FontSize="16"/>
+                                            <TextBlock Text=" : " FontSize="16"/>
+                                            <TextBlock Text="{Binding Path=DisplayName}" FontSize="16"/>
+                                        </DockPanel>
+                                    </HierarchicalDataTemplate>
 
-                        <HierarchicalDataTemplate
+                                    <HierarchicalDataTemplate
                                     DataType="{x:Type dataModels:BLE_CharacteristicDataModel}"
                                     ItemsSource="{Binding Path=Descriptors}" >
-                            <!-- This is data in the characteristic -->
-                            <StackPanel>
-                                <DockPanel>
-                                    <TextBlock x:Name="txtCharHeader" Text="{Binding Path=DisplayHeader}" FontSize="16" />
-                                    <TextBlock Text=" : " FontSize="16"/>
-                                    <TextBlock Text="{Binding Path=CharName}" FontSize="16"/>
-                                    <TextBlock Text=" : " FontSize="16"/>
-                                    <TextBlock Text="{Binding CharValue}" FontSize="16"/>
-                                    <TextBlock Text=" " FontSize="16"/>
-                                    <TextBlock Text="{Binding DisplayReadWrite}" FontSize="16"/>
-                                </DockPanel>
-                                <TextBlock Text="{Binding Uuid}" Visibility="Collapsed"/>
-                            </StackPanel>
-                        </HierarchicalDataTemplate>
+                                        <!-- This is data in the characteristic -->
+                                        <StackPanel>
+                                            <DockPanel>
+                                                <TextBlock x:Name="txtCharHeader" Text="{Binding Path=DisplayHeader}" FontSize="16" />
+                                                <TextBlock Text=" : " FontSize="16"/>
+                                                <TextBlock Text="{Binding Path=CharName}" FontSize="16"/>
+                                                <TextBlock Text=" : " FontSize="16"/>
+                                                <TextBlock Text="{Binding CharValue}" FontSize="16"/>
+                                                <TextBlock Text=" " FontSize="16"/>
+                                                <TextBlock Text="{Binding DisplayReadWrite}" FontSize="16"/>
+                                            </DockPanel>
+                                            <TextBlock Text="{Binding Uuid}" Visibility="Collapsed"/>
+                                        </StackPanel>
+                                    </HierarchicalDataTemplate>
 
-                        <HierarchicalDataTemplate  x:Name="DescTemplate"
+                                    <HierarchicalDataTemplate  x:Name="DescTemplate"
                                     DataType="{x:Type dataModels:BLE_DescriptorDataModel}">
-                            <DockPanel >
-                                <TextBlock x:Name="txtDescriptorHeader" Text="{Binding Path=DisplayHeader}" FontSize="16"/>
-                                <TextBlock Text=" : " FontSize="16"/>
-                                <TextBlock Text="{Binding Path=DisplayName}" FontSize="16"/>
-                            </DockPanel>
-                        </HierarchicalDataTemplate>
+                                        <DockPanel >
+                                            <TextBlock x:Name="txtDescriptorHeader" Text="{Binding Path=DisplayHeader}" FontSize="16"/>
+                                            <TextBlock Text=" : " FontSize="16"/>
+                                            <TextBlock Text="{Binding Path=DisplayName}" FontSize="16"/>
+                                        </DockPanel>
+                                    </HierarchicalDataTemplate>
 
-                    </TreeView.Resources>
-                </TreeView>
-            </Border>
-            <!-- Send -->
-            <Border>
-                <BLEcontrols:UC_BLEWriteGeneral x:Name="writeControl"/>
-            </Border>
-            <!-- Log stuff -->
-            <Border Style="{StaticResource brd075}" HorizontalAlignment="Stretch" Padding="0" Margin="0">
-                <DockPanel VerticalAlignment="Center" Margin="0,5">
-                    <StackPanel VerticalAlignment="Center">
-                        <DockPanel Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <StackPanel HorizontalAlignment="Center">
-                                <DockPanel Margin="0,6">
-                                    <Border x:Name="connectedOn" Style="{StaticResource brd075}" Padding="0" Height="15" Width="15" CornerRadius="7"
+                                </TreeView.Resources>
+                            </TreeView>
+                        </Border>
+                        <!-- Send -->
+                        <Border>
+                            <BLEcontrols:UC_BLEWriteGeneral x:Name="writeControl"/>
+                        </Border>
+                        <!-- Log stuff -->
+                        <Border Style="{StaticResource brd075}" HorizontalAlignment="Stretch" Padding="0" Margin="0">
+                            <DockPanel VerticalAlignment="Center" Margin="0,5">
+                                <StackPanel VerticalAlignment="Center" Height="70">
+                                    <DockPanel Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <StackPanel HorizontalAlignment="Center">
+                                            <DockPanel Margin="0,6">
+                                                <Border x:Name="connectedOn" Style="{StaticResource brd075}" Padding="0" Height="15" Width="15" CornerRadius="7"
                                             Background="Lime" BorderThickness="2" Margin="5,0" Visibility="Collapsed" />
-                                    <Border x:Name="connectedOff" Style="{StaticResource brd075}" Padding="0" Height="15" Width="15" CornerRadius="7"
+                                                <Border x:Name="connectedOff" Style="{StaticResource brd075}" Padding="0" Height="15" Width="15" CornerRadius="7"
                                             Background="LightGray" BorderThickness="2" Margin="5,0" />
-                                    <controls:UC_IconButton x:Name="btnConnect" Style="{StaticResource TextIconButton}" 
+                                                <controls:UC_IconButton x:Name="btnConnect" Style="{StaticResource TextIconButton}" 
                                         Content="{Binding Source={x:Static wpfHelper:TxtBinder.Connect}}" MaxWidth="150"
                                         IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Connect}}"                                                                                            
                                         Background="Transparent" Click="btnConnect_Click" />
-                                    <controls:UC_IconButton x:Name="btnDisconnect" Style="{StaticResource TextIconButton}" 
+                                                <controls:UC_IconButton x:Name="btnDisconnect" Style="{StaticResource TextIconButton}" 
                                         Content="{Binding Source={x:Static wpfHelper:TxtBinder.Disconnect}}" MaxWidth="150"
                                         IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}" Visibility="Collapsed"                                                                                           
                                         Background="Transparent" Click="btnDisconnect_Click" />
-                                    <controls:UC_IconButton x:Name="btnLog" Click="btnLog_Click" MaxWidth="150"
+                                                <controls:UC_IconButton x:Name="btnLog" Click="btnLog_Click" MaxWidth="150"
                                         Style="{StaticResource TextIconButton}" Margin="10"
                                         Content="{Binding Source={x:Static wpfHelper:TxtBinder.LogText}}"
                                     IconSource="{Binding Source={x:Static wpfHelper:IconBinder.LogIcon}}"/>
-                                    <controls:UC_IconButton x:Name="btnExit" Click="btnExit_Click" IconMargin="7"
+                                                <controls:UC_IconButton x:Name="btnExit" Click="btnExit_Click" IconMargin="7"
                                         Style="{StaticResource TextIconButton}" MaxWidth="150"
                                         Content="{Binding Source={x:Static wpfHelper:TxtBinder.Exit}}"
                                         IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Exit}}"/>
-                                </DockPanel>
-                            </StackPanel>
-                        </DockPanel>
+                                            </DockPanel>
+                                        </StackPanel>
+                                    </DockPanel>
+                                </StackPanel>
+                            </DockPanel>
+                        </Border>
                     </StackPanel>
+
+                    <StackPanel Grid.Column="1" x:Name="spCommands" VerticalAlignment="Stretch">
+                        <DockPanel HorizontalAlignment="Center">
+
+                            <Label x:Name="lblCmdDataTypeLabel" Content="{Binding Source={x:Static wpfHelper:TxtBinder.DataType}}" 
+                   Style="{Binding Source={StaticResource NameLabelLeft}}"     />
+                            <Label x:Name="lblCmdDataTypeContent" Content="xxxx" 
+                   Style="{Binding Source={StaticResource NameLabelRight}}"     />
+                        </DockPanel>
+
+                        <ListView x:Name="lbUsb" Height="140" MinWidth="250" MaxHeight="500"  Margin="10,0,10,10" 
+                    BorderThickness=".5" FontSize="16" 
+                    ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding Display}"
+                                Header="{Binding Source={x:Static wpfHelper:TxtBinder.Name}}" />
+                                    <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding BLECmdIndexExtraInfo.CharacteristicName}"
+                                Header="{Binding Source={x:Static wpfHelper:TxtBinder.Characteristic}}" />
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+
+                        <Border Margin="10" Style="{Binding Source={StaticResource brd075}}">
+                            <ListBox x:Name="listBox_BLE" BorderThickness=".5" FontSize="16"
+                                 Height="285" MinWidth="200"  
+                                 ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                                 ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="1">
+                                            <TextBlock Text="{Binding Display}" FontSize="16" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+
+                        </Border>
+
+
+                    </StackPanel>
+
                 </DockPanel>
-            </Border>
-            <Border x:Name="logSection" >
-                <StackPanel>
-                    <DockPanel HorizontalAlignment="Center" Visibility="Visible" Margin="5">
-                        <controls:UC_IconButton x:Name="btnCopyLog" Click="btnCopyLog_Click" 
-                                    Style="{StaticResource TextIconButton}" Margin="5,8"
-                                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Copy}}"
-                                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Add}}"/>
-                        <controls:UC_IconButton x:Name="btnClearLog" Click="btnClearLog_Click" 
-                                    Style="{StaticResource TextIconButton}" Margin="5,8"
-                                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Clear}}"
-                                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Delete}}"/>
-                    </DockPanel>
-                    <ListBox x:Name="lbLog" Height="200" Visibility="Visible"  SelectionMode="Extended"
-                        ScrollViewer.VerticalScrollBarVisibility="Auto" 
-                        ScrollViewer.HorizontalScrollBarVisibility="Auto" />
-                </StackPanel>
-            </Border>
-        </StackPanel>
+
+                <Border x:Name="logSection" >
+                    <StackPanel>
+                        <DockPanel HorizontalAlignment="Center" Visibility="Visible" Margin="5">
+                            <controls:UC_IconButton x:Name="btnCopyLog" Click="btnCopyLog_Click" 
+                                Style="{StaticResource TextIconButton}" Margin="5,8"
+                                Content="{Binding Source={x:Static wpfHelper:TxtBinder.Copy}}"
+                                IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Add}}"/>
+                            <controls:UC_IconButton x:Name="btnClearLog" Click="btnClearLog_Click" 
+                                Style="{StaticResource TextIconButton}" Margin="5,8"
+                                Content="{Binding Source={x:Static wpfHelper:TxtBinder.Clear}}"
+                                IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Delete}}"/>
+                        </DockPanel>
+                        <ListBox x:Name="lbLog" Height="200" Visibility="Visible"  SelectionMode="Extended"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto" />
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
+        </Grid>
+
     </Grid>
 </Window>
