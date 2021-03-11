@@ -7,9 +7,7 @@ using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Threading;
 using WpfHelperClasses.Core;
 
@@ -23,7 +21,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         private ClassLog log = new ClassLog("BLE_Full");
         private Window parent = null;
         private ButtonGroupSizeSyncManager buttonSizer = null;
-        private ScrollViewer logScroll = null;
         BluetoothLEDeviceInfo currentDevice = null;
         public static int Instances { get; private set; } 
         bool isBusy = false;
@@ -78,12 +75,12 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             WPF_ControlHelpers.CenterChild(parent, this);
-            this.logScroll = this.lbLog.GetScrollViewer();
-            this.logSection.Collapse();
+            this.ucLogger.Collapse();
             this.AddEventHandlers();
             this.timer.Start();
             this.writeControl.OnStartup(this.parent);
             DI.Wrapper.CurrentSupportedLanguage(this.SetLanguage);
+            this.ucLogger.OnLoaded();
         }
 
 
@@ -91,6 +88,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.timer.Stop();
             this.RemoveEventHandlers();
             this.writeControl.OnShutdown();
+            this.ucLogger.OnShutdown();
             this.buttonSizer.Teardown();
             DI.Wrapper.BLE_Disconnect();
             Instances--;
@@ -106,7 +104,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
 
         private void btnLog_Click(object sender, RoutedEventArgs e) {
-            this.logSection.ToggleVisibility();
+            this.ucLogger.ToggleVisibility();
         }
 
 
@@ -126,38 +124,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.SetConnectState(false);
         }
 
-
-        private void btnCopyLog_Click(object sender, RoutedEventArgs e) {
-            try {
-                lock (this.lbLog) {
-                    StringBuilder sb = new StringBuilder();
-                    this.lbLog.SelectAll();
-                    foreach (var item in lbLog.SelectedItems) {
-                        sb.AppendLine(item.ToString());
-                    }
-                    Clipboard.SetText(sb.ToString());
-                    this.lbLog.SelectedItem = null;
-                    this.lbLog.UnselectAll();
-                }
-            }
-            catch (Exception ex) {
-                this.log.Exception(9999, "btnCopyLog_Click", "", ex);
-            }
-        }
-
-        private void btnClearLog_Click(object sender, RoutedEventArgs e) {
-            try {
-                lock (this.lbLog) {
-                    if (this.logScroll != null) {
-                        this.lbLog.Items.Clear();
-                    }
-                }
-            }
-            catch (Exception ex) {
-                this.log.Exception(9999, "btnClearLog_Click", "", ex);
-            }
-        }
-
         #endregion
 
         #region Event handlers
@@ -168,13 +134,11 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             DI.Wrapper.LanguageChanged += this.languageChangedHandler;
             DI.Wrapper.BLE_CharacteristicReadValueChanged += this.characteristicReadValueChanged;
             this.timer.Tick += this.Timer_Tick;
-            App.STATIC_APP.LogMsgEvent += this.AppLogMsgEventHandler;
         }
 
 
         private void RemoveEventHandlers() {
             DI.Wrapper.LanguageChanged -= this.languageChangedHandler;
-            App.STATIC_APP.LogMsgEvent -= this.AppLogMsgEventHandler;
             DI.Wrapper.BLE_DeviceConnectResult -= this.DeviceConnectResultHandler;
             DI.Wrapper.BLE_CharacteristicReadValueChanged -= this.characteristicReadValueChanged;
             DI.Wrapper.BLE_ConnectionStatusChanged -= this.connectionStatusChanged;
@@ -182,21 +146,9 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.treeServices.SelectedItemChanged -= this.treeServices_SelectedItemChanged;
         }
 
+
         private void languageChangedHandler(object sender, SupportedLanguage language) {
             this.SetLanguage(language);
-        }
-
-
-        private void AppLogMsgEventHandler(object sender, string msg) {
-            // Race condition with messages coming before window rendered
-            try {
-                lock (this.lbLog) {
-                    if (this.logScroll != null) {
-                        this.lbLog.AddAndScroll(msg, this.logScroll, 400);
-                    }
-                }
-            }
-            catch (Exception) { }
         }
 
 

@@ -9,7 +9,7 @@
         xmlns:BLEcontrols="clr-namespace:MultiCommTerminal.NetCore.UserControls.BLE"
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
         xmlns:dataModels="clr-namespace:BluetoothLE.Net.DataModels;assembly=BluetoothLE.Net"
-        Style="{StaticResource MyWindowStyle}"
+        Style="{StaticResource MyWindowStyle}" 
         WindowStartupLocation="CenterScreen" 
         Title="BLE"
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.BluetoothClassic_W}}"
@@ -112,22 +112,9 @@
                     </StackPanel>
                 </DockPanel>
             </Border>
-            <Border x:Name="logSection" >
-                <StackPanel>
-                    <DockPanel HorizontalAlignment="Center" Visibility="Visible" Margin="5">
-                        <controls:UC_IconButton x:Name="btnCopyLog" Click="btnCopyLog_Click" 
-                                    Style="{StaticResource TextIconButton}" Margin="5,8"
-                                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Copy}}"
-                                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Add}}"/>
-                        <controls:UC_IconButton x:Name="btnClearLog" Click="btnClearLog_Click" 
-                                    Style="{StaticResource TextIconButton}" Margin="5,8"
-                                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Clear}}"
-                                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Delete}}"/>
-                    </DockPanel>
-                    <ListBox x:Name="lbLog" Height="200" Visibility="Visible"  SelectionMode="Extended"
-                        ScrollViewer.VerticalScrollBarVisibility="Auto" 
-                        ScrollViewer.HorizontalScrollBarVisibility="Auto" />
-                </StackPanel>
+
+            <Border>
+                <controls:UC_Logging x:Name="ucLogger" Visibility="Visible" VerticalAlignment="Stretch" MaxHeight="250"/>
             </Border>
         </StackPanel>
     </Grid>

@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="MultiCommTerminal.NetCore.UserControls.UC_Logging"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MultiCommTerminal.NetCore.UserControls"
+             xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
+             Background="#fffffa"
+             mc:Ignorable="d" 
+             d:DesignHeight="350" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0" HorizontalAlignment="Center" Margin="5">
+            <local:UC_IconButton x:Name="btnCopyLog" Click="btnCopyLog_Click" 
+                Style="{StaticResource TextIconButton}" Margin="5,8"
+                Content="{Binding Source={x:Static wpfHelper:TxtBinder.Copy}}"
+                IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Add}}"/>
+            <local:UC_IconButton x:Name="btnClearLog" Click="btnClearLog_Click" 
+                Style="{StaticResource TextIconButton}" Margin="5,8"
+                Content="{Binding Source={x:Static wpfHelper:TxtBinder.Clear}}"
+                IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Delete}}"/>
+        </DockPanel>
+        <ListBox Grid.Row="1" x:Name="lbLog" Visibility="Visible"  SelectionMode="Extended"
+                ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                ScrollViewer.HorizontalScrollBarVisibility="Auto" />
+    </Grid>
+</UserControl>
