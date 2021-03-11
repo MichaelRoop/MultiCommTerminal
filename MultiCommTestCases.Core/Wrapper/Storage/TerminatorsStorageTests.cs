@@ -6,9 +6,7 @@ using MultiCommTestCases.Core.Wrapper.Utils;
 using NUnit.Framework;
 using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using TestCaseSupport.Core;
 
 namespace MultiCommTestCases.Core.Wrapper.Storage {

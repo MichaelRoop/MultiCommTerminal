@@ -65,6 +65,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.buttonSizer.PrepForChange();
             this.timer = new DispatcherTimer(DispatcherPriority.Normal);
             this.timer.Interval = TimeSpan.FromMilliseconds(500);
+            // TODO - set the title on commands
+            //this.lblCmdDataTypeContent.Content = BLE_DataType.Reserved.ToStr();
         }
 
 
@@ -243,12 +245,21 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         private void treeServices_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {
             try {
                 if (e.NewValue is BLE_CharacteristicDataModel) {
-                    this.writeControl.SetCharacteristic(e.NewValue as BLE_CharacteristicDataModel);
+                    BLE_CharacteristicDataModel dm = e.NewValue as BLE_CharacteristicDataModel;
+                    this.writeControl.SetCharacteristic(dm);
+                    if (dm != null) {
+                        this.lblCmdDataTypeContent.Content = dm.DataTypeDisplay;
+                        // TODO load list of commands based on data type
+
+                    }
+
                 }
                 //// Cannot reset if not Characteristic since that happens on update
                 else if (e.NewValue is BLE_ServiceDataModel || e.NewValue is BLE_DescriptorDataModel) {
                     this.log.Info("------------------------------------------------------", e.NewValue.GetType().Name);
                     this.writeControl.Reset();
+                    // TODO - Reset the commands title
+                    //this.lblCmdDataTypeContent.Content = BLE_DataType.Reserved.ToStr();
                 }
             }
             catch (Exception ex) {
@@ -279,6 +290,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                     this.currentDevice = null;
                     DI.Wrapper.BLE_ConnectionStatusChanged -= this.connectionStatusChanged;
                     DI.Wrapper.BLE_Disconnect();
+                    // Reset title
+                    //this.lblCmdDataTypeContent.Content = BLE_DataType.Reserved.ToStr();
                 }
             });
         }
