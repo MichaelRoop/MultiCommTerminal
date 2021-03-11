@@ -56,16 +56,12 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             Instances++;
             this.parent = parent;
             InitializeComponent();
-            //this.MaxHeight = SystemParameters.VirtualScreenHeight;
-            this.SizeToContent = SizeToContent.WidthAndHeight;
-            //this.MaxHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
-
-
             this.buttonSizer = new ButtonGroupSizeSyncManager(
                 this.btnConnect, this.btnDisconnect, this.btnExit, this.btnLog);
             this.buttonSizer.PrepForChange();
             this.timer = new DispatcherTimer(DispatcherPriority.Normal);
             this.timer.Interval = TimeSpan.FromMilliseconds(500);
+
             // TODO - set the title on commands
             //this.lblCmdDataTypeContent.Content = BLE_DataType.Reserved.ToStr();
         }
@@ -79,12 +75,15 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             WPF_ControlHelpers.CenterChild(parent, this);
-            this.ucLogger.Collapse();
             this.AddEventHandlers();
             this.timer.Start();
             this.writeControl.OnStartup(this.parent);
             DI.Wrapper.CurrentSupportedLanguage(this.SetLanguage);
+            this.ucLogger.Show();
             this.ucLogger.OnLoaded();
+            this.ucLogger.Collapse();
+            this.SizeToContent = SizeToContent.WidthAndHeight;
+            this.SizeToContent = SizeToContent.Manual;
         }
 
 
@@ -109,6 +108,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         private void btnLog_Click(object sender, RoutedEventArgs e) {
             this.ucLogger.ToggleVisibility();
+            this.ResizeOnNormal();
         }
 
 
@@ -137,6 +137,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         private void AddEventHandlers() {
             DI.Wrapper.LanguageChanged += this.languageChangedHandler;
             DI.Wrapper.BLE_CharacteristicReadValueChanged += this.characteristicReadValueChanged;
+            this.ucLogger.OnMsgReceived += this.logger_OnMsgReceived;
             this.timer.Tick += this.Timer_Tick;
         }
 
@@ -146,6 +147,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             DI.Wrapper.BLE_DeviceConnectResult -= this.DeviceConnectResultHandler;
             DI.Wrapper.BLE_CharacteristicReadValueChanged -= this.characteristicReadValueChanged;
             DI.Wrapper.BLE_ConnectionStatusChanged -= this.connectionStatusChanged;
+            this.ucLogger.OnMsgReceived -= this.logger_OnMsgReceived;
             this.timer.Tick -= this.Timer_Tick;
             this.treeServices.SelectedItemChanged -= this.treeServices_SelectedItemChanged;
         }
@@ -301,6 +303,24 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                 }
             }
         }
+
+
+        private void logger_OnMsgReceived(object sender, EventArgs e) {
+            if (this.ucLogger.IsVisible) {
+                this.ResizeOnNormal();
+            }
+        }
+
+
+        private void ResizeOnNormal() {
+            if (this.WindowState == WindowState.Normal) {
+                this.SizeToContent = SizeToContent.WidthAndHeight;
+                this.InvalidateVisual();
+                this.SizeToContent = SizeToContent.Manual;
+            }
+        }
+
+
 
         #endregion
 

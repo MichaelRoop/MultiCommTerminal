@@ -17,6 +17,8 @@ namespace MultiCommTerminal.NetCore.UserControls {
         private ScrollViewer logScroll = null;
         private ButtonGroupSizeSyncManager buttonSizer = null;
 
+        public event EventHandler OnMsgReceived;
+
 
         public UC_Logging() {
             InitializeComponent();
@@ -85,6 +87,11 @@ namespace MultiCommTerminal.NetCore.UserControls {
                 lock (this.lbLog) {
                     if (this.logScroll != null) {
                         this.lbLog.AddAndScroll(msg, this.logScroll, 400);
+                        try {
+                            this.OnMsgReceived?.Invoke(this, new EventArgs());
+                        }
+                        catch (Exception) {
+                        }
                     }
                 }
             }
