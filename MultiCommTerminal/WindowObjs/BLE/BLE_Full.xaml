@@ -9,21 +9,18 @@
         xmlns:BLEcontrols="clr-namespace:MultiCommTerminal.NetCore.UserControls.BLE"
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
         xmlns:dataModels="clr-namespace:BluetoothLE.Net.DataModels;assembly=BluetoothLE.Net"
-        WindowStartupLocation="CenterScreen"
+        WindowStartupLocation="CenterScreen" 
         Style="{StaticResource MyWindowStyle}" 
         ResizeMode="CanResize"
         Title="BLE"
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.BluetoothClassic_W}}"
         Loaded="Window_Loaded" Closing="Window_Closing"
         MinHeight="100" MinWidth="200" MaxHeight="1200"  BorderThickness=".5">
-    
-        <!--
-    --> 
-    
+
+    <!-- TODO - the CanResize creates a margin over the title bar -->
+
     <Grid MinWidth="650">
-        <Grid x:Name="gridWait" Panel.ZIndex="10000" 
-              HorizontalAlignment="Stretch" 
-              VerticalAlignment="Stretch" Visibility="Collapsed" >
+        <Grid x:Name="gridWait" Panel.ZIndex="10000" Visibility="Collapsed" Margin="0" >
             <Grid.Background>
                 <!--  Prevent any control from getting input during spinner visibility -->
                 <SolidColorBrush Color="AntiqueWhite" Opacity=".1"/>
@@ -32,15 +29,15 @@
             <!--<controls:UC_BusyImageSpinner />-->
             <controls:UC_BusySpinner />
         </Grid>
-
-        <Grid Margin="0">
+        
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-
+            
             <Border Grid.Row="0" Style="{StaticResource brd075}" Padding="0" >
                 <TreeView x:Name="treeServices" HorizontalAlignment="Stretch" Padding="10"
                         SelectedItemChanged="treeServices_SelectedItemChanged"

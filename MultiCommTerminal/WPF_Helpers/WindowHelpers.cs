@@ -29,7 +29,19 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
                     if (b != null) {
                         b.MouseDown += (sender, args) => {
                             WrapErr.ToErrReport(9999, "Drag when mouse not down", () => {
-                                win.DragMove();
+                                if (win.WindowState == WindowState.Maximized) {
+                                    // Dislodge it from maximized state to move
+                                    win.WindowState = WindowState.Normal;
+
+                                    // Center the window on the click point
+                                    Point p = args.GetPosition(win);
+                                    win.Top = p.Y - 15; // Middle of top bar
+                                    win.Left = p.X - (win.Width / 2.0);
+                                    win.DragMove();
+                                }
+                                else {
+                                    win.DragMove();
+                                }
                             });
                         };
                     }

@@ -77,15 +77,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         }
 
 
-        //protected override void OnStateChanged(EventArgs e) {
-        //    if (this.WindowState == WindowState.Maximized) {
-        //        //this.BindMouseDownToCustomTitleBar();
-        //    }
-        //    base.OnStateChanged(e);
-        //}
-
-
-
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             WPF_ControlHelpers.CenterChild(parent, this);
             this.ucLogger.Collapse();
