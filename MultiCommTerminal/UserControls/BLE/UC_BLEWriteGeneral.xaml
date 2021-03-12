@@ -55,7 +55,7 @@
             <Label Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" x:Name="lblInfoContent" Content="" 
                        Style="{Binding Source={StaticResource NameLabelRight}}"/>
         </Grid>
-        <Border Grid.Row="1" Style="{StaticResource brd075}" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Border Grid.Row="1" Style="{StaticResource brd075}" BorderThickness="0" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -63,10 +63,10 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>                
                 <UC:UC_IconButton Grid.Column="0" x:Name="btnRead" Style="{StaticResource TextIconButton}" Visibility="Visible" HorizontalAlignment="Right"
-                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Read}}" 
+                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Read}}" Margin="5,0"
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Read}}"                                                                                            
                             Background="Transparent" Click="btnRead_Click" />
-                <UC:UC_IconButton Grid.Column="1" x:Name="btnSend" Style="{StaticResource TextIconButton}" Visibility="Visible" Margin="10,0"
+                <UC:UC_IconButton Grid.Column="1" x:Name="btnSend" Style="{StaticResource TextIconButton}" Visibility="Visible" Margin="5,0,10,0"
                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Write}}" 
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Send}}"                                                                                            
                             Background="Transparent" Click="btnSend_Click" />

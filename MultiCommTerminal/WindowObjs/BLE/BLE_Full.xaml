@@ -45,7 +45,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <BLEcontrols:UC_BLECmds Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Visibility="Visible" />
+            <BLEcontrols:UC_BLECmds x:Name="ucCmds" Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Visibility="Visible" />
 
 
             <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource brd075}" Padding="0" >
@@ -100,8 +100,8 @@
                 <BLEcontrols:UC_BLEWriteGeneral x:Name="writeControl"/>
             </Border>
             <!-- Log stuff -->
-            <Border Grid.Row="2" Grid.Column="0" Style="{StaticResource brd075}" HorizontalAlignment="Stretch" Padding="0" Margin="0,10,0,10">
-                <DockPanel VerticalAlignment="Center" Margin="0">
+            <Border Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Stretch" Padding="0" Margin="0,10,0,10">
+                <DockPanel VerticalAlignment="Bottom" Margin="0,0,0,-5">
                     <DockPanel Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <StackPanel HorizontalAlignment="Center">
                             <DockPanel Margin="0">
@@ -117,14 +117,19 @@
                                     Content="{Binding Source={x:Static wpfHelper:TxtBinder.Disconnect}}" MaxWidth="150"
                                     IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}" Visibility="Collapsed"                                                                                           
                                     Background="Transparent" Click="btnDisconnect_Click" />
+                                <controls:UC_IconButton x:Name="btnExit" Click="btnExit_Click" IconMargin="7"
+                                    Style="{StaticResource TextIconButton}" MaxWidth="150" Margin="5,0,0,0"
+                                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Exit}}"
+                                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Exit}}"/>
                                 <controls:UC_IconButton x:Name="btnLog" Click="btnLog_Click" MaxWidth="150"
                                     Style="{StaticResource TextIconButton}" Margin="5,0"
                                     Content="{Binding Source={x:Static wpfHelper:TxtBinder.LogText}}"
-                                IconSource="{Binding Source={x:Static wpfHelper:IconBinder.LogIcon}}"/>
-                                <controls:UC_IconButton x:Name="btnExit" Click="btnExit_Click" IconMargin="7"
-                                    Style="{StaticResource TextIconButton}" MaxWidth="150"
-                                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Exit}}"
-                                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Exit}}"/>
+                                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.LogIcon}}"/>
+                                <controls:UC_IconButton x:Name="btnCommands" Click="btnCommands_Click" MaxWidth="150"
+                                    Style="{StaticResource TextIconButton}"
+                                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Commands}}"
+                                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Command}}"/>
+                                
                             </DockPanel>
                         </StackPanel>
                     </DockPanel>

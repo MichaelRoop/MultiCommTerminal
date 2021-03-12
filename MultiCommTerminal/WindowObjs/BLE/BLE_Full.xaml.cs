@@ -57,7 +57,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.parent = parent;
             InitializeComponent();
             this.buttonSizer = new ButtonGroupSizeSyncManager(
-                this.btnConnect, this.btnDisconnect, this.btnExit, this.btnLog);
+                this.btnConnect, this.btnDisconnect, this.btnExit, this.btnLog, this.btnCommands);
             this.buttonSizer.PrepForChange();
             this.timer = new DispatcherTimer(DispatcherPriority.Normal);
             this.timer.Interval = TimeSpan.FromMilliseconds(500);
@@ -82,6 +82,9 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.ucLogger.Show();
             this.ucLogger.OnLoaded();
             this.ucLogger.Collapse();
+            this.ucCmds.Show();
+            //this.ucCmds.OnLoaded();
+            this.ucCmds.Collapse();
             this.SizeToContent = SizeToContent.WidthAndHeight;
             this.SizeToContent = SizeToContent.Manual;
         }
@@ -109,6 +112,11 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         private void btnLog_Click(object sender, RoutedEventArgs e) {
             this.ucLogger.ToggleVisibility();
             this.ResizeOnNormal();
+        }
+
+
+        private void btnCommands_Click(object sender, RoutedEventArgs e) {
+            this.ucCmds.ToggleVisibility();
         }
 
 
@@ -263,6 +271,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                 this.btnDisconnect.Content = l.GetText(MsgCode.Disconnect);
                 this.btnLog.Content = l.GetText(MsgCode.Log);
                 this.btnExit.Content = l.GetText(MsgCode.exit);
+                this.btnCommands.Content = l.GetText(MsgCode.commands);
                 DI.Wrapper.Translate(this.currentDevice);
                 this.dataChanged = true;
             });
