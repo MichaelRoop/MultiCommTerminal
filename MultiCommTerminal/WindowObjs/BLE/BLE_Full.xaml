@@ -41,8 +41,14 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            
-            <Border Grid.Row="0" Style="{StaticResource brd075}" Padding="0" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <BLEcontrols:UC_BLECmds Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Visibility="Visible" />
+
+
+            <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource brd075}" Padding="0" >
                 <TreeView x:Name="treeServices" HorizontalAlignment="Stretch" Padding="10"
                         SelectedItemChanged="treeServices_SelectedItemChanged"
                         MinHeight="250" MaxHeight="700" 
@@ -90,44 +96,42 @@
                 </TreeView>
             </Border>
             <!-- Send -->
-            <Border Grid.Row="1" >
+            <Border Grid.Row="1" Grid.Column="0" >
                 <BLEcontrols:UC_BLEWriteGeneral x:Name="writeControl"/>
             </Border>
             <!-- Log stuff -->
-            <Border Grid.Row="2" Style="{StaticResource brd075}" HorizontalAlignment="Stretch" Padding="0" Margin="0">
-                <DockPanel VerticalAlignment="Center" Margin="0,5">
-                    <StackPanel VerticalAlignment="Center">
-                        <DockPanel Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <StackPanel HorizontalAlignment="Center">
-                                <DockPanel Margin="0,6">
-                                    <Border x:Name="connectedOn" Style="{StaticResource brd075}" Padding="0" Height="15" Width="15" CornerRadius="7"
-                                            Background="Lime" BorderThickness="2" Margin="5,0" Visibility="Collapsed" />
-                                    <Border x:Name="connectedOff" Style="{StaticResource brd075}" Padding="0" Height="15" Width="15" CornerRadius="7"
-                                            Background="LightGray" BorderThickness="2" Margin="5,0" />
-                                    <controls:UC_IconButton x:Name="btnConnect" Style="{StaticResource TextIconButton}" 
-                                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.Connect}}" MaxWidth="150"
-                                        IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Connect}}"                                                                                            
-                                        Background="Transparent" Click="btnConnect_Click" />
-                                    <controls:UC_IconButton x:Name="btnDisconnect" Style="{StaticResource TextIconButton}" 
-                                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.Disconnect}}" MaxWidth="150"
-                                        IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}" Visibility="Collapsed"                                                                                           
-                                        Background="Transparent" Click="btnDisconnect_Click" />
-                                    <controls:UC_IconButton x:Name="btnLog" Click="btnLog_Click" MaxWidth="150"
-                                        Style="{StaticResource TextIconButton}" Margin="10"
-                                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.LogText}}"
-                                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.LogIcon}}"/>
-                                    <controls:UC_IconButton x:Name="btnExit" Click="btnExit_Click" IconMargin="7"
-                                        Style="{StaticResource TextIconButton}" MaxWidth="150"
-                                        Content="{Binding Source={x:Static wpfHelper:TxtBinder.Exit}}"
-                                        IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Exit}}"/>
-                                </DockPanel>
-                            </StackPanel>
-                        </DockPanel>
-                    </StackPanel>
+            <Border Grid.Row="2" Grid.Column="0" Style="{StaticResource brd075}" HorizontalAlignment="Stretch" Padding="0" Margin="0,10,0,10">
+                <DockPanel VerticalAlignment="Center" Margin="0">
+                    <DockPanel Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <StackPanel HorizontalAlignment="Center">
+                            <DockPanel Margin="0">
+                                <Border x:Name="connectedOn" Style="{StaticResource brd075}" Padding="0" Height="15" Width="15" CornerRadius="7"
+                                        Background="Lime" BorderThickness="2" Margin="5,0" Visibility="Collapsed" />
+                                <Border x:Name="connectedOff" Style="{StaticResource brd075}" Padding="0" Height="15" Width="15" CornerRadius="7"
+                                        Background="LightGray" BorderThickness="2" Margin="5,0" />
+                                <controls:UC_IconButton x:Name="btnConnect" Style="{StaticResource TextIconButton}" 
+                                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Connect}}" MaxWidth="150"
+                                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Connect}}"                                                                                            
+                                    Background="Transparent" Click="btnConnect_Click" />
+                                <controls:UC_IconButton x:Name="btnDisconnect" Style="{StaticResource TextIconButton}" 
+                                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Disconnect}}" MaxWidth="150"
+                                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}" Visibility="Collapsed"                                                                                           
+                                    Background="Transparent" Click="btnDisconnect_Click" />
+                                <controls:UC_IconButton x:Name="btnLog" Click="btnLog_Click" MaxWidth="150"
+                                    Style="{StaticResource TextIconButton}" Margin="5,0"
+                                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.LogText}}"
+                                IconSource="{Binding Source={x:Static wpfHelper:IconBinder.LogIcon}}"/>
+                                <controls:UC_IconButton x:Name="btnExit" Click="btnExit_Click" IconMargin="7"
+                                    Style="{StaticResource TextIconButton}" MaxWidth="150"
+                                    Content="{Binding Source={x:Static wpfHelper:TxtBinder.Exit}}"
+                                    IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Exit}}"/>
+                            </DockPanel>
+                        </StackPanel>
+                    </DockPanel>
                 </DockPanel>
             </Border>
 
-            <Border Grid.Row="3">
+            <Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
                 <controls:UC_Logging x:Name="ucLogger" Visibility="Visible" MaxHeight="300"/>
             </Border>
         </Grid>

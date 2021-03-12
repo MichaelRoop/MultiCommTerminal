@@ -16,7 +16,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition MaxHeight="120"/>
+            <RowDefinition MaxHeight="130"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <!-- Data type label -->
