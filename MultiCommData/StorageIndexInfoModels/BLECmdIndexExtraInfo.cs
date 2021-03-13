@@ -11,6 +11,11 @@ namespace MultiCommData.Net.StorageIndexInfoModels {
         public BLE_DataType DataType { get; set; } = BLE_DataType.UInt_8bit;
 
 
+        public BLECmdIndexExtraInfo() {
+            // Must have a default constructor to deserialize or check the param for null
+        }
+
+
         public BLECmdIndexExtraInfo(BLECommandSetDataModel dm) {
             this.Update(dm);
         }
