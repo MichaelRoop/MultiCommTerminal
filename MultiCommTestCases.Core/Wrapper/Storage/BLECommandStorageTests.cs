@@ -36,6 +36,7 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
 
         #endregion
 
+        #region Create
 
         [Test]
         public void T001_Create_Success() {
@@ -45,14 +46,14 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
                 items.Add(new ScriptItem() { Display = "Close door", Command = "0" });
                 items.Add(new ScriptItem() { Display = "Open door", Command = "1" });
                 items.Add(new ScriptItem() { Display = "Lock door", Command = "2" });
-                var ndx =this.CreateItem(items, "6195", BLE_DataType.UInt_8bit, "Demo uint 8 bit open close", "");
+                var ndx = this.CreateItem(items, "6195", BLE_DataType.UInt_8bit, "Demo uint 8 bit open close", "");
                 Assert.NotNull(ndx, "Did not return index");
             });
         }
 
 
         [Test]
-        public void T002_Create_SingletemOutOfRange() {
+        public void T002_Create_SingleItemOutOfRange() {
             TestHelpers.CatchUnexpected(() => {
                 ScriptItem item = new ScriptItem() { Display = "Close door", Command = "3000" };
                 string error = string.Empty;
@@ -95,7 +96,25 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
 
 
         [Test]
-        public void T005_DeleteMiddle() {
+        public void T004_04CreateDemoSet() {
+            this.log.InfoEntry("T004_04CreateDemoSet");
+            TestHelpers.CatchUnexpected(() => {
+                this.GetCommandList(0);
+                W.CreateBLEDemoCmdsBool(this.OnSuccessDummy, this.AssertErr);
+                W.CreateBLEDemoCmdsUint8(this.OnSuccessDummy, this.AssertErr);
+                this.GetCommandList(2);
+            });
+        }
+
+
+
+
+        #endregion
+
+        #region Delete
+
+        [Test]
+        public void T005_01DeleteMiddle() {
             TestHelpers.CatchUnexpected(() => {
                 this.SetupData();
                 List<IIndexItem<BLECmdIndexExtraInfo>> index = this.GetCommandList(3);
@@ -113,6 +132,23 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
             });
         }
 
+
+        [Test]
+        public void T005_02DeleteAllFiles() {
+            this.log.InfoEntry("T001_Create_Success");
+            TestHelpers.CatchUnexpected(() => {
+                // First create 3
+                this.SetupData();
+                this.GetCommandList(3);
+                W.DeleteAllBLECmds(this.OnSuccessDummy, this.AssertErr);
+                this.AssertCompleteFired();
+                this.GetCommandList(0);
+            });
+        }
+
+        #endregion
+
+        #region Add
 
         [Test]
         public void T006_AddCommand() {
@@ -139,6 +175,9 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
             });
         }
 
+        #endregion
+
+        #region Save
 
         [Test]
         public void T007_EditCommand() {
@@ -236,8 +275,15 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
             });
         }
 
+        #endregion
 
 
+        #region Generate Demo Set
+
+
+
+
+        #endregion
 
 
         private List<IIndexItem<BLECmdIndexExtraInfo>> GetCommandList(int expectedCount) {

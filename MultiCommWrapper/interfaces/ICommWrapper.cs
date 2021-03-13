@@ -365,10 +365,22 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void DeleteBLECmdSet(IIndexItem<BLECmdIndexExtraInfo> index, Action<bool> onComplete, OnErr onError);
 
+        /// <summary>Delete files, index and storage directory</summary>
+        /// <param name="onSuccess"></param>
+        /// <param name="onError"></param>
         void DeleteAllBLECmds(Action onSuccess, OnErr onError);
 
+        /// <summary>Delete all the files in the directory and update index</summary>
+        /// <param name="onSuccess"></param>
+        /// <param name="onError"></param>
+        void DeleteAllBLECmdFiles(Action onSuccess, OnErr onError);
 
         void ValidateBLECmdItem(BLE_DataType dataType, ScriptItem item, Action onSuccess, OnErr onError);
+
+        void CreateBLEDemoCmdsBool(Action onSuccess, OnErr onError);
+
+        void CreateBLEDemoCmdsUint8(Action onSuccess, OnErr onError);
+
 
         #endregion
 

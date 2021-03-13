@@ -115,9 +115,7 @@ namespace MultiCommWrapper.Net.WrapCode {
                 if (this._bleCmdStorage == null) {
                     this._bleCmdStorage =
                         this.storageFactory.GetIndexedManager<BLECommandSetDataModel, BLECmdIndexExtraInfo>(this.Dir(BLE_CMD_DIR), BLE_CMD_INDEX_FILE);
-                    // Not required to have default
-                    //this.AssureBLECmdsDefault(this._bleCmdStorage);
-
+                    this.AssureBLECmdsDefault(this._bleCmdStorage);
                 }
                 return this._bleCmdStorage;
             }
@@ -358,19 +356,10 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         private void AssureBLECmdsDefault(IIndexedStorageManager<BLECommandSetDataModel, BLECmdIndexExtraInfo> manager) {
-            List<IIndexItem<BLECmdIndexExtraInfo>> index = this.bleCmdStorage.IndexedItems;
-            // TODO Not necessary to have a default.
+            List<IIndexItem<BLECmdIndexExtraInfo>> index = manager.IndexedItems;
             if (index.Count == 0) {
-                List<ScriptItem> items = new List<ScriptItem>();
-                items.Add(new ScriptItem() { Display = "Open door cmd", Command = "1" });
-                items.Add(new ScriptItem() { Display = "Close door cmd", Command = "0" });
-
-                BLECommandSetDataModel dm = new BLECommandSetDataModel(items) {
-                    CharacteristicName = "6195", // Pseudo Guid for test. TODO . Comment out
-                    DataType = BLE_DataType.UInt_8bit,
-                    Display = "Demo uint 8 bit open close"
-                };
-                this.Create(dm.Display, dm,  manager, (idx) => { }, (err) => { }, new BLECmdIndexExtraInfo(dm));
+                this.CreateBLEDemoCmdsBool(() => { }, err => { });
+                this.CreateBLEDemoCmdsUint8(() => { }, err => { });
             }
         }
 
@@ -512,9 +501,6 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-
-
-
         private void DeleteAllFromStorage<TSToreObject, TExtraInfo>(
             IIndexedStorageManager<TSToreObject, TExtraInfo> manager, Action onSuccess, OnErr onError)
             where TSToreObject : class where TExtraInfo : class {
@@ -534,6 +520,28 @@ namespace MultiCommWrapper.Net.WrapCode {
                 }
             });
         }
+
+
+        private void DeleteAllFilesFromStorage<TSToreObject, TExtraInfo>(
+            IIndexedStorageManager<TSToreObject, TExtraInfo> manager, Action onSuccess, OnErr onError)
+            where TSToreObject : class where TExtraInfo : class {
+            WrapErr.ToErrReport(9999, () => {
+                ErrReport report;
+                WrapErr.ToErrReport(out report, 9999, () => {
+                    if (manager.DeleteAllFiles()) {
+                        onSuccess.Invoke();
+                    }
+                    else {
+                        onError.Invoke(this.GetText(MsgCode.DeleteFailure));
+                    }
+                });
+                if (report.Code != 0) {
+                    onError.Invoke(this.GetText(MsgCode.UnknownError));
+                }
+            });
+        }
+
+
 
 
         #endregion

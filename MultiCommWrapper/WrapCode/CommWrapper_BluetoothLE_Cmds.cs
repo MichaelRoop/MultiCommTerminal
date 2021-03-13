@@ -47,6 +47,11 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
+        public void DeleteAllBLECmdFiles(Action onSuccess, OnErr onError) {
+            this.DeleteAllFilesFromStorage(this.bleCmdStorage, onSuccess, onError);
+        }
+
+
         public void ValidateBLECmdItem(BLE_DataType dataType, ScriptItem item, Action onSuccess, OnErr onError) {
             ErrReport report;
             WrapErr.ToErrReport(out report, 9999, () => {
@@ -63,6 +68,42 @@ namespace MultiCommWrapper.Net.WrapCode {
             }
         }
 
+        #region Create Command sets
+
+
+        public void CreateBLEDemoCmdsBool(Action onSuccess, OnErr onError) {
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 9999, "Failure on CreateBLEBoolDemoCmds", () => {
+                List<ScriptItem> items = new List<ScriptItem>();
+                this.AddCmd(items, "ON", "1");
+                this.AddCmd(items, "OFF", "0");
+                this.CreateBLECmds("Demo BLE Commands - Bool", BLE_DataType.Bool, items, onSuccess, onError);
+            });
+        }
+
+
+        public void CreateBLEDemoCmdsUint8(Action onSuccess, OnErr onError) {
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 9999, "Failure on CreateBLEBoolDemoCmds", () => {
+                List<ScriptItem> items = new List<ScriptItem>();
+                this.AddCmd(items, "ALL OFF", "0");
+                this.AddCmd(items, "ALL ON", "255");
+                this.AddCmd(items, "0,3,7 BITS ON", "137");
+                this.CreateBLECmds("Demo BLE Commands - Uint8", BLE_DataType.UInt_8bit, items, onSuccess, onError);
+            });
+        }
+
+
+        public void CreateBLECmds(string display, BLE_DataType dataType, List<ScriptItem> items, Action onSuccess, OnErr onError) {
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 9999, "Failure on CreateBLEBoolDemoCmds", () => {
+                BLECommandSetDataModel dm = new BLECommandSetDataModel(items, "", dataType, display);
+                this.CreateBLECmdSet(
+                    dm.Display, dm, new BLECmdIndexExtraInfo(dm), idx => onSuccess(), onError);
+            });
+        }
+
+        #endregion
 
         #region Private
 
