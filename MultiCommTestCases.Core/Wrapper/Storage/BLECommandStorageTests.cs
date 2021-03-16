@@ -39,7 +39,7 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
         #region Create
 
         [Test]
-        public void T001_Create_Success() {
+        public void T001_Create01_Success() {
             this.log.InfoEntry("T001_Create_Success");
             TestHelpers.CatchUnexpected(() => {
                 List<ScriptItem> items = new List<ScriptItem>();
@@ -53,7 +53,7 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
 
 
         [Test]
-        public void T002_Create_SingleItemOutOfRange() {
+        public void T001_Create02_SingleItemOutOfRange() {
             TestHelpers.CatchUnexpected(() => {
                 ScriptItem item = new ScriptItem() { Display = "Close door", Command = "3000" };
                 string error = string.Empty;
@@ -68,7 +68,7 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
 
 
         [Test]
-        public void T003_Create_ItemInListOutOfRange() {
+        public void T001_Create03_ItemInListOutOfRange() {
             TestHelpers.CatchUnexpected(() => {
                 List<ScriptItem> items = new List<ScriptItem>();
                 items.Add(new ScriptItem() { Display = "Close door", Command = "3000" });
@@ -82,21 +82,22 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
 
 
         [Test]
-        public void T004_Create_ValidateCount() {
+        public void T001_Create04_ValidateCount() {
             TestHelpers.CatchUnexpected(() => {
                 this.SetupData();
-                List<IIndexItem<BLECmdIndexExtraInfo>> index = this.GetCommandList(3);
-                Assert.AreEqual(3, index.Count);
-                Assert.AreEqual("6195", index[0].ExtraInfoObj.CharacteristicName);
-                Assert.AreEqual("6196", index[1].ExtraInfoObj.CharacteristicName);
-                Assert.AreEqual("6197", index[2].ExtraInfoObj.CharacteristicName);
+                List<IIndexItem<BLECmdIndexExtraInfo>> index = this.GetCommandList(4);
+                Assert.AreEqual(4, index.Count);
+                Assert.AreEqual("6194", index[0].ExtraInfoObj.CharacteristicName);
+                Assert.AreEqual("6195", index[1].ExtraInfoObj.CharacteristicName);
+                Assert.AreEqual("6196", index[2].ExtraInfoObj.CharacteristicName);
+                Assert.AreEqual("6197", index[3].ExtraInfoObj.CharacteristicName);
 
             });
         }
 
 
         [Test]
-        public void T004_04CreateDemoSet() {
+        public void T001_05CreateDemoSet() {
             this.log.InfoEntry("T004_04CreateDemoSet");
             TestHelpers.CatchUnexpected(() => {
                 this.GetCommandList(0);
@@ -106,40 +107,38 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
             });
         }
 
-
-
-
         #endregion
 
         #region Delete
 
         [Test]
-        public void T005_01DeleteMiddle() {
+        public void T002_Delete01_Second() {
             TestHelpers.CatchUnexpected(() => {
                 this.SetupData();
-                List<IIndexItem<BLECmdIndexExtraInfo>> index = this.GetCommandList(3);
+                List<IIndexItem<BLECmdIndexExtraInfo>> index = this.GetCommandList(4);
                 bool ok = false;
                 string error = string.Empty;
                 TDI.Wrapper.DeleteBLECmdSet(
                     index[1], (tf) => { ok = tf; }, (err) => { error = err; });
                 Assert.AreEqual(string.Empty, error);
                 Assert.True(ok, "Success but with false");
-                index = GetCommandList(2);
+                index = GetCommandList(3);
                 // Middle is gone
-                Assert.AreEqual("6195", index[0].ExtraInfoObj.CharacteristicName);
-                Assert.AreEqual("6197", index[1].ExtraInfoObj.CharacteristicName);
+                Assert.AreEqual("6194", index[0].ExtraInfoObj.CharacteristicName);
+                Assert.AreEqual("6196", index[1].ExtraInfoObj.CharacteristicName);
+                Assert.AreEqual("6197", index[2].ExtraInfoObj.CharacteristicName);
 
             });
         }
 
 
         [Test]
-        public void T005_02DeleteAllFiles() {
+        public void T002_Delet02_AllFiles() {
             this.log.InfoEntry("T001_Create_Success");
             TestHelpers.CatchUnexpected(() => {
                 // First create 3
                 this.SetupData();
-                this.GetCommandList(3);
+                this.GetCommandList(4);
                 W.DeleteAllBLECmds(this.OnSuccessDummy, this.AssertErr);
                 this.AssertCompleteFired();
                 this.GetCommandList(0);
@@ -151,26 +150,26 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
         #region Add
 
         [Test]
-        public void T006_AddCommand() {
+        public void T003_Add01_Success() {
             TestHelpers.CatchUnexpected(() => {
                 // Create list of 3 and validate
                 this.SetupData();
-                List<IIndexItem<BLECmdIndexExtraInfo>> index = this.GetCommandList(3);
+                List<IIndexItem<BLECmdIndexExtraInfo>> index = this.GetCommandList(4);
 
                 List<ScriptItem> items = new List<ScriptItem>();
                 items.Add(new ScriptItem() { Display = "Close door", Command = "0" });
                 items.Add(new ScriptItem() { Display = "Open door", Command = "1" });
                 items.Add(new ScriptItem() { Display = "Lock door", Command = "2" });
-                var ndx = this.CreateItem(items, "9999", BLE_DataType.UInt_16bit, "Fourth at 16 bits", "");
+                var ndx = this.CreateItem(items, "9999", BLE_DataType.UInt_16bit, "Fifth at 16 bits", "");
                 Assert.NotNull(ndx, "Null returned when creating fourth");
 
-                index = this.GetCommandList(4);
+                index = this.GetCommandList(5);
 
 
-                Assert.AreEqual("Fourth at 16 bits", index[3].Display);
-                Assert.AreEqual("9999", index[3].ExtraInfoObj.CharacteristicName);
-                Assert.AreEqual(BLE_DataType.UInt_16bit, index[3].ExtraInfoObj.DataType);
-                Assert.AreEqual(BLE_DataType.UInt_16bit.ToStr(), index[3].ExtraInfoObj.DataTypeDisplay);
+                Assert.AreEqual("Fifth at 16 bits", index[4].Display);
+                Assert.AreEqual("9999", index[4].ExtraInfoObj.CharacteristicName);
+                Assert.AreEqual(BLE_DataType.UInt_16bit, index[4].ExtraInfoObj.DataType);
+                Assert.AreEqual(BLE_DataType.UInt_16bit.ToStr(), index[4].ExtraInfoObj.DataTypeDisplay);
 
             });
         }
@@ -180,12 +179,12 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
         #region Save
 
         [Test]
-        public void T007_EditCommand() {
+        public void T004_EditSave01_Success() {
             TestHelpers.CatchUnexpected(() => {
-                // Create list of 3 and validate
+                // Create list of 4 and validate
                 this.SetupData();
-                List<IIndexItem<BLECmdIndexExtraInfo>> index = this.GetCommandList(3);
-                IIndexItem<BLECmdIndexExtraInfo> item = index[0];
+                List<IIndexItem<BLECmdIndexExtraInfo>> index = this.GetCommandList(4);
+                IIndexItem<BLECmdIndexExtraInfo> item = index[1];
 
                 BLECommandSetDataModel dataModel = null;
                 string error = string.Empty;
@@ -199,7 +198,7 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
                 Assert.AreEqual("6195", dataModel.CharacteristicName);
                 Assert.AreEqual(BLE_DataType.UInt_8bit, dataModel.DataType);
                 Assert.AreEqual("Demo uint 8 bit", dataModel.Display);
-                Assert.AreEqual(3, dataModel.Items.Count);
+                Assert.AreEqual(3, dataModel.Items.Count, "Command item count in data model");
                 Assert.AreEqual("Close door", dataModel.Items[0].Display);
                 Assert.AreEqual("0", dataModel.Items[0].Command);
 
@@ -216,7 +215,7 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
 
                 // TODO index extra info not being updated. The actual object file is OK
                 // need to retrieve the proper one. Not in previous order
-                index = this.GetCommandList(3);
+                index = this.GetCommandList(4);
                 // Iterate to find the correct data model
                 item = null;
                 for (int i = 0; i< index.Count; i++) {
@@ -245,12 +244,12 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
 
 
         [Test]
-        public void T007_EditSaveOutOfRange() {
+        public void T004_EditSave02_OutOfRange() {
             TestHelpers.CatchUnexpected(() => {
                 // Create list of 3 and validate
                 this.SetupData();
-                List<IIndexItem<BLECmdIndexExtraInfo>> index = this.GetCommandList(3);
-                IIndexItem<BLECmdIndexExtraInfo> item = index[0];
+                List<IIndexItem<BLECmdIndexExtraInfo>> index = this.GetCommandList(4);
+                IIndexItem<BLECmdIndexExtraInfo> item = index[1];
 
                 BLECommandSetDataModel dataModel = null;
                 string error = string.Empty;
@@ -278,9 +277,7 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
         #endregion
 
 
-        #region Generate Demo Set
-
-
+        #region Retrieve lists
 
 
         #endregion
@@ -294,7 +291,7 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
                 (err) => { error = err; });
             Assert.AreEqual(string.Empty, error);
             Assert.NotNull(index);
-            Assert.AreEqual(expectedCount, index.Count);
+            Assert.AreEqual(expectedCount, index.Count, "GetCommandList index count");
             return index;
         }
 
@@ -303,8 +300,14 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
             List<ScriptItem> items = new List<ScriptItem>();
             items.Add(new ScriptItem() { Display = "Close door", Command = "0" });
             items.Add(new ScriptItem() { Display = "Open door", Command = "1" });
+            var ndx = this.CreateItem(items, "6194", BLE_DataType.Bool, "Demo bool", "");
+            Assert.NotNull(ndx, "Did not return index 0");
+
+            items = new List<ScriptItem>();
+            items.Add(new ScriptItem() { Display = "Close door", Command = "0" });
+            items.Add(new ScriptItem() { Display = "Open door", Command = "1" });
             items.Add(new ScriptItem() { Display = "Lock door", Command = "2" });
-            var ndx = this.CreateItem(items, "6195", BLE_DataType.UInt_8bit, "Demo uint 8 bit", "");
+            ndx = this.CreateItem(items, "6195", BLE_DataType.UInt_8bit, "Demo uint 8 bit", "");
             Assert.NotNull(ndx, "Did not return index 1");
 
             items = new List<ScriptItem>();
