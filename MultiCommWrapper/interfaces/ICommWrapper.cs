@@ -357,9 +357,17 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void GetBLECmdList(Action<List<IIndexItem<BLECmdIndexExtraInfo>>> onSuccess, OnErr onError);
 
-        void GetFilteredBLECmdList(BLE_DataType dataType, Action<List<IIndexItem<BLECmdIndexExtraInfo>>> onSuccess, OnErr onError);
-        
-        void GetFilteredBLECmdList(BLE_DataType dataType, string characteristic, Action<List<IIndexItem<BLECmdIndexExtraInfo>>> onSuccess, OnErr onError);
+        /// <summary>Retrieve lists of commands filtered on data type and characteristic name</summary>
+        /// <param name="dataType">Characteristic data type</param>
+        /// <param name="characteristic">The characteristic name</param>
+        /// <param name="onSuccess">
+        /// Raises 2 lists, first is general on data type only, second extra filtering on characteristic name</param>
+        /// <param name="onError">Invoked with error message on error</param>
+        void GetFilteredBLECmdList(
+            BLE_DataType dataType, 
+            string characteristic,
+            Action<List<IIndexItem<BLECmdIndexExtraInfo>>, List<IIndexItem<BLECmdIndexExtraInfo>>> onSuccess,
+            OnErr onError);
 
         void CreateBLECmdSet(string display, BLECommandSetDataModel data, BLECmdIndexExtraInfo extra, Action<IIndexItem<BLECmdIndexExtraInfo>> onSuccess, OnErr onError);
         

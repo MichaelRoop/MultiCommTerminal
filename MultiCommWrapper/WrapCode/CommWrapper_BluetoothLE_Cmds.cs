@@ -21,12 +21,11 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
-        public void GetFilteredBLECmdList(BLE_DataType dataType, Action<List<IIndexItem<BLECmdIndexExtraInfo>>> onSuccess, OnErr onError) {
-            this.GetFilteredBLECmdList(dataType, "", onSuccess, onError);
-        }
-
-
-        public void GetFilteredBLECmdList(BLE_DataType dataType, string characteristic, Action<List<IIndexItem<BLECmdIndexExtraInfo>>> onSuccess, OnErr onError) {
+        public void GetFilteredBLECmdList(
+            BLE_DataType dataType, 
+            string characteristic,
+            Action<List<IIndexItem<BLECmdIndexExtraInfo>>, List<IIndexItem<BLECmdIndexExtraInfo>>> onSuccess,
+            OnErr onError) {
             ErrReport report;
             WrapErr.ToErrReport(out report, 9999, "Failure on GetFilteredBLECmdList", () => {
                 this.RetrieveIndex(
@@ -42,15 +41,9 @@ namespace MultiCommWrapper.Net.WrapCode {
                                         specificResult.Add(item);
                                     }
                                 }
-                                break;
                             }
                         }
-                        if (specificResult.Count > 0) {
-                            onSuccess.Invoke(specificResult);
-                        }
-                        else {
-                            onSuccess.Invoke(generalResult);
-                        }
+                        onSuccess.Invoke(generalResult, specificResult);
                     },
                     onError);
             });

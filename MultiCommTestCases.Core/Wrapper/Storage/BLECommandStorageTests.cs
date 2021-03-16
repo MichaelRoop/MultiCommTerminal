@@ -279,6 +279,84 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
 
         #region Retrieve lists
 
+        [Test]
+        public void T005_Filter01_AllNoNames() {
+            TestHelpers.CatchUnexpected(() => {
+                // Create list of 4 and validate
+                this.SetupDataNoNames();
+                var 
+                t = this.GetFilteredCommandList("", BLE_DataType.Bool, 1, 0);
+                t = this.GetFilteredCommandList("", BLE_DataType.UInt_8bit, 1, 0);
+                t = this.GetFilteredCommandList("", BLE_DataType.UInt_16bit, 1, 0);
+                t = this.GetFilteredCommandList("", BLE_DataType.UInt_32bit, 1, 0);
+            });
+        }
+
+        [Test]
+        public void T005_Filter02_AllWithNames() {
+            TestHelpers.CatchUnexpected(() => {
+                // Create list of 4 and validate
+                this.SetupData();
+                var
+                t = this.GetFilteredCommandList("", BLE_DataType.Bool, 1, 0);
+                t = this.GetFilteredCommandList("", BLE_DataType.UInt_8bit, 1, 0);
+                t = this.GetFilteredCommandList("", BLE_DataType.UInt_16bit, 1, 0);
+                t = this.GetFilteredCommandList("", BLE_DataType.UInt_32bit, 1, 0);
+            });
+        }
+
+
+        [Test]
+        public void T005_Filter03_AllWithNamesNameFilterOn() {
+            TestHelpers.CatchUnexpected(() => {
+                // Create list of 4 and validate
+                this.SetupData();
+                var
+                t = this.GetFilteredCommandList("6194", BLE_DataType.Bool, 1, 1);
+                t = this.GetFilteredCommandList("6195", BLE_DataType.UInt_8bit, 1, 1);
+                t = this.GetFilteredCommandList("6196", BLE_DataType.UInt_16bit, 1, 1);
+                t = this.GetFilteredCommandList("6197", BLE_DataType.UInt_32bit, 1, 1);
+            });
+        }
+
+        [Test]
+        public void T005_Filter04_AllWithNamesNameFilterOn_NoMatcth() {
+            TestHelpers.CatchUnexpected(() => {
+                // Create list of 4 and validate
+                this.SetupData();
+                var
+                t = this.GetFilteredCommandList("X6194", BLE_DataType.Bool, 1, 0);
+                t = this.GetFilteredCommandList("Y6195", BLE_DataType.UInt_8bit, 1, 0);
+                t = this.GetFilteredCommandList("Z6196", BLE_DataType.UInt_16bit, 1,0);
+                t = this.GetFilteredCommandList("W6197", BLE_DataType.UInt_32bit, 1, 0);
+            });
+        }
+
+
+        [Test]
+        public void T005_Filter04_MultiOfSameTypeNameFilterOn() {
+            TestHelpers.CatchUnexpected(() => {
+                // Create list of 4 and validate
+                // The uint8 named one is 6195
+                this.SetupData();
+                this.CreateItem(this.CreateCmdList(0, 4), "", BLE_DataType.UInt_8bit, "Demo Uint8 - 1", "");
+                this.CreateItem(this.CreateCmdList(0, 4), "", BLE_DataType.UInt_8bit, "Demo Uint8 - 2", "");
+                this.CreateItem(this.CreateCmdList(0, 4), "", BLE_DataType.UInt_8bit, "Demo Uint8 - 3", "");
+                this.CreateItem(this.CreateCmdList(0, 4), "", BLE_DataType.UInt_8bit, "Demo Uint8 - 4", "");
+                this.CreateItem(this.CreateCmdList(0, 4), "", BLE_DataType.UInt_8bit, "Demo Uint8 - 5", "");
+                this.CreateItem(this.CreateCmdList(0, 4), "", BLE_DataType.UInt_8bit, "Demo Uint8 - 6", "");
+                this.CreateItem(this.CreateCmdList(0, 4), "", BLE_DataType.UInt_8bit, "Demo Uint8 - 7", "");
+                this.CreateItem(this.CreateCmdList(0, 4), "", BLE_DataType.UInt_8bit, "Demo Uint8 - 8", "");
+
+                var
+                t = this.GetFilteredCommandList("6195", BLE_DataType.UInt_8bit, 9, 1);
+                t = this.GetFilteredCommandList("", BLE_DataType.UInt_8bit, 9, 0);
+            });
+        }
+
+
+
+
 
         #endregion
 
@@ -294,6 +372,34 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
             Assert.AreEqual(expectedCount, index.Count, "GetCommandList index count");
             return index;
         }
+
+
+        private Tuple<List<IIndexItem<BLECmdIndexExtraInfo>>, List<IIndexItem<BLECmdIndexExtraInfo>>>
+            GetFilteredCommandList(string name, BLE_DataType dataType, int generalCount, int specificCount) {
+            List<IIndexItem<BLECmdIndexExtraInfo>> general = null;
+            List<IIndexItem<BLECmdIndexExtraInfo>> specific = null;
+
+            string error = string.Empty;
+            TDI.Wrapper.GetFilteredBLECmdList(
+                dataType,
+                name,
+                (ndxG, ndxS) => { 
+                    general = ndxG;
+                    specific = ndxS;
+                },
+                (err) => { error = err; });
+            Assert.AreEqual(string.Empty, error);
+            Assert.NotNull(general);
+            Assert.NotNull(specific);
+            Assert.AreEqual(generalCount, general.Count, 
+                string.Format("{0} GetFilteredCommandList general index count", dataType));
+            Assert.AreEqual(specificCount, specific.Count, 
+                string.Format("{0} GetFilteredCommandList Specific index count", dataType));
+            return new Tuple<List<IIndexItem<BLECmdIndexExtraInfo>>, List<IIndexItem<BLECmdIndexExtraInfo>>>(general, specific);
+        }
+
+
+
 
 
         private void SetupData() {
@@ -322,6 +428,45 @@ namespace MultiCommTestCases.Core.Wrapper.Storage {
             ndx = this.CreateItem(items, "6197", BLE_DataType.UInt_32bit, "Demo uint 32 bit", "");
             Assert.NotNull(ndx, "Did not return index 3");
         }
+
+
+        private void SetupDataNoNames() {
+            List<ScriptItem> items = new List<ScriptItem>();
+            items.Add(new ScriptItem() { Display = "Close door", Command = "0" });
+            items.Add(new ScriptItem() { Display = "Open door", Command = "1" });
+            var ndx = this.CreateItem(items, "", BLE_DataType.Bool, "Demo bool", "");
+            Assert.NotNull(ndx, "Did not return index 0");
+
+            items = new List<ScriptItem>();
+            items.Add(new ScriptItem() { Display = "Close door", Command = "0" });
+            items.Add(new ScriptItem() { Display = "Open door", Command = "1" });
+            items.Add(new ScriptItem() { Display = "Lock door", Command = "2" });
+            ndx = this.CreateItem(items, "", BLE_DataType.UInt_8bit, "Demo uint 8 bit", "");
+            Assert.NotNull(ndx, "Did not return index 1");
+
+            items = new List<ScriptItem>();
+            items.Add(new ScriptItem() { Display = "Close sessame", Command = "10000" });
+            items.Add(new ScriptItem() { Display = "Open sessame", Command = "10001" });
+            ndx = this.CreateItem(items, "", BLE_DataType.UInt_16bit, "Demo uint 16 bit", "");
+            Assert.NotNull(ndx, "Did not return index 2");
+
+            items = new List<ScriptItem>();
+            items.Add(new ScriptItem() { Display = "Close 32 bits", Command = "999999" });
+            items.Add(new ScriptItem() { Display = "Open 32 bits", Command = "888888" });
+            ndx = this.CreateItem(items, "", BLE_DataType.UInt_32bit, "Demo uint 32 bit", "");
+            Assert.NotNull(ndx, "Did not return index 3");
+        }
+
+
+        private List<ScriptItem> CreateCmdList(int startCmd, int number) {
+            List<ScriptItem> items = new List<ScriptItem>();
+            for (int i = 0; i < number; i++) {
+                items.Add(new ScriptItem() { Display =  string.Format("Command {0}", i), Command = startCmd.ToString() }); ;
+                startCmd++;
+            }
+            return items;
+        }
+
 
 
         private IIndexItem<BLECmdIndexExtraInfo> CreateItem(List<ScriptItem> items, string characteristicName, BLE_DataType dataType, string display, string errExpected) {
