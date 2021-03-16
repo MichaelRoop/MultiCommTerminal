@@ -21,6 +21,46 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
+        public void GetFilteredBLECmdList(BLE_DataType dataType, Action<List<IIndexItem<BLECmdIndexExtraInfo>>> onSuccess, OnErr onError) {
+            this.GetFilteredBLECmdList(dataType, "", onSuccess, onError);
+        }
+
+
+        public void GetFilteredBLECmdList(BLE_DataType dataType, string characteristic, Action<List<IIndexItem<BLECmdIndexExtraInfo>>> onSuccess, OnErr onError) {
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 9999, "Failure on GetFilteredBLECmdList", () => {
+                this.RetrieveIndex(
+                    this.bleCmdStorage,
+                    (idx) => {
+                        List<IIndexItem<BLECmdIndexExtraInfo>> generalResult = new List<IIndexItem<BLECmdIndexExtraInfo>>();
+                        List<IIndexItem<BLECmdIndexExtraInfo>> specificResult = new List<IIndexItem<BLECmdIndexExtraInfo>>();
+                        if (idx.Count > 0) {
+                            foreach (var item in idx) {
+                                if (item.ExtraInfoObj.DataType == dataType) {
+                                    generalResult.Add(item);
+                                    if (!string.IsNullOrWhiteSpace(characteristic) && item.ExtraInfoObj.CharacteristicName == characteristic) {
+                                        specificResult.Add(item);
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        if (specificResult.Count > 0) {
+                            onSuccess.Invoke(specificResult);
+                        }
+                        else {
+                            onSuccess.Invoke(generalResult);
+                        }
+                    },
+                    onError);
+            });
+            if (report.Code != 0) {
+                WrapErr.SafeAction(() => onError(this.GetText(MsgCode.UnknownError)));
+            }
+        }
+
+
+
         public void CreateBLECmdSet(string display, BLECommandSetDataModel data, BLECmdIndexExtraInfo extraInfo, Action<IIndexItem<BLECmdIndexExtraInfo>> onSuccess, OnErr onError) {
             this.ValidateRanges(data, () => this.Create(display, data, this.bleCmdStorage, onSuccess, onError, extraInfo), onError);
         }

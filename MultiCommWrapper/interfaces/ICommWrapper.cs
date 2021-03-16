@@ -357,6 +357,10 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void GetBLECmdList(Action<List<IIndexItem<BLECmdIndexExtraInfo>>> onSuccess, OnErr onError);
 
+        void GetFilteredBLECmdList(BLE_DataType dataType, Action<List<IIndexItem<BLECmdIndexExtraInfo>>> onSuccess, OnErr onError);
+        
+        void GetFilteredBLECmdList(BLE_DataType dataType, string characteristic, Action<List<IIndexItem<BLECmdIndexExtraInfo>>> onSuccess, OnErr onError);
+
         void CreateBLECmdSet(string display, BLECommandSetDataModel data, BLECmdIndexExtraInfo extra, Action<IIndexItem<BLECmdIndexExtraInfo>> onSuccess, OnErr onError);
         
         void RetrieveBLECmdSet(IIndexItem<BLECmdIndexExtraInfo> index, Action<BLECommandSetDataModel> onSuccess, OnErr onError);
