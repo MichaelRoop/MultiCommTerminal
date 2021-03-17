@@ -117,6 +117,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         private void btnCommands_Click(object sender, RoutedEventArgs e) {
             this.ucCmds.ToggleVisibility();
+            this.ResizeOnNormal();
         }
 
 
@@ -134,6 +135,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.writeControl.Reset();
             // This will call the disconnect as well as set the visuals
             this.SetConnectState(false);
+            this.ResizeOnNormal();
         }
 
         #endregion
@@ -170,6 +172,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.Dispatcher.Invoke(() => {
                 this.IsBusy = false;
                 DI.Wrapper.BLE_DeviceConnectResult -= this.DeviceConnectResultHandler;
+                this.ResizeOnNormal();
                 switch (info.Status) {
                     case BLEOperationStatus.Failed:
                     case BLEOperationStatus.UnhandledError:
@@ -213,6 +216,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                 if (e.NewValue is BLE_CharacteristicDataModel) {
                     BLE_CharacteristicDataModel dm = e.NewValue as BLE_CharacteristicDataModel;
                     this.writeControl.SetCharacteristic(dm);
+                    this.ResizeOnNormal();
                     if (dm != null) {
                         //this.lblCmdDataTypeContent.Content = dm.DataTypeDisplay;
                         // TODO load list of commands based on data type
@@ -224,6 +228,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                 else if (e.NewValue is BLE_ServiceDataModel || e.NewValue is BLE_DescriptorDataModel) {
                     this.log.Info("------------------------------------------------------", e.NewValue.GetType().Name);
                     this.writeControl.Reset();
+                    this.ResizeOnNormal();
                     // TODO - Reset the commands title
                     //this.lblCmdDataTypeContent.Content = BLE_DataType.Reserved.ToStr();
                 }
@@ -259,6 +264,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                     // Reset title
                     //this.lblCmdDataTypeContent.Content = BLE_DataType.Reserved.ToStr();
                 }
+                this.ResizeOnNormal();
             });
         }
 
@@ -274,6 +280,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                     this.btnCommands.Content = l.GetText(MsgCode.commands);
                     DI.Wrapper.Translate(this.currentDevice);
                     this.dataChanged = true;
+                    this.ResizeOnNormal();
                 }
                 catch (Exception e) {
                     this.log.Exception(9999, "SetLanguage", "", e);
@@ -292,6 +299,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                         this.treeServices.RefreshAndExpand();
                         this.treeServices.RestoreSelected(selected);
                         this.treeServices.SelectedItemChanged += this.treeServices_SelectedItemChanged;
+                        this.ResizeOnNormal();
                     }
                     catch (Exception e) {
                         this.log.Exception(9999, "characteristicReadValueChanged", "", e);
