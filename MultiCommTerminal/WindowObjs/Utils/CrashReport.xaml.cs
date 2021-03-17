@@ -23,8 +23,13 @@ namespace MultiCommTerminal.NetCore.WindowObjs.Utils {
         #region Constructors and window events
 
         public static void ShowBox(Exception ex, Window parent) {
-            CrashReport win = new CrashReport(ex, parent);
-            win.ShowDialog();
+            try {
+                CrashReport win = new CrashReport(ex, parent);
+                win.ShowDialog();
+            }
+            catch (Exception e) {
+                Log.Exception(9999, "CrashReport", "ShowBox", e);
+            }
         }
 
         public static void ShowBox(ErrReport report, Window parent) {

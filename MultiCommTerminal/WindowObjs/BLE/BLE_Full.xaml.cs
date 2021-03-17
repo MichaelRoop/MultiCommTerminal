@@ -265,15 +265,19 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         private void SetLanguage(SupportedLanguage l) {
             this.Dispatcher.Invoke(() => {
-                this.buttonSizer.PrepForChange();
-                this.InvalidateVisual();
-                this.btnConnect.Content = l.GetText(MsgCode.connect);
-                this.btnDisconnect.Content = l.GetText(MsgCode.Disconnect);
-                this.btnLog.Content = l.GetText(MsgCode.Log);
-                this.btnExit.Content = l.GetText(MsgCode.exit);
-                this.btnCommands.Content = l.GetText(MsgCode.commands);
-                DI.Wrapper.Translate(this.currentDevice);
-                this.dataChanged = true;
+                try {
+                    this.buttonSizer.PrepForChange();
+                    this.btnConnect.Content = l.GetText(MsgCode.connect);
+                    this.btnDisconnect.Content = l.GetText(MsgCode.Disconnect);
+                    this.btnLog.Content = l.GetText(MsgCode.Log);
+                    this.btnExit.Content = l.GetText(MsgCode.exit);
+                    this.btnCommands.Content = l.GetText(MsgCode.commands);
+                    DI.Wrapper.Translate(this.currentDevice);
+                    this.dataChanged = true;
+                }
+                catch (Exception e) {
+                    this.log.Exception(9999, "SetLanguage", "", e);
+                }
             });
         }
 
@@ -287,23 +291,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                         List<string> selected = this.treeServices.GetSelected();
                         this.treeServices.RefreshAndExpand();
                         this.treeServices.RestoreSelected(selected);
-
-                        //if (obj != null) {
-                        //    if (obj is TreeViewItem) {
-                        //        (obj as TreeViewItem).IsSelected = true;
-                        //    }
-                        //    //else {
-                        //    //    TreeViewItem item = pTreeView.ItemContainerGenerator.ContainerFromIndex(0) as TreeViewItem;
-                        //    //    if (item != null) {
-                        //    //        item.IsSelected = true;
-                        //    //        item.IsSelected = false;
-                        //    //    }
-                        //    //}
-
-
-                        //}
-
-
                         this.treeServices.SelectedItemChanged += this.treeServices_SelectedItemChanged;
                     }
                     catch (Exception e) {
