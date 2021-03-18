@@ -8,7 +8,7 @@
              xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
              Background="#fffffa"
              mc:Ignorable="d" BorderThickness="0,0,.5,0" BorderBrush="#0277bd"
-             d:DesignHeight="450" d:DesignWidth="260"
+             d:DesignHeight="450" d:DesignWidth="260" IsVisibleChanged="UC_IsVisibleChanged"
              VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -27,26 +27,21 @@
                    Style="{Binding Source={StaticResource NameLabelRight}}"     />
         </DockPanel>
         <!-- List of command sets  -->
-        <ListView Grid.Row="1" x:Name="lvBLECmdList" Margin="10,0" BorderThickness=".5" FontSize="16" 
+        <Border Grid.Row="1" Style="{Binding Source={StaticResource brd075}}">
+            <ListBox x:Name="lbCmdList" BorderThickness=".5" FontSize="16" 
+            SelectionChanged="lbCmdList_SelectionChanged"
             ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
-            <ListView.View>
-                <GridView>
-                    <!-- Prevents user from manually resizing. Goes wonkers -->
-                    <GridView.ColumnHeaderContainerStyle>
-                        <Style TargetType="{x:Type FrameworkElement}">
-                            <Setter Property="IsHitTestVisible" Value="False"/>
-                        </Style>
-                    </GridView.ColumnHeaderContainerStyle>
-                    
-                    <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding Display}"
-                        Header="{Binding Source={x:Static wpfHelper:TxtBinder.Name}}" />
-                    <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding BLECmdIndexExtraInfo.CharacteristicName}"
-                        Header="{Binding Source={x:Static wpfHelper:TxtBinder.Characteristic}}" />
-                </GridView>
-            </ListView.View>
-        </ListView >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="1">
+                            <TextBlock Text="{Binding Display}" FontSize="16" />
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox >
+        </Border>
         <!-- Commands for selected command set -->
-        <Border Grid.Row="2" Margin="10" Style="{Binding Source={StaticResource brd075}}"  >
+        <Border Grid.Row="2"  Style="{Binding Source={StaticResource brd075}}" >
             <ListBox x:Name="lb_BLECmds" BorderThickness=".5" FontSize="16"
                                  ScrollViewer.VerticalScrollBarVisibility="Auto" 
                                  ScrollViewer.HorizontalScrollBarVisibility="Auto">
