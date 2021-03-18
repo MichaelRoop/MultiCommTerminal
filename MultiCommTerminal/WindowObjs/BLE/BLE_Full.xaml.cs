@@ -61,7 +61,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.buttonSizer.PrepForChange();
             this.timer = new DispatcherTimer(DispatcherPriority.Normal);
             this.timer.Interval = TimeSpan.FromMilliseconds(500);
-
+            this.CenterToParent(this.parent);
             // TODO - set the title on commands
             //this.lblCmdDataTypeContent.Content = BLE_DataType.Reserved.ToStr();
         }
@@ -80,10 +80,10 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.writeControl.OnStartup(this.parent);
             DI.Wrapper.CurrentSupportedLanguage(this.SetLanguage);
             this.ucLogger.Show();
-            this.ucLogger.OnLoaded();
+            this.ucLogger.OnStartup();
             this.ucLogger.Collapse();
             this.ucCmds.Show();
-            //this.ucCmds.OnLoaded();
+            this.ucCmds.OnStartup();
             this.ucCmds.Collapse();
             this.SizeToContent = SizeToContent.WidthAndHeight;
             this.SizeToContent = SizeToContent.Manual;
@@ -94,6 +94,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.timer.Stop();
             this.RemoveEventHandlers();
             this.writeControl.OnShutdown();
+            this.ucCmds.OnShutdown();
             this.ucLogger.OnShutdown();
             this.buttonSizer.Teardown();
             DI.Wrapper.BLE_Disconnect();

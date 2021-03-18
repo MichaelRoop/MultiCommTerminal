@@ -28,7 +28,7 @@ namespace MultiCommTerminal.NetCore.UserControls {
 
 
         /// <summary>Call when parent window is loaded</summary>
-        public void OnLoaded() {
+        public void OnStartup() {
             try {
                 DI.Wrapper.CurrentSupportedLanguage(this.SetLanguage);
                 this.logScroll = this.lbLog.GetScrollViewer();

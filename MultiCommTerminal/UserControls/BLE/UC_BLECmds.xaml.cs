@@ -1,4 +1,6 @@
 ﻿using BluetoothLE.Net.DataModels;
+using LanguageFactory.Net.data;
+using LanguageFactory.Net.Messaging;
 using LogUtils.Net;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommData.Net.StorageIndexInfoModels;
@@ -31,6 +33,20 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
         public UC_BLECmds() {
             InitializeComponent();
             this.lblCmdDataTypeContent.Content = "";
+        }
+
+        public void OnStartup() {
+            DI.Wrapper.LanguageChanged += languageChanged;
+        }
+
+
+        private void languageChanged(object sender, SupportedLanguage l) {
+            this.lblCmdDataTypeLabel.Content = l.GetText(MsgCode.DataType);
+        }
+
+
+        public void OnShutdown() {
+            DI.Wrapper.LanguageChanged -= languageChanged;
         }
 
 
@@ -70,6 +86,11 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
                 this.log.Exception(9999, "Init", "", ex);
             }
         }
+
+
+
+
+
 
         #endregion
 
