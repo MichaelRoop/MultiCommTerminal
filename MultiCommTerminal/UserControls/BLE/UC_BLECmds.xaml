@@ -7,7 +7,7 @@
              xmlns:UC="clr-namespace:MultiCommTerminal.NetCore.UserControls"
              xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
              Background="#fffffa"
-             mc:Ignorable="d" 
+             mc:Ignorable="d" BorderThickness="0,0,.5,0" BorderBrush="#0277bd"
              d:DesignHeight="450" d:DesignWidth="260"
              VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
     <Grid>

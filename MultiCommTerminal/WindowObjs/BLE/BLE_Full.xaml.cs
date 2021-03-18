@@ -110,6 +110,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
 
         private void btnLog_Click(object sender, RoutedEventArgs e) {
+            this.ucLogger.Width = this.Width;
             this.ucLogger.ToggleVisibility();
             this.ResizeOnNormal();
         }
@@ -118,6 +119,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         private void btnCommands_Click(object sender, RoutedEventArgs e) {
             this.ucCmds.ToggleVisibility();
             this.ResizeOnNormal();
+            this.ucLogger.Width = this.Width;
         }
 
 

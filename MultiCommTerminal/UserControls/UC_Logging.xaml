@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MultiCommTerminal.NetCore.UserControls"
              xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
-             Background="#fffffa"
+             Background="#fffffa" BorderThickness=".5" BorderBrush="#0277bd"
              mc:Ignorable="d" 
              d:DesignHeight="350" d:DesignWidth="800">
     <Grid>
@@ -24,7 +24,7 @@
                 IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Delete}}"/>
         </DockPanel>
         <ListBox Grid.Row="1" x:Name="lbLog" Visibility="Visible"  SelectionMode="Extended"
-                ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                ScrollViewer.VerticalScrollBarVisibility="Auto"
                 ScrollViewer.HorizontalScrollBarVisibility="Auto" />
     </Grid>
 </UserControl>
