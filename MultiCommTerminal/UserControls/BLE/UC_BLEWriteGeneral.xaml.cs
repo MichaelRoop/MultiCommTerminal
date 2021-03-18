@@ -31,11 +31,13 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
             this.SetEnabled(false, false);
         }
 
+
         public void OnStartup(Window parent) {
             this.parent = parent;
             DI.Wrapper.LanguageChanged += this.languageChangedHandler;
 
         }
+
 
         public void OnShutdown() {
             try {
@@ -49,6 +51,10 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
             }
         }
 
+
+        public void SetCommandText(string command) {
+            this.txtCommmand.Text = command;
+        }
 
         public void Reset() {
             try {

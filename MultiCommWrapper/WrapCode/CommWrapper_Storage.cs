@@ -360,6 +360,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             if (index.Count == 0) {
                 this.CreateBLEDemoCmdsBool(() => { }, err => { });
                 this.CreateBLEDemoCmdsUint8(() => { }, err => { });
+                this.CreateBLEDemoCmdsUint16(() => { }, err => { });
             }
         }
 

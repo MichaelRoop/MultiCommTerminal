@@ -27,10 +27,17 @@
                    Style="{Binding Source={StaticResource NameLabelRight}}"     />
         </DockPanel>
         <!-- List of command sets  -->
-        <ListView Grid.Row="1" x:Name="lbUsb" Margin="10,0" BorderThickness=".5" FontSize="16" 
+        <ListView Grid.Row="1" x:Name="lvBLECmdList" Margin="10,0" BorderThickness=".5" FontSize="16" 
             ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
             <ListView.View>
                 <GridView>
+                    <!-- Prevents user from manually resizing. Goes wonkers -->
+                    <GridView.ColumnHeaderContainerStyle>
+                        <Style TargetType="{x:Type FrameworkElement}">
+                            <Setter Property="IsHitTestVisible" Value="False"/>
+                        </Style>
+                    </GridView.ColumnHeaderContainerStyle>
+                    
                     <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding Display}"
                         Header="{Binding Source={x:Static wpfHelper:TxtBinder.Name}}" />
                     <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding BLECmdIndexExtraInfo.CharacteristicName}"
@@ -40,7 +47,7 @@
         </ListView >
         <!-- Commands for selected command set -->
         <Border Grid.Row="2" Margin="10" Style="{Binding Source={StaticResource brd075}}"  >
-            <ListBox x:Name="listBox_BLE" BorderThickness=".5" FontSize="16"
+            <ListBox x:Name="lb_BLECmds" BorderThickness=".5" FontSize="16"
                                  ScrollViewer.VerticalScrollBarVisibility="Auto" 
                                  ScrollViewer.HorizontalScrollBarVisibility="Auto">
                 <ListBox.ItemTemplate>

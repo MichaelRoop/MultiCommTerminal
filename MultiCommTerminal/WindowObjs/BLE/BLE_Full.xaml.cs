@@ -150,7 +150,13 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             DI.Wrapper.LanguageChanged += this.languageChangedHandler;
             DI.Wrapper.BLE_CharacteristicReadValueChanged += this.characteristicReadValueChanged;
             this.ucLogger.OnMsgReceived += this.logger_OnMsgReceived;
+            this.ucCmds.OnCmdSelected += this.onCmdSelected;
             this.timer.Tick += this.Timer_Tick;
+        }
+
+
+        private void onCmdSelected(object sender, string command) {
+            this.writeControl.SetCommandText(command);
         }
 
 
@@ -160,6 +166,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             DI.Wrapper.BLE_CharacteristicReadValueChanged -= this.characteristicReadValueChanged;
             DI.Wrapper.BLE_ConnectionStatusChanged -= this.connectionStatusChanged;
             this.ucLogger.OnMsgReceived -= this.logger_OnMsgReceived;
+            this.ucCmds.OnCmdSelected -= this.onCmdSelected;
             this.timer.Tick -= this.Timer_Tick;
             this.treeServices.SelectedItemChanged -= this.treeServices_SelectedItemChanged;
         }
@@ -218,6 +225,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                 if (e.NewValue is BLE_CharacteristicDataModel) {
                     BLE_CharacteristicDataModel dm = e.NewValue as BLE_CharacteristicDataModel;
                     this.writeControl.SetCharacteristic(dm);
+                    this.ucCmds.Init(dm);
                     this.ResizeOnNormal();
                     if (dm != null) {
                         //this.lblCmdDataTypeContent.Content = dm.DataTypeDisplay;

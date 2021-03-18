@@ -393,6 +393,7 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void CreateBLEDemoCmdsUint8(Action onSuccess, OnErr onError);
 
+        void CreateBLEDemoCmdsUint16(Action onSuccess, OnErr onError);
 
         #endregion
 
