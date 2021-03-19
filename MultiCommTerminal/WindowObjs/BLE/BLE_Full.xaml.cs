@@ -141,6 +141,13 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.ResizeOnNormal();
         }
 
+
+        private void btnSettings_Click(object sender, RoutedEventArgs e) {
+            BLECommands.ShowBox(this);
+            // reload the list if showing in the commands window
+        }
+
+
         #endregion
 
         #region Event handlers
