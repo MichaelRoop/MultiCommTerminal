@@ -16,22 +16,32 @@
         <Border BorderBrush="Blue" BorderThickness=".25">
             <StackPanel>
                 <StackPanel Grid.ColumnSpan="2" HorizontalAlignment="Center">
-                    <DockPanel Margin="5">
-                        <Label Content="Name" Padding="5,5,0,5" />
-                        <Label Content=":" />
-                        <TextBox x:Name="txtName" Text="Script X" VerticalAlignment="Center" />
-                        
-                    </DockPanel>
-                        <ComboBox x:Name="cbDataTypes" SelectionChanged="cbDataTypes_SelectionChanged" >
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Display}" Style="{StaticResource TxtBlockRight}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
+                    <Grid HorizontalAlignment="Left" Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="15"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-                    </ComboBox>
+                        <Label Grid.Row="0" Grid.Column="0" 
+                               Style="{Binding Source={StaticResource NameLabelLeft}}" 
+                               Content="{Binding Source={x:Static wpfHelper:TxtBinder.Name}}"  />
+                        <Label Grid.Row="0" Grid.Column="1" 
+                               Style="{Binding Source={StaticResource NameLabelCenter}}" Content=":" />
+                        <TextBox Grid.Row="0" Grid.Column="2" x:Name="txtName" Style="{Binding Source={StaticResource TxtBoxRight}}"/>
+
+
+                        <Label Grid.Row="1" Grid.Column="0" 
+                               Style="{Binding Source={StaticResource NameLabelLeft}}" 
+                               Content="{Binding Source={x:Static wpfHelper:TxtBinder.DataType}}"  />
+
+                        <Label Grid.Row="1" Grid.Column="1" Style="{Binding Source={StaticResource NameLabelCenter}}" Content=":" />
+                        <Label Grid.Row="1" Grid.Column="2" x:Name="txtDataType" Style="{Binding Source={StaticResource NameLabelRight}}" />
+                    </Grid>
                     <DockPanel>
                         <ListBox x:Name="lbxCmds" MinWidth="250" Height="200" Margin="10" FontSize="16"
                             ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" >

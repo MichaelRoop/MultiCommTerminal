@@ -1,4 +1,5 @@
-﻿using MultiCommData.Net.StorageIndexInfoModels;
+﻿using LanguageFactory.Net.data;
+using MultiCommData.Net.StorageIndexInfoModels;
 using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using StorageFactory.Net.interfaces;
@@ -52,11 +53,20 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         #region Control events
 
         private void btnAdd_Click(object sender, RoutedEventArgs e) {
-            BLECommandsEdit.ShowBox(this, null, BLECommandsEdit.UseType.New);
+            BLESelectDataType.ShowBox(this);
+            this.ReloadList(true);
         }
 
+
         private void btnEdit_Click(object sender, RoutedEventArgs e) {
-            //BLECommandsEdit.ShowBox(this, null, BLECommandsEdit.UseType.Edit);
+            var item = this.lbxCmds.SelectedItem as IIndexItem<BLECmdIndexExtraInfo>;
+            if (item != null) {
+                BLECommandsEdit.ShowBox(this, item);
+            }
+            else {
+                App.ShowMsg(DI.Wrapper.GetText(MsgCode.NothingSelected));
+            }
+            this.ReloadList(true);
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e) {

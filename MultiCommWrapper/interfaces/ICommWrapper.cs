@@ -370,7 +370,9 @@ namespace MultiCommWrapper.Net.interfaces {
             OnErr onError);
 
         void CreateBLECmdSet(string display, BLECommandSetDataModel data, BLECmdIndexExtraInfo extra, Action<IIndexItem<BLECmdIndexExtraInfo>> onSuccess, OnErr onError);
-        
+
+        void CreateBLECmdSet(BLECommandSetDataModel data, Action<IIndexItem<BLECmdIndexExtraInfo>> onSuccess, OnErr onError);
+
         void RetrieveBLECmdSet(IIndexItem<BLECmdIndexExtraInfo> index, Action<BLECommandSetDataModel> onSuccess, OnErr onError);
 
         void SaveBLECmdSet(IIndexItem<BLECmdIndexExtraInfo> idx, BLECommandSetDataModel data, Action onSuccess, OnErr onError);

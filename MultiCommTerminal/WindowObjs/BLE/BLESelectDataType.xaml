@@ -1,0 +1,38 @@
+﻿<Window x:Class="MultiCommTerminal.NetCore.WindowObjs.BLE.BLESelectDataType"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MultiCommTerminal.NetCore.WindowObjs.BLE"
+      xmlns:controls="clr-namespace:MultiCommTerminal.NetCore.UserControls"
+      xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
+      mc:Ignorable="d" 
+      Style="{StaticResource MyWindowStyle}"
+      Title="{Binding Source={x:Static wpfHelper:TxtBinder.DataType}}" 
+      Icon="{Binding Source={x:Static wpfHelper:IconBinder.Command_W}}"
+      WindowStartupLocation="Manual" MinHeight="30" MinWidth="150" BorderThickness=".25"
+      Loaded="Window_Loaded" Closing="Window_Closing">
+    <Grid>
+        <StackPanel>
+        <ComboBox x:Name="cbDataTypes" Margin="10">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Display}" Style="{StaticResource TxtBlockRight}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+            <DockPanel HorizontalAlignment="Center" Margin="10">
+                <controls:UC_IconButton x:Name="btnCancel" Margin="5" Style="{StaticResource TextIconButton}" 
+                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.Cancel}}"
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}"
+                            Click="btnCancel_Click" />
+                <controls:UC_IconButton x:Name="btnOk" Margin="5" Style="{StaticResource TextIconButton}" 
+                            Content="{Binding Source={x:Static wpfHelper:TxtBinder.OK}}"
+                            IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Save}}"
+                            Click="btnOk_Click" />
+            </DockPanel>
+        </StackPanel>
+    </Grid>
+</Window>

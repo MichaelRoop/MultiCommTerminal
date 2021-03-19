@@ -2,21 +2,10 @@
 using MultiCommData.Net.StorageDataModels;
 using MultiCommData.Net.StorageIndexInfoModels;
 using MultiCommTerminal.NetCore.DependencyInjection;
-using MultiCommTerminal.NetCore.UserControls.BLE;
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using StorageFactory.Net.interfaces;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
@@ -27,8 +16,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         #region Data types
 
         /// <summary>Functionality differs by use type</summary>
-        public enum UseType {
-            View,
+        private enum UseType {
             Edit,
             New,
         }
@@ -37,31 +25,40 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         #region Data
 
-        Window parent = null;
+        private Window parent = null;
         private ButtonGroupSizeSyncManager widthManager = null;
         private BLECommandSetDataModel original = null;
         private BLECommandSetDataModel copy = null;
         private IIndexItem<BLECmdIndexExtraInfo> index = null;
-        private UseType useType = UseType.View;
-        private List<BLETypeDisplay> lbDataTypes = new List<BLETypeDisplay>();
+        private UseType useType = UseType.New;
+        private BLE_DataType dataType = BLE_DataType.Bool;
 
         #endregion
 
         #region Constructors and window events
 
-        public static void ShowBox(Window parent, IIndexItem<BLECmdIndexExtraInfo> index, UseType useType) {
-            BLECommandsEdit win = new BLECommandsEdit(parent, index, useType);
+        public static void ShowBox(Window parent, IIndexItem<BLECmdIndexExtraInfo> index) {
+            BLECommandsEdit win = new BLECommandsEdit(parent, index, UseType.Edit, index.ExtraInfoObj.DataType);
             win.ShowDialog();
         }
 
 
-        public BLECommandsEdit(Window parent, IIndexItem<BLECmdIndexExtraInfo> index, UseType useType) {
+        public static void ShowBox(Window parent, BLE_DataType dataType) {
+            BLECommandsEdit win = new BLECommandsEdit(parent, null, UseType.New, dataType);
+            win.ShowDialog();
+        }
+
+
+
+        private BLECommandsEdit(Window parent, IIndexItem<BLECmdIndexExtraInfo> index, UseType useType, BLE_DataType dataType) {
             this.parent = parent;
             this.index = index;
             this.useType = useType;
+            this.dataType = dataType;
             InitializeComponent();
-            this.PopulateDataFields();
-            this.ShowControls();
+            this.Init();
+            this.widthManager = new ButtonGroupSizeSyncManager(this.btnCancel, this.btnOk);
+            this.widthManager.PrepForChange();
             this.SizeToContent = SizeToContent.WidthAndHeight;
         }
 
@@ -85,15 +82,13 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         #region Controls events
 
-        // TODO - Problem - If I change the data type here it would invalidate any checks done on individual commands.
-        // Would need to iterate through the commands and flag error and refuse save
-
         private void btnAdd_Click(object sender, RoutedEventArgs e) {
-            // Add a command
+            // TODO Command editor binary, hex, dec
         }
 
-        private void btnEdit_Click(object sender, RoutedEventArgs e) {
 
+        private void btnEdit_Click(object sender, RoutedEventArgs e) {
+            // TODO Command editor binary, hex, dec
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e) {
@@ -110,106 +105,86 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         }
 
         private void btnOk_Click(object sender, RoutedEventArgs e) {
-            // Save and close
-        }
-
-
-        private void cbDataTypes_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            // TODO - Validate all the data accumulated so far
+            this.CopyBackToOriginal();
+            if (this.useType == UseType.Edit) {
+                DI.Wrapper.SaveBLECmdSet(this.index, this.original, this.Close, this.onFailure);
+            }
+            else {
+                DI.Wrapper.CreateBLECmdSet(this.original, (idx) => { this.Close(); }, this.onFailure);
+            }
         }
 
         #endregion
 
         #region Private
 
-        /// <summary>Populate controls in the dialog depending on use type</summary>
-        private void PopulateDataFields() {
-            this.lbDataTypes.Add(new BLETypeDisplay(BLE_DataType.Bool));
-            this.lbDataTypes.Add(new BLETypeDisplay(BLE_DataType.UInt_8bit));
-            this.lbDataTypes.Add(new BLETypeDisplay(BLE_DataType.UInt_16bit));
-            this.cbDataTypes.ItemsSource = this.lbDataTypes;
-
-            switch (this.useType) {
-                case UseType.View:
-                case UseType.Edit:
-                    this.RetrieveScript();
-                    break;
-                case UseType.New:
-                    this.InitializeNewScript();
-                    break;
-            }
+        private void Init() {
+            this.original = this.useType == UseType.Edit
+                ? this.RetrieveOriginal()
+                : this.CreateNewOriginal();
+            this.copy = this.MakeWorkingCopy(this.original);
             if (this.copy != null) {
                 this.txtName.Text = this.copy.Display;
                 this.lbxCmds.ItemsSource = copy.Items;
-                var x = this.lbDataTypes.FirstOrDefault(x => x.DataType == this.copy.DataType);
-                if (x != null) {
-                    this.cbDataTypes.SelectedItem = x;
+                this.txtDataType.Content = this.copy.DataType.ToStr();
+            }
+        }
+
+
+        /// <summary>Create a new dummy script template</summary>
+        private BLECommandSetDataModel CreateNewOriginal() {
+            List<ScriptItem> items = new List<ScriptItem>();
+            items.Add(new ScriptItem("Open", "1"));
+            return new BLECommandSetDataModel(items, "", this.dataType, "Sample Name");
+        }
+
+
+        private BLECommandSetDataModel RetrieveOriginal() {
+            BLECommandSetDataModel tmp = null;
+            DI.Wrapper.RetrieveBLECmdSet(this.index, dm => { tmp = dm; }, this.onFailure);
+            return tmp;
+        }
+
+
+        private BLECommandSetDataModel MakeWorkingCopy(BLECommandSetDataModel source) {
+            if (source != null) {
+                var target = new BLECommandSetDataModel() {
+                    DataType = source.DataType,
+                    Display = source.Display,
+                    CharacteristicName = source.CharacteristicName,
+                    UId = source.UId,
+                };
+                foreach (var item in original.Items) {
+                    target.Items.Add(new ScriptItem(item.Display, item.Command));
+                }
+                return target; 
+            }
+            return null;
+        }
+
+        private void CopyBackToOriginal() {
+            this.original.Display = this.txtName.Text;
+            this.original.Items.Clear();
+            //UUid already there. No need to transfer data type. cannot be changed
+            foreach (var obj in this.lbxCmds.Items) {
+                ScriptItem item = obj as ScriptItem;
+                if (item != null) {
+                    this.original.Items.Add(new ScriptItem(item.Display, item.Command));
                 }
             }
         }
 
 
-        /// <summary>Show or hide controls based on use type</summary>
-        private void ShowControls() {
-            switch (this.useType) {
-                case UseType.View:
-                    this.btnCancel.Visibility = Visibility.Collapsed;
-                    this.txtName.IsEnabled = false;
-                    this.lbxCmds.IsEnabled = false;
-                    this.stPanelSideButtons.Visibility = Visibility.Collapsed;
-                    break;
-                case UseType.Edit:
-                case UseType.New:
-                    // Call before rendering which will trigger initial resize events
-                    this.widthManager = new ButtonGroupSizeSyncManager(this.btnCancel, this.btnOk);
-                    this.widthManager.PrepForChange();
-                    break;
-            }
-        }
 
-
-        /// <summary>Retrieve the script from storage</summary>
-        private void RetrieveScript() {
-            DI.Wrapper.RetrieveBLECmdSet(this.index, this.onRetrieveSuccess, this.onRetrieveFailure);
-        }
-
-
-        /// <summary>Create a new dummy script template</summary>
-        private void InitializeNewScript() {
-            List<ScriptItem> items = new List<ScriptItem>();
-            items.Add(new ScriptItem("Open", "1"));
-            items.Add(new ScriptItem("Close", "2"));
-            this.copy = new BLECommandSetDataModel(
-                items, "", BLE_DataType.UInt_8bit, "Sample Name");
-        }
 
         #endregion
 
         #region Delegates
 
-        /// <summary>On successful retrieval make a copy of the script</summary>
-        /// <param name="dataModel">The script data to dopy</param>
-        private void onRetrieveSuccess(BLECommandSetDataModel dataModel) {
-            // Make a copy of the original to avoid changing it unless OK
-            this.original = dataModel;
-            this.copy = new BLECommandSetDataModel() {
-                DataType = this.original.DataType,
-                Display = this.original.Display,
-                CharacteristicName = this.original.CharacteristicName,
-                UId = this.original.UId,
-            };
-            foreach (var item in original.Items) {
-                this.copy.Items.Add(new ScriptItem() {
-                    Display = item.Display,
-                    Command = item.Command,
-                });
-            }
-        }
-
 
         /// <summary>On failure of retrieval post message and close</summary>
         /// <param name="msg">The message to display</param>
-        private void onRetrieveFailure(string msg) {
+        private void onFailure(string msg) {
             App.ShowMsg(msg);
             this.Close();
         }

@@ -53,6 +53,11 @@ namespace MultiCommWrapper.Net.WrapCode {
         }
 
 
+        public void CreateBLECmdSet(BLECommandSetDataModel data, Action<IIndexItem<BLECmdIndexExtraInfo>> onSuccess, OnErr onError) {
+            this.ValidateRanges(data, () => this.Create(
+                data.Display, data, this.bleCmdStorage, onSuccess, onError, new BLECmdIndexExtraInfo(data)), onError);
+        }
+
 
         public void CreateBLECmdSet(string display, BLECommandSetDataModel data, BLECmdIndexExtraInfo extraInfo, Action<IIndexItem<BLECmdIndexExtraInfo>> onSuccess, OnErr onError) {
             this.ValidateRanges(data, () => this.Create(display, data, this.bleCmdStorage, onSuccess, onError, extraInfo), onError);

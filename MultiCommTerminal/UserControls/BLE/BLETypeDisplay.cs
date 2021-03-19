@@ -4,7 +4,7 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
 
     public class BLETypeDisplay {
         public string Display { get; set; } = string.Empty;
-        public BLE_DataType DataType { get; set; } = BLE_DataType.Bool;
+        public BLE_DataType DataType { get; set; } = BLE_DataType.UInt_8bit;
 
         public BLETypeDisplay() { }
 
