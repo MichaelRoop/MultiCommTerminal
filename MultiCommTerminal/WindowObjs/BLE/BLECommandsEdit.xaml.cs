@@ -84,6 +84,10 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         private void btnAdd_Click(object sender, RoutedEventArgs e) {
             // TODO Command editor binary, hex, dec
+
+            var win = new BLECmdEdit(this, this.dataType);
+            win.ShowDialog();
+
         }
 
 
