@@ -126,11 +126,11 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                 }
                 else {
                     if (this.IsHexDecimal(args.Key)) {
-                        var s = string.Format("{0}{1}", this.edHex.Text, this.GetHexValue(args.Key));
+                        var s = string.Format("{0}{1}", this.edHex.Text, this.GetHexDecimalValue(args.Key));
 
                         this.log.Info("edHex_PreviewKeyDown", () =>
                             string.Format("'{0}'  '{1}'  '{2}'  '{3}'", 
-                            args.Key.ToString(), this.edHex.Text, this.GetHexValue(args.Key), s));
+                            args.Key.ToString(), this.edHex.Text, this.GetHexDecimalValue(args.Key), s));
                         
                         UInt32 tmp = Convert.ToUInt32(s, 16);
                         this.ValidateRange(tmp.ToString(), args);
@@ -390,7 +390,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
 
 
-        private string GetHexValue(Key key) {
+        private string GetHexDecimalValue(Key key) {
             switch (key) {
                 case Key.A:
                     return "A";
@@ -405,9 +405,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                 case Key.F:
                     return "F";
                 default:
-                    return string.Empty;
+                    return this.GetNumericValue(key);
             }
-
         }
 
 
