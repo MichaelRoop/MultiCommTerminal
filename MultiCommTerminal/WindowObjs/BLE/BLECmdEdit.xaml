@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MultiCommTerminal.NetCore.WindowObjs.BLE"
+        xmlns:UC_EditBoxes="clr-namespace:MultiCommTerminal.NetCore.UserControls.EditBoxes"
         xmlns:controls="clr-namespace:MultiCommTerminal.NetCore.UserControls"
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
         mc:Ignorable="d"
@@ -56,8 +57,8 @@ KeyDown="Window_KeyDown"
                                  PreviewKeyDown="edHex_PreviewKeyDown" TextChanged="edHex_TextChanged" />
 
                         <Label Grid.Row="5" Grid.Column="0" Content="Bin" Style="{StaticResource NameLabelLeft}" />
-                        <TextBox Grid.Row="5" Grid.Column="1" x:Name="edBin" Style="{StaticResource TxtBoxRight}" 
-                                 PreviewKeyDown="edBin_PreviewKeyDown"  TextChanged="edBin_TextChanged"/>
+                        <UC_EditBoxes:UC_BinaryEditBox  Grid.Row="5" Grid.Column="1" x:Name="edBinEdit" />
+
                     </Grid>
                     <DockPanel HorizontalAlignment="Center" Margin="0,0,0,10">
                         <controls:UC_IconButton x:Name="btnCancel" Margin="5" Style="{StaticResource TextIconButton}" 

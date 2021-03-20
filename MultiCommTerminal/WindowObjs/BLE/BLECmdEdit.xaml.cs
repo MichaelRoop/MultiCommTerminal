@@ -29,6 +29,9 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                 this.dataType, str => this.txtRange.Content = str, this.onFailure);
             this.widthManager = new ButtonGroupSizeSyncManager(this.btnCancel, this.btnOk);
             this.widthManager.PrepForChange();
+            this.edBinEdit.SetValidator(this.ValidateRangeFunc);
+            this.edBinEdit.OnValueChanged += this.onBinaryValueChanged;
+            this.edBinEdit.OnValueEmpty += this.onBinaryValueEmpty;
             this.SizeToContent = SizeToContent.WidthAndHeight;
         }
 
@@ -47,6 +50,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             if (this.widthManager != null) {
                 this.widthManager.Teardown();
             }
+            this.edBinEdit.OnValueChanged -= this.onBinaryValueChanged;
+            this.edBinEdit.OnValueEmpty -= this.onBinaryValueEmpty;
         }
 
         #endregion
@@ -83,16 +88,15 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                 this.log.Info("tbDec_TextChanged", this.tbDec.Text);
                 if (this.tbDec.Text.Length == 0) {
                     this.edHex.Text = "";
-                    this.edBin.Text = "";
+                    this.edBinEdit.SetEmpty();
                 }
                 else {
                     this.edHex.TextChanged -= this.edHex_TextChanged;
-                    this.edBin.TextChanged -= this.edBin_TextChanged;
                     // Now translate to hex and binary
-                    this.edHex.Text = UInt32.Parse(this.tbDec.Text).ToString("X");
-                    this.edBin.Text = Convert.ToUInt32(this.tbDec.Text).ToFormatedBinaryString();
+                    UInt32 val = UInt32.Parse(this.tbDec.Text);
+                    this.edHex.Text = val.ToString("X");
+                    this.edBinEdit.SetValue(val);
                     this.edHex.TextChanged += this.edHex_TextChanged;
-                    this.edBin.TextChanged += this.edBin_TextChanged;
                 }
             }
             catch (Exception ex) {
@@ -131,77 +135,15 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                 this.log.Info("tbDec_TextChanged", this.edHex.Text);
                 if (this.edHex.Text.Length == 0) {
                     this.tbDec.Text = "";
-                    this.edBin.Text = "";
+                    this.edBinEdit.SetEmpty();
                 }
                 else {
                     this.tbDec.TextChanged -= this.tbDec_TextChanged;
-                    this.edBin.TextChanged -= this.edBin_TextChanged;
                     // Now translate to decimal and binary
                     UInt32 val = Convert.ToUInt32(this.edHex.Text, 16);
                     this.tbDec.Text = val.ToString();
-                    this.edBin.Text = val.ToFormatedBinaryString();
+                    this.edBinEdit.SetValue(val);
                     this.tbDec.TextChanged += this.tbDec_TextChanged;
-                    this.edBin.TextChanged += this.edBin_TextChanged;
-                }
-            }
-            catch (Exception ex) {
-                this.log.Exception(9999, "", ex);
-            }
-        }
-
-
-        private void edBin_PreviewKeyDown(object sender, KeyEventArgs args) {
-            try {
-                if (args.Key.IsBinaryNumericForbidden()) {
-                    args.Handled = true;
-                }
-                else {
-                    if (args.Key.IsNumeric()) {
-                        string current = this.edBin.Text;
-                        string extra = args.Key.GetNumericValue();
-                        string newValue = string.Format("{0}{1}", current, extra);
-                        // Need to convert to an actual value
-                        newValue = newValue.Replace(" ", "");
-                        if (newValue.Length > 0) {
-                            this.ValidateRange(Convert.ToUInt32(newValue, 2).ToString(), args);
-                        }
-                        // TODO do I need an else?
-                    }
-                }
-            }
-            catch (Exception ex) {
-                this.log.Exception(9999, "", ex);
-            }
-        }
-
-        private void edBin_TextChanged(object sender, TextChangedEventArgs e) {
-            try {
-                // remove multiple leading zeros
-                this.log.Info("tbDec_TextChanged", this.edHex.Text);
-                if (this.edBin.Text.Length == 0) {
-                    this.edHex.Text = "";
-                    this.tbDec.Text = "";
-                }
-                else {
-                    this.tbDec.TextChanged -= this.tbDec_TextChanged;
-                    this.edHex.TextChanged -= this.edHex_TextChanged;
-
-                    // Now translate to decimal and binary
-                    string noSpaceBin = this.edBin.Text.Replace(" ", "");
-                    UInt32 value = Convert.ToUInt32(noSpaceBin, 2);
-                    this.tbDec.Text = value.ToString();
-                    //this.edHex.Text = Convert.ToUInt32(this.edBin.Text, 16).ToString();
-                    this.edHex.Text = UInt32.Parse(this.tbDec.Text).ToString("X");
-
-                    this.edBin.TextChanged -= this.edBin_TextChanged;
-                    int carretIndex = this.edBin.CaretIndex;
-                    this.edBin.Text = value.ToFormatedBinaryString();
-                    this.edBin.CaretIndex = carretIndex > this.edBin.Text.Length 
-                        ? this.edBin.Text.Length 
-                        : carretIndex;
-                    this.edBin.TextChanged += this.edBin_TextChanged;
-                    this.tbDec.TextChanged += this.tbDec_TextChanged;
-                    this.edHex.TextChanged += this.edHex_TextChanged;
                 }
             }
             catch (Exception ex) {
@@ -241,6 +183,44 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                 });
         }
 
+
+        private bool ValidateRangeFunc(string value) {
+            bool result = false;
+            DI.Wrapper.ValidateBLEValue(
+                this.dataType, value, () => { result = true; },
+                err => {
+                    App.ShowMsg(err);
+                    result = false;
+                });
+            return result;
+        }
+
+
+        #region Custom EditBox events
+
+        private void onBinaryValueEmpty(object sender, EventArgs e) {
+            // TODO - eventually call their empty functions but for now handle directly
+            this.tbDec.TextChanged -= this.tbDec_TextChanged;
+            this.edHex.TextChanged -= this.edHex_TextChanged;
+            this.edHex.Text = "";
+            this.tbDec.Text = "";
+            this.tbDec.TextChanged += this.tbDec_TextChanged;
+            this.edHex.TextChanged += this.edHex_TextChanged;
+        }
+
+
+        private void onBinaryValueChanged(object sender, uint value) {
+            // TODO - eventually call their SetValue functions but for now handle directly
+            this.tbDec.TextChanged -= this.tbDec_TextChanged;
+            this.edHex.TextChanged -= this.edHex_TextChanged;
+            this.tbDec.Text = value.ToString();
+            this.edHex.Text = UInt32.Parse(this.tbDec.Text).ToString("X");
+            this.tbDec.TextChanged += this.tbDec_TextChanged;
+            this.edHex.TextChanged += this.edHex_TextChanged;
+        }
+
+
+        #endregion
 
     }
 }

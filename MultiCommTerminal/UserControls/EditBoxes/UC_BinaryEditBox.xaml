@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:MultiCommTerminal.NetCore.UserControls.EditBoxes"
              mc:Ignorable="d" 
              >
-    <Grid HorizontalAlignment="Center" VerticalAlignment="Stretch">
+    <Grid HorizontalAlignment="Left" VerticalAlignment="Stretch">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
