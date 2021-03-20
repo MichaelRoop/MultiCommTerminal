@@ -83,9 +83,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                 }
                 else {
                     if (this.IsNumeric(args.Key)) {
-                        this.ValidateRange(
-                            string.Format("{0}{1}", this.tbDec.Text, this.GetNumericValue(args.Key)),
-                            args);
+                        string s = this.GetNumericValue(args.Key);
+                        this.ValidateRange(string.Format("{0}{1}", this.tbDec.Text, s), args);
                     }
                 }
             }
@@ -100,6 +99,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         /// <param name="args">The event args</param>
         private void tbDec_TextChanged(object sender, TextChangedEventArgs e) {
             try {
+                // remove multiple leading zeros
                 this.log.Info("tbDec_TextChanged", this.tbDec.Text);
                 if (this.tbDec.Text.Length == 0) {
                     this.edHex.Text = "";
@@ -117,15 +117,52 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         }
 
 
-        private void edDec_MouseMove(object sender, MouseEventArgs e) {
-            //(sender as TextBox).SelectionLength = 0;
+
+        private void edHex_PreviewKeyDown(object sender, KeyEventArgs args) {
+            try {
+                if (this.IsForebidden(args.Key)) {
+                    args.Handled = true;
+                    return;
+                }
+                else {
+                    if (this.IsHexDecimal(args.Key)) {
+                        var s = string.Format("{0}{1}", this.edHex.Text, this.GetHexValue(args.Key));
+
+                        this.log.Info("edHex_PreviewKeyDown", () =>
+                            string.Format("'{0}'  '{1}'  '{2}'  '{3}'", 
+                            args.Key.ToString(), this.edHex.Text, this.GetHexValue(args.Key), s));
+                        
+                        UInt32 tmp = Convert.ToUInt32(s, 16);
+                        this.ValidateRange(tmp.ToString(), args);
+                    }
+                }
+            }
+            catch (Exception ex) {
+                this.log.Exception(9999, "", ex);
+            }
+
         }
 
-
-
-        private void edHex_PreviewTextInput(object sender, TextCompositionEventArgs e) {
-
+        private void edHex_TextChanged(object sender, TextChangedEventArgs e) {
+            try {
+                // remove multiple leading zeros
+                this.log.Info("tbDec_TextChanged", this.edHex.Text);
+                if (this.edHex.Text.Length == 0) {
+                    this.tbDec.Text = "";
+                    this.edBin.Text = "";
+                }
+                else {
+                    //// Now translate to decimal and binary
+                    UInt32 val = Convert.ToUInt32(this.edHex.Text, 16);
+                    this.tbDec.Text = val.ToString();
+                    this.edBin.Text = this.ToBinary(val);
+                }
+            }
+            catch (Exception ex) {
+                this.log.Exception(9999, "", ex);
+            }
         }
+
 
         private void edBin_PreviewTextInput(object sender, TextCompositionEventArgs e) {
 

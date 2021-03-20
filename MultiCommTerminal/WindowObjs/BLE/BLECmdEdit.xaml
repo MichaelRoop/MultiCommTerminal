@@ -58,7 +58,8 @@ KeyDown="Window_KeyDown"
                                  PreviewKeyDown="tbDec_PreviewKeyUp" TextChanged="tbDec_TextChanged" />
                         
                         <Label Grid.Row="5" Grid.Column="0" Content="Hex 0x" Style="{StaticResource NameLabelLeft}" />
-                        <TextBox Grid.Row="5" Grid.Column="1" x:Name="edHex"  Style="{StaticResource TxtBoxRight}" PreviewTextInput="edHex_PreviewTextInput" />
+                        <TextBox Grid.Row="5" Grid.Column="1" x:Name="edHex"  Style="{StaticResource TxtBoxRight}" 
+                                 PreviewKeyDown="edHex_PreviewKeyDown" TextChanged="edHex_TextChanged" />
 
                         <Label Grid.Row="6" Grid.Column="0" Content="Bin" Style="{StaticResource NameLabelLeft}" />
                         <TextBox Grid.Row="6" Grid.Column="1" x:Name="edBin" Style="{StaticResource TxtBoxRight}" PreviewTextInput="edBin_PreviewTextInput" />
