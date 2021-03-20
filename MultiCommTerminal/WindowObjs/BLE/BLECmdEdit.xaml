@@ -55,19 +55,7 @@ KeyDown="Window_KeyDown"
 
                         <Label Grid.Row="4" Grid.Column="0" Content="Dec" Style="{StaticResource NameLabelLeft}" />
                         <TextBox Grid.Row="4" Grid.Column="1" x:Name="tbDec" Style="{StaticResource TxtBoxRight}" 
-                                 PreviewKeyDown="tbDec_PreviewKeyUp" PreviewTextInput="tbDec_PreviewTextInput"
-                                 TextInput="tbDec_TextInput" TextChanged="tbDec_TextChanged"
-                                 />
-
-                        <!--
-                                KeyDown="edDec_KeyDown"
-                                 KeyUp="edDec_KeyUp"
-                        
-PreviewTextInput="edDec_PreviewTextInput" PreviewMouseDown="edDec_PreviewMouseDown"                         
-                        
-                        -->
-                        
-                        
+                                 PreviewKeyDown="tbDec_PreviewKeyUp" TextChanged="tbDec_TextChanged" />
                         
                         <Label Grid.Row="5" Grid.Column="0" Content="Hex 0x" Style="{StaticResource NameLabelLeft}" />
                         <TextBox Grid.Row="5" Grid.Column="1" x:Name="edHex"  Style="{StaticResource TxtBoxRight}" PreviewTextInput="edHex_PreviewTextInput" />

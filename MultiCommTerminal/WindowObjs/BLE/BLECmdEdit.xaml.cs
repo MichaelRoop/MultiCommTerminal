@@ -61,83 +61,60 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         #region Edit box events
 
-        private void tbDec_PreviewKeyUp(object sender, KeyEventArgs e) {
-            //this.ProcessKeys(sender as TextBox, true, e);
-            this.ProcessNumericBox(e);
+
+        private void ValidateRange(string value, KeyEventArgs args) {
+            DI.Wrapper.ValidateBLEValue(
+                this.dataType, value, () => { },
+                err => {
+                    args.Handled = true;
+                    App.ShowMsg(err);
+                });
         }
 
-        private void tbDec_PreviewTextInput(object sender, TextCompositionEventArgs e) {
-            this.log.Info("tbDec_TextInput", () => string.Format("{0} New '{1}",
-                this.tbDec.Text, e.Text));
-
-            //try {
-            //    this.log.Info("tbDec_TextInput", () => string.Format("{0} New '{1}",
-            //        this.tbDec.Text, e.Text));
-
-            //    string value = string.Format("{0}{1}", this.tbDec.Text, e.Text);
-
-            //    ////e.Text
-            //    //// Now translate to hex and binary
-            //    this.edHex.Text = UInt16.Parse(value).ToString("X");
-            //    this.edBin.Text = this.ToBinary(Convert.ToUInt32(value));
-
-
-
-            //    //this.SetText(this.tbDec, newVal);
-            //    //// Now translate to hex and binary
-            //    //this.edHex.Text = UInt16.Parse(newVal).ToString("X");
-            //    //this.edBin.Text = this.ToBinary(Convert.ToUInt32(newVal));
-            //}
-            //catch(Exception ex) {
-            //    this.log.Exception(9999, "", ex);
-            //}
-
-
+        /// <summary>Prevent invalid characters ever getting entered</summary>
+        /// <param name="sender">The EditBox</param>
+        /// <param name="args">The event args</param>
+        private void tbDec_PreviewKeyUp(object sender, KeyEventArgs args) {
+            try {
+                // Filter out forbidden characters and A-F
+                if (this.IsForebidden(args.Key) || this.IsHex(args.Key)) {
+                    args.Handled = true;
+                    return;
+                }
+                else {
+                    if (this.IsNumeric(args.Key)) {
+                        this.ValidateRange(
+                            string.Format("{0}{1}", this.tbDec.Text, this.GetNumericValue(args.Key)),
+                            args);
+                    }
+                }
+            }
+            catch(Exception ex) {
+                this.log.Exception(9999, "", ex);
+            }
         }
 
 
+        /// <summary>Invalid characters already filtered. Do translation</summary>
+        /// <param name="sender">The EditBox</param>
+        /// <param name="args">The event args</param>
         private void tbDec_TextChanged(object sender, TextChangedEventArgs e) {
             try {
-                this.log.Info("tbDec_TextChanged", () => string.Format("{0}",
-                    this.tbDec.Text));
-
-                string value = string.Format("{0}", this.tbDec.Text);
-                if (value.Length == 0) {
+                this.log.Info("tbDec_TextChanged", this.tbDec.Text);
+                if (this.tbDec.Text.Length == 0) {
                     this.edHex.Text = "";
                     this.edBin.Text = "";
                 }
                 else {
-                    ////e.Text
                     //// Now translate to hex and binary
-                    this.edHex.Text = UInt16.Parse(value).ToString("X");
-                    this.edBin.Text = this.ToBinary(Convert.ToUInt32(value));
-                    //this.SetText(this.tbDec, newVal);
-                    //// Now translate to hex and binary
-                    //this.edHex.Text = UInt16.Parse(newVal).ToString("X");
-                    //this.edBin.Text = this.ToBinary(Convert.ToUInt32(newVal));
+                    this.edHex.Text = UInt16.Parse(this.tbDec.Text).ToString("X");
+                    this.edBin.Text = this.ToBinary(Convert.ToUInt32(this.tbDec.Text));
                 }
             }
             catch (Exception ex) {
                 this.log.Exception(9999, "", ex);
             }
         }
-
-
-
-        private void tbDec_TextInput(object sender, TextCompositionEventArgs e) {
-            this.log.Info("tbDec_TextInput", () => string.Format("{0} New '{1}", this.tbDec.Text, e.Text));
-            //if (this.tbDec.Text.Length == 0) {
-            //    this.edHex.Text = "";
-            //    this.edBin.Text = "";
-            //}
-            //else {
-            //    //e.Text
-            //    // Now translate to hex and binary
-            //    this.edHex.Text = UInt16.Parse(this.tbDec.Text).ToString("X");
-            //    this.edBin.Text = this.ToBinary(Convert.ToUInt32(this.tbDec.Text));
-            //}
-        }
-
 
 
         private void edDec_MouseMove(object sender, MouseEventArgs e) {
