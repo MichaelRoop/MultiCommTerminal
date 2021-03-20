@@ -3,17 +3,10 @@ using LogUtils.Net;
 using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using System;
-using System.Collections.Generic;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
@@ -65,10 +58,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         /// <param name="args">The event args</param>
         private void tbDec_PreviewKeyUp(object sender, KeyEventArgs args) {
             try {
-                // Filter out forbidden characters and A-F
-                if (this.IsForebidden(args.Key) || this.IsHex(args.Key)) {
+                if (args.Key.IsUnsignedNumericForbidden()) {
                     args.Handled = true;
-                    return;
                 }
                 else {
                     if (this.IsNumeric(args.Key)) {
@@ -112,9 +103,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         private void edHex_PreviewKeyDown(object sender, KeyEventArgs args) {
             try {
-                if (this.IsForebidden(args.Key)) {
+                if (args.Key.IsHexNumericForbidden()) {
                     args.Handled = true;
-                    return;
                 }
                 else {
                     if (this.IsHexDecimal(args.Key)) {
@@ -162,12 +152,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         private void edBin_PreviewKeyDown(object sender, KeyEventArgs args) {
             try {
-                // Filter out forbidden characters and A-F and numerics over 0,1
-                if (this.IsForebidden(args.Key) ||
-                    this.IsHex(args.Key) ||
-                    this.IsNonBinaryNumeric(args.Key)) {
+                if (args.Key.IsBinaryNumericForbidden()) {
                     args.Handled = true;
-                    return;
                 }
                 else {
                     if (this.IsNumeric(args.Key)) {
@@ -186,7 +172,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             catch (Exception ex) {
                 this.log.Exception(9999, "", ex);
             }
-
         }
 
         private void edBin_TextChanged(object sender, TextChangedEventArgs e) {
