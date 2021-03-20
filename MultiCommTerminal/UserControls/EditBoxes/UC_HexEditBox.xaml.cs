@@ -2,23 +2,22 @@
 using System;
 using System.Windows.Controls;
 using System.Windows.Input;
-using VariousUtils.Net;
 using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
 
-    /// <summary>Interaction logic for UC_BinaryEditBox.xaml</summary>
-    public partial class UC_BinaryEditBox : UserControl {
+    /// <summary>Interaction logic for UC_HexEditBox.xaml</summary>
+    public partial class UC_HexEditBox : UserControl {
 
-        private ClassLog log = new ClassLog("UC_BinaryEditBox");
-        private Func<string,bool> validateFunc = null;
+        private ClassLog log = new ClassLog("UC_HexEditBox");
+        private Func<string, bool> validateFunc = null;
 
         /// <summary>Raised when the edit receives the event when data changed by user</summary>
         public event EventHandler<UInt32> OnValueChanged;
         public event EventHandler OnValueEmpty;
 
 
-        public UC_BinaryEditBox() {
+        public UC_HexEditBox() {
             InitializeComponent();
             this.validateFunc = this.DummyValidator;
         }
@@ -26,7 +25,7 @@ namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
         public void SetValue(UInt32 value) {
             this.tbEdit.TextChanged -= this.tbEdit_TextChanged;
             int carretIndex = this.tbEdit.CaretIndex;
-            this.tbEdit.Text = value.ToFormatedBinaryString();
+            this.tbEdit.Text = value.ToString("X");
             this.tbEdit.CaretIndex = carretIndex > this.tbEdit.Text.Length
                 ? this.tbEdit.Text.Length
                 : carretIndex;
@@ -46,20 +45,19 @@ namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
         }
 
 
+
         private void tbEdit_PreviewKeyDown(object sender, KeyEventArgs args) {
             try {
-                if (args.Key.IsBinaryNumericForbidden()) {
+                if (args.Key.IsHexNumericForbidden()) {
                     args.Handled = true;
                 }
                 else {
-                    if (args.Key.IsNumeric()) {
-                        string add = args.Key.GetNumericValue();
-                        string newVal = tbEdit.PreviewKeyDownAssembleText(add);
-                        newVal = newVal.Replace(" ", "");
+                    if (args.Key.IsHexDecimal()) {
+                        string add = args.Key.GetHexDecimalValue();
+                        string newVal = this.tbEdit.PreviewKeyDownAssembleText(add);
                         this.log.Info("", () => string.Format("'{0}'  '{1}'  '{2}'", this.tbEdit, add, newVal));
-
                         if (newVal.Length > 0) {
-                            this.ValidateRange(Convert.ToUInt32(newVal, 2).ToString(), args);
+                            this.ValidateRange(Convert.ToUInt32(newVal, 16).ToString(), args);
                         }
                     }
                 }
@@ -69,7 +67,6 @@ namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
             }
         }
 
-
         private void tbEdit_TextChanged(object sender, TextChangedEventArgs e) {
             try {
                 this.log.Info("tbEdit_TextChanged", this.tbEdit.Text);
@@ -77,9 +74,7 @@ namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
                     this.OnValueEmpty?.Invoke(this, new EventArgs());
                 }
                 else {
-                    UInt32 value = Convert.ToUInt32(this.tbEdit.Text.Replace(" ", ""), 2);
-                    this.SetValue(value);
-                    this.OnValueChanged?.Invoke(this, value);
+                    this.OnValueChanged?.Invoke(this, Convert.ToUInt32(this.tbEdit.Text, 16));
                 }
             }
             catch (Exception ex) {

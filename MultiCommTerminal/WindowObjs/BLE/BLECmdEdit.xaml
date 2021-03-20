@@ -49,12 +49,10 @@ KeyDown="Window_KeyDown"
                                Content="{Binding Source={x:Static wpfHelper:TxtBinder.Command}}" Style="{StaticResource NameLabelCenter}" />
 
                         <Label Grid.Row="3" Grid.Column="0" Content="Dec" Style="{StaticResource NameLabelLeft}" />
-                        <TextBox Grid.Row="3" Grid.Column="1" x:Name="tbDec" Style="{StaticResource TxtBoxRight}" 
-                                 PreviewKeyDown="tbDec_PreviewKeyUp" TextChanged="tbDec_TextChanged" />
-                        
+                        <UC_EditBoxes:UC_UIntEditBox  Grid.Row="3" Grid.Column="1" x:Name="edDecEdit" />
+
                         <Label Grid.Row="4" Grid.Column="0" Content="Hex 0x" Style="{StaticResource NameLabelLeft}" />
-                        <TextBox Grid.Row="4" Grid.Column="1" x:Name="edHex"  Style="{StaticResource TxtBoxRight}" 
-                                 PreviewKeyDown="edHex_PreviewKeyDown" TextChanged="edHex_TextChanged" />
+                        <UC_EditBoxes:UC_HexEditBox Grid.Row="4" Grid.Column="1" x:Name="edHexEdit" />
 
                         <Label Grid.Row="5" Grid.Column="0" Content="Bin" Style="{StaticResource NameLabelLeft}" />
                         <UC_EditBoxes:UC_BinaryEditBox  Grid.Row="5" Grid.Column="1" x:Name="edBinEdit" />

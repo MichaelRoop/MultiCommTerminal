@@ -4,9 +4,6 @@ using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using VariousUtils.Net;
 using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
@@ -29,9 +26,18 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                 this.dataType, str => this.txtRange.Content = str, this.onFailure);
             this.widthManager = new ButtonGroupSizeSyncManager(this.btnCancel, this.btnOk);
             this.widthManager.PrepForChange();
+            this.edDecEdit.SetValidator(this.ValidateRangeFunc);
+            this.edHexEdit.SetValidator(this.ValidateRangeFunc);
             this.edBinEdit.SetValidator(this.ValidateRangeFunc);
+
+            this.edDecEdit.OnValueChanged += this.onDecValueChanged;
+            this.edHexEdit.OnValueChanged += this.onHexValueChanged;
             this.edBinEdit.OnValueChanged += this.onBinaryValueChanged;
+
+            this.edDecEdit.OnValueEmpty += this.onDecValueEmpty;
+            this.edHexEdit.OnValueEmpty += this.onHexValueEmpty;
             this.edBinEdit.OnValueEmpty += this.onBinaryValueEmpty;
+
             this.SizeToContent = SizeToContent.WidthAndHeight;
         }
 
@@ -46,113 +52,21 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.CenterToParent(this.parent);
         }
 
+
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             if (this.widthManager != null) {
                 this.widthManager.Teardown();
             }
+            this.edDecEdit.OnValueChanged -= this.onDecValueChanged;
+            this.edHexEdit.OnValueChanged -= this.onHexValueChanged;
             this.edBinEdit.OnValueChanged -= this.onBinaryValueChanged;
+
+            this.edDecEdit.OnValueEmpty -= this.onDecValueEmpty;
+            this.edHexEdit.OnValueEmpty -= this.onHexValueEmpty;
             this.edBinEdit.OnValueEmpty -= this.onBinaryValueEmpty;
         }
 
         #endregion
-
-        #region Edit box events
-
-        /// <summary>Prevent invalid characters ever getting entered</summary>
-        /// <param name="sender">The EditBox</param>
-        /// <param name="args">The event args</param>
-        private void tbDec_PreviewKeyUp(object sender, KeyEventArgs args) {
-            try {
-                if (args.Key.IsUnsignedNumericForbidden()) {
-                    args.Handled = true;
-                }
-                else {
-                    if (args.Key.IsNumeric()) {
-                        string s = args.Key.GetNumericValue();
-                        this.ValidateRange(string.Format("{0}{1}", this.tbDec.Text, s), args);
-                    }
-                }
-            }
-            catch(Exception ex) {
-                this.log.Exception(9999, "", ex);
-            }
-        }
-
-
-        /// <summary>Invalid characters already filtered. Do translation</summary>
-        /// <param name="sender">The EditBox</param>
-        /// <param name="args">The event args</param>
-        private void tbDec_TextChanged(object sender, TextChangedEventArgs e) {
-            try {
-                // remove multiple leading zeros
-                this.log.Info("tbDec_TextChanged", this.tbDec.Text);
-                if (this.tbDec.Text.Length == 0) {
-                    this.edHex.Text = "";
-                    this.edBinEdit.SetEmpty();
-                }
-                else {
-                    this.edHex.TextChanged -= this.edHex_TextChanged;
-                    // Now translate to hex and binary
-                    UInt32 val = UInt32.Parse(this.tbDec.Text);
-                    this.edHex.Text = val.ToString("X");
-                    this.edBinEdit.SetValue(val);
-                    this.edHex.TextChanged += this.edHex_TextChanged;
-                }
-            }
-            catch (Exception ex) {
-                this.log.Exception(9999, "", ex);
-            }
-        }
-
-
-        private void edHex_PreviewKeyDown(object sender, KeyEventArgs args) {
-            try {
-                if (args.Key.IsHexNumericForbidden()) {
-                    args.Handled = true;
-                }
-                else {
-                    if (args.Key.IsHexDecimal()) {
-                        var s = string.Format("{0}{1}", this.edHex.Text, args.Key.GetHexDecimalValue());
-
-                        this.log.Info("edHex_PreviewKeyDown", () =>
-                            string.Format("'{0}'  '{1}'  '{2}'  '{3}'", 
-                            args.Key.ToString(), this.edHex.Text, args.Key.GetHexDecimalValue(), s));
-                        
-                        UInt32 tmp = Convert.ToUInt32(s, 16);
-                        this.ValidateRange(tmp.ToString(), args);
-                    }
-                }
-            }
-            catch (Exception ex) {
-                this.log.Exception(9999, "", ex);
-            }
-
-        }
-
-        private void edHex_TextChanged(object sender, TextChangedEventArgs e) {
-            try {
-                // remove multiple leading zeros
-                this.log.Info("tbDec_TextChanged", this.edHex.Text);
-                if (this.edHex.Text.Length == 0) {
-                    this.tbDec.Text = "";
-                    this.edBinEdit.SetEmpty();
-                }
-                else {
-                    this.tbDec.TextChanged -= this.tbDec_TextChanged;
-                    // Now translate to decimal and binary
-                    UInt32 val = Convert.ToUInt32(this.edHex.Text, 16);
-                    this.tbDec.Text = val.ToString();
-                    this.edBinEdit.SetValue(val);
-                    this.tbDec.TextChanged += this.tbDec_TextChanged;
-                }
-            }
-            catch (Exception ex) {
-                this.log.Exception(9999, "", ex);
-            }
-        }
-
-        #endregion
-
 
         #region Button events
 
@@ -164,23 +78,13 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         }
 
+        #endregion
+
+        #region Private
 
         private void onFailure(string msg) {
             App.ShowMsg(msg);
             this.Close();
-        }
-
-
-        #endregion
-
-
-        private void ValidateRange(string value, KeyEventArgs args) {
-            DI.Wrapper.ValidateBLEValue(
-                this.dataType, value, () => { },
-                err => {
-                    args.Handled = true;
-                    App.ShowMsg(err);
-                });
         }
 
 
@@ -195,30 +99,39 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             return result;
         }
 
+        #endregion
 
         #region Custom EditBox events
 
-        private void onBinaryValueEmpty(object sender, EventArgs e) {
-            // TODO - eventually call their empty functions but for now handle directly
-            this.tbDec.TextChanged -= this.tbDec_TextChanged;
-            this.edHex.TextChanged -= this.edHex_TextChanged;
-            this.edHex.Text = "";
-            this.tbDec.Text = "";
-            this.tbDec.TextChanged += this.tbDec_TextChanged;
-            this.edHex.TextChanged += this.edHex_TextChanged;
+        private void onDecValueEmpty(object sender, EventArgs e) {
+            this.edHexEdit.SetEmpty();
+            this.edBinEdit.SetEmpty();
         }
 
+        private void onHexValueEmpty(object sender, EventArgs e) {
+            this.edDecEdit.SetEmpty();
+            this.edBinEdit.SetEmpty();
+        }
+
+        private void onBinaryValueEmpty(object sender, EventArgs e) {
+            this.edDecEdit.SetEmpty();
+            this.edHexEdit.SetEmpty();
+        }
+
+        private void onDecValueChanged(object sender, uint value) {
+            this.edHexEdit.SetValue(value);
+            this.edBinEdit.SetValue(value);
+        }
+
+        private void onHexValueChanged(object sender, uint value) {
+            this.edDecEdit.SetValue(value);
+            this.edBinEdit.SetValue(value);
+        }
 
         private void onBinaryValueChanged(object sender, uint value) {
-            // TODO - eventually call their SetValue functions but for now handle directly
-            this.tbDec.TextChanged -= this.tbDec_TextChanged;
-            this.edHex.TextChanged -= this.edHex_TextChanged;
-            this.tbDec.Text = value.ToString();
-            this.edHex.Text = UInt32.Parse(this.tbDec.Text).ToString("X");
-            this.tbDec.TextChanged += this.tbDec_TextChanged;
-            this.edHex.TextChanged += this.edHex_TextChanged;
+            this.edDecEdit.SetValue(value);
+            this.edHexEdit.SetValue(value);
         }
-
 
         #endregion
 
