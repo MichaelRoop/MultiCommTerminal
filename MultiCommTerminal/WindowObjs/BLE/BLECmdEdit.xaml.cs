@@ -5,6 +5,7 @@ using MultiCommTerminal.NetCore.WPF_Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -60,16 +61,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         #endregion
 
         #region Edit box events
-
-
-        private void ValidateRange(string value, KeyEventArgs args) {
-            DI.Wrapper.ValidateBLEValue(
-                this.dataType, value, () => { },
-                err => {
-                    args.Handled = true;
-                    App.ShowMsg(err);
-                });
-        }
 
         /// <summary>Prevent invalid characters ever getting entered</summary>
         /// <param name="sender">The EditBox</param>
@@ -152,7 +143,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                     this.edBin.Text = "";
                 }
                 else {
-                    //// Now translate to decimal and binary
+                    // Now translate to decimal and binary
                     UInt32 val = Convert.ToUInt32(this.edHex.Text, 16);
                     this.tbDec.Text = val.ToString();
                     this.edBin.Text = this.ToBinary(val);
@@ -191,103 +182,27 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         #endregion
 
 
-
-        //private void ProcessKeys(TextBox t, bool hex, KeyEventArgs args) {
-        //    this.log.Info("ProcessKeys", () => string.Format("KEY '{0}'", args.Key.ToString()));
-
-        //    // Allow certain system keys to go through
-        //    if (!this.IsSysKey(args.Key)) {
-        //        string current = t.Text;
-        //        string newVal = this.GetNumericValue(args.Key);
-        //        if (newVal == string.Empty && hex) {
-        //            newVal = this.GetHexValue(args.Key);
-        //        }
-
-        //        if (newVal.Length > 0) {
-        //            // can do some validation here
-        //            t.Text = string.Format("{0}{1}", t.Text, newVal);
-        //            this.log.Info("ProcessKeys", () => string.Format("Completed:{0}", t.Text));
-        //        }
-        //        t.Focus();
-        //        t.CaretIndex = t.Text.Length;
-
-        //        // Consider all other keys handled
-        //        args.Handled = true;
-
-        //    }
-        //}
-
-
-        private void ProcessNumericBox(KeyEventArgs args) {
-            // Filter out forbidden characters and A-F
-            if (this.IsForebidden(args.Key) || this.IsHex(args.Key)) {
-                args.Handled = true;
-                return;
-            }
-
-            if (this.IsNumeric(args.Key)) {
-                //string newVal = this.GetNumericValue(args.Key);
-                //if (newVal != string.Empty) {
-                    string newVal = string.Format("{0}{1}", 
-                        this.tbDec.Text,
-                        this.GetNumericValue(args.Key));
-
-
-                    // Validate the range
-                    DI.Wrapper.ValidateBLEValue(
-                        this.dataType,
-                        newVal,
-                        () => {
-                            //this.SetText(this.tbDec, newVal);
-                            //// Now translate to hex and binary
-                            //this.edHex.Text = UInt16.Parse(newVal).ToString("X");
-                            //this.edBin.Text = this.ToBinary(Convert.ToUInt32(newVal));
-                        },
-                        err => {
-                            args.Handled = true;
-                            App.ShowMsg(err);
-                        });
-                //}
-                //else {
-                //    args.Handled = true;
-
-                //}
-            }
-
-
-
-
-
-
-
-            //// Allow certain system keys to go through
-            //if (!this.IsSysKey(args.Key)) {
-            //    //string current = this.tbDec.Text;
-            //    string newVal = this.GetNumericValue(args.Key);
-            //    if (newVal != string.Empty) {
-            //        newVal = string.Format("{0}{1}", this.tbDec.Text, newVal);
-            //        // Validate the range
-            //        DI.Wrapper.ValidateBLEValue(
-            //            this.dataType,
-            //            newVal,
-            //            () => {
-            //                this.SetText(this.tbDec, newVal);
-
-            //                // Now translate to hex and binary
-            //                this.edHex.Text = UInt16.Parse(newVal).ToString("X");
-            //                this.edBin.Text = this.ToBinary(Convert.ToUInt32(newVal));
-            //            },
-            //            App.ShowMsg);
-            //    }
-            //    // Consider all other keys handled
-            //    args.Handled = true;
-            //}
-
-
+        private void ValidateRange(string value, KeyEventArgs args) {
+            DI.Wrapper.ValidateBLEValue(
+                this.dataType, value, () => { },
+                err => {
+                    args.Handled = true;
+                    App.ShowMsg(err);
+                });
         }
+
+
 
         //https://stackoverflow.com/questions/2954962/convert-integer-to-binary-in-c-sharp
         public string ToBinary(UInt32 base10) {
+            StringBuilder sb = new StringBuilder(Convert.ToString(base10, 2));
+            for (int i = sb.Length - 4; i > 0; i -= 4) {
+                sb.Insert(i, ' ');
+            }
+            return sb.ToString();
+            //return Convert.ToString(base10, 2);
+
+            /*
             string binary = "";
             do {
                 binary = (base10 % 2) + binary;
@@ -298,6 +213,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             // Need to add spaces
             Char[] arr = binary.ToCharArray();
             Array.Reverse(arr);
+
             List<char> target = new List<char>();
             for (int i = 0; i < arr.Length; i++) {
                 if (i % 4 == 0) {
@@ -308,10 +224,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
             target.Reverse();
             return new string(target.ToArray());
-
-
-
-            //return binary;
+            */
         }
 
 
