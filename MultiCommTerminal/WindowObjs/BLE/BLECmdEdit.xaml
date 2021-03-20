@@ -54,7 +54,10 @@ KeyDown="Window_KeyDown"
                                Content="{Binding Source={x:Static wpfHelper:TxtBinder.Command}}" Style="{StaticResource NameLabelCenter}" />
 
                         <Label Grid.Row="4" Grid.Column="0" Content="Dec" Style="{StaticResource NameLabelLeft}" />
-                        <TextBox Grid.Row="4" Grid.Column="1" x:Name="tbDec" Style="{StaticResource TxtBoxRight}" PreviewKeyDown="tbDec_PreviewKeyUp"/>
+                        <TextBox Grid.Row="4" Grid.Column="1" x:Name="tbDec" Style="{StaticResource TxtBoxRight}" 
+                                 PreviewKeyDown="tbDec_PreviewKeyUp" PreviewTextInput="tbDec_PreviewTextInput"
+                                 TextInput="tbDec_TextInput" TextChanged="tbDec_TextChanged"
+                                 />
 
                         <!--
                                 KeyDown="edDec_KeyDown"
