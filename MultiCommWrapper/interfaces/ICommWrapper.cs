@@ -347,6 +347,8 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void BLE_GetRangeDisplay(BLE_CharacteristicDataModel dataModel, Action<string, string> onSuccess, OnErr onError);
 
+        void BLE_GetRangeDisplay(BLE_DataType dataType, Action<string> onSuccess, OnErr onError);
+
         void Translate(BluetoothLEDeviceInfo device);
 
         void Translate(BLE_CharacteristicDataModel device);
@@ -390,6 +392,8 @@ namespace MultiCommWrapper.Net.interfaces {
         void DeleteAllBLECmdFiles(Action onSuccess, OnErr onError);
 
         void ValidateBLECmdItem(BLE_DataType dataType, ScriptItem item, Action onSuccess, OnErr onError);
+
+        void ValidateBLEValue(BLE_DataType dataType, string command, Action onSuccess, OnErr onError);
 
         void CreateBLEDemoCmdsBool(Action onSuccess, OnErr onError);
 

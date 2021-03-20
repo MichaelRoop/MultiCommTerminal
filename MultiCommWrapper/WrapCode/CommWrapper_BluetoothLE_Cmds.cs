@@ -91,9 +91,27 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void ValidateBLECmdItem(BLE_DataType dataType, ScriptItem item, Action onSuccess, OnErr onError) {
+            this.ValidateBLEValue(dataType, item.Command, onSuccess, onError);
+            //ErrReport report;
+            //WrapErr.ToErrReport(out report, 9999, () => {
+            //    RangeValidationResult result = this.bleRangeValidator.Validate(item.Command, dataType);
+            //    if (result.Status == BLE_DataValidationStatus.Success) {
+            //        onSuccess.Invoke();
+            //    }
+            //    else {
+            //        onError.Invoke(this.Translate(result));
+            //    }
+            //});
+            //if (report.Code != 0) {
+            //    onError.Invoke(this.GetText(MsgCode.UnknownError));
+            //}
+        }
+
+
+        public void ValidateBLEValue(BLE_DataType dataType, string command, Action onSuccess, OnErr onError) {
             ErrReport report;
             WrapErr.ToErrReport(out report, 9999, () => {
-                RangeValidationResult result = this.bleRangeValidator.Validate(item.Command, dataType);
+                RangeValidationResult result = this.bleRangeValidator.Validate(command, dataType);
                 if (result.Status == BLE_DataValidationStatus.Success) {
                     onSuccess.Invoke();
                 }
@@ -105,6 +123,8 @@ namespace MultiCommWrapper.Net.WrapCode {
                 onError.Invoke(this.GetText(MsgCode.UnknownError));
             }
         }
+
+
 
         #region Create Command sets
 

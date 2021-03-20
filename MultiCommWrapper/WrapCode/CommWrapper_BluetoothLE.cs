@@ -324,6 +324,24 @@ namespace MultiCommWrapper.Net.WrapCode {
             }
         }
 
+
+        public void BLE_GetRangeDisplay(BLE_DataType dataType, Action<string> onSuccess, OnErr onError) {
+            try {
+                DataTypeDisplay display = this.validator.GetRange(dataType);
+                onSuccess(
+                    string.Format("{0}: {1},  {2}: {3},  {4}: {5}",
+                    this.GetText(MsgCode.DataType), display.DataType,
+                    this.GetText(MsgCode.Min), display.Min,
+                    this.GetText(MsgCode.Max), display.Max));
+            }
+            catch (Exception e) {
+                this.log.Exception(9999, "", e);
+                WrapErr.SafeAction(() => {
+                    onError.Invoke(this.GetText(MsgCode.UnhandledError));
+                });
+            }
+        }
+
         #endregion
 
         #region Init and teardown

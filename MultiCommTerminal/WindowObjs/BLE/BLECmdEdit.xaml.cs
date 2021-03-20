@@ -1,5 +1,6 @@
 ﻿using BluetoothLE.Net.Enumerations;
 using LogUtils.Net;
+using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,9 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.parent = parent;
             this.dataType = dataType;
             InitializeComponent();
-
+            this.txtDataType.Content = this.dataType.ToStr();
+            DI.Wrapper.BLE_GetRangeDisplay(
+                this.dataType, str => this.txtRange.Content = str, this.onFailure);
             this.SizeToContent = SizeToContent.WidthAndHeight;
         }
 
@@ -57,42 +60,9 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         #region Edit box events
 
-        private void edDec_PreviewTextInput(object sender, TextCompositionEventArgs e) {
-            //TextBox tb = sender as TextBox;
-            //this.log.Info("edDec_PreviewTextInput", () => string.Format(
-            //    "TB.Text:{0}, Args.Text:{1}", tb.Text, e.Text));
-        }
-
-
-        private void edDec_PreviewMouseDown(object sender, MouseButtonEventArgs e) {
-            //TextBox tb = sender as TextBox;
-            //this.log.Info("edDec_PreviewMouseDown", () => string.Format(
-            //    "TB.Text:{0}", tb.Text));
-        }
-
-
-        //        private void edDec_KeyDown(object sender, KeyEventArgs e) {
-        ////            this.ProcessKeys(sender as TextBox, true, e);
-
-        //            //TextBox tb = sender as TextBox;
-        //            //this.log.Info("edDec_KeyDown", () => string.Format(
-        //            //    "TB.Text:{0}, Key:{1}",
-        //            //    tb.Text, e.Key.ToString()));
-
-        //        }
-
-
-        //private void edDec_KeyUp(object sender, KeyEventArgs e) {
-        //    this.ProcessKeys(sender as TextBox, true, e);
-
-        //}
-
-        private void edDec_PreviewKeyDown(object sender, KeyEventArgs e) {
-            this.ProcessKeys(sender as TextBox, true, e);
-        }
-
-        private void edDec_PreviewKeyUp(object sender, KeyEventArgs e) {
-            this.ProcessKeys(sender as TextBox, true, e);
+        private void tbDec_PreviewKeyUp(object sender, KeyEventArgs e) {
+            //this.ProcessKeys(sender as TextBox, true, e);
+            this.ProcessNumericBox(e);
         }
 
 
@@ -123,8 +93,194 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         }
 
+
+        private void onFailure(string msg) {
+            App.ShowMsg(msg);
+            this.Close();
+        }
+
+
         #endregion
 
+
+
+        //private void ProcessKeys(TextBox t, bool hex, KeyEventArgs args) {
+        //    this.log.Info("ProcessKeys", () => string.Format("KEY '{0}'", args.Key.ToString()));
+
+        //    // Allow certain system keys to go through
+        //    if (!this.IsSysKey(args.Key)) {
+        //        string current = t.Text;
+        //        string newVal = this.GetNumericValue(args.Key);
+        //        if (newVal == string.Empty && hex) {
+        //            newVal = this.GetHexValue(args.Key);
+        //        }
+
+        //        if (newVal.Length > 0) {
+        //            // can do some validation here
+        //            t.Text = string.Format("{0}{1}", t.Text, newVal);
+        //            this.log.Info("ProcessKeys", () => string.Format("Completed:{0}", t.Text));
+        //        }
+        //        t.Focus();
+        //        t.CaretIndex = t.Text.Length;
+
+        //        // Consider all other keys handled
+        //        args.Handled = true;
+
+        //    }
+        //}
+
+
+        private void ProcessNumericBox(KeyEventArgs args) {
+            // Allow certain system keys to go through
+            if (!this.IsSysKey(args.Key)) {
+                //string current = this.tbDec.Text;
+                string newVal = this.GetNumericValue(args.Key);
+                if (newVal != string.Empty) {
+                    newVal = string.Format("{0}{1}", this.tbDec.Text, newVal);
+                    // Validate the range
+                    DI.Wrapper.ValidateBLEValue(
+                        this.dataType,
+                        newVal,
+                        () => {
+                            this.SetText(this.tbDec, newVal);
+
+                            // Now translate to hex and binary
+                            this.edHex.Text = UInt16.Parse(newVal).ToString("X");
+                            this.edBin.Text = this.ToBinary(Convert.ToUInt32(newVal));
+                        },
+                        App.ShowMsg);
+                }
+
+
+                // Consider all other keys handled
+                args.Handled = true;
+
+            }
+
+
+        }
+
+        //https://stackoverflow.com/questions/2954962/convert-integer-to-binary-in-c-sharp
+        public string ToBinary(UInt32 base10) {
+            string binary = "";
+            do {
+                binary = (base10 % 2) + binary;
+                base10 /= 2;
+            }
+            while (base10 > 0);
+
+            // Need to add spaces
+            Char[] arr = binary.ToCharArray();
+            Array.Reverse(arr);
+            List<char> target = new List<char>();
+            for (int i = 0; i < arr.Length; i++) {
+                if (i % 4 == 0) {
+                    target.Add(' ');
+                }
+                target.Add(arr[i]);
+            }
+
+            target.Reverse();
+            return new string(target.ToArray());
+
+
+
+            //return binary;
+        }
+
+
+        private void SetText(TextBox t, string text) {
+            t.Text = text;
+            t.Focus();
+            t.CaretIndex = this.tbDec.Text.Length;
+        }
+
+
+
+        private bool IsSysKey(Key key) {
+            switch (key) {
+                case Key.None:
+                case Key.Cancel:
+                case Key.Back:
+                case Key.Tab:
+                case Key.LineFeed:
+                case Key.Clear:
+                case Key.Enter:
+                case Key.Delete:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+
+
+
+        private string GetNumericValue(Key key) {
+            switch (key) {
+                case Key.NumPad0:
+                case Key.D0:
+                    return "0";
+                case Key.NumPad1:
+                case Key.D1:
+                    return "1";
+                case Key.NumPad2:
+                case Key.D2:
+                    return "2";
+                case Key.NumPad3:
+                case Key.D3:
+                    return "3";
+                case Key.NumPad4:
+                case Key.D4:
+                    return "4";
+                case Key.NumPad5:
+                case Key.D5:
+                    return "5";
+                case Key.NumPad6:
+                case Key.D6:
+                    return "6";
+                case Key.NumPad7:
+                case Key.D7:
+                    return "7";
+                case Key.NumPad8:
+                case Key.D8:
+                    return "8";
+                case Key.NumPad9:
+                case Key.D9:
+                    return "9";
+                default:
+                    return string.Empty;
+            }
+        }
+
+
+
+
+        private string GetHexValue(Key key) {
+            switch (key) {
+                case Key.A:
+                    return "A";
+                case Key.B:
+                    return "B";
+                case Key.C:
+                    return "C";
+                case Key.D:
+                    return "D";
+                case Key.E:
+                    return "E";
+                case Key.F:
+                    return "F";
+                default:
+                    return string.Empty;
+            }
+
+        }
+
+
+
+
+
+#if BLAH_THIS_IS_FULL_SWITCH
         private void Window_KeyDown(object sender, KeyEventArgs e) {
             switch (e.Key) {
                 case Key.None:
@@ -482,122 +638,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         }
 
 
-        private void ProcessKeys(TextBox t, bool hex, KeyEventArgs args) {
-
-            this.log.Info("ProcessKeys", () => string.Format("KEY '{0}'", args.Key.ToString()));
-
-
-
-            if (this.IsSysKey(args.Key)) {
-                args.Handled = false;
-                // At this point you need to see the back or delete button result
-
-                return;
-            }
-
-            // TODO - intercept other keys like space to block them
-            if (args.Key == Key.Space) {
-                this.log.Info("ProcessKeys", "Space");
-                args.Handled = true;
-                return;
-            }
-
-
-            string current = t.Text;
-            string newVal = this.GetNumericValue(args.Key);
-            if (newVal == string.Empty && hex) {
-                newVal = this.GetHexValue(args.Key);
-            }
-
-            this.log.Info("ProcessKeys", () => string.Format("Old:{0}  Extra: '{1}'", t.Text, newVal));
-
-            if (newVal.Length > 0) {
-                // can do some validation here
-                t.Text = string.Format("{0}{1}", t.Text, newVal);
-                this.log.Info("ProcessKeys", () => string.Format("Completed:{0}", t.Text));
-            }
-            t.Focus();
-            t.CaretIndex = t.Text.Length;
-            args.Handled = true;
-        }
-
-
-        private bool IsSysKey(Key key) {
-            switch (key) {
-                case Key.None:
-                case Key.Cancel:
-                case Key.Back:
-                case Key.Tab:
-                case Key.LineFeed:
-                case Key.Clear:
-                case Key.Enter:
-                case Key.Delete:
-                    return true;
-
-                default:
-                    return false;
-            }
-        }
-
-
-
-
-        private string GetNumericValue(Key key) {
-            switch (key) {
-                case Key.NumPad0:
-                case Key.D0:
-                    return "0";
-                case Key.NumPad1:
-                case Key.D1:
-                    return "1";
-                case Key.NumPad2:
-                case Key.D2:
-                    return "2";
-                case Key.NumPad3:
-                case Key.D3:
-                    return "3";
-                case Key.NumPad4:
-                case Key.D4:
-                    return "4";
-                case Key.NumPad5:
-                case Key.D5:
-                    return "5";
-                case Key.NumPad6:
-                case Key.D6:
-                    return "6";
-                case Key.NumPad7:
-                case Key.D7:
-                    return "7";
-                case Key.NumPad8:
-                case Key.D8:
-                    return "8";
-                case Key.NumPad9:
-                case Key.D9:
-                    return "9";
-                default:
-                    return string.Empty;
-            }
-        }
-
-        private string GetHexValue(Key key) {
-            switch (key) {
-                case Key.A:
-                    return "A";
-                case Key.B:
-                    return "B";
-                case Key.C:
-                    return "C";
-                case Key.D:
-                    return "D";
-                case Key.E:
-                    return "E";
-                case Key.F:
-                    return "F";
-                default:
-                    return string.Empty;
-            }
-
-        }
+#endif
 
     }
 }
