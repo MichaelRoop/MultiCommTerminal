@@ -22,24 +22,20 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
     public partial class BLECmdEdit : Window {
 
         private ClassLog log = new ClassLog("BLECmdEdit");
-
-
-        //https://social.msdn.microsoft.com/Forums/vstudio/en-US/cbc8bf43-eb0e-439a-a08d-5336dd1ce5c5/wpf-how-to-make-textbox-only-allow-enter-certain-range-of-numbers?forum=wpf#:~:text=In%20our%20WPF%20application%2C%20we,number%20from%205%20to%209999.&text=To%20only%209999%2C%20we%20can,TextBox%20MaxLength%20%3D%20%224%22.
-
-        #region Constructors and window events
-
-
         private BLE_DataType dataType = BLE_DataType.Bool;
         private Window parent = null;
+        private ButtonGroupSizeSyncManager widthManager = null;
 
+        #region Constructors and window events
 
         public BLECmdEdit(Window parent, BLE_DataType dataType) {
             this.parent = parent;
             this.dataType = dataType;
             InitializeComponent();
-            this.txtDataType.Content = this.dataType.ToStr();
             DI.Wrapper.BLE_GetRangeDisplay(
                 this.dataType, str => this.txtRange.Content = str, this.onFailure);
+            this.widthManager = new ButtonGroupSizeSyncManager(this.btnCancel, this.btnOk);
+            this.widthManager.PrepForChange();
             this.SizeToContent = SizeToContent.WidthAndHeight;
         }
 
@@ -55,7 +51,9 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
-
+            if (this.widthManager != null) {
+                this.widthManager.Teardown();
+            }
         }
 
         #endregion
@@ -211,10 +209,12 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                     this.edHex.Text = UInt32.Parse(this.tbDec.Text).ToString("X");
 
                     this.edBin.TextChanged -= this.edBin_TextChanged;
+                    int carretIndex = this.edBin.CaretIndex;
                     this.edBin.Text = this.ToBinary(value);
-                    this.edBin.CaretIndex = this.edBin.Text.Length;
+                    this.edBin.CaretIndex = carretIndex > this.edBin.Text.Length 
+                        ? this.edBin.Text.Length 
+                        : carretIndex;
                     this.edBin.TextChanged += this.edBin_TextChanged;
-
                     this.tbDec.TextChanged += this.tbDec_TextChanged;
                     this.edHex.TextChanged += this.edHex_TextChanged;
                 }

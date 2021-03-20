@@ -31,38 +31,32 @@ KeyDown="Window_KeyDown"
                             <RowDefinition />
                             <RowDefinition />
                             <RowDefinition />
-                            <RowDefinition />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto" />
                             <ColumnDefinition Width="auto" MinWidth="200" />
                         </Grid.ColumnDefinitions>
-                        <Label Grid.Row="0" Grid.Column="0" 
-                               Content="{Binding Source={x:Static wpfHelper:TxtBinder.DataType}}" Style="{StaticResource NameLabelLeft}" />
-                        <Label Grid.Row="0" Grid.Column="1" x:Name="txtDataType" Style="{StaticResource  NameLabelRight}"   />
+
+                        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" x:Name="txtRange" Margin="5"
+                               Style="{StaticResource  NameLabelCenter}"   />
 
                         <Label Grid.Row="1" Grid.Column="0" 
-                               Content="{Binding Source={x:Static wpfHelper:TxtBinder.Range}}" Style="{StaticResource NameLabelLeft}" />
-                        <Label Grid.Row="1" Grid.Column="1" x:Name="txtRange" Style="{StaticResource  NameLabelRight}"   />
-
-                        <Label Grid.Row="2" Grid.Column="0" 
                                Content="{Binding Source={x:Static wpfHelper:TxtBinder.Name}}" Style="{StaticResource NameLabelLeft}" />
-                        <TextBox Grid.Row="2" Grid.Column="1" x:Name="txtName" Style="{StaticResource TxtBoxRight}" />
-
+                        <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtName" Style="{StaticResource TxtBoxRight}" />
                         
-                        <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" 
+                        <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" 
                                Content="{Binding Source={x:Static wpfHelper:TxtBinder.Command}}" Style="{StaticResource NameLabelCenter}" />
 
-                        <Label Grid.Row="4" Grid.Column="0" Content="Dec" Style="{StaticResource NameLabelLeft}" />
-                        <TextBox Grid.Row="4" Grid.Column="1" x:Name="tbDec" Style="{StaticResource TxtBoxRight}" 
+                        <Label Grid.Row="3" Grid.Column="0" Content="Dec" Style="{StaticResource NameLabelLeft}" />
+                        <TextBox Grid.Row="3" Grid.Column="1" x:Name="tbDec" Style="{StaticResource TxtBoxRight}" 
                                  PreviewKeyDown="tbDec_PreviewKeyUp" TextChanged="tbDec_TextChanged" />
                         
-                        <Label Grid.Row="5" Grid.Column="0" Content="Hex 0x" Style="{StaticResource NameLabelLeft}" />
-                        <TextBox Grid.Row="5" Grid.Column="1" x:Name="edHex"  Style="{StaticResource TxtBoxRight}" 
+                        <Label Grid.Row="4" Grid.Column="0" Content="Hex 0x" Style="{StaticResource NameLabelLeft}" />
+                        <TextBox Grid.Row="4" Grid.Column="1" x:Name="edHex"  Style="{StaticResource TxtBoxRight}" 
                                  PreviewKeyDown="edHex_PreviewKeyDown" TextChanged="edHex_TextChanged" />
 
-                        <Label Grid.Row="6" Grid.Column="0" Content="Bin" Style="{StaticResource NameLabelLeft}" />
-                        <TextBox Grid.Row="6" Grid.Column="1" x:Name="edBin" Style="{StaticResource TxtBoxRight}" 
+                        <Label Grid.Row="5" Grid.Column="0" Content="Bin" Style="{StaticResource NameLabelLeft}" />
+                        <TextBox Grid.Row="5" Grid.Column="1" x:Name="edBin" Style="{StaticResource TxtBoxRight}" 
                                  PreviewKeyDown="edBin_PreviewKeyDown"  TextChanged="edBin_TextChanged"/>
                     </Grid>
                     <DockPanel HorizontalAlignment="Center" Margin="0,0,0,10">
