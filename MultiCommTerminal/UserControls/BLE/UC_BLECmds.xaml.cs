@@ -50,6 +50,16 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
         }
 
 
+        public void Reset() {
+            Unsubscribe();
+            this.characteristic = null;
+            this.lbCmdList.ItemsSource = null;
+            this.lb_BLECmds.ItemsSource = null;
+            this.lblCmdDataTypeContent.Content = "";
+            this.Subscribe();
+        }
+
+
         public void Init(BLE_CharacteristicDataModel dm, bool force = false) {
             try {
                 // The BLE tree updates continuously so need to check if same

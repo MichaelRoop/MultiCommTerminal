@@ -262,6 +262,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                 }
                 else {
                     this.writeControl.Reset();
+                    this.ucCmds.Reset();
                 }
                 this.ResizeOnNormal();
             }
@@ -273,33 +274,17 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         private void treeServices_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {
             try {
-                if (e.NewValue is BLE_CharacteristicDataModel) {
-                    this.currentCharacteristic = e.NewValue as BLE_CharacteristicDataModel;
+                //if (e.NewValue is BLE_CharacteristicDataModel) {
+                //    this.currentCharacteristic = e.NewValue as BLE_CharacteristicDataModel;
+                //}
+                ////// Cannot reset if not Characteristic since that happens on update
+                //else if (e.NewValue is BLE_ServiceDataModel || e.NewValue is BLE_DescriptorDataModel) {
+                //    this.log.Info("------------------------------------------------------", e.NewValue.GetType().Name);
+                //    this.currentCharacteristic = null;
+                //}
 
-                    //BLE_CharacteristicDataModel dm = e.NewValue as BLE_CharacteristicDataModel;
-                    //this.writeControl.SetCharacteristic(dm);
-                    //this.ucCmds.Init(dm);
-                    ////this.ucLogger.Width = 400;
-                    //this.ResizeOnNormal();
-                    ////this.ucLogger.Width = this.Width;
-                    //if (dm != null) {
-                    ////    //this.lblCmdDataTypeContent.Content = dm.DataTypeDisplay;
-                    ////    // TODO load list of commands based on data type
-
-                    //}
-
-                }
-                //// Cannot reset if not Characteristic since that happens on update
-                else if (e.NewValue is BLE_ServiceDataModel || e.NewValue is BLE_DescriptorDataModel) {
-                    this.log.Info("------------------------------------------------------", e.NewValue.GetType().Name);
-                    ////this.currentCharacteristic = null;
-                    //this.writeControl.Reset();
-                    ////this.ucLogger.Width = 400;
-                    //this.ResizeOnNormal();
-                    ////this.ucLogger.Width = this.Width;
-                    ////// TODO - Reset the commands title
-                    //////this.lblCmdDataTypeContent.Content = BLE_DataType.Reserved.ToStr();
-                }
+                // Will be null unless it is a characteristic. Handled in Update
+                this.currentCharacteristic = e.NewValue as BLE_CharacteristicDataModel;
                 this.Update(false);
             }
             catch (Exception ex) {
@@ -328,7 +313,9 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                     this.btnConnect.Show();
                     this.treeServices.ItemsSource = null;
                     this.currentDevice = null;
-                    //this.currentCharacteristic = null;
+                    this.currentCharacteristic = null;
+                    this.writeControl.Reset();
+                    this.ucCmds.Reset();
                     DI.Wrapper.BLE_ConnectionStatusChanged -= this.connectionStatusChanged;
                     DI.Wrapper.BLE_Disconnect();
                     // Reset title
