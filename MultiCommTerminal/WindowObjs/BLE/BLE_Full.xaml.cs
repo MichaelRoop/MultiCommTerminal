@@ -22,7 +22,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         private Window parent = null;
         private ButtonGroupSizeSyncManager buttonSizer = null;
         BluetoothLEDeviceInfo currentDevice = null;
-        //BLE_CharacteristicDataModel currentCharacteristic = null;
+        BLE_CharacteristicDataModel currentCharacteristic = null;
         public static int Instances { get; private set; } 
         bool isBusy = false;
         DispatcherTimer timer = null;
@@ -167,7 +167,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         private void btnSettings_Click(object sender, RoutedEventArgs e) {
             BLECommands.ShowBox(this);
-            //this.Update(true);
+            this.Update(true);
 
             // reload the list if showing in the commands window
         }
@@ -254,53 +254,53 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         }
 
 
-        //private void Update(bool force) {
-        //    try {
-        //        if (this.currentCharacteristic != null) {
-        //            this.writeControl.SetCharacteristic(this.currentCharacteristic);
-        //            this.ucCmds.Init(this.currentCharacteristic, force);
-        //        }
-        //        else {
-        //            this.writeControl.Reset();
-        //        }
-        //        this.ResizeOnNormal();
-        //    }
-        //    catch(Exception ex) {
-        //        this.log.Exception(9999, "", "Update", ex);
-        //    }
-        //}
+        private void Update(bool force) {
+            try {
+                if (this.currentCharacteristic != null) {
+                    this.writeControl.SetCharacteristic(this.currentCharacteristic);
+                    this.ucCmds.Init(this.currentCharacteristic, force);
+                }
+                else {
+                    this.writeControl.Reset();
+                }
+                this.ResizeOnNormal();
+            }
+            catch (Exception ex) {
+                this.log.Exception(9999, "", "Update", ex);
+            }
+        }
 
 
         private void treeServices_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {
             try {
                 if (e.NewValue is BLE_CharacteristicDataModel) {
-                    //this.currentCharacteristic = e.NewValue as BLE_CharacteristicDataModel;
+                    this.currentCharacteristic = e.NewValue as BLE_CharacteristicDataModel;
 
-                    BLE_CharacteristicDataModel dm = e.NewValue as BLE_CharacteristicDataModel;
-                    this.writeControl.SetCharacteristic(dm);
-                    this.ucCmds.Init(dm);
-                    //this.ucLogger.Width = 400;
-                    this.ResizeOnNormal();
-                    //this.ucLogger.Width = this.Width;
-                    if (dm != null) {
-                    //    //this.lblCmdDataTypeContent.Content = dm.DataTypeDisplay;
-                    //    // TODO load list of commands based on data type
+                    //BLE_CharacteristicDataModel dm = e.NewValue as BLE_CharacteristicDataModel;
+                    //this.writeControl.SetCharacteristic(dm);
+                    //this.ucCmds.Init(dm);
+                    ////this.ucLogger.Width = 400;
+                    //this.ResizeOnNormal();
+                    ////this.ucLogger.Width = this.Width;
+                    //if (dm != null) {
+                    ////    //this.lblCmdDataTypeContent.Content = dm.DataTypeDisplay;
+                    ////    // TODO load list of commands based on data type
 
-                    }
+                    //}
 
                 }
                 //// Cannot reset if not Characteristic since that happens on update
                 else if (e.NewValue is BLE_ServiceDataModel || e.NewValue is BLE_DescriptorDataModel) {
                     this.log.Info("------------------------------------------------------", e.NewValue.GetType().Name);
-                    //this.currentCharacteristic = null;
-                    this.writeControl.Reset();
-                    //this.ucLogger.Width = 400;
-                    this.ResizeOnNormal();
-                    //this.ucLogger.Width = this.Width;
-                    //// TODO - Reset the commands title
-                    ////this.lblCmdDataTypeContent.Content = BLE_DataType.Reserved.ToStr();
+                    ////this.currentCharacteristic = null;
+                    //this.writeControl.Reset();
+                    ////this.ucLogger.Width = 400;
+                    //this.ResizeOnNormal();
+                    ////this.ucLogger.Width = this.Width;
+                    ////// TODO - Reset the commands title
+                    //////this.lblCmdDataTypeContent.Content = BLE_DataType.Reserved.ToStr();
                 }
-                //this.Update(false);
+                this.Update(false);
             }
             catch (Exception ex) {
                 this.log.Exception(9999, "", "treeServices_SelectedItemChanged", ex);

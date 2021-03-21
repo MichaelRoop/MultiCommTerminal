@@ -50,11 +50,13 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
         }
 
 
-        public void Init(BLE_CharacteristicDataModel dm) {
+        public void Init(BLE_CharacteristicDataModel dm, bool force = false) {
             try {
                 // The BLE tree updates continuously so need to check if same
-                if (this.characteristic != null && this.characteristic.Uuid == dm.Uuid) {
-                    return;
+                if (!force) {
+                    if (this.characteristic != null && this.characteristic.Uuid == dm.Uuid) {
+                        return;
+                    }
                 }
 
                 this.Unsubscribe();

@@ -1,4 +1,5 @@
 ﻿using BluetoothLE.Net.Enumerations;
+using LanguageFactory.Net.data;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommData.Net.StorageIndexInfoModels;
 using MultiCommTerminal.NetCore.DependencyInjection;
@@ -83,17 +84,30 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         #region Controls events
 
         private void btnAdd_Click(object sender, RoutedEventArgs e) {
-            // TODO Command editor binary, hex, dec
-
-            var win = new BLECmdEdit(this, this.dataType);
-            win.ShowDialog();
-
+            //// TODO Command editor binary, hex, dec
+            ScriptItem item = new ScriptItem(DI.Wrapper.GetText(MsgCode.Default), "0");
+            if (BLECmdEdit.ShowBox(this, this.dataType, item)) {
+                this.lbxCmds.ItemsSource = null;
+                this.copy.Items.Add(item);
+                this.lbxCmds.ItemsSource = this.copy.Items;
+            }
         }
 
 
         private void btnEdit_Click(object sender, RoutedEventArgs e) {
-            // TODO Command editor binary, hex, dec
+            ScriptItem item = this.lbxCmds.SelectedItem as ScriptItem;
+            if (item != null) {
+                // TODO - determine if we need to get it from the actual List<>
+                if (BLECmdEdit.ShowBox(this, this.dataType, item)) {
+                    this.lbxCmds.ItemsSource = null;
+                    this.lbxCmds.ItemsSource = this.copy.Items;
+                }
+            }
+            else {
+                App.ShowMsg(DI.Wrapper.GetText(MsgCode.NothingSelected));
+            }
         }
+
 
         private void btnDelete_Click(object sender, RoutedEventArgs e) {
             ScriptItem item = this.lbxCmds.SelectedItem as ScriptItem;
