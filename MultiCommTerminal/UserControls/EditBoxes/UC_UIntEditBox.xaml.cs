@@ -17,6 +17,9 @@ namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
         public event EventHandler OnValueEmpty;
 
 
+        public string Text { get { return this.tbEdit.Text; } }
+
+
         public UC_UIntEditBox() {
             InitializeComponent();
             this.validateFunc = this.DummyValidator;
