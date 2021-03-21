@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:MultiCommTerminal.NetCore.UserControls"
              xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
              Background="#fffffa" BorderThickness=".5" BorderBrush="#0277bd"
-             mc:Ignorable="d" 
+             mc:Ignorable="d" HorizontalAlignment="Stretch"
              d:DesignHeight="350" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
@@ -24,6 +24,7 @@
                 IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Delete}}"/>
         </DockPanel>
         <ListBox Grid.Row="1" x:Name="lbLog" Visibility="Visible"  SelectionMode="Extended"
+                 HorizontalAlignment="Stretch"
                 ScrollViewer.VerticalScrollBarVisibility="Auto"
                 ScrollViewer.HorizontalScrollBarVisibility="Auto" />
     </Grid>

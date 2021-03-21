@@ -13,7 +13,7 @@
         Style="{StaticResource MyWindowStyle}" 
         Title="BLE"
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.BluetoothClassic_W}}"
-        Loaded="Window_Loaded" Closing="Window_Closing"
+        Loaded="Window_Loaded" Closing="Window_Closing" SizeChanged="Window_SizeChanged"
         MinHeight="540" MinWidth="900" MaxHeight="1200">
 
     <!-- TODO - the CanResize creates a margin over the title bar
@@ -48,7 +48,7 @@
             <BLEcontrols:UC_BLECmds x:Name="ucCmds" Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Visibility="Visible" MinWidth="200" />
 
 
-            <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource brd075}" Padding="0" >
+            <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource brd075}" Padding="0" HorizontalAlignment="Stretch" >
                 <TreeView x:Name="treeServices" HorizontalAlignment="Stretch" Padding="10"
                         SelectedItemChanged="treeServices_SelectedItemChanged"
                         MinHeight="250" MaxHeight="700" 
@@ -139,7 +139,7 @@
             </Border>
 
             <Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
-                <controls:UC_Logging x:Name="ucLogger" Visibility="Visible" MaxHeight="300"/>
+                <controls:UC_Logging x:Name="ucLogger" Visibility="Visible" MaxHeight="300" HorizontalAlignment="Stretch"/>
             </Border>
         </Grid>
     </Grid>

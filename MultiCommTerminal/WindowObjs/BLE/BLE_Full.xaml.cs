@@ -22,6 +22,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         private Window parent = null;
         private ButtonGroupSizeSyncManager buttonSizer = null;
         BluetoothLEDeviceInfo currentDevice = null;
+        //BLE_CharacteristicDataModel currentCharacteristic = null;
         public static int Instances { get; private set; } 
         bool isBusy = false;
         DispatcherTimer timer = null;
@@ -61,9 +62,28 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.buttonSizer.PrepForChange();
             this.timer = new DispatcherTimer(DispatcherPriority.Normal);
             this.timer.Interval = TimeSpan.FromMilliseconds(500);
-            this.CenterToParent(this.parent);
+            //this.CenterToParent(this.parent);
             // TODO - set the title on commands
             //this.lblCmdDataTypeContent.Content = BLE_DataType.Reserved.ToStr();
+            //this.ucLogger.Collapse();
+            //this.ucCmds.Collapse();
+
+            this.treeServices.SizeChanged += TreeServices_SizeChanged;
+        }
+
+        private void TreeServices_SizeChanged(object sender, SizeChangedEventArgs e) {
+            //this.ucLogger.Width = this.Width;
+            //if (this.ucLogger.IsVisible) {
+            //    this.ucLogger.ToggleVisibility();
+            //    this.ucLogger.MaxWidth = this.Width;
+            //    this.ucLogger.ToggleVisibility();
+            //}
+            //else {
+            //    this.ucLogger.MaxWidth = this.Width;
+            //}
+            //this.ucLogger.InvalidateVisual();
+            //this.ucLogger.InvalidateMeasure();
+            this.ResizeOnNormal();
         }
 
 
@@ -86,7 +106,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.ucCmds.OnStartup();
             this.ucCmds.Collapse();
             this.SizeToContent = SizeToContent.WidthAndHeight;
-            this.SizeToContent = SizeToContent.Manual;
+//            this.SizeToContent = SizeToContent.Manual;
+            this.CenterToParent(this.parent);
         }
 
 
@@ -111,16 +132,18 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
 
         private void btnLog_Click(object sender, RoutedEventArgs e) {
-            this.ucLogger.Width = this.Width;
+            // Shrink logger before hidding. Set to full width on going visible
+            //this.ucLogger.Width = ucLogger.IsVisible ? 400 : this.Width;
             this.ucLogger.ToggleVisibility();
             this.ResizeOnNormal();
         }
 
 
         private void btnCommands_Click(object sender, RoutedEventArgs e) {
+            //this.ucLogger.Width = this.ucCmds.IsVisible ? 400 : this.Width;
             this.ucCmds.ToggleVisibility();
             this.ResizeOnNormal();
-            this.ucLogger.Width = this.Width;
+            //this.ucLogger.Width = this.Width;
         }
 
 
@@ -144,6 +167,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         private void btnSettings_Click(object sender, RoutedEventArgs e) {
             BLECommands.ShowBox(this);
+            //this.Update(true);
+
             // reload the list if showing in the commands window
         }
 
@@ -228,16 +253,38 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             });
         }
 
+
+        //private void Update(bool force) {
+        //    try {
+        //        if (this.currentCharacteristic != null) {
+        //            this.writeControl.SetCharacteristic(this.currentCharacteristic);
+        //            this.ucCmds.Init(this.currentCharacteristic, force);
+        //        }
+        //        else {
+        //            this.writeControl.Reset();
+        //        }
+        //        this.ResizeOnNormal();
+        //    }
+        //    catch(Exception ex) {
+        //        this.log.Exception(9999, "", "Update", ex);
+        //    }
+        //}
+
+
         private void treeServices_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {
             try {
                 if (e.NewValue is BLE_CharacteristicDataModel) {
+                    //this.currentCharacteristic = e.NewValue as BLE_CharacteristicDataModel;
+
                     BLE_CharacteristicDataModel dm = e.NewValue as BLE_CharacteristicDataModel;
                     this.writeControl.SetCharacteristic(dm);
                     this.ucCmds.Init(dm);
+                    //this.ucLogger.Width = 400;
                     this.ResizeOnNormal();
+                    //this.ucLogger.Width = this.Width;
                     if (dm != null) {
-                        //this.lblCmdDataTypeContent.Content = dm.DataTypeDisplay;
-                        // TODO load list of commands based on data type
+                    //    //this.lblCmdDataTypeContent.Content = dm.DataTypeDisplay;
+                    //    // TODO load list of commands based on data type
 
                     }
 
@@ -245,11 +292,15 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                 //// Cannot reset if not Characteristic since that happens on update
                 else if (e.NewValue is BLE_ServiceDataModel || e.NewValue is BLE_DescriptorDataModel) {
                     this.log.Info("------------------------------------------------------", e.NewValue.GetType().Name);
+                    //this.currentCharacteristic = null;
                     this.writeControl.Reset();
+                    //this.ucLogger.Width = 400;
                     this.ResizeOnNormal();
-                    // TODO - Reset the commands title
-                    //this.lblCmdDataTypeContent.Content = BLE_DataType.Reserved.ToStr();
+                    //this.ucLogger.Width = this.Width;
+                    //// TODO - Reset the commands title
+                    ////this.lblCmdDataTypeContent.Content = BLE_DataType.Reserved.ToStr();
                 }
+                //this.Update(false);
             }
             catch (Exception ex) {
                 this.log.Exception(9999, "", "treeServices_SelectedItemChanged", ex);
@@ -277,6 +328,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                     this.btnConnect.Show();
                     this.treeServices.ItemsSource = null;
                     this.currentDevice = null;
+                    //this.currentCharacteristic = null;
                     DI.Wrapper.BLE_ConnectionStatusChanged -= this.connectionStatusChanged;
                     DI.Wrapper.BLE_Disconnect();
                     // Reset title
@@ -329,19 +381,38 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         private void logger_OnMsgReceived(object sender, EventArgs e) {
             if (this.ucLogger.IsVisible) {
-                this.ResizeOnNormal();
+                //this.ResizeOnNormal();
             }
         }
 
 
         private void ResizeOnNormal() {
             if (this.WindowState == WindowState.Normal) {
+                //this.ucLogger.Width = 100;
                 this.SizeToContent = SizeToContent.WidthAndHeight;
                 this.InvalidateVisual();
-                this.SizeToContent = SizeToContent.Manual;
+//                this.SizeToContent = SizeToContent.Manual;
             }
+            //this.ucLogger.MaxWidth = this.Width;
         }
 
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e) {
+            //this.ucLogger.Width = this.Width;
+            //if (this.ucLogger.IsVisible) {
+            //    this.ucLogger.ToggleVisibility();
+            //    //this.ucLogger.MaxWidth = this.Width;
+            //    this.ucLogger.ToggleVisibility();
+            //}
+            //else {
+            //    //this.ucLogger.MaxWidth = this.Width;
+            //}
+
+
+            //this.ucLogger.InvalidateVisual();
+            //this.ucLogger.InvalidateMeasure();
+            //this.ResizeOnNormal();
+        }
 
 
         #endregion
