@@ -13,8 +13,8 @@
         Style="{StaticResource MyWindowStyle}" 
         Title="BLE"
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.BluetoothClassic_W}}"
-        Loaded="Window_Loaded" Closing="Window_Closing" SizeChanged="Window_SizeChanged"
-        MinHeight="540" MinWidth="900" MaxHeight="1200">
+        Loaded="Window_Loaded" Closing="Window_Closing"
+        MinHeight="540" MinWidth="500" MaxHeight="1200">
 
     <!-- TODO - the CanResize creates a margin over the title bar
         ResizeMode="CanResize"
@@ -23,7 +23,7 @@
     
     -->
 
-    <Grid MinWidth="650">
+    <Grid>
         <Grid x:Name="gridWait" Panel.ZIndex="10000" Visibility="Collapsed" Margin="0" >
             <Grid.Background>
                 <!--  Prevent any control from getting input during spinner visibility -->
@@ -96,13 +96,13 @@
                 </TreeView>
             </Border>
             <!-- Send -->
-            <Border Grid.Row="1" Grid.Column="0" >
-                <BLEcontrols:UC_BLEWriteGeneral x:Name="writeControl" Margin=".5,0"/>
+            <Border Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" >
+                <BLEcontrols:UC_BLEWriteGeneral x:Name="writeControl" Margin=".5,0" HorizontalAlignment="Stretch"/>
             </Border>
             <!-- Log stuff -->
-            <Border Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Stretch" Padding="0" Margin="0,10,0,10">
-                <DockPanel VerticalAlignment="Bottom" Margin="0,0,0,-5">
-                    <DockPanel Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Border Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Stretch" Padding="0" Margin="0,10,0,10" >
+                <DockPanel VerticalAlignment="Bottom" Margin="0,0,0,-5" HorizontalAlignment="Stretch">
+                    <DockPanel Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch">
                         <StackPanel HorizontalAlignment="Center">
                             <DockPanel Margin="0">
                                 <Border x:Name="connectedOn" Style="{StaticResource brd075}" Padding="0" Height="15" Width="15" CornerRadius="7"
@@ -138,8 +138,8 @@
                 </DockPanel>
             </Border>
 
-            <Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
-                <controls:UC_Logging x:Name="ucLogger" Visibility="Visible" MaxHeight="300" HorizontalAlignment="Stretch"/>
+            <Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch">
+                <controls:UC_Logging x:Name="ucLogger" Visibility="Visible" MaxHeight="300" HorizontalAlignment="Center"/>
             </Border>
         </Grid>
     </Grid>

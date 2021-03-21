@@ -7,7 +7,7 @@
              xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
              Background="#fffffa" BorderThickness=".5" BorderBrush="#0277bd"
              mc:Ignorable="d" HorizontalAlignment="Stretch"
-             d:DesignHeight="350" d:DesignWidth="800">
+             d:DesignHeight="350" d:DesignWidth="500">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

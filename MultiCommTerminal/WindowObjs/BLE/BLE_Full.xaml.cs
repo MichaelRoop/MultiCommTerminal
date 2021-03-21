@@ -62,28 +62,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.buttonSizer.PrepForChange();
             this.timer = new DispatcherTimer(DispatcherPriority.Normal);
             this.timer.Interval = TimeSpan.FromMilliseconds(500);
-            //this.CenterToParent(this.parent);
-            // TODO - set the title on commands
-            //this.lblCmdDataTypeContent.Content = BLE_DataType.Reserved.ToStr();
-            //this.ucLogger.Collapse();
-            //this.ucCmds.Collapse();
-
-            this.treeServices.SizeChanged += TreeServices_SizeChanged;
-        }
-
-        private void TreeServices_SizeChanged(object sender, SizeChangedEventArgs e) {
-            //this.ucLogger.Width = this.Width;
-            //if (this.ucLogger.IsVisible) {
-            //    this.ucLogger.ToggleVisibility();
-            //    this.ucLogger.MaxWidth = this.Width;
-            //    this.ucLogger.ToggleVisibility();
-            //}
-            //else {
-            //    this.ucLogger.MaxWidth = this.Width;
-            //}
-            //this.ucLogger.InvalidateVisual();
-            //this.ucLogger.InvalidateMeasure();
-            this.ResizeOnNormal();
         }
 
 
@@ -106,7 +84,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.ucCmds.OnStartup();
             this.ucCmds.Collapse();
             this.SizeToContent = SizeToContent.WidthAndHeight;
-//            this.SizeToContent = SizeToContent.Manual;
             this.CenterToParent(this.parent);
         }
 
@@ -367,40 +344,23 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
 
         private void logger_OnMsgReceived(object sender, EventArgs e) {
-            if (this.ucLogger.IsVisible) {
-                //this.ResizeOnNormal();
-            }
+            // May not want to do this - causes it to continualy increase outiside
+            // of other controls being resized
+            //this.ResizeOnNormal();
         }
 
 
         private void ResizeOnNormal() {
             if (this.WindowState == WindowState.Normal) {
-                //this.ucLogger.Width = 100;
+                this.ucLogger.Invalidate();
+                this.ucCmds.Invalidate();
+                this.treeServices.Invalidate();
+                this.writeControl.Invalidate();
                 this.SizeToContent = SizeToContent.WidthAndHeight;
-                this.InvalidateVisual();
-//                this.SizeToContent = SizeToContent.Manual;
+                // TODO - look this up.
+                this.ucLogger.Width = this.Width;
             }
-            //this.ucLogger.MaxWidth = this.Width;
         }
-
-
-        private void Window_SizeChanged(object sender, SizeChangedEventArgs e) {
-            //this.ucLogger.Width = this.Width;
-            //if (this.ucLogger.IsVisible) {
-            //    this.ucLogger.ToggleVisibility();
-            //    //this.ucLogger.MaxWidth = this.Width;
-            //    this.ucLogger.ToggleVisibility();
-            //}
-            //else {
-            //    //this.ucLogger.MaxWidth = this.Width;
-            //}
-
-
-            //this.ucLogger.InvalidateVisual();
-            //this.ucLogger.InvalidateMeasure();
-            //this.ResizeOnNormal();
-        }
-
 
         #endregion
 
