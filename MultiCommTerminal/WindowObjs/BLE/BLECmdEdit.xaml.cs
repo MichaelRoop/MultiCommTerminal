@@ -98,9 +98,9 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.txtName.Text = this.cmdItem.Display;
             string cmdStr = cmdItem.Command;
 
-            UInt32 val = 0;
+            UInt64 val = 0;
             if (cmdStr.Length > 0) {
-                if (!UInt32.TryParse(cmdStr, out val)){
+                if (!UInt64.TryParse(cmdStr, out val)){
                     val = 0;
                 }
             }

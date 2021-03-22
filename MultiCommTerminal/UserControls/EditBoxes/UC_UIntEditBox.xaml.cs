@@ -20,7 +20,7 @@ namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
         }
 
 
-        protected override void DoSetValue(UInt32 value) {
+        protected override void DoSetValue(UInt64 value) {
             this.tbEdit.TextChanged -= this.tbEdit_TextChanged;
             int carretIndex = this.tbEdit.CaretIndex;
             this.tbEdit.Text = value.ToString();
@@ -67,7 +67,7 @@ namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
                     this.RaiseValueEmpty();
                 }
                 else {
-                    this.RaiseValueChanged(Convert.ToUInt32(this.tbEdit.Text));
+                    this.RaiseValueChanged(Convert.ToUInt64(this.tbEdit.Text));
                 }
             }
             catch (Exception ex) {

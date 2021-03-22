@@ -16,7 +16,7 @@ namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
 
         #region  IUintEditBox
 
-        public event EventHandler<UInt32> OnValueChanged;
+        public event EventHandler<UInt64> OnValueChanged;
         public event EventHandler OnValueEmpty;
 
         public UC_UintEditBoxBase() {
@@ -29,7 +29,7 @@ namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
         }
 
 
-        public bool SetValue(UInt32 value) {
+        public bool SetValue(UInt64 value) {
             if (this.validateFunc(value.ToString())) {
                 this.DoSetValue(value);
                 return true;
@@ -53,7 +53,7 @@ namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
 
         #region Abstract
 
-        protected abstract void DoSetValue(UInt32 value);
+        protected abstract void DoSetValue(UInt64 value);
         protected abstract void DoSetEmpty();
 
         #endregion
@@ -65,7 +65,7 @@ namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
             this.SetDependantsEmpty();
         }
 
-        protected void RaiseValueChanged(UInt32 value) {
+        protected void RaiseValueChanged(UInt64 value) {
             this.OnValueChanged?.Invoke(this, value);
             this.SetDependantsValue(value);
          }
@@ -86,7 +86,7 @@ namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
         }
 
 
-        protected void SetDependantsValue(UInt32 value) {
+        protected void SetDependantsValue(UInt64 value) {
             foreach (var d in this.dependants) {
                 d.SetValue(value);
             }

@@ -8,7 +8,7 @@ namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
     public interface IUintEditBox {
 
         /// <summary>Raised when the value is changed</summary>
-        event EventHandler<UInt32> OnValueChanged;
+        event EventHandler<UInt64> OnValueChanged;
 
         /// <summary>Raised when the value is empty (not zero)</summary>
         event EventHandler OnValueEmpty;
@@ -20,7 +20,7 @@ namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
         /// <summary>Set the value directly without raising an event</summary>
         /// <param name="value">The value to set</param>
         /// <returns>true if the value is valid and set to edit box, otherwise false</returns>
-        bool SetValue(UInt32 value);
+        bool SetValue(UInt64 value);
 
 
         void SetEmpty();

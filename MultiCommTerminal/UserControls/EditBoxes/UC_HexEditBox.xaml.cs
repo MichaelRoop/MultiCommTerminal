@@ -15,7 +15,7 @@ namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
             InitializeComponent();
         }
 
-        protected override void DoSetValue(UInt32 value) {
+        protected override void DoSetValue(UInt64 value) {
             this.tbEdit.TextChanged -= this.tbEdit_TextChanged;
             int carretIndex = this.tbEdit.CaretIndex;
             this.tbEdit.Text = value.ToString("X");
@@ -44,7 +44,7 @@ namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
                         string newVal = this.tbEdit.PreviewKeyDownAssembleText(add);
                         this.log.Info("", () => string.Format("'{0}'  '{1}'  '{2}'", this.tbEdit, add, newVal));
                         if (newVal.Length > 0) {
-                            this.ValidateRange(() => Convert.ToUInt32(newVal, 16).ToString(), args);
+                            this.ValidateRange(() => Convert.ToUInt64(newVal, 16).ToString(), args);
                         }
                     }
                 }
@@ -61,7 +61,7 @@ namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
                     this.RaiseValueEmpty();
                 }
                 else {
-                    this.RaiseValueChanged(Convert.ToUInt32(this.tbEdit.Text, 16));
+                    this.RaiseValueChanged(Convert.ToUInt64(this.tbEdit.Text, 16));
                 }
             }
             catch (Exception ex) {
