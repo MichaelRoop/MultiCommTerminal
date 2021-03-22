@@ -100,13 +100,14 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                     val = 0;
                 }
             }
-            this.edDecEdit.SetValue(val);
-            this.edBinEdit.SetValue(val);
-            this.edHexEdit.SetValue(val);
 
             this.edDecEdit.SetValidator(this.ValidateRangeFunc);
             this.edHexEdit.SetValidator(this.ValidateRangeFunc);
             this.edBinEdit.SetValidator(this.ValidateRangeFunc);
+
+            this.edDecEdit.SetValue(val);
+            this.edBinEdit.SetValue(val);
+            this.edHexEdit.SetValue(val);
 
             this.edDecEdit.RegisterDependant(this.edBinEdit);
             this.edDecEdit.RegisterDependant(this.edHexEdit);

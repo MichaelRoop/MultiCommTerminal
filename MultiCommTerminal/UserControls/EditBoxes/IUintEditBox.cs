@@ -19,7 +19,8 @@ namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
 
         /// <summary>Set the value directly without raising an event</summary>
         /// <param name="value">The value to set</param>
-        void SetValue(UInt32 value);
+        /// <returns>true if the value is valid and set to edit box, otherwise false</returns>
+        bool SetValue(UInt32 value);
 
 
         void SetEmpty();

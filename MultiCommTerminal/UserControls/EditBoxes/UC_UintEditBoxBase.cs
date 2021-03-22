@@ -27,8 +27,13 @@ namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
         }
 
 
-        public void SetValue(UInt32 value) {
-            this.DoSetValue(value);
+        public bool SetValue(UInt32 value) {
+            if (this.validateFunc(value.ToString())) {
+                this.DoSetValue(value);
+                return true;
+            }
+            this.DoSetEmpty();
+            return false;
         }
 
 
