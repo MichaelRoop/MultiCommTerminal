@@ -1,4 +1,6 @@
-﻿using LogUtils.Net;
+﻿using LanguageFactory.Net.data;
+using LogUtils.Net;
+using MultiCommTerminal.NetCore.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
@@ -11,7 +13,6 @@ namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
 
         private ClassLog log = new ClassLog("UC_UintEditBoxBase");
         private Func<string, bool> validateFunc = null;
-        private Action<string> errPostAction = null;
         private List<IUintEditBox> dependants = new List<IUintEditBox>();
 
         #region  IUintEditBox
@@ -21,7 +22,6 @@ namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
 
         public UC_UintEditBoxBase() {
             this.validateFunc = this.DummyValidator;
-            this.errPostAction = this.DummyErrReporter;
         }
 
         public void RegisterDependant(IUintEditBox editBox) {
@@ -44,9 +44,8 @@ namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
         }
 
 
-        public void SetValidator(Func<string, bool> func, Action<string> errReporter) {
+        public void SetValidator(Func<string, bool> func) {
             this.validateFunc = func;
-            this.errPostAction = errReporter;
         }
 
         #endregion
@@ -72,7 +71,7 @@ namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
 
         protected void PostError(string err) {
             try {
-                this.errPostAction.Invoke(err);
+                App.ShowMsg(err);
             }
             catch(Exception ex) {
                 this.log.Exception(9999, err, ex);
@@ -99,6 +98,11 @@ namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
                     args.Handled = true;
                 }
             }
+            catch (OverflowException ofex) {
+                args.Handled = true;
+                this.log.Exception(9999, "ValidateRange", "", ofex);
+                this.PostError(DI.Wrapper.GetText(MsgCode.InvalidInput));
+            }
             catch (Exception ex) {
                 args.Handled = true;
                 this.log.Exception(9999, "ValidateRange", "", ex);
@@ -113,10 +117,6 @@ namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
         private bool DummyValidator(string value) {
             return true;
         }
-
-        private void DummyErrReporter(string value) {
-        }
-
 
         #endregion
 

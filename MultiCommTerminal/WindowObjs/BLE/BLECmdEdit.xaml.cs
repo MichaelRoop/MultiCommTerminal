@@ -105,9 +105,9 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                 }
             }
 
-            this.edDecEdit.SetValidator(this.ValidateRangeFunc, App.ShowMsg);
-            this.edHexEdit.SetValidator(this.ValidateRangeFunc, App.ShowMsg);
-            this.edBinEdit.SetValidator(this.ValidateRangeFunc, App.ShowMsg);
+            this.edDecEdit.SetValidator(this.ValidateRangeFunc);
+            this.edHexEdit.SetValidator(this.ValidateRangeFunc);
+            this.edBinEdit.SetValidator(this.ValidateRangeFunc);
 
             this.edDecEdit.SetValue(val);
             this.edBinEdit.SetValue(val);

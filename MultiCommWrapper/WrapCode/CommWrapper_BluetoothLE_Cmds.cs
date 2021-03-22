@@ -109,6 +109,9 @@ namespace MultiCommWrapper.Net.WrapCode {
         public void ValidateBLEValue(BLE_DataType dataType, string command, Action onSuccess, OnErr onError) {
             ErrReport report;
             WrapErr.ToErrReport(out report, 9999, () => {
+                this.log.Info("", () => string.Format("Validate:{0} '{1}'", dataType.ToStr(), command));
+
+
                 RangeValidationResult result = this.bleRangeValidator.Validate(command, dataType);
                 if (result.Status == BLE_DataValidationStatus.Success) {
                     onSuccess.Invoke();
