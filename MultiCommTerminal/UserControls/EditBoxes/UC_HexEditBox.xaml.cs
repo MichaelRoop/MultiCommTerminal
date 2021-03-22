@@ -44,7 +44,7 @@ namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
                         string newVal = this.tbEdit.PreviewKeyDownAssembleText(add);
                         this.log.Info("", () => string.Format("'{0}'  '{1}'  '{2}'", this.tbEdit, add, newVal));
                         if (newVal.Length > 0) {
-                            this.ValidateRange(Convert.ToUInt32(newVal, 16).ToString(), args);
+                            this.ValidateRange(() => Convert.ToUInt32(newVal, 16).ToString(), args);
                         }
                     }
                 }

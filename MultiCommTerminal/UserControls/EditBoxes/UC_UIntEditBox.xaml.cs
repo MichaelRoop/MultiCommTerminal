@@ -49,7 +49,7 @@ namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
                         string newVal = this.tbEdit.PreviewKeyDownAssembleText(add);
                         this.log.Info("", () => string.Format("'{0}'  '{1}'  '{2}'", this.tbEdit, add, newVal));
                         if (newVal.Length > 0) {
-                            this.ValidateRange(newVal, args);
+                            this.ValidateRange(() => { return newVal; }, args);
                         }
                     }
                 }

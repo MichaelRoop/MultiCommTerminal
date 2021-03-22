@@ -33,6 +33,10 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.dataType = dataType;
             this.cmdItem = cmdItem;
             InitializeComponent();
+            if (this.dataType == BLE_DataType.UInt_32bit) {
+                this.grdValueCol.MinWidth = 320;
+            }
+
             DI.Wrapper.BLE_GetRangeDisplay(
                 this.dataType, str => this.txtRange.Content = str, this.onFailure);
             this.widthManager = new ButtonGroupSizeSyncManager(this.btnCancel, this.btnOk);
@@ -101,9 +105,9 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                 }
             }
 
-            this.edDecEdit.SetValidator(this.ValidateRangeFunc);
-            this.edHexEdit.SetValidator(this.ValidateRangeFunc);
-            this.edBinEdit.SetValidator(this.ValidateRangeFunc);
+            this.edDecEdit.SetValidator(this.ValidateRangeFunc, App.ShowMsg);
+            this.edHexEdit.SetValidator(this.ValidateRangeFunc, App.ShowMsg);
+            this.edBinEdit.SetValidator(this.ValidateRangeFunc, App.ShowMsg);
 
             this.edDecEdit.SetValue(val);
             this.edBinEdit.SetValue(val);

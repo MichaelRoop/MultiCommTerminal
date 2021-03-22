@@ -37,6 +37,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.lbDataTypes.Add(new BLETypeDisplay(BLE_DataType.Bool));
             this.lbDataTypes.Add(new BLETypeDisplay(BLE_DataType.UInt_8bit));
             this.lbDataTypes.Add(new BLETypeDisplay(BLE_DataType.UInt_16bit));
+            this.lbDataTypes.Add(new BLETypeDisplay(BLE_DataType.UInt_32bit));
             this.cbDataTypes.ItemsSource = this.lbDataTypes;
             this.cbDataTypes.SelectedIndex = 0;
             this.widthManager = new ButtonGroupSizeSyncManager(this.btnCancel, this.btnOk);

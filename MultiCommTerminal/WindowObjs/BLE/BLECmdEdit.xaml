@@ -24,7 +24,7 @@ KeyDown="Window_KeyDown"
         <Border BorderBrush="Blue" BorderThickness=".25">
             <StackPanel>
                 <StackPanel Grid.ColumnSpan="2" HorizontalAlignment="Center">
-                    <Grid Margin="10">
+                    <Grid Margin="10" Grid.IsSharedSizeScope="True">
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition />
@@ -34,8 +34,8 @@ KeyDown="Window_KeyDown"
                             <RowDefinition />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="auto" MinWidth="200" />
+                            <ColumnDefinition Width="auto" SharedSizeGroup="A"/>
+                            <ColumnDefinition Width="auto" SharedSizeGroup="B" x:Name="grdValueCol" MinWidth="175" />
                         </Grid.ColumnDefinitions>
 
                         <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" x:Name="txtRange" Margin="5"
@@ -43,7 +43,7 @@ KeyDown="Window_KeyDown"
 
                         <Label Grid.Row="1" Grid.Column="0" 
                                Content="{Binding Source={x:Static wpfHelper:TxtBinder.Name}}" Style="{StaticResource NameLabelLeft}" />
-                        <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtName" Style="{StaticResource TxtBoxRight}" />
+                        <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtName" Style="{StaticResource TxtBoxRight}" HorizontalAlignment="Stretch"/>
                         
                         <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" 
                                Content="{Binding Source={x:Static wpfHelper:TxtBinder.Command}}" Style="{StaticResource NameLabelCenter}" />

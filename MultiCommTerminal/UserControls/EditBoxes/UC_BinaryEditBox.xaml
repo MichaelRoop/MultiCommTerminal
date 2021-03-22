@@ -6,11 +6,11 @@
              xmlns:local="clr-namespace:MultiCommTerminal.NetCore.UserControls.EditBoxes"
              mc:Ignorable="d" 
              >
-    <Grid HorizontalAlignment="Left" VerticalAlignment="Stretch">
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <TextBox x:Name="tbEdit" Style="{StaticResource TxtBoxLeft}"  Margin="0"
+        <TextBox x:Name="tbEdit" Style="{StaticResource TxtBoxLeft}"  Margin="0" HorizontalAlignment="Stretch"
                  PreviewKeyDown="tbEdit_PreviewKeyDown" TextChanged="tbEdit_TextChanged" />
     </Grid>
 </local:UC_UintEditBoxBase>
