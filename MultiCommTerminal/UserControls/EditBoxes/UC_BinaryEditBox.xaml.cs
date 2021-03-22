@@ -8,22 +8,16 @@ using WpfHelperClasses.Core;
 namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
 
     /// <summary>Interaction logic for UC_BinaryEditBox.xaml</summary>
-    public partial class UC_BinaryEditBox : UserControl {
+    public partial class UC_BinaryEditBox : UC_UintEditBoxBase {
 
         private ClassLog log = new ClassLog("UC_BinaryEditBox");
-        private Func<string,bool> validateFunc = null;
 
-        /// <summary>Raised when the edit receives the event when data changed by user</summary>
-        public event EventHandler<UInt32> OnValueChanged;
-        public event EventHandler OnValueEmpty;
-
-
-        public UC_BinaryEditBox() {
+        public UC_BinaryEditBox() : base() {
             InitializeComponent();
-            this.validateFunc = this.DummyValidator;
         }
 
-        public void SetValue(UInt32 value) {
+
+        protected override void DoSetValue(UInt32 value) {
             this.tbEdit.TextChanged -= this.tbEdit_TextChanged;
             int carretIndex = this.tbEdit.CaretIndex;
             this.tbEdit.Text = value.ToFormatedBinaryString();
@@ -34,15 +28,10 @@ namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
         }
 
 
-        public void SetEmpty() {
+        protected override void DoSetEmpty() {
             this.tbEdit.TextChanged -= this.tbEdit_TextChanged;
             this.tbEdit.Text = "";
             this.tbEdit.TextChanged += this.tbEdit_TextChanged;
-        }
-
-
-        public void SetValidator(Func<string, bool> func) {
-            this.validateFunc = func;
         }
 
 
@@ -74,31 +63,18 @@ namespace MultiCommTerminal.NetCore.UserControls.EditBoxes {
             try {
                 this.log.Info("tbEdit_TextChanged", this.tbEdit.Text);
                 if (this.tbEdit.Text.Length == 0) {
-                    this.OnValueEmpty?.Invoke(this, new EventArgs());
+                    this.RaiseValueEmpty();
                 }
                 else {
                     UInt32 value = Convert.ToUInt32(this.tbEdit.Text.Replace(" ", ""), 2);
                     this.SetValue(value);
-                    this.OnValueChanged?.Invoke(this, value);
+                    this.RaiseValueChanged(value);
                 }
             }
             catch (Exception ex) {
                 this.log.Exception(9999, "", ex);
             }
         }
-
-
-        private void ValidateRange(string value, KeyEventArgs args) {
-            if (!this.validateFunc(value)) {
-                args.Handled = true;
-            }
-        }
-
-
-        private bool DummyValidator(string value) {
-            return true;
-        }
-
 
     }
 }

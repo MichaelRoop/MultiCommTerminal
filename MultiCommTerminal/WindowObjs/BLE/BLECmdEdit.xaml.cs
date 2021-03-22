@@ -57,13 +57,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             if (this.widthManager != null) {
                 this.widthManager.Teardown();
             }
-            this.edDecEdit.OnValueChanged -= this.onDecValueChanged;
-            this.edHexEdit.OnValueChanged -= this.onHexValueChanged;
-            this.edBinEdit.OnValueChanged -= this.onBinaryValueChanged;
-
-            this.edDecEdit.OnValueEmpty -= this.onDecValueEmpty;
-            this.edHexEdit.OnValueEmpty -= this.onHexValueEmpty;
-            this.edBinEdit.OnValueEmpty -= this.onBinaryValueEmpty;
         }
 
         #endregion
@@ -115,13 +108,14 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             this.edHexEdit.SetValidator(this.ValidateRangeFunc);
             this.edBinEdit.SetValidator(this.ValidateRangeFunc);
 
-            this.edDecEdit.OnValueChanged += this.onDecValueChanged;
-            this.edHexEdit.OnValueChanged += this.onHexValueChanged;
-            this.edBinEdit.OnValueChanged += this.onBinaryValueChanged;
+            this.edDecEdit.RegisterDependant(this.edBinEdit);
+            this.edDecEdit.RegisterDependant(this.edHexEdit);
 
-            this.edDecEdit.OnValueEmpty += this.onDecValueEmpty;
-            this.edHexEdit.OnValueEmpty += this.onHexValueEmpty;
-            this.edBinEdit.OnValueEmpty += this.onBinaryValueEmpty;
+            this.edHexEdit.RegisterDependant(this.edDecEdit);
+            this.edHexEdit.RegisterDependant(this.edBinEdit);
+
+            this.edBinEdit.RegisterDependant(this.edDecEdit);
+            this.edBinEdit.RegisterDependant(this.edHexEdit);
         }
 
 
@@ -143,40 +137,6 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                     result = false;
                 });
             return result;
-        }
-
-        #endregion
-
-        #region Custom EditBox events
-
-        private void onDecValueEmpty(object sender, EventArgs e) {
-            this.edHexEdit.SetEmpty();
-            this.edBinEdit.SetEmpty();
-        }
-
-        private void onHexValueEmpty(object sender, EventArgs e) {
-            this.edDecEdit.SetEmpty();
-            this.edBinEdit.SetEmpty();
-        }
-
-        private void onBinaryValueEmpty(object sender, EventArgs e) {
-            this.edDecEdit.SetEmpty();
-            this.edHexEdit.SetEmpty();
-        }
-
-        private void onDecValueChanged(object sender, uint value) {
-            this.edHexEdit.SetValue(value);
-            this.edBinEdit.SetValue(value);
-        }
-
-        private void onHexValueChanged(object sender, uint value) {
-            this.edDecEdit.SetValue(value);
-            this.edBinEdit.SetValue(value);
-        }
-
-        private void onBinaryValueChanged(object sender, uint value) {
-            this.edDecEdit.SetValue(value);
-            this.edHexEdit.SetValue(value);
         }
 
         #endregion
