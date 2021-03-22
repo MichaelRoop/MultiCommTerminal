@@ -349,6 +349,8 @@ namespace MultiCommWrapper.Net.interfaces {
 
         void BLE_GetRangeDisplay(BLE_DataType dataType, Action<string> onSuccess, OnErr onError);
 
+        void BLE_GetShortRangeDisplay(BLE_DataType dataType, Action<string> onSuccess, OnErr onError);
+
         void Translate(BluetoothLEDeviceInfo device);
 
         void Translate(BLE_CharacteristicDataModel device);

@@ -37,7 +37,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                 this.grdValueCol.MinWidth = 320;
             }
 
-            DI.Wrapper.BLE_GetRangeDisplay(
+            DI.Wrapper.BLE_GetShortRangeDisplay(
                 this.dataType, str => this.txtRange.Content = str, this.onFailure);
             this.widthManager = new ButtonGroupSizeSyncManager(this.btnCancel, this.btnOk);
             this.widthManager.PrepForChange();

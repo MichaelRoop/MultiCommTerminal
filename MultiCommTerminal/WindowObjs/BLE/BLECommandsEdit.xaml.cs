@@ -144,7 +144,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             if (this.copy != null) {
                 this.txtName.Text = this.copy.Display;
                 this.lbxCmds.ItemsSource = copy.Items;
-                this.txtDataType.Content = this.copy.DataType.ToStr();
+                this.lbDataType.Content = string.Format("{0} : {1}", 
+                    DI.Wrapper.GetText(MsgCode.DataType), this.copy.DataType.ToStr());
             }
         }
 
