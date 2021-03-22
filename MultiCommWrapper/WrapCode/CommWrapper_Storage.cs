@@ -361,6 +361,7 @@ namespace MultiCommWrapper.Net.WrapCode {
                 this.CreateBLEDemoCmdsBool(() => { }, err => { });
                 this.CreateBLEDemoCmdsUint8(() => { }, err => { });
                 this.CreateBLEDemoCmdsUint16(() => { }, err => { });
+                this.CreateBLEDemoCmdsUint32(() => { }, err => { });
             }
         }
 

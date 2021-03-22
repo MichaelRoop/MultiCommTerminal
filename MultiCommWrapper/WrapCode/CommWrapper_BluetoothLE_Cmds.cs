@@ -143,7 +143,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         public void CreateBLEDemoCmdsUint8(Action onSuccess, OnErr onError) {
             ErrReport report;
-            WrapErr.ToErrReport(out report, 9999, "Failure on CreateBLEBoolDemoCmds", () => {
+            WrapErr.ToErrReport(out report, 9999, "Failure on CreateBLEUInt8DemoCmds", () => {
                 List<ScriptItem> items = new List<ScriptItem>();
                 this.AddCmd(items, "ALL OFF", "0");
                 this.AddCmd(items, "ALL ON", 0xFF.ToString());
@@ -155,12 +155,24 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         public void CreateBLEDemoCmdsUint16(Action onSuccess, OnErr onError) {
             ErrReport report;
-            WrapErr.ToErrReport(out report, 9999, "Failure on CreateBLEBoolDemoCmds", () => {
+            WrapErr.ToErrReport(out report, 9999, "Failure on CreateBLEUInt16DemoCmds", () => {
                 List<ScriptItem> items = new List<ScriptItem>();
                 this.AddCmd(items, "ALL OFF", "0");
                 this.AddCmd(items, "ALL ON", 0xFFFF.ToString());
                 this.AddCmd(items, "0,15 BITS ON", "32769");
                 this.CreateBLECmds("Demo Uint16 Commands", BLE_DataType.UInt_16bit, items, onSuccess, onError);
+            });
+        }
+
+
+        public void CreateBLEDemoCmdsUint32(Action onSuccess, OnErr onError) {
+            ErrReport report;
+            WrapErr.ToErrReport(out report, 9999, "Failure on CreateBLEUInt32DemoCmds", () => {
+                List<ScriptItem> items = new List<ScriptItem>();
+                this.AddCmd(items, "ALL OFF", "0");
+                this.AddCmd(items, "ALL ON", 0xFFFFFFFF.ToString());
+                this.AddCmd(items, "First and last 8 bits ON", 0xFF0000FF.ToString());
+                this.CreateBLECmds("Demo Uint32 Commands", BLE_DataType.UInt_32bit, items, onSuccess, onError);
             });
         }
 
