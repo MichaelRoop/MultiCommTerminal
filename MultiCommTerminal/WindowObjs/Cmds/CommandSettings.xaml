@@ -8,6 +8,7 @@
         xmlns:controls="clr-namespace:MultiCommTerminal.NetCore.UserControls"
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
         xmlns:buttons="clr-namespace:WpfCustomControlLib.Core.Buttons;assembly=WpfCustomControlLib.Core"
+        xmlns:UC_Custom="clr-namespace:WpfUserControlLib;assembly=WpfUserControlLib"
         Style="{StaticResource MyWindowStyle}"
         WindowStartupLocation="CenterScreen" 
         Title="{Binding Source={x:Static wpfHelper:TxtBinder.Commands}}"
@@ -21,7 +22,7 @@
                 <!--  Prevent any control from getting input during spinner visibility -->
                 <SolidColorBrush Color="AntiqueWhite" Opacity=".1"/>
             </Grid.Background>
-            <controls:UC_BusySpinner />
+            <UC_Custom:UC_BusySpinner />
         </Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
             <buttons:UC_IconButton x:Name="btnCmdsHc05" Style="{StaticResource TextIconButton}"

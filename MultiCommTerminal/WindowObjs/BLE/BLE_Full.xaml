@@ -10,6 +10,7 @@
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
         xmlns:dataModels="clr-namespace:BluetoothLE.Net.DataModels;assembly=BluetoothLE.Net"
         xmlns:buttons="clr-namespace:WpfCustomControlLib.Core.Buttons;assembly=WpfCustomControlLib.Core"
+        xmlns:UC_Custom="clr-namespace:WpfUserControlLib;assembly=WpfUserControlLib"
         WindowStartupLocation="CenterScreen" 
         Style="{StaticResource MyWindowStyle}" 
         Title="BLE"
@@ -32,7 +33,7 @@
             </Grid.Background>
             <!--Image spinner no longer showing-->
             <!--<controls:UC_BusyImageSpinner />-->
-            <controls:UC_BusySpinner />
+            <UC_Custom:UC_BusySpinner />
         </Grid>
         
         <Grid>
