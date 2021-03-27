@@ -8,6 +8,7 @@
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
         xmlns:syntaxBox="clr-namespace:Alsing.SourceCode;assembly=Alsing.SyntaxBox" 
         xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        xmlns:buttons="clr-namespace:WpfCustomControlLib.Core.Buttons;assembly=WpfCustomControlLib.Core"
     WindowStartupLocation="Manual" 
         mc:Ignorable="d"
         Title="" 
@@ -31,12 +32,12 @@
             </WindowsFormsHost>-->
 
             <DockPanel Margin="5" Height="70" HorizontalAlignment="Center">
-                <controls:UC_IconButton x:Name="btnExit" Margin="5" HorizontalAlignment="Center"
+                <buttons:UC_IconButton x:Name="btnExit" Margin="5" HorizontalAlignment="Center"
                     Style="{StaticResource TextIconButton}" 
                     Content="{Binding Source={x:Static wpfHelper:TxtBinder.Exit}}" 
                     IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Exit}}"
                     Click="btnExit_Click"/>
-                <controls:UC_IconButton x:Name="btnCopy" Margin="5" HorizontalAlignment="Center"
+                <buttons:UC_IconButton x:Name="btnCopy" Margin="5" HorizontalAlignment="Center"
                     Style="{StaticResource TextIconButton}" 
                     Content="{Binding Source={x:Static wpfHelper:TxtBinder.Copy}}" 
                     IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Add}}"

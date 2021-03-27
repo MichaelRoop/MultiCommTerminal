@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:MultiCommTerminal.NetCore.WindowObjs.BLE"
         xmlns:controls="clr-namespace:MultiCommTerminal.NetCore.UserControls"
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
+        xmlns:buttons="clr-namespace:WpfCustomControlLib.Core.Buttons;assembly=WpfCustomControlLib.Core"
         mc:Ignorable="d"
         Style="{StaticResource MyWindowStyle}"
         Title="{Binding Source={x:Static wpfHelper:TxtBinder.Commands}}" 
@@ -56,25 +57,25 @@
                             </ListBox.ItemTemplate>
                         </ListBox>
                         <StackPanel x:Name="stPanelSideButtons" Margin="0,10,10,0" VerticalAlignment="Top">
-                            <controls:UC_RoundIconButton x:Name="btnAdd"  Style="{StaticResource IconButton}" Width="40" Height="40"
+                            <buttons:UC_RoundIconButton x:Name="btnAdd"  Style="{StaticResource IconButton}" Width="40" Height="40"
                                 IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Add}}"  Margin="0,5" VerticalAlignment="Top"
                                 Click="btnAdd_Click" />
                             <StackPanel x:Name="spEditButtons" VerticalAlignment="Top">
-                                <controls:UC_RoundIconButton x:Name="btnEdit"  Style="{StaticResource IconButton}" Width="35" Height="35"
+                                <buttons:UC_RoundIconButton x:Name="btnEdit"  Style="{StaticResource IconButton}" Width="35" Height="35"
                                     IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Edit}}"  Margin="0,5"
                                     Click="btnEdit_Click" />
-                                <controls:UC_RoundIconButton x:Name="btnDelete"  Style="{StaticResource IconButton}" Width="45" Height="45" Margin="0,5"
+                                <buttons:UC_RoundIconButton x:Name="btnDelete"  Style="{StaticResource IconButton}" Width="45" Height="45" Margin="0,5"
                                     IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Delete}}" 
                                     Click="btnDelete_Click" />
                             </StackPanel>
                         </StackPanel>
                     </DockPanel>
                     <DockPanel HorizontalAlignment="Center" Margin="0,0,0,10">
-                        <controls:UC_IconButton x:Name="btnCancel" Margin="5" Style="{StaticResource TextIconButton}" 
+                        <buttons:UC_IconButton x:Name="btnCancel" Margin="5" Style="{StaticResource TextIconButton}" 
                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Cancel}}"
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}"
                             Click="btnCancel_Click" />
-                        <controls:UC_IconButton x:Name="btnOk" Margin="5" Style="{StaticResource TextIconButton}" 
+                        <buttons:UC_IconButton x:Name="btnOk" Margin="5" Style="{StaticResource TextIconButton}" 
                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.OK}}"
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Save}}"
                             Click="btnOk_Click" />

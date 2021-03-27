@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MultiCommTerminal.NetCore.UserControls"
+             xmlns:buttons="clr-namespace:WpfCustomControlLib.Core.Buttons;assembly=WpfCustomControlLib.Core"
              xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
              mc:Ignorable="d" Background="#fffffa"
              MaxWidth="650"
@@ -73,7 +74,7 @@
 
             <Border Style="{StaticResource brd075}">
                 <DockPanel >
-                    <local:UC_IconButton x:Name="btnSend" Style="{StaticResource TextIconButton}" Visibility="Visible"
+                    <buttons:UC_IconButton x:Name="btnSend" Style="{StaticResource TextIconButton}" Visibility="Visible"
                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Send}}" 
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Send}}"                                                                                            
                             Background="Transparent" Click="btnSend_Click" />
@@ -106,29 +107,29 @@
                                         Background="LightGray" BorderThickness="2" Margin="5,0" />
 
                                 <!-- Column 1 -->
-                                <local:UC_IconButton Grid.Row="0" Grid.Column="1" x:Name="btnConnect" Style="{StaticResource TextIconButton}" 
+                                <buttons:UC_IconButton Grid.Row="0" Grid.Column="1" x:Name="btnConnect" Style="{StaticResource TextIconButton}" 
                                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Connect}}" Margin="0,0,10,0"
                                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Connect}}"                                                                                            
                                             Background="Transparent" Click="btnConnect_Click" />
-                                <local:UC_IconButton Grid.Row="0" Grid.Column="1" x:Name="btnDisconnect" Style="{StaticResource TextIconButton}" Visibility="Collapsed"
+                                <buttons:UC_IconButton Grid.Row="0" Grid.Column="1" x:Name="btnDisconnect" Style="{StaticResource TextIconButton}" Visibility="Collapsed"
                                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Disconnect}}" HorizontalAlignment="Right"
                                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}" Margin="0,0,10,0"                                                                                           
                                             Background="Transparent" Click="btnDisconnect_Click"  />
-                                <local:UC_IconButton Grid.Row="1" Grid.Column="1"  x:Name="btnExit" Click="btnExit_Click" IconMargin="7"
+                                <buttons:UC_IconButton Grid.Row="1" Grid.Column="1"  x:Name="btnExit" Click="btnExit_Click" IconMargin="7"
                                         Style="{StaticResource TextIconButton}" Margin="0,0,10,0"
                                         Content="{Binding Source={x:Static wpfHelper:TxtBinder.Exit}}"
                                         IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Exit}}"/>
 
                                 <!-- Column 2 -->
                                 <DockPanel Grid.Row="0" Grid.Column="2"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8">
-                                    <local:UC_RoundIconButton x:Name="btnInfo" Click="btnInfo_Click" 
+                                    <buttons:UC_RoundIconButton x:Name="btnInfo" Click="btnInfo_Click" 
                                             Style="{StaticResource IconButton}" Margin="2,0" Width="32" Height="32"
                                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Help}}"/>
-                                    <local:UC_RoundIconButton x:Name="btnSettings" Click="btnSettings_Click" 
+                                    <buttons:UC_RoundIconButton x:Name="btnSettings" Click="btnSettings_Click" 
                                             Style="{StaticResource IconButton}" Margin="10,0,2,-2" Width="30" Height="30"
                                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Settings}}"/>
                                 </DockPanel>
-                                <local:UC_IconButton Grid.Row="1" Grid.Column="2" x:Name="btnLog" Click="btnLog_Click" 
+                                <buttons:UC_IconButton Grid.Row="1" Grid.Column="2" x:Name="btnLog" Click="btnLog_Click" 
                                         Style="{StaticResource TextIconButton}" Margin="0"
                                         Content="{Binding Source={x:Static wpfHelper:TxtBinder.LogText}}"
                                         IconSource="{Binding Source={x:Static wpfHelper:IconBinder.LogIcon}}"/>
@@ -139,11 +140,11 @@
             <Border x:Name="logSection">
                 <StackPanel>
                     <DockPanel HorizontalAlignment="Center" Visibility="Visible">
-                        <local:UC_IconButton x:Name="btnCopyLog" Click="btnCopyLog_Click" 
+                        <buttons:UC_IconButton x:Name="btnCopyLog" Click="btnCopyLog_Click" 
                                     Style="{StaticResource TextIconButton}" Margin="5,8"
                                     Content="{Binding Source={x:Static wpfHelper:TxtBinder.Copy}}"
                                     IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Add}}"/>
-                        <local:UC_IconButton x:Name="btnClearLog" Click="btnClearLog_Click" 
+                        <buttons:UC_IconButton x:Name="btnClearLog" Click="btnClearLog_Click" 
                                     Style="{StaticResource TextIconButton}" Margin="5,8"
                                     Content="{Binding Source={x:Static wpfHelper:TxtBinder.Clear}}"
                                     IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Delete}}"/>

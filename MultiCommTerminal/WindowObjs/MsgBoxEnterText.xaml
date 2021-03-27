@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MultiCommTerminal.NetCore.WindowObjs"
+        xmlns:buttons="clr-namespace:WpfCustomControlLib.Core.Buttons;assembly=WpfCustomControlLib.Core"
         mc:Ignorable="d"
         xmlns:controls="clr-namespace:MultiCommTerminal.NetCore.UserControls"
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
@@ -18,11 +19,11 @@
             <TextBox x:Name="txtInput" HorizontalAlignment="Center" FontSize="16" Text="" MinWidth="130" Margin="0,10,0,0"/>
 
             <DockPanel HorizontalAlignment="Center" Margin="10">
-                <controls:UC_IconButton x:Name="btnOk" Style="{StaticResource TextIconButton}" Margin="5" 
+                <buttons:UC_IconButton x:Name="btnOk" Style="{StaticResource TextIconButton}" Margin="5" 
                     Content="{Binding Source={x:Static wpfHelper:TxtBinder.OK}}"
                     IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Save}}" 
                     Click="btnOk_Click" />
-                <controls:UC_IconButton x:Name="btnCancel" Style="{StaticResource TextIconButton}" Margin="5" 
+                <buttons:UC_IconButton x:Name="btnCancel" Style="{StaticResource TextIconButton}" Margin="5" 
                     Content="{Binding Source={x:Static wpfHelper:TxtBinder.Cancel}}"
                     IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}" 
                     Click="btnCancel_Click" />

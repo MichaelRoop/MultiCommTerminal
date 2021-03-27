@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         xmlns:controls="clr-namespace:MultiCommTerminal.NetCore.UserControls"
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
+        xmlns:buttons="clr-namespace:WpfCustomControlLib.Core.Buttons;assembly=WpfCustomControlLib.Core"
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.USBPort_W}}"
         Style="{StaticResource MyWindowStyle}" Title="" 
         WindowStartupLocation="Manual" 
@@ -95,11 +96,11 @@
                          PreviewTextInput="txtWriteTimeout_PreviewTextInput"  />
             </Grid>
             <DockPanel HorizontalAlignment="Center" Margin="10">
-                <controls:UC_IconButton x:Name="btnOk" Style="{StaticResource TextIconButton}" Margin="5" 
+                <buttons:UC_IconButton x:Name="btnOk" Style="{StaticResource TextIconButton}" Margin="5" 
                     Content="{Binding Source={x:Static wpfHelper:TxtBinder.OK}}"
                     IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Save}}" 
                     Click="btnOk_Click" />
-                <controls:UC_IconButton x:Name="btnCancel" Style="{StaticResource TextIconButton}" Margin="5" 
+                <buttons:UC_IconButton x:Name="btnCancel" Style="{StaticResource TextIconButton}" Margin="5" 
                     Content="{Binding Source={x:Static wpfHelper:TxtBinder.Cancel}}"
                     IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}" 
                     Click="btnCancel_Click" />

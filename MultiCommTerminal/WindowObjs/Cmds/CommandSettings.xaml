@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         xmlns:controls="clr-namespace:MultiCommTerminal.NetCore.UserControls"
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
+        xmlns:buttons="clr-namespace:WpfCustomControlLib.Core.Buttons;assembly=WpfCustomControlLib.Core"
         Style="{StaticResource MyWindowStyle}"
         WindowStartupLocation="CenterScreen" 
         Title="{Binding Source={x:Static wpfHelper:TxtBinder.Commands}}"
@@ -23,11 +24,11 @@
             <controls:UC_BusySpinner />
         </Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
-            <controls:UC_IconButton x:Name="btnCmdsHc05" Style="{StaticResource TextIconButton}"
+            <buttons:UC_IconButton x:Name="btnCmdsHc05" Style="{StaticResource TextIconButton}"
                     Content="{Binding Source={x:Static wpfHelper:TxtBinder.Commands}}" Margin="5"
                     IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Command}}"                                                                                            
                     Background="Transparent" Click="btnCmdsHc05_Click" />
-            <controls:UC_IconButton x:Name="btnExit" Style="{StaticResource TextIconButton}"
+            <buttons:UC_IconButton x:Name="btnExit" Style="{StaticResource TextIconButton}"
                     Content="{Binding Source={x:Static wpfHelper:TxtBinder.Exit}}" Margin="5,25,5,5"
                     IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Exit}}"                                                                                            
                     Background="Transparent" Click="btnExit_Click" />

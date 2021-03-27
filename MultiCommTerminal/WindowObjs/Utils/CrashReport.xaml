@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MultiCommTerminal.NetCore.WindowObjs.Utils"
-        xmlns:controls="clr-namespace:MultiCommTerminal.NetCore.UserControls"
+        xmlns:controls="clr-namespace:WpfCustomControlLib.Core.Buttons;assembly=WpfCustomControlLib.Core"
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
         WindowStartupLocation="Manual" 
         mc:Ignorable="d"

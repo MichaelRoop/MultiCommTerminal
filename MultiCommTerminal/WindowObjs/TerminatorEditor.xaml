@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         xmlns:controls="clr-namespace:MultiCommTerminal.NetCore.UserControls"
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
+        xmlns:buttons="clr-namespace:WpfCustomControlLib.Core.Buttons;assembly=WpfCustomControlLib.Core"
         Style="{StaticResource MyWindowStyle}"
         Title="{Binding Source={x:Static wpfHelper:TxtBinder.Terminators}}" 
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.Terminator_W}}"
@@ -58,17 +59,17 @@
             <DockPanel Margin="10">
                 <controls:UC_TerminatorEdit x:Name="tEditor" BorderThickness=".25" HorizontalAlignment="Center" />
                 <Label Content="&#x2b84;" VerticalAlignment="Center" FontSize="20" Margin="5,0,-5,0" HorizontalContentAlignment="Right"/>
-                <controls:UC_RoundIconButton x:Name="btnDelete"  Style="{StaticResource IconButton}" Width="40" Height="40"
+                <buttons:UC_RoundIconButton x:Name="btnDelete"  Style="{StaticResource IconButton}" Width="40" Height="40"
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Delete}}" 
                             Click="btnDelete_Click" HorizontalAlignment="Right" />
             </DockPanel>
             <DockPanel HorizontalAlignment="Center" Margin="10,5,10,15">
-                <controls:UC_IconButton x:Name="btnCancel"  Margin="0,0,10,0"
+                <buttons:UC_IconButton x:Name="btnCancel"  Margin="0,0,10,0"
                             Style="{StaticResource TextIconButton}" 
                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Cancel}}" 
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}"
                             Click="btnCancel_Click"/>
-                <controls:UC_IconButton x:Name="btnSave"  Margin="0,0,10,0"
+                <buttons:UC_IconButton x:Name="btnSave"  Margin="0,0,10,0"
                             Style="{StaticResource TextIconButton}" 
                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Save}}" 
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Save}}"

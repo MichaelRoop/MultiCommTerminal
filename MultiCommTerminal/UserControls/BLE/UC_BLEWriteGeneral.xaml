@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MultiCommTerminal.NetCore.UserControls.BLE"
-             xmlns:UC="clr-namespace:MultiCommTerminal.NetCore.UserControls"
+             xmlns:buttons="clr-namespace:WpfCustomControlLib.Core.Buttons;assembly=WpfCustomControlLib.Core"
              mc:Ignorable="d" 
              xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
              Background="#fffffa"
@@ -62,11 +62,11 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>                
-                <UC:UC_IconButton Grid.Column="0" x:Name="btnRead" Style="{StaticResource TextIconButton}" Visibility="Visible" HorizontalAlignment="Right"
+                <buttons:UC_IconButton Grid.Column="0" x:Name="btnRead" Style="{StaticResource TextIconButton}" Visibility="Visible" HorizontalAlignment="Right"
                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Read}}" Margin="5,0"
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Read}}"                                                                                            
                             Background="Transparent" Click="btnRead_Click" />
-                <UC:UC_IconButton Grid.Column="1" x:Name="btnSend" Style="{StaticResource TextIconButton}" Visibility="Visible" Margin="5,0,10,0"
+                <buttons:UC_IconButton Grid.Column="1" x:Name="btnSend" Style="{StaticResource TextIconButton}" Visibility="Visible" Margin="5,0,10,0"
                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Write}}" 
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Send}}"                                                                                            
                             Background="Transparent" Click="btnSend_Click" />

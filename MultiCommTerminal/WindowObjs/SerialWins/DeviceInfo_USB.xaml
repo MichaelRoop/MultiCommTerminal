@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:MultiCommTerminal.NetCore.WindowObjs.SerialWins"
         xmlns:controls="clr-namespace:MultiCommTerminal.NetCore.UserControls"
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
+        xmlns:buttons="clr-namespace:WpfCustomControlLib.Core.Buttons;assembly=WpfCustomControlLib.Core"
         Style="{StaticResource MyWindowStyle}"
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.USBPort_W}}"
         WindowStartupLocation="Manual" 
@@ -35,7 +36,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-                <controls:UC_RoundIconButton x:Name="btnEdit"  
+                <buttons:UC_RoundIconButton x:Name="btnEdit"  
                             Style="{StaticResource IconButton}" Visibility="Collapsed"
                             Margin="5,0" VerticalAlignment="Center"  Width="35" Height="35"
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Edit}}"  
@@ -43,7 +44,7 @@
 
             </DockPanel>
             <DockPanel HorizontalAlignment="Center" Margin="10,5,10,15">
-                <controls:UC_IconButton x:Name="btnExit"
+                <buttons:UC_IconButton x:Name="btnExit"
                             Style="{StaticResource TextIconButton}" 
                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Exit}}" 
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Exit}}"

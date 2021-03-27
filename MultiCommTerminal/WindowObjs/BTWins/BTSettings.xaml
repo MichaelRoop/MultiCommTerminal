@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MultiCommTerminal.NetCore.WindowObjs.BTWins"
+        xmlns:buttons="clr-namespace:WpfCustomControlLib.Core.Buttons;assembly=WpfCustomControlLib.Core"
         mc:Ignorable="d"
         xmlns:controls="clr-namespace:MultiCommTerminal.NetCore.UserControls"
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
@@ -23,15 +24,15 @@
             <controls:UC_BusySpinner />
         </Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
-            <controls:UC_IconButton x:Name="btnPair" Style="{StaticResource TextIconButton}"
+            <buttons:UC_IconButton x:Name="btnPair" Style="{StaticResource TextIconButton}"
                     Content="{Binding Source={x:Static wpfHelper:TxtBinder.Pair}}" Margin="5"
                     IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Pair}}"                                                                                            
                     Background="Transparent" Click="btnPair_Click" />
-            <controls:UC_IconButton x:Name="btnUnpair" Style="{StaticResource TextIconButton}"
+            <buttons:UC_IconButton x:Name="btnUnpair" Style="{StaticResource TextIconButton}"
                     Content="{Binding Source={x:Static wpfHelper:TxtBinder.UnPair}}" Margin="5"
                     IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Unpair}}"                                                                                            
                     Background="Transparent" Click="btnUnpair_Click" />
-            <controls:UC_IconButton x:Name="btnExit" Style="{StaticResource TextIconButton}"
+            <buttons:UC_IconButton x:Name="btnExit" Style="{StaticResource TextIconButton}"
                     Content="{Binding Source={x:Static wpfHelper:TxtBinder.Exit}}" Margin="5,25,5,5"
                     IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Exit}}"                                                                                            
                     Background="Transparent" Click="btnExit_Click" />

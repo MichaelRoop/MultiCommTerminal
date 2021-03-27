@@ -7,6 +7,7 @@
         xmlns:dataModels="clr-namespace:BluetoothLE.Net.DataModels;assembly=BluetoothLE.Net"
         xmlns:controls="clr-namespace:MultiCommTerminal.NetCore.UserControls"
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
+        xmlns:buttons="clr-namespace:WpfCustomControlLib.Core.Buttons;assembly=WpfCustomControlLib.Core"
         Icon="{Binding Source={x:Static wpfHelper:IconBinder.ServicesWhite}}"
         WindowStartupLocation="Manual" 
         Title="{Binding Source={x:Static wpfHelper:TxtBinder.Services}}" 
@@ -73,7 +74,7 @@
             </Border>
             <Border x:Name="borderMainButtons" HorizontalAlignment="Center" Margin="10">
                 <DockPanel HorizontalAlignment="Center">
-                    <controls:UC_IconButton x:Name="btnExit" Margin="5"
+                    <buttons:UC_IconButton x:Name="btnExit" Margin="5"
                             Style="{StaticResource TextIconButton}" 
                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Exit}}" 
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Exit}}"

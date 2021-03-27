@@ -7,6 +7,7 @@
         xmlns:UC_EditBoxes="clr-namespace:MultiCommTerminal.NetCore.UserControls.EditBoxes"
         xmlns:controls="clr-namespace:MultiCommTerminal.NetCore.UserControls"
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
+        xmlns:buttons="clr-namespace:WpfCustomControlLib.Core.Buttons;assembly=WpfCustomControlLib.Core"
         mc:Ignorable="d"
         Style="{StaticResource MyWindowStyle}"
         Title="{Binding Source={x:Static wpfHelper:TxtBinder.Edit}}" 
@@ -59,11 +60,11 @@ KeyDown="Window_KeyDown"
 
                     </Grid>
                     <DockPanel HorizontalAlignment="Center" Margin="0,0,0,10">
-                        <controls:UC_IconButton x:Name="btnCancel" Margin="5" Style="{StaticResource TextIconButton}" 
+                        <buttons:UC_IconButton x:Name="btnCancel" Margin="5" Style="{StaticResource TextIconButton}" 
                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.Cancel}}"
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Cancel}}"
                             Click="btnCancel_Click" />
-                        <controls:UC_IconButton x:Name="btnOk" Margin="5" Style="{StaticResource TextIconButton}" 
+                        <buttons:UC_IconButton x:Name="btnOk" Margin="5" Style="{StaticResource TextIconButton}" 
                             Content="{Binding Source={x:Static wpfHelper:TxtBinder.OK}}"
                             IconSource="{Binding Source={x:Static wpfHelper:IconBinder.Save}}"
                             Click="btnOk_Click" />

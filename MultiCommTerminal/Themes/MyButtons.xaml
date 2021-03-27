@@ -5,7 +5,7 @@
 	>
 
     <!-- Button with rounded corners -->
-    <Style x:Key="RoundEdgeButton" TargetType="{x:Type Button}">
+    <!--<Style x:Key="RoundEdgeButton" TargetType="{x:Type Button}">
         <Setter Property="Width" Value="85"/>
         <Setter Property="Height" Value="35"/>
         <Setter Property="Foreground" Value="#004c8c"/>
@@ -18,14 +18,14 @@
                             VerticalAlignment="Center" HorizontalAlignment="Center" TextTrimming="CharacterEllipsis" />
                     </Border>
                     <ControlTemplate.Triggers>
-                        <!-- Useful when using a mouse. Set general opacity -->
+                        --><!-- Useful when using a mouse. Set general opacity --><!--
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Opacity" Value=".5" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="False">
                             <Setter Property="Opacity" Value="1" />
                         </Trigger>
-                        <!-- Useful when just doing touch screen. Note: must set different properties than IsMouseOver -->
+                        --><!-- Useful when just doing touch screen. Note: must set different properties than IsMouseOver --><!--
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="buttonBorder" Property="Opacity" Value=".5" />
                             <Setter TargetName="buttonText" Property="Opacity" Value=".5" />
@@ -38,11 +38,11 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
+    </Style>-->
 
     <!-- Button with rounded corners and an icon on the left -->
-    <Style x:Key="TextIconButton" TargetType="{x:Type controls:UC_IconButton}">
-        <!--<Setter Property="MinWidth" Value="35"/>-->
+    <!--<Style x:Key="TextIconButton" TargetType="{x:Type controls:UC_IconButton}">
+        --><!--<Setter Property="MinWidth" Value="35"/>--><!--
         <Setter Property="Height" Value="35"/>
         <Setter Property="Foreground" Value="#004c8c"/>
         <Setter Property="Background" Value="Transparent"/>
@@ -53,12 +53,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:UC_IconButton}">
-                    <!-- TODO If the border H Alignment is Center it can resize down but cannot be set on entry as both same size. works with stretch but not downsize -->
-                    <!-- Bind the border background to the button background to capture click event -->
+                    --><!-- TODO If the border H Alignment is Center it can resize down but cannot be set on entry as both same size. works with stretch but not downsize -->
+                    <!-- Bind the border background to the button background to capture click event --><!--
                     <Border x:Name="tiButtonBorder" CornerRadius="3" BorderBrush="#004c8c" BorderThickness=".25" Background="{TemplateBinding Background}" >
                         <Grid Margin="10,0" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}">
                             <DockPanel HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center">
-                                <!--Pad image seperately since the Content already is padded-->
+                                --><!--Pad image seperately since the Content already is padded--><!--
                                 <Border x:Name="imageBorder" Padding="{TemplateBinding IconMargin}">
                                     <Image Source="{TemplateBinding IconSource}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                            RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" />
@@ -69,14 +69,14 @@
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <!-- Useful when using a mouse. Set general opacity -->
+                        --><!-- Useful when using a mouse. Set general opacity --><!--
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Opacity" Value=".5" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="False">
                             <Setter Property="Opacity" Value="1" />
                         </Trigger>
-                        <!-- Useful when just doing touch screen. Note: must set different properties than IsMouseOver -->
+                        --><!-- Useful when just doing touch screen. Note: must set different properties than IsMouseOver --><!--
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="tiButtonBorder" Property="Opacity" Value=".4" />
                             <Setter TargetName="buttonText" Property="Opacity" Value=".5" />
@@ -89,10 +89,10 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
+    </Style>-->
 
     <!-- Button with rounded corners and an icon on the left -->
-    <Style x:Key="RoundIconButton" TargetType="{x:Type controls:UC_RoundIconButton}">
+    <!--<Style x:Key="RoundIconButton" TargetType="{x:Type controls:UC_RoundIconButton}">
         <Setter Property="Width" Value="45"/>
         <Setter Property="Height" Value="45"/>
         <Setter Property="Foreground" Value="#004c8c"/>
@@ -114,14 +114,14 @@
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <!--Useful when using a mouse. Set general opacity-->
+                        --><!--Useful when using a mouse. Set general opacity--><!--
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Opacity" Value=".5" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="False">
                             <Setter Property="Opacity" Value="1" />
                         </Trigger>
-                        <!--Useful when just doing touch screen. Note: must set different properties than IsMouseOver-->
+                        --><!--Useful when just doing touch screen. Note: must set different properties than IsMouseOver--><!--
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="tiButtonBorder" Property="Opacity" Value=".4" />
                             <Setter TargetName="icon" Property="Opacity" Value=".5" />
@@ -134,11 +134,11 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
+    </Style>-->
 
 
     <!-- Button with an icon and not border -->
-    <Style x:Key="IconButton" TargetType="{x:Type controls:UC_RoundIconButton}">
+    <!--<Style x:Key="IconButton" TargetType="{x:Type controls:UC_RoundIconButton}">
         <Setter Property="Width" Value="15"/>
         <Setter Property="Height" Value="15"/>
         <Setter Property="Foreground" Value="#004c8c"/>
@@ -159,14 +159,14 @@
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <!--Useful when using a mouse. Set general opacity-->
+                        --><!--Useful when using a mouse. Set general opacity--><!--
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Opacity" Value=".5" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="False">
                             <Setter Property="Opacity" Value="1" />
                         </Trigger>
-                        <!--Useful when just doing touch screen. Note: must set different properties than IsMouseOver-->
+                        --><!--Useful when just doing touch screen. Note: must set different properties than IsMouseOver--><!--
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="tiButtonBorder" Property="Opacity" Value=".4" />
                             <Setter TargetName="icon" Property="Opacity" Value=".5" />
@@ -179,7 +179,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
+    </Style>-->
 
 
 
