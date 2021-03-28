@@ -7,11 +7,11 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!--<ResourceDictionary Source="Themes/MyButtons.xaml" />-->
-
-                <ResourceDictionary Source="pack://application:,,,/WpfCustomControlLib.Core;component/Themes/Generic.xaml"/>
-                <ResourceDictionary Source="Themes/MyWindows.xaml" />
-                <ResourceDictionary Source="Themes/MyLabelAndText.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/WpfCustomControlLib.Core;component/Themes/MyButtons.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/WpfCustomControlLib.Core;component/Themes/MyWindows.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/WpfCustomControlLib.Core;component/Themes/MyLabelAndText.xaml"/>
+                <!--<ResourceDictionary Source="Themes/MyWindows.xaml" />
+                <ResourceDictionary Source="Themes/MyLabelAndText.xaml" />-->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
