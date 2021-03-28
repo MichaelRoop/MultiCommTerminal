@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using WpfCustomControlLib.Core.Helpers;
 using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {

@@ -5,6 +5,7 @@ using MultiCommWrapper.Net.DataModels;
 using StorageFactory.Net.interfaces;
 using System.Collections.Generic;
 using System.Windows;
+using WpfCustomControlLib.Core.Helpers;
 using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {

@@ -2,6 +2,7 @@
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using System.Windows;
 using WifiCommon.Net.DataModels;
+using WpfCustomControlLib.Core.Helpers;
 using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.NetCore.WindowObjs.WifiWins {

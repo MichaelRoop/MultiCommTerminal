@@ -4,6 +4,7 @@ using MultiCommTerminal.NetCore.DependencyInjection;
 using MultiCommTerminal.NetCore.WPF_Helpers;
 using MultiCommWrapper.Net.DataModels;
 using System.Windows;
+using WpfCustomControlLib.Core.Helpers;
 using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.NetCore.WindowObjs.BTWins {

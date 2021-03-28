@@ -6,6 +6,7 @@ using MultiCommTerminal.NetCore.WPF_Helpers;
 using System;
 using System.Collections.Generic;
 using System.Windows;
+using WpfCustomControlLib.Core.Helpers;
 using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.NetCore.WindowObjs.BLE {

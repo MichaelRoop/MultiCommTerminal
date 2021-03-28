@@ -7,6 +7,7 @@ using StorageFactory.Net.interfaces;
 using StorageFactory.Net.StorageManagers;
 using System.Windows;
 using System.Windows.Controls;
+using WpfCustomControlLib.Core.Helpers;
 using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.NetCore.WindowObjs {

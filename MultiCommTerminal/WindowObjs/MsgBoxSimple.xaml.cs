@@ -1,5 +1,6 @@
 ﻿using MultiCommTerminal.NetCore.WPF_Helpers;
 using System.Windows;
+using WpfCustomControlLib.Core.Helpers;
 using WpfHelperClasses.Core;
 
 namespace MultiCommTerminal.NetCore.WindowObjs {
