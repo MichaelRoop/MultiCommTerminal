@@ -92,7 +92,7 @@ namespace MultiCommTerminal.NetCore {
             this.logHelper.ErrorMsgEvent += this.LogHelper_ErrorMsgEvent;
             this.logHelper.ExceptionMsgEvent += this.LogHelper_ExceptionMsgEvent;
             this.logHelper.EveryMsgEvent += this.LogHelper_EveryMsgEvent;
-            this.logHelper.Setup(App.Build, MsgLevel.Info, true, 5);
+            this.logHelper.Setup(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name, App.Build, MsgLevel.Info, true, 5);
         }
 
 
