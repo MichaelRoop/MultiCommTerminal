@@ -1,0 +1,46 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "1ead2701-7507-4984-9629-e1fb6525f62f": {
+      "ProjectGuid": "1ead2701-7507-4984-9629-e1fb6525f62f",
+      "DisplayName": "MultiCommTerminal.NetCore",
+      "ColorIndex": 0
+    },
+    "29fd78c3-523f-40a8-ab81-cf0cf6d5a1be": {
+      "ProjectGuid": "29fd78c3-523f-40a8-ab81-cf0cf6d5a1be",
+      "DisplayName": "Serial.UWP.Core",
+      "ColorIndex": 1
+    },
+    "31a222e3-7470-4102-a087-f6902fedcc17": {
+      "ProjectGuid": "31a222e3-7470-4102-a087-f6902fedcc17",
+      "DisplayName": "Bluetooth.UWP.Core",
+      "ColorIndex": 2
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    },
+    "2a7f5c3f-d621-40c0-87de-a477433d63f6": {
+      "ProjectGuid": "2a7f5c3f-d621-40c0-87de-a477433d63f6",
+      "DisplayName": "MultiCommTestCases.Core",
+      "ColorIndex": 3
+    },
+    "85dc0bcd-7fdc-4164-a6de-d020188b5248": {
+      "ProjectGuid": "85dc0bcd-7fdc-4164-a6de-d020188b5248",
+      "DisplayName": "Common.Net",
+      "ColorIndex": 4
+    },
+    "0747d6bb-52d0-4082-82f0-b3a3f3d8f02d": {
+      "ProjectGuid": "0747d6bb-52d0-4082-82f0-b3a3f3d8f02d",
+      "DisplayName": "BluetoothCommon.Net",
+      "ColorIndex": 5
+    },
+    "60f7fa9d-29a0-4410-9008-ea062d2f8afc": {
+      "ProjectGuid": "60f7fa9d-29a0-4410-9008-ea062d2f8afc",
+      "DisplayName": "Wifi.UWP.Core",
+      "ColorIndex": 6
+    }
+  },
+  "NextColorIndex": 7
+}
