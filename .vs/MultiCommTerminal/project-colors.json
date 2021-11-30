@@ -40,7 +40,17 @@
       "ProjectGuid": "60f7fa9d-29a0-4410-9008-ea062d2f8afc",
       "DisplayName": "Wifi.UWP.Core",
       "ColorIndex": 6
+    },
+    "bf0c5eb0-aef3-444f-b486-4c1d3271ffff": {
+      "ProjectGuid": "bf0c5eb0-aef3-444f-b486-4c1d3271ffff",
+      "DisplayName": "BluetoothLE.Net",
+      "ColorIndex": 7
+    },
+    "02bcc200-e4c3-4a45-a911-1471693e07a0": {
+      "ProjectGuid": "02bcc200-e4c3-4a45-a911-1471693e07a0",
+      "DisplayName": "BluetoothRfComm.UWP.Core",
+      "ColorIndex": 8
     }
   },
-  "NextColorIndex": 7
+  "NextColorIndex": 9
 }
