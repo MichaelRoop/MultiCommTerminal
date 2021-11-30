@@ -1,7 +1,5 @@
-﻿using MultiCommData.Net.interfaces;
+﻿using StorageFactory.Net.interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MultiCommData.Net.StorageDataModels {
 

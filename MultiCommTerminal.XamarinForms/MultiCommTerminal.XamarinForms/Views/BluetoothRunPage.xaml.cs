@@ -164,7 +164,7 @@ namespace MultiCommTerminal.XamarinForms.Views {
 
 
         private void PopulateTerminators(TerminatorDataModel data) {
-            this.lbTerminatorsName.Text = data.Name;
+            this.lbTerminatorsName.Text = data.Display;
             this.lbTerminatorsText.Text = "";
             StringBuilder tmp = new StringBuilder();
             for (int i = 0; i < data.TerminatorInfos.Count; i++) {

@@ -1,5 +1,5 @@
 ﻿using CommunicationStack.Net.Stacks;
-using MultiCommData.Net.interfaces;
+using StorageFactory.Net.interfaces;
 using System;
 using System.Collections.Generic;
 

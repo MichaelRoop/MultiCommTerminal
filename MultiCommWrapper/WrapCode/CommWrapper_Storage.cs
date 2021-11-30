@@ -3,7 +3,6 @@ using ChkUtils.Net;
 using ChkUtils.Net.ErrObjects;
 using CommunicationStack.Net.Stacks;
 using LanguageFactory.Net.data;
-using MultiCommData.Net.interfaces;
 using MultiCommData.Net.StorageDataModels;
 using MultiCommData.Net.StorageIndexInfoModels;
 using MultiCommWrapper.Net.interfaces;
