@@ -9,8 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Threading;
-using WpfCustomControlLib.Core.Helpers;
-using WpfHelperClasses.Core;
+using WpfCustomControlLib.Net6.Helpers;
+using WpfHelperClasses.Net6;
 
 namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 

@@ -6,7 +6,7 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
-using WpfHelperClasses.Core;
+using WpfHelperClasses.Net6;
 
 namespace MultiCommTerminal.NetCore.WindowObjs {
 

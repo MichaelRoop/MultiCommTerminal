@@ -12,8 +12,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using WpfCustomControlLib.Core.Helpers;
-using WpfHelperClasses.Core;
+using WpfCustomControlLib.Net6.Helpers;
+using WpfHelperClasses.Net6;
 
 namespace MultiCommTerminal.NetCore.WindowObjs.Terminators {
     /// <summary>

@@ -72,32 +72,6 @@
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\SharedNetLibs\ChkUtils.Net\ChkUtils.Net.csproj">
-      <Project>{a71559fd-9a21-4f27-92ec-c89fbef25718}</Project>
-      <Name>ChkUtils.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SharedNetLibs\Common.Net\Common.Net.csproj">
-      <Project>{85dc0bcd-7fdc-4164-a6de-d020188b5248}</Project>
-      <Name>Common.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SharedNetLibs\CommunicationStack.Net\CommunicationStack.Net.csproj">
-      <Project>{34EB157E-2489-4B3E-9E6A-BE92D5ED4711}</Project>
-      <Name>CommunicationStack.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SharedNetLibs\LogUtils.Net\LogUtils.Net.csproj">
-      <Project>{db9aa64b-945b-41d5-a0da-83407d2bfcc8}</Project>
-      <Name>LogUtils.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SharedNetLibs\VariousUtils\VariousUtils.Net.csproj">
-      <Project>{8702af2d-436d-485d-b6a7-f2854e56b9c4}</Project>
-      <Name>VariousUtils.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SharedNetLibs\WifiCommon.Net\WifiCommon.Net.csproj">
-      <Project>{640c4743-4899-4cc0-8b1f-ac6b7a9ca08f}</Project>
-      <Name>WifiCommon.Net</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

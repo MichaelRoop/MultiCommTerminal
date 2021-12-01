@@ -7,7 +7,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using WpfHelperClasses.Core;
+using WpfHelperClasses.Net6;
 using static MultiCommTerminal.NetCore.WindowObjs.MsgBoxYesNo;
 //using static System.ComponentModel.Design.ObjectSelectorEditor;
 

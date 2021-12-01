@@ -10,7 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using WpfCustomControlLib.Core.Helpers;
+using WpfCustomControlLib.Net6.Helpers;
 
 namespace MultiCommTerminal.NetCore.WindowObjs {
 

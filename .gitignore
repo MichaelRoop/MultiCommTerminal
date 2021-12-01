@@ -43,3 +43,5 @@
 /MultiCommTestCases.Core/bin/*
 /MultiCommTestCases.Core/obj/*
 /MultiCommDashboards.Core/obj/*
+/MultiCommTerminalTestNet6/obj/*
+/MultiCommTerminalTestNet6/bin/*

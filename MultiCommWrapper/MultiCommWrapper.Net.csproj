@@ -1,19 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+	  <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\SharedNetLibs\BluetoothCommon.Net\BluetoothCommon.Net.csproj" />
-    <ProjectReference Include="..\..\SharedNetLibs\BluetoothLE\BluetoothLE.Net.csproj" />
-    <ProjectReference Include="..\..\SharedNetLibs\DependencyInjectorFactory\DependencyInjectorFactory.Net.csproj" />
-    <ProjectReference Include="..\..\SharedNetLibs\Ethernet.Common.Net\Ethernet.Common.Net.csproj" />
-    <ProjectReference Include="..\..\SharedNetLibs\IconFactory\IconFactory.Net.csproj" />
-    <ProjectReference Include="..\..\SharedNetLibs\LanguageFactory\LanguageFactory.Net.csproj" />
-    <ProjectReference Include="..\..\SharedNetLibs\SerialCommon.Net\SerialCommon.Net.csproj" />
-    <ProjectReference Include="..\..\SharedNetLibs\StorageFactory.Net\StorageFactory.Net.csproj" />
-    <ProjectReference Include="..\..\SharedNetLibs\WifiCommon.Net\WifiCommon.Net.csproj" />
+    <ProjectReference Include="..\..\SharedNetLibs\BluetoothCommon.Net\BluetoothCommon.Net6.csproj" />
+    <ProjectReference Include="..\..\SharedNetLibs\BluetoothLE\BluetoothLE.Net6.csproj" />
+    <ProjectReference Include="..\..\SharedNetLibs\DependencyInjectorFactory\DependencyInjectorFactory.Net6.csproj" />
+    <ProjectReference Include="..\..\SharedNetLibs\IconFactory\IconFactory.Net6.csproj" />
+    <ProjectReference Include="..\..\SharedNetLibs\LanguageFactory\LanguageFactory.Net6.csproj" />
+    <ProjectReference Include="..\..\SharedNetLibs\SerialCommon.Net\SerialCommon.Net6.csproj" />
+    <ProjectReference Include="..\..\SharedNetLibs\WifiCommon.Net\WifiCommon.Net6.csproj" />
     <ProjectReference Include="..\MultiCommData\MultiCommData.Net.csproj" />
   </ItemGroup>
 

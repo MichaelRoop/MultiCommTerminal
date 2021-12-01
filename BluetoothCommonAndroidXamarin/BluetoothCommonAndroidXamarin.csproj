@@ -70,36 +70,6 @@
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\SharedNetLibs\BluetoothCommon.Net\BluetoothCommon.Net.csproj">
-      <Project>{0747d6bb-52d0-4082-82f0-b3a3f3d8f02d}</Project>
-      <Name>BluetoothCommon.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SharedNetLibs\BluetoothLE\BluetoothLE.Net.csproj">
-      <Project>{bf0c5eb0-aef3-444f-b486-4c1d3271ffff}</Project>
-      <Name>BluetoothLE.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SharedNetLibs\ChkUtils.Net\ChkUtils.Net.csproj">
-      <Project>{a71559fd-9a21-4f27-92ec-c89fbef25718}</Project>
-      <Name>ChkUtils.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SharedNetLibs\Common.Net\Common.Net.csproj">
-      <Project>{85DC0BCD-7FDC-4164-A6DE-D020188B5248}</Project>
-      <Name>Common.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SharedNetLibs\CommunicationStack.Net\CommunicationStack.Net.csproj">
-      <Project>{34eb157e-2489-4b3e-9e6a-be92d5ed4711}</Project>
-      <Name>CommunicationStack.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SharedNetLibs\LogUtils.Net\LogUtils.Net.csproj">
-      <Project>{db9aa64b-945b-41d5-a0da-83407d2bfcc8}</Project>
-      <Name>LogUtils.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SharedNetLibs\VariousUtils\VariousUtils.Net.csproj">
-      <Project>{8702af2d-436d-485d-b6a7-f2854e56b9c4}</Project>
-      <Name>VariousUtils.Net</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

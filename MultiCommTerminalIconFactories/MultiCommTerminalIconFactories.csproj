@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+	  <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\SharedNetLibs\IconFactory\IconFactory.Net.csproj" />
+    <ProjectReference Include="..\..\SharedNetLibs\IconFactory\IconFactory.Net6.csproj" />
   </ItemGroup>
 
 </Project>

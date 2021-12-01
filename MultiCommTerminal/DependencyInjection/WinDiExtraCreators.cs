@@ -1,6 +1,7 @@
 ﻿using Bluetooth.UWP.Core;
 using BluetoothCommon.Net.interfaces;
 using BluetoothLE.Net.interfaces;
+using BluetoothRfComm;
 using BluetoothRfComm.UWP.Core;
 using DependencyInjectorFactory.Net;
 using DependencyInjectorFactory.Net.interfaces;

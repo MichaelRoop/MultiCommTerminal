@@ -119,50 +119,6 @@
     <AndroidResource Include="Resources\drawable\icon_feed.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\SharedNetLibs\BluetoothCommon.Net\BluetoothCommon.Net.csproj">
-      <Project>{0747d6bb-52d0-4082-82f0-b3a3f3d8f02d}</Project>
-      <Name>BluetoothCommon.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\SharedNetLibs\BluetoothLE\BluetoothLE.Net.csproj">
-      <Project>{bf0c5eb0-aef3-444f-b486-4c1d3271ffff}</Project>
-      <Name>BluetoothLE.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\SharedNetLibs\ChkUtils.Net\ChkUtils.Net.csproj">
-      <Project>{a71559fd-9a21-4f27-92ec-c89fbef25718}</Project>
-      <Name>ChkUtils.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\SharedNetLibs\DependencyInjectorFactory\DependencyInjectorFactory.Net.csproj">
-      <Project>{6d911cdf-3f4f-45f8-a698-bcb47ff53e08}</Project>
-      <Name>DependencyInjectorFactory.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\SharedNetLibs\Ethernet.Common.Net\Ethernet.Common.Net.csproj">
-      <Project>{fb8026ae-bedc-4d83-bcf2-bc419e1f5825}</Project>
-      <Name>Ethernet.Common.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\SharedNetLibs\IconFactory\IconFactory.Net.csproj">
-      <Project>{8ca4272f-afd9-4737-a941-ab24ed051d40}</Project>
-      <Name>IconFactory.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\SharedNetLibs\LogUtils.Net\LogUtils.Net.csproj">
-      <Project>{db9aa64b-945b-41d5-a0da-83407d2bfcc8}</Project>
-      <Name>LogUtils.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\SharedNetLibs\SerialCommon.Net\SerialCommon.Net.csproj">
-      <Project>{da822327-351c-4516-bda3-b0266d57e8eb}</Project>
-      <Name>SerialCommon.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\SharedNetLibs\StorageFactory.Net\StorageFactory.Net.csproj">
-      <Project>{b5d8b51d-7186-458f-a02c-200e104463f0}</Project>
-      <Name>StorageFactory.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\SharedNetLibs\WifiCommon.Net\WifiCommon.Net.csproj">
-      <Project>{640c4743-4899-4cc0-8b1f-ac6b7a9ca08f}</Project>
-      <Name>WifiCommon.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\BluetoothRfComm.AndroidXamarin\BluetoothRfComm.AndroidXamarin.csproj">
-      <Project>{069f8d1a-9678-459e-8984-2eb5383a3eb4}</Project>
-      <Name>BluetoothRfComm.AndroidXamarin</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\MultiCommData\MultiCommData.Net.csproj">
       <Project>{e6ecdc5e-f10c-4730-bdd1-b45936bfe05e}</Project>
       <Name>MultiCommData.Net</Name>
@@ -178,10 +134,6 @@
     <ProjectReference Include="..\..\Wifi.AndroidXamarin\Wifi.AndroidXamarin.csproj">
       <Project>{54d6678e-55c1-46df-856f-fc9630026cfa}</Project>
       <Name>Wifi.AndroidXamarin</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MultiCommTerminal.XamarinForms\MultiCommTerminal.XamarinForms.csproj">
-      <Project>{e036b65b-b93c-4c80-ac96-5968a7acead1}</Project>
-      <Name>MultiCommTerminal.XamarinForms</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

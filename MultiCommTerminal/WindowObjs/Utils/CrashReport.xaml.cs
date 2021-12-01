@@ -6,8 +6,8 @@ using System;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using WpfCustomControlLib.Core.Helpers;
-using WpfHelperClasses.Core;
+using WpfCustomControlLib.Net6.Helpers;
+using WpfHelperClasses.Net6;
 
 namespace MultiCommTerminal.NetCore.WindowObjs.Utils {
 

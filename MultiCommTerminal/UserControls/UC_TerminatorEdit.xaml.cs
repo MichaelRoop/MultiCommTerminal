@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using WpfHelperClasses.Core;
+using WpfHelperClasses.Net6;
 
 namespace MultiCommTerminal.NetCore.UserControls {
 

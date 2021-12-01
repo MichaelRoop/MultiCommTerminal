@@ -11,7 +11,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using WpfHelperClasses.Core;
+using WpfHelperClasses.Net6;
 
 namespace MultiCommTerminal.NetCore.UserControls {
 

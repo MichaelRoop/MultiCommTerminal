@@ -6,8 +6,8 @@ using MultiCommTerminal.NetCore.WPF_Helpers;
 using SerialCommon.Net.DataModels;
 using System;
 using System.Windows;
-using WpfCustomControlLib.Core.Helpers;
-using WpfHelperClasses.Core;
+using WpfCustomControlLib.Net6.Helpers;
+using WpfHelperClasses.Net6;
 
 namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
 

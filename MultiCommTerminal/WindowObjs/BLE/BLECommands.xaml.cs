@@ -5,8 +5,8 @@ using MultiCommTerminal.NetCore.WPF_Helpers;
 using StorageFactory.Net.interfaces;
 using System.Windows;
 using System.Windows.Controls;
-using WpfCustomControlLib.Core.Helpers;
-using WpfHelperClasses.Core;
+using WpfCustomControlLib.Net6.Helpers;
+using WpfHelperClasses.Net6;
 
 namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 

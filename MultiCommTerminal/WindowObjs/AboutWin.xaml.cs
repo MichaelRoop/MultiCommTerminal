@@ -3,7 +3,7 @@ using MultiCommTerminal.NetCore.WPF_Helpers;
 using System;
 using System.Diagnostics;
 using System.Windows;
-using WpfHelperClasses.Core;
+using WpfHelperClasses.Net6;
 
 namespace MultiCommTerminal.NetCore.WindowObjs {
 

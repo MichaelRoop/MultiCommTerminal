@@ -7,8 +7,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using WpfCustomControlLib.Core.Helpers;
-using WpfHelperClasses.Core;
+using WpfCustomControlLib.Net6.Helpers;
+using WpfHelperClasses.Net6;
 
 namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
 

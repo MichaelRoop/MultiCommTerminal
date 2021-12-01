@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\SharedNetCoreLibs\Communications.UWP.Core\Communications.UWP.Core.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\ChkUtils.Net\ChkUtils.Net.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\LogUtils.Net\LogUtils.Net.csproj" />
     <ProjectReference Include="..\..\SharedNetLibs\WifiCommon.Net\WifiCommon.Net.csproj" />

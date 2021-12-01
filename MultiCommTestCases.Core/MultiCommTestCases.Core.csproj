@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,13 +15,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\SharedNetLibs\TestCaseSupport.Core\TestCaseSupport.Core.csproj" />
-    <ProjectReference Include="..\BluetoothLE.UWP.Core\Bluetooth.UWP.Core.csproj" />
-    <ProjectReference Include="..\BluetoothRfComm.Win32.Core\BluetoothRfComm.UWP.Core.csproj" />
-    <ProjectReference Include="..\Ethernet.UWP.Core\Ethernet.UWP.Core.csproj" />
     <ProjectReference Include="..\MultiCommTerminalIconFactories\MultiCommTerminalIconFactories.csproj" />
     <ProjectReference Include="..\MultiCommWrapper\MultiCommWrapper.Net.csproj" />
-    <ProjectReference Include="..\Serial.UWP.Core\Serial.UWP.Core.csproj" />
-    <ProjectReference Include="..\Wifi.UWP.Core\Wifi.UWP.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
