@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+	  <TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
+	  <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +16,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\SharedNetLibs\TestCaseSupport.Core\TestCaseSupport.Core.csproj" />
+    <ProjectReference Include="..\..\SharedWinRTLibs\BluetoothCommon.WinRT\BluetoothCommon.WinRT.csproj" />
+    <ProjectReference Include="..\..\SharedWinRTLibs\BluetoothLE.WinRT\BluetoothLE.WinRT.csproj" />
+    <ProjectReference Include="..\..\SharedWinRTLibs\BluetoothRFComm.WinRT\BluetoothRFComm.WinRT.csproj" />
+    <ProjectReference Include="..\..\SharedWinRTLibs\Ethernet.WinRT\Ethernet.WinRT.csproj" />
+    <ProjectReference Include="..\..\SharedWinRTLibs\Serial.WinRT\Serial.WinRT.csproj" />
+    <ProjectReference Include="..\..\SharedWinRTLibs\Wifi.WinRT\Wifi.WinRT.csproj" />
     <ProjectReference Include="..\MultiCommTerminalIconFactories\MultiCommTerminalIconFactories.csproj" />
     <ProjectReference Include="..\MultiCommWrapper\MultiCommWrapper.Net.csproj" />
   </ItemGroup>

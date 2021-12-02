@@ -85,9 +85,9 @@
     <ProjectReference Include="..\..\SharedNet6Wpf\WpfCustomControlLib.Net6\WpfCustomControlLib.Net6.csproj" />
     <ProjectReference Include="..\..\SharedNet6Wpf\WpfHelperClasses.Net6\WpfHelperClasses.Net6.csproj" />
     <ProjectReference Include="..\..\SharedNet6Wpf\WpfUserControlLib.Net6\WpfUserControlLib.Net6.csproj" />
-    <ProjectReference Include="..\..\SharedNetLibs\BluetoothLE\BluetoothLE.Net6.csproj" />
-    <ProjectReference Include="..\..\SharedNetLibs\Ethernet.Common.Net\Ethernet.Common.Net6.csproj" />
-    <ProjectReference Include="..\..\SharedNetLibs\StorageFactory.Net\StorageFactory.Net6.csproj" />
+    <ProjectReference Include="..\..\SharedNetLibs\BluetoothLE\BluetoothLE.Net.csproj" />
+    <ProjectReference Include="..\..\SharedNetLibs\Ethernet.Common.Net\Ethernet.Common.Net.csproj" />
+    <ProjectReference Include="..\..\SharedNetLibs\StorageFactory.Net\StorageFactory.Net.csproj" />
     <ProjectReference Include="..\..\SharedWinRTLibs\BluetoothCommon.WinRT\BluetoothCommon.WinRT.csproj" />
     <ProjectReference Include="..\..\SharedWinRTLibs\BluetoothLE.WinRT\BluetoothLE.WinRT.csproj" />
     <ProjectReference Include="..\..\SharedWinRTLibs\BluetoothRFComm.WinRT\BluetoothRFComm.WinRT.csproj" />

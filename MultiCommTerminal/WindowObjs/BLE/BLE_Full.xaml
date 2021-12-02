@@ -8,7 +8,7 @@
         xmlns:controls="clr-namespace:MultiCommTerminal.NetCore.UserControls"
         xmlns:BLEcontrols="clr-namespace:MultiCommTerminal.NetCore.UserControls.BLE"
         xmlns:wpfHelper="clr-namespace:MultiCommTerminal.NetCore.WPF_Helpers"
-        xmlns:dataModels="clr-namespace:BluetoothLE.Net.DataModels;assembly=BluetoothLE.Net6"
+        xmlns:dataModels="clr-namespace:BluetoothLE.Net.DataModels;assembly=BluetoothLE.Net"
         xmlns:buttons="clr-namespace:WpfCustomControlLib.Net6.Buttons;assembly=WpfCustomControlLib.Net6"
         xmlns:UC_Custom="clr-namespace:WpfUserControlLib.Net6;assembly=WpfUserControlLib.Net6"
         WindowStartupLocation="CenterScreen" 

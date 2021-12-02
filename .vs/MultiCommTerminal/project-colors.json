@@ -50,7 +50,127 @@
       "ProjectGuid": "02bcc200-e4c3-4a45-a911-1471693e07a0",
       "DisplayName": "BluetoothRfComm.UWP.Core",
       "ColorIndex": 8
+    },
+    "e036b65b-b93c-4c80-ac96-5968a7acead1": {
+      "ProjectGuid": "e036b65b-b93c-4c80-ac96-5968a7acead1",
+      "DisplayName": "MultiCommTerminal.XamarinForms",
+      "ColorIndex": 9
+    },
+    "da822327-351c-4516-bda3-b0266d57e8eb": {
+      "ProjectGuid": "da822327-351c-4516-bda3-b0266d57e8eb",
+      "DisplayName": "SerialCommon.Net",
+      "ColorIndex": 10
+    },
+    "e6ecdc5e-f10c-4730-bdd1-b45936bfe05e": {
+      "ProjectGuid": "e6ecdc5e-f10c-4730-bdd1-b45936bfe05e",
+      "DisplayName": "MultiCommData.Net",
+      "ColorIndex": 11
+    },
+    "b5d8b51d-7186-458f-a02c-200e104463f0": {
+      "ProjectGuid": "b5d8b51d-7186-458f-a02c-200e104463f0",
+      "DisplayName": "StorageFactory.Net",
+      "ColorIndex": 12
+    },
+    "f86e019f-f046-4dc2-a949-d0ea0f0d0964": {
+      "ProjectGuid": "f86e019f-f046-4dc2-a949-d0ea0f0d0964",
+      "DisplayName": "MultiCommWrapper.Net",
+      "ColorIndex": 13
+    },
+    "02ddac66-796c-453e-a59d-08a31d61f69f": {
+      "ProjectGuid": "02ddac66-796c-453e-a59d-08a31d61f69f",
+      "DisplayName": "Communications.UWP.Core",
+      "ColorIndex": 14
+    },
+    "18412f94-9fb8-4870-9864-b85313e1e069": {
+      "ProjectGuid": "18412f94-9fb8-4870-9864-b85313e1e069",
+      "DisplayName": "Ethernet.UWP.Core",
+      "ColorIndex": 15
+    },
+    "db9aa64b-945b-41d5-a0da-83407d2bfcc8": {
+      "ProjectGuid": "db9aa64b-945b-41d5-a0da-83407d2bfcc8",
+      "DisplayName": "LogUtils.Net",
+      "ColorIndex": 0
+    },
+    "a71559fd-9a21-4f27-92ec-c89fbef25718": {
+      "ProjectGuid": "a71559fd-9a21-4f27-92ec-c89fbef25718",
+      "DisplayName": "ChkUtils.Net",
+      "ColorIndex": 1
+    },
+    "34eb157e-2489-4b3e-9e6a-be92d5ed4711": {
+      "ProjectGuid": "34eb157e-2489-4b3e-9e6a-be92d5ed4711",
+      "DisplayName": "CommunicationStack.Net",
+      "ColorIndex": 2
+    },
+    "6d911cdf-3f4f-45f8-a698-bcb47ff53e08": {
+      "ProjectGuid": "6d911cdf-3f4f-45f8-a698-bcb47ff53e08",
+      "DisplayName": "DependencyInjectorFactory.Net",
+      "ColorIndex": 3
+    },
+    "8702af2d-436d-485d-b6a7-f2854e56b9c4": {
+      "ProjectGuid": "8702af2d-436d-485d-b6a7-f2854e56b9c4",
+      "DisplayName": "VariousUtils.Net",
+      "ColorIndex": 4
+    },
+    "640c4743-4899-4cc0-8b1f-ac6b7a9ca08f": {
+      "ProjectGuid": "640c4743-4899-4cc0-8b1f-ac6b7a9ca08f",
+      "DisplayName": "WifiCommon.Net",
+      "ColorIndex": 5
+    },
+    "b7a51635-a748-4a80-9d66-9a8573a9c09a": {
+      "ProjectGuid": "b7a51635-a748-4a80-9d66-9a8573a9c09a",
+      "DisplayName": "MultiCommTerminalIconFactories",
+      "ColorIndex": 6
+    },
+    "4b0dba6d-0600-49c9-91d2-d6d451728b4a": {
+      "ProjectGuid": "4b0dba6d-0600-49c9-91d2-d6d451728b4a",
+      "DisplayName": "WpfCustomControlLib.Net6",
+      "ColorIndex": 7
+    },
+    "423fbf6a-9f3b-4622-90d7-35f133db7415": {
+      "ProjectGuid": "423fbf6a-9f3b-4622-90d7-35f133db7415",
+      "DisplayName": "BluetoothCommon.Net6",
+      "ColorIndex": 8
+    },
+    "233ceb1a-d118-46ef-b6ad-2c8f055450f8": {
+      "ProjectGuid": "233ceb1a-d118-46ef-b6ad-2c8f055450f8",
+      "DisplayName": "MultiCommTerminalTestNet6",
+      "ColorIndex": 9
+    },
+    "5e910c3e-49ab-4f07-a615-32a582787214": {
+      "ProjectGuid": "5e910c3e-49ab-4f07-a615-32a582787214",
+      "DisplayName": "WpfUserControlLib.Net6",
+      "ColorIndex": 10
+    },
+    "63da8acf-4231-40fd-99a7-28aa3d96e9c2": {
+      "ProjectGuid": "63da8acf-4231-40fd-99a7-28aa3d96e9c2",
+      "DisplayName": "BluetoothLE.Net6",
+      "ColorIndex": 11
+    },
+    "4773bd80-2ec8-448b-aa38-c17d513d52a3": {
+      "ProjectGuid": "4773bd80-2ec8-448b-aa38-c17d513d52a3",
+      "DisplayName": "Ethernet.WinRT",
+      "ColorIndex": 12
+    },
+    "206d36eb-b06f-4944-9417-b14104012c64": {
+      "ProjectGuid": "206d36eb-b06f-4944-9417-b14104012c64",
+      "DisplayName": "Serial.WinRT",
+      "ColorIndex": 13
+    },
+    "422a198a-d8d2-4379-9bb5-00a9c5547bab": {
+      "ProjectGuid": "422a198a-d8d2-4379-9bb5-00a9c5547bab",
+      "DisplayName": "BluetoothRFComm.WinRT",
+      "ColorIndex": 14
+    },
+    "bd0e66a5-c864-4669-a7df-136b3b059b83": {
+      "ProjectGuid": "bd0e66a5-c864-4669-a7df-136b3b059b83",
+      "DisplayName": "CommunicationStack.Net6",
+      "ColorIndex": 15
+    },
+    "b5c93333-fcb5-45fa-aad6-39ab51eecf78": {
+      "ProjectGuid": "b5c93333-fcb5-45fa-aad6-39ab51eecf78",
+      "DisplayName": "StorageFactory.Net6",
+      "ColorIndex": 0
     }
   },
-  "NextColorIndex": 9
+  "NextColorIndex": 1
 }
