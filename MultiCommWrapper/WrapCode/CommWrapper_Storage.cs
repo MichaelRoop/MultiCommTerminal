@@ -611,7 +611,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             IIndexedStorageManager<TSToreObject, TExtraInfo> manager,
             Action<IIndexItem<TExtraInfo>> onSuccess,
             OnErr onError, TExtraInfo extraInfo = null)
-            where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class {
+            where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class, new() {
 
             this.Create(display, data, manager, onSuccess, (d) => { }, onError, extraInfo);
         }
@@ -624,7 +624,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             Action<IIndexItem<TExtraInfo>> onSuccess,
             Action<TSToreObject> onChange,
             OnErr onError, TExtraInfo extraInfo = null)
-            where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class {
+            where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class, new() {
 
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;
@@ -710,7 +710,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             Action<IIndexItem<TExtraInfo>> onSuccess,
             OnErr onError,
             TExtraInfo extraInfo = null)
-            where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class {
+            where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class, new() {
 
             this.SaveOrCreate(manager, display, data, preSaveIndexUpdate, onSuccess, (d) => { }, onError, extraInfo);
         }
@@ -726,7 +726,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             Action<TSToreObject> onChange,
             OnErr onError, 
             TExtraInfo extraInfo = null)
-            where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class {
+            where TSToreObject : class, IDisplayableData, IIndexible where TExtraInfo : class, new() {
 
             WrapErr.ToErrReport(9999, () => {
                 ErrReport report;
