@@ -45,7 +45,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         // Windows path and file name for document
         private readonly string WIN_ORIGINE_USER_MANUAL_PATH_AND_FILE =
-            string.Format(@"/{0}", 
+            string.Format(@"{0}\{1}", 
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), 
                 PDF_USER_MANUAL_DIR_AND_FILE);
 
