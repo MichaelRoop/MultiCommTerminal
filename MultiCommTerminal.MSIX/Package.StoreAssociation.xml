@@ -366,6 +366,8 @@
       <ReservedName>Multi Comm Terminal</ReservedName>
     </ReservedNames>
   </ProductReservedInfo>
-  <AccountPackageIdentityNames />
+  <AccountPackageIdentityNames>
+    <MainPackageIdentityName>61651MRProductions.MultiCommDashboards</MainPackageIdentityName>
+  </AccountPackageIdentityNames>
   <PackageInfoList LandingUrl="https://developer.microsoft.com/dashboard/Application?appId=9MW99375981Z" />
 </StoreAssociation>
