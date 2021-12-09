@@ -18,7 +18,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         #region Data
 
-        private BLERangeValidator validator = new BLERangeValidator();
+        //private BLERangeValidator validator = new BLERangeValidator();
 
         #endregion
 
@@ -53,8 +53,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         #region Event handlers
 
         private void BLE_DeviceDiscoveredHandler(object sender, BluetoothLEDeviceInfo e) {
-            ErrReport report;
-            WrapErr.ToErrReport(out report, 200050, "Failure on BLE_DeviceDiscoveredHandler", () => {
+            WrapErr.ToErrReport(out ErrReport report, 200050, "Failure on BLE_DeviceDiscoveredHandler", () => {
                 this.BLE_DeviceDiscovered?.Invoke(this, e);
             });
             this.RaiseIfException(report);
@@ -62,39 +61,34 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         private void BLE_DeviceRemovedHandler(object sender, string e) {
-            ErrReport report;
-            WrapErr.ToErrReport(out report, 200051, "Failure on BLE_DeviceRemovedHandler", () => {
+            WrapErr.ToErrReport(out ErrReport report, 200051, "Failure on BLE_DeviceRemovedHandler", () => {
                 this.BLE_DeviceRemoved?.Invoke(this, e);
             });
         }
 
 
         private void BLE_DeviceUpdatedHandler(object sender, NetPropertiesUpdateDataModel args) {
-            ErrReport report;
-            WrapErr.ToErrReport(out report, 200052, "Failure on BLE_DeviceUpdatedHandler", () => {
+            WrapErr.ToErrReport(out ErrReport report, 200052, "Failure on BLE_DeviceUpdatedHandler", () => {
                 this.BLE_DeviceUpdated?.Invoke(this, args);
             });
         }
 
 
         private void BLE_DeviceDiscoveryCompleted(object sender, bool e) {
-            ErrReport report;
-            WrapErr.ToErrReport(out report, 200053, "Failure on BLE_DeviceDiscoveryCompleted", () => {
+            WrapErr.ToErrReport(out ErrReport report, 200053, "Failure on BLE_DeviceDiscoveryCompleted", () => {
                 this.BLE_DeviceDiscoveryComplete?.Invoke(this, e);
             });
         }
 
 
         private void BleStack_MsgReceived(object sender, byte[] e) {
-            ErrReport report;
-            WrapErr.ToErrReport(out report, 200054, "Failure on BleStack_MsgReceived", () => {
+            WrapErr.ToErrReport(out ErrReport report, 200054, "Failure on BleStack_MsgReceived", () => {
             });
         }
 
 
         private void BLE_CharacteristicReadValueChangeHandler(object sender, BLE_CharacteristicReadResult args) {
-            ErrReport report;
-            WrapErr.ToErrReport(out report, 200055, "Failure on BLE_CharacteristicReadValueChangeHandler", () => {
+            WrapErr.ToErrReport(out ErrReport report, 200055, "Failure on BLE_CharacteristicReadValueChangeHandler", () => {
                 if (args.Status == BLE_CharacteristicCommunicationStatus.Success) {
                     this.TranslateIfBool(args.DataModel);
                 }
@@ -102,8 +96,7 @@ namespace MultiCommWrapper.Net.WrapCode {
             });
         }
         private void BleDeviceInfoAssembledHandler(object sender, BLEGetInfoStatus info) {
-            ErrReport report;
-            WrapErr.ToErrReport(out report, 200056, "Failure on BLEGetInfoStatus", () => {
+            WrapErr.ToErrReport(out ErrReport report, 200056, "Failure on BLEGetInfoStatus", () => {
                 info.Message = this.Translate(info.Status);
                 this.BLE_DeviceInfoGathered?.Invoke(this, info);
             });
@@ -112,8 +105,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         private void BleDeviceConnectResultHandler(object sender, BLEGetInfoStatus info) {
-            ErrReport report;
-            WrapErr.ToErrReport(out report, 200057, "Failure on BLEGetInfoStatus", () => {
+            WrapErr.ToErrReport(out ErrReport report, 200057, "Failure on BLEGetInfoStatus", () => {
                 info.Message = this.Translate(info.Status);
                 this.Translate(info.DeviceInfo);
                 this.BLE_DeviceConnectResult?.Invoke(this, info);
@@ -123,10 +115,9 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         private void BLEBluetooth_ConnectionStatusChanged(object sender, BLE_ConnectStatusChangeInfo e) {
-            ErrReport report;
-            WrapErr.ToErrReport(out report, 200058, "Failure on BLE_ConnectStatusChangeInfo", () => {
-                e.Message = e.Status == BLE_ConnectStatus.Connected 
-                    ? this.GetText(MsgCode.Connected) 
+            WrapErr.ToErrReport(out ErrReport report, 200058, "Failure on BLE_ConnectStatusChangeInfo", () => {
+                e.Message = e.Status == BLE_ConnectStatus.Connected
+                    ? this.GetText(MsgCode.Connected)
                     : this.GetText(MsgCode.Disconnected);
                 this.BLE_ConnectionStatusChanged?.Invoke(sender, e);
             });
@@ -138,47 +129,41 @@ namespace MultiCommWrapper.Net.WrapCode {
         #region Public
 
         public void BLE_DiscoverAsync() {
-            ErrReport report;
-            WrapErr.ToErrReport(out report, 200056, "Failure on BLE_DiscoverAsync", () => {
+            WrapErr.ToErrReport(out ErrReport report, 200056, "Failure on BLE_DiscoverAsync", () => {
                 this.bleBluetooth.DiscoverDevices();
             });
         }
 
 
         public void BLE_CancelDiscover() {
-            ErrReport report;
-            WrapErr.ToErrReport(out report, 200057, "Failure on BLE_CancelDiscover", () => {
+            WrapErr.ToErrReport(out ErrReport report, 200057, "Failure on BLE_CancelDiscover", () => {
                 this.bleBluetooth.CancelDiscoverDevices();
             });
         }
 
 
         public void BLE_ConnectAsync(BluetoothLEDeviceInfo device) {
-            ErrReport report;
-            WrapErr.ToErrReport(out report, 200058, "Failure on BLE_ConnectAsync", () => {
+            WrapErr.ToErrReport(out ErrReport report, 200058, "Failure on BLE_ConnectAsync", () => {
                 this.bleBluetooth.Connect(device);
             });
         }
 
 
         public void BLE_GetInfo(BluetoothLEDeviceInfo device) {
-            ErrReport report;
-            WrapErr.ToErrReport(out report, 200059, "Failure on BluetoothLEDeviceInfo", () => {
+            WrapErr.ToErrReport(out ErrReport report, 200059, "Failure on BluetoothLEDeviceInfo", () => {
                 this.bleBluetooth.GetInfo(device);
             });
         }
 
 
         public void BLE_GetDbgInfoStringDump(object obj, Action<string, string> onComplete) {
-            ErrReport report;
-            WrapErr.ToErrReport(out report, 9999, "", () => {
-                BluetoothLEDeviceInfo info = obj as BluetoothLEDeviceInfo;
-                if (info == null) {
+            WrapErr.ToErrReport(out ErrReport report, 9999, "", () => {
+                if (obj is not BluetoothLEDeviceInfo info) {
                     onComplete("** NOT  A BLE DEVICE **", "** NOT  A BLE DEVICE **");
                     return;
                 }
 
-                StringBuilder sb = new StringBuilder();
+                StringBuilder sb = new ();
                 sb.Append(string.Format("        Id: {0}", info.Id)).AppendLine();
                 sb.Append(string.Format(" IsDefault: {0}", info.IsDefault)).AppendLine();
                 sb.Append(string.Format(" IsEnabled: {0}", info.IsEnabled)).AppendLine();
@@ -230,8 +215,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
 
         public void BLE_Disconnect() {
-            ErrReport report;
-            WrapErr.ToErrReport(out report, 200060, "Failure on BLE_Disconnect", () => {
+            WrapErr.ToErrReport(out ErrReport report, 200060, "Failure on BLE_Disconnect", () => {
                 this.bleBluetooth.Disconnect();
             });
         }
@@ -240,25 +224,26 @@ namespace MultiCommWrapper.Net.WrapCode {
         public List<KeyValuePropertyDisplay> BLE_GetDeviceInfoForDisplay(BluetoothLEDeviceInfo info) {
             try {
                 // TODO - language
-                List<KeyValuePropertyDisplay> list = new List<KeyValuePropertyDisplay>();
-                list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Name), info.Name));
-                list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Id), info.Id));
-                list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.AccessStatus), info.AccessStatus.ToString().CamelCaseToSpaces()));
-                list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Address), info.AddressAsULong.ToString()));
-                list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.AddressType), info.AddressType.ToString().CamelCaseToSpaces()));
-                list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Default), info.IsDefault.ToString()));
-                list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Enabled), info.IsEnabled.ToString()));
-                list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Kind), info.DeviceKind.ToString().UnderlineToSpaces()));
-                list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.PairingAllowed), info.CanPair.ToString()));
-                list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Paired), info.IsPaired.ToString()));
-                list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.PairedWithSecureConnection), info.WasPairedUsingSecureConnection.ToString()));
-                list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.Connected), info.IsConnected.ToString()));
-                list.Add(new KeyValuePropertyDisplay(this.GetText(MsgCode.ProtectionLevel), info.ProtectionLevel.ToString().CamelCaseToSpaces()));
-                list.Add(new KeyValuePropertyDisplay(string.Format("{0} (Bluetooth)", this.GetText(MsgCode.Kind)), info.TypeBluetooth.ToString().CamelCaseToSpaces()));
-                list.Add(new KeyValuePropertyDisplay("Enclosure(Dock)", info.EnclosureLocation.InDock.ToString()));
-                list.Add(new KeyValuePropertyDisplay("Enclosure(Lid)", info.EnclosureLocation.InLid.ToString()));
-                list.Add(new KeyValuePropertyDisplay("Enclosure(Clockwise Rotation)", info.EnclosureLocation.ClockWiseRotationInDegrees.ToString()));
-                list.Add(new KeyValuePropertyDisplay("Enclosure(Panel)", info.EnclosureLocation.Location.ToString()));
+                List<KeyValuePropertyDisplay> list = new() {
+                    new KeyValuePropertyDisplay(this.GetText(MsgCode.Name), info.Name),
+                    new KeyValuePropertyDisplay(this.GetText(MsgCode.Id), info.Id),
+                    new KeyValuePropertyDisplay(this.GetText(MsgCode.AccessStatus), info.AccessStatus.ToString().CamelCaseToSpaces()),
+                    new KeyValuePropertyDisplay(this.GetText(MsgCode.Address), info.AddressAsULong.ToString()),
+                    new KeyValuePropertyDisplay(this.GetText(MsgCode.AddressType), info.AddressType.ToString().CamelCaseToSpaces()),
+                    new KeyValuePropertyDisplay(this.GetText(MsgCode.Default), info.IsDefault.ToString()),
+                    new KeyValuePropertyDisplay(this.GetText(MsgCode.Enabled), info.IsEnabled.ToString()),
+                    new KeyValuePropertyDisplay(this.GetText(MsgCode.Kind), info.DeviceKind.ToString().UnderlineToSpaces()),
+                    new KeyValuePropertyDisplay(this.GetText(MsgCode.PairingAllowed), info.CanPair.ToString()),
+                    new KeyValuePropertyDisplay(this.GetText(MsgCode.Paired), info.IsPaired.ToString()),
+                    new KeyValuePropertyDisplay(this.GetText(MsgCode.PairedWithSecureConnection), info.WasPairedUsingSecureConnection.ToString()),
+                    new KeyValuePropertyDisplay(this.GetText(MsgCode.Connected), info.IsConnected.ToString()),
+                    new KeyValuePropertyDisplay(this.GetText(MsgCode.ProtectionLevel), info.ProtectionLevel.ToString().CamelCaseToSpaces()),
+                    new KeyValuePropertyDisplay(string.Format("{0} (Bluetooth)", this.GetText(MsgCode.Kind)), info.TypeBluetooth.ToString().CamelCaseToSpaces()),
+                    new KeyValuePropertyDisplay("Enclosure(Dock)", info.EnclosureLocation.InDock.ToString()),
+                    new KeyValuePropertyDisplay("Enclosure(Lid)", info.EnclosureLocation.InLid.ToString()),
+                    new KeyValuePropertyDisplay("Enclosure(Clockwise Rotation)", info.EnclosureLocation.ClockWiseRotationInDegrees.ToString()),
+                    new KeyValuePropertyDisplay("Enclosure(Panel)", info.EnclosureLocation.Location.ToString())
+                };
                 return list;
             }
             catch (Exception e) {
@@ -270,7 +255,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         public List<NetPropertyDataModelDisplay> BLE_GetServiceProperties(BluetoothLEDeviceInfo info) {
             try {
-                List<NetPropertyDataModelDisplay> list = new List<NetPropertyDataModelDisplay>();
+                List<NetPropertyDataModelDisplay> list = new ();
                 foreach (var sp in info.ServiceProperties) {
                     list.Add(new NetPropertyDataModelDisplay(sp.Value));
                 }
@@ -307,7 +292,7 @@ namespace MultiCommWrapper.Net.WrapCode {
         public void BLE_GetRangeDisplay(BLE_CharacteristicDataModel dataModel, Action<string, string> onSuccess, OnErr onError) {
             try {
                 if (dataModel != null) {
-                    DataTypeDisplay display = this.validator.GetRange(dataModel.Parser.DataType);
+                    DataTypeDisplay display = BLERangeValidator.GetRange(dataModel.Parser.DataType);
                     onSuccess(
                         dataModel.CharName,
                         string.Format("{0}: {1},  {2}: {3},  {4}: {5}",
@@ -327,7 +312,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         public void BLE_GetRangeDisplay(BLE_DataType dataType, Action<string> onSuccess, OnErr onError) {
             try {
-                DataTypeDisplay display = this.validator.GetRange(dataType);
+                DataTypeDisplay display = BLERangeValidator.GetRange(dataType);
                 onSuccess(
                     string.Format("{0}: {1},  {2}: {3},  {4}: {5}",
                     this.GetText(MsgCode.DataType), display.DataType,
@@ -345,7 +330,7 @@ namespace MultiCommWrapper.Net.WrapCode {
 
         public void BLE_GetShortRangeDisplay(BLE_DataType dataType, Action<string> onSuccess, OnErr onError) {
             try {
-                DataTypeDisplay display = this.validator.GetRange(dataType);
+                DataTypeDisplay display = BLERangeValidator.GetRange(dataType);
                 onSuccess(
                     string.Format("{0},  {1}: {2},  {3}: {4}",
                     display.DataType, this.GetText(MsgCode.Min), display.Min, this.GetText(MsgCode.Max), display.Max));
