@@ -49,7 +49,7 @@ namespace MultiCommTerminal.NetCore {
         /// <summary>Build number to display</summary>
         public static string Build {
             get {
-                return "2021.03.24.13";
+                return "2021.12.13.3";
             }
         }
 

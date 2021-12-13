@@ -210,7 +210,27 @@
       "ProjectGuid": "d2da5e9b-5140-4af9-845f-d6cca82913b3",
       "DisplayName": "BluetoothLE.Net",
       "ColorIndex": 8
+    },
+    "904686e0-4f30-4f61-b7cb-af882605c94e": {
+      "ProjectGuid": "904686e0-4f30-4f61-b7cb-af882605c94e",
+      "DisplayName": "DependencyInjectorFactory.Net",
+      "ColorIndex": 9
+    },
+    "43b3e962-7e4f-44e2-a5a8-ae4660b72288": {
+      "ProjectGuid": "43b3e962-7e4f-44e2-a5a8-ae4660b72288",
+      "DisplayName": "MultiCommTerminal.MSIX",
+      "ColorIndex": 10
+    },
+    "20503afb-db3a-4bd0-82a7-b6193def59c6": {
+      "ProjectGuid": "20503afb-db3a-4bd0-82a7-b6193def59c6",
+      "DisplayName": "LanguageFactory.Net",
+      "ColorIndex": 11
+    },
+    "463a8322-e03e-4853-abff-3a35c7e00dd9": {
+      "ProjectGuid": "463a8322-e03e-4853-abff-3a35c7e00dd9",
+      "DisplayName": "WpfHelperClasses.Net6",
+      "ColorIndex": 12
     }
   },
-  "NextColorIndex": 9
+  "NextColorIndex": 13
 }
