@@ -2,9 +2,7 @@
 using LogUtils.Net;
 using MultiCommTestCases.Core.Wrapper.Utils;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using TestCaseSupport.Core;
 
@@ -15,10 +13,10 @@ namespace MultiCommTestCases.Core.Wrapper.Bluetooth {
 
         #region Data
 
-        private ClassLog log = new ClassLog("BluetoothClassicTests");
-        private List<BTDeviceInfo> devices = new List<BTDeviceInfo>();
-        private AutoResetEvent discoveryComplet = new AutoResetEvent(false);
-        private AutoResetEvent connectComplet = new AutoResetEvent(false);
+        //private readonly ClassLog log = new ("BluetoothClassicTests");
+        private readonly List<BTDeviceInfo> devices = new ();
+        private readonly ManualResetEvent discoveryComplet = new (false);
+        private readonly AutoResetEvent connectComplet = new (false);
 
         #endregion
 
@@ -52,13 +50,15 @@ namespace MultiCommTestCases.Core.Wrapper.Bluetooth {
         [Test]
         public void Test01_ConnectDisconnect() {
             this.connectComplet.Reset();
-            TDI.Wrapper.BT_ConnectionCompleted += Wrapper_BT_ConnectionCompleted;
-            TestHelpers.CatchUnexpected(() => {
-                TDI.Wrapper.BTClassicConnectAsync(this.devices[0]);
-                Assert.True(this.connectComplet.WaitOne(5000), "Connect timed out");
-                TDI.Wrapper.BTClassicDisconnect();
-            });
-            TDI.Wrapper.BT_ConnectionCompleted -= Wrapper_BT_ConnectionCompleted;
+            this.AssureDiscovered();
+            TDI.Wrapper.BTClassicDisconnect();
+
+            TDI.Wrapper.BT_ConnectionCompleted += this.Wrapper_BT_ConnectionCompleted;
+            TDI.Wrapper.BTClassicConnectAsync(this.devices[0]);
+            bool completed = this.connectComplet.WaitOne(10000);
+            TDI.Wrapper.BT_ConnectionCompleted -= this.Wrapper_BT_ConnectionCompleted;
+            Assert.True(completed, "Connect timed out");
+            TDI.Wrapper.BTClassicDisconnect();
         }
 
 
@@ -74,6 +74,11 @@ namespace MultiCommTestCases.Core.Wrapper.Bluetooth {
 
         private void Wrapper_BT_ConnectionCompleted(object sender, bool e) {
             this.connectComplet.Set();
+        }
+
+        private void AssureDiscovered() {
+            Assert.True(this.discoveryComplet.WaitOne(5000), "Discovery timed out");
+            Assert.True(this.devices.Count > 0, "No BT devices discovered");
         }
 
         #endregion
