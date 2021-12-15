@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="google-services .json" />
+    <None Include="MultiCommTerminalIconFactories.csproj" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />

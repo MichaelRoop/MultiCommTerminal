@@ -1,0 +1,36 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "8c7212a3-55c4-4925-9b9c-2ae5f5525586": {
+      "ProjectGuid": "8c7212a3-55c4-4925-9b9c-2ae5f5525586",
+      "DisplayName": "MultiCommTerminal.AndroidXamarin",
+      "ColorIndex": 0
+    },
+    "1ebfff32-6d49-4642-8019-71807cc2000e": {
+      "ProjectGuid": "1ebfff32-6d49-4642-8019-71807cc2000e",
+      "DisplayName": "MultiCommTerminal.XamarinForms.Android",
+      "ColorIndex": 1
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    },
+    "7728f061-b0ff-43be-a039-f0000e1f43ec": {
+      "ProjectGuid": "7728f061-b0ff-43be-a039-f0000e1f43ec",
+      "DisplayName": "BluetoothCommonAndroidXamarin",
+      "ColorIndex": 2
+    },
+    "069f8d1a-9678-459e-8984-2eb5383a3eb4": {
+      "ProjectGuid": "069f8d1a-9678-459e-8984-2eb5383a3eb4",
+      "DisplayName": "BluetoothRfComm.AndroidXamarin",
+      "ColorIndex": 3
+    },
+    "54d6678e-55c1-46df-856f-fc9630026cfa": {
+      "ProjectGuid": "54d6678e-55c1-46df-856f-fc9630026cfa",
+      "DisplayName": "Wifi.AndroidXamarin",
+      "ColorIndex": 4
+    }
+  },
+  "NextColorIndex": 5
+}
