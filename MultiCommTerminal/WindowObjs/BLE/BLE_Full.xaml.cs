@@ -297,7 +297,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
                     DI.Wrapper.BLE_ConnectionStatusChanged -= this.connectionStatusChanged;
                     DI.Wrapper.BLE_Disconnect();
                     // Reset title
-                    //this.lblCmdDataTypeContent.Content = BLE_DataType.Reserved.ToStr();
+                    //this.lblCmdDataTypeContent.Content = BLE_DataType.Reserved0x00.ToStr();
                 }
                 this.ResizeOnNormal();
             });
