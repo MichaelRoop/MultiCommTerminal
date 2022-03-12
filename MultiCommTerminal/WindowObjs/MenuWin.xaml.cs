@@ -21,7 +21,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         #region Data
 
         private Window mainWindow = null;
-        private List<MenuItemDataModel> items = new List<MenuItemDataModel>();
+        private List<MenuItemDataModel> items = new ();
         private ICommWrapper wrapper = null;
         private RunPageManager runPageManager = null;
 
@@ -66,7 +66,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
                         TerminatorDataSelector.ShowBox(this.mainWindow);
                         break;
                     case MenuCode.Commands:
-                        Commands cmds = new Commands(this.mainWindow);
+                        Commands cmds = new (this.mainWindow);
                         cmds.ShowDialog();
                         break;
                     case MenuCode.Ethernet:
@@ -85,7 +85,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
                         this.runPageManager.Open(typeof(BLE_Full));
                         break;
                     case MenuCode.CodeSamples:
-                        Help_CommunicationMediums cm = new Help_CommunicationMediums(this.mainWindow);
+                        Help_CommunicationMediums cm = new (this.mainWindow);
                         cm.ShowDialog();
                         break;
                     case MenuCode.Settings:
@@ -138,7 +138,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
 
         private void AddItem(MenuCode menuCode, string display, UIIcon uIIcon, string padding) {
-            MenuItemDataModel dataModel = new MenuItemDataModel() {
+            MenuItemDataModel dataModel = new () {
                 Code = menuCode,
                 Display = display,
                 IconSource = IconBinder.Source(uIIcon),

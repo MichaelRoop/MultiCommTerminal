@@ -13,7 +13,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
     /// <summary>Interaction logic for BLECmdEdit.xaml</summary>
     public partial class BLECmdEdit : Window {
 
-        private ClassLog log = new ClassLog("BLECmdEdit");
+        private ClassLog log = new ("BLECmdEdit");
         private BLE_DataType dataType = BLE_DataType.Bool;
         private Window parent = null;
         private ScriptItem cmdItem = null;
@@ -23,7 +23,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         #region Constructors and window events
 
         public static bool ShowBox(Window parent, BLE_DataType dataType, ScriptItem cmdItem) {
-            BLECmdEdit win = new BLECmdEdit(parent, dataType, cmdItem);
+            BLECmdEdit win = new (parent, dataType, cmdItem);
             win.ShowDialog();
             return win.saveItem;
         }
@@ -75,7 +75,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         private void btnOk_Click(object sender, RoutedEventArgs e) {
             // Make copy to validate so as not to change the inputed item
-            ScriptItem tmp = new ScriptItem(this.txtName.Text, this.edDecEdit.Text);
+            ScriptItem tmp = new (this.txtName.Text, this.edDecEdit.Text);
             DI.Wrapper.ValidateBLECmdItem(
                 this.dataType,
                 tmp,

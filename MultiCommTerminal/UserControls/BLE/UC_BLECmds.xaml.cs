@@ -19,10 +19,10 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
 
         #region Data
 
-        private List<IIndexItem<BLECmdIndexExtraInfo>> general = new List<IIndexItem<BLECmdIndexExtraInfo>>();
+        private List<IIndexItem<BLECmdIndexExtraInfo>> general = new ();
         private BLE_CharacteristicDataModel characteristic = null;
         private string currentCmd = string.Empty;
-        private ClassLog log = new ClassLog("UC_BLECmds");
+        private ClassLog log = new ("UC_BLECmds");
 
         #endregion
 

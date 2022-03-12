@@ -16,13 +16,13 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BTWins {
 
         private Window parent = null;
         private bool pair = false;
-        private List<BTDeviceInfo> items = new List<BTDeviceInfo>();
+        private List<BTDeviceInfo> items = new ();
 
         public BTDeviceInfo SelectedBT { get; private set; } = null;
 
 
         public static BTDeviceInfo ShowBox(Window parent, bool pair = true) {
-            BTSelect win = new BTSelect(parent, pair);
+            BTSelect win = new (parent, pair);
             win.ShowDialog();
             return win.SelectedBT;
         }

@@ -14,12 +14,12 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         private Window parent = null;
 
         public static void ShowBox(Window parent, BluetoothLEDeviceInfo info) {
-            BLE_PropertiesDisplay win = new BLE_PropertiesDisplay(parent, info);
+            BLE_PropertiesDisplay win = new (parent, info);
             win.ShowDialog();
         }
 
         public static void ShowBox(Window parent, BTDeviceInfo info) {
-            BLE_PropertiesDisplay win = new BLE_PropertiesDisplay(parent, info);
+            BLE_PropertiesDisplay win = new (parent, info);
             win.ShowDialog();
         }
 

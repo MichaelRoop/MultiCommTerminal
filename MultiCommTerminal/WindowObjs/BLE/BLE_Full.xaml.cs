@@ -19,7 +19,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         #region Data
 
-        private ClassLog log = new ClassLog("BLE_Full");
+        private ClassLog log = new ("BLE_Full");
         private Window parent = null;
         private ButtonGroupSizeSyncManager buttonSizer = null;
         BluetoothLEDeviceInfo currentDevice = null;

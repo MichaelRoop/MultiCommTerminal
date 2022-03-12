@@ -27,7 +27,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
             #region Test data for info display
             // ---------------------------------------------
-            BLE_ServiceDataModel service1 = new BLE_ServiceDataModel();
+            BLE_ServiceDataModel service1 = new ();
             service1.DisplayName = "Hogwarts 1 service";
             service1.Characteristics.Add(new BLE_CharacteristicDataModel());
             service1.Characteristics[0].CharName = "George Characteristic";
@@ -43,7 +43,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
             // ---------------------------------------------
 
             // ---------------------------------------------
-            BLE_ServiceDataModel service2 = new BLE_ServiceDataModel();
+            BLE_ServiceDataModel service2 = new ();
             service2.DisplayName = "Hogwarts 2 service";
             service2.Characteristics.Add(new BLE_CharacteristicDataModel());
             service2.Characteristics[0].CharName = "Hermioni characteristic";
@@ -58,7 +58,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
             // Set the input as the active
             this.borderInput.BorderThickness = new Thickness(2);
         }
-        ServiceTreeDict treeDict = new ServiceTreeDict();
+        ServiceTreeDict treeDict = new ();
 
         BluetoothLEDeviceInfo info = null;
 

@@ -18,7 +18,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
 
 
         public static void ShowBox(Window parent, EthernetSelectResult data) {
-            EthernetEditRequest win = new EthernetEditRequest(parent, data);
+            EthernetEditRequest win = new (parent, data);
             win.ShowDialog();
         }
 

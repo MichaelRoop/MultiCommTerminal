@@ -18,14 +18,14 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         Window parent = null;
         private ButtonGroupSizeSyncManager widthManager = null;
-        private List<BLETypeDisplay> lbDataTypes = new List<BLETypeDisplay>();
+        private List<BLETypeDisplay> lbDataTypes = new ();
 
         #endregion
 
 
         public static void ShowBox(Window parent) {
             try {
-                BLESelectDataType win = new BLESelectDataType(parent);
+                BLESelectDataType win = new (parent);
                 win.ShowDialog();
             }
             catch (Exception) { }

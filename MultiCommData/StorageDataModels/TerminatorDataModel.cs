@@ -11,7 +11,7 @@ namespace MultiCommData.Net.StorageDataModels {
         /// <summary>The UID for storage identification</summary>
         public string UId { get; set; } = "";
 
-        public byte[] TerminatorBlock { get; set; } = new byte[0];
+        public byte[] TerminatorBlock { get; set; } = Array.Empty<byte>();
         public List<TerminatorInfo> TerminatorInfos { get; set; } = new List<TerminatorInfo>();
 
         public string Display { get; set; } = "";

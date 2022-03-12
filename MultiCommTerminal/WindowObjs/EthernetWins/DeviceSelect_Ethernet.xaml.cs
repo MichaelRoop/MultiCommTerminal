@@ -17,7 +17,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
 
         private Window parent = null;
         private ButtonGroupSizeSyncManager widthManager = null;
-        private List<IIndexItem<EthernetExtraInfo>> lstInfo = new List<IIndexItem<EthernetExtraInfo>>();
+        private List<IIndexItem<EthernetExtraInfo>> lstInfo = new ();
 
         #endregion
 
@@ -32,7 +32,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
         #region Constructor and windows events
 
         public static EthernetSelectResult ShowBox(Window parent, bool isSelect) {
-            DeviceSelect_Ethernet win = new DeviceSelect_Ethernet(parent, isSelect);
+            DeviceSelect_Ethernet win = new (parent, isSelect);
             win.ShowDialog();
             return win.SelectedEthernet;
         }

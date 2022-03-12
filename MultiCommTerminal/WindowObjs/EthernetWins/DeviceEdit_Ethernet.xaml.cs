@@ -24,7 +24,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
         private Window parent = null;
         private ButtonGroupSizeSyncManager widthManager = null;
         private IIndexItem<EthernetExtraInfo> index = null;
-        private EthernetParams data = new EthernetParams();
+        private EthernetParams data = new ();
 
         #endregion
 
@@ -37,7 +37,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
         #region Constructors and windows events
 
         public static bool ShowBoxEdit(Window parent, IIndexItem<EthernetExtraInfo> index) {
-            DeviceEdit_Ethernet win = new DeviceEdit_Ethernet(parent, index);
+            DeviceEdit_Ethernet win = new (parent, index);
             win.ShowDialog();
             return win.IsChanged;
         }

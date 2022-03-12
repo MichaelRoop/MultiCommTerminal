@@ -19,7 +19,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
 
 
         public static void ShowBox(Window parent, SerialDeviceInfo info) {
-            DeviceInfo_USB win = new DeviceInfo_USB(parent, info);
+            DeviceInfo_USB win = new (parent, info);
             win.ShowDialog();
         }
 

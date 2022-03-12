@@ -40,13 +40,13 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         #region Constructors and window events
 
         public static void ShowBox(Window parent, IIndexItem<BLECmdIndexExtraInfo> index) {
-            BLECommandsEdit win = new BLECommandsEdit(parent, index, UseType.Edit, index.ExtraInfoObj.DataType);
+            BLECommandsEdit win = new (parent, index, UseType.Edit, index.ExtraInfoObj.DataType);
             win.ShowDialog();
         }
 
 
         public static void ShowBox(Window parent, BLE_DataType dataType) {
-            BLECommandsEdit win = new BLECommandsEdit(parent, null, UseType.New, dataType);
+            BLECommandsEdit win = new (parent, null, UseType.New, dataType);
             win.ShowDialog();
         }
 
@@ -86,7 +86,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         private void btnAdd_Click(object sender, RoutedEventArgs e) {
             //// TODO Command editor binary, hex, dec
-            ScriptItem item = new ScriptItem(DI.Wrapper.GetText(MsgCode.Default), "0");
+            ScriptItem item = new (DI.Wrapper.GetText(MsgCode.Default), "0");
             if (BLECmdEdit.ShowBox(this, this.dataType, item)) {
                 this.lbxCmds.ItemsSource = null;
                 this.copy.Items.Add(item);
@@ -153,7 +153,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         /// <summary>Create a new dummy script template</summary>
         private BLECommandSetDataModel CreateNewOriginal() {
-            List<ScriptItem> items = new List<ScriptItem>();
+            List<ScriptItem> items = new ();
             items.Add(new ScriptItem("Open", "1"));
             return new BLECommandSetDataModel(items, "", this.dataType, "Sample Name");
         }

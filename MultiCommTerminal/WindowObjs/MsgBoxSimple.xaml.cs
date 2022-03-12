@@ -12,7 +12,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         public static void ShowBox(Window win, string msg) {
             win.Dispatcher.Invoke(() => {
-                MsgBoxSimple box = new MsgBoxSimple(win, msg);
+                MsgBoxSimple box = new (win, msg);
                 box.ShowDialog();
             });
         }
@@ -20,19 +20,19 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         public static void ShowBox(Window win, string title, string msg) {
             win.Dispatcher.Invoke(() => {
-                MsgBoxSimple box = new MsgBoxSimple(win, title, msg);
+                MsgBoxSimple box = new (win, title, msg);
                 box.ShowDialog();
             });
         }
 
 
         public static void ShowBox(string msg) {
-            MsgBoxSimple box = new MsgBoxSimple(msg);
+            MsgBoxSimple box = new (msg);
             box.ShowDialog();
         }
 
         public static void ShowBox(string title, string msg) {
-            MsgBoxSimple box = new MsgBoxSimple(title, msg);
+            MsgBoxSimple box = new (title, msg);
             box.ShowDialog();
         }
 

@@ -74,11 +74,11 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         #region Side button event handlers
 
         private void btnAdd_Click(object sender, RoutedEventArgs e) {
-            ScriptItem item = new ScriptItem() {
+            ScriptItem item = new () {
                 Display = "Display Name",
                 Command = "Command text",
             };
-            ScriptCmdEdit win = new ScriptCmdEdit(this, item);
+            ScriptCmdEdit win = new (this, item);
             win.ShowDialog();
             if (win.IsChanged) {
                 this.lbxCmds.ItemsSource = null;
@@ -91,7 +91,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         private void btnEdit_Click(object sender, RoutedEventArgs e) {
             ScriptItem item = this.lbxCmds.SelectedItem as ScriptItem;
             if (item != null) {
-                ScriptCmdEdit win = new ScriptCmdEdit(this, item);
+                ScriptCmdEdit win = new (this, item);
                 win.ShowDialog();
                 if (win.IsChanged) {
                     this.lbxCmds.ItemsSource = null;
@@ -163,7 +163,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
         /// <summary>Create a new dummy script template</summary>
         private void InitializeNewScript() {
-            List<ScriptItem> items = new List<ScriptItem>();
+            List<ScriptItem> items = new ();
             items.Add(new ScriptItem("Command Name 1", "Sample Command Text 1"));
             items.Add(new ScriptItem("Command Name 2", "Sample Command Text 2"));
             this.copy = new ScriptDataModel(items) {

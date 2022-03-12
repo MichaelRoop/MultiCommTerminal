@@ -14,12 +14,12 @@ namespace MultiCommTerminal.NetCore.UserControls {
         #region Data
 
         Window parent = null;
-        List<StackPanel> panels = new List<StackPanel>();
-        List<Label> hex = new List<Label>();
-        List<Label> names = new List<Label>();
+        List<StackPanel> panels = new ();
+        List<Label> hex = new ();
+        List<Label> names = new ();
         private int currentIndex = -1;
         private const int MAX_TERMINATORS = 5;
-        private List<TerminatorInfo> selectedTerminators = new List<TerminatorInfo>();
+        private List<TerminatorInfo> selectedTerminators = new ();
         private string objUID = "";
 
         #endregion
@@ -47,7 +47,7 @@ namespace MultiCommTerminal.NetCore.UserControls {
 
             this.ResetAllBoxes();
             // Make a copy to not mess up the original in case you do not save
-            List<TerminatorInfo> infos = new List<TerminatorInfo>();
+            List<TerminatorInfo> infos = new ();
             foreach (var i in dataModel.TerminatorInfos) {
                 infos.Add(new TerminatorInfo(i.Code));
             }

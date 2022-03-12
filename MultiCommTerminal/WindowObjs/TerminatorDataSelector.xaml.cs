@@ -21,7 +21,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         #region Constructors and window events
 
         public static void ShowBox(Window parent) {
-            TerminatorDataSelector win = new TerminatorDataSelector(parent);
+            TerminatorDataSelector win = new (parent);
             win.ShowDialog();
         }
 
@@ -51,7 +51,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         #region Sidebar buttons
 
         private void btnAdd_Click(object sender, RoutedEventArgs e) {
-            TerminatorEditor win = new TerminatorEditor(this, null);
+            TerminatorEditor win = new (this, null);
             win.ShowDialog();
             this.ReloadList(win.IsChanged);
         }
@@ -60,7 +60,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         private void btnEdit_Click(object sender, RoutedEventArgs e) {
             var item = this.listBoxTerminators.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
             if (item != null) {
-                TerminatorEditor win = new TerminatorEditor(this, item);
+                TerminatorEditor win = new (this, item);
                 win.ShowDialog();
                 this.ReloadList(win.IsChanged);
             }
