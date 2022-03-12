@@ -27,10 +27,10 @@ namespace MultiCommTerminal.NetCore {
         #region Data
 
         private log4net.ILog loggerImpl = null;
-        private ClassLog log = new ClassLog("App");
+        private ClassLog log = new ("App");
         private DateTime currentDate = DateTime.Now;
         private static App staticApp = null;
-        LogHelper logHelper = new LogHelper();
+        LogHelper logHelper = new ();
 
 
         #endregion
@@ -220,12 +220,12 @@ namespace MultiCommTerminal.NetCore {
 
             //https://stackoverflow.com/questions/16336917/can-you-configure-log4net-in-code-instead-of-using-a-config-file
             Hierarchy hierarchy = (Hierarchy)LogManager.GetRepository(Assembly.GetCallingAssembly());
-            PatternLayout patternLayout = new PatternLayout();
+            PatternLayout patternLayout = new ();
             //patternLayout.ConversionPattern = "%date [%thread] %-5level %logger - %message%newline";
             patternLayout.ConversionPattern = "%message%newline";
             patternLayout.ActivateOptions();
 
-            RollingFileAppender roller = new RollingFileAppender();
+            RollingFileAppender roller = new ();
             roller.AppendToFile = true;
             // I had to use the manual configuration because the %env for special folders no longer working
             //MultiCommSerialTerminal/Settings
@@ -242,7 +242,7 @@ namespace MultiCommTerminal.NetCore {
             roller.ActivateOptions();
             hierarchy.Root.AddAppender(roller);
 
-            MemoryAppender memory = new MemoryAppender();
+            MemoryAppender memory = new ();
             memory.ActivateOptions();
             hierarchy.Root.AddAppender(memory);
 

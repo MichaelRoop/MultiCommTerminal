@@ -12,7 +12,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         Window parent = null;
 
         public static void ShowBox(Window parent, BluetoothLEDeviceInfo info) {
-            BLE_ServicesDisplay win = new BLE_ServicesDisplay(parent, info);
+            BLE_ServicesDisplay win = new (parent, info);
             win.ShowDialog();
         }
 
@@ -42,9 +42,9 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         #region Debug code for dev
 
-        ServiceTreeDict treeDict = new ServiceTreeDict();
+        ServiceTreeDict treeDict = new ();
         private void CreateDebugTree() {
-            BLE_ServiceDataModel service1 = new BLE_ServiceDataModel();
+            BLE_ServiceDataModel service1 = new ();
             service1.DisplayName = "Hogwarts 1 service";
             service1.Characteristics.Add(new BLE_CharacteristicDataModel());
             service1.Characteristics[0].CharName = "George Characteristic";
@@ -58,7 +58,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
             service1.Characteristics[1].Descriptors[1].DisplayName = "Name of stuff";
             this.treeDict.Add("1", service1);
 
-            BLE_ServiceDataModel service2 = new BLE_ServiceDataModel();
+            BLE_ServiceDataModel service2 = new ();
             service2.DisplayName = "Hogwarts 2 service";
             service2.Characteristics.Add(new BLE_CharacteristicDataModel());
             service2.Characteristics[0].CharName = "Hermioni characteristic";

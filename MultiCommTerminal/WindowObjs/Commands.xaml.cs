@@ -59,7 +59,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
 
         private void btnAdd_Click(object sender, RoutedEventArgs e) {
-            ScriptEdit win = new ScriptEdit(this, null, ScriptEdit.UseType.New);
+            ScriptEdit win = new (this, null, ScriptEdit.UseType.New);
             win.ShowDialog();
         }
 
@@ -101,7 +101,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         private void OpenViewer(ScriptEdit.UseType useType) {
             var item = this.lbxCmds.SelectedItem as IIndexItem<DefaultFileExtraInfo>;
             if (item != null) {
-                ScriptEdit win = new ScriptEdit(this, item, useType);
+                ScriptEdit win = new (this, item, useType);
                 win.ShowDialog();
             }
         }

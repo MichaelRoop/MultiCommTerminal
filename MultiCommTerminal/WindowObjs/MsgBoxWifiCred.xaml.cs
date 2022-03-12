@@ -46,7 +46,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         /// <param name="service">Network port</param>
         /// <returns></returns>
         public static WifiCredResult ShowBox(Window win, string ssid, string host, string service) {
-            MsgBoxWifiCred box = new MsgBoxWifiCred(win, ssid, host, service);
+            MsgBoxWifiCred box = new (win, ssid, host, service);
             box.processType = ProcessType.Init;
             box.ShowDialog();
             return box.Result;
@@ -57,7 +57,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         /// <param name="parent">The parent window</param>
         /// <param name="index">The data item index object</param>
         public static bool ShowBox(Window parent, IIndexItem<DefaultFileExtraInfo> index) {
-            MsgBoxWifiCred box = new MsgBoxWifiCred(parent, index);
+            MsgBoxWifiCred box = new (parent, index);
             box.processType = ProcessType.Edit;
             box.ShowDialog();
             return box.Result.IsChanged;
@@ -65,7 +65,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
 
         public static bool ShowBox(Window parent) {
-            MsgBoxWifiCred box = new MsgBoxWifiCred(parent);
+            MsgBoxWifiCred box = new (parent);
             box.processType = ProcessType.Create;
             box.ShowDialog();
             return box.Result.IsChanged;
@@ -159,7 +159,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
                     }
                     break;
                 case ProcessType.Create:
-                    WifiCredentialsDataModel dm = new WifiCredentialsDataModel() {
+                    WifiCredentialsDataModel dm = new () {
                         SSID = this.txtSSID.Text,
                         RemoteHostName = this.txtHostName.Text,
                         RemoteServiceName = this.txtServiceName.Text,

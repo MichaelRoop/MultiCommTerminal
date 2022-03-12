@@ -26,7 +26,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         #region Constructors and windows events
 
         public static void ShowBox(Window parent) {
-            LanguageSelector win = new LanguageSelector(parent);
+            LanguageSelector win = new (parent);
             win.ShowDialog();
         }
 

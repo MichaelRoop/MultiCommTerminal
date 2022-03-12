@@ -39,7 +39,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         #region Static methods
 
         public static MsgBoxResult ShowBoxDelete(Window win, string msg) {
-            MsgBoxYesNo box = new MsgBoxYesNo(win, DI.Wrapper.GetText(MsgCode.Delete), msg, false);
+            MsgBoxYesNo box = new (win, DI.Wrapper.GetText(MsgCode.Delete), msg, false);
             box.ShowDialog();
             return box.Result;
         }
@@ -47,28 +47,28 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
 
         public static MsgBoxResult ShowBox(Window win, string msg, bool suppressContinue = false) {
-            MsgBoxYesNo box = new MsgBoxYesNo(win, msg, suppressContinue);
+            MsgBoxYesNo box = new (win, msg, suppressContinue);
             box.ShowDialog();
             return box.Result;
         }
 
 
         public static MsgBoxResult ShowBox(Window win, string title, string msg, bool suppressContinue = false) {
-            MsgBoxYesNo box = new MsgBoxYesNo(win, title, msg, suppressContinue);
+            MsgBoxYesNo box = new (win, title, msg, suppressContinue);
             box.ShowDialog();
             return box.Result;
         }
 
 
         public static MsgBoxResult ShowBox(string msg, bool suppressContinue = false) {
-            MsgBoxYesNo box = new MsgBoxYesNo(msg, suppressContinue);
+            MsgBoxYesNo box = new (msg, suppressContinue);
             box.ShowDialog();
             return box.Result;
         }
 
 
         public static MsgBoxResult ShowBox(string title, string msg, bool suppressContinue = false) {
-            MsgBoxYesNo box = new MsgBoxYesNo(title, msg, suppressContinue);
+            MsgBoxYesNo box = new (title, msg, suppressContinue);
             box.ShowDialog();
             return box.Result;
         }

@@ -21,7 +21,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
         public bool Changed { get; set; } = false;
 
         public static bool ShowBox(Window parent, SerialDeviceInfo info) {
-            DeviceEdit_USB win = new DeviceEdit_USB(parent, info);
+            DeviceEdit_USB win = new (parent, info);
             win.ShowDialog();
             return win.Changed;
         }
@@ -111,7 +111,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
         }
 
 
-        private readonly Regex numOnly = new Regex("[^0-9]");
+        private readonly Regex numOnly = new ("[^0-9]");
         private void txtWriteTimeout_PreviewTextInput(object sender, TextCompositionEventArgs e) {
             e.Handled = numOnly.IsMatch(e.Text);
         }

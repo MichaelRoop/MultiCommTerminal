@@ -20,8 +20,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
         private Window parent = null;
         private bool pair = false;
-        private List<BluetoothLEDeviceInfo> devices = new List<BluetoothLEDeviceInfo>();
-        private ClassLog log = new ClassLog("BLESelect");
+        private List<BluetoothLEDeviceInfo> devices = new ();
+        private ClassLog log = new ("BLESelect");
 
         public BluetoothLEDeviceInfo SelectedBLE { get; private set; } = null;
 
@@ -30,7 +30,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         #region Constructor and window event
 
         public static BluetoothLEDeviceInfo ShowBox(Window parent, bool pair = true) {
-            BLESelect win = new BLESelect(parent, pair);
+            BLESelect win = new (parent, pair);
             win.ShowDialog();
             return win.SelectedBLE;
         }

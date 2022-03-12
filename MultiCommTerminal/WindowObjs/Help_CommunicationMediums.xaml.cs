@@ -17,8 +17,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
     public partial class Help_CommunicationMediums : Window {
 
         Window parent = null;
-        private List<CommMediumHelp> testData = new List<CommMediumHelp>();
-        List<CommMediumHelp> mediumHelps = new List<CommMediumHelp>();
+        private List<CommMediumHelp> testData = new ();
+        List<CommMediumHelp> mediumHelps = new ();
 
 
         public Help_CommunicationMediums(Window parent) {
@@ -72,7 +72,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         private void OnHasCodeSampleView(CommMedium helpType) {
             // This to avoid opening the code highlighted box because
             // its control malfunctions with no content
-            MsgBoxCode win = new MsgBoxCode(this, helpType);
+            MsgBoxCode win = new (this, helpType);
             win.ShowDialog();
         }
 

@@ -16,15 +16,15 @@ namespace MultiCommTerminal.NetCore.WindowObjs.SerialWins {
     public partial class SerialSelectUSB : Window {
 
         private Window parent = null;
-        private List<SerialDeviceInfo> usbItems = new List<SerialDeviceInfo>();
-        private AutoResetEvent doneLoading = new AutoResetEvent(false);
+        private List<SerialDeviceInfo> usbItems = new ();
+        private AutoResetEvent doneLoading = new (false);
 
         public SerialDeviceInfo SerialInfo { get; private set; } = null;
 
         #region Constructors and window events
 
         public static SerialDeviceInfo ShowBox(Window parent, bool isSelect) {
-            SerialSelectUSB win = new SerialSelectUSB(parent, isSelect);
+            SerialSelectUSB win = new (parent, isSelect);
             win.ShowDialog();
             return win.SerialInfo;
         }

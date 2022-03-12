@@ -12,7 +12,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.EthernetWins {
         Window parent;
 
         public static void ShowBox(Window parent, EthernetParams info) {
-            EthernetInfo win = new EthernetInfo(parent, info);
+            EthernetInfo win = new (parent, info);
             win.ShowDialog();
         }
 

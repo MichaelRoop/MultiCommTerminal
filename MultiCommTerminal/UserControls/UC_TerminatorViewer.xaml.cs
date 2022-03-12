@@ -17,8 +17,8 @@ namespace MultiCommTerminal.NetCore.UserControls {
         #region Data
 
         private ICommWrapper wrapper = null;
-        private List<Label> hex = new List<Label>();
-        private List<Label> names = new List<Label>();
+        private List<Label> hex = new ();
+        private List<Label> names = new ();
         private const int MAX_TERMINATORS = 5;
         private bool hasName = false;
 

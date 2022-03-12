@@ -16,9 +16,9 @@ namespace MultiCommTerminal.NetCore.UserControls.BLE {
         #region Data
 
         private BLE_CharacteristicDataModel selected = null;
-        private BLERangeValidator validator = new BLERangeValidator();
+        private BLERangeValidator validator = new ();
         private Window parent = null;
-        private ClassLog log = new ClassLog("UC_BLEWriteGeneral");
+        private ClassLog log = new ("UC_BLEWriteGeneral");
 
         #endregion
 

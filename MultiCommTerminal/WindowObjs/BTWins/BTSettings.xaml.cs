@@ -18,7 +18,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BTWins {
         #region Constructors and window events
 
         public static void ShowBox(Window parent) {
-            BTSettings win = new BTSettings(parent);
+            BTSettings win = new (parent);
             win.ShowDialog();
         }
 

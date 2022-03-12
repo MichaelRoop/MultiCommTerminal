@@ -17,7 +17,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
 
 
         public static void ShowBox(Window parent, BluetoothLEDeviceInfo info) {
-            DeviceInfo_BLE win = new DeviceInfo_BLE(parent, info);
+            DeviceInfo_BLE win = new (parent, info);
             win.ShowDialog();
         }
 

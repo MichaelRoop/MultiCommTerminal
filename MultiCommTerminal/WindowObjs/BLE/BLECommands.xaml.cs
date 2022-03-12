@@ -18,7 +18,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         #region Constructors
 
         public static void ShowBox(Window parent) {
-            BLECommands win = new BLECommands(parent);
+            BLECommands win = new (parent);
             win.ShowDialog();
         }
 

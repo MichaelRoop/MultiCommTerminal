@@ -13,7 +13,7 @@ namespace MultiCommTerminal.NetCore.UserControls {
     /// <summary>Interaction logic for UC_Logging.xaml</summary>
     public partial class UC_Logging : UserControl {
 
-        private ClassLog log = new ClassLog("UC_Logging");
+        private ClassLog log = new ("UC_Logging");
         private ScrollViewer logScroll = null;
         private ButtonGroupSizeSyncManager buttonSizer = null;
 
@@ -51,7 +51,7 @@ namespace MultiCommTerminal.NetCore.UserControls {
         private void btnCopyLog_Click(object sender, RoutedEventArgs e) {
             try {
                 lock (this.lbLog) {
-                    StringBuilder sb = new StringBuilder();
+                    StringBuilder sb = new ();
                     this.lbLog.SelectAll();
                     foreach (var item in lbLog.SelectedItems) {
                         sb.AppendLine(item.ToString());

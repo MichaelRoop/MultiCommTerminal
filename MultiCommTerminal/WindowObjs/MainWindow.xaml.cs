@@ -14,7 +14,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
     public partial class MainWindow : Window {
 
         MenuWin menu = null;
-        ClassLog log = new ClassLog("MainWindow");
+        ClassLog log = new ("MainWindow");
 
         public MainWindow() {
             InitializeComponent();

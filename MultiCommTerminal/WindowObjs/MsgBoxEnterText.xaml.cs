@@ -54,7 +54,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         #region Static methods
 
         public static MsgBoxTextInputData ShowBox(Window win, string title, string msg, string defaultTxt = "") {
-            MsgBoxEnterText box = new MsgBoxEnterText(win, title, msg, defaultTxt);
+            MsgBoxEnterText box = new (win, title, msg, defaultTxt);
             box.ShowDialog();
             return box.Result;
         }

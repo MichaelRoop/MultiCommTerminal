@@ -18,7 +18,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs {
         private CommMedium medium = CommMedium.None;
 
         public static void ShowBox(Window parent, CommMedium medium) {
-            CommandsPopup win = new CommandsPopup(parent, medium);
+            CommandsPopup win = new (parent, medium);
             win.ShowDialog();
         }
 

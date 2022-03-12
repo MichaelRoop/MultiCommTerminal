@@ -18,7 +18,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.Cmds {
         #region Constructors and window events
 
         public static bool ShowBox(Window parent) {
-            CommandSettings win = new CommandSettings(parent);
+            CommandSettings win = new (parent);
             win.ShowDialog();
             return win.IsChanged;
         }

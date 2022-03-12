@@ -20,12 +20,12 @@ namespace MultiCommTerminal.NetCore.UserControls {
 
         #region Data
 
-        private ClassLog log = new ClassLog("UC_RunPage");
+        private ClassLog log = new ("UC_RunPage");
         private ScrollViewer inScroll = null;
         private ScrollViewer logScroll = null;
         private Window parent = null;
         private ButtonGroupSizeSyncManager buttonSizer = null;
-        private List<ScriptItem> scriptItems = new List<ScriptItem>();
+        private List<ScriptItem> scriptItems = new ();
         bool isBusy = false;
         CommMedium medium = CommMedium.None;
 
@@ -202,7 +202,7 @@ namespace MultiCommTerminal.NetCore.UserControls {
         private void btnCopyLog_Click(object sender, RoutedEventArgs e) {
             try {
                 lock (this.lbLog) {
-                    StringBuilder sb = new StringBuilder();
+                    StringBuilder sb = new ();
                     this.lbLog.SelectAll();
                     foreach (object row in lbLog.SelectedItems) {
                         sb.AppendLine(row.ToString());

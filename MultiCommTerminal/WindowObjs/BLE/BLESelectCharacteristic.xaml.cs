@@ -1,6 +1,5 @@
 ﻿using BluetoothLE.Net.DataModels;
 using LogUtils.Net;
-using MultiCommTerminal.NetCore.WPF_Helpers;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,8 +21,8 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
 
 
         private Window parent = null;
-        private List<BLE_CharacteristicDataModel> characteristics = new List<BLE_CharacteristicDataModel>();
-        private ClassLog log = new ClassLog("BLESelectCharacteristic");
+        private List<BLE_CharacteristicDataModel> characteristics = new ();
+        private ClassLog log = new ("BLESelectCharacteristic");
 
         public SelectResult Result { get; private set; } = new SelectResult();
 
@@ -32,7 +31,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BLE {
         #region Constructor and window event
 
         public static SelectResult ShowBox(Window parent, List<BLE_CharacteristicDataModel> characteristics) {
-            BLESelectCharacteristic win = new BLESelectCharacteristic(parent, characteristics);
+            BLESelectCharacteristic win = new (parent, characteristics);
             win.ShowDialog();
             return win.Result;
         }

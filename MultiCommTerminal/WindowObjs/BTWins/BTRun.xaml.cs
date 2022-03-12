@@ -134,7 +134,7 @@ namespace MultiCommTerminal.NetCore.WindowObjs.BTWins {
             this.Dispatcher.Invoke(() => {
                 this.ui.IsBusy = false;
                 DI.Wrapper.BT_DeviceInfoGathered -= deviceInfoGathered;
-                DeviceInfo_BT win = new DeviceInfo_BT(this, e);
+                DeviceInfo_BT win = new (this, e);
                 win.ShowDialog();
             });
         }
