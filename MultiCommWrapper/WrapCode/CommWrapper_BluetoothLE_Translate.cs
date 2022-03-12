@@ -42,7 +42,7 @@ namespace MultiCommWrapper.Net.WrapCode {
                 case BLE_DataValidationStatus.InvalidInput:
                     return this.GetText(MsgCode.InvalidInput);
                 case BLE_DataValidationStatus.NotHandled:
-                    return this.GetText(MsgCode.UnhandledError);
+                    return this.GetText(MsgCode.DataTypeUnhandled);
                 case BLE_DataValidationStatus.UnhandledError:
                     return this.GetText(MsgCode.UnhandledError);
                 default:

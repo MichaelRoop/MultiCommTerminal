@@ -106,7 +106,6 @@ namespace MultiCommTerminal.NetCore.WPF_Helpers {
                 case CommMedium.BluetoothLE:
                     return BluetoothLE_W;
                 case CommMedium.Ethernet:
-                    // TODO need white
                     return Source(UIIcon.EthernetWhite);
                 case CommMedium.Wifi:
                     return Source(UIIcon.Wifi);
