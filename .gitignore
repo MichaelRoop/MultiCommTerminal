@@ -1,4 +1,7 @@
 /MultiCommTerminal/bin/*
+/MultiCommTerminal/obj/*
+/MultiCommData/bin/*
+/MultiCommData/obj/*
 /BluetoothClassic/obj/*
 /BluetoothLE/obj/*
 /BluetoothLE.Win32/bin/*
@@ -48,3 +51,9 @@
 /.vs/MultiCommTerminal/v17/TestStore/*
 /.vs/MultiCommTerminalAndroid/v17/*
 /.vs/MultiCommTerminal/v17/*
+/.vs/*
+/MultiCommTerminal.MSIX/MultiCommTerminal.MSIX.assets.cache
+/MultiCommTerminal.MSIX/MultiCommTerminal.MSIX.wapproj.user
+/.vs/MultiCommTerminalAndroid/DesignTimeBuild/.dtbcache.v2
+/BluetoothCommonAndroidXamarin/BluetoothCommonAndroidXamarin.csproj.user
+/.vs/MultiCommTerminalAndroid/DesignTimeBuild/.dtbcache.v2
